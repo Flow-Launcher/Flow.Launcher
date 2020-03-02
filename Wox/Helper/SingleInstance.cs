@@ -273,13 +273,15 @@ namespace Wox.Helper
         private static IList<string> GetCommandLineArgs( string uniqueApplicationName )
         {
             string[] args = null;
-            if (AppDomain.CurrentDomain.ActivationContext == null)
+
+            try
             {
                 // The application was not clickonce deployed, get args from standard API's
                 args = Environment.GetCommandLineArgs();
             }
-            else
+            catch (NotSupportedException)
             {
+              
                 // The application was clickonce deployed
                 // Clickonce deployed apps cannot recieve traditional commandline arguments
                 // As a workaround commandline arguments can be written to a shared location before 

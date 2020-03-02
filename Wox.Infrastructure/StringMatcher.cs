@@ -19,7 +19,7 @@ namespace Wox.Infrastructure
             _alphabet = alphabet;
         }
 
-        public static StringMatcher Instance { get; internal set; }
+        public static StringMatcher Instance { get; set; }
 
         [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
         public static int Score(string source, string target)

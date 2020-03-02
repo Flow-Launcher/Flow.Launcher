@@ -55,7 +55,7 @@ namespace Wox.Plugin
         /// <summary>
         /// Only resulsts that originQuery match with curren query will be displayed in the panel
         /// </summary>
-        internal Query OriginQuery { get; set; }
+        public Query OriginQuery { get; set; }
 
         /// <summary>
         /// Plugin directory
@@ -122,6 +122,6 @@ namespace Wox.Plugin
         /// <summary>
         /// Plugin ID that generated this result
         /// </summary>
-        public string PluginID { get; internal set; }
+        public string PluginID { get; set; }
     }
 }
