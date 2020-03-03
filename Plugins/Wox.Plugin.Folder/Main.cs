@@ -102,7 +102,7 @@ namespace Wox.Plugin.Folder
                     {
                         try
                         {
-                            Process.Start(path);
+                            Process.Start("explorer", path);
                             return true;
                         }
                         catch (Exception ex)
@@ -254,7 +254,7 @@ namespace Wox.Plugin.Folder
                 {
                     try
                     {
-                        Process.Start(filePath);
+                        Process.Start("explorer", filePath);
                     }
                     catch (Exception ex)
                     {
@@ -285,7 +285,7 @@ namespace Wox.Plugin.Folder
                 Score = 500,
                 Action = c =>
                 {
-                    Process.Start(search);
+                    Process.Start("explorer", search);
                     return true;
                 }
             };
