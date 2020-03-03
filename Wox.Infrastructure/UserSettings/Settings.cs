@@ -28,7 +28,7 @@ namespace Wox.Infrastructure.UserSettings
         public bool ShouldUsePinyin { get; set; } = true;
 
 
-        public StringMatcher.SearchPrecisionScore QuerySearchPrecision { get; private set; } = StringMatcher.SearchPrecisionScore.Regular;
+        internal StringMatcher.SearchPrecisionScore QuerySearchPrecision { get; private set; } = StringMatcher.SearchPrecisionScore.Regular;
 
         [JsonIgnore]
         public string QuerySearchPrecisionString

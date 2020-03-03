@@ -23,7 +23,7 @@ namespace Wox.Plugin
         /// Raw query, this includes action keyword if it has
         /// We didn't recommend use this property directly. You should always use Search property.
         /// </summary>
-        public string RawQuery { get; set; }
+        public string RawQuery { get; internal set; }
 
         /// <summary>
         /// Search part of a query.
@@ -31,7 +31,7 @@ namespace Wox.Plugin
         /// Since we allow user to switch a exclusive plugin to generic plugin, 
         /// so this property will always give you the "real" query part of the query
         /// </summary>
-        public string Search { get; set; }
+        public string Search { get; internal set; }
 
         /// <summary>
         /// The raw query splited into a string array.
@@ -96,10 +96,10 @@ namespace Wox.Plugin
         public override string ToString() => RawQuery;
 
         [Obsolete("Use ActionKeyword, this property will be removed in v1.3.0")]
-        public string ActionName { get; set; }
+        public string ActionName { get; internal set; }
 
         [Obsolete("Use Search instead, this property will be removed in v1.3.0")]
-        public List<string> ActionParameters { get; set; }
+        public List<string> ActionParameters { get; internal set; }
 
         [Obsolete("Use Search instead, this method will be removed in v1.3.0")]
         public string GetAllRemainingParameter() => Search;

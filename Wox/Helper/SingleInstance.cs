@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters;
 using System.Security;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -244,12 +245,12 @@ namespace Wox.Helper
             singleInstanceMutex = new Mutex(true, applicationIdentifier, out firstInstance);
             if (firstInstance)
             {
-                CreateRemoteService(channelName);
+                _ = CreateRemoteService(channelName);
                 return true;
             }
             else
             {
-                SignalFirstInstance(channelName);
+                _ = SignalFirstInstance(channelName);
                 return false;
             }
         }
@@ -321,7 +322,7 @@ namespace Wox.Helper
         /// Once receives signal from client, will activate first instance.
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
-        private static async void CreateRemoteService(string channelName)
+        private static async Task CreateRemoteService(string channelName)
         {
             using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In))
             {
@@ -347,7 +348,7 @@ namespace Wox.Helper
         /// <param name="args">
         /// Command line arguments for the second instance, passed to the first instance to take appropriate action.
         /// </param>
-        private static async void SignalFirstInstance(string channelName)
+        private static async Task SignalFirstInstance(string channelName)
         {
             // Create a client pipe connected to server
             using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out))

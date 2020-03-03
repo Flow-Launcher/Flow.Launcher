@@ -40,10 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Programs\FileSystemFolderSourceShallow.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="AppxPackagingTlb">
       <HintPath>.\AppxPackagingTlb.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>

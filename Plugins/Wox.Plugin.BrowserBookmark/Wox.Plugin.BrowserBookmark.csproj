@@ -32,7 +32,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

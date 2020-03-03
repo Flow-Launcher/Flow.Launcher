@@ -24,7 +24,7 @@ namespace Wox.Plugin
         public string PluginDirectory
         {
             get { return _pluginDirectory; }
-            set
+            internal set
             {
                 _pluginDirectory = value;
                 ExecuteFilePath = Path.Combine(value, ExecuteFileName);
