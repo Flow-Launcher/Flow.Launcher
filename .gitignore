@@ -290,6 +290,7 @@ Output/*
 /Python.Runtime.dll
 Thumbs.db
 RELEASES
+*xsd
 
 
 *.sublime-*
