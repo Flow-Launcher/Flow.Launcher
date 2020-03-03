@@ -19,7 +19,7 @@ namespace Wox.Plugin.Folder
 
         private string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
 
-        private static string _fileExplorerProgramName = "explorer";
+        private const string _fileExplorerProgramName = "explorer";
         private static List<string> _driverNames;
         private PluginInitContext _context;
 
