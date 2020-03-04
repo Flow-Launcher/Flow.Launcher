@@ -8,7 +8,7 @@ trigger:
 - dev
 
 pool:
-  vmImage: 'vs2017-win2016' #'due to windows SDK dependency for building UWP project'
+  vmImage: 'windows-2019' #'due to windows SDK dependency for building UWP project'
 
 variables:
   solution: '**/*.sln'
@@ -22,7 +22,7 @@ steps:
     packageType: sdk
     version: 3.1.100
     installationPath: $(Agent.ToolsDirectory)/dotnet
-    
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
