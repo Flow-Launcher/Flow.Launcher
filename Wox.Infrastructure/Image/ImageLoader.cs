@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Wox.Infrastructure.Image
     public static class ImageLoader
     {
         private static readonly ImageCache ImageCache = new ImageCache();
-        private static BinaryStorage<ConcurrentDictionary<string, int>> _storage;
+        private static BinaryStorage<Dictionary<string, int>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
         private static IImageHashGenerator _hashGenerator;
 
@@ -32,9 +33,10 @@ namespace Wox.Infrastructure.Image
 
         public static void Initialize()
         {
-            _storage = new BinaryStorage<ConcurrentDictionary<string, int>>("Image");
+            _storage = new BinaryStorage<Dictionary<string, int>>("Image");
             _hashGenerator = new ImageHashGenerator();
-            ImageCache.Usage = _storage.TryLoad(new ConcurrentDictionary<string, int>());
+
+            ImageCache.Usage = LoadStorageToConcurrentDictionary();
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.ErrorIcon })
             {
@@ -57,8 +59,20 @@ namespace Wox.Infrastructure.Image
 
         public static void Save()
         {
-            ImageCache.Cleanup();
-            _storage.Save(ImageCache.Usage);
+            lock (_storage)
+            {
+                _storage.Save(ImageCache.CleanupAndToDictionary());
+            }
+        }
+
+        private static ConcurrentDictionary<string, int> LoadStorageToConcurrentDictionary()
+        {
+            lock(_storage)
+            {
+                var loaded = _storage.TryLoad(new Dictionary<string, int>());
+
+                return new ConcurrentDictionary<string, int>(loaded);
+            }
         }
 
         private class ImageResult

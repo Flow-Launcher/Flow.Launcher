@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +25,11 @@ namespace Wox.Infrastructure.Image
             set { _data[path] = value; }
         }
 
-        public void Cleanup()
-        {
-            var images = Usage
+        public Dictionary<string, int> CleanupAndToDictionary() 
+            => Usage
                 .OrderByDescending(o => o.Value)
                 .Take(MaxCached)
                 .ToDictionary(i => i.Key, i => i.Value);
-            Usage = new ConcurrentDictionary<string, int>(images);
-        }
 
         public bool ContainsKey(string key)
         {
