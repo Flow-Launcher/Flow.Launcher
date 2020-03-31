@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wox.Test", "Wox.Test\Wox.Test.csproj", "{FF742965-9A80-41A5-B042-D6C7D3A21708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wox.Test", "Wox.Test\Wox.Test.csproj", "{FF742965-9A80-41A5-B042-D6C7D3A21708}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DB90F671-D861-46BB-93A3-F1304F5BA1C5} = {DB90F671-D861-46BB-93A3-F1304F5BA1C5}
 	EndProjectSection
@@ -69,9 +69,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldCSharp", "Plugins
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wox.Plugin.Shell", "Plugins\Wox.Plugin.Shell\Wox.Plugin.Shell.csproj", "{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wox.Plugin.Calculator", "Plugins\Wox.Plugin.Calculator\Wox.Plugin.Calculator.csproj", "{59BD9891-3837-438A-958D-ADC7F91F6F7E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wox.Plugin.BrowserBookmark", "Plugins\Wox.Plugin.BrowserBookmark\Wox.Plugin.BrowserBookmark.csproj", "{9B130CC5-14FB-41FF-B310-0A95B6894C37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wox.Plugin.Calculator", "Plugins\Wox.Plugin.Calculator\Wox.Plugin.Calculator.csproj", "{59BD9891-3837-438A-958D-ADC7F91F6F7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -288,18 +288,6 @@ Global
 		{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}.Release|x64.Build.0 = Release|Any CPU
 		{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}.Release|x86.Build.0 = Release|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x64.Build.0 = Debug|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x86.Build.0 = Debug|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x64.ActiveCfg = Release|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x64.Build.0 = Release|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x86.ActiveCfg = Release|Any CPU
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x86.Build.0 = Release|Any CPU
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -312,6 +300,18 @@ Global
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37}.Release|x64.Build.0 = Release|Any CPU
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37}.Release|x86.Build.0 = Release|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x64.Build.0 = Debug|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Debug|x86.Build.0 = Debug|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x64.ActiveCfg = Release|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x64.Build.0 = Release|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x86.ActiveCfg = Release|Any CPU
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -329,8 +329,8 @@ Global
 		{230AE83F-E92E-4E69-8355-426B305DA9C0} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{03FFA443-5F50-48D5-8869-F3DF316803AA} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
-		{59BD9891-3837-438A-958D-ADC7F91F6F7E} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
+		{59BD9891-3837-438A-958D-ADC7F91F6F7E} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F26ACB50-3F6C-4907-B0C9-1ADACC1D0DED}
