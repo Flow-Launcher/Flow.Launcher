@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -10,6 +10,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -46,6 +47,10 @@
   
   <ItemGroup>
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -184,6 +189,6 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File $(SolutionDir)Scripts\post_build.ps1 $(ConfigurationName) $(SolutionDir)" />
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File $(SolutionDir)Scripts\post_build.ps1 $(ConfigurationName) $(SolutionDir) $(TargetPath)" />
   </Target>
 </Project>

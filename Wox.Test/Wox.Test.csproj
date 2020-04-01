@@ -9,6 +9,7 @@
     <AssemblyName>Wox.Test</AssemblyName>
     <ApplicationIcon />
     <StartupObject />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Wox.Plugin.Url\Wox.Plugin.Url.csproj" />
