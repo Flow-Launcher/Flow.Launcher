@@ -63,7 +63,7 @@ namespace Wox
             // which will cause ungraceful exit
             SaveAppAllSettings();
 
-            UpdateManager.RestartApp();
+            UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
         public void CheckForNewUpdate()

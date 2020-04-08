@@ -9,6 +9,8 @@ namespace Wox.Infrastructure
         public const string Wox = "Wox";
         public const string Plugins = "Plugins";
 
+        public const string ApplicationFileName = Wox + ".exe";
+
         private static readonly Assembly Assembly = Assembly.GetExecutingAssembly();
         public static readonly string ProgramDirectory = Directory.GetParent(Assembly.Location.NonNull()).ToString();
         public static readonly string ExecutablePath = Path.Combine(ProgramDirectory, Wox + ".exe");

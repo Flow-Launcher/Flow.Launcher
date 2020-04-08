@@ -39,7 +39,7 @@ namespace Wox.Core.Configuration
                 MessageBox.Show("Wox needs to restart to finish disabling portable mode, " +
                     "after the restart your portable data profile will be deleted and roaming data profile kept");
 
-                UpdateManager.RestartApp();
+                UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
             catch (Exception e)
             {
@@ -67,7 +67,7 @@ namespace Wox.Core.Configuration
                 MessageBox.Show("Wox needs to restart to finish enabling portable mode, " +
                     "after the restart your roaming data profile will be deleted and portable data profile kept");
 
-                UpdateManager.RestartApp();
+                UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
             catch (Exception e)
             {
@@ -82,10 +82,9 @@ namespace Wox.Core.Configuration
         {
             using (var portabilityUpdater = NewUpdateManager())
             {
-                var exeName = Constant.Wox + ".exe";
-                portabilityUpdater.RemoveShortcutsForExecutable(exeName, ShortcutLocation.StartMenu);
-                portabilityUpdater.RemoveShortcutsForExecutable(exeName, ShortcutLocation.Desktop);
-                portabilityUpdater.RemoveShortcutsForExecutable(exeName, ShortcutLocation.Startup);
+                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
+                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
+                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
             }
         }
 
@@ -112,10 +111,9 @@ namespace Wox.Core.Configuration
         {
             using (var portabilityUpdater = NewUpdateManager())
             {
-                var exeName = Constant.Wox + ".exe";
-                portabilityUpdater.CreateShortcutsForExecutable(exeName, ShortcutLocation.StartMenu, false);
-                portabilityUpdater.CreateShortcutsForExecutable(exeName, ShortcutLocation.Desktop, false);
-                portabilityUpdater.CreateShortcutsForExecutable(exeName, ShortcutLocation.Startup, false);
+                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
+                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
+                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
             }
         }
 
