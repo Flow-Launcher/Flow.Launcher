@@ -115,13 +115,26 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
+function IsDotNetCoreAppSelfContainedPublishEvent{
+    return Test-Path $solution\Output\Release\coreclr.dll
+}
+
+function FixPublishLastWriteDateTimeError ($solutionPath) {
+    #Fix error from publishing self contained app, when nuget tries to pack core dll references throws the error 'The DateTimeOffset specified cannot be converted into a Zip file timestamp' 
+    gci -path "$solutionPath\Output\Release" -rec -file *.dll | Where-Object {$_.LastWriteTime -lt (Get-Date).AddYears(-20)} | %  { try { $_.LastWriteTime = '01/01/2000 00:00:00' } catch {} }
+}
+
 function Main {
     $p = Build-Path
     $v = Build-Version
     Copy-Resources $p $config
 
     if ($config -eq "Release"){
-
+        
+        if(IsDotNetCoreAppSelfContainedPublishEvent) {
+            FixPublishLastWriteDateTimeError $p
+		}
+        
         Delete-Unused $p $config
         $o = "$p\Output\Packages"
         Validate-Directory $o
