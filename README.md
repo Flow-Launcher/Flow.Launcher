@@ -25,6 +25,7 @@ Features
 - Install plugins from http://www.wox.one/plugin
 
 **New from this fork:**
+- Upgraded to .Net Core 3.1
 - Portable mode
 - Drastically improved search experience
 - Auto-complete text suggestion
@@ -53,7 +54,6 @@ Windows may complain about security due to code not being signed. This will be f
 Versions marked as **pre-release** are unstable pre-release versions.
 
 - Requirements:
-  - .net >= 4.5.2
   - If you want to integrate with [everything](https://www.voidtools.com/): `.exe` installer + use x64 if your windows is x64 + everything service is running. Supported version is 1.3.4.686
   - If you use python plugins, install [python3](https://www.python.org/downloads/): `.exe` installer + add it to `%PATH%` or set it in WoX settings
 
@@ -76,10 +76,11 @@ Contribution
 - I'd appreciate if you could solve [help_needed](https://github.com/Wox-launcher/Wox/issues?q=is%3Aopen+is%3Aissue+label%3Ahelp_needed) labeled issue
 - Don't hesitate to ask questions in the [issues](https://github.com/Wox-launcher/Wox/issues)
 
-Build
+Developing/Debugging
 -----
 
-Install Visual Studio 2017/2019
+Install Visual Studio 2019
+Install [.Net Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.201-windows-x64-installer) or alternatively via Visual Studio installer.
 
 Documentation
 -------------
