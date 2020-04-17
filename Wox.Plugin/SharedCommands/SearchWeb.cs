@@ -11,7 +11,7 @@ namespace Wox.Plugin.SharedCommands
         /// Opens search in a new browser. If no browser path is passed in then Chrome is used. 
         /// Leave browser path blank to use Chrome.
         /// </summary>
-		public static void NewBrowserWindow(this string url, string browserPath)
+		public static void NewBrowserWindow(this string url, string browserPath = "")
         {
             var browserExecutableName = browserPath?
                                         .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
@@ -22,41 +22,47 @@ namespace Wox.Plugin.SharedCommands
             // Internet Explorer will open url in new browser window, and does not take the --new-window parameter
             var browserArguements = browserExecutableName == "iexplore.exe" ? url : "--new-window " + url;
 
+            var psi = new ProcessStartInfo
+            {
+                FileName = browser,
+                Arguments = browserArguements,
+                UseShellExecute = true
+            };
+
             try
             {
-                Process.Start(browser, browserArguements);
+                Process.Start(psi);
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                var psi = new ProcessStartInfo
-                {
-                    FileName = url,
-                    UseShellExecute = true
-                };
-                Process.Start(psi);
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
         }
 
         /// <summary> 
         /// Opens search as a tab in the default browser chosen in Windows settings.
         /// </summary>
-        public static void NewTabInBrowser(this string url, string browserPath)
+        public static void NewTabInBrowser(this string url, string browserPath = "")
         {
+            var psi = new ProcessStartInfo() { UseShellExecute = true};
             try
             {
                 if (!string.IsNullOrEmpty(browserPath))
                 {
-                    Process.Start(browserPath, url);
+                    psi.FileName = browserPath;
+                    psi.Arguments = url;
                 }
                 else
                 {
-                    Process.Start(url);
+                    psi.FileName = url;
                 }
+
+                Process.Start(psi);
             }
-            // This error may be thrown for Process.Start(browserPath, url)
+            // This error may be thrown if browser path is incorrect
             catch (System.ComponentModel.Win32Exception)
             {
-                Process.Start(url);
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
         }
     }
