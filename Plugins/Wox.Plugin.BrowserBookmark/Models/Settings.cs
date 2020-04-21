@@ -1,4 +1,4 @@
-﻿namespace Wox.Plugin.BrowserBookmark.Models
+﻿namespace Flow.Launcher.Plugin.BrowserBookmark.Models
 {
     public class Settings : BaseModel
     {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 
-namespace Wox.Plugin.ControlPanel
+namespace Flow.Launcher.Plugin.ControlPanel
 {
     //from:https://raw.githubusercontent.com/CoenraadS/Windows-Control-Panel-Items
     public class ControlPanelItem

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Wox.Plugin.Url
+namespace Flow.Launcher.Plugin.Url
 {
     public class Main : ISettingProvider,IPlugin, IPluginI18n, ISavable
     {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Infrastructure.Storage
+namespace Flow.Launcher.Infrastructure.Storage
 {
     public class PluginJsonStorage<T> :JsonStrorage<T> where T : new()
     {

@@ -4,14 +4,14 @@ using System.Runtime.InteropServices;
 #if DEBUG
 
 [assembly: AssemblyConfiguration("Debug")]
-[assembly: AssemblyDescription("Debug build, https://github.com/jjw24/Wox")]
+[assembly: AssemblyDescription("Debug build, https://github.com/jjw24/Flow.Launcher")]
 #else
 [assembly: AssemblyConfiguration("Release")]
-[assembly: AssemblyDescription("Release build, https://github.com/jjw24/Wox")]
+[assembly: AssemblyDescription("Release build, https://github.com/jjw24/Flow.Launcher")]
 #endif
 
-[assembly: AssemblyCompany("Wox")]
-[assembly: AssemblyProduct("Wox")]
+[assembly: AssemblyCompany("Flow.Launcher")]
+[assembly: AssemblyProduct("Flow.Launcher")]
 [assembly: AssemblyCopyright("The MIT License (MIT)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

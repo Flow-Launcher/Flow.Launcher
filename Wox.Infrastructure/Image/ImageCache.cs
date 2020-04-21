@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 
-namespace Wox.Infrastructure.Image
+namespace Flow.Launcher.Infrastructure.Image
 {
     [Serializable]
     public class ImageCache

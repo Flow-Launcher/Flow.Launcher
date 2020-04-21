@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 
-namespace Wox.Plugin.Color
+namespace Flow.Launcher.Plugin.Color
 {
     public sealed class ColorsPlugin : IPlugin, IPluginI18n
     {

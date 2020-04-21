@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Forms;
-using Wox.Plugin.Program.Views.Models;
-using Wox.Plugin.Program.Views;
+using Flow.Launcher.Plugin.Program.Views.Models;
+using Flow.Launcher.Plugin.Program.Views;
 using System.Linq;
 
-namespace Wox.Plugin.Program
+namespace Flow.Launcher.Plugin.Program
 {
     /// <summary>
     /// Interaction logic for AddProgramSource.xaml

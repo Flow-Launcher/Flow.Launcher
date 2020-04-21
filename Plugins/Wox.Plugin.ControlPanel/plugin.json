@@ -7,6 +7,6 @@
     "Version":"1.0.0",
     "Language":"csharp",
     "Website":"http://www.wox.one/plugin",
-    "ExecuteFileName":"Wox.Plugin.ControlPanel.dll",
+    "ExecuteFileName":"Flow.Launcher.Plugin.ControlPanel.dll",
     "IcoPath":"Images\\ControlPanel.png"
 }

@@ -32,7 +32,7 @@ function Build-Path {
 }
 
 function Copy-Resources ($path, $config) {
-    $project = "$path\Wox"
+    $project = "$path\Flow.Launcher"
     $output = "$path\Output"
     $target = "$output\$config"
     Copy-Item -Recurse -Force $project\Themes\* $target\Themes\
@@ -74,7 +74,7 @@ function Zip-Release ($path, $version, $output) {
 
     $input = "$path\Output\Release"
     Write-Host "Input path:  $input"
-    $file = "$output\Wox-JJW24-$version.zip"
+    $file = "$output\Flow.Launcher-JJW24-$version.zip"
     Write-Host "Filename: $file"
 
     [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
@@ -93,9 +93,9 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Input path:  $input"
     Nuget pack $spec -Version $version -Properties Configuration=Release -BasePath $input -OutputDirectory  $output
 
-    $nupkg = "$output\Wox-JJW24.$version.nupkg"
+    $nupkg = "$output\Flow.Launcher-JJW24.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
-    $icon = "$path\Wox\Resources\app.ico"
+    $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
     # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
     New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe -Force
@@ -107,7 +107,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Wox-JJW24-$version.exe"
+    $file = "$output\Flow.Launcher-JJW24-$version.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force

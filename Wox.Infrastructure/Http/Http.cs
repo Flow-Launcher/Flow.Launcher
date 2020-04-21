@@ -4,10 +4,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Infrastructure.Http
+namespace Flow.Launcher.Infrastructure.Http
 {
     public static class Http
     {

@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using Shell;
-using Wox.Infrastructure;
-using Wox.Plugin.Program.Logger;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.Program.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Wox.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
     [Serializable]
     public class Win32 : IProgram

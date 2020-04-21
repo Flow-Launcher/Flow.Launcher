@@ -5,8 +5,8 @@
     <ProjectGuid>{FF742965-9A80-41A5-B042-D6C7D3A21708}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wox.Test</RootNamespace>
-    <AssemblyName>Wox.Test</AssemblyName>
+    <RootNamespace>Flow.Launcher.Test</RootNamespace>
+    <AssemblyName>Flow.Launcher.Test</AssemblyName>
     <ApplicationIcon />
     <StartupObject />
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -38,10 +38,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\Wox.Plugin.Url\Wox.Plugin.Url.csproj" />
-    <ProjectReference Include="..\Wox.Core\Wox.Core.csproj" />
-    <ProjectReference Include="..\Wox.Infrastructure\Wox.Infrastructure.csproj" />
-    <ProjectReference Include="..\Wox.Plugin\Wox.Plugin.csproj" />
+    <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Url\Flow.Launcher.Plugin.Url.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
   <ItemGroup>

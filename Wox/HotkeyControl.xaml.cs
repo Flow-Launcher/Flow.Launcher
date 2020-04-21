@@ -5,11 +5,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using NHotkey.Wpf;
-using Wox.Core.Resource;
-using Wox.Infrastructure.Hotkey;
-using Wox.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Plugin;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class HotkeyControl : UserControl
     {

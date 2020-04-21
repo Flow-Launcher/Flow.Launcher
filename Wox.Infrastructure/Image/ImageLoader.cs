@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 
-namespace Wox.Infrastructure.Image
+namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
@@ -129,7 +129,7 @@ namespace Wox.Infrastructure.Image
                     /* Directories can also have thumbnails instead of shell icons.
                      * Generating thumbnails for a bunch of folders while scrolling through
                      * results from Everything makes a big impact on performance and 
-                     * Wox responsibility. 
+                     * Flow.Launcher responsibility. 
                      * - Solution: just load the icon
                      */
                     type = ImageType.Folder;

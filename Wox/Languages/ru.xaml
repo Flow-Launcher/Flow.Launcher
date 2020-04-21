@@ -4,21 +4,21 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Регистрация хоткея {0} не удалась</system:String>
     <system:String x:Key="couldnotStartCmd">Не удалось запустить {0}</system:String>
-    <system:String x:Key="invalidWoxPluginFileFormat">Неверный формат файла wox плагина</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Неверный формат файла wox плагина</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Отображать это окно выше всех при этом запросе</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Не отображать это окно выше всех при этом запросе</system:String>
     <system:String x:Key="executeQuery">Выполнить запрос:{0}</system:String>
     <system:String x:Key="lastExecuteTime">Последний раз выполнен в:{0}</system:String>
     <system:String x:Key="iconTrayOpen">Открыть</system:String>
     <system:String x:Key="iconTraySettings">Настройки</system:String>
-    <system:String x:Key="iconTrayAbout">О Wox</system:String>
+    <system:String x:Key="iconTrayAbout">О Flow.Launcher</system:String>
     <system:String x:Key="iconTrayExit">Закрыть</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Настройки Wox</system:String>
+    <system:String x:Key="wox_settings">Настройки Flow.Launcher</system:String>
     <system:String x:Key="general">Общие</system:String>
-    <system:String x:Key="startWoxOnSystemStartup">Запускать Wox при запуске системы</system:String>
-    <system:String x:Key="hideWoxWhenLoseFocus">Скрывать Wox если потерян фокус</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Запускать Flow.Launcher при запуске системы</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Скрывать Flow.Launcher если потерян фокус</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не отображать сообщение об обновлении когда доступна новая версия</system:String>
     <system:String x:Key="rememberLastLocation">Запомнить последнее место запуска</system:String>
     <system:String x:Key="language">Язык</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
     <system:String x:Key="selectPythonDirectory">Select</system:String>
-    <system:String x:Key="hideOnStartup">Hide Wox on startup</system:String>
+    <system:String x:Key="hideOnStartup">Hide Flow.Launcher on startup</system:String>
     
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Плагины</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Темы</system:String>
     <system:String x:Key="browserMoreThemes">Найти больше тем</system:String>
-    <system:String x:Key="helloWox">Привет Wox</system:String>
+    <system:String x:Key="helloFlow.Launcher">Привет Flow.Launcher</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запросов</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатов</system:String>
     <system:String x:Key="windowMode">Оконный режим</system:String>
@@ -50,7 +50,7 @@
     
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Горячие клавиши</system:String>
-    <system:String x:Key="woxHotkey">Горячая клавиша Wox</system:String>
+    <system:String x:Key="woxHotkey">Горячая клавиша Flow.Launcher</system:String>
     <system:String x:Key="customQueryHotkey">Задаваемые горячие клавиши для запросов</system:String>
     <system:String x:Key="delete">Удалить</system:String>
     <system:String x:Key="edit">Изменить</system:String>
@@ -75,10 +75,10 @@
     <system:String x:Key="proxyConnectFailed">Подключение к прокси серверу не удалось</system:String>
 
     <!--Setting About-->
-    <system:String x:Key="about">О Wox</system:String>
+    <system:String x:Key="about">О Flow.Launcher</system:String>
     <system:String x:Key="website">Сайт</system:String>
     <system:String x:Key="version">Версия</system:String>
-    <system:String x:Key="about_activate_times">Вы воспользовались Wox уже {0} раз</system:String>
+    <system:String x:Key="about_activate_times">Вы воспользовались Flow.Launcher уже {0} раз</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
     <system:String x:Key="newVersionTips">New version {0} avaiable, please restart wox</system:String>
     <system:String x:Key="releaseNotes">Release Notes:</system:String>
@@ -117,14 +117,14 @@
     <system:String x:Key="reportWindow_sending">Отправляем</system:String>
     <system:String x:Key="reportWindow_report_succeed">Отчёт успешно отправлен</system:String>
     <system:String x:Key="reportWindow_report_failed">Не удалось отправить отчёт</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Произошёл сбой в Wox</system:String>
+    <system:String x:Key="reportWindow_wox_got_an_error">Произошёл сбой в Flow.Launcher</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">Доступна новая версия Wox V{0}</system:String>
+    <system:String x:Key="update_wox_update_new_version_available">Доступна новая версия Flow.Launcher V{0}</system:String>
     <system:String x:Key="update_wox_update_error">Произошла ошибка при попытке установить обновление</system:String>
     <system:String x:Key="update_wox_update">Обновить</system:String>
     <system:String x:Key="update_wox_update_cancel">Отмена</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Это обновление перезапустит Wox</system:String>
+    <system:String x:Key="update_wox_update_restart_wox_tip">Это обновление перезапустит Flow.Launcher</system:String>
     <system:String x:Key="update_wox_update_upadte_files">Следующие файлы будут обновлены</system:String>
     <system:String x:Key="update_wox_update_files">Обновить файлы</system:String>
     <system:String x:Key="update_wox_update_upadte_description">Описание обновления</system:String>

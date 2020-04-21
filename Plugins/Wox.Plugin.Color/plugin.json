@@ -2,11 +2,11 @@
     "ID":"9B36CE6181FC47FBB597AA2C29CD9B0A",
     "ActionKeyword":"*",
     "Name":"Colors",
-    "Description":"Provide hex color preview.(Try #000 in Wox)",
+    "Description":"Provide hex color preview.(Try #000 in Flow.Launcher)",
     "Author":"qianlifeng",
     "Version":"1.0.0",
     "Language":"csharp",
     "Website":"http://www.wox.one/plugin",
-    "ExecuteFileName":"Wox.Plugin.Color.dll",
+    "ExecuteFileName":"Flow.Launcher.Plugin.Color.dll",
     "IcoPath":"Images\\color.png"
 }

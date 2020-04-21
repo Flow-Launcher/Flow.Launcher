@@ -4,23 +4,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Storage;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
     /// <summary>
-    /// The entry for managing Wox plugins
+    /// The entry for managing Flow.Launcher plugins
     /// </summary>
     public static class PluginManager
     {
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         /// <summary>
-        /// Directories that will hold Wox plugin directory
+        /// Directories that will hold Flow.Launcher plugin directory
         /// </summary>
 
         public static List<PluginPair> AllPlugins { get; private set; }

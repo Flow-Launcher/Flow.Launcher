@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Wox.Plugin.Everything.Everything
+namespace Flow.Launcher.Plugin.Everything.Everything
 {
     public sealed class EverythingApiDllImport
     {

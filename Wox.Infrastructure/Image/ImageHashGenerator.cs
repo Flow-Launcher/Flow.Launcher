@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Wox.Infrastructure.Image
+namespace Flow.Launcher.Infrastructure.Image
 {
     public interface IImageHashGenerator
     {

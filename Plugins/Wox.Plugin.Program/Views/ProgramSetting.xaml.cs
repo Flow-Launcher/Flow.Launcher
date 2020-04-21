@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Wox.Plugin.Program.Views.Models;
-using Wox.Plugin.Program.Views.Commands;
-using Wox.Plugin.Program.Programs;
+using Flow.Launcher.Plugin.Program.Views.Models;
+using Flow.Launcher.Plugin.Program.Views.Commands;
+using Flow.Launcher.Plugin.Program.Programs;
 using System.ComponentModel;
 using System.Windows.Data;
 
-namespace Wox.Plugin.Program.Views
+namespace Flow.Launcher.Plugin.Program.Views
 {
     /// <summary>
     /// Interaction logic for ProgramSetting.xaml

@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.Everything.Everything;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Everything.Everything;
 
-namespace Wox.Plugin.Everything
+namespace Flow.Launcher.Plugin.Everything
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, ISavable
     {

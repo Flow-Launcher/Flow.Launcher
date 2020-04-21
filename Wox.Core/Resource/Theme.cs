@@ -8,11 +8,11 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Core.Resource
+namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {

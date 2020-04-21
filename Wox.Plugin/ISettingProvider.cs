@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
     public interface ISettingProvider
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using Wox.Core.Resource;
+using Flow.Launcher.Core.Resource;
 
-namespace Wox.Core
+namespace Flow.Launcher.Core
 {
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {

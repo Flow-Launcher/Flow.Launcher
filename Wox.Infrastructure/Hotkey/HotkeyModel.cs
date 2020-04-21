@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Wox.Infrastructure.Hotkey
+namespace Flow.Launcher.Infrastructure.Hotkey
 {
     public class HotkeyModel
     {

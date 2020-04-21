@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Infrastructure.Logger
+namespace Flow.Launcher.Infrastructure.Logger
 {
     public static class Log
     {

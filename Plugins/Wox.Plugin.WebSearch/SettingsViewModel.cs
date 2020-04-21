@@ -1,6 +1,6 @@
-﻿using Wox.Infrastructure.Storage;
+﻿using Flow.Launcher.Infrastructure.Storage;
 
-namespace Wox.Plugin.WebSearch
+namespace Flow.Launcher.Plugin.WebSearch
 {
     public class SettingsViewModel
     {

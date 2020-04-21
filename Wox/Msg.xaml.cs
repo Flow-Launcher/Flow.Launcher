@@ -5,11 +5,11 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using Wox.Helper;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Image;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class Msg : Window
     {

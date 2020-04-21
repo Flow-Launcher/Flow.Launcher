@@ -285,7 +285,7 @@ paket-files/
 # New to Visual Studio
 *.VC.db
 
-## Wox specific
+## Flow.Launcher specific
 Output/*
 /Python.Runtime.dll
 Thumbs.db

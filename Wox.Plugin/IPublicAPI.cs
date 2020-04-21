@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Public APIs that plugin can use
@@ -14,16 +14,16 @@ namespace Wox.Plugin
         /// <param name="query"></param>
         /// <param name="plugin"></param>
         /// <param name="results"></param>
-        [Obsolete("This method will be removed in Wox 1.3")]
+        [Obsolete("This method will be removed in Flow.Launcher 1.3")]
         void PushResults(Query query, PluginMetadata plugin, List<Result> results);
 
         /// <summary>
-        /// Change Wox query
+        /// Change Flow.Launcher query
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
-        /// force requery By default, Wox will not fire query if your query is same with existing one. 
-        /// Set this to true to force Wox requerying
+        /// force requery By default, Flow.Launcher will not fire query if your query is same with existing one. 
+        /// Set this to true to force Flow.Launcher requerying
         /// </param>
         void ChangeQuery(string query, bool requery = false);
 
@@ -35,30 +35,30 @@ namespace Wox.Plugin
         void ChangeQueryText(string query, bool selectAll = false);
 
         /// <summary>
-        /// Close Wox
+        /// Close Flow.Launcher
         /// </summary>
         [Obsolete]
         void CloseApp();
 
         /// <summary>
-        /// Restart Wox
+        /// Restart Flow.Launcher
         /// </summary>
         void RestarApp();
 
         /// <summary>
-        /// Hide Wox
+        /// Hide Flow.Launcher
         /// </summary>
         [Obsolete]
         void HideApp();
 
         /// <summary>
-        /// Show Wox
+        /// Show Flow.Launcher
         /// </summary>
         [Obsolete]
         void ShowApp();
 
         /// <summary>
-        /// Save all Wox settings
+        /// Save all Flow.Launcher settings
         /// </summary>
         void SaveAppAllSettings();
 
@@ -71,7 +71,7 @@ namespace Wox.Plugin
         void ReloadAllPluginData();
 
         /// <summary>
-        /// Check for new Wox update
+        /// Check for new Flow.Launcher update
         /// </summary>
         void CheckForNewUpdate();
 
@@ -110,7 +110,7 @@ namespace Wox.Plugin
         void StopLoadingBar();
 
         /// <summary>
-        /// Install Wox plugin
+        /// Install Flow.Launcher plugin
         /// </summary>
         /// <param name="path">Plugin path (ends with .wox)</param>
         void InstallPlugin(string path);
@@ -133,6 +133,6 @@ namespace Wox.Plugin
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
-        event WoxGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        event Flow.LauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
     }
 }

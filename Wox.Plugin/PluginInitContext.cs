@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
     public class PluginInitContext
     {

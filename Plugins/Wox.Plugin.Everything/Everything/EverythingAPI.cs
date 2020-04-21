@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Wox.Infrastructure.Logger;
-using Wox.Plugin.Everything.Everything.Exceptions;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.Everything.Everything.Exceptions;
 
-namespace Wox.Plugin.Everything.Everything
+namespace Flow.Launcher.Plugin.Everything.Everything
 {
     public interface IEverythingApi
     {

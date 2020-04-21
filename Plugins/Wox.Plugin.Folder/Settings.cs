@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.Storage;
 
-namespace Wox.Plugin.Folder
+namespace Flow.Launcher.Plugin.Folder
 {
     public class Settings
     {

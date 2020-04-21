@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Markup;
 
-namespace Wox.Infrastructure.UI
+namespace Flow.Launcher.Infrastructure.UI
 {
     public class EnumBindingSourceExtension : MarkupExtension
     {

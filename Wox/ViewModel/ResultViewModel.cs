@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Image;
-using Wox.Infrastructure.Logger;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
 
 
-namespace Wox.ViewModel
+namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using Wox.Core.Plugin;
-using Wox.Plugin;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Test
+namespace Flow.Launcher.Test
 {
     public class QueryBuilderTest
     {

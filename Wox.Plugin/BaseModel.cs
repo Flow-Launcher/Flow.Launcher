@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
     public class BaseModel : INotifyPropertyChanged
     {

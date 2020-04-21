@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
-using Wox.Plugin.WebSearch.SuggestionSources;
+using Flow.Launcher.Plugin.WebSearch.SuggestionSources;
 
-namespace Wox.Plugin.WebSearch
+namespace Flow.Launcher.Plugin.WebSearch
 {
     public class Settings : BaseModel
     {

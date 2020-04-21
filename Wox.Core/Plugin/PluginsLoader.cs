@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Exception;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {

@@ -1,4 +1,4 @@
-﻿namespace Wox.Core.Resource
+﻿namespace Flow.Launcher.Core.Resource
 {
     public static class InternationalizationManager
     {

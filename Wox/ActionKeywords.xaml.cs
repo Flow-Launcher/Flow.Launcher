@@ -1,11 +1,11 @@
 ﻿using System.Windows;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Infrastructure.Exception;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class ActionKeywords : Window
     {

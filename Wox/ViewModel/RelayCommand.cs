@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Wox.ViewModel
+namespace Flow.Launcher.ViewModel
 {
     public class RelayCommand : ICommand
     {

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 
 
-namespace Wox.Plugin.Url
+namespace Flow.Launcher.Plugin.Url
 {
     /// <summary>
     /// SettingsControl.xaml 的交互逻辑

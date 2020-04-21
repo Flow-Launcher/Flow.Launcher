@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Storage;
 
-namespace Wox.Plugin.Folder
+namespace Flow.Launcher.Plugin.Folder
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n, ISavable, IContextMenu
     {

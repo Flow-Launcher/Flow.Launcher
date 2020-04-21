@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Wox.Plugin.WebSearch.SuggestionSources
+namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public abstract class SuggestionSource
     {

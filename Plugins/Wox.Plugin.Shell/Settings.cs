@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Wox.Plugin.Shell
+namespace Flow.Launcher.Plugin.Shell
 {
     public class Settings
     {

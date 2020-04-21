@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
-    public delegate void WoxKeyDownEventHandler(WoxKeyDownEventArgs e);
-    public delegate void AfterWoxQueryEventHandler(WoxQueryEventArgs e);
+    public delegate void Flow.LauncherKeyDownEventHandler(Flow.LauncherKeyDownEventArgs e);
+    public delegate void AfterFlow.LauncherQueryEventHandler(Flow.LauncherQueryEventArgs e);
 
     public delegate void ResultItemDropEventHandler(Result result, IDataObject dropObject, DragEventArgs e);
 
@@ -15,15 +15,15 @@ namespace Wox.Plugin
     /// <param name="vkcode"></param>
     /// <param name="state"></param>
     /// <returns>return true to continue handling, return false to intercept system handling</returns>
-    public delegate bool WoxGlobalKeyboardEventHandler(int keyevent, int vkcode, SpecialKeyState state);
+    public delegate bool Flow.LauncherGlobalKeyboardEventHandler(int keyevent, int vkcode, SpecialKeyState state);
 
-    public class WoxKeyDownEventArgs
+    public class Flow.LauncherKeyDownEventArgs
     {
         public string Query { get; set; }
         public KeyEventArgs keyEventArgs { get; set; }
     }
 
-    public class WoxQueryEventArgs
+    public class Flow.LauncherQueryEventArgs
     {
         public Query Query { get; set; }
     }

@@ -3,9 +3,9 @@ using System.IO;
 using System.Windows;
 using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
-using Wox.Plugin;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
     internal class PluginInstaller
     {
@@ -83,7 +83,7 @@ namespace Wox.Core.Plugin
                     //    Plugins.Initialize();
                     //}
                     if (MessageBox.Show($"You have installed plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                        "Restart Wox to take effect?",
+                                        "Restart Flow.Launcher to take effect?",
                                         "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         PluginManager.API.RestarApp();

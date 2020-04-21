@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Wox.Plugin;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
     public static class QueryBuilder
     {

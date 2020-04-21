@@ -9,17 +9,17 @@ using System.Windows;
 using System.Windows.Input;
 using NHotkey;
 using NHotkey.Wpf;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Helper;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Hotkey;
-using Wox.Infrastructure.Storage;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
-using Wox.Storage;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Storage;
 
-namespace Wox.ViewModel
+namespace Flow.Launcher.ViewModel
 {
     public class MainViewModel : BaseModel, ISavable
     {
@@ -29,9 +29,9 @@ namespace Wox.ViewModel
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
 
-        private readonly WoxJsonStorage<History> _historyItemsStorage;
-        private readonly WoxJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
-        private readonly WoxJsonStorage<TopMostRecord> _topMostRecordStorage;
+        private readonly Flow.LauncherJsonStorage<History> _historyItemsStorage;
+        private readonly Flow.LauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
+        private readonly Flow.LauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         private readonly Settings _settings;
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
@@ -56,9 +56,9 @@ namespace Wox.ViewModel
 
             _settings = settings;
 
-            _historyItemsStorage = new WoxJsonStorage<History>();
-            _userSelectedRecordStorage = new WoxJsonStorage<UserSelectedRecord>();
-            _topMostRecordStorage = new WoxJsonStorage<TopMostRecord>();
+            _historyItemsStorage = new Flow.LauncherJsonStorage<History>();
+            _userSelectedRecordStorage = new Flow.LauncherJsonStorage<UserSelectedRecord>();
+            _topMostRecordStorage = new Flow.LauncherJsonStorage<TopMostRecord>();
             _history = _historyItemsStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
@@ -566,7 +566,7 @@ namespace Wox.ViewModel
         }
 
         /// <summary>
-        /// Checks if Wox should ignore any hotkeys
+        /// Checks if Flow.Launcher should ignore any hotkeys
         /// </summary>
         /// <returns></returns>
         private bool ShouldIgnoreHotkeys()
@@ -615,12 +615,12 @@ namespace Wox.ViewModel
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
                 }
 
-                ToggleWox();
+                ToggleFlow.Launcher();
                 e.Handled = true;
             }
         }
 
-        private void ToggleWox()
+        private void ToggleFlow.Launcher()
         {
             if (MainWindowVisibility != Visibility.Visible)
             {

@@ -1,6 +1,6 @@
-﻿using Wox.Plugin;
+﻿using Flow.Launcher.Plugin;
 
-namespace Wox.Infrastructure.UserSettings
+namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class CustomPluginHotkey : BaseModel
     {

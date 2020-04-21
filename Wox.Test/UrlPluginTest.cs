@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Wox.Plugin.Url;
+using Flow.Launcher.Plugin.Url;
 
-namespace Wox.Test
+namespace Flow.Launcher.Test
 {
     [TestFixture]
     public class UrlPluginTest

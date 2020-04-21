@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Wox.Plugin.Caculator.ViewModels;
+using Flow.Launcher.Plugin.Caculator.ViewModels;
 
-namespace Wox.Plugin.Caculator.Views
+namespace Flow.Launcher.Plugin.Caculator.Views
 {
     /// <summary>
     /// Interaction logic for CalculatorSettings.xaml

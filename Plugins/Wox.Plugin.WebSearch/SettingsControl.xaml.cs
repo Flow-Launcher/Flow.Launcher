@@ -1,9 +1,9 @@
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using Wox.Core.Plugin;
+using Flow.Launcher.Core.Plugin;
 
-namespace Wox.Plugin.WebSearch
+namespace Flow.Launcher.Plugin.WebSearch
 {
     /// <summary>
     /// Interaction logic for WebSearchesSetting.xaml

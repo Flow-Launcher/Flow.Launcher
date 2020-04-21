@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Wox.Plugin.Program
+namespace Flow.Launcher.Plugin.Program
 {
     public class LocationConverter : MarkupExtension, IValueConverter
     {

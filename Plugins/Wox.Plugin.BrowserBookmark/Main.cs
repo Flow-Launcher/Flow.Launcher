@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.BrowserBookmark.Commands;
-using Wox.Plugin.BrowserBookmark.Models;
-using Wox.Plugin.BrowserBookmark.Views;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.BrowserBookmark.Commands;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Flow.Launcher.Plugin.BrowserBookmark.Views;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Wox.Plugin.BrowserBookmark
+namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, ISavable
     {

@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
-using Wox.Infrastructure;
+using Flow.Launcher.Infrastructure;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
 using MessageBox = System.Windows.MessageBox;
 
-namespace Wox.Plugin.Sys
+namespace Flow.Launcher.Plugin.Sys
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
@@ -200,7 +200,7 @@ namespace Wox.Plugin.Sys
                 },
                 new Result
                 {
-                    Title = "Restart Wox",
+                    Title = "Restart Flow.Launcher",
                     SubTitle = context.API.GetTranslation("wox_plugin_sys_restart"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
@@ -238,7 +238,7 @@ namespace Wox.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = "Check for new Wox update",
+                    SubTitle = "Check for new Flow.Launcher update",
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {

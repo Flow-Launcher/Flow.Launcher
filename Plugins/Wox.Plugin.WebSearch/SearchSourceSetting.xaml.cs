@@ -2,9 +2,9 @@
 using System.IO;
 using System.Windows;
 using Microsoft.Win32;
-using Wox.Core.Plugin;
+using Flow.Launcher.Core.Plugin;
 
-namespace Wox.Plugin.WebSearch
+namespace Flow.Launcher.Plugin.WebSearch
 {
     public partial class SearchSourceSettingWindow
     {

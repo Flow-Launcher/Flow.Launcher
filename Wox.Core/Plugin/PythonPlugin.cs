@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Wox.Infrastructure;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
     internal class PythonPlugin : JsonRPCPlugin
     {

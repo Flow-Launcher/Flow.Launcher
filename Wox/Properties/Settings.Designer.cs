@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Wox.Properties {
+namespace Flow.Launcher.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace Wox.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/jjw24/Wox")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/jjw24/Flow.Launcher")]
         public string GithubRepo {
             get {
                 return ((string)(this["GithubRepo"]));

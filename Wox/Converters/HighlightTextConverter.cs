@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Documents;
 
-namespace Wox.Converters
+namespace Flow.Launcher.Converters
 {
     public class HighlightTextConverter : IMultiValueConverter
     {

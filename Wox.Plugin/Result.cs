@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
 
     public class Result

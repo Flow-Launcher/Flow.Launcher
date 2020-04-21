@@ -6,11 +6,11 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.Caculator.ViewModels;
-using Wox.Plugin.Caculator.Views;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Caculator.ViewModels;
+using Flow.Launcher.Plugin.Caculator.Views;
 
-namespace Wox.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Caculator
 {
     public class Main : IPlugin, IPluginI18n, ISavable, ISettingProvider
     {

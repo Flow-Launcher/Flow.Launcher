@@ -4,11 +4,11 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Exception;
-using Wox.Infrastructure.Logger;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
 
     internal abstract class PluginConfig

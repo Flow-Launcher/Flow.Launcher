@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Wox.Plugin;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Infrastructure.UserSettings
+namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel
     {
@@ -76,7 +76,7 @@ namespace Wox.Infrastructure.UserSettings
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
 
-        public bool StartWoxOnSystemStartup { get; set; } = true;
+        public bool StartFlow.LauncherOnSystemStartup { get; set; } = true;
         public bool HideOnStartup { get; set; }
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon

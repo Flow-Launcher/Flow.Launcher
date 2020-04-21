@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Media;
 using Microsoft.Win32;
 
-namespace Wox.Helper
+namespace Flow.Launcher.Helper
 {
     public static class WallpaperPathRetrieval
     {

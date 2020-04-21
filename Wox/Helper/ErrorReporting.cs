@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Threading;
 using NLog;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Exception;
 
-namespace Wox.Helper
+namespace Flow.Launcher.Helper
 {
     public static class ErrorReporting
     {
@@ -32,7 +32,7 @@ namespace Wox.Helper
 
         public static string RuntimeInfo()
         {
-            var info = $"\nWox version: {Constant.Version}" +
+            var info = $"\nFlow.Launcher version: {Constant.Version}" +
                        $"\nOS Version: {Environment.OSVersion.VersionString}" +
                        $"\nIntPtr Length: {IntPtr.Size}" +
                        $"\nx64: {Environment.Is64BitOperatingSystem}";

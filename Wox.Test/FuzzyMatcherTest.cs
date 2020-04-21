@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
-using Wox.Infrastructure;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Test
+namespace Flow.Launcher.Test
 {
     [TestFixture]
     public class FuzzyMatcherTest

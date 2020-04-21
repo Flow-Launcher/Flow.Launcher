@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:wox="clr-namespace:Wox"
-        xmlns:vm="clr-namespace:Wox.ViewModel"
+        xmlns:wox="clr-namespace:Flow.Launcher"
+        xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-        xmlns:userSettings="clr-namespace:Wox.Infrastructure.UserSettings;assembly=Wox.Infrastructure"
+        xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        x:Class="Wox.SettingWindow"
+        x:Class="Flow.Launcher.SettingWindow"
         mc:Ignorable="d"
         Icon="Images\app.png"
         Title="{DynamicResource wox_settings}"
@@ -36,15 +36,15 @@
                 <CheckBox Margin="10" IsChecked="{Binding PortableMode}">
                     <TextBlock Text="Portable Mode" />
                 </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.StartWoxOnSystemStartup}"
+                <CheckBox Margin="10" IsChecked="{Binding Settings.StartFlow.LauncherOnSystemStartup}"
                           Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck">
-                    <TextBlock Text="{DynamicResource startWoxOnSystemStartup}" />
+                    <TextBlock Text="{DynamicResource startFlow.LauncherOnSystemStartup}" />
                 </CheckBox>
                 <CheckBox Margin="10" IsChecked="{Binding Settings.HideOnStartup}">
                     <TextBlock Text="{DynamicResource hideOnStartup}" />
                 </CheckBox>
                 <CheckBox Margin="10" IsChecked="{Binding Settings.HideWhenDeactive}">
-                    <TextBlock Text="{DynamicResource hideWoxWhenLoseFocus}" />
+                    <TextBlock Text="{DynamicResource hideFlow.LauncherWhenLoseFocus}" />
                 </CheckBox>
                 <CheckBox Margin="10" IsChecked="{Binding Settings.HideNotifyIcon}">
                     <TextBlock Text="{DynamicResource hideNotifyIcon}" />
@@ -224,7 +224,7 @@
                                         <RowDefinition Height="50" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBox Text="{DynamicResource helloWox}" IsReadOnly="True"
+                                    <TextBox Text="{DynamicResource helloFlow.Launcher}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}" Grid.Row="0" />
                                     <ContentControl Visibility="Visible" Grid.Row="1">
                                         <wox:ResultListBox DataContext="{Binding PreviewResults}" />

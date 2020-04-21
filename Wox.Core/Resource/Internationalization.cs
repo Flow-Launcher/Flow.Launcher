@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Wox.Core.Plugin;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Resource
+namespace Flow.Launcher.Core.Resource
 {
     public class Internationalization
     {
@@ -27,11 +27,11 @@ namespace Wox.Core.Resource
             LoadDefaultLanguage();
             // we don't want to load /Languages/en.xaml twice
             // so add wox language directory after load plugin language files
-            AddWoxLanguageDirectory();
+            AddFlow.LauncherLanguageDirectory();
         }
 
 
-        private void AddWoxLanguageDirectory()
+        private void AddFlow.LauncherLanguageDirectory()
         {
             var directory = Path.Combine(Constant.ProgramDirectory, Folder);
             _languageDirectories.Add(directory);

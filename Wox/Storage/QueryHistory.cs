@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Wox.Plugin;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Storage
+namespace Flow.Launcher.Storage
 {
     public class History
     {

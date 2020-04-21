@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
     public class Query
     {

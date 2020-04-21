@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Wox.Plugin.SharedCommands
+namespace Flow.Launcher.Plugin.SharedCommands
 {
     public static class ShellCommand
     {

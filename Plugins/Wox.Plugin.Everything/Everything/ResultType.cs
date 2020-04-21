@@ -1,4 +1,4 @@
-namespace Wox.Plugin.Everything.Everything
+namespace Flow.Launcher.Plugin.Everything.Everything
 {
     public enum ResultType
     {

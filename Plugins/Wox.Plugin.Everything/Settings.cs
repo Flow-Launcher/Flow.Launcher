@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.Storage;
 
-namespace Wox.Plugin.Everything
+namespace Flow.Launcher.Plugin.Everything
 {
     public class Settings
     {

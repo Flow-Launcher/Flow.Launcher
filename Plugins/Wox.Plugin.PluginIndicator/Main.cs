@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Wox.Core.Plugin;
+using Flow.Launcher.Core.Plugin;
 
-namespace Wox.Plugin.PluginIndicator
+namespace Flow.Launcher.Plugin.PluginIndicator
 {
     public class Main : IPlugin, IPluginI18n
     {

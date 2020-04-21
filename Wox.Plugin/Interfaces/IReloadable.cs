@@ -1,4 +1,4 @@
-﻿namespace Wox.Plugin
+﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// This interface is to indicate and allow plugins to reload their

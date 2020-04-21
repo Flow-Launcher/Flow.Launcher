@@ -4,13 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.Program.Programs;
-using Wox.Plugin.Program.Views;
-using Stopwatch = Wox.Infrastructure.Stopwatch;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Program.Programs;
+using Flow.Launcher.Plugin.Program.Views;
+using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
-namespace Wox.Plugin.Program
+namespace Flow.Launcher.Plugin.Program
 {
     public class Main : ISettingProvider, IPlugin, IPluginI18n, IContextMenu, ISavable, IReloadable
     {
@@ -32,26 +32,26 @@ namespace Wox.Plugin.Program
             _settingsStorage = new PluginJsonStorage<Settings>();
             _settings = _settingsStorage.Load();
 
-            Stopwatch.Normal("|Wox.Plugin.Program.Main|Preload programs cost", () =>
+            Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
             {
                 _win32Storage = new BinaryStorage<Win32[]>("Win32");
                 _win32s = _win32Storage.TryLoad(new Win32[] { });
                 _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
                 _uwps = _uwpStorage.TryLoad(new UWP.Application[] { });
             });
-            Log.Info($"|Wox.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
-            Log.Info($"|Wox.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
+            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
+            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
 
             var a = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_win32s.Any())
-                    Stopwatch.Normal("|Wox.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
             });
 
             var b = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_uwps.Any())
-                    Stopwatch.Normal("|Wox.Plugin.Program.Main|Win32Program index cost", IndexUWPPrograms);
+                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUWPPrograms);
             });
 
             Task.WaitAll(a, b);

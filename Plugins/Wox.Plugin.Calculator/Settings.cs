@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wox.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Caculator
 {
     public class Settings
     {

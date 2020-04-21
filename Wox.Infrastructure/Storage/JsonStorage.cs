@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 
-namespace Wox.Infrastructure.Storage
+namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Serialize object using json format.

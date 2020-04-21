@@ -4,7 +4,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 
-namespace Wox.Plugin.BrowserBookmark
+namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class FirefoxBookmarks
     {

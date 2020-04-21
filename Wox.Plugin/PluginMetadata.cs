@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Wox.Plugin
+namespace Flow.Launcher.Plugin
 {
     [JsonObject(MemberSerialization.OptOut)]
     public class PluginMetadata : BaseModel

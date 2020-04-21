@@ -5,11 +5,11 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Helper;
-using Wox.Infrastructure.UserSettings;
-using Wox.ViewModel;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DataFormats = System.Windows.DataFormats;
@@ -18,7 +18,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class MainWindow
     {
@@ -107,7 +107,7 @@ namespace Wox
         {
             _notifyIcon = new NotifyIcon
             {
-                Text = Infrastructure.Constant.Wox,
+                Text = Infrastructure.Constant.Flow.Launcher,
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
@@ -192,7 +192,7 @@ namespace Wox
                 }
                 else
                 {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidWoxPluginFileFormat"));
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidFlow.LauncherPluginFileFormat"));
                 }
             }
             e.Handled = false;

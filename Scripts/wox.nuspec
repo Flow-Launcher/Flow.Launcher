@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Wox-JJW24</id>
-    <title>Wox</title>
+    <id>Flow.Launcher-JJW24</id>
+    <title>Flow.Launcher</title>
     <version>$version$</version>
     <authors>happlebao, Jeremy Wu</authors>
-    <projectUrl>https://github.com/jjw24/Wox</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/jjw24/Wox/master/Wox/Images/app.png</iconUrl>
+    <projectUrl>https://github.com/jjw24/Flow.Launcher</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/jjw24/Flow.Launcher/master/Flow.Launcher/Images/app.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Wox - a launcher for windows</description>
+    <description>Flow.Launcher - a launcher for windows</description>
   </metadata>
   <files>
-    <file src="**\*.*" target="lib\net45\" exclude="Wox.vshost.exe;Wox.vshost.exe.config;Wox.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
+    <file src="**\*.*" target="lib\net45\" exclude="Flow.Launcher.vshost.exe;Flow.Launcher.vshost.exe.config;Flow.Launcher.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
   </files>
 </package>

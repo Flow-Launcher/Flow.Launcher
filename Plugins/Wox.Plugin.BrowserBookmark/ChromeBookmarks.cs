@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Wox.Plugin.BrowserBookmark
+namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class ChromeBookmarks
     {

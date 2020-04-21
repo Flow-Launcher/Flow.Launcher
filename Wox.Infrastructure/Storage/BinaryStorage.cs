@@ -4,10 +4,10 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Infrastructure.Storage
+namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Stroage object using binary data

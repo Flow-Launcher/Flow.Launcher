@@ -6,8 +6,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wox.Core</RootNamespace>
-    <AssemblyName>Wox.Core</AssemblyName>
+    <RootNamespace>Flow.Launcher.Core</RootNamespace>
+    <AssemblyName>Flow.Launcher.Core</AssemblyName>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -68,8 +68,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Wox.Infrastructure\Wox.Infrastructure.csproj" />
-    <ProjectReference Include="..\Wox.Plugin\Wox.Plugin.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
 </Project>

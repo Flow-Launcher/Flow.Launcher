@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Wox.Infrastructure.Logger;
-using Wox.ViewModel;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.ViewModel;
 
-namespace Wox.Converters
+namespace Flow.Launcher.Converters
 {
     public class QuerySuggestionBoxConverter : IMultiValueConverter
     {

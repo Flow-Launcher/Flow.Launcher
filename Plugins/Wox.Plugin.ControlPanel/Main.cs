@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Wox.Infrastructure;
+using Flow.Launcher.Infrastructure;
 
-namespace Wox.Plugin.ControlPanel
+namespace Flow.Launcher.Plugin.ControlPanel
 {
     public class Main : IPlugin, IPluginI18n
     {

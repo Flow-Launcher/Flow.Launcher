@@ -1,5 +1,5 @@
 ﻿
-namespace Wox.Core.Configuration
+namespace Flow.Launcher.Core.Configuration
 {
     public interface IPortable
     {

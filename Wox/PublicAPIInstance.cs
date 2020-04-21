@@ -5,17 +5,17 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using Squirrel;
-using Wox.Core;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Helper;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Hotkey;
-using Wox.Infrastructure.Image;
-using Wox.Plugin;
-using Wox.ViewModel;
+using Flow.Launcher.Core;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI
     {
@@ -144,9 +144,9 @@ namespace Wox
             return PluginManager.AllPlugins.ToList();
         }
 
-        public event WoxGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        public event Flow.LauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
-        [Obsolete("This will be removed in Wox 1.3")]
+        [Obsolete("This will be removed in Flow.Launcher 1.3")]
         public void PushResults(Query query, PluginMetadata plugin, List<Result> results)
         {
             results.ForEach(o =>

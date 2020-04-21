@@ -9,15 +9,15 @@ using System.Windows;
 using JetBrains.Annotations;
 using Squirrel;
 using Newtonsoft.Json;
-using Wox.Core.Resource;
-using Wox.Plugin.SharedCommands;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Http;
-using Wox.Infrastructure.Logger;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Http;
+using Flow.Launcher.Infrastructure.Logger;
 using System.IO;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Core
+namespace Flow.Launcher.Core
 {
     public class Updater
     {
@@ -63,7 +63,7 @@ namespace Wox.Core
             if (newReleaseVersion <= currentVersion)
             {
                 if (!silentIfLatestVersion)
-                    MessageBox.Show("You already have the latest Wox version");
+                    MessageBox.Show("You already have the latest Flow.Launcher version");
                 updateManager.Dispose();
                 return;
             }
@@ -86,7 +86,7 @@ namespace Wox.Core
                 var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
                 FilesFolders.Copy(DataLocation.PortableDataPath, targetDestination);
                 if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
-                    MessageBox.Show(string.Format("Wox was not able to move your user profile data to the new update version. Please manually" +
+                    MessageBox.Show(string.Format("Flow.Launcher was not able to move your user profile data to the new update version. Please manually" +
                         "move your profile data folder from {0} to {1}", DataLocation.PortableDataPath, targetDestination));
             }
             else

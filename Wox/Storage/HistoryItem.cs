@@ -1,6 +1,6 @@
 using System;
 
-namespace Wox.Storage
+namespace Flow.Launcher.Storage
 {
     public class HistoryItem
     {

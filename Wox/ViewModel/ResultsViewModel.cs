@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
-namespace Wox.ViewModel
+namespace Flow.Launcher.ViewModel
 {
     public class ResultsViewModel : BaseModel
     {

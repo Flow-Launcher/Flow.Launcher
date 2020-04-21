@@ -1,4 +1,4 @@
-﻿namespace Wox.Plugin
+﻿namespace Flow.Launcher.Plugin
 {
     public class PluginPair
     {

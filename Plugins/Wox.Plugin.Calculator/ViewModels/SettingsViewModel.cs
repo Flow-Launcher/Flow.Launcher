@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wox.Infrastructure.Storage;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Plugin.Caculator.ViewModels
+namespace Flow.Launcher.Plugin.Caculator.ViewModels
 {
     public class SettingsViewModel : BaseModel, ISavable
     {

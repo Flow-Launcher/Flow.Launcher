@@ -1,6 +1,6 @@
 using System;
 
-namespace Wox.Plugin.Everything.Everything.Exceptions
+namespace Flow.Launcher.Plugin.Everything.Everything.Exceptions
 {
     /// <summary>
     /// 

@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">핫키 등록 실패: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
-    <system:String x:Key="invalidWoxPluginFileFormat">Wox 플러그인 파일 형식이 유효하지 않습니다.</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Flow.Launcher 플러그인 파일 형식이 유효하지 않습니다.</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">이 쿼리의 최상위로 설정</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">이 쿼리의 최상위 설정 취소</system:String>
     <system:String x:Key="executeQuery">쿼리 실행: {0}</system:String>
@@ -15,10 +15,10 @@
     <system:String x:Key="iconTrayExit">종료</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Wox 설정</system:String>
+    <system:String x:Key="wox_settings">Flow.Launcher 설정</system:String>
     <system:String x:Key="general">일반</system:String>
-    <system:String x:Key="startWoxOnSystemStartup">시스템 시작 시 Wox 실행</system:String>
-    <system:String x:Key="hideWoxWhenLoseFocus">포커스 잃으면 Wox 숨김</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">시스템 시작 시 Flow.Launcher 실행</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">포커스 잃으면 Flow.Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
     <system:String x:Key="rememberLastLocation">마지막 실행 위치 기억</system:String>
     <system:String x:Key="language">언어</system:String>
@@ -31,7 +31,7 @@
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
-    <system:String x:Key="hideOnStartup">시작 시 Wox 숨김</system:String>
+    <system:String x:Key="hideOnStartup">시작 시 Flow.Launcher 숨김</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">플러그인</system:String>
@@ -46,7 +46,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">테마</system:String>
     <system:String x:Key="browserMoreThemes">테마 더 찾아보기</system:String>
-    <system:String x:Key="helloWox">Hello Wox</system:String>
+    <system:String x:Key="helloFlow.Launcher">Hello Flow.Launcher</system:String>
     <system:String x:Key="queryBoxFont">쿼리 상자 글꼴</system:String>
     <system:String x:Key="resultItemFont">결과 항목 글꼴</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
@@ -54,7 +54,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">핫키</system:String>
-    <system:String x:Key="woxHotkey">Wox 핫키</system:String>
+    <system:String x:Key="woxHotkey">Flow.Launcher 핫키</system:String>
     <system:String x:Key="customQueryHotkey">사용자지정 쿼리 핫키</system:String>
     <system:String x:Key="delete">삭제</system:String>
     <system:String x:Key="edit">편집</system:String>
@@ -82,9 +82,9 @@
     <system:String x:Key="about">정보</system:String>
     <system:String x:Key="website">웹사이트</system:String>
     <system:String x:Key="version">버전</system:String>
-    <system:String x:Key="about_activate_times">Wox를 {0}번 실행했습니다.</system:String>
+    <system:String x:Key="about_activate_times">Flow.Launcher를 {0}번 실행했습니다.</system:String>
     <system:String x:Key="checkUpdates">업데이트 확인</system:String>
-    <system:String x:Key="newVersionTips">새 버전({0})이 있습니다. Wox를 재시작하세요.</system:String>
+    <system:String x:Key="newVersionTips">새 버전({0})이 있습니다. Flow.Launcher를 재시작하세요.</system:String>
     <system:String x:Key="releaseNotes">릴리즈 노트:</system:String>
 
     <!--Action Keyword Setting Dialog-->
@@ -121,14 +121,14 @@
     <system:String x:Key="reportWindow_sending">보내는 중</system:String>
     <system:String x:Key="reportWindow_report_succeed">보고서를 정상적으로 보냈습니다.</system:String>
     <system:String x:Key="reportWindow_report_failed">보고서를 보내지 못했습니다.</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Wox에 문제가 발생했습니다.</system:String>
+    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher에 문제가 발생했습니다.</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">새 Wox 버전({0})을 사용할 수 있습니다.</system:String>
+    <system:String x:Key="update_wox_update_new_version_available">새 Flow.Launcher 버전({0})을 사용할 수 있습니다.</system:String>
     <system:String x:Key="update_wox_update_error">소프트웨어 업데이트를 설치하는 중에 오류가 발생했습니다.</system:String>
     <system:String x:Key="update_wox_update">업데이트</system:String>
     <system:String x:Key="update_wox_update_cancel">취소</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">업데이트를 위해 Wox를 재시작합니다.</system:String>
+    <system:String x:Key="update_wox_update_restart_wox_tip">업데이트를 위해 Flow.Launcher를 재시작합니다.</system:String>
     <system:String x:Key="update_wox_update_upadte_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_wox_update_files">업데이트 파일</system:String>
     <system:String x:Key="update_wox_update_upadte_description">업데이트 설명</system:String>

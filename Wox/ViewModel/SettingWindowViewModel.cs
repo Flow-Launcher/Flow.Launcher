@@ -7,29 +7,29 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Wox.Core;
-using Wox.Core.Configuration;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Helper;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Storage;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
+using Flow.Launcher.Core;
+using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
-namespace Wox.ViewModel
+namespace Flow.Launcher.ViewModel
 {
     public class SettingWindowViewModel : BaseModel
     {
         private readonly Updater _updater;
         private readonly IPortable _portable;
-        private readonly WoxJsonStorage<Settings> _storage;
+        private readonly Flow.LauncherJsonStorage<Settings> _storage;
 
         public SettingWindowViewModel(Updater updater, IPortable portable)
         {
             _updater = updater;
             _portable = portable;
-            _storage = new WoxJsonStorage<Settings>();
+            _storage = new Flow.LauncherJsonStorage<Settings>();
             Settings = _storage.Load();
             Settings.PropertyChanged += (s, e) =>
             {

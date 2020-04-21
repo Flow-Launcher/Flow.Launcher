@@ -6,11 +6,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Wox.Plugin.WebSearch
+namespace Flow.Launcher.Plugin.WebSearch
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n, ISavable, IResultUpdated
     {

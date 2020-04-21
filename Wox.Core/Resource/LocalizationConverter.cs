@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Data;
 
-namespace Wox.Core
+namespace Flow.Launcher.Core
 {
     public class LocalizationConverter : IValueConverter
     {

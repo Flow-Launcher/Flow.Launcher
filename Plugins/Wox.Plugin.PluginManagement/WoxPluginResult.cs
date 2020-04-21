@@ -1,6 +1,6 @@
-namespace Wox.Plugin.PluginManagement
+namespace Flow.Launcher.Plugin.PluginManagement
 {
-    public class WoxPluginResult
+    public class Flow.LauncherPluginResult
     {
         public string plugin_file;
         public string description;

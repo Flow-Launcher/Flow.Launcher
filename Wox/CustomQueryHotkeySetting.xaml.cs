@@ -5,11 +5,11 @@ using System.Linq;
 using System.Windows;
 using NHotkey;
 using NHotkey.Wpf;
-using Wox.Core.Resource;
-using Wox.Infrastructure.Hotkey;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {

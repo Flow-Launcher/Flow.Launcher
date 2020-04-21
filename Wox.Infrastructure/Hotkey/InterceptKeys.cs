@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Wox.Infrastructure.Hotkey
+namespace Flow.Launcher.Infrastructure.Hotkey
 {
     internal static class InterceptKeys
     {

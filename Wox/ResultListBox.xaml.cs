@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class ResultListBox
     {

@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
-using Wox.Core.Plugin;
-using Wox.Infrastructure.Exception;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Exception;
 
-namespace Wox.Test.Plugins
+namespace Flow.Launcher.Test.Plugins
 {
 
     [TestFixture]
@@ -11,7 +11,7 @@ namespace Wox.Test.Plugins
         [Test]
         public void PublicAPIIsNullTest()
         {
-            //Assert.Throws(typeof(WoxFatalException), () => PluginManager.Initialize(null));
+            //Assert.Throws(typeof(Flow.LauncherFatalException), () => PluginManager.Initialize(null));
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Wox.Core.Resource
+namespace Flow.Launcher.Core.Resource
 {
     internal static class AvailableLanguages
     {

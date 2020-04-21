@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Image;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Wox.Plugin.Folder
+namespace Flow.Launcher.Plugin.Folder
 {
     internal class ContextMenuLoader : IContextMenu
     {
@@ -185,7 +185,7 @@ namespace Wox.Plugin.Folder
 
         public void LogException(string message, Exception e)
         {
-            Log.Exception($"|Wox.Plugin.Folder.ContextMenu|{message}", e);
+            Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
         }
 
         private bool CanRunAsDifferentUser(string path)

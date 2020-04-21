@@ -11,14 +11,14 @@ assembly_info:
 before_build:
 - ps: nuget restore
 build:
-  project: Wox.sln
+  project: Flow.Launcher.sln
 after_test:
 artifacts:
-- path: 'Output\Packages\Wox-*.zip'
+- path: 'Output\Packages\Flow.Launcher-*.zip'
   name: zipped_binary
-- path: 'Output\Packages\Wox.Plugin.*.nupkg'
+- path: 'Output\Packages\Flow.Launcher.Plugin.*.nupkg'
   name: nuget_package
-- path: 'Output\Packages\Wox-*.*'
+- path: 'Output\Packages\Flow.Launcher-*.*'
   name: installer
 - path: 'Output\Packages\RELEASES'
   name: installer

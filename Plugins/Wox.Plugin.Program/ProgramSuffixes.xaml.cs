@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Wox.Plugin.Program
+namespace Flow.Launcher.Plugin.Program
 {
     /// <summary>
     /// ProgramSuffixes.xaml 的交互逻辑

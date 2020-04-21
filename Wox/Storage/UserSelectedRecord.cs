@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Storage
+namespace Flow.Launcher.Storage
 {
     public class UserSelectedRecord
     {

@@ -8,11 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Http;
-using Wox.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Http;
+using Flow.Launcher.Infrastructure.Logger;
 
-namespace Wox.Plugin.PluginManagement
+namespace Flow.Launcher.Plugin.PluginManagement
 {
     public class Main : IPlugin, IPluginI18n
     {
@@ -119,25 +119,25 @@ namespace Wox.Plugin.PluginManagement
             catch (WebException e)
             {
                 //todo happlebao add option in log to decide give user prompt or not
-                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Can't connect to Wox plugin website, check your conenction");
-                Log.Exception("|PluginManagement.ResultForInstallPlugin|Can't connect to Wox plugin website, check your conenction", e);
+                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Can't connect to Flow.Launcher plugin website, check your conenction");
+                Log.Exception("|PluginManagement.ResultForInstallPlugin|Can't connect to Flow.Launcher plugin website, check your conenction", e);
                 return new List<Result>();
             }
-            List<WoxPluginResult> searchedPlugins;
+            List<Flow.LauncherPluginResult> searchedPlugins;
             try
             {
-                searchedPlugins = JsonConvert.DeserializeObject<List<WoxPluginResult>>(json);
+                searchedPlugins = JsonConvert.DeserializeObject<List<Flow.LauncherPluginResult>>(json);
             }
             catch (JsonSerializationException e)
             {
-                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Coundn't parse api search results, Please update your Wox!");
-                Log.Exception("|PluginManagement.ResultForInstallPlugin|Coundn't parse api search results, Please update your Wox!", e);
+                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Coundn't parse api search results, Please update your Flow.Launcher!");
+                Log.Exception("|PluginManagement.ResultForInstallPlugin|Coundn't parse api search results, Please update your Flow.Launcher!", e);
                 return results;
             }
 
-            foreach (WoxPluginResult r in searchedPlugins)
+            foreach (Flow.LauncherPluginResult r in searchedPlugins)
             {
-                WoxPluginResult r1 = r;
+                Flow.LauncherPluginResult r1 = r;
                 results.Add(new Result
                 {
                     Title = r.name,
@@ -152,7 +152,7 @@ namespace Wox.Plugin.PluginManagement
 
                         if (result == MessageBoxResult.Yes)
                         {
-                            string folder = Path.Combine(Path.GetTempPath(), "WoxPluginDownload");
+                            string folder = Path.Combine(Path.GetTempPath(), "Flow.LauncherPluginDownload");
                             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
                             string filePath = Path.Combine(folder, Guid.NewGuid().ToString() + ".wox");
 
@@ -212,11 +212,11 @@ namespace Wox.Plugin.PluginManagement
                              $"Name: {plugin.Name}{Environment.NewLine}" +
                              $"Version: {plugin.Version}{Environment.NewLine}" +
                              $"Author: {plugin.Author}";
-            if (MessageBox.Show(content, "Wox", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(content, "Flow.Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 File.Create(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt")).Close();
                 var result = MessageBox.Show($"You have uninstalled plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                             "Restart Wox to take effect?",
+                                             "Restart Flow.Launcher to take effect?",
                                              "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {

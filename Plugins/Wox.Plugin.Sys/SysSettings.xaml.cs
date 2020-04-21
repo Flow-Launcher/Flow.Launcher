@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace Wox.Plugin.Sys
+namespace Flow.Launcher.Plugin.Sys
 {
     public partial class SysSettings : UserControl
     {

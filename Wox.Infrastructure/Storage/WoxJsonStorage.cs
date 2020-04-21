@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Infrastructure.Storage
+namespace Flow.Launcher.Infrastructure.Storage
 {
-    public class WoxJsonStorage<T> : JsonStrorage<T> where T : new()
+    public class Flow.LauncherJsonStorage<T> : JsonStrorage<T> where T : new()
     {
-        public WoxJsonStorage()
+        public Flow.LauncherJsonStorage()
         {
             var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
             Helper.ValidateDirectory(directoryPath);

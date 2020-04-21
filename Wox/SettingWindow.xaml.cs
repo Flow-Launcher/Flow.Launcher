@@ -11,15 +11,15 @@ using System.Windows.Navigation;
 using Microsoft.Win32;
 using NHotkey;
 using NHotkey.Wpf;
-using Wox.Core;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Infrastructure.Hotkey;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin;
-using Wox.ViewModel;
+using Flow.Launcher.Core;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class SettingWindow
     {
@@ -54,7 +54,7 @@ namespace Wox
         {
             using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
             {
-                key?.SetValue(Infrastructure.Constant.Wox, Infrastructure.Constant.ExecutablePath);
+                key?.SetValue(Infrastructure.Constant.Flow.Launcher, Infrastructure.Constant.ExecutablePath);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Wox
         {
             using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
             {
-                key?.DeleteValue(Infrastructure.Constant.Wox, false);
+                key?.DeleteValue(Infrastructure.Constant.Flow.Launcher, false);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Wox
         {
             using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
             {
-                var path = key?.GetValue(Infrastructure.Constant.Wox) as string;
+                var path = key?.GetValue(Infrastructure.Constant.Flow.Launcher) as string;
                 if (path != null)
                 {
                     return path == Infrastructure.Constant.ExecutablePath;
@@ -99,7 +99,7 @@ namespace Wox
                     if (File.Exists(pythonPath))
                     {
                         _settings.PluginSettings.PythonDirectory = pythonDirectory;
-                        MessageBox.Show("Remember to restart Wox use new Python path");
+                        MessageBox.Show("Remember to restart Flow.Launcher use new Python path");
                     }
                     else
                     {

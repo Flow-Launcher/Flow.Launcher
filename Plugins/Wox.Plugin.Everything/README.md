@@ -1,4 +1,4 @@
-Wox.Plugin.Everything
+Flow.Launcher.Plugin.Everything
 =====================
 
-Wox plugin for Everything
+Flow.Launcher plugin for Everything

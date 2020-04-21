@@ -6,11 +6,11 @@ using System.Text;
 using hyjiacan.util.p4n;
 using hyjiacan.util.p4n.format;
 using JetBrains.Annotations;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Storage;
-using Wox.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Wox.Infrastructure
+namespace Flow.Launcher.Infrastructure
 {
     public interface IAlphabet
     {
@@ -34,7 +34,7 @@ namespace Wox.Infrastructure
         {
             Format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 
-            Stopwatch.Normal("|Wox.Infrastructure.Alphabet.Initialize|Preload pinyin cache", () =>
+            Stopwatch.Normal("|Flow.Launcher.Infrastructure.Alphabet.Initialize|Preload pinyin cache", () =>
             {
                 _pinyinStorage = new BinaryStorage<Dictionary<string, string[][]>>("Pinyin");
                 
@@ -48,7 +48,7 @@ namespace Wox.Infrastructure
                 // force pinyin library static constructor initialize
                 PinyinHelper.toHanyuPinyinStringArray('T', Format);
             });
-            Log.Info($"|Wox.Infrastructure.Alphabet.Initialize|Number of preload pinyin combination<{PinyinCache.Count}>");
+            Log.Info($"|Flow.Launcher.Infrastructure.Alphabet.Initialize|Number of preload pinyin combination<{PinyinCache.Count}>");
         }
 
         public string Translate(string str)

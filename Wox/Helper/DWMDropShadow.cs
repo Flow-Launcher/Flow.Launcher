@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Wox.Helper
+namespace Flow.Launcher.Helper
 {
     public class DwmDropShadow
     {

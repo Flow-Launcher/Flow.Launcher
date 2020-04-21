@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Wox.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
     public interface IProgram
     {

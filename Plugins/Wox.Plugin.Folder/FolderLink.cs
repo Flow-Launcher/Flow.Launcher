@@ -2,7 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Wox.Plugin.Folder
+namespace Flow.Launcher.Plugin.Folder
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class FolderLink

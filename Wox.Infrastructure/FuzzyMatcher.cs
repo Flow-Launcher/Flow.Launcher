@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wox.Infrastructure
+namespace Flow.Launcher.Infrastructure
 {
     [Obsolete("This class is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
     public class FuzzyMatcher

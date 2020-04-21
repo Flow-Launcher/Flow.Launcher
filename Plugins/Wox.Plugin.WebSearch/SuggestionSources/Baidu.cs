@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Wox.Infrastructure.Http;
-using Wox.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Http;
+using Flow.Launcher.Infrastructure.Logger;
 
-namespace Wox.Plugin.WebSearch.SuggestionSources
+namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Baidu : SuggestionSource
     {

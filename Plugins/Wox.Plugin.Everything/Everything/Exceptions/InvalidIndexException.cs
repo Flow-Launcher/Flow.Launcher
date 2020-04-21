@@ -1,6 +1,6 @@
 using System;
 
-namespace Wox.Plugin.Everything.Everything
+namespace Flow.Launcher.Plugin.Everything.Everything
 {
     /// <summary>
     /// 

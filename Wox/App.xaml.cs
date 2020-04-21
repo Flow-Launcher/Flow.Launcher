@@ -3,30 +3,30 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using Wox.Core;
-using Wox.Core.Configuration;
-using Wox.Core.Plugin;
-using Wox.Core.Resource;
-using Wox.Helper;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Http;
-using Wox.Infrastructure.Image;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
-using Wox.ViewModel;
-using Stopwatch = Wox.Infrastructure.Stopwatch;
+using Flow.Launcher.Core;
+using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Http;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
+using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
-namespace Wox
+namespace Flow.Launcher
 {
     public partial class App : IDisposable, ISingleInstanceApp
     {
         public static PublicAPIInstance API { get; private set; }
-        private const string Unique = "Wox_Unique_Application_Mutex";
+        private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
         private Settings _settings;
         private MainViewModel _mainVM;
         private SettingWindowViewModel _settingsVM;
-        private readonly Updater _updater = new Updater(Wox.Properties.Settings.Default.GithubRepo);
+        private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
         private readonly Portable _portable = new Portable();
         private readonly Alphabet _alphabet = new Alphabet();
         private StringMatcher _stringMatcher;
@@ -50,7 +50,7 @@ namespace Wox
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Wox startup ----------------------------------------------------");
+                Log.Info("|App.OnStartup|Begin Flow.Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
@@ -73,7 +73,7 @@ namespace Wox
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
-                Current.MainWindow.Title = Constant.Wox;
+                Current.MainWindow.Title = Constant.Flow.Launcher;
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
@@ -91,14 +91,14 @@ namespace Wox
                 AutoUpdates();
 
                 _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
-                Log.Info("|App.OnStartup|End Wox startup ----------------------------------------------------  ");
+                Log.Info("|App.OnStartup|End Flow.Launcher startup ----------------------------------------------------  ");
             });
         }
 
 
         private void AutoStartup()
         {
-            if (_settings.StartWoxOnSystemStartup)
+            if (_settings.StartFlow.LauncherOnSystemStartup)
             {
                 if (!SettingWindow.StartupSet())
                 {

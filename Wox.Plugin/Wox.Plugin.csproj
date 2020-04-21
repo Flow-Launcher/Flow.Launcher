@@ -6,8 +6,8 @@
     <UseWPF>true</UseWPF>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wox.Plugin</RootNamespace>
-    <AssemblyName>Wox.Plugin</AssemblyName>
+    <RootNamespace>Flow.Launcher.Plugin</RootNamespace>
+    <AssemblyName>Flow.Launcher.Plugin</AssemblyName>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

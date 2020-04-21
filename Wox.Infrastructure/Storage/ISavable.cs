@@ -1,4 +1,4 @@
-﻿namespace Wox.Infrastructure.Storage
+﻿namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Save plugin settings/cache, 

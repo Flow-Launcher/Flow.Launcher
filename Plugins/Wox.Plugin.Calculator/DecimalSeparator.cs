@@ -5,9 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wox.Core;
+using Flow.Launcher.Core;
 
-namespace Wox.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Caculator
 {    
     [TypeConverter(typeof(LocalizationConverter))]
     public enum DecimalSeparator

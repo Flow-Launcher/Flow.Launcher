@@ -5,7 +5,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
-namespace Wox.Infrastructure.Image
+namespace Flow.Launcher.Infrastructure.Image
 {
     [Flags]
     public enum ThumbnailOptions

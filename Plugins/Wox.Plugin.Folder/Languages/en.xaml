@@ -10,6 +10,6 @@
     <system:String x:Key="wox_plugin_folder_delete_folder_link">Are you sure you want to delete {0}?</system:String>
 
     <system:String x:Key="wox_plugin_folder_plugin_name">Folder</system:String>
-    <system:String x:Key="wox_plugin_folder_plugin_description">Open favorite folder from Wox directly</system:String>
+    <system:String x:Key="wox_plugin_folder_plugin_description">Open favorite folder from Flow.Launcher directly</system:String>
 
 </ResourceDictionary>

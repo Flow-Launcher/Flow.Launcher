@@ -1,4 +1,4 @@
-namespace Wox.Infrastructure.Hotkey
+namespace Flow.Launcher.Infrastructure.Hotkey
 {
     public enum KeyEvent
     {

@@ -1,4 +1,4 @@
-﻿namespace Wox.Plugin.WebSearch
+﻿namespace Flow.Launcher.Plugin.WebSearch
 {
     public class SearchSourceViewModel
     {

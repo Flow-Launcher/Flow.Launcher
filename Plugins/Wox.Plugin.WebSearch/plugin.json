@@ -28,6 +28,6 @@
     "Version": "1.0.0",
     "Language": "csharp",
     "Website": "http://www.wox.one/plugin",
-    "ExecuteFileName": "Wox.Plugin.WebSearch.dll",
+    "ExecuteFileName": "Flow.Launcher.Plugin.WebSearch.dll",
     "IcoPath": "Images\\web_search.png"
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wox.Helper
+namespace Flow.Launcher.Helper
 {
     public static class SyntaxSugars
     {

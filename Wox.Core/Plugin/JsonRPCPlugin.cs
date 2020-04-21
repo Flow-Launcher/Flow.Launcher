@@ -7,11 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Exception;
-using Wox.Infrastructure.Logger;
-using Wox.Plugin;
+using Flow.Launcher.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Core.Plugin
+namespace Flow.Launcher.Core.Plugin
 {
     /// <summary>
     /// Represent the plugin that using JsonPRC
@@ -77,9 +77,9 @@ namespace Wox.Core.Plugin
 
                         if (!String.IsNullOrEmpty(result1.JsonRPCAction.Method))
                         {
-                            if (result1.JsonRPCAction.Method.StartsWith("Wox."))
+                            if (result1.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
                             {
-                                ExecuteWoxAPI(result1.JsonRPCAction.Method.Substring(4), result1.JsonRPCAction.Parameters);
+                                ExecuteFlow.LauncherAPI(result1.JsonRPCAction.Method.Substring(4), result1.JsonRPCAction.Parameters);
                             }
                             else
                             {
@@ -87,9 +87,9 @@ namespace Wox.Core.Plugin
                                 JsonRPCRequestModel jsonRpcRequestModel = JsonConvert.DeserializeObject<JsonRPCRequestModel>(actionReponse);
                                 if (jsonRpcRequestModel != null
                                     && !String.IsNullOrEmpty(jsonRpcRequestModel.Method)
-                                    && jsonRpcRequestModel.Method.StartsWith("Wox."))
+                                    && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
                                 {
-                                    ExecuteWoxAPI(jsonRpcRequestModel.Method.Substring(4), jsonRpcRequestModel.Parameters);
+                                    ExecuteFlow.LauncherAPI(jsonRpcRequestModel.Method.Substring(4), jsonRpcRequestModel.Parameters);
                                 }
                             }
                         }
@@ -105,7 +105,7 @@ namespace Wox.Core.Plugin
             }
         }
 
-        private void ExecuteWoxAPI(string method, object[] parameters)
+        private void ExecuteFlow.LauncherAPI(string method, object[] parameters)
         {
             MethodInfo methodInfo = PluginManager.API.GetType().GetMethod(method);
             if (methodInfo != null)

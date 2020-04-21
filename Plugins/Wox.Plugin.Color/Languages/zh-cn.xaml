@@ -3,6 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="wox_plugin_color_plugin_name">颜色</system:String>
-    <system:String x:Key="wox_plugin_color_plugin_description">提供在Wox查询hex颜色。(尝试在Wox中输入#000)</system:String>
+    <system:String x:Key="wox_plugin_color_plugin_description">提供在Flow.Launcher查询hex颜色。(尝试在Flow.Launcher中输入#000)</system:String>
 
 </ResourceDictionary>

@@ -2,9 +2,9 @@
 using System.Windows.Media;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Wox.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Image;
 
-namespace Wox.Plugin.WebSearch
+namespace Flow.Launcher.Plugin.WebSearch
 {
     public class SearchSource : BaseModel
     {

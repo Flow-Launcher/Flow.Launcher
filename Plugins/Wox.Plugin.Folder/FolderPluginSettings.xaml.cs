@@ -8,7 +8,7 @@ using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using MessageBox = System.Windows.MessageBox;
 
-namespace Wox.Plugin.Folder
+namespace Flow.Launcher.Plugin.Folder
 {
 
     public partial class FileSystemSettings

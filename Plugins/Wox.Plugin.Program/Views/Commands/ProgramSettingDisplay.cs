@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wox.Plugin.Program.Views.Models;
+using Flow.Launcher.Plugin.Program.Views.Models;
 
-namespace Wox.Plugin.Program.Views.Commands
+namespace Flow.Launcher.Plugin.Program.Views.Commands
 {
     internal static class ProgramSettingDisplay
     {

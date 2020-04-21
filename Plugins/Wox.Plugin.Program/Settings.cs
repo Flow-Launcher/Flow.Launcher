@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Wox.Plugin.Program
+namespace Flow.Launcher.Plugin.Program
 {
     public class Settings
     {

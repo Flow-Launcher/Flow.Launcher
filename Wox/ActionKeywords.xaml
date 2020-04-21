@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wox.ActionKeywords"
+﻿<Window x:Class="Flow.Launcher.ActionKeywords"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ActionKeywords"

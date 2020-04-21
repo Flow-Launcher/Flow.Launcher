@@ -1,4 +1,4 @@
-﻿What does Wox.Plugin do?
+﻿What does Flow.Launcher.Plugin do?
 ====
 
 * Defines base objects and interfaces for plugins

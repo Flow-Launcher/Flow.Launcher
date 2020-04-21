@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace Wox.Helper
+namespace Flow.Launcher.Helper
 {
     public static class SingletonWindowOpener
     {

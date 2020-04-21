@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Wox.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 
-namespace Wox.Infrastructure
+namespace Flow.Launcher.Infrastructure
 {
     public static class Stopwatch
     {

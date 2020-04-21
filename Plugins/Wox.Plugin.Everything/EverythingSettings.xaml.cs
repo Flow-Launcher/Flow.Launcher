@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Microsoft.Win32;
 
-namespace Wox.Plugin.Everything
+namespace Flow.Launcher.Plugin.Everything
 {
     public partial class EverythingSettings : UserControl
     {

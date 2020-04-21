@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using WindowsInput;
 using WindowsInput.Native;
-using Wox.Infrastructure.Hotkey;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.Storage;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
-namespace Wox.Plugin.Shell
+namespace Flow.Launcher.Plugin.Shell
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, ISavable
     {
@@ -94,7 +94,7 @@ namespace Wox.Plugin.Shell
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Wox.Plugin.Shell.Main.Query|Exception when query for <{query}>", e);
+                    Log.Exception($"|Flow.Launcher.Plugin.Shell.Main.Query|Exception when query for <{query}>", e);
                 }
                 return results;
             }

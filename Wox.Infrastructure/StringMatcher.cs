@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using static Wox.Infrastructure.StringMatcher;
+using static Flow.Launcher.Infrastructure.StringMatcher;
 
-namespace Wox.Infrastructure
+namespace Flow.Launcher.Infrastructure
 {
     public class StringMatcher
     {

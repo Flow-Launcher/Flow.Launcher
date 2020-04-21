@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Wox.Infrastructure;
+using Flow.Launcher.Infrastructure;
 
-namespace Wox.Plugin.BrowserBookmark.Commands
+namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 {
     internal static class Bookmarks
     {

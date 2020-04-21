@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using Microsoft.Win32;
 
-namespace Wox.Infrastructure.Exception
+namespace Flow.Launcher.Infrastructure.Exception
 {
     public class ExceptionFormatter
     {
@@ -62,7 +62,7 @@ namespace Wox.Infrastructure.Exception
             sb.AppendLine("## Environment");
             sb.AppendLine($"* Command Line: {Environment.CommandLine}");
             sb.AppendLine($"* Timestamp: {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
-            sb.AppendLine($"* Wox version: {Constant.Version}");
+            sb.AppendLine($"* Flow.Launcher version: {Constant.Version}");
             sb.AppendLine($"* OS Version: {Environment.OSVersion.VersionString}");
             sb.AppendLine($"* IntPtr Length: {IntPtr.Size}");
             sb.AppendLine($"* x64: {Environment.Is64BitOperatingSystem}");

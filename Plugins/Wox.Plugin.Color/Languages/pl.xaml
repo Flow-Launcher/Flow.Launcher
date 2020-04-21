@@ -3,6 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="wox_plugin_color_plugin_name">Kolory</system:String>
-    <system:String x:Key="wox_plugin_color_plugin_description">Podgląd kolorów po wpisaniu ich kodu szesnastkowego. (Spróbuj wpisać #000 w oknie Woxa)</system:String>
+    <system:String x:Key="wox_plugin_color_plugin_description">Podgląd kolorów po wpisaniu ich kodu szesnastkowego. (Spróbuj wpisać #000 w oknie Flow.Launchera)</system:String>
     
 </ResourceDictionary>

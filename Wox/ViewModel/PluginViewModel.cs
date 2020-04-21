@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using Wox.Plugin;
-using Wox.Core.Resource;
-using Wox.Infrastructure.Image;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Image;
 
-namespace Wox.ViewModel
+namespace Flow.Launcher.ViewModel
 {
     public class PluginViewModel : BaseModel
     {

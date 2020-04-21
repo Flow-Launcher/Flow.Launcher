@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wox.Infrastructure.UserSettings
+namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public static class DataLocation
     {
         public const string PortableFolderName = "UserData";
         public const string DeletionIndicatorFile = ".dead";
         public static string PortableDataPath = Path.Combine(Constant.ProgramDirectory, PortableFolderName);
-        public static string RoamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constant.Wox);
+        public static string RoamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constant.Flow.Launcher);
         public static string DataDirectory()
         {
             if (PortableDataLocationInUse())

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Win32;
 
-namespace Wox.Plugin.ControlPanel
+namespace Flow.Launcher.Plugin.ControlPanel
 {
     //from:https://raw.githubusercontent.com/CoenraadS/Windows-Control-Panel-Items
     public static class ControlPanelList

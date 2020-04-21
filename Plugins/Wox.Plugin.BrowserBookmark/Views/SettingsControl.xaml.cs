@@ -1,9 +1,9 @@
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using Wox.Plugin.BrowserBookmark.Models;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
-namespace Wox.Plugin.BrowserBookmark.Views
+namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
     /// <summary>
     /// Interaction logic for BrowserBookmark.xaml

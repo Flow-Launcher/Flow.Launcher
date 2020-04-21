@@ -4,12 +4,12 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
-using Wox.Infrastructure;
-using Wox.Infrastructure.Logger;
-using Wox.Infrastructure.UserSettings;
-using Wox.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Wox.Core.Configuration
+namespace Flow.Launcher.Core.Configuration
 {
     public class Portable : IPortable
     {
@@ -19,7 +19,7 @@ namespace Wox.Core.Configuration
         /// <returns></returns>
         private UpdateManager NewUpdateManager()
         {
-            return new UpdateManager(string.Empty, Constant.Wox, Constant.RootDirectory);
+            return new UpdateManager(string.Empty, Constant.Flow.Launcher, Constant.RootDirectory);
         }
 
         public void DisablePortableMode()
@@ -36,7 +36,7 @@ namespace Wox.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.PortableDataPath);
 
-                MessageBox.Show("Wox needs to restart to finish disabling portable mode, " +
+                MessageBox.Show("Flow.Launcher needs to restart to finish disabling portable mode, " +
                     "after the restart your portable data profile will be deleted and roaming data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
@@ -64,7 +64,7 @@ namespace Wox.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
-                MessageBox.Show("Wox needs to restart to finish enabling portable mode, " +
+                MessageBox.Show("Flow.Launcher needs to restart to finish enabling portable mode, " +
                     "after the restart your roaming data profile will be deleted and portable data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
@@ -126,7 +126,7 @@ namespace Wox.Core.Configuration
                     .CreateSubKey("Uninstall", RegistryKeyPermissionCheck.ReadWriteSubTree)) {; }
 
             var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                .CreateSubKey(uninstallRegSubKey + "\\" + Constant.Wox, RegistryKeyPermissionCheck.ReadWriteSubTree);
+                .CreateSubKey(uninstallRegSubKey + "\\" + Constant.Flow.Launcher, RegistryKeyPermissionCheck.ReadWriteSubTree);
             key.SetValue("DisplayIcon", Constant.ApplicationDirectory + "\\app.ico", RegistryValueKind.String);
 
             using (var portabilityUpdater = NewUpdateManager())
@@ -142,13 +142,13 @@ namespace Wox.Core.Configuration
 
         ///<summary>
         ///This method should be run at first before all methods during start up and should be run before determining which data location
-        ///will be used for Wox.
+        ///will be used for Flow.Launcher.
         ///</summary>
         public void PreStartCleanUpAfterPortabilityUpdate()
         {
             // Specify here so this method does not rely on other environment variables to initialise
             var portableDataPath = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(), "UserData");
-            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Wox");
+            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Flow.Launcher");
 
             bool DataLocationPortableDeleteRequired = false;
             bool DataLocationRoamingDeleteRequired = false;
@@ -163,7 +163,7 @@ namespace Wox.Core.Configuration
             {
                 FilesFolders.RemoveFolderIfExists(roamingDataPath);
 
-                if (MessageBox.Show("Wox has detected you enabled portable mode, " +
+                if (MessageBox.Show("Flow.Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -179,7 +179,7 @@ namespace Wox.Core.Configuration
             {
                 FilesFolders.RemoveFolderIfExists(portableDataPath);
 
-                MessageBox.Show("Wox has detected you disabled portable mode, " +
+                MessageBox.Show("Flow.Launcher has detected you disabled portable mode, " +
                                     "the relevant shortcuts and uninstaller entry have been created");
 
                 return;
@@ -193,7 +193,7 @@ namespace Wox.Core.Configuration
 
             if(roamingLocationExists && portableLocationExists)
             {
-                MessageBox.Show(string.Format("Wox detected your user data exists both in {0} and " +
+                MessageBox.Show(string.Format("Flow.Launcher detected your user data exists both in {0} and " +
                                     "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occured.", 
                                     DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 

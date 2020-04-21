@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Wox.Plugin;
+using Flow.Launcher.Plugin;
 
-namespace Wox.Infrastructure.Hotkey
+namespace Flow.Launcher.Infrastructure.Hotkey
 {
     /// <summary>
     /// Listens keyboard globally.

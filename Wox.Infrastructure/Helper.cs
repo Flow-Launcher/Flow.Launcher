@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Wox.Infrastructure
+namespace Flow.Launcher.Infrastructure
 {
     public static class Helper
     {
