@@ -107,7 +107,7 @@ namespace Flow.Launcher
         {
             _notifyIcon = new NotifyIcon
             {
-                Text = Infrastructure.Constant.Flow.Launcher,
+                Text = Infrastructure.Constant.FlowLauncher,
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };

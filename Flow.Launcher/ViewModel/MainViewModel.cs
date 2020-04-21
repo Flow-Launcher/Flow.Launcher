@@ -29,9 +29,9 @@ namespace Flow.Launcher.ViewModel
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
 
-        private readonly Flow.LauncherJsonStorage<History> _historyItemsStorage;
-        private readonly Flow.LauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
-        private readonly Flow.LauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
+        private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
+        private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
+        private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         private readonly Settings _settings;
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
@@ -56,9 +56,9 @@ namespace Flow.Launcher.ViewModel
 
             _settings = settings;
 
-            _historyItemsStorage = new Flow.LauncherJsonStorage<History>();
-            _userSelectedRecordStorage = new Flow.LauncherJsonStorage<UserSelectedRecord>();
-            _topMostRecordStorage = new Flow.LauncherJsonStorage<TopMostRecord>();
+            _historyItemsStorage = new FlowLauncherJsonStorage<History>();
+            _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
+            _topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
             _history = _historyItemsStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
@@ -615,12 +615,12 @@ namespace Flow.Launcher.ViewModel
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
                 }
 
-                ToggleFlow.Launcher();
+                ToggleFlowLauncher();
                 e.Handled = true;
             }
         }
 
-        private void ToggleFlow.Launcher()
+        private void ToggleFlowLauncher()
         {
             if (MainWindowVisibility != Visibility.Visible)
             {

@@ -54,7 +54,7 @@ namespace Flow.Launcher
         {
             using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
             {
-                key?.SetValue(Infrastructure.Constant.Flow.Launcher, Infrastructure.Constant.ExecutablePath);
+                key?.SetValue(Infrastructure.Constant.FlowLauncher, Infrastructure.Constant.ExecutablePath);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Flow.Launcher
         {
             using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
             {
-                key?.DeleteValue(Infrastructure.Constant.Flow.Launcher, false);
+                key?.DeleteValue(Infrastructure.Constant.FlowLauncher, false);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Flow.Launcher
         {
             using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
             {
-                var path = key?.GetValue(Infrastructure.Constant.Flow.Launcher) as string;
+                var path = key?.GetValue(Infrastructure.Constant.FlowLauncher) as string;
                 if (path != null)
                 {
                     return path == Infrastructure.Constant.ExecutablePath;

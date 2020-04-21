@@ -79,7 +79,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             if (result1.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
                             {
-                                ExecuteFlow.LauncherAPI(result1.JsonRPCAction.Method.Substring(4), result1.JsonRPCAction.Parameters);
+                                ExecuteFlowLauncherAPI(result1.JsonRPCAction.Method.Substring(4), result1.JsonRPCAction.Parameters);
                             }
                             else
                             {
@@ -89,7 +89,7 @@ namespace Flow.Launcher.Core.Plugin
                                     && !String.IsNullOrEmpty(jsonRpcRequestModel.Method)
                                     && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
                                 {
-                                    ExecuteFlow.LauncherAPI(jsonRpcRequestModel.Method.Substring(4), jsonRpcRequestModel.Parameters);
+                                    ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4), jsonRpcRequestModel.Parameters);
                                 }
                             }
                         }
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        private void ExecuteFlow.LauncherAPI(string method, object[] parameters)
+        private void ExecuteFlowLauncherAPI(string method, object[] parameters)
         {
             MethodInfo methodInfo = PluginManager.API.GetType().GetMethod(method);
             if (methodInfo != null)

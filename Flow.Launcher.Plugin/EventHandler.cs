@@ -3,8 +3,8 @@ using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin
 {
-    public delegate void Flow.LauncherKeyDownEventHandler(Flow.LauncherKeyDownEventArgs e);
-    public delegate void AfterFlow.LauncherQueryEventHandler(Flow.LauncherQueryEventArgs e);
+    public delegate void FlowLauncherKeyDownEventHandler(FlowLauncherKeyDownEventArgs e);
+    public delegate void AfterFlowLauncherQueryEventHandler(FlowLauncherQueryEventArgs e);
 
     public delegate void ResultItemDropEventHandler(Result result, IDataObject dropObject, DragEventArgs e);
 
@@ -15,15 +15,15 @@ namespace Flow.Launcher.Plugin
     /// <param name="vkcode"></param>
     /// <param name="state"></param>
     /// <returns>return true to continue handling, return false to intercept system handling</returns>
-    public delegate bool Flow.LauncherGlobalKeyboardEventHandler(int keyevent, int vkcode, SpecialKeyState state);
+    public delegate bool FlowLauncherGlobalKeyboardEventHandler(int keyevent, int vkcode, SpecialKeyState state);
 
-    public class Flow.LauncherKeyDownEventArgs
+    public class FlowLauncherKeyDownEventArgs
     {
         public string Query { get; set; }
         public KeyEventArgs keyEventArgs { get; set; }
     }
 
-    public class Flow.LauncherQueryEventArgs
+    public class FlowLauncherQueryEventArgs
     {
         public Query Query { get; set; }
     }

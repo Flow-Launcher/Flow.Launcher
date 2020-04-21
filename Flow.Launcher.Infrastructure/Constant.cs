@@ -6,14 +6,14 @@ namespace Flow.Launcher.Infrastructure
 {
     public static class Constant
     {
-        public const string Flow.Launcher = "Flow.Launcher";
+        public const string FlowLauncher = "Flow.Launcher";
         public const string Plugins = "Plugins";
 
-        public const string ApplicationFileName = Flow.Launcher + ".exe";
+        public const string ApplicationFileName = FlowLauncher + ".exe";
 
         private static readonly Assembly Assembly = Assembly.GetExecutingAssembly();
         public static readonly string ProgramDirectory = Directory.GetParent(Assembly.Location.NonNull()).ToString();
-        public static readonly string ExecutablePath = Path.Combine(ProgramDirectory, Flow.Launcher + ".exe");
+        public static readonly string ExecutablePath = Path.Combine(ProgramDirectory, FlowLauncher + ".exe");
         public static readonly string ApplicationDirectory = Directory.GetParent(ProgramDirectory).ToString();
         public static readonly string RootDirectory = Directory.GetParent(ApplicationDirectory).ToString();
         

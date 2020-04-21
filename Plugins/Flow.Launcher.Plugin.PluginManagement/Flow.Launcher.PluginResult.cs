@@ -1,6 +1,6 @@
 namespace Flow.Launcher.Plugin.PluginManagement
 {
-    public class Flow.LauncherPluginResult
+    public class FlowLauncherPluginResult
     {
         public string plugin_file;
         public string description;

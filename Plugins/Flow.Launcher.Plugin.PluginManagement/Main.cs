@@ -123,10 +123,10 @@ namespace Flow.Launcher.Plugin.PluginManagement
                 Log.Exception("|PluginManagement.ResultForInstallPlugin|Can't connect to Flow.Launcher plugin website, check your conenction", e);
                 return new List<Result>();
             }
-            List<Flow.LauncherPluginResult> searchedPlugins;
+            List<FlowLauncherPluginResult> searchedPlugins;
             try
             {
-                searchedPlugins = JsonConvert.DeserializeObject<List<Flow.LauncherPluginResult>>(json);
+                searchedPlugins = JsonConvert.DeserializeObject<List<FlowLauncherPluginResult>>(json);
             }
             catch (JsonSerializationException e)
             {
@@ -135,9 +135,9 @@ namespace Flow.Launcher.Plugin.PluginManagement
                 return results;
             }
 
-            foreach (Flow.LauncherPluginResult r in searchedPlugins)
+            foreach (FlowLauncherPluginResult r in searchedPlugins)
             {
-                Flow.LauncherPluginResult r1 = r;
+                FlowLauncherPluginResult r1 = r;
                 results.Add(new Result
                 {
                     Title = r.name,

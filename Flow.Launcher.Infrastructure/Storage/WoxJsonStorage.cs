@@ -8,9 +8,9 @@ using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-    public class Flow.LauncherJsonStorage<T> : JsonStrorage<T> where T : new()
+    public class FlowLauncherJsonStorage<T> : JsonStrorage<T> where T : new()
     {
-        public Flow.LauncherJsonStorage()
+        public FlowLauncherJsonStorage()
         {
             var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
             Helper.ValidateDirectory(directoryPath);

@@ -73,7 +73,7 @@ namespace Flow.Launcher
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
-                Current.MainWindow.Title = Constant.Flow.Launcher;
+                Current.MainWindow.Title = Constant.FlowLauncher;
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
@@ -98,7 +98,7 @@ namespace Flow.Launcher
 
         private void AutoStartup()
         {
-            if (_settings.StartFlow.LauncherOnSystemStartup)
+            if (_settings.StartFlowLauncherOnSystemStartup)
             {
                 if (!SettingWindow.StartupSet())
                 {

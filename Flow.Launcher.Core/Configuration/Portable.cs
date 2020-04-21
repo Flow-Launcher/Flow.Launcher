@@ -19,7 +19,7 @@ namespace Flow.Launcher.Core.Configuration
         /// <returns></returns>
         private UpdateManager NewUpdateManager()
         {
-            return new UpdateManager(string.Empty, Constant.Flow.Launcher, Constant.RootDirectory);
+            return new UpdateManager(string.Empty, Constant.FlowLauncher, Constant.RootDirectory);
         }
 
         public void DisablePortableMode()
@@ -126,7 +126,7 @@ namespace Flow.Launcher.Core.Configuration
                     .CreateSubKey("Uninstall", RegistryKeyPermissionCheck.ReadWriteSubTree)) {; }
 
             var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                .CreateSubKey(uninstallRegSubKey + "\\" + Constant.Flow.Launcher, RegistryKeyPermissionCheck.ReadWriteSubTree);
+                .CreateSubKey(uninstallRegSubKey + "\\" + Constant.FlowLauncher, RegistryKeyPermissionCheck.ReadWriteSubTree);
             key.SetValue("DisplayIcon", Constant.ApplicationDirectory + "\\app.ico", RegistryValueKind.String);
 
             using (var portabilityUpdater = NewUpdateManager())

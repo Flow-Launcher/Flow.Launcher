@@ -144,7 +144,7 @@ namespace Flow.Launcher
             return PluginManager.AllPlugins.ToList();
         }
 
-        public event Flow.LauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
         [Obsolete("This will be removed in Flow.Launcher 1.3")]
         public void PushResults(Query query, PluginMetadata plugin, List<Result> results)

@@ -23,13 +23,13 @@ namespace Flow.Launcher.ViewModel
     {
         private readonly Updater _updater;
         private readonly IPortable _portable;
-        private readonly Flow.LauncherJsonStorage<Settings> _storage;
+        private readonly FlowLauncherJsonStorage<Settings> _storage;
 
         public SettingWindowViewModel(Updater updater, IPortable portable)
         {
             _updater = updater;
             _portable = portable;
-            _storage = new Flow.LauncherJsonStorage<Settings>();
+            _storage = new FlowLauncherJsonStorage<Settings>();
             Settings = _storage.Load();
             Settings.PropertyChanged += (s, e) =>
             {

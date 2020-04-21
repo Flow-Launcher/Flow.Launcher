@@ -133,6 +133,6 @@ namespace Flow.Launcher.Plugin
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
-        event Flow.LauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
     }
 }
