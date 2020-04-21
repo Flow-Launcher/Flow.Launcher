@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">Schließen</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Flow.Launcher Einstellungen</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow.Launcher Einstellungen</system:String>
     <system:String x:Key="general">Allgemein</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">Starte Flow.Launcher bei Systemstart</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verstecke Flow.Launcher wenn der Fokus verloren geht</system:String>
@@ -50,7 +50,7 @@
     
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Tastenkombination</system:String>
-    <system:String x:Key="woxHotkey">Flow.Launcher Tastenkombination</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow.Launcher Tastenkombination</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage Tastenkombination</system:String>
     <system:String x:Key="delete">Löschen</system:String>
     <system:String x:Key="edit">Bearbeiten</system:String>
@@ -117,16 +117,16 @@
     <system:String x:Key="reportWindow_sending">Sende</system:String>
     <system:String x:Key="reportWindow_report_succeed">Report erfolgreich</system:String>
     <system:String x:Key="reportWindow_report_failed">Report fehlgeschlagen</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher hat einen Fehler</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher hat einen Fehler</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">V{0} von Flow.Launcher ist verfügbar</system:String>
-    <system:String x:Key="update_wox_update_error">Es ist ein Fehler während der Installation der Aktualisierung aufgetreten.</system:String>
-    <system:String x:Key="update_wox_update">Aktualisieren</system:String>
-    <system:String x:Key="update_wox_update_cancel">Abbrechen</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Diese Aktualisierung wird Flow.Launcher neu starten</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">Folgende Dateien werden aktualisiert</system:String>
-    <system:String x:Key="update_wox_update_files">Aktualisiere Dateien</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">Aktualisierungbeschreibung</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">V{0} von Flow.Launcher ist verfügbar</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Es ist ein Fehler während der Installation der Aktualisierung aufgetreten.</system:String>
+    <system:String x:Key="update_flowlauncher_update">Aktualisieren</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Abbrechen</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Diese Aktualisierung wird Flow.Launcher neu starten</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Folgende Dateien werden aktualisiert</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Aktualisiere Dateien</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualisierungbeschreibung</system:String>
     
 </ResourceDictionary>

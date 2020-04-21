@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Eklenti Bilgisi-->
-    <system:String x:Key="wox_plugin_browserbookmark_plugin_name">Yer İşaretleri</system:String>
-    <system:String x:Key="wox_plugin_browserbookmark_plugin_description">Tarayıcılarınızdaki yer işaretlerini arayın.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Yer İşaretleri</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tarayıcılarınızdaki yer işaretlerini arayın.</system:String>
 
 </ResourceDictionary>

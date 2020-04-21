@@ -36,12 +36,12 @@ namespace Flow.Launcher.Plugin.PluginIndicator
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("wox_plugin_pluginindicator_plugin_name");
+            return context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("wox_plugin_pluginindicator_plugin_description");
+            return context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_description");
         }
     }
 }

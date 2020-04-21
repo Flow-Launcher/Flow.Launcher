@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">Afsluiten</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Flow.Launcher Instellingen</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow.Launcher Instellingen</system:String>
     <system:String x:Key="general">Algemeen</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow.Launcher als systeem opstart</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verberg Flow.Launcher als focus verloren is</system:String>
@@ -50,7 +50,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Sneltoets</system:String>
-    <system:String x:Key="woxHotkey">Flow.Launcher Sneltoets</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow.Launcher Sneltoets</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Sneltoets</system:String>
     <system:String x:Key="delete">Verwijder</system:String>
     <system:String x:Key="edit">Bewerken</system:String>
@@ -117,16 +117,16 @@
     <system:String x:Key="reportWindow_sending">Versturen</system:String>
     <system:String x:Key="reportWindow_report_succeed">Rapport succesvol</system:String>
     <system:String x:Key="reportWindow_report_failed">Rapport mislukt</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher heeft een error</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher heeft een error</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">Nieuwe Flow.Launcher release {0} nu beschikbaar</system:String>
-    <system:String x:Key="update_wox_update_error">Een error is voorgekomen tijdens het installeren van de update</system:String>
-    <system:String x:Key="update_wox_update">Update</system:String>
-    <system:String x:Key="update_wox_update_cancel">Annuleer</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Deze upgrade zal Flow.Launcher opnieuw opstarten</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">Volgende bestanden zullen worden geüpdatet</system:String>
-    <system:String x:Key="update_wox_update_files">Update bestanden</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">Update beschrijving</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Nieuwe Flow.Launcher release {0} nu beschikbaar</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Een error is voorgekomen tijdens het installeren van de update</system:String>
+    <system:String x:Key="update_flowlauncher_update">Update</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Annuleer</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Deze upgrade zal Flow.Launcher opnieuw opstarten</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Volgende bestanden zullen worden geüpdatet</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Update bestanden</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">Update beschrijving</system:String>
 
 </ResourceDictionary>

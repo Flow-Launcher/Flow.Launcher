@@ -112,7 +112,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Install Flow.Launcher plugin
         /// </summary>
-        /// <param name="path">Plugin path (ends with .wox)</param>
+        /// <param name="path">Plugin path (ends with .flowlauncher)</param>
         void InstallPlugin(string path);
 
         /// <summary>

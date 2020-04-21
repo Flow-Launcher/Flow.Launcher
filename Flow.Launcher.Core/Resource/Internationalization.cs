@@ -26,7 +26,7 @@ namespace Flow.Launcher.Core.Resource
             AddPluginLanguageDirectories();
             LoadDefaultLanguage();
             // we don't want to load /Languages/en.xaml twice
-            // so add wox language directory after load plugin language files
+            // so add flowlauncher language directory after load plugin language files
             AddFlowLauncherLanguageDirectory();
         }
 

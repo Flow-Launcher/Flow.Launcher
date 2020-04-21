@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">退出</system:String>
     
     <!--设置，通用-->
-    <system:String x:Key="wox_settings">Flow.Launcher设置</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow.Launcher设置</system:String>
     <system:String x:Key="general">通用</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">开机启动</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">失去焦点时自动隐藏Flow.Launcher</system:String>
@@ -57,7 +57,7 @@
     
     <!--设置，热键-->
     <system:String x:Key="hotkey">热键</system:String>
-    <system:String x:Key="woxHotkey">Flow.Launcher激活热键</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow.Launcher激活热键</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="about_activate_times">你已经激活了Flow.Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">检查更新</system:String>
-    <system:String x:Key="newVersionTips">发现新版本 {0} , 请重启 wox。</system:String>
+    <system:String x:Key="newVersionTips">发现新版本 {0} , 请重启 flowlauncher。</system:String>
     <system:String x:Key="releaseNotes">更新说明:</system:String>
 
     <!--Action Keyword 设置对话框-->
@@ -124,16 +124,16 @@
     <system:String x:Key="reportWindow_sending">发送中</system:String>
     <system:String x:Key="reportWindow_report_succeed">发送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher出错啦</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher出错啦</system:String>
 
     <!--更新-->
-    <system:String x:Key="update_wox_update_new_version_available">发现Flow.Launcher新版本 V{0}</system:String>
-    <system:String x:Key="update_wox_update_error">更新Flow.Launcher出错</system:String>
-    <system:String x:Key="update_wox_update">更新</system:String>
-    <system:String x:Key="update_wox_update_cancel">取消</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">此更新需要重启Flow.Launcher</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">下列文件会被更新</system:String>
-    <system:String x:Key="update_wox_update_files">更新文件</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">更新日志</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">发现Flow.Launcher新版本 V{0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">更新Flow.Launcher出错</system:String>
+    <system:String x:Key="update_flowlauncher_update">更新</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重启Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">下列文件会被更新</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">更新文件</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">更新日志</system:String>
 
 </ResourceDictionary>

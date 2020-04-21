@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">Çıkış</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Flow.Launcher Ayarları</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow.Launcher Ayarları</system:String>
     <system:String x:Key="general">Genel</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">Flow.Launcher'u başlangıçta başlat</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Odak pencereden ayrıldığında Flow.Launcher'u gizle</system:String>
@@ -58,7 +58,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
-    <system:String x:Key="woxHotkey">Flow.Launcher Kısayolu</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow.Launcher Kısayolu</system:String>
     <system:String x:Key="customQueryHotkey">Özel Sorgu Kısayolları</system:String>
     <system:String x:Key="delete">Sil</system:String>
     <system:String x:Key="edit">Düzenle</system:String>
@@ -130,16 +130,16 @@
     <system:String x:Key="reportWindow_sending">Gönderiliyor</system:String>
     <system:String x:Key="reportWindow_report_succeed">Hata raporu başarıyla gönderildi</system:String>
     <system:String x:Key="reportWindow_report_failed">Hata raporu gönderimi başarısız oldu</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher'ta bir hata oluştu</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher'ta bir hata oluştu</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">Flow.Launcher'un yeni bir sürümü ({0}) mevcut</system:String>
-    <system:String x:Key="update_wox_update_error">Güncellemelerin kurulması sırasında bir hata oluştu</system:String>
-    <system:String x:Key="update_wox_update">Güncelle</system:String>
-    <system:String x:Key="update_wox_update_cancel">İptal</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Bu güncelleme Flow.Launcher'u yeniden başlatacaktır</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">Aşağıdaki dosyalar güncelleştirilecektir</system:String>
-    <system:String x:Key="update_wox_update_files">Güncellenecek dosyalar</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">Güncelleme açıklaması</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Flow.Launcher'un yeni bir sürümü ({0}) mevcut</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Güncellemelerin kurulması sırasında bir hata oluştu</system:String>
+    <system:String x:Key="update_flowlauncher_update">Güncelle</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">İptal</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Bu güncelleme Flow.Launcher'u yeniden başlatacaktır</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Aşağıdaki dosyalar güncelleştirilecektir</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Güncellenecek dosyalar</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">Güncelleme açıklaması</system:String>
 
 </ResourceDictionary>

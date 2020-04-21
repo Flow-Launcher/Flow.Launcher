@@ -59,7 +59,7 @@ namespace Flow.Launcher.Plugin.Everything
                 {
                     results.Add(new Result
                     {
-                        Title = _context.API.GetTranslation("wox_plugin_everything_is_not_running"),
+                        Title = _context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running"),
                         IcoPath = "Images\\warning.png"
                     });
                 }
@@ -68,12 +68,12 @@ namespace Flow.Launcher.Plugin.Everything
                     Log.Exception("EverythingPlugin", "Query Error", e);
                     results.Add(new Result
                     {
-                        Title = _context.API.GetTranslation("wox_plugin_everything_query_error"),
+                        Title = _context.API.GetTranslation("flowlauncher_plugin_everything_query_error"),
                         SubTitle = e.Message,
                         Action = _ =>
                         {
                             Clipboard.SetText(e.Message + "\r\n" + e.StackTrace);
-                            _context.API.ShowMsg(_context.API.GetTranslation("wox_plugin_everything_copied"), null, string.Empty);
+                            _context.API.ShowMsg(_context.API.GetTranslation("flowlauncher_plugin_everything_copied"), null, string.Empty);
                             return false;
                         },
                         IcoPath = "Images\\error.png"
@@ -132,7 +132,7 @@ namespace Flow.Launcher.Plugin.Everything
             List<ContextMenu> defaultContextMenus = new List<ContextMenu>();
             ContextMenu openFolderContextMenu = new ContextMenu
             {
-                Name = _context.API.GetTranslation("wox_plugin_everything_open_containing_folder"),
+                Name = _context.API.GetTranslation("flowlauncher_plugin_everything_open_containing_folder"),
                 Command = "explorer.exe",
                 Argument = " /select,\"{path}\"",
                 ImagePath = "Images\\folder.png"
@@ -144,7 +144,7 @@ namespace Flow.Launcher.Plugin.Everything
 
             ContextMenu openWithEditorContextMenu = new ContextMenu
             {
-                Name = string.Format(_context.API.GetTranslation("wox_plugin_everything_open_with_editor"), Path.GetFileNameWithoutExtension(editorPath)),
+                Name = string.Format(_context.API.GetTranslation("flowlauncher_plugin_everything_open_with_editor"), Path.GetFileNameWithoutExtension(editorPath)),
                 Command = editorPath,
                 Argument = " \"{path}\"",
                 ImagePath = editorPath
@@ -183,12 +183,12 @@ namespace Flow.Launcher.Plugin.Everything
 
         public string GetTranslatedPluginTitle()
         {
-            return _context.API.GetTranslation("wox_plugin_everything_plugin_name");
+            return _context.API.GetTranslation("flowlauncher_plugin_everything_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return _context.API.GetTranslation("wox_plugin_everything_plugin_description");
+            return _context.API.GetTranslation("flowlauncher_plugin_everything_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -218,7 +218,7 @@ namespace Flow.Launcher.Plugin.Everything
                             }
                             catch
                             {
-                                _context.API.ShowMsg(string.Format(_context.API.GetTranslation("wox_plugin_everything_canot_start"), record.FullPath), string.Empty, string.Empty);
+                                _context.API.ShowMsg(string.Format(_context.API.GetTranslation("flowlauncher_plugin_everything_canot_start"), record.FullPath), string.Empty, string.Empty);
                                 return false;
                             }
                             return true;
@@ -231,7 +231,7 @@ namespace Flow.Launcher.Plugin.Everything
             var icoPath = (record.Type == ResultType.File) ? "Images\\file.png" : "Images\\folder.png";
             contextMenus.Add(new Result
             {
-                Title = _context.API.GetTranslation("wox_plugin_everything_copy_path"),
+                Title = _context.API.GetTranslation("flowlauncher_plugin_everything_copy_path"),
                 Action = (context) =>
                 {
                     Clipboard.SetText(record.FullPath);
@@ -242,7 +242,7 @@ namespace Flow.Launcher.Plugin.Everything
 
             contextMenus.Add(new Result
             {
-                Title = _context.API.GetTranslation("wox_plugin_everything_copy"),
+                Title = _context.API.GetTranslation("flowlauncher_plugin_everything_copy"),
                 Action = (context) =>
                 {
                     Clipboard.SetFileDropList(new System.Collections.Specialized.StringCollection { record.FullPath });
@@ -254,7 +254,7 @@ namespace Flow.Launcher.Plugin.Everything
             if (record.Type == ResultType.File || record.Type == ResultType.Folder)
                 contextMenus.Add(new Result
                 {
-                    Title = _context.API.GetTranslation("wox_plugin_everything_delete"),
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_everything_delete"),
                     Action = (context) =>
                     {
                         try
@@ -266,7 +266,7 @@ namespace Flow.Launcher.Plugin.Everything
                         }
                         catch
                         {
-                            _context.API.ShowMsg(string.Format(_context.API.GetTranslation("wox_plugin_everything_canot_delete"), record.FullPath), string.Empty, string.Empty);
+                            _context.API.ShowMsg(string.Format(_context.API.GetTranslation("flowlauncher_plugin_everything_canot_delete"), record.FullPath), string.Empty, string.Empty);
                             return false;
                         }
 

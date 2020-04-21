@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Регистрация хоткея {0} не удалась</system:String>
     <system:String x:Key="couldnotStartCmd">Не удалось запустить {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Неверный формат файла wox плагина</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Неверный формат файла flowlauncher плагина</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Отображать это окно выше всех при этом запросе</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Не отображать это окно выше всех при этом запросе</system:String>
     <system:String x:Key="executeQuery">Выполнить запрос:{0}</system:String>
@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">Закрыть</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Настройки Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Настройки Flow.Launcher</system:String>
     <system:String x:Key="general">Общие</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">Запускать Flow.Launcher при запуске системы</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Скрывать Flow.Launcher если потерян фокус</system:String>
@@ -50,7 +50,7 @@
     
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Горячие клавиши</system:String>
-    <system:String x:Key="woxHotkey">Горячая клавиша Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Горячая клавиша Flow.Launcher</system:String>
     <system:String x:Key="customQueryHotkey">Задаваемые горячие клавиши для запросов</system:String>
     <system:String x:Key="delete">Удалить</system:String>
     <system:String x:Key="edit">Изменить</system:String>
@@ -80,7 +80,7 @@
     <system:String x:Key="version">Версия</system:String>
     <system:String x:Key="about_activate_times">Вы воспользовались Flow.Launcher уже {0} раз</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
-    <system:String x:Key="newVersionTips">New version {0} avaiable, please restart wox</system:String>
+    <system:String x:Key="newVersionTips">New version {0} avaiable, please restart flowlauncher</system:String>
     <system:String x:Key="releaseNotes">Release Notes:</system:String>
 
     <!--Action Keyword Setting Dialog-->
@@ -117,16 +117,16 @@
     <system:String x:Key="reportWindow_sending">Отправляем</system:String>
     <system:String x:Key="reportWindow_report_succeed">Отчёт успешно отправлен</system:String>
     <system:String x:Key="reportWindow_report_failed">Не удалось отправить отчёт</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Произошёл сбой в Flow.Launcher</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Произошёл сбой в Flow.Launcher</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">Доступна новая версия Flow.Launcher V{0}</system:String>
-    <system:String x:Key="update_wox_update_error">Произошла ошибка при попытке установить обновление</system:String>
-    <system:String x:Key="update_wox_update">Обновить</system:String>
-    <system:String x:Key="update_wox_update_cancel">Отмена</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Это обновление перезапустит Flow.Launcher</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">Следующие файлы будут обновлены</system:String>
-    <system:String x:Key="update_wox_update_files">Обновить файлы</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">Описание обновления</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Доступна новая версия Flow.Launcher V{0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Произошла ошибка при попытке установить обновление</system:String>
+    <system:String x:Key="update_flowlauncher_update">Обновить</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Отмена</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Это обновление перезапустит Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Следующие файлы будут обновлены</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Обновить файлы</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">Описание обновления</system:String>
     
 </ResourceDictionary>

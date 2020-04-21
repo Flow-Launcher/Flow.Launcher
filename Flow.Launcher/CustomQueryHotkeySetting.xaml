@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Flow.Launcher.CustomQueryHotkeySetting"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:wox="clr-namespace:Flow.Launcher"
+        xmlns:flowlauncher="clr-namespace:Flow.Launcher"
         Icon="Images\app.png"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Margin="10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                    HorizontalAlignment="Right" Text="{DynamicResource hotkey}" />
-        <wox:HotkeyControl x:Name="ctlHotkey" Margin="10" Grid.Column="1" />
+        <flowlauncher:HotkeyControl x:Name="ctlHotkey" Margin="10" Grid.Column="1" />
 
         <TextBlock Margin="10" FontSize="14" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                    HorizontalAlignment="Right" Text="{DynamicResource actionKeyword}" />

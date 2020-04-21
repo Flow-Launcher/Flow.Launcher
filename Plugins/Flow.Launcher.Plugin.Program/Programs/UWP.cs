@@ -318,7 +318,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     new Result
                     {
-                        Title = api.GetTranslation("wox_plugin_program_open_containing_folder"),
+                        Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
 
                         Action = _ =>
                         {

@@ -22,13 +22,13 @@ namespace Flow.Launcher.Plugin.Program
         {
             if (string.IsNullOrEmpty(tbSuffixes.Text))
             {
-                string warning = context.API.GetTranslation("wox_plugin_program_suffixes_cannot_empty");
+                string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");
                 MessageBox.Show(warning);
                 return;
             }
 
             _settings.ProgramSuffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator);
-            string msg = context.API.GetTranslation("wox_plugin_program_update_file_suffixes");
+            string msg = context.API.GetTranslation("flowlauncher_plugin_program_update_file_suffixes");
             MessageBox.Show(msg);
 
             DialogResult = true;

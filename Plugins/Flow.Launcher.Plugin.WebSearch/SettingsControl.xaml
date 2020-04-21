@@ -19,7 +19,7 @@
             <CheckBox IsChecked="{Binding Settings.EnableSuggestion}"
                       Margin="0 10 10 10"
                       Name="EnableSuggestion"
-                      Content="{DynamicResource wox_plugin_websearch_enable_suggestion}" />
+                      Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}" />
             <ComboBox ItemsSource="{Binding Settings.Suggestions}"
                       SelectedItem="{Binding Settings.SelectedSuggestion}"
                       IsEnabled="{Binding ElementName=EnableSuggestion, Path=IsChecked}" Margin="10,3,10,10" />
@@ -38,14 +38,14 @@
                   Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{DynamicResource wox_plugin_websearch_action_keyword}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ActionKeyword}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource wox_plugin_websearch_url}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Url}" />
@@ -57,11 +57,11 @@
         </ListView>
         <StackPanel Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Click="OnDeleteSearchSearchClick" Width="100" Margin="10"
-                    Content="{DynamicResource wox_plugin_websearch_delete}" />
+                    Content="{DynamicResource flowlauncher_plugin_websearch_delete}" />
             <Button Click="OnEditSearchSourceClick" Width="100" Margin="10"
-                    Content="{DynamicResource wox_plugin_websearch_edit}" />
+                    Content="{DynamicResource flowlauncher_plugin_websearch_edit}" />
             <Button Click="OnAddSearchSearchClick" Width="100" Margin="10"
-                    Content="{DynamicResource wox_plugin_websearch_add}" />
+                    Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
     </Grid>
 </UserControl>

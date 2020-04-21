@@ -13,7 +13,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (File.Exists(path))
             {
-                string tempFoler = Path.Combine(Path.GetTempPath(), "wox\\plugins");
+                string tempFoler = Path.Combine(Path.GetTempPath(), "flowlauncher\\plugins");
                 if (Directory.Exists(tempFoler))
                 {
                     Directory.Delete(tempFoler, true);
@@ -77,7 +77,7 @@ namespace Flow.Launcher.Core.Plugin
                     //exsiting plugins may be has loaded by application,
                     //if we try to delelte those kind of plugins, we will get a  error that indicate the
                     //file is been used now.
-                    //current solution is to restart wox. Ugly.
+                    //current solution is to restart flowlauncher. Ugly.
                     //if (MainWindow.Initialized)
                     //{
                     //    Plugins.Initialize();

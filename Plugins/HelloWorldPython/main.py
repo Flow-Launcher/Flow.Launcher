@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from wox import Flow.Launcher
+from flowlauncher import Flow.Launcher
 
 class HelloWorld(Flow.Launcher):
 

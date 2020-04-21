@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 new Result
                 {
-                    Title = api.GetTranslation("wox_plugin_program_run_as_different_user"),
+                    Title = api.GetTranslation("flowlauncher_plugin_program_run_as_different_user"),
                     Action = _ =>
                     {
                         var info = new ProcessStartInfo
@@ -118,7 +118,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 },
                 new Result
                 {
-                    Title = api.GetTranslation("wox_plugin_program_run_as_administrator"),
+                    Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
                     Action = _ =>
                     {
                         var info = new ProcessStartInfo
@@ -137,7 +137,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 },
                 new Result
                 {
-                    Title = api.GetTranslation("wox_plugin_program_open_containing_folder"),
+                    Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
                     {
 

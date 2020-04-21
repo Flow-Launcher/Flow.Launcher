@@ -50,17 +50,17 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             if (string.IsNullOrEmpty(_searchSource.Title))
             {
-                var warning = _api.GetTranslation("wox_plugin_websearch_input_title");
+                var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_title");
                 MessageBox.Show(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.Url))
             {
-                var warning = _api.GetTranslation("wox_plugin_websearch_input_url");
+                var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_url");
                 MessageBox.Show(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.ActionKeyword))
             {
-                var warning = _api.GetTranslation("wox_plugin_websearch_input_action_keyword");
+                var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_action_keyword");
                 MessageBox.Show(warning);
             }
             else if (_action == Action.Add)

@@ -7,8 +7,8 @@
     <licenseUrl>https://github.com/jjw24/Flow.Launcher/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/jjw24/Flow.Launcher</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Reference this library if you want to develop a wox plugin</description>
-    <tags>wox</tags>
+    <description>Reference this library if you want to develop a Flow Launcher plugin</description>
+    <tags>flowlauncher</tags>
   </metadata>
   <files>
       <file src="..\Output\Release\Flow.Launcher.Plugin.dll" target="lib\net452" />

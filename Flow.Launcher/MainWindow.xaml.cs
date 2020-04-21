@@ -52,7 +52,7 @@ namespace Flow.Launcher
 
         private void OnInitialized(object sender, EventArgs e)
         {
-            // show notify icon when wox is hided
+            // show notify icon when flowlauncher is hided
             InitializeNotifyIcon();
         }
 
@@ -186,7 +186,7 @@ namespace Flow.Launcher
             {
                 // Note that you can have more than one file.
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files[0].ToLower().EndsWith(".wox"))
+                if (files[0].ToLower().EndsWith(".flowlauncher"))
                 {
                     PluginManager.InstallPlugin(files[0]);
                 }

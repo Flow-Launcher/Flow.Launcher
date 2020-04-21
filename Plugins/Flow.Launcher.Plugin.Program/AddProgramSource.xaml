@@ -9,13 +9,13 @@
              WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
-            <Label Content="{DynamicResource wox_plugin_program_directory}"/>
+            <Label Content="{DynamicResource flowlauncher_plugin_program_directory}"/>
             <TextBox Name="Directory" VerticalAlignment="Center" Width="300" Margin="0,7" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Click="BrowseButton_Click" Content="{DynamicResource wox_plugin_program_browse}" 
+            <Button Click="BrowseButton_Click" Content="{DynamicResource flowlauncher_plugin_program_browse}" 
                 HorizontalAlignment="Right" Margin="10" Height="20" Width="70"   />
-            <Button Click="ButtonAdd_OnClick"  Content="{DynamicResource wox_plugin_program_update}" 
+            <Button Click="ButtonAdd_OnClick"  Content="{DynamicResource flowlauncher_plugin_program_update}" 
                 HorizontalAlignment="Right" Margin="10" Height="20" Width="70"  />
         </StackPanel>
     </StackPanel>

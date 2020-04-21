@@ -10,7 +10,7 @@
              ResizeMode="NoResize"
              Width="600"
              Height="455"
-             Title="{DynamicResource reportWindow_wox_got_an_error}"
+             Title="{DynamicResource reportWindow_flowlauncher_got_an_error}"
              d:DesignHeight="300" d:DesignWidth="600" x:ClassModifier="internal">
     <RichTextBox x:Name="ErrorTextbox" 
                  IsDocumentEnabled="True"

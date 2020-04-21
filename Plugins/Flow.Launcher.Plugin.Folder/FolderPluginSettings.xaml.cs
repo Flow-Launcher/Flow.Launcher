@@ -13,12 +13,12 @@ namespace Flow.Launcher.Plugin.Folder
 
     public partial class FileSystemSettings
     {
-        private IPublicAPI woxAPI;
+        private IPublicAPI flowlauncherAPI;
         private Settings _settings;
 
-        public FileSystemSettings(IPublicAPI woxAPI, Settings settings)
+        public FileSystemSettings(IPublicAPI flowlauncherAPI, Settings settings)
         {
-            this.woxAPI = woxAPI;
+            this.flowlauncherAPI = flowlauncherAPI;
             InitializeComponent();
             _settings = settings;
             lbxFolders.ItemsSource = _settings.FolderLinks;
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Folder
             var selectedFolder = lbxFolders.SelectedItem as FolderLink;
             if (selectedFolder != null)
             {
-                string msg = string.Format(woxAPI.GetTranslation("wox_plugin_folder_delete_folder_link"), selectedFolder.Path);
+                string msg = string.Format(flowlauncherAPI.GetTranslation("flowlauncher_plugin_folder_delete_folder_link"), selectedFolder.Path);
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Folder
             }
             else
             {
-                string warning = woxAPI.GetTranslation("wox_plugin_folder_select_folder_link_warning");
+                string warning = flowlauncherAPI.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
                 MessageBox.Show(warning);
             }
         }
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Folder
             }
             else
             {
-                string warning = woxAPI.GetTranslation("wox_plugin_folder_select_folder_link_warning");
+                string warning = flowlauncherAPI.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
                 MessageBox.Show(warning);
             }
         }

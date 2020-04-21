@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:wox="clr-namespace:Flow.Launcher"
+        xmlns:flowlauncher="clr-namespace:Flow.Launcher"
         xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
@@ -10,7 +10,7 @@
         x:Class="Flow.Launcher.SettingWindow"
         mc:Ignorable="d"
         Icon="Images\app.png"
-        Title="{DynamicResource wox_settings}"
+        Title="{DynamicResource flowlauncher_settings}"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800" 
@@ -227,7 +227,7 @@
                                     <TextBox Text="{DynamicResource helloFlow.Launcher}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}" Grid.Row="0" />
                                     <ContentControl Visibility="Visible" Grid.Row="1">
-                                        <wox:ResultListBox DataContext="{Binding PreviewResults}" />
+                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults}" />
                                     </ContentControl>
                                 </Grid>
                             </Border>
@@ -294,8 +294,8 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Height="24"
                             Margin="0,4,0,3">
-                    <TextBlock VerticalAlignment="Center" Margin="0 0 10 0" Text="{DynamicResource woxHotkey}" />
-                    <wox:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 10 0" Text="{DynamicResource flowlauncherHotkey}" />
+                    <flowlauncher:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
                                        Loaded="OnHotkeyControlLoaded" />
                 </StackPanel>
                 <TextBlock VerticalAlignment="Center" Grid.Row="1" Margin="0,3,10,2"

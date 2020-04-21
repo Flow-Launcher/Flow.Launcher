@@ -133,12 +133,12 @@ namespace Flow.Launcher.Plugin.Program
 
         public string GetTranslatedPluginTitle()
         {
-            return _context.API.GetTranslation("wox_plugin_program_plugin_name");
+            return _context.API.GetTranslation("flowlauncher_plugin_program_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return _context.API.GetTranslation("wox_plugin_program_plugin_description");
+            return _context.API.GetTranslation("flowlauncher_plugin_program_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -153,12 +153,12 @@ namespace Flow.Launcher.Plugin.Program
             menuOptions.Add(
                                 new Result
                                 {
-                                    Title = _context.API.GetTranslation("wox_plugin_program_disable_program"),
+                                    Title = _context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
                                     Action = c =>
                                     {
                                         DisableProgram(program);
-                                        _context.API.ShowMsg(_context.API.GetTranslation("wox_plugin_program_disable_dlgtitle_success"),
-                                                                _context.API.GetTranslation("wox_plugin_program_disable_dlgtitle_success_message"));
+                                        _context.API.ShowMsg(_context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                                                                _context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success_message"));
                                         return false;
                                     },
                                     IcoPath = "Images/disable.png"

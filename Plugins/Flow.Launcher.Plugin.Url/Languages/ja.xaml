@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="wox_plugin_url_open_url">次のURLを開く:{0}</system:String>
-    <system:String x:Key="wox_plugin_url_canot_open_url">次のURLを開くことができません:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_open_url">次のURLを開く:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">次のURLを開くことができません:{0}</system:String>
 
-    <system:String x:Key="wox_plugin_url_plugin_name">URL</system:String>
-    <system:String x:Key="wox_plugin_url_plugin_description">入力したURLをFlow.Launcherから開くプラグインです。</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_description">入力したURLをFlow.Launcherから開くプラグインです。</system:String>
 
 </ResourceDictionary>

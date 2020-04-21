@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">結束</system:String>
 
     <!--設定，一般-->
-    <system:String x:Key="wox_settings">Flow.Launcher 設定</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow.Launcher 設定</system:String>
     <system:String x:Key="general">一般</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">開機時啟動</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">失去焦點時自動隱藏 Flow.Launcher</system:String>
@@ -50,7 +50,7 @@
 
     <!--設置，熱鍵-->
     <system:String x:Key="hotkey">熱鍵</system:String>
-    <system:String x:Key="woxHotkey">Flow.Launcher 執行熱鍵</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow.Launcher 執行熱鍵</system:String>
     <system:String x:Key="customQueryHotkey">自定義熱鍵查詢</system:String>
     <system:String x:Key="delete">刪除</system:String>
     <system:String x:Key="edit">編輯</system:String>
@@ -117,16 +117,16 @@
     <system:String x:Key="reportWindow_sending">傳送中</system:String>
     <system:String x:Key="reportWindow_report_succeed">傳送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">傳送失敗</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher 出錯啦</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher 出錯啦</system:String>
 
     <!--更新-->
-    <system:String x:Key="update_wox_update_new_version_available">發現 Flow.Launcher 新版本 V{0}</system:String>
-    <system:String x:Key="update_wox_update_error">更新 Flow.Launcher 出錯</system:String>
-    <system:String x:Key="update_wox_update">更新</system:String>
-    <system:String x:Key="update_wox_update_cancel">取消</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">此更新需要重新啟動 Flow.Launcher</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">下列檔案會被更新</system:String>
-    <system:String x:Key="update_wox_update_files">更新檔案</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">更新日誌</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">發現 Flow.Launcher 新版本 V{0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">更新 Flow.Launcher 出錯</system:String>
+    <system:String x:Key="update_flowlauncher_update">更新</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">下列檔案會被更新</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">更新檔案</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">更新日誌</system:String>
 
 </ResourceDictionary>

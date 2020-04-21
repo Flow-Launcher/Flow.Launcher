@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (_settings.SelectedSearchSource != null)
             {
                 var selected = _settings.SelectedSearchSource;
-                var warning = _context.API.GetTranslation("wox_plugin_websearch_delete_warning");
+                var warning = _context.API.GetTranslation("flowlauncher_plugin_websearch_delete_warning");
                 var formated = string.Format(warning, selected.Title);
 
                 var result = MessageBox.Show(formated, string.Empty, MessageBoxButton.YesNo);

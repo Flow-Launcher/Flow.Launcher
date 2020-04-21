@@ -44,7 +44,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static void DeletePythonBinding()
         {
-            const string binding = "wox.py";
+            const string binding = "flowlauncher.py";
             var directory = DataLocation.PluginsDirectory;
             foreach (var subDirectory in Directory.GetDirectories(directory))
             {

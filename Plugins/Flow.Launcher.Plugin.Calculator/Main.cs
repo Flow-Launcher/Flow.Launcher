@@ -56,10 +56,10 @@ namespace Flow.Launcher.Plugin.Caculator
                 var result = MagesEngine.Interpret(expression);
 
                 if (result.ToString() == "NaN")
-                    result = Context.API.GetTranslation("wox_plugin_calculator_not_a_number");
+                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_not_a_number");
 
                 if (result is Function)
-                    result = Context.API.GetTranslation("wox_plugin_calculator_expression_not_complete");
+                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_expression_not_complete");
 
                 if (!string.IsNullOrEmpty(result?.ToString()))
                 {
@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin.Caculator
                             Title = newResult,
                             IcoPath = "Images/calculator.png",
                             Score = 300,
-                            SubTitle = Context.API.GetTranslation("wox_plugin_calculator_copy_number_to_clipboard"),
+                            SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
                             Action = c =>
                             {
                                 try
@@ -167,12 +167,12 @@ namespace Flow.Launcher.Plugin.Caculator
         
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("wox_plugin_caculator_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("wox_plugin_caculator_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_description");
         }
 
         public Control CreateSettingPanel()

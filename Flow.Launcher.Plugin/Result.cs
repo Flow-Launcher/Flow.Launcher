@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin
 
 
         /// <summary>
-        /// return true to hide wox after select result
+        /// return true to hide flowlauncher after select result
         /// </summary>
         public Func<ActionContext, bool> Action { get; set; }
 

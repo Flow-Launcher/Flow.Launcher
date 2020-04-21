@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
   
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource wox_plugin_calculator_output_decimal_seperator}" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource flowlauncher_plugin_calculator_output_decimal_seperator}" VerticalAlignment="Center" />
             <ComboBox x:Name="DecimalSeparatorComboBox"
                       Grid.Column="1"
                       Grid.Row="0"
@@ -41,7 +41,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource wox_plugin_calculator_max_decimal_places}" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}" VerticalAlignment="Center" />
             <ComboBox x:Name="MaxDecimalPlaces"
                       Grid.Column="1"
                       Grid.Row="1"

@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">Afslut</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Flow.Launcher indstillinger</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow.Launcher indstillinger</system:String>
     <system:String x:Key="general">Generelt</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow.Launcher ved system start</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Skjul Flow.Launcher ved mistet fokus</system:String>
@@ -50,7 +50,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Genvejstast</system:String>
-    <system:String x:Key="woxHotkey">Flow.Launcher genvejstast</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow.Launcher genvejstast</system:String>
     <system:String x:Key="customQueryHotkey">Tilpasset søgegenvejstast</system:String>
     <system:String x:Key="delete">Slet</system:String>
     <system:String x:Key="edit">Rediger</system:String>
@@ -117,16 +117,16 @@
     <system:String x:Key="reportWindow_sending">Sender</system:String>
     <system:String x:Key="reportWindow_report_succeed">Rapport sendt korrekt</system:String>
     <system:String x:Key="reportWindow_report_failed">Kunne ikke sende rapport</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher fik en fejl</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher fik en fejl</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">Ny Flow.Launcher udgivelse {0} er nu tilgængelig</system:String>
-    <system:String x:Key="update_wox_update_error">Der skete en fejl ifm. opdatering af Flow.Launcher</system:String>
-    <system:String x:Key="update_wox_update">Opdater</system:String>
-    <system:String x:Key="update_wox_update_cancel">Annuler</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Denne opdatering vil genstarte Flow.Launcher</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">Følgende filer bliver opdateret</system:String>
-    <system:String x:Key="update_wox_update_files">Opdatereringsfiler</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">Opdateringsbeskrivelse</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Ny Flow.Launcher udgivelse {0} er nu tilgængelig</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Der skete en fejl ifm. opdatering af Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update">Opdater</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Annuler</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Denne opdatering vil genstarte Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Følgende filer bliver opdateret</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Opdatereringsfiler</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">Opdateringsbeskrivelse</system:String>
 
 </ResourceDictionary>

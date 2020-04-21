@@ -152,9 +152,9 @@ namespace Flow.Launcher.Plugin.PluginManagement
 
                         if (result == MessageBoxResult.Yes)
                         {
-                            string folder = Path.Combine(Path.GetTempPath(), "Flow.LauncherPluginDownload");
+                            string folder = Path.Combine(Path.GetTempPath(), "FlowLauncherPluginDownload");
                             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
-                            string filePath = Path.Combine(folder, Guid.NewGuid().ToString() + ".wox");
+                            string filePath = Path.Combine(folder, Guid.NewGuid().ToString() + ".flowlauncher");
 
                             string pluginUrl = APIBASE + "/media/" + r1.plugin_file;
 
@@ -248,12 +248,12 @@ namespace Flow.Launcher.Plugin.PluginManagement
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("wox_plugin_plugin_management_plugin_name");
+            return context.API.GetTranslation("flowlauncher_plugin_plugin_management_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("wox_plugin_plugin_management_plugin_description");
+            return context.API.GetTranslation("flowlauncher_plugin_plugin_management_plugin_description");
         }
     }
 }

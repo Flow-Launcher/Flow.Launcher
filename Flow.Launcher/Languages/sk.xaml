@@ -15,7 +15,7 @@
     <system:String x:Key="iconTrayExit">Ukončiť</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="wox_settings">Nastavenia Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Nastavenia Flow.Launcher</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">Spustiť Flow.Launcher po štarte systému</system:String>
     <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Schovať Flow.Launcher po strate fokusu</system:String>
@@ -55,7 +55,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Klávesová skratka</system:String>
-    <system:String x:Key="woxHotkey">Klávesová skratka pre Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow.Launcher</system:String>
     <system:String x:Key="customQueryHotkey">Vlastná klávesová skratka pre dopyt</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
@@ -127,16 +127,16 @@
     <system:String x:Key="reportWindow_sending">Odosiela sa</system:String>
     <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
-    <system:String x:Key="reportWindow_wox_got_an_error">Flow.Launcher zaznamenal chybu</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher zaznamenal chybu</system:String>
 
     <!--update-->
-    <system:String x:Key="update_wox_update_new_version_available">Je dostupné nové vydanie Flow.Launcher {0}</system:String>
-    <system:String x:Key="update_wox_update_error">Počas inštalácie aktualizácií došlo k chybe</system:String>
-    <system:String x:Key="update_wox_update">Aktualizovať</system:String>
-    <system:String x:Key="update_wox_update_cancel">Zrušiť</system:String>
-    <system:String x:Key="update_wox_update_restart_wox_tip">Tento upgrade reštartuje Flow.Launcher</system:String>
-    <system:String x:Key="update_wox_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
-    <system:String x:Key="update_wox_update_files">Aktualizovať súbory</system:String>
-    <system:String x:Key="update_wox_update_upadte_description">Aktualizovať popis</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Je dostupné nové vydanie Flow.Launcher {0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Počas inštalácie aktualizácií došlo k chybe</system:String>
+    <system:String x:Key="update_flowlauncher_update">Aktualizovať</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Zrušiť</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualizovať popis</system:String>
 
 </ResourceDictionary>

@@ -90,7 +90,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
             else
             {
-                string msg = context.API.GetTranslation("wox_plugin_program_pls_select_program_source");
+                string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
                 MessageBox.Show(msg);
             }
         }
@@ -181,7 +181,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (selectedItems.Count() == 0)
             {
-                string msg = context.API.GetTranslation("wox_plugin_program_pls_select_program_source");
+                string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
                 MessageBox.Show(msg);
                 return;
             }
@@ -192,7 +192,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                                 .Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
                 .Count() == 0)
             {
-                var msg = string.Format(context.API.GetTranslation("wox_plugin_program_delete_program_source"));
+                var msg = string.Format(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
@@ -290,7 +290,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                                 .Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
                 .Count() == 0)
             {
-                btnProgramSourceStatus.Content = context.API.GetTranslation("wox_plugin_program_delete");
+                btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_delete");
                 return;
             }
 

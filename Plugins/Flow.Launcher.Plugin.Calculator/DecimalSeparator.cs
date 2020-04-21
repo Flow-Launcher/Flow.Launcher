@@ -12,13 +12,13 @@ namespace Flow.Launcher.Plugin.Caculator
     [TypeConverter(typeof(LocalizationConverter))]
     public enum DecimalSeparator
     {
-        [LocalizedDescription("wox_plugin_calculator_decimal_seperator_use_system_locale")]
+        [LocalizedDescription("flowlauncher_plugin_calculator_decimal_seperator_use_system_locale")]
         UseSystemLocale,
         
-        [LocalizedDescription("wox_plugin_calculator_decimal_seperator_dot")]
+        [LocalizedDescription("flowlauncher_plugin_calculator_decimal_seperator_dot")]
         Dot, 
         
-        [LocalizedDescription("wox_plugin_calculator_decimal_seperator_comma")]
+        [LocalizedDescription("flowlauncher_plugin_calculator_decimal_seperator_comma")]
         Comma
     }
 }

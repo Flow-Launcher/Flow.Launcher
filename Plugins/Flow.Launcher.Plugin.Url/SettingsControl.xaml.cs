@@ -23,13 +23,13 @@ namespace Flow.Launcher.Plugin.Url
     public partial class SettingsControl : UserControl
     {
         private Settings _settings;
-        private IPublicAPI _woxAPI;
+        private IPublicAPI _flowlauncherAPI;
 
-        public SettingsControl(IPublicAPI woxAPI,Settings settings)
+        public SettingsControl(IPublicAPI flowlauncherAPI,Settings settings)
         {
             InitializeComponent();
             _settings = settings;
-            _woxAPI = woxAPI;
+            _flowlauncherAPI = flowlauncherAPI;
             browserPathBox.Text = _settings.BrowserPath;
             NewWindowBrowser.IsChecked = _settings.OpenInNewBrowserWindow;
             NewTabInBrowser.IsChecked = !_settings.OpenInNewBrowserWindow;
@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Url
         private void OnChooseClick(object sender, RoutedEventArgs e)
         {
             var fileBrowserDialog = new OpenFileDialog();
-            fileBrowserDialog.Filter = _woxAPI.GetTranslation("wox_plugin_url_plugin_filter"); ;
+            fileBrowserDialog.Filter = _flowlauncherAPI.GetTranslation("flowlauncher_plugin_url_plugin_filter"); ;
             fileBrowserDialog.CheckFileExists = true;
             fileBrowserDialog.CheckPathExists = true;
             if (fileBrowserDialog.ShowDialog() == true)

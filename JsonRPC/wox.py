@@ -47,7 +47,7 @@ class Flow.LauncherAPI(object):
     @classmethod
     def change_query(cls,query,requery = False):
         """
-        change wox query
+        change flowlauncher query
         """
         print(json.dumps({"method": "Flow.Launcher.ChangeQuery","parameters":[query,requery]}))
 
@@ -61,21 +61,21 @@ class Flow.LauncherAPI(object):
     @classmethod
     def close_app(cls):
         """
-        close wox
+        close flowlauncher
         """
         print(json.dumps({"method": "Flow.Launcher.CloseApp","parameters":[]}))
 
     @classmethod
     def hide_app(cls):
         """
-        hide wox
+        hide flowlauncher
         """
         print(json.dumps({"method": "Flow.Launcher.HideApp","parameters":[]}))
 
     @classmethod
     def show_app(cls):
         """
-        show wox
+        show flowlauncher
         """
         print(json.dumps({"method": "Flow.Launcher.ShowApp","parameters":[]}))
 
@@ -96,20 +96,20 @@ class Flow.LauncherAPI(object):
     @classmethod
     def start_loadingbar(cls):
         """
-        start loading animation in wox
+        start loading animation in flowlauncher
         """
         print(json.dumps({"method": "Flow.Launcher.StartLoadingBar","parameters":[]}))
 
     @classmethod
     def stop_loadingbar(cls):
         """
-        stop loading animation in wox
+        stop loading animation in flowlauncher
         """
         print(json.dumps({"method": "Flow.Launcher.StopLoadingBar","parameters":[]}))
 
     @classmethod
     def reload_plugins(cls):
         """
-        reload all wox plugins
+        reload all flowlauncher plugins
         """
         print(json.dumps({"method": "Flow.Launcher.ReloadPlugins","parameters":[]}))
