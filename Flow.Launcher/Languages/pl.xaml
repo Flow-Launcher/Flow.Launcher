@@ -15,10 +15,10 @@
     <system:String x:Key="iconTrayExit">Wyjdź</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="flowlauncher_settings">Ustawienia Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Ustawienia Flow Launcher</system:String>
     <system:String x:Key="general">Ogólne</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Uruchamiaj Flow.Launcher przy starcie systemu</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Ukryj okno Flow.Launcher kiedy przestanie ono być aktywne</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Uruchamiaj Flow Launcher przy starcie systemu</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
     <system:String x:Key="rememberLastLocation">Zapamiętaj ostatnią pozycję okna</system:String>
     <system:String x:Key="language">Język</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="pythonDirectory">Folder biblioteki Python</system:String>
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
     <system:String x:Key="selectPythonDirectory">Wybierz</system:String>
-    <system:String x:Key="hideOnStartup">Uruchamiaj Flow.Launcher zminimalizowany</system:String>
+    <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Wtyczki</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Skórka</system:String>
     <system:String x:Key="browserMoreThemes">Znajdź więcej skórek</system:String>
-    <system:String x:Key="helloFlow.Launcher">Witaj Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">Witaj Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Czcionka okna zapytania</system:String>
     <system:String x:Key="resultItemFont">Czcionka okna wyników</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>
@@ -50,7 +50,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
-    <system:String x:Key="flowlauncherHotkey">Skrót klawiszowy Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Skrót klawiszowy Flow Launcher</system:String>
     <system:String x:Key="customQueryHotkey">Skrót klawiszowy niestandardowych zapytań</system:String>
     <system:String x:Key="delete">Usuń</system:String>
     <system:String x:Key="edit">Edytuj</system:String>
@@ -78,9 +78,9 @@
     <system:String x:Key="about">O programie</system:String>
     <system:String x:Key="website">Strona internetowa</system:String>
     <system:String x:Key="version">Wersja</system:String>
-    <system:String x:Key="about_activate_times">Uaktywniłeś Flow.Launcher {0} razy</system:String>
+    <system:String x:Key="about_activate_times">Uaktywniłeś Flow Launcher {0} razy</system:String>
     <system:String x:Key="checkUpdates">Szukaj aktualizacji</system:String>
-    <system:String x:Key="newVersionTips">Nowa wersja {0} jest dostępna, uruchom ponownie Flow.Launcher</system:String>
+    <system:String x:Key="newVersionTips">Nowa wersja {0} jest dostępna, uruchom ponownie Flow Launcher</system:String>
     <system:String x:Key="releaseNotes">Zmiany:</system:String>
 
     <!--Action Keyword Setting Dialog-->
@@ -117,14 +117,14 @@
     <system:String x:Key="reportWindow_sending">Wysyłam raport...</system:String>
     <system:String x:Key="reportWindow_report_succeed">Raport wysłany pomyślnie</system:String>
     <system:String x:Key="reportWindow_report_failed">Nie udało się wysłać raportu</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">W programie Flow.Launcher wystąpił błąd</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">W programie Flow Launcher wystąpił błąd</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Nowa wersja Flow.Launcher {0} jest dostępna</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Nowa wersja Flow Launcher {0} jest dostępna</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Wystąpił błąd podczas instalowania aktualizacji programu</system:String>
     <system:String x:Key="update_flowlauncher_update">Aktualizuj</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Anuluj</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow.Launcher musi zostać zresetowany</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow Launcher musi zostać zresetowany</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Następujące pliki zostaną zaktualizowane</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizuj pliki</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Opis aktualizacji</system:String>

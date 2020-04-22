@@ -4,21 +4,21 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Реєстрація хоткея {0} не вдалася</system:String>
     <system:String x:Key="couldnotStartCmd">Не вдалося запустити {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Невірний формат файлу плагіна Flow.Launcher</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Невірний формат файлу плагіна Flow Launcher</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Відображати першим при такому ж запиті</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Відмінити відображення першим при такому ж запиті</system:String>
     <system:String x:Key="executeQuery">Виконати запит: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Час останнього використання: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Відкрити</system:String>
     <system:String x:Key="iconTraySettings">Налаштування</system:String>
-    <system:String x:Key="iconTrayAbout">Про Flow.Launcher</system:String>
+    <system:String x:Key="iconTrayAbout">Про Flow Launcher</system:String>
     <system:String x:Key="iconTrayExit">Закрити</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="flowlauncher_settings">Налаштування Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Налаштування Flow Launcher</system:String>
     <system:String x:Key="general">Основні</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Запускати Flow.Launcher при запуску системи</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Сховати Flow.Launcher якщо втрачено фокус</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Запускати Flow Launcher при запуску системи</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Сховати Flow Launcher якщо втрачено фокус</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не повідомляти про доступні нові версії</system:String>
     <system:String x:Key="rememberLastLocation">Запам'ятати останнє місце запуску</system:String>
     <system:String x:Key="language">Мова</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="pythonDirectory">Директорія Python</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
     <system:String x:Key="selectPythonDirectory">Вибрати</system:String>
-    <system:String x:Key="hideOnStartup">Сховати Flow.Launcher при запуску системи</system:String>
+    <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Плагіни</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Теми</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
-    <system:String x:Key="helloFlow.Launcher">Привіт Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">Привіт Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
@@ -50,7 +50,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Гарячі клавіші</system:String>
-    <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Змінити</system:String>
@@ -75,12 +75,12 @@
     <system:String x:Key="proxyConnectFailed">Невдале підключення Proxy</system:String>
 
     <!--Setting About-->
-    <system:String x:Key="about">Про Flow.Launcher</system:String>
+    <system:String x:Key="about">Про Flow Launcher</system:String>
     <system:String x:Key="website">Сайт</system:String>
     <system:String x:Key="version">Версия</system:String>
-    <system:String x:Key="about_activate_times">Ви скористалися Flow.Launcher вже {0} разів</system:String>
+    <system:String x:Key="about_activate_times">Ви скористалися Flow Launcher вже {0} разів</system:String>
     <system:String x:Key="checkUpdates">Перевірити наявність оновлень</system:String>
-    <system:String x:Key="newVersionTips">Доступна нова версія {0}, будь ласка, перезавантажте Flow.Launcher</system:String>
+    <system:String x:Key="newVersionTips">Доступна нова версія {0}, будь ласка, перезавантажте Flow Launcher</system:String>
     <system:String x:Key="releaseNotes">Примітки до поточного релізу:</system:String>
 
     <!--Action Keyword Setting Dialog-->
@@ -117,14 +117,14 @@
     <system:String x:Key="reportWindow_sending">Відправити</system:String>
     <system:String x:Key="reportWindow_report_succeed">Звіт успішно відправлено</system:String>
     <system:String x:Key="reportWindow_report_failed">Не вдалося відправити звіт</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Стався збій в додатоку Flow.Launcher</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Стався збій в додатоку Flow Launcher</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Доступна нова версія Flow.Launcher V{0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Доступна нова версія Flow Launcher V{0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Сталася помилка під час спроби встановити оновлення</system:String>
     <system:String x:Key="update_flowlauncher_update">Оновити</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Скасувати</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Це оновлення перезавантажить Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Це оновлення перезавантажить Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Ці файли будуть оновлені</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Оновити файли</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Опис оновлення</system:String>

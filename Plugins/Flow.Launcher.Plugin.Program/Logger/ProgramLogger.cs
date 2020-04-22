@@ -12,7 +12,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 namespace Flow.Launcher.Plugin.Program.Logger
 {
     /// <summary>
-    /// The Program plugin has seen many issues recorded in the Flow.Launcher repo related to various loading of Windows programs.
+    /// The Program plugin has seen many issues recorded in the Flow Launcher repo related to various loading of Windows programs.
     /// This is a dedicated logger for this Program plugin with the aim to output a more friendlier message and clearer
     /// log that will allow debugging to be quicker and easier.
     /// </summary>
@@ -63,7 +63,7 @@ namespace Flow.Launcher.Plugin.Program.Logger
             {
                 if (IsKnownWinProgramError(e, callingMethodName) || IsKnownUWPProgramError(e, callingMethodName))
                 {
-                    possibleResolution = "Can be ignored and Flow.Launcher should still continue, however the program may not be loaded";
+                    possibleResolution = "Can be ignored and Flow Launcher should still continue, however the program may not be loaded";
                     errorStatus = "KNOWN";
                 }
 
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.Program.Logger
 
         /// <summary>
         /// Please follow exception format: |class name|calling method name|loading program path|user friendly message that explains the error
-        /// => Example: |Win32|LnkProgram|c:\..\chrome.exe|Permission denied on directory, but Flow.Launcher should continue
+        /// => Example: |Win32|LnkProgram|c:\..\chrome.exe|Permission denied on directory, but Flow Launcher should continue
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal static void LogException(string message, Exception e)

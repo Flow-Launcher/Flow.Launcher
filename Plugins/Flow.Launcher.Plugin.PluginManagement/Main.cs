@@ -119,8 +119,8 @@ namespace Flow.Launcher.Plugin.PluginManagement
             catch (WebException e)
             {
                 //todo happlebao add option in log to decide give user prompt or not
-                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Can't connect to Flow.Launcher plugin website, check your conenction");
-                Log.Exception("|PluginManagement.ResultForInstallPlugin|Can't connect to Flow.Launcher plugin website, check your conenction", e);
+                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Can't connect to Wox plugin website, check your conenction");
+                Log.Exception("|PluginManagement.ResultForInstallPlugin|Can't connect to Wox plugin website, check your conenction", e);
                 return new List<Result>();
             }
             List<FlowLauncherPluginResult> searchedPlugins;
@@ -131,7 +131,7 @@ namespace Flow.Launcher.Plugin.PluginManagement
             catch (JsonSerializationException e)
             {
                 context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Coundn't parse api search results, Please update your Flow.Launcher!");
-                Log.Exception("|PluginManagement.ResultForInstallPlugin|Coundn't parse api search results, Please update your Flow.Launcher!", e);
+                Log.Exception("|PluginManagement.ResultForInstallPlugin|Coundn't parse api search results, Please update your Flow Launcher!", e);
                 return results;
             }
 
@@ -212,11 +212,11 @@ namespace Flow.Launcher.Plugin.PluginManagement
                              $"Name: {plugin.Name}{Environment.NewLine}" +
                              $"Version: {plugin.Version}{Environment.NewLine}" +
                              $"Author: {plugin.Author}";
-            if (MessageBox.Show(content, "Flow.Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(content, "Flow Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 File.Create(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt")).Close();
                 var result = MessageBox.Show($"You have uninstalled plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                             "Restart Flow.Launcher to take effect?",
+                                             "Restart Flow Launcher to take effect?",
                                              "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {

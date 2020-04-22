@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Sneltoets registratie: {0} mislukt</system:String>
     <system:String x:Key="couldnotStartCmd">Kan {0} niet starten</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Ongeldige Flow.Launcher plugin bestandsextensie</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Ongeldige Flow Launcher plugin bestandsextensie</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Stel in als hoogste in deze query</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Annuleer hoogste in deze query</system:String>
     <system:String x:Key="executeQuery">Executeer query: {0}</system:String>
@@ -15,10 +15,10 @@
     <system:String x:Key="iconTrayExit">Afsluiten</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="flowlauncher_settings">Flow.Launcher Instellingen</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow Launcher Instellingen</system:String>
     <system:String x:Key="general">Algemeen</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow.Launcher als systeem opstart</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verberg Flow.Launcher als focus verloren is</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
     <system:String x:Key="rememberLastLocation">Herinner laatste opstart locatie</system:String>
     <system:String x:Key="language">Taal</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="pythonDirectory">Python map</system:String>
     <system:String x:Key="autoUpdates">Automatische Update</system:String>
     <system:String x:Key="selectPythonDirectory">Selecteer</system:String>
-    <system:String x:Key="hideOnStartup">Verberg Flow.Launcher als systeem opstart</system:String>
+    <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Thema</system:String>
     <system:String x:Key="browserMoreThemes">Zoek meer thema´s</system:String>
-    <system:String x:Key="helloFlow.Launcher">Hallo Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Query Box lettertype</system:String>
     <system:String x:Key="resultItemFont">Resultaat Item lettertype</system:String>
     <system:String x:Key="windowMode">Window Mode</system:String>
@@ -50,7 +50,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Sneltoets</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow.Launcher Sneltoets</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher Sneltoets</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Sneltoets</system:String>
     <system:String x:Key="delete">Verwijder</system:String>
     <system:String x:Key="edit">Bewerken</system:String>
@@ -78,9 +78,9 @@
     <system:String x:Key="about">Over</system:String>
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="version">Versie</system:String>
-    <system:String x:Key="about_activate_times">U heeft Flow.Launcher {0} keer opgestart</system:String>
+    <system:String x:Key="about_activate_times">U heeft Flow Launcher {0} keer opgestart</system:String>
     <system:String x:Key="checkUpdates">Zoek naar Updates</system:String>
-    <system:String x:Key="newVersionTips">Nieuwe versie {0} beschikbaar, start Flow.Launcher opnieuw op</system:String>
+    <system:String x:Key="newVersionTips">Nieuwe versie {0} beschikbaar, start Flow Launcher opnieuw op</system:String>
     <system:String x:Key="releaseNotes">Release Notes:</system:String>
 
     <!--Action Keyword Setting Dialog-->
@@ -117,14 +117,14 @@
     <system:String x:Key="reportWindow_sending">Versturen</system:String>
     <system:String x:Key="reportWindow_report_succeed">Rapport succesvol</system:String>
     <system:String x:Key="reportWindow_report_failed">Rapport mislukt</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher heeft een error</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher heeft een error</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Nieuwe Flow.Launcher release {0} nu beschikbaar</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Nieuwe Flow Launcher release {0} nu beschikbaar</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Een error is voorgekomen tijdens het installeren van de update</system:String>
     <system:String x:Key="update_flowlauncher_update">Update</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annuleer</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Deze upgrade zal Flow.Launcher opnieuw opstarten</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Deze upgrade zal Flow Launcher opnieuw opstarten</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Volgende bestanden zullen worden geüpdatet</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Update bestanden</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Update beschrijving</system:String>

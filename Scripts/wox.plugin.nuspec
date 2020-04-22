@@ -4,8 +4,8 @@
     <id>Flow.Launcher.Plugin</id>
     <version>$version$</version>
     <authors>qianlifeng, Jeremy Wu</authors>
-    <licenseUrl>https://github.com/jjw24/Flow.Launcher/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/jjw24/Flow.Launcher</projectUrl>
+    <licenseUrl>https://github.com/Flow-Launcher/Flow.Launcher/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Flow-Launcher/Flow.Launcher</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Reference this library if you want to develop a Flow Launcher plugin</description>
     <tags>flowlauncher</tags>

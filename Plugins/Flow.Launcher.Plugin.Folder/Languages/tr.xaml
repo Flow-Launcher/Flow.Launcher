@@ -10,6 +10,6 @@
     <system:String x:Key="flowlauncher_plugin_folder_delete_folder_link">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_folder_plugin_name">Klasör</system:String>
-    <system:String x:Key="flowlauncher_plugin_folder_plugin_description">Favori klasörünüzü doğrudan Flow.Launcher'tan açın</system:String>
+    <system:String x:Key="flowlauncher_plugin_folder_plugin_description">Favori klasörünüzü doğrudan Flow Launcher'tan açın</system:String>
 
 </ResourceDictionary>

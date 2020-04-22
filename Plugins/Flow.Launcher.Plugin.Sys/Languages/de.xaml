@@ -9,8 +9,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Computer neu starten</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Abmelden</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Computer sperren</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit">Flow.Launcher schließen</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart">Flow.Launcher neu starten</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher schließen</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcher neu starten</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting">Anwendung beschleunigen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Computer in Schlafmodus versetzen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Papierkorb leeren</system:String>

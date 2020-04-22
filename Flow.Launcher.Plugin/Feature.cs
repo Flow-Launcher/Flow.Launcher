@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin
     /// Represent plugin query will be executed in UI thread directly. Don't do long-running operation in Query method if you implement this interface
     /// <remarks>This will improve the performance of instant search like websearch or cmd plugin</remarks>
     /// </summary>
-    [Obsolete("Flow.Launcher is fast enough now, executed on ui thread is no longer needed")]
+    [Obsolete("Flow Launcher is fast enough now, executed on ui thread is no longer needed")]
     public interface IInstantQuery : IFeatures
     {
         bool IsInstantQuery(string query);

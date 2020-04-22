@@ -200,7 +200,7 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
-                    Title = "Restart Flow.Launcher",
+                    Title = "Restart Flow Launcher",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
@@ -238,7 +238,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = "Check for new Flow.Launcher update",
+                    SubTitle = "Check for new Flow Launcher update",
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {

@@ -34,7 +34,7 @@ namespace Flow.Launcher.Infrastructure
         {
             Format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 
-            Stopwatch.Normal("|Flow.Launcher.Infrastructure.Alphabet.Initialize|Preload pinyin cache", () =>
+            Stopwatch.Normal("|Flow Launcher.Infrastructure.Alphabet.Initialize|Preload pinyin cache", () =>
             {
                 _pinyinStorage = new BinaryStorage<Dictionary<string, string[][]>>("Pinyin");
                 
@@ -48,7 +48,7 @@ namespace Flow.Launcher.Infrastructure
                 // force pinyin library static constructor initialize
                 PinyinHelper.toHanyuPinyinStringArray('T', Format);
             });
-            Log.Info($"|Flow.Launcher.Infrastructure.Alphabet.Initialize|Number of preload pinyin combination<{PinyinCache.Count}>");
+            Log.Info($"|Flow Launcher.Infrastructure.Alphabet.Initialize|Number of preload pinyin combination<{PinyinCache.Count}>");
         }
 
         public string Translate(string str)

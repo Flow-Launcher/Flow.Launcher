@@ -26,7 +26,7 @@
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Update</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow.Launcher will only index files that end with the following suffixes:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher will only index files that end with the following suffixes:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_split_by_tip">(Each suffix should split by ';' )</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">File suffixes can't be empty</system:String>
@@ -37,7 +37,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
     

@@ -10,6 +10,6 @@
     <system:String x:Key="flowlauncher_plugin_folder_delete_folder_link">Bist du sicher {0} zu löschen?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_folder_plugin_name">Ordner</system:String>
-    <system:String x:Key="flowlauncher_plugin_folder_plugin_description">Öffne deine Lieblingsordner direkt von Flow.Launcher aus</system:String>
+    <system:String x:Key="flowlauncher_plugin_folder_plugin_description">Öffne deine Lieblingsordner direkt von Flow Launcher aus</system:String>
 
 </ResourceDictionary>

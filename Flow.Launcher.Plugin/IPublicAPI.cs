@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="query"></param>
         /// <param name="plugin"></param>
         /// <param name="results"></param>
-        [Obsolete("This method will be removed in Flow.Launcher 1.3")]
+        [Obsolete("This method will be removed in Flow Launcher 1.3")]
         void PushResults(Query query, PluginMetadata plugin, List<Result> results);
 
         /// <summary>
@@ -22,8 +22,8 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
-        /// force requery By default, Flow.Launcher will not fire query if your query is same with existing one. 
-        /// Set this to true to force Flow.Launcher requerying
+        /// force requery By default, Flow Launcher will not fire query if your query is same with existing one. 
+        /// Set this to true to force Flow Launcher requerying
         /// </param>
         void ChangeQuery(string query, bool requery = false);
 
@@ -35,30 +35,30 @@ namespace Flow.Launcher.Plugin
         void ChangeQueryText(string query, bool selectAll = false);
 
         /// <summary>
-        /// Close Flow.Launcher
+        /// Close Flow Launcher
         /// </summary>
         [Obsolete]
         void CloseApp();
 
         /// <summary>
-        /// Restart Flow.Launcher
+        /// Restart Flow Launcher
         /// </summary>
         void RestarApp();
 
         /// <summary>
-        /// Hide Flow.Launcher
+        /// Hide Flow Launcher
         /// </summary>
         [Obsolete]
         void HideApp();
 
         /// <summary>
-        /// Show Flow.Launcher
+        /// Show Flow Launcher
         /// </summary>
         [Obsolete]
         void ShowApp();
 
         /// <summary>
-        /// Save all Flow.Launcher settings
+        /// Save all Flow Launcher settings
         /// </summary>
         void SaveAppAllSettings();
 
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin
         void ReloadAllPluginData();
 
         /// <summary>
-        /// Check for new Flow.Launcher update
+        /// Check for new Flow Launcher update
         /// </summary>
         void CheckForNewUpdate();
 
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin
         void StopLoadingBar();
 
         /// <summary>
-        /// Install Flow.Launcher plugin
+        /// Install Flow Launcher plugin
         /// </summary>
         /// <param name="path">Plugin path (ends with .flowlauncher)</param>
         void InstallPlugin(string path);

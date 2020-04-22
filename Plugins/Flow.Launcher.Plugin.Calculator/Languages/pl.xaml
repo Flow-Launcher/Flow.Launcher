@@ -3,6 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_caculator_plugin_name">Kalkulator</system:String>
-    <system:String x:Key="flowlauncher_plugin_caculator_plugin_description">Szybkie wykonywanie obliczeń matematycznych. (Spróbuj wpisać 5*3-2 w oknie Flow.Launchera)</system:String>
+    <system:String x:Key="flowlauncher_plugin_caculator_plugin_description">Szybkie wykonywanie obliczeń matematycznych. (Spróbuj wpisać 5*3-2 w oknie Flow Launchera)</system:String>
     
 </ResourceDictionary>

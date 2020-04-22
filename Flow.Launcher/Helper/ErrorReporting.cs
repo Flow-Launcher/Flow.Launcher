@@ -32,7 +32,7 @@ namespace Flow.Launcher.Helper
 
         public static string RuntimeInfo()
         {
-            var info = $"\nFlow.Launcher version: {Constant.Version}" +
+            var info = $"\nFlow Launcher version: {Constant.Version}" +
                        $"\nOS Version: {Environment.OSVersion.VersionString}" +
                        $"\nIntPtr Length: {IntPtr.Size}" +
                        $"\nx64: {Environment.Is64BitOperatingSystem}";

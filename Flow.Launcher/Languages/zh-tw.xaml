@@ -4,7 +4,7 @@
     <!--主視窗-->
     <system:String x:Key="registerHotkeyFailed">登錄快速鍵：{0} 失敗</system:String>
     <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">無效的 Flow.Launcher 外掛格式</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">在目前查詢中置頂</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">取消置頂</system:String>
     <system:String x:Key="executeQuery">執行查詢：{0}</system:String>
@@ -15,10 +15,10 @@
     <system:String x:Key="iconTrayExit">結束</system:String>
 
     <!--設定，一般-->
-    <system:String x:Key="flowlauncher_settings">Flow.Launcher 設定</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow Launcher 設定</system:String>
     <system:String x:Key="general">一般</system:String>
     <system:String x:Key="startFlow.LauncherOnSystemStartup">開機時啟動</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">失去焦點時自動隱藏 Flow.Launcher</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">記住上次啟動位置</system:String>
     <system:String x:Key="language">語言</system:String>
@@ -42,7 +42,7 @@
     <!--設定，主題-->
     <system:String x:Key="theme">主題</system:String>
     <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
-    <system:String x:Key="helloFlow.Launcher">你好，Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">你好，Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">查詢框字體</system:String>
     <system:String x:Key="resultItemFont">結果項字體</system:String>
     <system:String x:Key="windowMode">視窗模式</system:String>
@@ -50,7 +50,7 @@
 
     <!--設置，熱鍵-->
     <system:String x:Key="hotkey">熱鍵</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow.Launcher 執行熱鍵</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher 執行熱鍵</system:String>
     <system:String x:Key="customQueryHotkey">自定義熱鍵查詢</system:String>
     <system:String x:Key="delete">刪除</system:String>
     <system:String x:Key="edit">編輯</system:String>
@@ -78,9 +78,9 @@
     <system:String x:Key="about">關於</system:String>
     <system:String x:Key="website">網站</system:String>
     <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="about_activate_times">您已經啟動了 Flow.Launcher {0} 次</system:String>
+    <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">檢查更新</system:String>
-    <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow.Launcher。</system:String>
+    <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher。</system:String>
     <system:String x:Key="releaseNotes">更新說明:</system:String>
 
     <!--Action Keyword 設定對話框-->
@@ -117,14 +117,14 @@
     <system:String x:Key="reportWindow_sending">傳送中</system:String>
     <system:String x:Key="reportWindow_report_succeed">傳送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">傳送失敗</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher 出錯啦</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出錯啦</system:String>
 
     <!--更新-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">發現 Flow.Launcher 新版本 V{0}</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">更新 Flow.Launcher 出錯</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">發現 Flow Launcher 新版本 V{0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">更新 Flow Launcher 出錯</system:String>
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">下列檔案會被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新檔案</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">更新日誌</system:String>

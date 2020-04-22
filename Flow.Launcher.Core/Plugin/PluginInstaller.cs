@@ -83,7 +83,7 @@ namespace Flow.Launcher.Core.Plugin
                     //    Plugins.Initialize();
                     //}
                     if (MessageBox.Show($"You have installed plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                        "Restart Flow.Launcher to take effect?",
+                                        "Restart Flow Launcher to take effect?",
                                         "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         PluginManager.API.RestarApp();

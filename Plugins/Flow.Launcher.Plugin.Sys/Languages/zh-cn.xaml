@@ -9,8 +9,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">重启这台电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">注销</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">锁定这台电脑</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit">退出Flow.Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart">重启Flow.Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit">退出Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart">重启Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting">设置</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">休眠这台电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">清空回收站</system:String>

@@ -9,8 +9,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Uruchom ponownie komputer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Wyloguj się</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Zablokuj ten komputer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit">Wyłącz Flow.Launchera</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart">Uruchom ponownie Flow.Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit">Wyłącz Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart">Uruchom ponownie Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting">Dostosuj ustawienia</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Przełącz komputer w tryb uśpienia</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Opróżnij kosz</system:String>

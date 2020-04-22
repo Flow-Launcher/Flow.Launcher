@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_url_canot_open_url">URL Açılamıyor: {0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_plugin_description">Flow.Launcher'a yazılan URL'leri açar</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_description">Flow Launcher'a yazılan URL'leri açar</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Tarayıcınızın konumunu ayarlayın:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Seç</system:String>

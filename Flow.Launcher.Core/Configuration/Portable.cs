@@ -36,7 +36,7 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.PortableDataPath);
 
-                MessageBox.Show("Flow.Launcher needs to restart to finish disabling portable mode, " +
+                MessageBox.Show("Flow Launcher needs to restart to finish disabling portable mode, " +
                     "after the restart your portable data profile will be deleted and roaming data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
@@ -64,7 +64,7 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
-                MessageBox.Show("Flow.Launcher needs to restart to finish enabling portable mode, " +
+                MessageBox.Show("Flow Launcher needs to restart to finish enabling portable mode, " +
                     "after the restart your roaming data profile will be deleted and portable data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
@@ -142,7 +142,7 @@ namespace Flow.Launcher.Core.Configuration
 
         ///<summary>
         ///This method should be run at first before all methods during start up and should be run before determining which data location
-        ///will be used for Flow.Launcher.
+        ///will be used for Flow Launcher.
         ///</summary>
         public void PreStartCleanUpAfterPortabilityUpdate()
         {
@@ -163,7 +163,7 @@ namespace Flow.Launcher.Core.Configuration
             {
                 FilesFolders.RemoveFolderIfExists(roamingDataPath);
 
-                if (MessageBox.Show("Flow.Launcher has detected you enabled portable mode, " +
+                if (MessageBox.Show("Flow Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -179,7 +179,7 @@ namespace Flow.Launcher.Core.Configuration
             {
                 FilesFolders.RemoveFolderIfExists(portableDataPath);
 
-                MessageBox.Show("Flow.Launcher has detected you disabled portable mode, " +
+                MessageBox.Show("Flow Launcher has detected you disabled portable mode, " +
                                     "the relevant shortcuts and uninstaller entry have been created");
 
                 return;
@@ -193,7 +193,7 @@ namespace Flow.Launcher.Core.Configuration
 
             if(roamingLocationExists && portableLocationExists)
             {
-                MessageBox.Show(string.Format("Flow.Launcher detected your user data exists both in {0} and " +
+                MessageBox.Show(string.Format("Flow Launcher detected your user data exists both in {0} and " +
                                     "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occured.", 
                                     DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 

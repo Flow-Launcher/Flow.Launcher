@@ -3,6 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_color_plugin_name">Farben</system:String>
-    <system:String x:Key="flowlauncher_plugin_color_plugin_description">Stellt eine HEX-Farben Vorschau bereit. (Versuche #000 in Flow.Launcher)</system:String>
+    <system:String x:Key="flowlauncher_plugin_color_plugin_description">Stellt eine HEX-Farben Vorschau bereit. (Versuche #000 in Flow Launcher)</system:String>
     
 </ResourceDictionary>

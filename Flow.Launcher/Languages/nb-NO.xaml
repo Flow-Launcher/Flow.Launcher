@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Kunne ikke registrere hurtigtast: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Kunne ikke starte {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Ugyldig filformat for Flow.Launcher-utvidelse</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Ugyldig filformat for Flow Launcher-utvidelse</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Sett til øverste for denne spørringen</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Avbryt øverste for denne spørringen</system:String>
     <system:String x:Key="executeQuery">Utfør spørring: {0}</system:String>
@@ -15,10 +15,10 @@
     <system:String x:Key="iconTrayExit">Avslutt</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="flowlauncher_settings">Flow.Launcher-innstillinger</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow Launcher-innstillinger</system:String>
     <system:String x:Key="general">Generelt</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow.Launcher ved systemstart</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Skjul Flow.Launcher ved mistet fokus</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow Launcher ved systemstart</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Skjul Flow Launcher ved mistet fokus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsel om ny versjon</system:String>
     <system:String x:Key="rememberLastLocation">Husk siste plassering</system:String>
     <system:String x:Key="language">Språk</system:String>
@@ -31,7 +31,7 @@
     <system:String x:Key="pythonDirectory">Python-mappe</system:String>
     <system:String x:Key="autoUpdates">Oppdater automatisk</system:String>
     <system:String x:Key="selectPythonDirectory">Velg</system:String>
-    <system:String x:Key="hideOnStartup">Skjul Flow.Launcher ved oppstart</system:String>
+    <system:String x:Key="hideOnStartup">Skjul Flow Launcher ved oppstart</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Utvidelse</system:String>
@@ -46,7 +46,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Finn flere temaer</system:String>
-    <system:String x:Key="helloFlow.Launcher">Hallo Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Font for spørringsboks</system:String>
     <system:String x:Key="resultItemFont">Font for resultat</system:String>
     <system:String x:Key="windowMode">Vindusmodus</system:String>
@@ -54,7 +54,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow.Launcher-hurtigtast</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher-hurtigtast</system:String>
     <system:String x:Key="customQueryHotkey">Egendefinerd spørringshurtigtast</system:String>
     <system:String x:Key="delete">Slett</system:String>
     <system:String x:Key="edit">Rediger</system:String>
@@ -82,13 +82,13 @@
     <system:String x:Key="about">Om</system:String>
     <system:String x:Key="website">Netside</system:String>
     <system:String x:Key="version">Versjon</system:String>
-    <system:String x:Key="about_activate_times">Du har aktivert Flow.Launcher {0} ganger</system:String>
+    <system:String x:Key="about_activate_times">Du har aktivert Flow Launcher {0} ganger</system:String>
     <system:String x:Key="checkUpdates">Sjekk for oppdatering</system:String>
-    <system:String x:Key="newVersionTips">Ny versjon {0} er tilgjengelig, vennligst start Flow.Launcher på nytt.</system:String>
+    <system:String x:Key="newVersionTips">Ny versjon {0} er tilgjengelig, vennligst start Flow Launcher på nytt.</system:String>
     <system:String x:Key="checkUpdatesFailed">Oppdateringssjekk feilet, vennligst sjekk tilkoblingen og proxy-innstillene for api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
         Nedlastning av oppdateringer feilet, vennligst sjekk tilkoblingen og proxy-innstillene for github-cloud.s3.amazonaws.com, 
-        eller gå til https://github.com/jjw24/Flow.Launcher/releases for å laste ned oppdateringer manuelt.
+        eller gå til https://github.com/Flow-Launcher/Flow.Launcher/releases for å laste ned oppdateringer manuelt.
     </system:String>
     <system:String x:Key="releaseNotes">Versjonsmerknader:</system:String>
 
@@ -126,14 +126,14 @@
     <system:String x:Key="reportWindow_sending">Sender</system:String>
     <system:String x:Key="reportWindow_report_succeed">Rapport sendt med suksess</system:String>
     <system:String x:Key="reportWindow_report_failed">Kunne ikke sende rapport</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher møtte på en feil</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher møtte på en feil</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Versjon {0} av Flow.Launcher er nå tilgjengelig</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Versjon {0} av Flow Launcher er nå tilgjengelig</system:String>
     <system:String x:Key="update_flowlauncher_update_error">En feil oppstod under installasjon av programvareoppdateringer</system:String>
     <system:String x:Key="update_flowlauncher_update">Oppdater</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Avbryt</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Denne opgraderingen vil starte Flow.Launcher på nytt</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Denne opgraderingen vil starte Flow Launcher på nytt</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Følgende filer vil bli oppdatert</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Oppdateringsfiler</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Oppdateringsbeskrivelse</system:String>

@@ -99,7 +99,7 @@ namespace Flow.Launcher
                     if (File.Exists(pythonPath))
                     {
                         _settings.PluginSettings.PythonDirectory = pythonDirectory;
-                        MessageBox.Show("Remember to restart Flow.Launcher use new Python path");
+                        MessageBox.Show("Remember to restart Flow Launcher use new Python path");
                     }
                     else
                     {

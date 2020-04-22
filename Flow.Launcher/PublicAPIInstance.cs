@@ -146,7 +146,7 @@ namespace Flow.Launcher
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
-        [Obsolete("This will be removed in Flow.Launcher 1.3")]
+        [Obsolete("This will be removed in Flow Launcher 1.3")]
         public void PushResults(Query query, PluginMetadata plugin, List<Result> results)
         {
             results.ForEach(o =>

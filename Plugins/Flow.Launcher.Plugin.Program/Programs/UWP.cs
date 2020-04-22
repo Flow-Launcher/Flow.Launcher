@@ -377,7 +377,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (!string.IsNullOrWhiteSpace(resourceReference) && resourceReference.StartsWith(prefix))
                 {
                     // magic comes from @talynone
-                    // https://github.com/talynone/Flow.Launcher.Plugin.WindowsUniversalAppLauncher/blob/master/StoreAppLauncher/Helpers/NativeApiHelper.cs#L139-L153
+                    // https://github.com/talynone/Wox.Plugin.WindowsUniversalAppLauncher/blob/master/StoreAppLauncher/Helpers/NativeApiHelper.cs#L139-L153
                     string key = resourceReference.Substring(prefix.Length);
                     string parsed;
                     if (key.StartsWith("//"))
@@ -413,7 +413,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     else
                     {
-                        // https://github.com/Flow.Launcher-launcher/Flow.Launcher/issues/964
+                        // https://github.com/Wox-launcher/Wox/issues/964
                         // known hresult 2147942522:
                         // 'Microsoft Corporation' violates pattern constraint of '\bms-resource:.{1,256}'.
                         // for

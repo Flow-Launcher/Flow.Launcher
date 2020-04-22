@@ -3,5 +3,5 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_color_plugin_name">顏色</system:String>
-    <system:String x:Key="flowlauncher_plugin_color_plugin_description">提供在 Flow.Launcher 查詢 hex 顏色。(試著在 Flow.Launcher 中輸入 #000)</system:String>
+    <system:String x:Key="flowlauncher_plugin_color_plugin_description">提供在 Flow Launcher 查詢 hex 顏色。(試著在 Flow Launcher 中輸入 #000)</system:String>
 </ResourceDictionary>

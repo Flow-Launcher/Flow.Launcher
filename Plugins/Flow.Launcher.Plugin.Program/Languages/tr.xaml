@@ -23,7 +23,7 @@
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">İşlem yapmak istediğiniz klasörü seçin.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Güncelle</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow.Launcher yalnızca aşağıdaki uzantılara sahip dosyaları indeksleyecektir:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher yalnızca aşağıdaki uzantılara sahip dosyaları indeksleyecektir:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_split_by_tip">(Her uzantıyı ; işareti ile ayırın)</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Dosya uzantıları başarıyla güncellendi</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Dosya uzantıları boş olamaz</system:String>
@@ -32,7 +32,7 @@
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">İçeren Klasörü Aç</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Programları Flow.Launcher'tan arayın</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Programları Flow Launcher'tan arayın</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Geçersiz Konum</system:String>
 

@@ -13,14 +13,14 @@ using Flow.Launcher.Plugin;
 namespace Flow.Launcher.Core.Plugin
 {
     /// <summary>
-    /// The entry for managing Flow.Launcher plugins
+    /// The entry for managing Flow Launcher plugins
     /// </summary>
     public static class PluginManager
     {
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         /// <summary>
-        /// Directories that will hold Flow.Launcher plugin directory
+        /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
 
         public static List<PluginPair> AllPlugins { get; private set; }

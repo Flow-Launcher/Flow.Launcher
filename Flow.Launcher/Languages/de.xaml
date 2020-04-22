@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Tastenkombinationregistrierung: {0} fehlgeschlagen</system:String>
     <system:String x:Key="couldnotStartCmd">Kann {0} nicht starten</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Fehlerhaftes Flow.Launcher-Plugin Dateiformat</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Fehlerhaftes Flow Launcher-Plugin Dateiformat</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">In dieser Abfrage als oberstes setzen</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">In dieser Abfrage oberstes abbrechen</system:String>
     <system:String x:Key="executeQuery">Abfrage ausführen:{0}</system:String>
@@ -15,10 +15,10 @@
     <system:String x:Key="iconTrayExit">Schließen</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="flowlauncher_settings">Flow.Launcher Einstellungen</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow Launcher Einstellungen</system:String>
     <system:String x:Key="general">Allgemein</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Starte Flow.Launcher bei Systemstart</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verstecke Flow.Launcher wenn der Fokus verloren geht</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Starte Flow Launcher bei Systemstart</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verstecke Flow Launcher wenn der Fokus verloren geht</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Zeige keine Nachricht wenn eine neue Version vorhanden ist</system:String>
     <system:String x:Key="rememberLastLocation">Merke letzte Ausführungsposition</system:String>
     <system:String x:Key="language">Sprache</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="pythonDirectory">Python-Verzeichnis</system:String>
     <system:String x:Key="autoUpdates">Automatische Aktualisierung</system:String>
     <system:String x:Key="selectPythonDirectory">Auswählen</system:String>
-    <system:String x:Key="hideOnStartup">Verstecke Flow.Launcher bei Systemstart</system:String>
+    <system:String x:Key="hideOnStartup">Verstecke Flow Launcher bei Systemstart</system:String>
     
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Theme</system:String>
     <system:String x:Key="browserMoreThemes">Suche nach weiteren Themes</system:String>
-    <system:String x:Key="helloFlow.Launcher">Hallo Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Abfragebox Schriftart</system:String>
     <system:String x:Key="resultItemFont">Ergebnis Schriftart</system:String>
     <system:String x:Key="windowMode">Fenstermodus</system:String>
@@ -50,7 +50,7 @@
     
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Tastenkombination</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow.Launcher Tastenkombination</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher Tastenkombination</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage Tastenkombination</system:String>
     <system:String x:Key="delete">Löschen</system:String>
     <system:String x:Key="edit">Bearbeiten</system:String>
@@ -78,9 +78,9 @@
     <system:String x:Key="about">Über</system:String>
     <system:String x:Key="website">Webseite</system:String>
     <system:String x:Key="version">Version</system:String>
-    <system:String x:Key="about_activate_times">Sie haben Flow.Launcher {0} mal aktiviert</system:String>
+    <system:String x:Key="about_activate_times">Sie haben Flow Launcher {0} mal aktiviert</system:String>
     <system:String x:Key="checkUpdates">Nach Aktuallisierungen Suchen</system:String>
-    <system:String x:Key="newVersionTips">Eine neue Version ({0}) ist vorhanden. Bitte starten Sie Flow.Launcher neu.</system:String>
+    <system:String x:Key="newVersionTips">Eine neue Version ({0}) ist vorhanden. Bitte starten Sie Flow Launcher neu.</system:String>
     <system:String x:Key="releaseNotes">Versionshinweise:</system:String>
 
     <!--Action Keyword Setting Dialog-->
@@ -117,14 +117,14 @@
     <system:String x:Key="reportWindow_sending">Sende</system:String>
     <system:String x:Key="reportWindow_report_succeed">Report erfolgreich</system:String>
     <system:String x:Key="reportWindow_report_failed">Report fehlgeschlagen</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher hat einen Fehler</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher hat einen Fehler</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">V{0} von Flow.Launcher ist verfügbar</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">V{0} von Flow Launcher ist verfügbar</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Es ist ein Fehler während der Installation der Aktualisierung aufgetreten.</system:String>
     <system:String x:Key="update_flowlauncher_update">Aktualisieren</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Abbrechen</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Diese Aktualisierung wird Flow.Launcher neu starten</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Diese Aktualisierung wird Flow Launcher neu starten</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Folgende Dateien werden aktualisiert</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualisiere Dateien</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualisierungbeschreibung</system:String>

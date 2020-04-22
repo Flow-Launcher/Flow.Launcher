@@ -4,21 +4,21 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Neuspešno registrovana prečica: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Neuspešno pokretanje {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Nepravilni Flow.Launcher plugin format datoteke</system:String>
+    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Nepravilni Flow Launcher plugin format datoteke</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Postavi kao najviši u ovom upitu</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Poništi najviši u ovom upitu</system:String>
     <system:String x:Key="executeQuery">Izvrši upit: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Vreme poslednjeg izvršenja: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Otvori</system:String>
     <system:String x:Key="iconTraySettings">Podešavanja</system:String>
-    <system:String x:Key="iconTrayAbout">O Flow.Launcher-u</system:String>
+    <system:String x:Key="iconTrayAbout">O Flow Launcher-u</system:String>
     <system:String x:Key="iconTrayExit">Izlaz</system:String>
 
     <!--Setting General-->
-    <system:String x:Key="flowlauncher_settings">Flow.Launcher Podešavanja</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow Launcher Podešavanja</system:String>
     <system:String x:Key="general">Opšte</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Pokreni Flow.Launcher pri podizanju sistema</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Sakri Flow.Launcher kada se izgubi fokus</system:String>
+    <system:String x:Key="startFlow.LauncherOnSystemStartup">Pokreni Flow Launcher pri podizanju sistema</system:String>
+    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Sakri Flow Launcher kada se izgubi fokus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne prikazuj obaveštenje o novoj verziji</system:String>
     <system:String x:Key="rememberLastLocation">Zapamti lokaciju poslednjeg pokretanja</system:String>
     <system:String x:Key="language">Jezik</system:String>
@@ -31,7 +31,7 @@
     <system:String x:Key="pythonDirectory">Python direktorijum</system:String>
     <system:String x:Key="autoUpdates">Auto ažuriranje</system:String>
     <system:String x:Key="selectPythonDirectory">Izaberi</system:String>
-    <system:String x:Key="hideOnStartup">Sakrij Flow.Launcher pri podizanju sistema</system:String>
+    <system:String x:Key="hideOnStartup">Sakrij Flow Launcher pri podizanju sistema</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -46,7 +46,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Pretražite još tema</system:String>
-    <system:String x:Key="helloFlow.Launcher">Zdravo Flow.Launcher</system:String>
+    <system:String x:Key="helloFlow.Launcher">Zdravo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Font upita</system:String>
     <system:String x:Key="resultItemFont">Font rezultata</system:String>
     <system:String x:Key="windowMode">Režim prozora</system:String>
@@ -54,7 +54,7 @@
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Prečica</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow.Launcher prečica</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher prečica</system:String>
     <system:String x:Key="customQueryHotkey">prečica za ručno dodat upit</system:String>
     <system:String x:Key="delete">Obriši</system:String>
     <system:String x:Key="edit">Izmeni</system:String>
@@ -79,16 +79,16 @@
     <system:String x:Key="proxyConnectFailed">Veza sa proksijem neuspešna</system:String>
 
     <!--Setting About-->
-    <system:String x:Key="about">O Flow.Launcher-u</system:String>
+    <system:String x:Key="about">O Flow Launcher-u</system:String>
     <system:String x:Key="website">Veb sajt</system:String>
     <system:String x:Key="version">Verzija</system:String>
-    <system:String x:Key="about_activate_times">Aktivirali ste Flow.Launcher {0} puta</system:String>
+    <system:String x:Key="about_activate_times">Aktivirali ste Flow Launcher {0} puta</system:String>
     <system:String x:Key="checkUpdates">Proveri ažuriranja</system:String>
-    <system:String x:Key="newVersionTips">Nove verzija {0} je dostupna, molim Vas ponovo pokrenite Flow.Launcher.</system:String>
+    <system:String x:Key="newVersionTips">Nove verzija {0} je dostupna, molim Vas ponovo pokrenite Flow Launcher.</system:String>
     <system:String x:Key="checkUpdatesFailed">Neuspešna provera ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
         Neuspešno preuzimanje ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema github-cloud.s3.amazonaws.com, 
-        ili posetite https://github.com/jjw24/Flow.Launcher/releases da preuzmete ažuriranja ručno.
+        ili posetite https://github.com/Flow-Launcher/Flow.Launcher/releases da preuzmete ažuriranja ručno.
     </system:String>
     <system:String x:Key="releaseNotes">U novoj verziji:</system:String>
 
@@ -126,14 +126,14 @@
     <system:String x:Key="reportWindow_sending">Slanje</system:String>
     <system:String x:Key="reportWindow_report_succeed">Izveštaj uspešno poslat</system:String>
     <system:String x:Key="reportWindow_report_failed">Izveštaj neuspešno poslat</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow.Launcher je dobio grešku</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher je dobio grešku</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Nova verzija Flow.Launcher-a {0} je dostupna</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Nova verzija Flow Launcher-a {0} je dostupna</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Došlo je do greške prilokom instalacije ažuriranja</system:String>
     <system:String x:Key="update_flowlauncher_update">Ažuriraj</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Otkaži</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Ova nadogradnja će ponovo pokrenuti Flow.Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Ova nadogradnja će ponovo pokrenuti Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Sledeće datoteke će biti ažurirane</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Ažuriraj datoteke</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Opis ažuriranja</system:String>

@@ -566,7 +566,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// Checks if Flow.Launcher should ignore any hotkeys
+        /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
         /// <returns></returns>
         private bool ShouldIgnoreHotkeys()
