@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launcher</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launcher</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Pri tomto dopyte umiestniť navrchu</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto dopyte</system:String>
     <system:String x:Key="executeQuery">Spustiť dopyt: {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launcher</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
     <system:String x:Key="language">Jazyk</system:String>
@@ -47,7 +47,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
     <system:String x:Key="browserMoreThemes">Prehliadať viac motívov</system:String>
-    <system:String x:Key="helloFlow.Launcher">Ahoj Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Ahoj Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Písmo poľa pre dopyt</system:String>
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>

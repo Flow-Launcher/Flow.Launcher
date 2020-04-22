@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Nie udało się ustawić skrótu klawiszowego: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Nie udało się uruchomić: {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Niepoprawny format pliku wtyczki</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Niepoprawny format pliku wtyczki</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Ustaw jako najwyższy wynik dla tego zapytania</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Usuń ten najwyższy wynik dla tego zapytania</system:String>
     <system:String x:Key="executeQuery">Wyszukaj: {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Ustawienia Flow Launcher</system:String>
     <system:String x:Key="general">Ogólne</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Uruchamiaj Flow Launcher przy starcie systemu</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Uruchamiaj Flow Launcher przy starcie systemu</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
     <system:String x:Key="rememberLastLocation">Zapamiętaj ostatnią pozycję okna</system:String>
     <system:String x:Key="language">Język</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Skórka</system:String>
     <system:String x:Key="browserMoreThemes">Znajdź więcej skórek</system:String>
-    <system:String x:Key="helloFlow.Launcher">Witaj Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Witaj Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Czcionka okna zapytania</system:String>
     <system:String x:Key="resultItemFont">Czcionka okna wyników</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>

@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Kısayol tuşu ataması başarısız oldu: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0} başlatılamıyor</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Geçersiz Flow Launcher eklenti dosyası formatı</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Geçersiz Flow Launcher eklenti dosyası formatı</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Bu sorgu için başa sabitle</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Sabitlemeyi kaldır</system:String>
     <system:String x:Key="executeQuery">Sorguyu çalıştır: {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Ayarları</system:String>
     <system:String x:Key="general">Genel</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Flow Launcher'u başlangıçta başlat</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Odak pencereden ayrıldığında Flow Launcher'u gizle</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Flow Launcher'u başlangıçta başlat</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak pencereden ayrıldığında Flow Launcher'u gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
     <system:String x:Key="rememberLastLocation">Pencere konumunu hatırla</system:String>
     <system:String x:Key="language">Dil</system:String>
@@ -48,7 +48,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Temalar</system:String>
     <system:String x:Key="browserMoreThemes">Daha fazla tema bul</system:String>
-    <system:String x:Key="helloFlow.Launcher">Merhaba Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Merhaba Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Pencere Yazı Tipi</system:String>
     <system:String x:Key="resultItemFont">Sonuç Yazı Tipi</system:String>
     <system:String x:Key="windowMode">Pencere Modu</system:String>

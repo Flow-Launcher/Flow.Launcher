@@ -4,7 +4,7 @@
     <!--主視窗-->
     <system:String x:Key="registerHotkeyFailed">登錄快速鍵：{0} 失敗</system:String>
     <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">在目前查詢中置頂</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">取消置頂</system:String>
     <system:String x:Key="executeQuery">執行查詢：{0}</system:String>
@@ -17,8 +17,8 @@
     <!--設定，一般-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 設定</system:String>
     <system:String x:Key="general">一般</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">開機時啟動</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">記住上次啟動位置</system:String>
     <system:String x:Key="language">語言</system:String>
@@ -42,7 +42,7 @@
     <!--設定，主題-->
     <system:String x:Key="theme">主題</system:String>
     <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
-    <system:String x:Key="helloFlow.Launcher">你好，Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">你好，Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">查詢框字體</system:String>
     <system:String x:Key="resultItemFont">結果項字體</system:String>
     <system:String x:Key="windowMode">視窗模式</system:String>

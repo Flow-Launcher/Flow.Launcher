@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">ホットキー「{0}」の登録に失敗しました</system:String>
     <system:String x:Key="couldnotStartCmd">{0}の起動に失敗しました</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Flow Launcherプラグインの形式が正しくありません</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcherプラグインの形式が正しくありません</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">このクエリを最上位にセットする</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">このクエリを最上位にセットをキャンセル</system:String>
     <system:String x:Key="executeQuery">次のコマンドを実行します:{0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher設定</system:String>
     <system:String x:Key="general">一般</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">スタートアップ時にFlow Launcherを起動する</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">スタートアップ時にFlow Launcherを起動する</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
     <system:String x:Key="dontPromptUpdateMsg">最新版が入手可能であっても、アップグレードメッセージを表示しない</system:String>
     <system:String x:Key="rememberLastLocation">前回のランチャーの位置を記憶</system:String>
     <system:String x:Key="language">言語</system:String>
@@ -47,7 +47,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">テーマ</system:String>
     <system:String x:Key="browserMoreThemes">テーマを探す</system:String>
-    <system:String x:Key="helloFlow.Launcher">こんにちは Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">こんにちは Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">検索ボックスのフォント</system:String>
     <system:String x:Key="resultItemFont">検索結果一覧のフォント</system:String>
     <system:String x:Key="windowMode">ウィンドウモード</system:String>

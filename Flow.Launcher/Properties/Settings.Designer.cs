@@ -25,7 +25,7 @@ namespace Flow.Launcher.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/jjw24/Flow.Launcher")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/Flow-Launcher/Flow.Launcher")]
         public string GithubRepo {
             get {
                 return ((string)(this["GithubRepo"]));

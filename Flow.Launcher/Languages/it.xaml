@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Impossibile salvare il tasto di scelta rapida: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Avvio fallito {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Formato file plugin non valido</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato file plugin non valido</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Risultato prioritario con questa query</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Rimuovi risultato prioritario con questa query</system:String>
     <system:String x:Key="executeQuery">Query d'esecuzione: {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Impostaizoni Flow Launcher</system:String>
     <system:String x:Key="general">Generale</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Avvia Wow all'avvio di Windows</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Avvia Wow all'avvio di Windows</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Non mostrare le notifiche per una nuova versione</system:String>
     <system:String x:Key="rememberLastLocation">Ricorda l'ultima posizione di avvio del launcher</system:String>
     <system:String x:Key="language">Lingua</system:String>
@@ -46,7 +46,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Sfoglia per altri temi</system:String>
-    <system:String x:Key="helloFlow.Launcher">Hello Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Hello Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Font campo di ricerca</system:String>
     <system:String x:Key="resultItemFont">Font campo risultati</system:String>
     <system:String x:Key="windowMode">Modalità finestra</system:String>

@@ -192,7 +192,7 @@ namespace Flow.Launcher
                 }
                 else
                 {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidFlow.LauncherPluginFileFormat"));
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidFlowLauncherPluginFileFormat"));
                 }
             }
             e.Handled = false;

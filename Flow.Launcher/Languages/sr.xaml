@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Neuspešno registrovana prečica: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Neuspešno pokretanje {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Nepravilni Flow Launcher plugin format datoteke</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Nepravilni Flow Launcher plugin format datoteke</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Postavi kao najviši u ovom upitu</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Poništi najviši u ovom upitu</system:String>
     <system:String x:Key="executeQuery">Izvrši upit: {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Podešavanja</system:String>
     <system:String x:Key="general">Opšte</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Pokreni Flow Launcher pri podizanju sistema</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Sakri Flow Launcher kada se izgubi fokus</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Pokreni Flow Launcher pri podizanju sistema</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Sakri Flow Launcher kada se izgubi fokus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne prikazuj obaveštenje o novoj verziji</system:String>
     <system:String x:Key="rememberLastLocation">Zapamti lokaciju poslednjeg pokretanja</system:String>
     <system:String x:Key="language">Jezik</system:String>
@@ -46,7 +46,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Pretražite još tema</system:String>
-    <system:String x:Key="helloFlow.Launcher">Zdravo Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Zdravo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Font upita</system:String>
     <system:String x:Key="resultItemFont">Font rezultata</system:String>
     <system:String x:Key="windowMode">Režim prozora</system:String>

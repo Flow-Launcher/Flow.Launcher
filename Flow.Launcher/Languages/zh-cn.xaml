@@ -4,7 +4,7 @@
     <!--主窗体-->
     <system:String x:Key="registerHotkeyFailed">注册热键：{0} 失败</system:String>
     <system:String x:Key="couldnotStartCmd">启动命令 {0} 失败</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">不是合法的Flow Launcher插件格式</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">不是合法的Flow Launcher插件格式</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">在当前查询中置顶</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">取消置顶</system:String>
     <system:String x:Key="executeQuery">执行查询：{0}</system:String>
@@ -17,8 +17,8 @@
     <!--设置，通用-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher设置</system:String>
     <system:String x:Key="general">通用</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">开机启动</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">失去焦点时自动隐藏Flow Launcher</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">开机启动</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
     <system:String x:Key="language">语言</system:String>
@@ -47,7 +47,7 @@
     <!--设置，主题-->
     <system:String x:Key="theme">主题</system:String>
     <system:String x:Key="browserMoreThemes">浏览更多主题</system:String>
-    <system:String x:Key="helloFlow.Launcher">你好，Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">你好，Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">查询框字体</system:String>
     <system:String x:Key="resultItemFont">结果项字体</system:String>
     <system:String x:Key="windowMode">窗口模式</system:String>

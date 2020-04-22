@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Sneltoets registratie: {0} mislukt</system:String>
     <system:String x:Key="couldnotStartCmd">Kan {0} niet starten</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Ongeldige Flow Launcher plugin bestandsextensie</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ongeldige Flow Launcher plugin bestandsextensie</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Stel in als hoogste in deze query</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Annuleer hoogste in deze query</system:String>
     <system:String x:Key="executeQuery">Executeer query: {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Instellingen</system:String>
     <system:String x:Key="general">Algemeen</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
     <system:String x:Key="rememberLastLocation">Herinner laatste opstart locatie</system:String>
     <system:String x:Key="language">Taal</system:String>
@@ -42,7 +42,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Thema</system:String>
     <system:String x:Key="browserMoreThemes">Zoek meer thema´s</system:String>
-    <system:String x:Key="helloFlow.Launcher">Hallo Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Query Box lettertype</system:String>
     <system:String x:Key="resultItemFont">Resultaat Item lettertype</system:String>
     <system:String x:Key="windowMode">Window Mode</system:String>

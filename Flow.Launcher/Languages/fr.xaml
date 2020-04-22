@@ -4,7 +4,7 @@
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Impossible de lancer {0}</system:String>
-    <system:String x:Key="invalidFlow.LauncherPluginFileFormat">Le format de fichier n'est pas un plugin Flow Launcher valide</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Le format de fichier n'est pas un plugin Flow Launcher valide</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Définir en tant que favori pour cette requête</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Annuler le favori</system:String>
     <system:String x:Key="executeQuery">Lancer la requête : {0}</system:String>
@@ -17,8 +17,8 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Paramètres - Flow Launcher</system:String>
     <system:String x:Key="general">Général</system:String>
-    <system:String x:Key="startFlow.LauncherOnSystemStartup">Lancer Flow Launcher au démarrage du système</system:String>
-    <system:String x:Key="hideFlow.LauncherWhenLoseFocus">Cacher Flow Launcher lors de la perte de focus</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Lancer Flow Launcher au démarrage du système</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Cacher Flow Launcher lors de la perte de focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne pas afficher le message de mise à jour pour les nouvelles versions</system:String>
     <system:String x:Key="rememberLastLocation">Se souvenir du dernier emplacement de la fenêtre</system:String>
     <system:String x:Key="language">Langue</system:String>
@@ -46,7 +46,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Thèmes</system:String>
     <system:String x:Key="browserMoreThemes">Trouver plus de thèmes</system:String>
-    <system:String x:Key="helloFlow.Launcher">Hello Flow Launcher</system:String>
+    <system:String x:Key="helloFlowLauncher">Hello Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Police (barre de recherche)</system:String>
     <system:String x:Key="resultItemFont">Police (liste des résultats)  </system:String>
     <system:String x:Key="windowMode">Mode fenêtré</system:String>
@@ -86,7 +86,7 @@
     <system:String x:Key="checkUpdates">Vérifier les mises à jour</system:String>
     <system:String x:Key="newVersionTips">Nouvelle version {0} disponible, veuillez redémarrer Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Échec de la vérification de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à api.github.com.</system:String>
-    <system:String x:Key="downloadUpdatesFailed">Échec du téléchargement de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à github-cloud.s3.amazonaws.com, ou téléchargez manuelement la mise à jour sur https://github.com/jjw24/Flow.Launcher/releases.</system:String>
+    <system:String x:Key="downloadUpdatesFailed">Échec du téléchargement de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à github-cloud.s3.amazonaws.com, ou téléchargez manuelement la mise à jour sur https://github.com/Flow-Launcher/Flow.Launcher/releases.</system:String>
     <system:String x:Key="releaseNotes">Notes de changement :</system:String>
 
     <!--Action Keyword Setting Dialog-->

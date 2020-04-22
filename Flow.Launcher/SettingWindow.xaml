@@ -36,15 +36,15 @@
                 <CheckBox Margin="10" IsChecked="{Binding PortableMode}">
                     <TextBlock Text="Portable Mode" />
                 </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.StartFlow.LauncherOnSystemStartup}"
+                <CheckBox Margin="10" IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
                           Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck">
-                    <TextBlock Text="{DynamicResource startFlow.LauncherOnSystemStartup}" />
+                    <TextBlock Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                 </CheckBox>
                 <CheckBox Margin="10" IsChecked="{Binding Settings.HideOnStartup}">
                     <TextBlock Text="{DynamicResource hideOnStartup}" />
                 </CheckBox>
                 <CheckBox Margin="10" IsChecked="{Binding Settings.HideWhenDeactive}">
-                    <TextBlock Text="{DynamicResource hideFlow.LauncherWhenLoseFocus}" />
+                    <TextBlock Text="{DynamicResource hideFlowLauncherWhenLoseFocus}" />
                 </CheckBox>
                 <CheckBox Margin="10" IsChecked="{Binding Settings.HideNotifyIcon}">
                     <TextBlock Text="{DynamicResource hideNotifyIcon}" />
@@ -224,7 +224,7 @@
                                         <RowDefinition Height="50" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBox Text="{DynamicResource helloFlow.Launcher}" IsReadOnly="True"
+                                    <TextBox Text="{DynamicResource helloFlowLauncher}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}" Grid.Row="0" />
                                     <ContentControl Visibility="Visible" Grid.Row="1">
                                         <flowlauncher:ResultListBox DataContext="{Binding PreviewResults}" />
