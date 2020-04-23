@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher
 {
@@ -51,8 +52,8 @@ namespace Flow.Launcher
             var link = new Hyperlink { IsEnabled = true };
             link.Inlines.Add(url);
             link.NavigateUri = new Uri(url);
-            link.RequestNavigate += (s, e) => Process.Start(e.Uri.ToString());
-            link.Click += (s, e) => Process.Start(url);
+            link.RequestNavigate += (s, e) => SearchWeb.NewBrowserWindow(e.Uri.ToString());
+            link.Click += (s, e) => SearchWeb.NewBrowserWindow(url);
 
             paragraph.Inlines.Add(textBeforeUrl);
             paragraph.Inlines.Add(link);
