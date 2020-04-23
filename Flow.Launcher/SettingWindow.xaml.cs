@@ -17,6 +17,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
@@ -269,7 +270,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            SearchWeb.NewBrowserWindow(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
