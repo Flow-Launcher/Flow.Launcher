@@ -112,10 +112,11 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         public static void OpenLocationInExporer(string location)
         {
+            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = location };
             try
             {
                 if (LocationExists(location))
-                    Process.Start(FileExplorerProgramName, location);
+                    Process.Start(psi);
             }
             catch (Exception e)
             {
