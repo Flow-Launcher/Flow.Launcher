@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -240,10 +240,8 @@ namespace Flow.Launcher
             if (e.ChangedButton == MouseButton.Left)
             {
                 var directory = _viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
-                if (!string.IsNullOrEmpty(directory) && Directory.Exists(directory))
-                {
-                    Process.Start(directory);
-                }
+                if (!string.IsNullOrEmpty(directory))
+                    FilesFolders.OpenLocationInExporer(directory);
             }
         }
         #endregion
