@@ -77,7 +77,7 @@ namespace Flow.Launcher.Core.Plugin
                     //exsiting plugins may be has loaded by application,
                     //if we try to delelte those kind of plugins, we will get a  error that indicate the
                     //file is been used now.
-                    //current solution is to restart flowlauncher. Ugly.
+                    //current solution is to restart Flow Launcher. Ugly.
                     //if (MainWindow.Initialized)
                     //{
                     //    Plugins.Initialize();
