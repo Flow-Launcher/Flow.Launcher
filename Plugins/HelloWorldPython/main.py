@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from flowlauncher import Flow.Launcher
+from flow.launcher import Flow.Launcher
 
-class HelloWorld(Flow.Launcher):
+class HelloWorld(FlowLauncher):
 
     def query(self, query):
         results = []
