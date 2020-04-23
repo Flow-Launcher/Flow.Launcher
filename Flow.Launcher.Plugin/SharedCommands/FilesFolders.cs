@@ -7,6 +7,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 {
     public static class FilesFolders
     {
+        private const string FileExplorerProgramName = "explorer";
         public static void Copy(this string sourcePath, string targetPath)
         {
             // Get the subdirectories for the specified directory.
@@ -114,7 +115,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             try
             {
                 if (LocationExists(location))
-                    Process.Start(location);
+                    Process.Start(FileExplorerProgramName, location);
             }
             catch (Exception e)
             {
