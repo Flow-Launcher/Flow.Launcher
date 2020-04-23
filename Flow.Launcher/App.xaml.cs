@@ -50,7 +50,7 @@ namespace Flow.Launcher
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Flow.Launcher startup ----------------------------------------------------");
+                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
@@ -91,7 +91,7 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
-                Log.Info("|App.OnStartup|End Flow.Launcher startup ----------------------------------------------------  ");
+                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
 

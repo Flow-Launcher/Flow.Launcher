@@ -130,7 +130,7 @@ namespace Flow.Launcher.Plugin.PluginManagement
             }
             catch (JsonSerializationException e)
             {
-                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Coundn't parse api search results, Please update your Flow.Launcher!");
+                context.API.ShowMsg("PluginManagement.ResultForInstallPlugin: Coundn't parse api search results, Please update your Flow Launcher!");
                 Log.Exception("|PluginManagement.ResultForInstallPlugin|Coundn't parse api search results, Please update your Flow Launcher!", e);
                 return results;
             }
