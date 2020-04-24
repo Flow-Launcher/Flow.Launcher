@@ -148,7 +148,7 @@ namespace Flow.Launcher.Core.Configuration
         {
             // Specify here so this method does not rely on other environment variables to initialise
             var portableDataPath = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(), "UserData");
-            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Flow.Launcher");
+            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
 
             bool DataLocationPortableDeleteRequired = false;
             bool DataLocationRoamingDeleteRequired = false;
