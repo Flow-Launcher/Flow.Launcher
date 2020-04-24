@@ -93,7 +93,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Input path:  $input"
     Nuget pack $spec -Version $version -Properties Configuration=Release -BasePath $input -OutputDirectory  $output
 
-    $nupkg = "$output\Flow.Launcher.$version.nupkg"
+    $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
@@ -107,7 +107,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow.Launcher-$version.exe"
+    $file = "$output\Flow Launcher-$version.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
