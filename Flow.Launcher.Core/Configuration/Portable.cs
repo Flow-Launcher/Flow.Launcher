@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Linq;
 
 namespace Flow.Launcher.Core.Configuration
 {
@@ -19,7 +20,11 @@ namespace Flow.Launcher.Core.Configuration
         /// <returns></returns>
         private UpdateManager NewUpdateManager()
         {
-            return new UpdateManager(string.Empty, Constant.FlowLauncher, Constant.RootDirectory);
+            var applicationFolderName = Constant.ApplicationDirectory
+                                            .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
+                                            .Last();
+
+            return new UpdateManager(string.Empty, applicationFolderName, Constant.RootDirectory);
         }
 
         public void DisablePortableMode()
@@ -148,7 +153,7 @@ namespace Flow.Launcher.Core.Configuration
         {
             // Specify here so this method does not rely on other environment variables to initialise
             var portableDataPath = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(), "UserData");
-            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Flow.Launcher");
+            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
 
             bool DataLocationPortableDeleteRequired = false;
             bool DataLocationRoamingDeleteRequired = false;
