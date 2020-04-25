@@ -212,8 +212,16 @@ namespace Flow.Launcher.Infrastructure
             if (allSubstringsContainedInCompareString)
             {
                 int count = query.Count(c => !char.IsWhiteSpace(c));
-                int factor = count < 4 ? 10 : 5;
-                score += factor * count;
+                //10 per char is too much for long query strings, this threshhold is to avoid where long strings will override the other results too much
+                int threshold = 4;
+                if (count <= threshold)
+                {
+                    score += count * 10;
+                }
+                else
+                {
+                    score += threshold * 10 + (count - threshold) * 5;
+                }
             }
 
             return score;

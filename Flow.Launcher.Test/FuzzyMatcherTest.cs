@@ -18,6 +18,7 @@ namespace Flow.Launcher.Test
         private const string LastIsChrome = "Last is chrome";
         private const string OneOneOneOne = "1111";
         private const string MicrosoftSqlServerManagementStudio = "Microsoft SQL Server Management Studio";
+        private const string VisualStudioCode = "Visual Studio Code";
 
         public List<string> GetSearchStrings()
             => new List<string>
@@ -122,13 +123,13 @@ namespace Flow.Launcher.Test
             }
         }
 
-        [TestCase(Chrome, Chrome, 137)]
-        [TestCase(Chrome, LastIsChrome, 83)]
+        [TestCase(Chrome, Chrome, 157)]
+        [TestCase(Chrome, LastIsChrome, 103)]
         [TestCase(Chrome, HelpCureHopeRaiseOnMindEntityChrome, 21)]
         [TestCase(Chrome, UninstallOrChangeProgramsOnYourComputer, 15)]
         [TestCase(Chrome, CandyCrushSagaFromKing, 0)]
         [TestCase("sql", MicrosoftSqlServerManagementStudio, 56)]
-        [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 79)]//double spacing intended
+        [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 99)]//double spacing intended
         public void WhenGivenQueryStringThenShouldReturnCurrentScoring(string queryString, string compareString, int expectedScore)
         {
             // When, Given
@@ -195,6 +196,9 @@ namespace Flow.Launcher.Test
         [TestCase("ch r", "Change settings for text-to-speech and for speech recognition (if installed).", StringMatcher.SearchPrecisionScore.Regular, true)]
         [TestCase("a test", "This is a test", StringMatcher.SearchPrecisionScore.Regular, true)]
         [TestCase("test", "This is a test", StringMatcher.SearchPrecisionScore.Regular, true)]
+        [TestCase("cod", VisualStudioCode, StringMatcher.SearchPrecisionScore.Regular, true)]
+        [TestCase("code", VisualStudioCode, StringMatcher.SearchPrecisionScore.Regular, true)]
+        [TestCase("codes", "Visual Studio Codes", StringMatcher.SearchPrecisionScore.Regular, true)]
         public void WhenGivenQueryShouldReturnResultsContainingAllQuerySubstrings(
             string queryString,
             string compareString,
