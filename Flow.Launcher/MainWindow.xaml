@@ -63,7 +63,7 @@
             <Grid>
                 <TextBox x:Name="QueryTextSuggestionBox"
                          Style="{DynamicResource QueryBoxStyle}"
-                         Foreground="LightGray"
+                         Foreground="DarkGray"
                          IsEnabled="False">
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
