@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from wox import Wox
+from flow.launcher import Flow.Launcher
 
-class HelloWorld(Wox):
+class HelloWorld(FlowLauncher):
 
     def query(self, query):
         results = []

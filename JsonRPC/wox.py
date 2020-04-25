@@ -4,9 +4,9 @@ import json
 import sys
 import inspect
 
-class Wox(object):
+class FlowLauncher(object):
     """
-    Wox python plugin base
+    Flow.Launcher python plugin base
     """
 
     def __init__(self):
@@ -42,74 +42,74 @@ class Wox(object):
         print("DEBUG:{}".format(msg))
         sys.exit()
 
-class WoxAPI(object):
+class FlowLauncherAPI(object):
 
     @classmethod
     def change_query(cls,query,requery = False):
         """
-        change wox query
+        change flowlauncher query
         """
-        print(json.dumps({"method": "Wox.ChangeQuery","parameters":[query,requery]}))
+        print(json.dumps({"method": "Flow.Launcher.ChangeQuery","parameters":[query,requery]}))
 
     @classmethod
     def shell_run(cls,cmd):
         """
         run shell commands
         """
-        print(json.dumps({"method": "Wox.ShellRun","parameters":[cmd]}))
+        print(json.dumps({"method": "Flow.Launcher.ShellRun","parameters":[cmd]}))
 
     @classmethod
     def close_app(cls):
         """
-        close wox
+        close flowlauncher
         """
-        print(json.dumps({"method": "Wox.CloseApp","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.CloseApp","parameters":[]}))
 
     @classmethod
     def hide_app(cls):
         """
-        hide wox
+        hide flowlauncher
         """
-        print(json.dumps({"method": "Wox.HideApp","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.HideApp","parameters":[]}))
 
     @classmethod
     def show_app(cls):
         """
-        show wox
+        show flowlauncher
         """
-        print(json.dumps({"method": "Wox.ShowApp","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.ShowApp","parameters":[]}))
 
     @classmethod
     def show_msg(cls,title,sub_title,ico_path=""):
         """
         show messagebox
         """
-        print(json.dumps({"method": "Wox.ShowMsg","parameters":[title,sub_title,ico_path]}))
+        print(json.dumps({"method": "Flow.Launcher.ShowMsg","parameters":[title,sub_title,ico_path]}))
 
     @classmethod
     def open_setting_dialog(cls):
         """
         open setting dialog
         """
-        print(json.dumps({"method": "Wox.OpenSettingDialog","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.OpenSettingDialog","parameters":[]}))
 
     @classmethod
     def start_loadingbar(cls):
         """
-        start loading animation in wox
+        start loading animation in flowlauncher
         """
-        print(json.dumps({"method": "Wox.StartLoadingBar","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.StartLoadingBar","parameters":[]}))
 
     @classmethod
     def stop_loadingbar(cls):
         """
-        stop loading animation in wox
+        stop loading animation in flowlauncher
         """
-        print(json.dumps({"method": "Wox.StopLoadingBar","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.StopLoadingBar","parameters":[]}))
 
     @classmethod
     def reload_plugins(cls):
         """
-        reload all wox plugins
+        reload all flowlauncher plugins
         """
-        print(json.dumps({"method": "Wox.ReloadPlugins","parameters":[]}))
+        print(json.dumps({"method": "Flow.Launcher.ReloadPlugins","parameters":[]}))

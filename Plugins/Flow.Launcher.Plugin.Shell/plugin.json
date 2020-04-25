@@ -1,0 +1,12 @@
+{
+  "ID": "D409510CD0D2481F853690A07E6DC426",
+  "ActionKeyword": ">",
+  "Name": "Shell",
+  "Description": "Provide executing commands from Flow Launcher. Commands should start with >",
+  "Author": "qianlifeng",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+  "ExecuteFileName": "Flow.Launcher.Plugin.Shell.dll",
+  "IcoPath": "Images\\shell.png"
+}
