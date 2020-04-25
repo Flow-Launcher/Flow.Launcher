@@ -17,6 +17,7 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 
 namespace Flow.Launcher.ViewModel
@@ -130,7 +131,7 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                Process.Start("http://doc.wox.one/");
+                SearchWeb.NewBrowserWindow("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
 
             OpenResultCommand = new RelayCommand(index =>

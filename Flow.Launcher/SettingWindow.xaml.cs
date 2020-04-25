@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using Microsoft.Win32;
 using NHotkey;
 using NHotkey.Wpf;
-using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
@@ -233,7 +229,7 @@ namespace Flow.Launcher
                     var uri = new Uri(website);
                     if (Uri.CheckSchemeName(uri.Scheme))
                     {
-                        Process.Start(website);
+                        SearchWeb.NewBrowserWindow(website);
                     }
                 }
             }
@@ -244,10 +240,8 @@ namespace Flow.Launcher
             if (e.ChangedButton == MouseButton.Left)
             {
                 var directory = _viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
-                if (!string.IsNullOrEmpty(directory) && Directory.Exists(directory))
-                {
-                    Process.Start(directory);
-                }
+                if (!string.IsNullOrEmpty(directory))
+                    FilesFolders.OpenLocationInExporer(directory);
             }
         }
         #endregion
@@ -269,7 +263,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            SearchWeb.NewBrowserWindow(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 

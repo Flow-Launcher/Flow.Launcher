@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Folder
 {
@@ -18,8 +19,7 @@ namespace Flow.Launcher.Plugin.Folder
         public const string CopyImagePath = "Images\\copy.png";
 
         private string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
-
-        private const string _fileExplorerProgramName = "explorer";
+        
         private static List<string> _driverNames;
         private PluginInitContext _context;
 
@@ -103,7 +103,7 @@ namespace Flow.Launcher.Plugin.Folder
                     {
                         try
                         {
-                            Process.Start(_fileExplorerProgramName, path);
+                            FilesFolders.OpenLocationInExporer(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -255,7 +255,7 @@ namespace Flow.Launcher.Plugin.Folder
                 {
                     try
                     {
-                        Process.Start(_fileExplorerProgramName, filePath);
+                        FilesFolders.OpenLocationInExporer(filePath);
                     }
                     catch (Exception ex)
                     {
@@ -286,7 +286,7 @@ namespace Flow.Launcher.Plugin.Folder
                 Score = 500,
                 Action = c =>
                 {
-                    Process.Start(_fileExplorerProgramName, search);
+                    FilesFolders.OpenLocationInExporer(search);
                     return true;
                 }
             };
