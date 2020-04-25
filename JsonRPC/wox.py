@@ -4,7 +4,7 @@ import json
 import sys
 import inspect
 
-class Flow.Launcher(object):
+class FlowLauncher(object):
     """
     Flow.Launcher python plugin base
     """
@@ -42,7 +42,7 @@ class Flow.Launcher(object):
         print("DEBUG:{}".format(msg))
         sys.exit()
 
-class Flow.LauncherAPI(object):
+class FlowLauncherAPI(object):
 
     @classmethod
     def change_query(cls,query,requery = False):
