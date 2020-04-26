@@ -9,10 +9,6 @@ Flow Launcher
 
 Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
 
-## Status
-
-Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
-
 ## Features
 
 - Search everything from applications, folders, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
@@ -42,7 +38,11 @@ Windows may complain about security due to code not being signed, this will be c
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
 - Logs are saved along with your user settings folder
 
-### Contributing
+## Status
+
+Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
+
+## Contributing
 
 We welcome all contributions. If you are unsure of a change you want to make, simply put an issue in for discussion, otherwise feel free to put in a pull request.
 
@@ -60,11 +60,11 @@ Install Visual Studio 2019
 
 Install .Net Core 3.1 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.201-windows-x64-installer)
 
-### Documentation
+## Documentation
 
 [Wiki](https://github.com/Flow-Launcher/Flow.Launcher/wiki)
 
-### A history of the flow
+## A history of the flow
 Flow's roots came from a rebrand of the [JJW24/Wox fork](https://github.com/jjw24/Wox/issues/156) and WoX.
 
 A big thank you and all credits to [Bao](https://github.com/bao-qian), the author of WoX, and its contrbutors for all the amazing work.
