@@ -38,6 +38,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Program\Flow.Launcher.Plugin.Program.csproj" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Url\Flow.Launcher.Plugin.Url.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />

@@ -263,6 +263,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string LogoPath { get; set; }
             public UWP Package { get; set; }
 
+            public Application(){}
+
             private int Score(string query)
             {
                 var displayNameMatch = StringMatcher.FuzzySearch(query, DisplayName);
@@ -371,62 +373,62 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Enabled = true;
             }
 
-            internal string ResourceFromPri(string packageFullName, string packageName, string resourceReference)
+            internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
             {
-                const string prefix = "ms-resource:";
-                if (!string.IsNullOrWhiteSpace(resourceReference) && resourceReference.StartsWith(prefix))
+                if (string.IsNullOrWhiteSpace(rawReferenceValue) || !rawReferenceValue.StartsWith("ms-resource:"))
+                    return rawReferenceValue;
+
+                var formattedPriReference = FormattedPriReferenceValue(packageName, rawReferenceValue);
+
+                var outBuffer = new StringBuilder(128);
+                string source = $"@{{{packageFullName}? {formattedPriReference}}}";
+                var capacity = (uint)outBuffer.Capacity;
+                var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
+                if (hResult == Hresult.Ok)
                 {
-                    string key = resourceReference.Substring(prefix.Length);
-                    string parsed;
-                    if (key.StartsWith("//"))
+                    var loaded = outBuffer.ToString();
+                    if (!string.IsNullOrEmpty(loaded))
                     {
-                        parsed = $"{prefix}{key}";
+                        return loaded;
                     }
                     else
                     {
-                        if (!key.StartsWith("/"))
-                        {
-                            key = $"/{key}";
-                        }
-
-                        if (!key.ToLower().Contains("resources"))
-                        {
-                            key = $"/Resources{key}";
-                        }
-                        parsed = $"{prefix}//{packageName}{key}";
-                    }
-
-                    var outBuffer = new StringBuilder(128);
-                    string source = $"@{{{packageFullName}? {parsed}}}";
-                    var capacity = (uint)outBuffer.Capacity;
-                    var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
-                    if (hResult == Hresult.Ok)
-                    {
-                        var loaded = outBuffer.ToString();
-                        if (!string.IsNullOrEmpty(loaded))
-                        {
-                            return loaded;
-                        }
-                        else
-                        {
-                            ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
-                                                        + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
-                            return string.Empty;
-                        }
-                    }
-                    else
-                    {
-                        var e = Marshal.GetExceptionForHR((int)hResult);
-                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
+                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
+                                                    + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
                         return string.Empty;
                     }
                 }
                 else
                 {
-                    return resourceReference;
+                    var e = Marshal.GetExceptionForHR((int)hResult);
+                    ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
+                    return string.Empty;
                 }
             }
 
+            public string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
+            {
+                const string prefix = "ms-resource:";
+                
+                if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
+                    return rawPriReferenceValue;
+
+                string key = rawPriReferenceValue.Substring(prefix.Length);
+                if (key.StartsWith("//"))
+                    return $"{prefix}{key}";
+                
+                if (!key.StartsWith("/"))
+                {
+                    key = $"/{key}";
+                }
+
+                if (!key.ToLower().Contains("resources"))
+                {
+                    key = $"/Resources{key}";
+                }
+
+                return $"{prefix}//{packageName}{key}";
+            }
 
             internal string LogoUriFromManifest(IAppxManifestApplication app)
             {
