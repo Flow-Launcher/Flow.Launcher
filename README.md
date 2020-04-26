@@ -29,7 +29,7 @@ Windows may complain about security due to code not being signed, this will be c
   - If you use python plugins, install [python3](https://www.python.org/downloads/): `.exe` installer + add it to `%PATH%` or set it in flow's settings
 
 **Usage**
-- Open flow: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey
+- Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey
 - Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>
 - Cancel/Return to previous screen: <kbd>Esc</kbd>
 - Install/Uninstall plugins: in the search window, type `wpm install/uninstall` + the plugin name
@@ -52,7 +52,7 @@ You will find the main goals of flow placed under Projects board, so feel free t
 
 Yes please, submit an issue to let us know.
 
-### Developing/Debugging
+## Developing/Debugging
 
 Flow Launcher's target framework is .Net Core 3.1
 
