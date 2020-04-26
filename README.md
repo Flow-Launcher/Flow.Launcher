@@ -7,9 +7,7 @@ Flow Launcher
 ![GitHub Release Date](https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher)
 [![Build Status](https://dev.azure.com/Flow-Launcher/Flow.Launcher/_apis/build/status/Flow.Launcher?branchName=master)](https://dev.azure.com/Flow-Launcher/Flow.Launcher/_build/latest?definitionId=1&branchName=master)
 
-Nickname flow, full name Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
-
-<sub>PS. Flowy is its street name.</sub>
+Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
 
 ## Status
 
@@ -24,12 +22,11 @@ Flow is under heavy development, but the code base is stable, so contributions a
 - Fully portable.
 
 ## Running Flow Launcher
-Remember to star it, flow will love you more :)
 
 | [Windows 7 and up](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
 | ------------- |
 
-Windows may complain about security due to code not being signed. This is fine, you can proceed to install it. 
+Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
 **Integrations:**
   - If you want to integrate with [everything](https://www.voidtools.com/): `.exe` installer + use x64 if your windows is x64 + everything service is running. Supported version is 1.3.4.686
@@ -68,8 +65,8 @@ Install .Net Core 3.1 SDK via Visual Studio installer or manually from [here](ht
 [Wiki](https://github.com/Flow-Launcher/Flow.Launcher/wiki)
 
 ### A history of the flow
-Flowy's roots came from a rebrand of the [JJW24/Wox fork](https://github.com/jjw24/Wox/issues/156) and WoX.
+Flow's roots came from a rebrand of the [JJW24/Wox fork](https://github.com/jjw24/Wox/issues/156) and WoX.
 
 A big thank you and all credits to [Bao](https://github.com/bao-qian), the author of WoX, and its contrbutors for all the amazing work.
 
-The JJW24/Wox fork started adding new changes on top of main WoX repo's code base from release v1.3.524. Flowy is a continuation of the work from JJW24/Wox
+The JJW24/Wox fork started adding new changes on top of main WoX repo's code base from release v1.3.524. Flow is a continuation of the work from JJW24/Wox
