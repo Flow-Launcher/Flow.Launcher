@@ -263,6 +263,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string LogoPath { get; set; }
             public UWP Package { get; set; }
 
+            public Application(){}
+
             private int Score(string query)
             {
                 var displayNameMatch = StringMatcher.FuzzySearch(query, DisplayName);
@@ -363,73 +365,70 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 BackgroundColor = manifestApp.GetStringValue("BackgroundColor");
                 Package = package;
 
-                DisplayName = ResourceFromPri(package.FullName, DisplayName);
-                Description = ResourceFromPri(package.FullName, Description);
+                DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
+                Description = ResourceFromPri(package.FullName, package.Name, Description);
                 LogoUri = LogoUriFromManifest(manifestApp);
                 LogoPath = LogoPathFromUri(LogoUri);
 
                 Enabled = true;
             }
 
-            internal string ResourceFromPri(string packageFullName, string resourceReference)
+            internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
             {
-                const string prefix = "ms-resource:";
-                if (!string.IsNullOrWhiteSpace(resourceReference) && resourceReference.StartsWith(prefix))
-                {
-                    // magic comes from @talynone
-                    // https://github.com/talynone/Wox.Plugin.WindowsUniversalAppLauncher/blob/master/StoreAppLauncher/Helpers/NativeApiHelper.cs#L139-L153
-                    string key = resourceReference.Substring(prefix.Length);
-                    string parsed;
-                    if (key.StartsWith("//"))
-                    {
-                        parsed = prefix + key;
-                    }
-                    else if (key.StartsWith("/"))
-                    {
-                        parsed = prefix + "//" + key;
-                    }
-                    else
-                    {
-                        parsed = prefix + "///resources/" + key;
-                    }
+                if (string.IsNullOrWhiteSpace(rawReferenceValue) || !rawReferenceValue.StartsWith("ms-resource:"))
+                    return rawReferenceValue;
 
-                    var outBuffer = new StringBuilder(128);
-                    string source = $"@{{{packageFullName}? {parsed}}}";
-                    var capacity = (uint)outBuffer.Capacity;
-                    var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
-                    if (hResult == Hresult.Ok)
+                var formattedPriReference = FormattedPriReferenceValue(packageName, rawReferenceValue);
+
+                var outBuffer = new StringBuilder(128);
+                string source = $"@{{{packageFullName}? {formattedPriReference}}}";
+                var capacity = (uint)outBuffer.Capacity;
+                var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
+                if (hResult == Hresult.Ok)
+                {
+                    var loaded = outBuffer.ToString();
+                    if (!string.IsNullOrEmpty(loaded))
                     {
-                        var loaded = outBuffer.ToString();
-                        if (!string.IsNullOrEmpty(loaded))
-                        {
-                            return loaded;
-                        }
-                        else
-                        {
-                            ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
-                                                        + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
-                            return string.Empty;
-                        }
+                        return loaded;
                     }
                     else
                     {
-                        // https://github.com/Wox-launcher/Wox/issues/964
-                        // known hresult 2147942522:
-                        // 'Microsoft Corporation' violates pattern constraint of '\bms-resource:.{1,256}'.
-                        // for
-                        // Microsoft.MicrosoftOfficeHub_17.7608.23501.0_x64__8wekyb3d8bbwe: ms-resource://Microsoft.MicrosoftOfficeHub/officehubintl/AppManifest_GetOffice_Description
-                        // Microsoft.BingFoodAndDrink_3.0.4.336_x64__8wekyb3d8bbwe: ms-resource:AppDescription
-                        var e = Marshal.GetExceptionForHR((int)hResult);
-                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
+                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
+                                                    + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
                         return string.Empty;
                     }
                 }
                 else
                 {
-                    return resourceReference;
+                    var e = Marshal.GetExceptionForHR((int)hResult);
+                    ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
+                    return string.Empty;
                 }
             }
 
+            public string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
+            {
+                const string prefix = "ms-resource:";
+                
+                if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
+                    return rawPriReferenceValue;
+
+                string key = rawPriReferenceValue.Substring(prefix.Length);
+                if (key.StartsWith("//"))
+                    return $"{prefix}{key}";
+                
+                if (!key.StartsWith("/"))
+                {
+                    key = $"/{key}";
+                }
+
+                if (!key.ToLower().Contains("resources"))
+                {
+                    key = $"/Resources{key}";
+                }
+
+                return $"{prefix}//{packageName}{key}";
+            }
 
             internal string LogoUriFromManifest(IAppxManifestApplication app)
             {
