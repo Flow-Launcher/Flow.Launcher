@@ -9,6 +9,8 @@ Flow Launcher
 
 Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
 
+<sub>Remember to star it, flow will love you more :)</sub>
+
 ## Features
 
 - Search everything from applications, folders, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
