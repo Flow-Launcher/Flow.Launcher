@@ -47,6 +47,18 @@ namespace Flow.Launcher.ViewModel
             await _updater.UpdateApp(false);
         }
 
+        public bool AutoUpdates
+        {
+            get { return Settings.AutoUpdates; }
+            set
+            {
+                Settings.AutoUpdates = value;
+
+                if (value)
+                    UpdateApp();
+            }
+        }
+
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode

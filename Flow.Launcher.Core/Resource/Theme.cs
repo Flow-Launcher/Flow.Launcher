@@ -34,6 +34,9 @@ namespace Flow.Launcher.Core.Resource
             var dicts = Application.Current.Resources.MergedDictionaries;
             _oldResource = dicts.First(d =>
             {
+                if (d.Source == null)
+                    return false;
+
                 var p = d.Source.AbsolutePath;
                 var dir = Path.GetDirectoryName(p).NonNull();
                 var info = new DirectoryInfo(dir);

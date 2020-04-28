@@ -1,4 +1,4 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,7 @@
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         x:Class="Flow.Launcher.SettingWindow"
         mc:Ignorable="d"
         Icon="Images\app.png"
@@ -32,65 +33,67 @@
 
     <TabControl Height="auto" SelectedIndex="0">
         <TabItem Header="{DynamicResource general}">
-            <StackPanel Orientation="Vertical">
-                <CheckBox Margin="10" IsChecked="{Binding PortableMode}">
-                    <TextBlock Text="Portable Mode" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
+            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="True" Margin="60,30,0,30">
+                <StackPanel Orientation="Vertical">
+                    <ui:ToggleSwitch Margin="10" IsOn="{Binding PortableMode}">
+                        <TextBlock Text="Portable Mode" />
+                    </ui:ToggleSwitch>
+                    <CheckBox Margin="10" IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
                           Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck">
-                    <TextBlock Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.HideOnStartup}">
-                    <TextBlock Text="{DynamicResource hideOnStartup}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.HideWhenDeactive}">
-                    <TextBlock Text="{DynamicResource hideFlowLauncherWhenLoseFocus}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.HideNotifyIcon}">
-                    <TextBlock Text="{DynamicResource hideNotifyIcon}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.RememberLastLaunchLocation}">
-                    <TextBlock Text="{DynamicResource rememberLastLocation}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}">
-                    <TextBlock Text="{DynamicResource ignoreHotkeysOnFullscreen}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding Settings.AutoUpdates}">
-                    <TextBlock Text="{DynamicResource autoUpdates}" />
-                </CheckBox>
-                <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}">
-                    <TextBlock Text="{DynamicResource ShouldUsePinyin}" />
-                </CheckBox>
-                <StackPanel Margin="10" Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource querySearchPrecision}" />
-                    <ComboBox Margin="10 0 0 0" Width="120"
+                        <TextBlock Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
+                    </CheckBox>
+                    <CheckBox Margin="10" IsChecked="{Binding Settings.HideOnStartup}">
+                        <TextBlock Text="{DynamicResource hideOnStartup}" />
+                    </CheckBox>
+                    <CheckBox Margin="10" IsChecked="{Binding Settings.HideWhenDeactive}">
+                        <TextBlock Text="{DynamicResource hideFlowLauncherWhenLoseFocus}" />
+                    </CheckBox>
+                    <CheckBox Margin="10" IsChecked="{Binding Settings.HideNotifyIcon}">
+                        <TextBlock Text="{DynamicResource hideNotifyIcon}" />
+                    </CheckBox>
+                    <CheckBox Margin="10" IsChecked="{Binding Settings.RememberLastLaunchLocation}">
+                        <TextBlock Text="{DynamicResource rememberLastLocation}" />
+                    </CheckBox>
+                    <CheckBox Margin="10" IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}">
+                        <TextBlock Text="{DynamicResource ignoreHotkeysOnFullscreen}" />
+                    </CheckBox>
+                    <ui:ToggleSwitch Margin="10" IsOn="{Binding AutoUpdates}">
+                        <TextBlock Text="{DynamicResource autoUpdates}" />
+                    </ui:ToggleSwitch>
+                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}">
+                        <TextBlock Text="{DynamicResource ShouldUsePinyin}" />
+                    </CheckBox>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource querySearchPrecision}" FontSize="14" />
+                        <ComboBox Margin="10 0 0 0" MaxWidth="200"
                               ItemsSource="{Binding QuerySearchPrecisionStrings}" 
                               SelectedItem="{Binding Settings.QuerySearchPrecisionString}" />
-                </StackPanel>
-                <StackPanel Margin="10" Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource lastQueryMode}" />
-                    <ComboBox Margin="10 0 0 0" Width="120"
+                    </StackPanel>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource lastQueryMode}" FontSize="14" />
+                        <ComboBox Margin="10 0 0 0" MaxWidth="200"
                               ItemsSource="{Binding LastQueryModes}" SelectedValue="{Binding Settings.LastQueryMode}"
                               DisplayMemberPath="Display" SelectedValuePath="Value" />
-                </StackPanel>
-                <StackPanel Margin="10" Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource language}" />
-                    <ComboBox Margin="10 0 0 0" Width="120"
+                    </StackPanel>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource language}" FontSize="14" />
+                        <ComboBox Margin="10 0 0 0" MaxWidth="200"
                               ItemsSource="{Binding Languages}" SelectedValue="{Binding Language}"
                               DisplayMemberPath="Display" SelectedValuePath="LanguageCode" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <TextBlock Text="{DynamicResource maxShowResults}" />
-                    <ComboBox Margin="10 0 0 0" Width="45" ItemsSource="{Binding MaxResultsRange}"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="{DynamicResource maxShowResults}" FontSize="14" />
+                        <ComboBox Margin="10 0 0 0" MaxWidth="100" ItemsSource="{Binding MaxResultsRange}"
                               SelectedItem="{Binding Settings.MaxResultsToShow}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="10" Text="{DynamicResource pythonDirectory}" />
-                    <TextBox Width="300" Margin="10" Text="{Binding Settings.PluginSettings.PythonDirectory}" />
-                    <Button Margin="10" Click="OnSelectPythonDirectoryClick"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="10" Text="{DynamicResource pythonDirectory}" FontSize="14" />
+                        <TextBox Width="300" Margin="10" Text="{Binding Settings.PluginSettings.PythonDirectory}" />
+                        <Button Margin="10" Click="OnSelectPythonDirectoryClick"
                             Content="{DynamicResource selectPythonDirectory}" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="{DynamicResource plugin}">
             <Grid>
@@ -106,7 +109,7 @@
                     </TextBlock>
                     <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="10, 0, 10, 10" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                             Margin="10, 0, 10, 10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="True">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="3">
