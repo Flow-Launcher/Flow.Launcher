@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -115,7 +115,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = location };
             try
             {
-                if (LocationExists(location))
+                if (LocationExists(fileOrFolderPath) || FileExits(fileOrFolderPath))
                     Process.Start(psi);
             }
             catch (Exception e)
