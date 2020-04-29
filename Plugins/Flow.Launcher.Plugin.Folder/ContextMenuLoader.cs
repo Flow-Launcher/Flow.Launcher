@@ -89,7 +89,7 @@ namespace Flow.Launcher.Plugin.Folder
                                 if (record.Type == ResultType.File)
                                     File.Delete(record.FullPath);
                                 else
-                                    Directory.Delete(record.FullPath);
+                                    Directory.Delete(record.FullPath, true);
                             }
                             catch(Exception e)
                             {
