@@ -59,7 +59,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
-        public int MaxResultsToShow { get; set; } = 6;
+        public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
         // Order defaults to 0 or -1, so 1 will let this property appear last
