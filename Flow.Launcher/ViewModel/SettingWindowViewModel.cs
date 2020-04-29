@@ -82,6 +82,14 @@ namespace Flow.Launcher.ViewModel
 
         public void Save()
         {
+            foreach (var vm in PluginViewModels)
+            {
+                var id = vm.PluginPair.Metadata.ID;
+
+                Settings.PluginSettings.Plugins[id].Disabled = vm.PluginPair.Metadata.Disabled;
+            }
+
+            PluginManager.Save();
             _storage.Save();
         }
 
