@@ -241,7 +241,7 @@ namespace Flow.Launcher
             {
                 var directory = _viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
                 if (!string.IsNullOrEmpty(directory))
-                    FilesFolders.OpenLocationInExporer(directory);
+                    FilesFolders.OpenPath(directory);
             }
         }
         #endregion

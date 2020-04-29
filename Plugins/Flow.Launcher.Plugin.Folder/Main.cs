@@ -103,7 +103,7 @@ namespace Flow.Launcher.Plugin.Folder
                     {
                         try
                         {
-                            FilesFolders.OpenLocationInExporer(path);
+                            FilesFolders.OpenPath(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -255,7 +255,7 @@ namespace Flow.Launcher.Plugin.Folder
                 {
                     try
                     {
-                        FilesFolders.OpenLocationInExporer(filePath);
+                        FilesFolders.OpenPath(filePath);
                     }
                     catch (Exception ex)
                     {
@@ -286,7 +286,7 @@ namespace Flow.Launcher.Plugin.Folder
                 Score = 500,
                 Action = c =>
                 {
-                    FilesFolders.OpenLocationInExporer(search);
+                    FilesFolders.OpenPath(search);
                     return true;
                 }
             };

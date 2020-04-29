@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -110,9 +110,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return File.Exists(filePath);
         }
 
-        public static void OpenLocationInExporer(string location)
+        public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = location };
+            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExits(fileOrFolderPath))
