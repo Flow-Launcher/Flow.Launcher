@@ -123,7 +123,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw e;
 #else
-                MessageBox.Show(string.Format("Unable to open location {0}, please check if it exists", location));
+                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }
