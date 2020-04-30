@@ -12,15 +12,26 @@
             get { return "CSHARP"; }
         }
 
+        public static string FSharp
+        {
+            get { return "FSHARP"; }
+        }
+
         public static string Executable
         {
             get { return "EXECUTABLE"; }
         }
 
+        public static bool IsDotNet(string language)
+        {
+            return language.ToUpper() == CSharp
+                || language.ToUpper() == FSharp;
+        }
+
         public static bool IsAllowed(string language)
         {
-            return language.ToUpper() == Python.ToUpper() 
-                || language.ToUpper() == CSharp.ToUpper()
+            return IsDotNet(language)
+                || language.ToUpper() == Python.ToUpper()
                 || language.ToUpper() == Executable.ToUpper();
         }
     }
