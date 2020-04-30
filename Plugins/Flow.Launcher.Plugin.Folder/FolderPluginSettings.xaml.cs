@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -22,6 +23,31 @@ namespace Flow.Launcher.Plugin.Folder
             InitializeComponent();
             _settings = settings;
             lbxFolders.ItemsSource = _settings.FolderLinks;
+            
+            RefreshView();
+        }
+
+        public void RefreshView()
+        {
+            lbxFolders.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+
+            if (lbxFolders.Items.Count == 0 
+                && btnDelete.Visibility == Visibility.Visible 
+                && btnEdit.Visibility == Visibility.Visible)
+            {
+                btnDelete.Visibility = Visibility.Hidden;
+                btnEdit.Visibility = Visibility.Hidden;
+            }
+
+            if (lbxFolders.Items.Count > 0
+                && btnDelete.Visibility == Visibility.Hidden
+                && btnEdit.Visibility == Visibility.Hidden)
+            {
+                btnDelete.Visibility = Visibility.Visible;
+                btnEdit.Visibility = Visibility.Visible;
+            }
+
+            lbxFolders.Items.Refresh();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -34,7 +60,7 @@ namespace Flow.Launcher.Plugin.Folder
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     _settings.FolderLinks.Remove(selectedFolder);
-                    lbxFolders.Items.Refresh();
+                    RefreshView();
                 }
             }
             else
@@ -57,7 +83,7 @@ namespace Flow.Launcher.Plugin.Folder
                     link.Path = folderBrowserDialog.SelectedPath;
                 }
 
-                lbxFolders.Items.Refresh();
+                RefreshView();
             }
             else
             {
@@ -84,7 +110,7 @@ namespace Flow.Launcher.Plugin.Folder
                 _settings.FolderLinks.Add(newFolder);
             }
 
-            lbxFolders.Items.Refresh();
+            RefreshView();
         }
 
         private void lbxFolders_Drop(object sender, DragEventArgs e)
@@ -110,7 +136,7 @@ namespace Flow.Launcher.Plugin.Folder
                         _settings.FolderLinks.Add(newFolder);
                     }
 
-                    lbxFolders.Items.Refresh();
+                    RefreshView();
                 }
             }
         }
