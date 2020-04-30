@@ -43,6 +43,12 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Restart Flow Launcher
         /// </summary>
+        void RestartApp();
+
+        /// <summary>
+        /// Restart Flow Launcher
+        /// </summary>
+        [Obsolete("Use RestartApp instead. This method will be removed in Flow Launcher 1.3")]
         void RestarApp();
 
         /// <summary>

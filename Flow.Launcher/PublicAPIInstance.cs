@@ -54,7 +54,7 @@ namespace Flow.Launcher
             Application.Current.MainWindow.Close();
         }
 
-        public void RestarApp()
+        public void RestartApp()
         {
             _mainVM.MainWindowVisibility = Visibility.Hidden;
 
@@ -64,6 +64,11 @@ namespace Flow.Launcher
             SaveAppAllSettings();
 
             UpdateManager.RestartApp(Constant.ApplicationFileName);
+        }
+
+        public void RestarApp()
+        {
+            RestartApp();
         }
 
         public void CheckForNewUpdate()
