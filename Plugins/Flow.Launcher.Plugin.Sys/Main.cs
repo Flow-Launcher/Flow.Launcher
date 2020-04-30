@@ -205,7 +205,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        context.API.RestarApp();
+                        context.API.RestartApp();
                         return false;
                     }
                 },
