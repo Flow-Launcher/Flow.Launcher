@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.Folder
 
         public Control CreateSettingPanel()
         {
-            return new FileSystemSettings(_context.API, _settings);
+            return new FolderPluginSettings(_context.API, _settings);
         }
 
         public void Init(PluginInitContext context)

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -12,12 +12,12 @@ using MessageBox = System.Windows.MessageBox;
 namespace Flow.Launcher.Plugin.Folder
 {
 
-    public partial class FileSystemSettings
+    public partial class FolderPluginSettings
     {
         private IPublicAPI flowlauncherAPI;
         private Settings _settings;
 
-        public FileSystemSettings(IPublicAPI flowlauncherAPI, Settings settings)
+        public FolderPluginSettings(IPublicAPI flowlauncherAPI, Settings settings)
         {
             this.flowlauncherAPI = flowlauncherAPI;
             InitializeComponent();
