@@ -57,14 +57,15 @@ function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
 
-function Pack-Nuget ($path, $version, $output) {
+function Pack-Plugin ($path, $output) {
     Write-Host "Begin build nuget library"
 
-    $spec = "$path\Scripts\flowlauncher.plugin.nuspec"
-    Write-Host "nuspec path: $spec"
+    $project = "$path\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj"
+
+    Write-Host "Packing: $project"
     Write-Host "Output path: $output"
 
-    Nuget pack $spec -Version $version -OutputDirectory $output
+    dotnet pack $project --include-symbols --configuration Release --output $output
 
     Write-Host "End build nuget library"
 }
@@ -72,13 +73,10 @@ function Pack-Nuget ($path, $version, $output) {
 function Zip-Release ($path, $version, $output) {
     Write-Host "Begin zip release"
 
-    $input = "$path\Output\Release"
-    Write-Host "Input path:  $input"
-    $file = "$output\Flow.Launcher-$version.zip"
-    Write-Host "Filename: $file"
+    $content = "$path\Output\Release\*"
+    $zipFile = "$output\Flow.Launcher-$version.zip"
 
-    [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
-    [System.IO.Compression.ZipFile]::CreateFromDirectory($input, $file)
+    Compress-Archive -Force -Path $content -DestinationPath $zipFile
 
     Write-Host "End zip release"
 }
@@ -88,10 +86,12 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Begin pack squirrel installer"
 
     $spec = "$path\Scripts\flowlauncher.nuspec"
-    Write-Host "nuspec path: $spec"
     $input = "$path\Output\Release"
+
+    Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
-    Nuget pack $spec -Version $version -Properties Configuration=Release -BasePath $input -OutputDirectory  $output
+    # TODO: can we use dotnet pack here?
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
@@ -139,12 +139,11 @@ function Main {
         $o = "$p\Output\Packages"
         Validate-Directory $o
         # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-        New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
         Pack-Squirrel-Installer $p $v $o
     
         $isInCI = $env:APPVEYOR
         if ($isInCI) {
-            Pack-Nuget $p $v $o
+            Pack-Plugin $p $o
             Zip-Release $p $v $o
         }
 
