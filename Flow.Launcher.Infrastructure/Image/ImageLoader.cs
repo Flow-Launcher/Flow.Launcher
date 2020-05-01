@@ -13,11 +13,12 @@ namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
-        private static readonly ImageCache ImageCache = new ImageCache();
-        private static BinaryStorage<Dictionary<string, int>> _storage;
-        private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
-        private static IImageHashGenerator _hashGenerator;
+        private static readonly ImageCache _imageCache = new ImageCache();
+        private static readonly ConcurrentDictionary<string, string> _guidToKey = new ConcurrentDictionary<string, string>();
+        private static readonly bool _enableHashImage = true;
 
+        private static BinaryStorage<Dictionary<string, int>> _storage;
+        private static IImageHashGenerator _hashGenerator;
 
         private static readonly string[] ImageExtensions =
         {
@@ -30,20 +31,20 @@ namespace Flow.Launcher.Infrastructure.Image
             ".ico"
         };
 
-
         public static void Initialize()
         {
             _storage = new BinaryStorage<Dictionary<string, int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
-            ImageCache.Usage = LoadStorageToConcurrentDictionary();
+            _imageCache.Usage = LoadStorageToConcurrentDictionary();
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.ErrorIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
-                ImageCache[icon] = img;
+                _imageCache[icon] = img;
             }
+
             Task.Run(() =>
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
@@ -53,7 +54,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         Load(key);
                     }
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.Usage.Count}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{_imageCache.Usage.Count}>, Images Number: {_imageCache.CacheSize()}, Unique Items {_imageCache.UniqueImagesInCache()}");
             });
         }
 
@@ -61,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                _storage.Save(ImageCache.CleanupAndToDictionary());
+                _storage.Save(_imageCache.CleanupAndToDictionary());
             }
         }
 
@@ -105,11 +106,11 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(ImageCache[Constant.ErrorIcon], ImageType.Error);
+                    return new ImageResult(_imageCache[Constant.ErrorIcon], ImageType.Error);
                 }
-                if (ImageCache.ContainsKey(path))
+                if (_imageCache.ContainsKey(path))
                 {
-                    return new ImageResult(ImageCache[path], ImageType.Cache);
+                    return new ImageResult(_imageCache[path], ImageType.Cache);
                 }
 
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
@@ -133,8 +134,11 @@ namespace Flow.Launcher.Infrastructure.Image
                      * - Solution: just load the icon
                      */
                     type = ImageType.Folder;
-                    image = WindowsThumbnailProvider.GetThumbnail(path, Constant.ThumbnailSize,
-                        Constant.ThumbnailSize, ThumbnailOptions.IconOnly);
+                    image = WindowsThumbnailProvider.GetThumbnail(
+                        path, 
+                        Constant.ThumbnailSize,
+                        Constant.ThumbnailSize, 
+                        ThumbnailOptions.IconOnly);
 
                 }
                 else if (File.Exists(path))
@@ -154,20 +158,26 @@ namespace Flow.Launcher.Infrastructure.Image
                              * be the case in many situations while testing. 
                              * - Solution: explicitly pass the ThumbnailOnly flag
                              */
-                            image = WindowsThumbnailProvider.GetThumbnail(path, Constant.ThumbnailSize,
-                                Constant.ThumbnailSize, ThumbnailOptions.ThumbnailOnly);
+                            image = WindowsThumbnailProvider.GetThumbnail(
+                                path, 
+                                Constant.ThumbnailSize,
+                                Constant.ThumbnailSize, 
+                                ThumbnailOptions.ThumbnailOnly);
                         }
                     }
                     else
                     {
                         type = ImageType.File;
-                        image = WindowsThumbnailProvider.GetThumbnail(path, Constant.ThumbnailSize,
-                            Constant.ThumbnailSize, ThumbnailOptions.None);
+                        image = WindowsThumbnailProvider.GetThumbnail(
+                            path, 
+                            Constant.ThumbnailSize,
+                            Constant.ThumbnailSize, 
+                            ThumbnailOptions.None);
                     }
                 }
                 else
                 {
-                    image = ImageCache[Constant.ErrorIcon];
+                    image = _imageCache[Constant.ErrorIcon];
                     path = Constant.ErrorIcon;
                 }
 
@@ -180,13 +190,12 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path}", e);
                 type = ImageType.Error;
-                image = ImageCache[Constant.ErrorIcon];
-                ImageCache[path] = image;
+                image = _imageCache[Constant.ErrorIcon];
+                _imageCache[path] = image;
             }
+
             return new ImageResult(image, type);
         }
-
-        private static bool EnableImageHash = true;
 
         public static ImageSource Load(string path, bool loadFullImage = false)
         {
@@ -194,24 +203,26 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var img = imageResult.ImageSource;
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
-            { // we need to get image hash
-                string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
+            { 
+                // we need to get image hash
+                string hash = _enableHashImage ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-                    if (GuidToKey.TryGetValue(hash, out string key))
-                    { // image already exists
-                        img = ImageCache[key];
+                    if (_guidToKey.TryGetValue(hash, out string key))
+                    { 
+                        // image already exists
+                        img = _imageCache[key];
                     }
                     else
-                    { // new guid
-                        GuidToKey[hash] = path;
+                    { 
+                        // new guid
+                        _guidToKey[hash] = path;
                     }
                 }
 
                 // update cache
-                ImageCache[path] = img;
+                _imageCache[path] = img;
             }
-
 
             return img;
         }
