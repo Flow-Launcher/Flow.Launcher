@@ -48,10 +48,10 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
-                    ImageCache.Usage.AsParallel().ForAll(x =>
+                    foreach (string key in _imageCache.Usage.Keys)
                     {
-                        Load(x.Key);
-                    });
+                        Load(key);
+                    }
                 });
                 Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.Usage.Count}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
