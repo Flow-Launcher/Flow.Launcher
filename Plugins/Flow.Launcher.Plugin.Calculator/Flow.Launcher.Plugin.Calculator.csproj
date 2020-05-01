@@ -99,7 +99,6 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
