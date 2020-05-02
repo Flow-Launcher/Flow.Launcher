@@ -52,6 +52,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="FSharp.Core" Version="4.7.1" />
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" />
