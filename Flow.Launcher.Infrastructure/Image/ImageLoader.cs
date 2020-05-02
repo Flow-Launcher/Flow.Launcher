@@ -100,8 +100,8 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static ImageResult LoadInternal(string path, bool loadFullImage = false)
         {
-            ImageSource image;
-            ImageType type = ImageType.Error;
+            ImageResult imageResult;
+
             try
             {
                 if (string.IsNullOrEmpty(path))
@@ -125,76 +125,92 @@ namespace Flow.Launcher.Infrastructure.Image
                     path = Path.Combine(Constant.ProgramDirectory, "Images", Path.GetFileName(path));
                 }
 
-                if (Directory.Exists(path))
+                imageResult = GetThumbnailResult(ref path, loadFullImage);
+            }
+            catch (System.Exception e)
+            {
+                try
                 {
-                    /* Directories can also have thumbnails instead of shell icons.
-                     * Generating thumbnails for a bunch of folders while scrolling through
-                     * results from Everything makes a big impact on performance and 
-                     * Flow.Launcher responsibility. 
-                     * - Solution: just load the icon
-                     */
-                    type = ImageType.Folder;
-                    image = WindowsThumbnailProvider.GetThumbnail(
-                        path, 
-                        Constant.ThumbnailSize,
-                        Constant.ThumbnailSize, 
-                        ThumbnailOptions.IconOnly);
-
+                    // Retry to get thumbnail for certain images when the first try failed
+                    imageResult = GetThumbnailResult(ref path, loadFullImage);
                 }
-                else if (File.Exists(path))
+                catch (System.Exception e2)
                 {
-                    var extension = Path.GetExtension(path).ToLower();
-                    if (ImageExtensions.Contains(extension))
+                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
+                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
+
+                    ImageSource image = _imageCache[Constant.ErrorIcon];
+                    _imageCache[path] = image;
+                    imageResult = new ImageResult(image, ImageType.Error);
+                }
+            }
+
+            return imageResult;
+        }
+
+        private static ImageResult GetThumbnailResult(ref string path, bool loadFullImage = false)
+        {
+            ImageSource image;
+            ImageType type = ImageType.Error;
+
+            if (Directory.Exists(path))
+            {
+                /* Directories can also have thumbnails instead of shell icons.
+                 * Generating thumbnails for a bunch of folders while scrolling through
+                 * results from Everything makes a big impact on performance and 
+                 * Flow.Launcher responsibility. 
+                 * - Solution: just load the icon
+                 */
+                type = ImageType.Folder;
+                image = GetThumbnail(path, ThumbnailOptions.IconOnly);
+            }
+            else if (File.Exists(path))
+            {
+                var extension = Path.GetExtension(path).ToLower();
+                if (ImageExtensions.Contains(extension))
+                {
+                    type = ImageType.ImageFile;
+                    if (loadFullImage)
                     {
-                        type = ImageType.ImageFile;
-                        if (loadFullImage)
-                        {
-                            image = LoadFullImage(path);
-                        }
-                        else
-                        {
-                            /* Although the documentation for GetImage on MSDN indicates that 
-                             * if a thumbnail is available it will return one, this has proved to not
-                             * be the case in many situations while testing. 
-                             * - Solution: explicitly pass the ThumbnailOnly flag
-                             */
-                            image = WindowsThumbnailProvider.GetThumbnail(
-                                path, 
-                                Constant.ThumbnailSize,
-                                Constant.ThumbnailSize, 
-                                ThumbnailOptions.ThumbnailOnly);
-                        }
+                        image = LoadFullImage(path);
                     }
                     else
                     {
-                        type = ImageType.File;
-                        image = WindowsThumbnailProvider.GetThumbnail(
-                            path, 
-                            Constant.ThumbnailSize,
-                            Constant.ThumbnailSize, 
-                            ThumbnailOptions.ThumbnailOnly);
+                        /* Although the documentation for GetImage on MSDN indicates that 
+                         * if a thumbnail is available it will return one, this has proved to not
+                         * be the case in many situations while testing. 
+                         * - Solution: explicitly pass the ThumbnailOnly flag
+                         */
+                        image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
                     }
                 }
                 else
                 {
-                    image = _imageCache[Constant.ErrorIcon];
-                    path = Constant.ErrorIcon;
-                }
-
-                if (type != ImageType.Error)
-                {
-                    image.Freeze();
+                    type = ImageType.File;
+                    image = GetThumbnail(path, ThumbnailOptions.None);
                 }
             }
-            catch (System.Exception e)
+            else
             {
-                Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path}", e);
-                type = ImageType.Error;
                 image = _imageCache[Constant.ErrorIcon];
-                _imageCache[path] = image;
+                path = Constant.ErrorIcon;
+            }
+
+            if (type != ImageType.Error)
+            {
+                image.Freeze();
             }
 
             return new ImageResult(image, type);
+        }
+
+        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly)
+        {
+            return WindowsThumbnailProvider.GetThumbnail(
+                path,
+                Constant.ThumbnailSize,
+                Constant.ThumbnailSize,
+                option);
         }
 
         public static ImageSource Load(string path, bool loadFullImage = false)
