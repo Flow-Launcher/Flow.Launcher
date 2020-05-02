@@ -49,7 +49,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
-                    ImageCache.Usage.AsParallel().ForAll(x =>
+                    _imageCache.Usage.AsParallel().ForAll(x =>
                     {
                         Load(x.Key);
                     });
