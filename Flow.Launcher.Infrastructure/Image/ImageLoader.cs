@@ -49,10 +49,10 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
-                    foreach (string key in _imageCache.Usage.Keys)
+                    ImageCache.Usage.AsParallel().ForAll(x =>
                     {
-                        Load(key);
-                    }
+                        Load(x.Key);
+                    });
                 });
                 Log.Info($"|ImageLoader.Initialize|Number of preload images is <{_imageCache.Usage.Count}>, Images Number: {_imageCache.CacheSize()}, Unique Items {_imageCache.UniqueImagesInCache()}");
             });
@@ -172,7 +172,7 @@ namespace Flow.Launcher.Infrastructure.Image
                             path, 
                             Constant.ThumbnailSize,
                             Constant.ThumbnailSize, 
-                            ThumbnailOptions.None);
+                            ThumbnailOptions.ThumbnailOnly);
                     }
                 }
                 else
