@@ -167,8 +167,7 @@ namespace Flow.Launcher.Plugin.Folder
         {
             _envStringPaths = new Dictionary<string, string>();
 
-            var specialPaths = System.Environment.GetEnvironmentVariables();
-            foreach (DictionaryEntry special in specialPaths)
+            foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
             {
                 if (Directory.Exists(special.Value.ToString()))
                 {
