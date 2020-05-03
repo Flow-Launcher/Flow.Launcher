@@ -166,25 +166,15 @@ namespace Flow.Launcher.Plugin.Folder
         private void LoadEnvironmentStringPaths()
         {
             _envStringPaths = new Dictionary<string, string>();
-            
-            var specialPaths = 
-                new Dictionary<string,Environment.SpecialFolder> {
-                    { "appdata", Environment.SpecialFolder.ApplicationData },
-                    { "localappdata", Environment.SpecialFolder.LocalApplicationData },
-                    { "programfiles", Environment.SpecialFolder.ProgramFiles },
-                    { "programfiles(x86)", Environment.SpecialFolder.ProgramFilesX86 },
-                    { "programdata", Environment.SpecialFolder.CommonApplicationData },
-                    { "userprofile", Environment.SpecialFolder.UserProfile }
-                };
 
-            foreach (var special in specialPaths)
+            var specialPaths = System.Environment.GetEnvironmentVariables();
+            foreach (DictionaryEntry special in specialPaths)
             {
-                _envStringPaths.Add(special.Key, Environment.GetFolderPath(special.Value));
+                if (Directory.Exists(special.Value.ToString()))
+                {
+                    _envStringPaths.Add(special.Key.ToString().ToLower(), special.Value.ToString());
+                }
             }
-
-            var tempDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Temp");
-
-            _envStringPaths.Add("temp", tempDirectoryPath);
         }
 
         private static readonly char[] _specialSearchChars = new char[]
