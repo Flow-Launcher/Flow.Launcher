@@ -131,7 +131,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 try
                 {
-                    // Retry to get thumbnail for certain images when the first try failed
+                    // Get thumbnail may fail for certain images on the first try, retry again has proven to work
                     imageResult = GetThumbnailResult(ref path, loadFullImage);
                 }
                 catch (System.Exception e2)
