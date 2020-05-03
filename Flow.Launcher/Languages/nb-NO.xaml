@@ -57,6 +57,7 @@
     <system:String x:Key="flowlauncherHotkey">Flow Launcher-hurtigtast</system:String>
     <system:String x:Key="openResultModifiers">Åpne resultatmodifiserere</system:String>
     <system:String x:Key="customQueryHotkey">Egendefinerd spørringshurtigtast</system:String>
+    <system:String x:Key="showOpenResultHotkey">Vis hurtigtast</system:String>
     <system:String x:Key="delete">Slett</system:String>
     <system:String x:Key="edit">Rediger</system:String>
     <system:String x:Key="add">Legg til</system:String>

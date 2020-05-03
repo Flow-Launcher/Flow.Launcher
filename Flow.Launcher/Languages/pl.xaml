@@ -53,6 +53,7 @@
     <system:String x:Key="flowlauncherHotkey">Skrót klawiszowy Flow Launcher</system:String>
     <system:String x:Key="openResultModifiers">Modyfikatory klawiszów otwierających wyniki</system:String>
     <system:String x:Key="customQueryHotkey">Skrót klawiszowy niestandardowych zapytań</system:String>
+    <system:String x:Key="showOpenResultHotkey">Pokaż skrót klawiszowy</system:String>
     <system:String x:Key="delete">Usuń</system:String>
     <system:String x:Key="edit">Edytuj</system:String>
     <system:String x:Key="add">Dodaj</system:String>

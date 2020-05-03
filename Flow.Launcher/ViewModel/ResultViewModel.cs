@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 
@@ -11,13 +13,21 @@ namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        public ResultViewModel(Result result)
+        public ResultViewModel(Result result, Settings settings)
         {
             if (result != null)
             {
                 Result = result;
             }
+
+            Settings = settings;
         }
+
+        public Settings Settings { get; private set; }
+
+        public Visibility ShowOpenResultHotkey =>  Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Hidden;
+
+        public string OpenResultModifiers => Settings.OpenResultModifiers;
 
         public ImageSource Image
         {

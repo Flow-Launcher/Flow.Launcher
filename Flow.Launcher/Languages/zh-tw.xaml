@@ -53,6 +53,7 @@
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 執行熱鍵</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
     <system:String x:Key="customQueryHotkey">自定義熱鍵查詢</system:String>
+    <system:String x:Key="showOpenResultHotkey">顯示熱鍵</system:String>
     <system:String x:Key="delete">刪除</system:String>
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>

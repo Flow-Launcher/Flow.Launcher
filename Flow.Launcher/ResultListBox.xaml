@@ -47,8 +47,14 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" x:Name="SubTitleRowDefinition" />
                             </Grid.RowDefinitions>
-                            <TextBlock Margin="0 5 5 0" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem},
-                                Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}Mod+{0}}" Style="{DynamicResource ItemTitleStyle}" HorizontalAlignment="Right" Opacity="0.3" />
+                            <TextBlock Margin="0 5 5 0" Visibility="{Binding ShowOpenResultHotkey}" Style="{DynamicResource ItemSubTitleStyle}" HorizontalAlignment="Right" Opacity="0.8" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}+{1}">
+                                        <Binding Path="OpenResultModifiers" />
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OrdinalConverter}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                             <TextBlock Style="{DynamicResource ItemTitleStyle}" DockPanel.Dock="Left"
                                        VerticalAlignment="Center" ToolTip="{Binding Result.Title}" x:Name="Title"
                                        Text="{Binding Result.Title}">

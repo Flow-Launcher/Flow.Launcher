@@ -53,6 +53,7 @@
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Sneltoets</system:String>
     <system:String x:Key="openResultModifiers">Open resultaatmodificatoren</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Sneltoets</system:String>
+    <system:String x:Key="showOpenResultHotkey">Sneltoets weergeven</system:String>
     <system:String x:Key="delete">Verwijder</system:String>
     <system:String x:Key="edit">Bewerken</system:String>
     <system:String x:Key="add">Toevoegen</system:String>

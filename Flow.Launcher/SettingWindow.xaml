@@ -305,6 +305,9 @@
                     <ComboBox Margin="0 0 0 0" Width="120"
                               ItemsSource="{Binding OpenResultModifiersList}" 
                               SelectedItem="{Binding Settings.OpenResultModifiers}" />
+                    <CheckBox Margin="10 0 0 0" IsChecked="{Binding Settings.ShowOpenResultHotkey}" VerticalAlignment="Center">
+                        <TextBlock Text="{DynamicResource showOpenResultHotkey}" />
+                    </CheckBox>
                 </StackPanel>
                 <TextBlock VerticalAlignment="Center" Grid.Row="2" Margin="0,3,10,2"
                            Text="{DynamicResource customQueryHotkey}" />
