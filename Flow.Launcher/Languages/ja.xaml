@@ -58,6 +58,7 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">ホットキー</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher ホットキー</system:String>
+    <system:String x:Key="openResultModifiers">結果修飾子を開く</system:String>
     <system:String x:Key="customQueryHotkey">カスタムクエリ ホットキー</system:String>
     <system:String x:Key="delete">削除</system:String>
     <system:String x:Key="edit">編集</system:String>

@@ -55,6 +55,7 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Atalho do Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Modificadores de resultado aberto</system:String>
     <system:String x:Key="customQueryHotkey">Atalho de Consulta Personalizada</system:String>
     <system:String x:Key="delete">Apagar</system:String>
     <system:String x:Key="edit">Editar</system:String>

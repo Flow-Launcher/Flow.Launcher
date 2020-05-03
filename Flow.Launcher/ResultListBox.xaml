@@ -33,6 +33,7 @@
                           Cursor="Hand" UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter"/>
+                            <converter:OrdinalConverter x:Key="OrdinalConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="32" />
@@ -46,6 +47,8 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" x:Name="SubTitleRowDefinition" />
                             </Grid.RowDefinitions>
+                            <TextBlock Margin="0 5 5 0" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem},
+                                Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}Mod+{0}}" Style="{DynamicResource ItemTitleStyle}" HorizontalAlignment="Right" Opacity="0.3" />
                             <TextBlock Style="{DynamicResource ItemTitleStyle}" DockPanel.Dock="Left"
                                        VerticalAlignment="Center" ToolTip="{Binding Result.Title}" x:Name="Title"
                                        Text="{Binding Result.Title}">

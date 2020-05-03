@@ -139,6 +139,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public List<string> OpenResultModifiersList => new List<string> { "Alt", "Ctrl", "Ctrl+Alt" };
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);

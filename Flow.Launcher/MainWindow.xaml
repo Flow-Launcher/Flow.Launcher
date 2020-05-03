@@ -48,15 +48,15 @@
         <KeyBinding Key="Enter" Command="{Binding OpenResultCommand}"></KeyBinding>
         <KeyBinding Key="Enter" Modifiers="Ctrl" Command="{Binding OpenResultCommand}"></KeyBinding>
         <KeyBinding Key="Enter" Modifiers="Alt" Command="{Binding OpenResultCommand}"></KeyBinding>
-        <KeyBinding Key="D1" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="0"></KeyBinding>
-        <KeyBinding Key="D2" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="1"></KeyBinding>
-        <KeyBinding Key="D3" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="2"></KeyBinding>
-        <KeyBinding Key="D4" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="3"></KeyBinding>
-        <KeyBinding Key="D5" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="4"></KeyBinding>
-        <KeyBinding Key="D6" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="5"></KeyBinding>
-        <KeyBinding Key="D7" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="6"></KeyBinding>
-        <KeyBinding Key="D8" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="7"></KeyBinding>
-        <KeyBinding Key="D9" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
+        <KeyBinding Key="D1" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="0"></KeyBinding>
+        <KeyBinding Key="D2" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="1"></KeyBinding>
+        <KeyBinding Key="D3" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="2"></KeyBinding>
+        <KeyBinding Key="D4" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="3"></KeyBinding>
+        <KeyBinding Key="D5" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="4"></KeyBinding>
+        <KeyBinding Key="D6" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="5"></KeyBinding>
+        <KeyBinding Key="D7" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="6"></KeyBinding>
+        <KeyBinding Key="D8" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="7"></KeyBinding>
+        <KeyBinding Key="D9" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
     <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" >
         <StackPanel Orientation="Vertical">

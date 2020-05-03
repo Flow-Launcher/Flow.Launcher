@@ -10,6 +10,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class Settings : BaseModel
     {
         public string Hotkey { get; set; } = "Alt + Space";
+        public string OpenResultModifiers { get; set; } = "Alt";
         public string Language { get; set; } = "en";
         public string Theme { get; set; } = "Dark";
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;

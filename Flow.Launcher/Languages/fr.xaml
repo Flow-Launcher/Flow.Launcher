@@ -55,6 +55,7 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Raccourcis</system:String>
     <system:String x:Key="flowlauncherHotkey">Ouvrir Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Modificateurs de résultats ouverts</system:String>
     <system:String x:Key="customQueryHotkey">Requêtes personnalisées</system:String>
     <system:String x:Key="delete">Supprimer</system:String>
     <system:String x:Key="edit">Modifier</system:String>

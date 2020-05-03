@@ -60,6 +60,7 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
+    <system:String x:Key="openResultModifiers">Open Result Modifiers</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>
