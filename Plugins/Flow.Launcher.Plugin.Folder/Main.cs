@@ -58,10 +58,12 @@ namespace Flow.Launcher.Plugin.Folder
             var results = GetUserFolderResults(query);
 
             string search = query.Search.ToLower();
-            if (!IsDriveOrSharedFolder(search))
+            if (!IsDriveOrSharedFolder(search) && !IsEnvironmentVariableSearch(search))
+            {
                 return results;
+            }
 
-            if (search.StartsWith("%"))
+            if (IsEnvironmentVariableSearch(search))
             {
                 results.AddRange(GetEnvironmentStringPathResults(search, query));
             }
@@ -79,15 +81,15 @@ namespace Flow.Launcher.Plugin.Folder
             return results;
         }
 
+        private static bool IsEnvironmentVariableSearch(string search)
+        {
+            return _envStringPaths != null && search.StartsWith("%");
+        }
+
         private static bool IsDriveOrSharedFolder(string search)
         {
             if (search.StartsWith(@"\\"))
             { // shared folder
-                return true;
-            }
-
-            if (_envStringPaths != null && search.StartsWith("%"))
-            { // environment string formatted folder
                 return true;
             }
 
