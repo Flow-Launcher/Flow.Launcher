@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -58,10 +58,12 @@ namespace Flow.Launcher.Plugin.Folder
             var results = GetUserFolderResults(query);
 
             string search = query.Search.ToLower();
-            if (!IsDriveOrSharedFolder(search))
+            if (!IsDriveOrSharedFolder(search) && !IsEnvironmentVariableSearch(search))
+            {
                 return results;
+            }
 
-            if (search.StartsWith("%"))
+            if (IsEnvironmentVariableSearch(search))
             {
                 results.AddRange(GetEnvironmentStringPathResults(search, query));
             }
@@ -79,15 +81,15 @@ namespace Flow.Launcher.Plugin.Folder
             return results;
         }
 
+        private static bool IsEnvironmentVariableSearch(string search)
+        {
+            return _envStringPaths != null && search.StartsWith("%");
+        }
+
         private static bool IsDriveOrSharedFolder(string search)
         {
             if (search.StartsWith(@"\\"))
             { // shared folder
-                return true;
-            }
-
-            if (_envStringPaths != null && search.StartsWith("%"))
-            { // environment string formatted folder
                 return true;
             }
 
@@ -164,25 +166,14 @@ namespace Flow.Launcher.Plugin.Folder
         private void LoadEnvironmentStringPaths()
         {
             _envStringPaths = new Dictionary<string, string>();
-            
-            var specialPaths = 
-                new Dictionary<string,Environment.SpecialFolder> {
-                    { "appdata", Environment.SpecialFolder.ApplicationData },
-                    { "localappdata", Environment.SpecialFolder.LocalApplicationData },
-                    { "programfiles", Environment.SpecialFolder.ProgramFiles },
-                    { "programfiles(x86)", Environment.SpecialFolder.ProgramFilesX86 },
-                    { "programdata", Environment.SpecialFolder.CommonApplicationData },
-                    { "userprofile", Environment.SpecialFolder.UserProfile }
-                };
 
-            foreach (var special in specialPaths)
+            foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
             {
-                _envStringPaths.Add(special.Key, Environment.GetFolderPath(special.Value));
+                if (Directory.Exists(special.Value.ToString()))
+                {
+                    _envStringPaths.Add(special.Key.ToString().ToLower(), special.Value.ToString());
+                }
             }
-
-            var tempDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Temp");
-
-            _envStringPaths.Add("temp", tempDirectoryPath);
         }
 
         private static readonly char[] _specialSearchChars = new char[]
