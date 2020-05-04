@@ -21,7 +21,7 @@
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Authors>qianlifeng, Jeremy Wu</Authors>
+    <Authors>flow-launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Flow-Launcher/Flow.Launcher</RepositoryUrl>
     <PackageDescription>Reference this library if you want to develop a Flow Launcher plugin</PackageDescription>
