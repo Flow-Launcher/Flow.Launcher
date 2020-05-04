@@ -18,6 +18,7 @@
         Style="{DynamicResource WindowStyle}"
         Icon="Images/app.png"
         AllowsTransparency="True"
+        Background="Transparent"
         Loaded="OnLoaded"
         Initialized="OnInitialized"
         Closing="OnClosing"
@@ -58,13 +59,14 @@
         <KeyBinding Key="D8" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="7"></KeyBinding>
         <KeyBinding Key="D9" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
-    <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" >
+    <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
         <StackPanel Orientation="Vertical">
             <Grid>
                 <TextBox x:Name="QueryTextSuggestionBox"
                          Style="{DynamicResource QueryBoxStyle}"
                          Foreground="DarkGray"
-                         IsEnabled="False">
+                         IsEnabled="False"
+                         Margin="0,0,56,0">
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
                             <Binding ElementName="QueryTextBox" Path="Text"/>
@@ -79,7 +81,8 @@
                      TextChanged="OnTextChanged"
                      AllowDrop="True"
                      Visibility="Visible"
-                    Background="Transparent">
+                    Background="Transparent"
+                    Margin="0,0,56,0">
                     <TextBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Command="ApplicationCommands.Cut"/>
@@ -90,6 +93,7 @@
                         </ContextMenu>
                     </TextBox.ContextMenu>
                 </TextBox>
+                <Image Source="{Binding Image, IsAsync=True}" Width="48"  HorizontalAlignment="Right" />
             </Grid>
             <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay}" 

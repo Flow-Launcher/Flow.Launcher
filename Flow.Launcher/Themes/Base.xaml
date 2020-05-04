@@ -6,7 +6,7 @@
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Height" Value="46" />
-        <Setter Property="Background" Value="#616161" />
+        <Setter Property="Background" Value="#2F2F2F" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -33,7 +33,7 @@
     <Style x:Key="BaseWindowBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="0" />
-        <Setter Property="Background" Value="#424242"></Setter>
+        <Setter Property="Background" Value="#2F2F2F"></Setter>
         <Setter Property="Padding" Value="8 10 8 8" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">

@@ -142,6 +142,9 @@
     <None Update="Images\logoff.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Images\mainsearch.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Images\New Message.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
