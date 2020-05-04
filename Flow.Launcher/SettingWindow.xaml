@@ -369,10 +369,11 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="{DynamicResource about}">
-            <Grid>
+            <Grid Height="400" Margin="65,0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Margin" Value="10, 10, 0, 0" />
+                        <Setter Property="Margin" Value="10, 25, 0, 0" />
+                        <Setter Property="FontSize" Value="14" />
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
@@ -386,8 +387,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ActivatedTimes, Mode=OneWay}" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource website}" />
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ActivatedTimes, Mode=OneWay}" FontSize="12" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource website}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
                     <Hyperlink NavigateUri="{Binding Github, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
                         <Run Text="{Binding Github, Mode=OneWay}" />
@@ -404,7 +405,7 @@
                 </TextBlock>
                 <Button Grid.Row="4" Grid.Column="0"
                         Content="{DynamicResource checkUpdates}" Click="OnCheckUpdates"
-                        HorizontalAlignment="Left" Margin="10 10 10 10" />
+                        HorizontalAlignment="Left" Margin="10 30 10 10" />
             </Grid>
         </TabItem>
     </TabControl>

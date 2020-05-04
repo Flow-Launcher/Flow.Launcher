@@ -95,7 +95,7 @@
         Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes:</system:String>
+    <system:String x:Key="releaseNotes">Release Notes</system:String>
 
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
