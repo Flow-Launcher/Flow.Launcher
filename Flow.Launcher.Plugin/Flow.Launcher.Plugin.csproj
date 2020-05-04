@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -20,11 +20,13 @@
     <FileVersion>1.0.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Authors>qianlifeng, Jeremy Wu</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Flow-Launcher/Flow.Launcher</RepositoryUrl>
     <PackageDescription>Reference this library if you want to develop a Flow Launcher plugin</PackageDescription>
     <PackageTags>flowlauncher</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
