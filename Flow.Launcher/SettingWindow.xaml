@@ -288,23 +288,25 @@
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource hotkey}">
-            <Grid Margin="10">
+            <Grid Margin="30 10 30 10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35" />
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="400" />
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="340" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Height="24"
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center"
                             Margin="0,4,0,3">
-                    <TextBlock VerticalAlignment="Center" Margin="0 0 10 0" Text="{DynamicResource flowlauncherHotkey}" />
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 10 0" Text="{DynamicResource flowlauncherHotkey}" FontSize="14" />
                     <flowlauncher:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
-                                       Loaded="OnHotkeyControlLoaded" />
+                                       Loaded="OnHotkeyControlLoaded" Height="35"/>
                 </StackPanel>
                 <TextBlock VerticalAlignment="Center" Grid.Row="1" Margin="0,3,10,2"
-                           Text="{DynamicResource customQueryHotkey}" />
+                           Text="{DynamicResource customQueryHotkey}" FontSize="14" />
                 <ListView ItemsSource="{Binding Settings.CustomPluginHotkeys}"
                           SelectedItem="{Binding SelectedCustomPluginHotkey}"
+                          Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
+                          BorderBrush="DarkGray" BorderThickness="1"
                           Margin="0 5 0 0" Grid.Row="2">
                     <ListView.View>
                         <GridView>
@@ -326,7 +328,7 @@
                     </ListView.View>
                 </ListView>
                 <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                            Orientation="Horizontal" Height="40" Width="360">
+                            Orientation="Horizontal" Width="360">
                     <Button Click="OnDeleteCustomHotkeyClick" Width="100"
                             Margin="10" Content="{DynamicResource delete}" />
                     <Button Click="OnnEditCustomHotkeyClick" Width="100" Margin="10"
