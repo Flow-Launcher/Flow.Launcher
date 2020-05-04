@@ -57,19 +57,6 @@ function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
 
-function Pack-Plugin ($path, $output) {
-    Write-Host "Begin build nuget library"
-
-    $project = "$path\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj"
-
-    Write-Host "Packing: $project"
-    Write-Host "Output path: $output"
-
-    dotnet pack $project --include-symbols --configuration Release --output $output
-
-    Write-Host "End build nuget library"
-}
-
 function Zip-Release ($path, $version, $output) {
     Write-Host "Begin zip release"
 
@@ -143,7 +130,6 @@ function Main {
     
         $isInCI = $env:APPVEYOR
         if ($isInCI) {
-            Pack-Plugin $p $o
             Zip-Release $p $v $o
         }
 

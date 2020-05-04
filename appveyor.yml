@@ -23,3 +23,7 @@ build:
 after_test:
 artifacts:
 - path: 'Output\Packages\*'
+- path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
+  name: Plugin nupkg
+- path: 'Output\Release\Flow.Launcher.Plugin.*.snupkg'
+  name: Plugin snupkg
