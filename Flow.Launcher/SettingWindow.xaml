@@ -339,9 +339,9 @@
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource proxy}">
-            <StackPanel>
+            <StackPanel Height="400" Margin="65,0">
                 <CheckBox Margin="10" IsChecked="{Binding Settings.Proxy.Enabled}">
-                    <TextBlock Text="{DynamicResource enableProxy}" />
+                    <TextBlock Text="{DynamicResource enableProxy}" FontSize="14" />
                 </CheckBox>
                 <Grid Margin="10" IsEnabled="{Binding Settings.Proxy.Enabled}">
                     <Grid.RowDefinitions>
@@ -351,20 +351,21 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="135" />
                         <ColumnDefinition Width="200" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{DynamicResource server}" Grid.Row="0" Grid.Column="0" Padding="5" />
-                    <TextBox Text="{Binding Settings.Proxy.Server}" Grid.Row="0" Grid.Column="1" Padding="5" />
-                    <TextBlock Text="{DynamicResource port}" Grid.Row="0" Grid.Column="2" Padding="5" />
-                    <TextBox Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty} }" Grid.Row="0" Grid.Column="3" Padding="5" />
-                    <TextBlock Text="{DynamicResource userName}" Grid.Row="1" Grid.Column="0" Padding="5" />
+                    <TextBlock Text="{DynamicResource server}" Grid.Row="0" Grid.Column="0" Padding="5" FontSize="14" />
+                    <TextBox Text="{Binding Settings.Proxy.Server}" Grid.Row="0" Grid.Column="1" Padding="5" Margin="0 0 0 20" />
+                    <TextBlock Text="{DynamicResource port}" Grid.Row="0" Grid.Column="2" Padding="5" Margin ="40 0 0 0" FontSize="14" />
+                    <TextBox Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty} }" Grid.Row="0" 
+                             Grid.Column="3" Padding="5" Margin="0 0 0 20"/>
+                    <TextBlock Text="{DynamicResource userName}" Grid.Row="1" Grid.Column="0" Padding="5" FontSize="14" />
                     <TextBox Text="{Binding Settings.Proxy.UserName}" Grid.Row="1" Grid.Column="1" Padding="5" />
-                    <TextBlock Text="{DynamicResource password}" Grid.Row="1" Grid.Column="2" Padding="5" />
+                    <TextBlock Text="{DynamicResource password}" Grid.Row="1" Grid.Column="2" Padding="5" Margin ="40 0 0 0" FontSize="14" />
                     <TextBox Text="{Binding Settings.Proxy.Password}" Grid.Row="1" Grid.Column="3" Padding="5" />
                 </Grid>
                 <Button Content="{DynamicResource testProxy}" IsEnabled="{Binding Settings.Proxy.Enabled}"
-                        Width="80" HorizontalAlignment="Left" Margin="10" Click="OnTestProxyClick" />
+                        HorizontalAlignment="Right" Margin="10 15 10 10" Click="OnTestProxyClick" />
             </StackPanel>
         </TabItem>
         <TabItem Header="{DynamicResource about}">
