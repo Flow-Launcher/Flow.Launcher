@@ -4,7 +4,7 @@
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Height" Value="46" />
         <Setter Property="Background" Value="#2F2F2F" />
         <Setter Property="Foreground" Value="#E3E0E3" />
