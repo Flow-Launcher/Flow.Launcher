@@ -55,6 +55,8 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Prečica</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher prečica</system:String>
+    <system:String x:Key="openResultModifiers">Отворите модификаторе резултата</system:String>
+    <system:String x:Key="showOpenResultHotkey">покажи хоткеи</system:String>
     <system:String x:Key="customQueryHotkey">prečica za ručno dodat upit</system:String>
     <system:String x:Key="delete">Obriši</system:String>
     <system:String x:Key="edit">Izmeni</system:String>

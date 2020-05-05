@@ -156,7 +156,7 @@ namespace Flow.Launcher.ViewModel
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
             var results = Results.ToList();
-            var newResults = newRawResults.Select(r => new ResultViewModel(r)).ToList();
+            var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
             var oldResults = results.Where(r => r.Result.PluginID == resultId).ToList();
 
             // Find the same results in A (old results) and B (new newResults)          

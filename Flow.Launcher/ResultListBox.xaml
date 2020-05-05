@@ -33,6 +33,8 @@
                           Cursor="Hand" UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter"/>
+                            <converter:OrdinalConverter x:Key="OrdinalConverter" />
+                            <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="32" />
@@ -46,6 +48,19 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" x:Name="SubTitleRowDefinition" />
                             </Grid.RowDefinitions>
+                            <StackPanel Visibility="{Binding ShowOpenResultHotkey}">
+                                <TextBlock Margin="0 5 5 0" Style="{DynamicResource ItemSubTitleStyle}" HorizontalAlignment="Right" Opacity="0.8" >
+                                    <TextBlock.Visibility>
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" />
+                                    </TextBlock.Visibility>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}+{1}">
+                                            <Binding Path="OpenResultModifiers" />
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OrdinalConverter}" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
                             <TextBlock Style="{DynamicResource ItemTitleStyle}" DockPanel.Dock="Left"
                                        VerticalAlignment="Center" ToolTip="{Binding Result.Title}" x:Name="Title"
                                        Text="{Binding Result.Title}">
