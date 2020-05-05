@@ -59,22 +59,26 @@
         <KeyBinding Key="D8" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="7"></KeyBinding>
         <KeyBinding Key="D9" Modifiers="Alt" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
-    <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
-        <StackPanel Orientation="Vertical">
-            <Grid>
-                <TextBox x:Name="QueryTextSuggestionBox"
+    <Grid Width="750">
+        <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.9" ShadowDepth="2" BlurRadius="15" />
+            </Border.Effect>
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <TextBox x:Name="QueryTextSuggestionBox"
                          Style="{DynamicResource QueryBoxStyle}"
                          Foreground="DarkGray"
                          IsEnabled="False"
                          Margin="0,0,56,0">
-                    <TextBox.Text>
-                        <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                            <Binding ElementName="QueryTextBox" Path="Text"/>
-                            <Binding ElementName="ResultListBox" Path="SelectedItem"/>
-                        </MultiBinding>
-                    </TextBox.Text>
-                </TextBox>
-                <TextBox x:Name="QueryTextBox"
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
+                                <Binding ElementName="QueryTextBox" Path="Text"/>
+                                <Binding ElementName="ResultListBox" Path="SelectedItem"/>
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox x:Name="QueryTextBox"
                     Style="{DynamicResource QueryBoxStyle}"
                      Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      PreviewDragOver="OnPreviewDragOver"
@@ -83,31 +87,32 @@
                      Visibility="Visible"
                     Background="Transparent"
                     Margin="0,0,56,0">
-                    <TextBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Command="ApplicationCommands.Cut"/>
-                            <MenuItem Command="ApplicationCommands.Copy"/>
-                            <MenuItem Command="ApplicationCommands.Paste"/>
-                            <Separator />
-                            <MenuItem Header="Settings" Click="OnContextMenusForSettingsClick" />
-                        </ContextMenu>
-                    </TextBox.ContextMenu>
-                </TextBox>
-                <Image Source="{Binding Image, IsAsync=True}" Width="48"  HorizontalAlignment="Right" />
-            </Grid>
-            <Line x:Name="ProgressBar" HorizontalAlignment="Right"
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="ApplicationCommands.Cut"/>
+                                <MenuItem Command="ApplicationCommands.Copy"/>
+                                <MenuItem Command="ApplicationCommands.Paste"/>
+                                <Separator />
+                                <MenuItem Header="Settings" Click="OnContextMenusForSettingsClick" />
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+                    <Image Source="{Binding Image, IsAsync=True}" Width="48"  HorizontalAlignment="Right" />
+                </Grid>
+                <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay}" 
                   Y1="0" Y2="0" X2="100" Height="2" Width="752" StrokeThickness="1">
-            </Line>
-            <ContentControl>
-                <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-            </ContentControl>
-            <ContentControl>
-                <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-            </ContentControl>
-            <ContentControl>
-                <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-            </ContentControl>
-        </StackPanel>
-    </Border>
+                </Line>
+                <ContentControl>
+                    <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                </ContentControl>
+                <ContentControl>
+                    <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                </ContentControl>
+                <ContentControl>
+                    <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                </ContentControl>
+            </StackPanel>
+        </Border>
+    </Grid>
 </Window>
