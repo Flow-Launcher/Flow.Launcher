@@ -76,6 +76,7 @@
                     Value="True">
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
+                    <Setter TargetName="imgIco" Property="Style" Value="{DynamicResource ItemImageSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>

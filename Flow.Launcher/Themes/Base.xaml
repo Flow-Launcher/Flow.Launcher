@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
@@ -74,6 +74,9 @@
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 
+    <Style x:Key="BaseItemImageSelectedStyle" TargetType="{x:Type Image}" >
+    </Style>    
+    
     <Style x:Key="BaseListboxStyle" TargetType="{x:Type ListBox}">
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
