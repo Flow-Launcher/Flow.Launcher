@@ -6,6 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
     
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="SelectionBrush" Value="#4D4D4D"/>
     </Style>
     
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
