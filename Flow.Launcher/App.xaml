@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemeResources />
+                <ui:ThemeResources RequestedTheme="Light" />
                 <ui:XamlControlsResources />
                 <ResourceDictionary Source="pack://application:,,,/Themes/Darker.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Languages/en.xaml" />
