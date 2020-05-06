@@ -13,6 +13,7 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -423,6 +424,8 @@ namespace Flow.Launcher.ViewModel
                 ThemeManager.Instance.ChangeTheme(Settings.Theme);
             }
         }
+
+        public ImageSource ThemeImage => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
 
         #endregion
 

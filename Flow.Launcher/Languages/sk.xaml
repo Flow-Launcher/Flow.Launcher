@@ -47,7 +47,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
     <system:String x:Key="browserMoreThemes">Prehliadať viac motívov</system:String>
-    <system:String x:Key="helloFlowLauncher">Ahoj Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Písmo poľa pre dopyt</system:String>
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>

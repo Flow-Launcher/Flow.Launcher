@@ -47,7 +47,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">テーマ</system:String>
     <system:String x:Key="browserMoreThemes">テーマを探す</system:String>
-    <system:String x:Key="helloFlowLauncher">こんにちは Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">検索ボックスのフォント</system:String>
     <system:String x:Key="resultItemFont">検索結果一覧のフォント</system:String>
     <system:String x:Key="windowMode">ウィンドウモード</system:String>

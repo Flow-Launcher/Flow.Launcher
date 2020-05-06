@@ -42,7 +42,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Søg efter flere temaer</system:String>
-    <system:String x:Key="helloFlowLauncher">Hej Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Søgefelt skrifttype</system:String>
     <system:String x:Key="resultItemFont">Resultat skrifttype</system:String>
     <system:String x:Key="windowMode">Vindue mode</system:String>

@@ -279,7 +279,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
 
-        public ImageSource Image => ImageLoader.Load($"{Constant.ProgramDirectory}\\Images\\mainsearch.png");
+        public ImageSource Image => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
 
         #endregion
 

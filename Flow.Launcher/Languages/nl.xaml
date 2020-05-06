@@ -42,7 +42,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Thema</system:String>
     <system:String x:Key="browserMoreThemes">Zoek meer thema´s</system:String>
-    <system:String x:Key="helloFlowLauncher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Query Box lettertype</system:String>
     <system:String x:Key="resultItemFont">Resultaat Item lettertype</system:String>
     <system:String x:Key="windowMode">Window Mode</system:String>
