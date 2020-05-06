@@ -117,10 +117,11 @@
                                            Width="32" Height="32" />
                                     <StackPanel Margin="3 0 3 0">
                                         <TextBlock Text="{Binding PluginPair.Metadata.Name}"
-                                                   ToolTip="{Binding PluginPair.Metadata.Name}" />
-                                        <TextBlock Text="{Binding PluginPair.Metadata.Description}"
-                                                   ToolTip="{Binding PluginPair.Metadata.Description}"
-                                                   Opacity="0.5" />
+                                                   ToolTip="{Binding PluginPair.Metadata.Description}" />
+                                        <TextBlock Opacity="0.5">
+                                            <Run Text="Version" />
+                                            <Run Text="{Binding PluginPair.Metadata.Version}" />
+                                        </TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
