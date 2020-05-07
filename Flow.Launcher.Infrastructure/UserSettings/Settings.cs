@@ -11,7 +11,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public string Hotkey { get; set; } = "Alt + Space";
         public string Language { get; set; } = "en";
-        public string Theme { get; set; } = "Dark";
+        public string Theme { get; set; } = Constant.DefaultTheme;
+        public bool UseDropShadowEffect { get; set; } = false;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }

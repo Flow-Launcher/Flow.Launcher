@@ -61,9 +61,6 @@
     </Window.InputBindings>
     <Grid Width="750">
         <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
-            <Border.Effect>
-                <DropShadowEffect Opacity="0.9" ShadowDepth="2" BlurRadius="15" />
-            </Border.Effect>
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <TextBox x:Name="QueryTextSuggestionBox"

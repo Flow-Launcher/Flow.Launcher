@@ -268,6 +268,24 @@ namespace Flow.Launcher.ViewModel
         public List<string> Themes
             => ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
 
+        public bool DropShadowEffect
+        {
+            get { return Settings.UseDropShadowEffect; }
+            set
+            {
+                if (value)
+                {
+                    ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
+                }
+                else
+                {
+                    ThemeManager.Instance.RemoveDropShadowEffectToCurrentTheme();
+                }
+
+                Settings.UseDropShadowEffect = value;
+            }
+        }
+
         public Brush PreviewBackground
         {
             get
