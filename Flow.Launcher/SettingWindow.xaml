@@ -216,7 +216,7 @@
                 </DockPanel>
                 <Grid Margin="0" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition  Height="160"/>
+                        <RowDefinition  Height="100"/>
                         <RowDefinition />
                         <RowDefinition Height="100" />
                     </Grid.RowDefinitions>
@@ -224,17 +224,17 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
-                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="15"/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Query window shadow effect" Margin="20 20 0 0" FontSize="14" />
-                            <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect}" Margin="250 15 0 0" Width="80"/>
+                            <TextBlock Grid.Row="0" Text="Query window shadow effect" Margin="0 30 0 0" FontSize="14" />
+                            <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect}" Margin="210 23 0 0" Width="80"/>
                             <TextBlock  Grid.Row="1" Text="Shadow effect has a substantial usage of GPU." 
                                         Width="280"
-                                        Margin="20 0 0 0" FontSize="12" HorizontalAlignment="Left"/>
-                            <TextBlock  Grid.Row="2" Text="Not recommended if you computer performance is limited" 
+                                        FontSize="10" HorizontalAlignment="Left"/>
+                            <TextBlock  Grid.Row="2" Text="Not recommended if you computer performance is limited." 
                                         Width="320"
-                                        Margin="20 0 0 0" FontSize="12" HorizontalAlignment="Left"/>
+                                        FontSize="10" HorizontalAlignment="Left"/>
                         </Grid>
                     </StackPanel>
                     <StackPanel Background="{Binding PreviewBackground}" Grid.Row="1" Margin="0">
