@@ -57,6 +57,8 @@
     <!--设置，热键-->
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher激活热键</system:String>
+    <system:String x:Key="openResultModifiers">开放结果修饰符</system:String>
+    <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>

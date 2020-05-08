@@ -50,7 +50,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Genvejstast</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher genvejstast</system:String>
+    <system:String x:Key="openResultModifiers">Åbn resultatmodifikatorer</system:String>
     <system:String x:Key="customQueryHotkey">Tilpasset søgegenvejstast</system:String>
+    <system:String x:Key="showOpenResultHotkey">Vis hotkey</system:String>
     <system:String x:Key="delete">Slet</system:String>
     <system:String x:Key="edit">Rediger</system:String>
     <system:String x:Key="add">Tilføj</system:String>

@@ -54,7 +54,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Tasti scelta rapida</system:String>
     <system:String x:Key="flowlauncherHotkey">Tasto scelta rapida Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Apri modificatori di risultato</system:String>
     <system:String x:Key="customQueryHotkey">Tasti scelta rapida per ricerche personalizzate</system:String>
+    <system:String x:Key="showOpenResultHotkey">Mostra tasto di scelta rapida</system:String>
     <system:String x:Key="delete">Cancella</system:String>
     <system:String x:Key="edit">Modifica</system:String>
     <system:String x:Key="add">Aggiungi</system:String>

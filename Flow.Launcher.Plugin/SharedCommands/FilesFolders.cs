@@ -110,12 +110,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return File.Exists(filePath);
         }
 
-        public static void OpenLocationInExporer(string location)
+        public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = location };
+            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
             try
             {
-                if (LocationExists(location))
+                if (LocationExists(fileOrFolderPath) || FileExits(fileOrFolderPath))
                     Process.Start(psi);
             }
             catch (Exception e)
@@ -123,7 +123,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw e;
 #else
-                MessageBox.Show(string.Format("Unable to open location {0}, please check if it exists", location));
+                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }

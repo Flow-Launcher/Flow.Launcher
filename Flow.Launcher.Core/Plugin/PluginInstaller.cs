@@ -86,7 +86,7 @@ namespace Flow.Launcher.Core.Plugin
                                         "Restart Flow Launcher to take effect?",
                                         "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        PluginManager.API.RestarApp();
+                        PluginManager.API.RestartApp();
                     }
                 }
             }

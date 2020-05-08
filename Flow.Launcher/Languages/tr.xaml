@@ -58,7 +58,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Kısayolu</system:String>
+    <system:String x:Key="openResultModifiers">Açık Sonuç Değiştiricileri</system:String>
     <system:String x:Key="customQueryHotkey">Özel Sorgu Kısayolları</system:String>
+    <system:String x:Key="showOpenResultHotkey">Kısayol Tuşunu Göster</system:String>
     <system:String x:Key="delete">Sil</system:String>
     <system:String x:Key="edit">Düzenle</system:String>
     <system:String x:Key="add">Ekle</system:String>

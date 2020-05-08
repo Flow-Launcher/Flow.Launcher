@@ -172,7 +172,7 @@ namespace Flow.Launcher.Core.Configuration
                                     "would you like to move it to a different location?", string.Empty,
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    FilesFolders.OpenLocationInExporer(Constant.RootDirectory);
+                    FilesFolders.OpenPath(Constant.RootDirectory);
 
                     Environment.Exit(0);
                 }

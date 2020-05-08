@@ -1,0 +1,12 @@
+{
+  "ID": "8FF5D5C1F8194958A12E8668FB7ECC04",
+  "ActionKeyword": "hf",
+  "Name": "Hello World FSharp",
+  "Description": "Hello World FSharp",
+  "Author": "Ioannis G.",
+  "Version": "1.0.0",
+  "Language": "fsharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+  "ExecuteFileName": "HelloWorldFSharp.dll",
+  "IcoPath": "Images\\app.png"
+}

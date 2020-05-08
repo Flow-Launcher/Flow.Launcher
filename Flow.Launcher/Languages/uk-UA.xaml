@@ -50,7 +50,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Гарячі клавіші</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Відкриті модифікатори результатів</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
+    <system:String x:Key="showOpenResultHotkey">Показати клавішу швидкого доступу</system:String>
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Змінити</system:String>
     <system:String x:Key="add">Додати</system:String>

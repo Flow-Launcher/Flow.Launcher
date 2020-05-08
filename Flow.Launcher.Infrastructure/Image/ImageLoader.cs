@@ -13,11 +13,12 @@ namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
-        private static readonly ImageCache ImageCache = new ImageCache();
-        private static BinaryStorage<Dictionary<string, int>> _storage;
-        private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
-        private static IImageHashGenerator _hashGenerator;
+        private static readonly ImageCache _imageCache = new ImageCache();
+        private static readonly ConcurrentDictionary<string, string> _guidToKey = new ConcurrentDictionary<string, string>();
+        private static readonly bool _enableHashImage = true;
 
+        private static BinaryStorage<Dictionary<string, int>> _storage;
+        private static IImageHashGenerator _hashGenerator;
 
         private static readonly string[] ImageExtensions =
         {
@@ -30,30 +31,30 @@ namespace Flow.Launcher.Infrastructure.Image
             ".ico"
         };
 
-
         public static void Initialize()
         {
             _storage = new BinaryStorage<Dictionary<string, int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
-            ImageCache.Usage = LoadStorageToConcurrentDictionary();
+            _imageCache.Usage = LoadStorageToConcurrentDictionary();
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.ErrorIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
-                ImageCache[icon] = img;
+                _imageCache[icon] = img;
             }
+
             Task.Run(() =>
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
-                    ImageCache.Usage.AsParallel().ForAll(x =>
+                    _imageCache.Usage.AsParallel().ForAll(x =>
                     {
                         Load(x.Key);
                     });
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.Usage.Count}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{_imageCache.Usage.Count}>, Images Number: {_imageCache.CacheSize()}, Unique Items {_imageCache.UniqueImagesInCache()}");
             });
         }
 
@@ -61,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                _storage.Save(ImageCache.CleanupAndToDictionary());
+                _storage.Save(_imageCache.CleanupAndToDictionary());
             }
         }
 
@@ -99,17 +100,17 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static ImageResult LoadInternal(string path, bool loadFullImage = false)
         {
-            ImageSource image;
-            ImageType type = ImageType.Error;
+            ImageResult imageResult;
+
             try
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(ImageCache[Constant.ErrorIcon], ImageType.Error);
+                    return new ImageResult(_imageCache[Constant.ErrorIcon], ImageType.Error);
                 }
-                if (ImageCache.ContainsKey(path))
+                if (_imageCache.ContainsKey(path))
                 {
-                    return new ImageResult(ImageCache[path], ImageType.Cache);
+                    return new ImageResult(_imageCache[path], ImageType.Cache);
                 }
 
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
@@ -124,69 +125,93 @@ namespace Flow.Launcher.Infrastructure.Image
                     path = Path.Combine(Constant.ProgramDirectory, "Images", Path.GetFileName(path));
                 }
 
-                if (Directory.Exists(path))
+                imageResult = GetThumbnailResult(ref path, loadFullImage);
+            }
+            catch (System.Exception e)
+            {
+                try
                 {
-                    /* Directories can also have thumbnails instead of shell icons.
-                     * Generating thumbnails for a bunch of folders while scrolling through
-                     * results from Everything makes a big impact on performance and 
-                     * Flow.Launcher responsibility. 
-                     * - Solution: just load the icon
-                     */
-                    type = ImageType.Folder;
-                    image = WindowsThumbnailProvider.GetThumbnail(path, Constant.ThumbnailSize,
-                        Constant.ThumbnailSize, ThumbnailOptions.IconOnly);
-
+                    // Get thumbnail may fail for certain images on the first try, retry again has proven to work
+                    imageResult = GetThumbnailResult(ref path, loadFullImage);
                 }
-                else if (File.Exists(path))
+                catch (System.Exception e2)
                 {
-                    var extension = Path.GetExtension(path).ToLower();
-                    if (ImageExtensions.Contains(extension))
+                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
+                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
+
+                    ImageSource image = _imageCache[Constant.ErrorIcon];
+                    _imageCache[path] = image;
+                    imageResult = new ImageResult(image, ImageType.Error);
+                }
+            }
+
+            return imageResult;
+        }
+
+        private static ImageResult GetThumbnailResult(ref string path, bool loadFullImage = false)
+        {
+            ImageSource image;
+            ImageType type = ImageType.Error;
+
+            if (Directory.Exists(path))
+            {
+                /* Directories can also have thumbnails instead of shell icons.
+                 * Generating thumbnails for a bunch of folders while scrolling through
+                 * results from Everything makes a big impact on performance and 
+                 * Flow.Launcher responsibility. 
+                 * - Solution: just load the icon
+                 */
+                type = ImageType.Folder;
+                image = GetThumbnail(path, ThumbnailOptions.IconOnly);
+            }
+            else if (File.Exists(path))
+            {
+                var extension = Path.GetExtension(path).ToLower();
+                if (ImageExtensions.Contains(extension))
+                {
+                    type = ImageType.ImageFile;
+                    if (loadFullImage)
                     {
-                        type = ImageType.ImageFile;
-                        if (loadFullImage)
-                        {
-                            image = LoadFullImage(path);
-                        }
-                        else
-                        {
-                            /* Although the documentation for GetImage on MSDN indicates that 
-                             * if a thumbnail is available it will return one, this has proved to not
-                             * be the case in many situations while testing. 
-                             * - Solution: explicitly pass the ThumbnailOnly flag
-                             */
-                            image = WindowsThumbnailProvider.GetThumbnail(path, Constant.ThumbnailSize,
-                                Constant.ThumbnailSize, ThumbnailOptions.ThumbnailOnly);
-                        }
+                        image = LoadFullImage(path);
                     }
                     else
                     {
-                        type = ImageType.File;
-                        image = WindowsThumbnailProvider.GetThumbnail(path, Constant.ThumbnailSize,
-                            Constant.ThumbnailSize, ThumbnailOptions.None);
+                        /* Although the documentation for GetImage on MSDN indicates that 
+                         * if a thumbnail is available it will return one, this has proved to not
+                         * be the case in many situations while testing. 
+                         * - Solution: explicitly pass the ThumbnailOnly flag
+                         */
+                        image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
                     }
                 }
                 else
                 {
-                    image = ImageCache[Constant.ErrorIcon];
-                    path = Constant.ErrorIcon;
-                }
-
-                if (type != ImageType.Error)
-                {
-                    image.Freeze();
+                    type = ImageType.File;
+                    image = GetThumbnail(path, ThumbnailOptions.None);
                 }
             }
-            catch (System.Exception e)
+            else
             {
-                Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path}", e);
-                type = ImageType.Error;
-                image = ImageCache[Constant.ErrorIcon];
-                ImageCache[path] = image;
+                image = _imageCache[Constant.ErrorIcon];
+                path = Constant.ErrorIcon;
             }
+
+            if (type != ImageType.Error)
+            {
+                image.Freeze();
+            }
+
             return new ImageResult(image, type);
         }
 
-        private static bool EnableImageHash = true;
+        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly)
+        {
+            return WindowsThumbnailProvider.GetThumbnail(
+                path,
+                Constant.ThumbnailSize,
+                Constant.ThumbnailSize,
+                option);
+        }
 
         public static ImageSource Load(string path, bool loadFullImage = false)
         {
@@ -194,24 +219,26 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var img = imageResult.ImageSource;
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
-            { // we need to get image hash
-                string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
+            { 
+                // we need to get image hash
+                string hash = _enableHashImage ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-                    if (GuidToKey.TryGetValue(hash, out string key))
-                    { // image already exists
-                        img = ImageCache[key];
+                    if (_guidToKey.TryGetValue(hash, out string key))
+                    { 
+                        // image already exists
+                        img = _imageCache[key];
                     }
                     else
-                    { // new guid
-                        GuidToKey[hash] = path;
+                    { 
+                        // new guid
+                        _guidToKey[hash] = path;
                     }
                 }
 
                 // update cache
-                ImageCache[path] = img;
+                _imageCache[path] = img;
             }
-
 
             return img;
         }

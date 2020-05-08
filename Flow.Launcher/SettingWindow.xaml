@@ -312,8 +312,9 @@
             <Grid Margin="30 10 30 10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="340" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="250" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center"
@@ -322,13 +323,22 @@
                     <flowlauncher:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
                                        Loaded="OnHotkeyControlLoaded" Height="35"/>
                 </StackPanel>
-                <TextBlock VerticalAlignment="Center" Grid.Row="1" Margin="0,3,10,2"
-                           Text="{DynamicResource customQueryHotkey}" FontSize="14" />
-                <ListView ItemsSource="{Binding Settings.CustomPluginHotkeys}"
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center"
+                            Margin="0,4,0,3">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 10 0" Text="{DynamicResource openResultModifiers}" FontSize="14"  />
+                    <ComboBox Margin="0 0 0 0" Width="120"
+                              ItemsSource="{Binding OpenResultModifiersList}" 
+                              SelectedItem="{Binding Settings.OpenResultModifiers}" FontSize="14" />
+                    <CheckBox Margin="30 0 0 0" IsChecked="{Binding Settings.ShowOpenResultHotkey}" VerticalAlignment="Center">
+                        <TextBlock Text="{DynamicResource showOpenResultHotkey}" FontSize="14" />
+                    </CheckBox>
+                </StackPanel>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" Margin="0 23 10 2" Text="{DynamicResource customQueryHotkey}" FontSize="14" />
+                <ListView Grid.Row="3" ItemsSource="{Binding Settings.CustomPluginHotkeys}"
                           SelectedItem="{Binding SelectedCustomPluginHotkey}"
                           Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
                           BorderBrush="DarkGray" BorderThickness="1"
-                          Margin="0 5 0 0" Grid.Row="2">
+                          Margin="0 5 0 0">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="{DynamicResource hotkey}" Width="180">
@@ -338,7 +348,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{DynamicResource actionKeywords}" Width="500">
+                            <GridViewColumn Header="{DynamicResource actionKeywords}" Width="546">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate DataType="userSettings:CustomPluginHotkey">
                                         <TextBlock Text="{Binding ActionKeyword}" />
@@ -348,7 +358,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                             Orientation="Horizontal" Width="360">
                     <Button Click="OnDeleteCustomHotkeyClick" Width="100"
                             Margin="10" Content="{DynamicResource delete}" />

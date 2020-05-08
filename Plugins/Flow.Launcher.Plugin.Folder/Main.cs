@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -27,6 +27,8 @@ namespace Flow.Launcher.Plugin.Folder
         private readonly PluginJsonStorage<Settings> _storage;
         private IContextMenu _contextMenuLoader;
 
+        private static Dictionary<string, string> _envStringPaths;
+
         public Main()
         {
             _storage = new PluginJsonStorage<Settings>();
@@ -48,6 +50,7 @@ namespace Flow.Launcher.Plugin.Folder
             _context = context;
             _contextMenuLoader = new ContextMenuLoader(context);
             InitialDriverList();
+            LoadEnvironmentStringPaths();
         }
 
         public List<Result> Query(Query query)
@@ -55,10 +58,19 @@ namespace Flow.Launcher.Plugin.Folder
             var results = GetUserFolderResults(query);
 
             string search = query.Search.ToLower();
-            if (!IsDriveOrSharedFolder(search))
+            if (!IsDriveOrSharedFolder(search) && !IsEnvironmentVariableSearch(search))
+            {
                 return results;
+            }
 
-            results.AddRange(QueryInternal_Directory_Exists(query));
+            if (IsEnvironmentVariableSearch(search))
+            {
+                results.AddRange(GetEnvironmentStringPathResults(search, query));
+            }
+            else
+            {
+                results.AddRange(QueryInternal_Directory_Exists(query.Search, query));
+            }
 
             // todo why was this hack here?
             foreach (var result in results)
@@ -69,10 +81,15 @@ namespace Flow.Launcher.Plugin.Folder
             return results;
         }
 
+        private static bool IsEnvironmentVariableSearch(string search)
+        {
+            return _envStringPaths != null && search.StartsWith("%");
+        }
+
         private static bool IsDriveOrSharedFolder(string search)
         {
             if (search.StartsWith(@"\\"))
-            { // share folder
+            { // shared folder
                 return true;
             }
 
@@ -103,7 +120,7 @@ namespace Flow.Launcher.Plugin.Folder
                     {
                         try
                         {
-                            FilesFolders.OpenLocationInExporer(path);
+                            FilesFolders.OpenPath(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -146,14 +163,26 @@ namespace Flow.Launcher.Plugin.Folder
             }
         }
 
+        private void LoadEnvironmentStringPaths()
+        {
+            _envStringPaths = new Dictionary<string, string>();
+
+            foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
+            {
+                if (Directory.Exists(special.Value.ToString()))
+                {
+                    _envStringPaths.Add(special.Key.ToString().ToLower(), special.Value.ToString());
+                }
+            }
+        }
+
         private static readonly char[] _specialSearchChars = new char[]
         {
             '?', '*', '>'
         };
 
-        private List<Result> QueryInternal_Directory_Exists(Query query)
+        private List<Result> QueryInternal_Directory_Exists(string search, Query query)
         {
-            var search = query.Search;
             var results = new List<Result>();
             var hasSpecial = search.IndexOfAny(_specialSearchChars) >= 0;
             string incompleteName = "";
@@ -243,6 +272,63 @@ namespace Flow.Launcher.Plugin.Folder
             return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList();
         }
 
+        private List<Result> GetEnvironmentStringPathSuggestions(string search, Query query)
+        {
+            var results = new List<Result>();
+            foreach (var p in _envStringPaths)
+            {
+                if (p.Key.StartsWith(search))
+                {
+                    results.Add(CreateFolderResult($"%{p.Key}%", p.Value, p.Value, query));
+                }
+            }
+            return results;
+        }
+
+        private List<Result> GetEnvironmentStringPathResults(string envStringSearch, Query query)
+        {
+            if (envStringSearch == "%")
+            { // return all environment string options as path suggestions
+                return GetEnvironmentStringPathSuggestions("", query);
+            }
+
+            var results = new List<Result>();
+            var search = envStringSearch.Substring(1);
+            
+            if (search.EndsWith("%") && search.Length > 1)
+            { // query starts and ends with a %, find an exact match from env-string paths
+                var exactEnvStringPath = search.Substring(0, search.Length-1);
+                
+                if (_envStringPaths.ContainsKey(exactEnvStringPath))
+                {
+                    var expandedPath = _envStringPaths[exactEnvStringPath];
+                    results.Add(CreateFolderResult($"%{exactEnvStringPath}%", expandedPath, expandedPath, query));
+                }
+            }
+            else if (search.Contains("%"))
+            { // query starts with a % and contains another % somewhere before the end
+                var splitSearch = search.Split("%");
+                var exactEnvStringPath = splitSearch[0];
+
+                // if there are more than 2 % characters in the query, don't bother
+                if (splitSearch.Length == 2 && _envStringPaths.ContainsKey(exactEnvStringPath))
+                {
+                    var queryPartToReplace = $"%{exactEnvStringPath}%";
+                    var expandedPath = _envStringPaths[exactEnvStringPath];
+                    // replace the %envstring% part of the query with its expanded equivalent
+                    var updatedSearch = envStringSearch.Replace(queryPartToReplace, expandedPath);
+
+                    results.AddRange(QueryInternal_Directory_Exists(updatedSearch, query));
+                }
+            }
+            else
+            { // query simply starts wtih a %, suggest env-string paths that match the rest of the search
+                results.AddRange(GetEnvironmentStringPathSuggestions(search, query));
+            }
+
+            return results;
+        }
+
         private static Result CreateFileResult(string filePath, Query query)
         {
             var result = new Result
@@ -255,7 +341,7 @@ namespace Flow.Launcher.Plugin.Folder
                 {
                     try
                     {
-                        FilesFolders.OpenLocationInExporer(filePath);
+                        FilesFolders.OpenPath(filePath);
                     }
                     catch (Exception ex)
                     {
@@ -286,7 +372,7 @@ namespace Flow.Launcher.Plugin.Folder
                 Score = 500,
                 Action = c =>
                 {
-                    FilesFolders.OpenLocationInExporer(search);
+                    FilesFolders.OpenPath(search);
                     return true;
                 }
             };

@@ -9,7 +9,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel
     {
-        public string Hotkey { get; set; } = "Alt + Space";
+        public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
+        public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+        public bool ShowOpenResultHotkey { get; set; } = true;
         public string Language { get; set; } = "en";
         public string Theme { get; set; } = Constant.DefaultTheme;
         public bool UseDropShadowEffect { get; set; } = false;
