@@ -72,7 +72,7 @@
                                 </vm:ResultsViewModel.FormattedText>
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ItemSubTitleStyle}" ToolTip="{Binding Result.SubTitle}"
-                                       Grid.Row="1" x:Name="SubTitle" Text="{Binding Result.SubTitle}">
+                                       Grid.Row="1" x:Name="SubTitle" Text="{Binding Result.SubTitle}" MinWidth="750">
                                 <vm:ResultsViewModel.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
                                         <Binding Path="Result.SubTitle" />
