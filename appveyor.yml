@@ -1,13 +1,12 @@
 version: 1.0.{build}
-image: Visual Studio 2019
-configuration: Release
-platform: Any CPU
+
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
   assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
+
 dotnet_csproj:
   patch: true
   file: 'Flow.*\*.csproj'
@@ -16,11 +15,20 @@ dotnet_csproj:
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
+
+skip_commits:
+  files:
+    - '*.md'
+
+image: Visual Studio 2019
+platform: Any CPU
+configuration: Release
 before_build:
 - ps: nuget restore
 build:
   project: Flow.Launcher.sln
-after_test:
+  verbosity: minimal
+
 artifacts:
 - path: 'Output\Packages\*'
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
