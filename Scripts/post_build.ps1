@@ -61,7 +61,7 @@ function Zip-Release ($path, $version, $output) {
     Write-Host "Begin zip release"
 
     $content = "$path\Output\Release\*"
-    $zipFile = "$output\Flow.Launcher-$version.zip"
+    $zipFile = "$output\Flow-Launcher-v$version.zip"
 
     Compress-Archive -Force -Path $content -DestinationPath $zipFile
 
@@ -80,7 +80,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     # TODO: can we use dotnet pack here?
     nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
-    $nupkg = "$output\FlowLauncher.$version.nupkg"
+    $nupkg = "$output\Flow-Launcher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
@@ -94,7 +94,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow Launcher-$version.exe"
+    $file = "$output\Flow-Launcher-v$version.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force

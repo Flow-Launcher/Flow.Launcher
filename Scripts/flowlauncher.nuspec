@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>FlowLauncher</id>
+    <id>Flow-Launcher</id>
     <title>Flow Launcher</title>
     <version>$version$</version>
     <authors>happlebao, Jeremy Wu</authors>
