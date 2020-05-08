@@ -6,10 +6,10 @@ param(
 Write-Host "Config: $config"
 
 function Build-Version {
-	if ([string]::IsNullOrEmpty($env:APPVEYOR_BUILD_VERSION)) {
+	if ([string]::IsNullOrEmpty($env:flowVersion)) {
 		$v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
 	} else {
-        $v = $env:APPVEYOR_BUILD_VERSION
+        $v = $env:flowVersion
     }
 
     Write-Host "Build Version: $v"

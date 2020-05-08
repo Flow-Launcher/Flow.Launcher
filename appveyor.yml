@@ -1,20 +1,24 @@
-version: 1.0.{build}
+version: '1.0.0.{build}'
+
+init:
+- ps: |
+      $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
+      $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
 
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
-
+  assembly_version: $(flowVersion)
+  assembly_file_version: $(flowVersion)
+  assembly_informational_version: $(flowVersion)
 dotnet_csproj:
   patch: true
   file: 'Flow.*\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
+  version: $(flowVersion)
+  package_version: $(flowVersion)
+  assembly_version: $(flowVersion)
+  file_version: $(flowVersion)
+  informational_version: $(flowVersion)
 
 skip_commits:
   files:
