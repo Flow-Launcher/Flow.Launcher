@@ -51,7 +51,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Tastenkombination</system:String>
+    <system:String x:Key="openResultModifiers">Öffnen Sie die Ergebnismodifikatoren</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage Tastenkombination</system:String>
+    <system:String x:Key="showOpenResultHotkey">Hotkey anzeigen</system:String>
     <system:String x:Key="delete">Löschen</system:String>
     <system:String x:Key="edit">Bearbeiten</system:String>
     <system:String x:Key="add">Hinzufügen</system:String>

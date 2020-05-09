@@ -288,8 +288,9 @@
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
                     <RowDefinition Height="20" />
-                    <RowDefinition Height="400" />
+                    <RowDefinition Height="365" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Height="24"
@@ -298,11 +299,21 @@
                     <flowlauncher:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
                                        Loaded="OnHotkeyControlLoaded" />
                 </StackPanel>
-                <TextBlock VerticalAlignment="Center" Grid.Row="1" Margin="0,3,10,2"
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Height="24"
+                            Margin="0,4,0,3">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 10 0" Text="{DynamicResource openResultModifiers}" />
+                    <ComboBox Margin="0 0 0 0" Width="120"
+                              ItemsSource="{Binding OpenResultModifiersList}" 
+                              SelectedItem="{Binding Settings.OpenResultModifiers}" />
+                    <CheckBox Margin="10 0 0 0" IsChecked="{Binding Settings.ShowOpenResultHotkey}" VerticalAlignment="Center">
+                        <TextBlock Text="{DynamicResource showOpenResultHotkey}" />
+                    </CheckBox>
+                </StackPanel>
+                <TextBlock VerticalAlignment="Center" Grid.Row="2" Margin="0,3,10,2"
                            Text="{DynamicResource customQueryHotkey}" />
                 <ListView ItemsSource="{Binding Settings.CustomPluginHotkeys}"
                           SelectedItem="{Binding SelectedCustomPluginHotkey}"
-                          Margin="0 5 0 0" Grid.Row="2">
+                          Margin="0 5 0 0" Grid.Row="3">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="{DynamicResource hotkey}" Width="180">
@@ -322,7 +333,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                             Orientation="Horizontal" Height="40" Width="360">
                     <Button Click="OnDeleteCustomHotkeyClick" Width="100"
                             Margin="10" Content="{DynamicResource delete}" />

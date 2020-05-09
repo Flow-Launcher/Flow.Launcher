@@ -26,6 +26,8 @@ namespace Flow.Launcher.ViewModel
     {
         #region Private Fields
 
+        private const string DefaultOpenResultModifiers = "Alt";
+
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
@@ -74,6 +76,7 @@ namespace Flow.Launcher.ViewModel
 
             SetHotkey(_settings.Hotkey, OnHotkey);
             SetCustomPluginHotkey();
+            SetOpenResultModifiers();
         }
 
         private void RegisterResultsUpdatedEvent()
@@ -276,6 +279,8 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadContextMenuCommand { get; set; }
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
+
+        public string OpenResultCommandModifiers { get; private set; }
 
         #endregion
 
@@ -592,6 +597,11 @@ namespace Flow.Launcher.ViewModel
                     ChangeQueryText(hotkey.ActionKeyword);
                 });
             }
+        }
+
+        private void SetOpenResultModifiers()
+        {
+            OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
         private void OnHotkey(object sender, HotkeyEventArgs e)

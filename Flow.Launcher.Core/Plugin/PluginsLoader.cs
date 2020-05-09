@@ -20,21 +20,21 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
-            var csharpPlugins = CSharpPlugins(metadatas).ToList();
+            var dotnetPlugins = DotNetPlugins(metadatas).ToList();
             var pythonPlugins = PythonPlugins(metadatas, settings.PythonDirectory);
             var executablePlugins = ExecutablePlugins(metadatas);
-            var plugins = csharpPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
+            var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
             return plugins;
         }
 
-        public static IEnumerable<PluginPair> CSharpPlugins(List<PluginMetadata> source)
+        public static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
         {
             var plugins = new List<PluginPair>();
-            var metadatas = source.Where(o => o.Language.ToUpper() == AllowedLanguage.CSharp);
+            var metadatas = source.Where(o => AllowedLanguage.IsDotNet(o.Language));
 
             foreach (var metadata in metadatas)
             {
-                var milliseconds = Stopwatch.Debug($"|PluginsLoader.CSharpPlugins|Constructor init cost for {metadata.Name}", () =>
+                var milliseconds = Stopwatch.Debug($"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
                 {
 
 #if DEBUG
@@ -50,7 +50,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"|PluginsLoader.CSharpPlugins|Couldn't load assembly for {metadata.Name}", e);
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for {metadata.Name}", e);
                         return;
                     }
                     var types = assembly.GetTypes();
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (InvalidOperationException e)
                     {
-                        Log.Exception($"|PluginsLoader.CSharpPlugins|Can't find class implement IPlugin for <{metadata.Name}>", e);
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find class implement IPlugin for <{metadata.Name}>", e);
                         return;
                     }
                     IPlugin plugin;
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"|PluginsLoader.CSharpPlugins|Can't create instance for <{metadata.Name}>", e);
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|Can't create instance for <{metadata.Name}>", e);
                         return;
                     }
 #endif
