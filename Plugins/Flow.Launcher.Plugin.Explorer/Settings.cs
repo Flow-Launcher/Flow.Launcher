@@ -6,5 +6,6 @@ namespace Flow.Launcher.Plugin.Explorer
 {
     public class Settings
     {
+        public int MaxResult { get; set; } = 100; 
     }
 }
