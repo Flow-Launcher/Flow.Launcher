@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Output\Debug\Plugins\Flow.Launcher.Explorer</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Output\Release\Plugins\Flow.Launcher.Explorer</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
+
+</Project>
