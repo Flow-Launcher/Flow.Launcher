@@ -1,14 +1,14 @@
 param(
     [string]$config = "Release", 
     [string]$solution,
-	[string]$targetpath
+    [string]$targetpath
 )
 Write-Host "Config: $config"
 
 function Build-Version {
-	if ([string]::IsNullOrEmpty($env:flowVersion)) {
-		$v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
-	} else {
+    if ([string]::IsNullOrEmpty($env:flowVersion)) {
+        $v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
+    } else {
         $v = $env:flowVersion
     }
 
@@ -120,12 +120,11 @@ function Main {
         
         if(IsDotNetCoreAppSelfContainedPublishEvent) {
             FixPublishLastWriteDateTimeError $p
-		}
+        }
         
         Delete-Unused $p $config
         $o = "$p\Output\Packages"
         Validate-Directory $o
-        # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
         Pack-Squirrel-Installer $p $v $o
     
         $isInCI = $env:APPVEYOR
