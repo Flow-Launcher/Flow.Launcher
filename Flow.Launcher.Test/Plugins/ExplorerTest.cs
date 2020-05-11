@@ -8,15 +8,15 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
-        [TestCase("directory='file:{path}'")]
-        public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string expectedString)
+        [TestCase("C:\\Dropbox", "directory='file:C:\\Dropbox'")]
+        public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
 
             // When
-            var path = @"C:\Dropbox";
-            var result = queryConstructor.QueryWhereRestrictionsForTopLevelDirectorySearch(path);
+            var folderPath = path;
+            var result = queryConstructor.QueryWhereRestrictionsForTopLevelDirectorySearch(folderPath);
 
             // Then
             Assert.IsTrue(result == expectedString,
