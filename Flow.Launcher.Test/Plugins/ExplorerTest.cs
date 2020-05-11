@@ -1,16 +1,16 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 
 namespace Flow.Launcher.Test.Plugins
 {
     [TestFixture]
     public class ExplorerTest
     {
-        public void WhenGivenFolderPathWindowsIndexSearchQuery_QueryStringShouldUseDirectoryCommand() { }
+        public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string expectedString){}
 
-        public void WhenSearchAllFoldersAndFilesWindowsIndexSearchQuery_QueryStringShouldUseScopeCommand() { }
+        public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString() { }
 
-        public void WhenWindowsIndexSearchReturnedNilAndIsNotIndexed_NewSearchMethodShouldUseDirectoryInfoClass() { }
+        public void GivenWindowsIndexSearch_WhenReturnedNilAndIsNotIndexed_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() { }
 
-        public void WhenSearchPatternHotKeyIsSearchAll_WindowsIndexSearchQueryStringShouldUseScopeCommand() { }
+        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
     }
 }
