@@ -80,7 +80,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     # TODO: can we use dotnet pack here?
     nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
-    $nupkg = "$output\Flow-Launcher.$version.nupkg"
+    $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
