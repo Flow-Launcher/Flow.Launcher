@@ -6,20 +6,34 @@
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="300" d:DesignWidth="500">
-    <Grid Margin="10,10,10,0">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="90" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Label Content="Open bookmark in:" Margin="40 3 0 8"/>
-            <RadioButton Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" Content="New window" Click="OnNewBrowserWindowClick" Margin="10" />
-            <RadioButton Name="NewTabInBrowser" GroupName="OpenSearchBehaviour" Content="New tab" Click="OnNewTabClick" Margin="10" />
+        <StackPanel>
+            <Grid Grid.Row="0" Margin="40 40 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_openBookmarks}"
+                       FontSize="15" Margin="0 5 0 0"/>
+                <RadioButton Grid.Column="1" Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" 
+                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newWindow}"
+                             Click="OnNewBrowserWindowClick" />
+                <RadioButton Grid.Column="2" Name="NewTabInBrowser" GroupName="OpenSearchBehaviour" 
+                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newTab}" 
+                             Click="OnNewTabClick" />
+            </Grid>
         </StackPanel>
         <StackPanel VerticalAlignment="Top" Grid.Row="1" Height="106" Margin="41,13,0,0">
-            <Label Content="Set browser from path:" Height="28" Margin="0,0,155,0" HorizontalAlignment="Left" Width="290"/>
-            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Height="34" Margin="5,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" RenderTransformOrigin="0.502,-1.668"/>
-            <Button x:Name="viewButton" HorizontalAlignment="Left" Margin="340,-33,-1,0" Width="100" Height="28" Click="OnChooseClick" FontSize="10" Content="Choose" />
+            <Label Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath}"
+                   Height="28" Margin="0,0,155,0" HorizontalAlignment="Left" Width="290"/>
+            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Height="34" TextWrapping="Wrap" VerticalAlignment="Top" Width="311" RenderTransformOrigin="0.502,-1.668"/>
+            <Button x:Name="viewButton" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_choose}"
+                    HorizontalAlignment="Left" Margin="340,-35,-1,0" Width="100" Height="34" Click="OnChooseClick" FontSize="14" />
         </StackPanel>
     </Grid>
 </UserControl>

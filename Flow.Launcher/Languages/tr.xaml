@@ -48,7 +48,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Temalar</system:String>
     <system:String x:Key="browserMoreThemes">Daha fazla tema bul</system:String>
-    <system:String x:Key="helloFlowLauncher">Merhaba Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Pencere Yazı Tipi</system:String>
     <system:String x:Key="resultItemFont">Sonuç Yazı Tipi</system:String>
     <system:String x:Key="windowMode">Pencere Modu</system:String>

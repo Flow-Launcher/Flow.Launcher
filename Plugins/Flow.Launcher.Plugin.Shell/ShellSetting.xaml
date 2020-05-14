@@ -6,22 +6,20 @@
              mc:Ignorable="d" 
              Loaded="CMDSetting_OnLoaded"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Border BorderBrush="Gray" Margin="10" BorderThickness="1">
-        <Grid Margin="10" VerticalAlignment="Top" >
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <CheckBox Grid.Row="0" x:Name="ReplaceWinR" Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}" Margin="10" HorizontalAlignment="Left"/>
-            <CheckBox Grid.Row="1" x:Name="LeaveShellOpen" Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}" Margin="10" HorizontalAlignment="Left"/>
-            <CheckBox Grid.Row="2" x:Name="AlwaysRunAsAdministrator" Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}" Margin="10" HorizontalAlignment="Left"/>
-            <ComboBox Grid.Row="3" x:Name="ShellComboBox" Margin="10" HorizontalAlignment="Left" >
-                <ComboBoxItem>CMD</ComboBoxItem>
-                <ComboBoxItem>PowerShell</ComboBoxItem>
-                <ComboBoxItem>RunCommand</ComboBoxItem>
-            </ComboBox>
-        </Grid>
-    </Border>
+    <Grid Margin="7,50" VerticalAlignment="Top" >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <CheckBox Grid.Row="0" x:Name="ReplaceWinR" Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}" Margin="10" HorizontalAlignment="Left"/>
+        <CheckBox Grid.Row="1" x:Name="LeaveShellOpen" Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}" Margin="10" HorizontalAlignment="Left"/>
+        <CheckBox Grid.Row="2" x:Name="AlwaysRunAsAdministrator" Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}" Margin="10" HorizontalAlignment="Left"/>
+        <ComboBox Grid.Row="3" x:Name="ShellComboBox" Margin="10" HorizontalAlignment="Left" >
+            <ComboBoxItem>CMD</ComboBoxItem>
+            <ComboBoxItem>PowerShell</ComboBoxItem>
+            <ComboBoxItem>RunCommand</ComboBoxItem>
+        </ComboBox>
+    </Grid>
 </UserControl>

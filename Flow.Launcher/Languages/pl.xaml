@@ -42,7 +42,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Skórka</system:String>
     <system:String x:Key="browserMoreThemes">Znajdź więcej skórek</system:String>
-    <system:String x:Key="helloFlowLauncher">Witaj Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Czcionka okna zapytania</system:String>
     <system:String x:Key="resultItemFont">Czcionka okna wyników</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>

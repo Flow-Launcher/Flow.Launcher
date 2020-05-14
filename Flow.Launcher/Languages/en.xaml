@@ -49,7 +49,7 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Theme</system:String>
     <system:String x:Key="browserMoreThemes">Browse for more themes</system:String>
-    <system:String x:Key="helloFlowLauncher">Hello Flow Launcher</system:String>
+    <system:String x:Key="hiThere">Hi There</system:String>
     <system:String x:Key="queryBoxFont">Query Box Font</system:String>
     <system:String x:Key="resultItemFont">Result Item Font</system:String>
     <system:String x:Key="windowMode">Window Mode</system:String>
@@ -68,6 +68,9 @@
     <system:String x:Key="add">Add</system:String>
     <system:String x:Key="pleaseSelectAnItem">Please select an item</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU.</system:String>
+    <system:String x:Key="shadowEffectPerformance">Not recommended if you computer performance is limited.</system:String>
 
     <!--Setting Proxy-->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
@@ -97,7 +100,7 @@
         Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes:</system:String>
+    <system:String x:Key="releaseNotes">Release Notes</system:String>
 
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
