@@ -75,7 +75,7 @@
                     Content="{DynamicResource flowlauncher_plugin_websearch_delete}" />
             <Button Click="OnEditSearchSourceClick" Width="100" Margin="10"
                     Content="{DynamicResource flowlauncher_plugin_websearch_edit}" />
-            <Button Click="OnAddSearchSearchClick" Width="100" Margin="10 10 0 10"
+            <Button Click="OnAddSearchSearchClick" Width="100" Margin="10 10 10 10"
                     Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
     </Grid>
