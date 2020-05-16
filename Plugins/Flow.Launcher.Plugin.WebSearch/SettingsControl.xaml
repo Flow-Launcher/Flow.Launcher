@@ -8,34 +8,49 @@
              Background="White"
              d:DataContext="{d:DesignInstance vm:SettingsViewModel}"
              d:DesignHeight="300" d:DesignWidth="500">
-    <Grid Margin="10">
+    <UserControl.Resources>
+        <Style TargetType="TextBox" x:Key="BrowserPathBoxStyle">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="15 0 0 0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="48" />
+            <RowDefinition Height="45" />
             <RowDefinition />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <CheckBox IsChecked="{Binding Settings.EnableSuggestion}"
-                      Margin="0 10 10 10"
+                      Margin="0 0 20 0"
                       Name="EnableSuggestion"
                       Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}" />
             <ComboBox ItemsSource="{Binding Settings.Suggestions}"
                       SelectedItem="{Binding Settings.SelectedSuggestion}"
-                      IsEnabled="{Binding ElementName=EnableSuggestion, Path=IsChecked}" Margin="10,3,10,10" />
+                      IsEnabled="{Binding ElementName=EnableSuggestion, Path=IsChecked}" />
             <!-- Not sure why binding IsEnabled directly to Settings.EnableWebSaerchSuggestion is not working -->
-            <Label Content="Open search in:" Margin="30 3 0 8"/>
-            <RadioButton Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" Content="New window" Click="OnNewBrowserWindowClick" Margin="10" />
-            <RadioButton Name="NewTabInBrowser" GroupName="OpenSearchBehaviour" Content="New tab" Click="OnNewTabClick" Margin="10" />
         </StackPanel>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0,3,0,17" Width="480">
-            <Label Content="Set browser from path:" Height="28" Margin="0,0,350,0" HorizontalAlignment="Left" Width="130"/>
-            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Height="21" Margin="138,-25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" RenderTransformOrigin="0.502,-1.668"/>
-            <Button x:Name="viewButton" HorizontalAlignment="Left" Margin="381,-30,0,0" Width="58" Height="25" Click="OnChooseClick" FontSize="10" Content="Choose" />
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Label Content="Open search in:" Margin="0 15 20 0"/>
+            <RadioButton Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" Content="New window" Click="OnNewBrowserWindowClick" 
+                         Margin="0 0 20 0"/>
+            <RadioButton Name="NewTabInBrowser" GroupName="OpenSearchBehaviour" Content="New tab" Click="OnNewTabClick" />
+        </StackPanel>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Left" Margin="0 3 0 0">
+            <Label Content="Set browser from path:" Margin="0 0 350 0" HorizontalAlignment="Left" Width="140"/>
+            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Margin="160,-22,0,0" 
+                     Width="214" Style="{StaticResource BrowserPathBoxStyle}"/>
+            <Button x:Name="viewButton" HorizontalAlignment="Left" Margin="400,-30,0,0"  
+                    Click="OnChooseClick" FontSize="13" Content="Choose" Width="80"/>
         </StackPanel>
         <ListView ItemsSource="{Binding Settings.SearchSources}"
                   SelectedItem="{Binding Settings.SelectedSearchSource}"
-                  Grid.Row="2">
+                  Grid.Row="3"
+                  Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
+                  BorderBrush="DarkGray"
+                  BorderThickness="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
@@ -45,7 +60,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}"  Width="418">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Url}" />
@@ -55,12 +70,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
+        <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Click="OnDeleteSearchSearchClick" Width="100" Margin="10"
                     Content="{DynamicResource flowlauncher_plugin_websearch_delete}" />
             <Button Click="OnEditSearchSourceClick" Width="100" Margin="10"
                     Content="{DynamicResource flowlauncher_plugin_websearch_edit}" />
-            <Button Click="OnAddSearchSearchClick" Width="100" Margin="10"
+            <Button Click="OnAddSearchSearchClick" Width="100" Margin="10 10 10 10"
                     Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
     </Grid>

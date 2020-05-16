@@ -41,7 +41,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="0" />
                         </Grid.ColumnDefinitions>
-                        <Image x:Name="imgIco" Width="32" Height="32" HorizontalAlignment="Left"
+                        <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Left"
                                Source="{Binding Image ,IsAsync=True}" />
                         <Grid Margin="5 0 5 0" Grid.Column="1" HorizontalAlignment="Stretch">
                             <Grid.RowDefinitions>
@@ -72,7 +72,7 @@
                                 </vm:ResultsViewModel.FormattedText>
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ItemSubTitleStyle}" ToolTip="{Binding Result.SubTitle}"
-                                       Grid.Row="1" x:Name="SubTitle" Text="{Binding Result.SubTitle}">
+                                       Grid.Row="1" x:Name="SubTitle" Text="{Binding Result.SubTitle}" MinWidth="750">
                                 <vm:ResultsViewModel.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
                                         <Binding Path="Result.SubTitle" />
@@ -91,6 +91,7 @@
                     Value="True">
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
+                    <Setter TargetName="ImageIcon" Property="Style" Value="{DynamicResource ItemImageSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>

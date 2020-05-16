@@ -5,18 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              Width="400"
-             Height="120"
+             Height="130"
              WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
-            <Label Content="{DynamicResource flowlauncher_plugin_program_directory}"/>
-            <TextBox Name="Directory" VerticalAlignment="Center" Width="300" Margin="0,7" />
+            <Label Content="{DynamicResource flowlauncher_plugin_program_directory}" Margin="15,10"/>
+            <TextBox Name="Directory" VerticalAlignment="Center" Width="278" Margin="10,7" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Click="BrowseButton_Click" Content="{DynamicResource flowlauncher_plugin_program_browse}" 
-                HorizontalAlignment="Right" Margin="10" Height="20" Width="70"   />
+                HorizontalAlignment="Right" Margin="10" Height="31" Width="70"   />
             <Button Click="ButtonAdd_OnClick"  Content="{DynamicResource flowlauncher_plugin_program_update}" 
-                HorizontalAlignment="Right" Margin="10" Height="20" Width="70"  />
+                HorizontalAlignment="Right" Margin="10" Height="31" Width="70"  />
         </StackPanel>
     </StackPanel>
 </Window>

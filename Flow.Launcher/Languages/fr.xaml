@@ -46,7 +46,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Thèmes</system:String>
     <system:String x:Key="browserMoreThemes">Trouver plus de thèmes</system:String>
-    <system:String x:Key="helloFlowLauncher">Hello Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Police (barre de recherche)</system:String>
     <system:String x:Key="resultItemFont">Police (liste des résultats)  </system:String>
     <system:String x:Key="windowMode">Mode fenêtré</system:String>

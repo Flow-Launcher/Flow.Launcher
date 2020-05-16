@@ -42,7 +42,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Теми</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
-    <system:String x:Key="helloFlowLauncher">Привіт Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>

@@ -19,6 +19,8 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
+using System.Windows.Media;
+using Flow.Launcher.Infrastructure.Image;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -215,7 +217,7 @@ namespace Flow.Launcher.ViewModel
                 Query();
             }
         }
-        
+
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
@@ -281,6 +283,8 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenResultCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
+
+        public ImageSource Image => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
 
         #endregion
 
