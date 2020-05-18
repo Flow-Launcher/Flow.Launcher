@@ -1,4 +1,4 @@
-﻿using Microsoft.Search.Interop;
+using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,14 +43,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         }
 
         ///<summary>
-        /// Search will be performed on all folders and files on the first level of a specified directory.
+        /// Set the required WHERE clause restriction to search on the first level of a specified directory.
         ///</summary>
         public string QueryWhereRestrictionsForTopLevelDirectorySearch(string path)
         {
-            // Set query restriction for top level directory search
             return $"directory='file:{path}'";
         }
 
+        ///<summary>
+        /// Search will be performed on all folders and files on the first level of a specified directory.
+        ///</summary>
         public string QueryForTopLevelDirectorySearch(string folderPath)
         {
             string query = "SELECT TOP " + _settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
