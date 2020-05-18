@@ -1,12 +1,16 @@
 ﻿using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Data.OleDb;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     public class QueryConstructor
     {
+        public OleDbConnection conn;
+        public OleDbCommand command;
+        public OleDbDataReader dataReaderResults;
+
         private Settings _settings;
 
         private const string SystemIndex = "SystemIndex";
@@ -18,14 +22,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         public CSearchQueryHelper CreateBaseQuery()
         {
-            // This uses the Microsoft.Search.Interop assembly
-            CSearchManager manager = new CSearchManager();
-
-            // SystemIndex catalog is the default catalog in Windows
-            ISearchCatalogManager catalogManager = manager.GetCatalog(SystemIndex);
-
-            // Get the ISearchQueryHelper which will help us to translate AQS --> SQL necessary to query the indexer
-            var baseQuery = catalogManager.GetQueryHelper();
+            var baseQuery = CreateQueryHelper();
 
             // Set the number of results we want. Don't set this property if all results are needed.
             baseQuery.QueryMaxResults = _settings.MaxResult;
@@ -33,13 +30,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             // Set list of columns we want to display, getting the path presently
             baseQuery.QuerySelectColumns = "System.FileName, System.ItemPathDisplay";
 
-            // Filter based on folder/file name
+            // Filter based on file name
             baseQuery.QueryContentProperties = "System.FileName";
 
             // Set sorting order 
             //baseQuery.QuerySorting = "System.ItemType DESC";
 
             return baseQuery;
+        }
+
+        internal CSearchQueryHelper CreateQueryHelper()
+        {
+            // This uses the Microsoft.Search.Interop assembly
+            var manager = new CSearchManager();
+
+            // SystemIndex catalog is the default catalog in Windows
+            var catalogManager = manager.GetCatalog(SystemIndex);
+
+            // Get the ISearchQueryHelper which will help us to translate AQS --> SQL necessary to query the indexer
+            var queryHelper = catalogManager.GetQueryHelper();
+
+            return queryHelper;
         }
 
         ///<summary>
@@ -67,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string QueryForAllFilesAndFolders(string userSearchString)
         {
-            // Generate SQL from our parameters, converting the userQuery from AQS->WHERE clause
+            // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
             return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
         }
 
@@ -77,6 +88,41 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string QueryWhereRestrictionsForAllFilesAndFoldersSearch()
         {
             return $"scope='file:'";
+        }
+
+        internal List<Result> ExecuteWindowsIndexSearch(string query)
+        {
+            var results = new List<Result>();
+
+            using (conn = new OleDbConnection(CreateQueryHelper().ConnectionString))
+            {
+                conn.Open();
+
+                using (command = new OleDbCommand(query, conn))
+                {
+                    // Results return as an OleDbDataReader.
+                    using (dataReaderResults = command.ExecuteReader())
+                    {
+                        if (dataReaderResults.HasRows)
+                        {
+                            while (dataReaderResults.Read())
+                            {
+                                if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
+                                {
+                                    var result = new Result
+                                    {
+                                        Title = dataReaderResults.GetString(0),
+                                        SubTitle = dataReaderResults.GetString(1)
+                                    };
+                                    results.Add(result);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return results;
         }
     }
 }
