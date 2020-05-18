@@ -37,9 +37,37 @@ namespace Flow.Launcher.Test.Plugins
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
-        
 
-        public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString() { }
+        [TestCase("scope='file:'")]
+        public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString) 
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When
+            var resultString = queryConstructor.QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+
+            Assert.IsTrue(resultString == expectedString,
+                $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {resultString}{Environment.NewLine}");
+        }
+
+        [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemPathDisplay\" " +
+            "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+                                        "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:'")]
+        public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
+            string userSearchString, string expectedString) 
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When
+            var resultString = queryConstructor.QueryForAllFilesAndFolders(userSearchString);
+
+            Assert.IsTrue(resultString == expectedString,
+                $"Expected query string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {resultString}{Environment.NewLine}");
+        }
 
         public void GivenWindowsIndexSearch_WhenReturnedNilAndIsNotIndexed_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() { }
 

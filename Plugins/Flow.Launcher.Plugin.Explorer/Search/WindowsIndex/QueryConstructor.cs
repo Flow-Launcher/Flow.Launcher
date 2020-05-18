@@ -1,4 +1,4 @@
-using Microsoft.Search.Interop;
+﻿using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -62,5 +62,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return query;
         }
 
+        ///<summary>
+        /// Search will be performed on all folders and files based on user's search keywords.
+        ///</summary>
+        public string QueryForAllFilesAndFolders(string userSearchString)
+        {
+            // Generate SQL from our parameters, converting the userQuery from AQS->WHERE clause
+            return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+        }
+
+        ///<summary>
+        /// Set the required WHERE clause restriction to search for all files and folders.
+        ///</summary>
+        public string QueryWhereRestrictionsForAllFilesAndFoldersSearch()
+        {
+            return $"scope='file:'";
+        }
     }
 }
