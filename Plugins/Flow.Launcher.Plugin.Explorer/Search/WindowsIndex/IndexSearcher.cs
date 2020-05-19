@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
-    internal class Searcher
+    internal class IndexSearcher
     {
         public OleDbConnection conn;
 
@@ -20,7 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         
         private readonly object _lock = new object();
 
-        public Searcher(PluginInitContext context)
+        public IndexSearcher(PluginInitContext context)
         {
             _context = context;
         }

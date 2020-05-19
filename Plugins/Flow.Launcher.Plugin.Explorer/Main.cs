@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
             var queryConstructor = new QueryConstructor(_settings);
 
-            var searcher = new Searcher(Context);
+            var searcher = new IndexSearcher(Context);
 
             return searcher.WindowsIndexSearch(query.Search,
                                                queryConstructor.CreateQueryHelper().ConnectionString,
