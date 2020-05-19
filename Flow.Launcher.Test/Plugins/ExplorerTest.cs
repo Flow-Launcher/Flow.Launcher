@@ -1,13 +1,41 @@
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Explorer;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.Test.Plugins
 {
     [TestFixture]
     public class ExplorerTest
     {
+        private List<Result> MethodWindowsIndexSearchReturnsZeroResults(string dummyString)
+        {
+            return new List<Result>();
+        }
+
+        private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(string dummyString)
+        {
+            return new List<Result> 
+            { 
+                new Result
+                {
+                    Title="Result 1"
+                },
+
+                new Result
+                {
+                    Title="Result 2"
+                }
+            };
+        }
+
+        private bool MethodIndexExistsReturnsTrue(string dummyString) => true;
+
+        private bool MethodIndexExistsReturnsFalse(string dummyString) => false;
+
         [TestCase("C:\\Dropbox", "directory='file:C:\\Dropbox'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
@@ -33,6 +61,7 @@ namespace Flow.Launcher.Test.Plugins
             //When            
             var queryString = queryConstructor.QueryForTopLevelDirectorySearch(folderPath);
             
+            // Then
             Assert.IsTrue(queryString == expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
@@ -47,6 +76,7 @@ namespace Flow.Launcher.Test.Plugins
             //When
             var resultString = queryConstructor.QueryWhereRestrictionsForAllFilesAndFoldersSearch();
 
+            // Then
             Assert.IsTrue(resultString == expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
@@ -64,12 +94,49 @@ namespace Flow.Launcher.Test.Plugins
             //When
             var resultString = queryConstructor.QueryForAllFilesAndFolders(userSearchString);
 
+            // Then
             Assert.IsTrue(resultString == expectedString,
                 $"Expected query string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
-        public void GivenWindowsIndexSearch_WhenReturnedNilAndIsNotIndexed_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() { }
+        [TestCase]
+        public void GivenWindowsIndexSearch_WhenReturnedZeroResultsAndIsNotIndexed_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() 
+        {
+            // Given
+            var searchManager = new SearchManager();
+            
+            // When
+            var results = searchManager.TopLevelFolderSearch(
+                                            MethodWindowsIndexSearchReturnsZeroResults, 
+                                            MethodDirectoryInfoClassSearchReturnsTwoResults, 
+                                            MethodIndexExistsReturnsFalse, 
+                                            "path string not used");
+
+            // Then
+            Assert.IsTrue(results.Count == 2,
+                $"Expected to have 2 results from DirectoryInfoClassSearch {Environment.NewLine} " +
+                $"Actual number of results is {results.Count} {Environment.NewLine}");
+        }
+
+        [TestCase]
+        public void GivenWindowsIndexSearch_WhenReturnedZeroResultsAndIsIndexed_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
+        {
+            // Given
+            var searchManager = new SearchManager();
+
+            // When
+            var results = searchManager.TopLevelFolderSearch(
+                                            MethodWindowsIndexSearchReturnsZeroResults,
+                                            MethodDirectoryInfoClassSearchReturnsTwoResults,
+                                            MethodIndexExistsReturnsTrue,
+                                            "path string not used");
+
+            // Then
+            Assert.IsTrue(results.Count == 0,
+                $"Expected to have 0 results because location is indexed {Environment.NewLine} " +
+                $"Actual number of results is {results.Count} {Environment.NewLine}");
+        }
 
         public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
     }
