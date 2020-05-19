@@ -46,7 +46,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 {
                                     if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                                     {
-                                        results.Add(CreateResult(dataReaderResults.GetString(0), dataReaderResults.GetString(1)));
+                                        results.Add(CreateResult(dataReaderResults.GetString(0), 
+                                                                 dataReaderResults.GetString(1), 
+                                                                 dataReaderResults.GetString(2)));
                                     }
                                 }
                             }
@@ -66,13 +68,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return results;
         }
 
-        private Result CreateResult(string filename, string path)
+        private Result CreateResult(string filename, string path, string fileType)
         {
             return new Result
             {
                 Title = filename,
                 SubTitle = path,
-                IcoPath = "Images\\Explorer.png",//<------CHANGE
+                IcoPath = fileType == "Directory" ? Constants.FolderImagePath : Constants.FileImagePath,
                 Action = c =>
                 {
                     try

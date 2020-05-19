@@ -27,6 +27,22 @@
     <None Include="Images\explorer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    
+    <None Include="Images\copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  
+    <None Include="Images\deletefilefolder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  
+    <Content Include="Images\file.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <None Include="Images\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>    
   </ItemGroup>
   
   <ItemGroup>

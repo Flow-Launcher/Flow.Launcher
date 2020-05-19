@@ -24,7 +24,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual: {result}{Environment.NewLine}");
         }
 
-        [TestCase("C:\\Dropbox", "SELECT TOP 100 System.FileName, System.ItemPathDisplay FROM SystemIndex WHERE directory='file:C:\\Dropbox'")]
+        [TestCase("C:\\Dropbox", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType FROM SystemIndex WHERE directory='file:C:\\Dropbox'")]
         public void GivenWindowsIndexSearch_WhenSearchTypeIsSearchTopFolderLevel_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
         {
             // Given
@@ -52,7 +52,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
-        [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemPathDisplay\" " +
+        [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemPathDisplay\", \"System.ItemType\" " +
             "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
                                         "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:'")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(

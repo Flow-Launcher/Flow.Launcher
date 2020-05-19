@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             baseQuery.QueryMaxResults = _settings.MaxResult;
 
             // Set list of columns we want to display, getting the path presently
-            baseQuery.QuerySelectColumns = "System.FileName, System.ItemPathDisplay";
+            baseQuery.QuerySelectColumns = "System.FileName, System.ItemPathDisplay, System.ItemType";
 
             // Filter based on file name
             baseQuery.QueryContentProperties = "System.FileName";
