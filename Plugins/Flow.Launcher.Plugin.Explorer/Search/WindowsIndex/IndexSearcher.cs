@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             _context = context;
         }
 
-        internal List<Result> ExecuteWindowsIndexSearch(string query, string connectionString)
+        internal List<Result> ExecuteWindowsIndexSearch(string searchString, string connectionString)
         {
             var results = new List<Result>();
 
@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 {
                     conn.Open();
 
-                    using (command = new OleDbCommand(query, conn))
+                    using (command = new OleDbCommand(searchString, conn))
                     {
                         // Results return as an OleDbDataReader.
                         using (dataReaderResults = command.ExecuteReader())
@@ -46,9 +46,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 {
                                     if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                                     {
-                                        results.Add(CreateResult(dataReaderResults.GetString(0), 
-                                                                 dataReaderResults.GetString(1), 
-                                                                 dataReaderResults.GetString(2)));
+                                        results.Add(CreateResult(
+                                                        dataReaderResults.GetString(0), 
+                                                        dataReaderResults.GetString(1), 
+                                                        dataReaderResults.GetString(2)));
                                     }
                                 }
                             }
@@ -91,11 +92,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             };
         }
 
-        internal List<Result> WindowsIndexSearch(string query, string connectionString, Func<string, string> constructQuery)
+        internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery)
         {
             lock (_lock)
             {
-                var constructedQuery = constructQuery(query);
+                var constructedQuery = constructQuery(searchString);
                 return ExecuteWindowsIndexSearch(constructedQuery, connectionString);
             }
         }
