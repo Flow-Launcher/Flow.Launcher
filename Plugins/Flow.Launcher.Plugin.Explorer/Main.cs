@@ -1,10 +1,8 @@
 ﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
@@ -51,13 +49,7 @@ namespace Flow.Launcher.Plugin.Explorer
             if (regexMatch.Success)
                 return results;
 
-            var queryConstructor = new QueryConstructor(_settings);
-
-            var searcher = new IndexSearcher(Context);
-
-            return searcher.WindowsIndexSearch(query.Search,
-                                               queryConstructor.CreateQueryHelper().ConnectionString,
-                                               queryConstructor.QueryForAllFilesAndFolders);
+            return new SearchManager(_settings, Context).Search(query.Search);
         }
 
         public void Save()

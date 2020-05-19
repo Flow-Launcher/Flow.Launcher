@@ -61,5 +61,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             return results;
         }
+
+        internal List<Result> WindowsIndexFilesAndFoldersSearch(string querySearchString)
+        {
+            var queryConstructor = new QueryConstructor(_settings);
+
+            var searcher = new IndexSearcher(_context);
+
+            return searcher.WindowsIndexSearch(querySearchString,
+                                               queryConstructor.CreateQueryHelper().ConnectionString,
+                                               queryConstructor.QueryForAllFilesAndFolders);
+        }
     }
 }
