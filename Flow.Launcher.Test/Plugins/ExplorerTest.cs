@@ -104,7 +104,7 @@ namespace Flow.Launcher.Test.Plugins
         public void GivenWindowsIndexSearch_WhenReturnedZeroResultsAndIsNotIndexed_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() 
         {
             // Given
-            var searchManager = new SearchManager();
+            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
             
             // When
             var results = searchManager.TopLevelFolderSearch(
@@ -123,7 +123,7 @@ namespace Flow.Launcher.Test.Plugins
         public void GivenWindowsIndexSearch_WhenReturnedZeroResultsAndIsIndexed_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
         {
             // Given
-            var searchManager = new SearchManager();
+            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
             var results = searchManager.TopLevelFolderSearch(
@@ -139,5 +139,25 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
+
+        [TestCase(@"c:\\", false)]
+        [TestCase(@"i:\", true)]
+        [TestCase(@"\c:\", false)]
+        [TestCase(@"cc:\", false)]
+        [TestCase(@"\\\SomeNetworkLocation\", false)]
+        [TestCase("RandomString", false)]
+        public void WhenGivenQuerySearchString_ThenShouldIndicateIfItIsLocationString(string querySearchString, bool expectedResult)
+        {
+            // When, Given
+            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
+
+            var result = searchManager.IsLocationPathString(querySearchString);
+
+            //Then
+            Assert.IsTrue(result == expectedResult,
+                $"Expected query search string check result is: {expectedResult} {Environment.NewLine} " +
+                $"Actual check result is {result} {Environment.NewLine}");
+
+        }
     }
 }
