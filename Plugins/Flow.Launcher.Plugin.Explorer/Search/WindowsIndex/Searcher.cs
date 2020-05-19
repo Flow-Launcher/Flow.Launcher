@@ -1,4 +1,5 @@
 ﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,7 +46,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 {
                                     if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                                     {
-                                        results.Add(CreateResult(dataReaderResults));
+                                        results.Add(CreateResult(dataReaderResults.GetString(0), dataReaderResults.GetString(1)));
                                     }
                                 }
                             }
@@ -65,23 +66,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return results;
         }
 
-        private Result CreateResult(OleDbDataReader dataReaderResults)
+        private Result CreateResult(string filename, string path)
         {
             return new Result
             {
-                Title = dataReaderResults.GetString(0),
-                SubTitle = dataReaderResults.GetString(1),
+                Title = filename,
+                SubTitle = path,
                 IcoPath = "Images\\Explorer.png",//<------CHANGE
                 Action = c =>
                 {
                     try
                     {
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = dataReaderResults.GetString(1),
-                            UseShellExecute = true,
-                            //WorkingDirectory = workingDir <----??
-                        });
+                        FilesFolders.OpenPath(path);
                     }
                     catch (Win32Exception)
                     {
