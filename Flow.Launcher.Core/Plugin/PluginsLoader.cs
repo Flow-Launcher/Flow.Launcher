@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -53,10 +53,12 @@ namespace Flow.Launcher.Core.Plugin
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for {metadata.Name}", e);
                         return;
                     }
-                    var types = assembly.GetTypes();
+
                     Type type;
                     try
                     {
+                        var types = assembly.GetTypes();
+                        
                         type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
                     }
                     catch (InvalidOperationException e)
@@ -64,6 +66,12 @@ namespace Flow.Launcher.Core.Plugin
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find class implement IPlugin for <{metadata.Name}>", e);
                         return;
                     }
+                    catch (ReflectionTypeLoadException e)
+                    {
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|The GetTypes method was unable to load assembly types for <{metadata.Name}>", e);
+                        return;
+                    }
+
                     IPlugin plugin;
                     try
                     {
