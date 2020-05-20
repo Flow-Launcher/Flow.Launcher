@@ -29,6 +29,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
         {
+            var erroredPlugins = new List<string>();
+
             var plugins = new List<PluginPair>();
             var metadatas = source.Where(o => AllowedLanguage.IsDotNet(o.Language));
 
@@ -50,6 +52,8 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
+                        erroredPlugins.Add(metadata.Name);
+
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for {metadata.Name}", e);
                         return;
                     }
@@ -63,11 +67,15 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (InvalidOperationException e)
                     {
+                        erroredPlugins.Add(metadata.Name);
+
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find class implement IPlugin for <{metadata.Name}>", e);
                         return;
                     }
                     catch (ReflectionTypeLoadException e)
                     {
+                        erroredPlugins.Add(metadata.Name);
+
                         Log.Exception($"|PluginsLoader.DotNetPlugins|The GetTypes method was unable to load assembly types for <{metadata.Name}>", e);
                         return;
                     }
@@ -79,6 +87,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
+                        erroredPlugins.Add(metadata.Name);
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Can't create instance for <{metadata.Name}>", e);
                         return;
                     }
@@ -93,6 +102,19 @@ namespace Flow.Launcher.Core.Plugin
                 metadata.InitTime += milliseconds;
 
             }
+
+            if (erroredPlugins.Count > 0)
+            {
+                var errorPluginString = "";
+
+                erroredPlugins.ForEach(x => errorPluginString += x + Environment.NewLine);
+
+                Task.Run(() =>
+                {
+                    MessageBox.Show($"Uh oh, unable to load plugins:{Environment.NewLine}{errorPluginString}");
+                });
+            }
+
             return plugins;
         }
 
