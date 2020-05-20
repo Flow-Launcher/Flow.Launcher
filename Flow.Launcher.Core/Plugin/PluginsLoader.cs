@@ -89,6 +89,7 @@ namespace Flow.Launcher.Core.Plugin
                     catch (Exception e)
                     {
                         erroredPlugins.Add(metadata.Name);
+
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Can't create instance for <{metadata.Name}>", e);
                         return;
                     }
