@@ -15,7 +15,7 @@
 
   <PropertyGroup>
     <Version>1.0.0</Version>
-    <PackageVersion>1.0.0-beta1</PackageVersion>
+    <PackageVersion>1.0.0-beta2</PackageVersion>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
@@ -43,7 +43,7 @@
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Output\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
