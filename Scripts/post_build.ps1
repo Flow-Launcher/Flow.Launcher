@@ -1,15 +1,15 @@
 param(
     [string]$config = "Release", 
     [string]$solution,
-	[string]$targetpath
+    [string]$targetpath
 )
 Write-Host "Config: $config"
 
 function Build-Version {
-	if ([string]::IsNullOrEmpty($env:APPVEYOR_BUILD_VERSION)) {
-		$v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
-	} else {
-        $v = $env:APPVEYOR_BUILD_VERSION
+    if ([string]::IsNullOrEmpty($env:flowVersion)) {
+        $v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
+    } else {
+        $v = $env:flowVersion
     }
 
     Write-Host "Build Version: $v"
@@ -57,28 +57,13 @@ function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
 
-function Pack-Nuget ($path, $version, $output) {
-    Write-Host "Begin build nuget library"
-
-    $spec = "$path\Scripts\flowlauncher.plugin.nuspec"
-    Write-Host "nuspec path: $spec"
-    Write-Host "Output path: $output"
-
-    Nuget pack $spec -Version $version -OutputDirectory $output
-
-    Write-Host "End build nuget library"
-}
-
 function Zip-Release ($path, $version, $output) {
     Write-Host "Begin zip release"
 
-    $input = "$path\Output\Release"
-    Write-Host "Input path:  $input"
-    $file = "$output\Flow.Launcher-$version.zip"
-    Write-Host "Filename: $file"
+    $content = "$path\Output\Release\*"
+    $zipFile = "$output\Flow-Launcher-v$version.zip"
 
-    [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
-    [System.IO.Compression.ZipFile]::CreateFromDirectory($input, $file)
+    Compress-Archive -Force -Path $content -DestinationPath $zipFile
 
     Write-Host "End zip release"
 }
@@ -88,10 +73,12 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Begin pack squirrel installer"
 
     $spec = "$path\Scripts\flowlauncher.nuspec"
-    Write-Host "nuspec path: $spec"
     $input = "$path\Output\Release"
+
+    Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
-    Nuget pack $spec -Version $version -Properties Configuration=Release -BasePath $input -OutputDirectory  $output
+    # TODO: can we use dotnet pack here?
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
@@ -107,7 +94,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow Launcher-$version.exe"
+    $file = "$output\Flow-Launcher-v$version.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
@@ -133,7 +120,7 @@ function Main {
         
         if(IsDotNetCoreAppSelfContainedPublishEvent) {
             FixPublishLastWriteDateTimeError $p
-		}
+        }
         
         Delete-Unused $p $config
         $o = "$p\Output\Packages"
@@ -144,7 +131,6 @@ function Main {
     
         $isInCI = $env:APPVEYOR
         if ($isInCI) {
-            Pack-Nuget $p $v $o
             Zip-Release $p $v $o
         }
 
