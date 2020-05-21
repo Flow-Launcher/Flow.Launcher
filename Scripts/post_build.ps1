@@ -125,6 +125,8 @@ function Main {
         Delete-Unused $p $config
         $o = "$p\Output\Packages"
         Validate-Directory $o
+        # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
+        New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
         Pack-Squirrel-Installer $p $v $o
     
         $isInCI = $env:APPVEYOR
