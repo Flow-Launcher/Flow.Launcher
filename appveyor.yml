@@ -34,12 +34,6 @@ build:
   verbosity: minimal
 
 artifacts:
-- path: 'Output\Packages\*.exe'
-  name: Setup File
-- path: 'Output\Packages\*.nupkg'
-  name: Squirrel nupkg
-- path: 'Output\Packages\RELEASES'
-  name: Squirrel RELEASES
 - path: 'Output\Packages\Flow-Launcher-*.zip'
   name: Zip
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
