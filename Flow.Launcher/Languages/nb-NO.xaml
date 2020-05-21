@@ -46,7 +46,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Finn flere temaer</system:String>
-    <system:String x:Key="helloFlowLauncher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Font for spørringsboks</system:String>
     <system:String x:Key="resultItemFont">Font for resultat</system:String>
     <system:String x:Key="windowMode">Vindusmodus</system:String>
@@ -55,7 +54,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher-hurtigtast</system:String>
+    <system:String x:Key="openResultModifiers">Åpne resultatmodifiserere</system:String>
     <system:String x:Key="customQueryHotkey">Egendefinerd spørringshurtigtast</system:String>
+    <system:String x:Key="showOpenResultHotkey">Vis hurtigtast</system:String>
     <system:String x:Key="delete">Slett</system:String>
     <system:String x:Key="edit">Rediger</system:String>
     <system:String x:Key="add">Legg til</system:String>

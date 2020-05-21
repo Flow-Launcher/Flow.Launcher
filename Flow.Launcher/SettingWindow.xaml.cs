@@ -270,7 +270,6 @@ namespace Flow.Launcher
         private void OnClosed(object sender, EventArgs e)
         {
             _viewModel.Save();
-            PluginManager.Save();
         }
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)

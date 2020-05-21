@@ -46,7 +46,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Pretražite još tema</system:String>
-    <system:String x:Key="helloFlowLauncher">Zdravo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Font upita</system:String>
     <system:String x:Key="resultItemFont">Font rezultata</system:String>
     <system:String x:Key="windowMode">Režim prozora</system:String>
@@ -55,6 +54,8 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Prečica</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher prečica</system:String>
+    <system:String x:Key="openResultModifiers">Отворите модификаторе резултата</system:String>
+    <system:String x:Key="showOpenResultHotkey">покажи хоткеи</system:String>
     <system:String x:Key="customQueryHotkey">prečica za ručno dodat upit</system:String>
     <system:String x:Key="delete">Obriši</system:String>
     <system:String x:Key="edit">Izmeni</system:String>

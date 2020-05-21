@@ -13,6 +13,7 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -47,6 +48,18 @@ namespace Flow.Launcher.ViewModel
             await _updater.UpdateApp(false);
         }
 
+        public bool AutoUpdates
+        {
+            get { return Settings.AutoUpdates; }
+            set
+            {
+                Settings.AutoUpdates = value;
+
+                if (value)
+                    UpdateApp();
+            }
+        }
+
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
@@ -70,6 +83,14 @@ namespace Flow.Launcher.ViewModel
 
         public void Save()
         {
+            foreach (var vm in PluginViewModels)
+            {
+                var id = vm.PluginPair.Metadata.ID;
+
+                Settings.PluginSettings.Plugins[id].Disabled = vm.PluginPair.Metadata.Disabled;
+            }
+
+            PluginManager.Save();
             _storage.Save();
         }
 
@@ -139,6 +160,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public List<string> OpenResultModifiersList => new List<string> { KeyConstant.Alt, KeyConstant.Ctrl, $"{KeyConstant.Ctrl}+{KeyConstant.Alt}" };
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
@@ -246,6 +268,24 @@ namespace Flow.Launcher.ViewModel
 
         public List<string> Themes
             => ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
+
+        public bool DropShadowEffect
+        {
+            get { return Settings.UseDropShadowEffect; }
+            set
+            {
+                if (value)
+                {
+                    ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
+                }
+                else
+                {
+                    ThemeManager.Instance.RemoveDropShadowEffectToCurrentTheme();
+                }
+
+                Settings.UseDropShadowEffect = value;
+            }
+        }
 
         public Brush PreviewBackground
         {
@@ -403,6 +443,8 @@ namespace Flow.Launcher.ViewModel
                 ThemeManager.Instance.ChangeTheme(Settings.Theme);
             }
         }
+
+        public ImageSource ThemeImage => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
 
         #endregion
 

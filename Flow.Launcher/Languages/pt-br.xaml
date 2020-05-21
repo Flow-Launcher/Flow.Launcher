@@ -46,7 +46,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>
     <system:String x:Key="browserMoreThemes">Ver mais temas</system:String>
-    <system:String x:Key="helloFlowLauncher">Olá Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Fonte da caixa de Consulta</system:String>
     <system:String x:Key="resultItemFont">Fonte do Resultado</system:String>
     <system:String x:Key="windowMode">Modo Janela</system:String>
@@ -55,7 +54,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Atalho do Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Modificadores de resultado aberto</system:String>
     <system:String x:Key="customQueryHotkey">Atalho de Consulta Personalizada</system:String>
+    <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
     <system:String x:Key="delete">Apagar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Adicionar</system:String>

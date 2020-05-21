@@ -42,7 +42,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Theme</system:String>
     <system:String x:Key="browserMoreThemes">Suche nach weiteren Themes</system:String>
-    <system:String x:Key="helloFlowLauncher">Hallo Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Abfragebox Schriftart</system:String>
     <system:String x:Key="resultItemFont">Ergebnis Schriftart</system:String>
     <system:String x:Key="windowMode">Fenstermodus</system:String>
@@ -51,7 +50,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Tastenkombination</system:String>
+    <system:String x:Key="openResultModifiers">Öffnen Sie die Ergebnismodifikatoren</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage Tastenkombination</system:String>
+    <system:String x:Key="showOpenResultHotkey">Hotkey anzeigen</system:String>
     <system:String x:Key="delete">Löschen</system:String>
     <system:String x:Key="edit">Bearbeiten</system:String>
     <system:String x:Key="add">Hinzufügen</system:String>

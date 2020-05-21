@@ -42,11 +42,34 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             StartMenuEnabled.IsChecked = _settings.EnableStartMenuSource;
             RegistryEnabled.IsChecked = _settings.EnableRegistrySource;
+
+            ViewRefresh();
+        }
+
+        private void ViewRefresh()
+        {
+            if(programSourceView.Items.Count == 0 
+                && btnProgramSourceStatus.Visibility == Visibility.Visible
+                && btnEditProgramSource.Visibility == Visibility.Visible)
+            {
+                btnProgramSourceStatus.Visibility = Visibility.Hidden;
+                btnEditProgramSource.Visibility = Visibility.Hidden;
+            }
+
+            if (programSourceView.Items.Count > 0
+                && btnProgramSourceStatus.Visibility == Visibility.Hidden
+                && btnEditProgramSource.Visibility == Visibility.Hidden)
+            {
+                btnProgramSourceStatus.Visibility = Visibility.Visible;
+                btnEditProgramSource.Visibility = Visibility.Visible;
+            }
+
+            programSourceView.Items.Refresh();
         }
 
         private void ReIndexing()
         {
-            programSourceView.Items.Refresh();
+            ViewRefresh();
             Task.Run(() =>
             {
                 Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Visible; });
@@ -63,7 +86,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 ReIndexing();
             }
 
-            programSourceView.Items.Refresh();
+            ViewRefresh();
         }
 
         private void DeleteProgramSources(List<ProgramSource> itemsToDelete)
@@ -148,7 +171,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                     directoriesToAdd.ForEach(x => _settings.ProgramSources.Add(x));
                     directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));                   
 
-                    programSourceView.Items.Refresh();
+                    ViewRefresh();
                     ReIndexing();
                 }
             }
@@ -170,7 +193,7 @@ namespace Flow.Launcher.Plugin.Program.Views
         {
             ProgramSettingDisplayList.LoadAllApplications();
 
-            programSourceView.Items.Refresh();
+            ViewRefresh();
         }
 
         private void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
@@ -219,7 +242,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             programSourceView.SelectedItems.Clear();
 
-            programSourceView.Items.Refresh();
+            ViewRefresh();
         }
 
         private void ProgramSourceView_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)

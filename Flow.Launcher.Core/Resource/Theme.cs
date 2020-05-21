@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -34,6 +35,9 @@ namespace Flow.Launcher.Core.Resource
             var dicts = Application.Current.Resources.MergedDictionaries;
             _oldResource = dicts.First(d =>
             {
+                if (d.Source == null)
+                    return false;
+
                 var p = d.Source.AbsolutePath;
                 var dir = Path.GetDirectoryName(p).NonNull();
                 var info = new DirectoryInfo(dir);
@@ -65,7 +69,7 @@ namespace Flow.Launcher.Core.Resource
 
         public bool ChangeTheme(string theme)
         {
-            const string defaultTheme = "Dark";
+            const string defaultTheme = Constant.DefaultTheme;
 
             string path = GetThemePath(theme);
             try
@@ -75,16 +79,15 @@ namespace Flow.Launcher.Core.Resource
 
                 Settings.Theme = theme;
 
-                var dicts = Application.Current.Resources.MergedDictionaries;
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
-                    dicts.Remove(_oldResource);
-                    var newResource = GetResourceDictionary();
-                    dicts.Add(newResource);
-                    _oldResource = newResource;
+                    UpdateResourceDictionary(GetResourceDictionary());
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
+
+                if (Settings.UseDropShadowEffect)
+                    AddDropShadowEffectToCurrentTheme();
             }
             catch (DirectoryNotFoundException e)
             {
@@ -109,13 +112,29 @@ namespace Flow.Launcher.Core.Resource
             return true;
         }
 
-        public ResourceDictionary GetResourceDictionary()
+        private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
+        {
+            var dicts = Application.Current.Resources.MergedDictionaries;
+
+            dicts.Remove(_oldResource);
+            dicts.Add(dictionaryToUpdate);
+            _oldResource = dictionaryToUpdate;
+        }
+
+        private ResourceDictionary CurrentThemeResourceDictionary()
         {
             var uri = GetThemePath(Settings.Theme);
             var dict = new ResourceDictionary
             {
                 Source = new Uri(uri, UriKind.Absolute)
             };
+
+            return dict;
+        }
+
+        public ResourceDictionary GetResourceDictionary()
+        {
+            var dict = CurrentThemeResourceDictionary();
 
             Style queryBoxStyle = dict["QueryBoxStyle"] as Style;
             if (queryBoxStyle != null)
@@ -146,6 +165,7 @@ namespace Flow.Launcher.Core.Resource
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
+
             return dict;
         }
 
@@ -174,6 +194,36 @@ namespace Flow.Launcher.Core.Resource
             }
 
             return string.Empty;
+        }
+
+        public void AddDropShadowEffectToCurrentTheme()
+        {
+            var dict = CurrentThemeResourceDictionary();
+
+            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+
+            var effectSetter = new Setter();
+            effectSetter.Property = Border.EffectProperty;
+            effectSetter.Value = new DropShadowEffect
+            {
+                Opacity = 0.9,
+                ShadowDepth = 2,
+                BlurRadius = 15
+            };
+
+            windowBorderStyle.Setters.Add(effectSetter);
+
+            UpdateResourceDictionary(dict);
+        }
+
+        public void RemoveDropShadowEffectToCurrentTheme()
+        {
+            var dict = CurrentThemeResourceDictionary();
+            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+
+            dict.Remove(Border.EffectProperty);
+
+            UpdateResourceDictionary(dict);
         }
 
         #region Blur Handling

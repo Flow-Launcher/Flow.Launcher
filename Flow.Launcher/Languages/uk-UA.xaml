@@ -42,7 +42,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Теми</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
-    <system:String x:Key="helloFlowLauncher">Привіт Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
@@ -51,7 +50,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Гарячі клавіші</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Відкриті модифікатори результатів</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
+    <system:String x:Key="showOpenResultHotkey">Показати клавішу швидкого доступу</system:String>
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Змінити</system:String>
     <system:String x:Key="add">Додати</system:String>

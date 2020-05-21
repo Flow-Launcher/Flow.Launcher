@@ -9,9 +9,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel
     {
-        public string Hotkey { get; set; } = "Alt + Space";
+        public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
+        public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+        public bool ShowOpenResultHotkey { get; set; } = true;
         public string Language { get; set; } = "en";
-        public string Theme { get; set; } = "Dark";
+        public string Theme { get; set; } = Constant.DefaultTheme;
+        public bool UseDropShadowEffect { get; set; } = false;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -59,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
-        public int MaxResultsToShow { get; set; } = 6;
+        public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
         // Order defaults to 0 or -1, so 1 will let this property appear last

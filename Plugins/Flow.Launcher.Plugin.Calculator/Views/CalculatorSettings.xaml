@@ -15,42 +15,44 @@
         <core:LocalizationConverter x:Key="LocalizationConverter"/>
     </UserControl.Resources>
 
-    <Border BorderBrush="Gray" Margin="10" BorderThickness="1">
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-  
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource flowlauncher_plugin_calculator_output_decimal_seperator}" VerticalAlignment="Center" />
-            <ComboBox x:Name="DecimalSeparatorComboBox"
+    <Grid Margin="20 50 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource flowlauncher_plugin_calculator_output_decimal_seperator}" 
+                   VerticalAlignment="Center" FontSize="14"/>
+        <ComboBox x:Name="DecimalSeparatorComboBox"
                       Grid.Column="1"
                       Grid.Row="0"
-                      Margin="0 5 0 5"
+                      Margin="10 5 0 5"
                       HorizontalAlignment="Left"
+                      MaxWidth="300"
                       SelectedItem="{Binding Settings.DecimalSeparator}"
                       ItemsSource="{Binding Source={ui:EnumBindingSource {x:Type calculator:DecimalSeparator}}}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource LocalizationConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource LocalizationConverter}}" FontSize="14"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}" VerticalAlignment="Center" />
-            <ComboBox x:Name="MaxDecimalPlaces"
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}" 
+                   VerticalAlignment="Center" FontSize="14"/>
+        <ComboBox x:Name="MaxDecimalPlaces"
                       Grid.Column="1"
                       Grid.Row="1"
-                      Margin="0 5 0 5"
+                      Margin="10 5 0 5"
                       HorizontalAlignment="Left"
+                      MaxWidth="300"
                       SelectedItem="{Binding Settings.MaxDecimalPlaces}"
                       ItemsSource="{Binding MaxDecimalPlacesRange}">
-            </ComboBox>
+        </ComboBox>
 
-        </Grid>
-    </Border>
+    </Grid>
 </UserControl>

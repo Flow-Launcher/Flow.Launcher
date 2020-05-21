@@ -47,7 +47,6 @@
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
     <system:String x:Key="browserMoreThemes">Prehliadať viac motívov</system:String>
-    <system:String x:Key="helloFlowLauncher">Ahoj Flow Launcher</system:String>
     <system:String x:Key="queryBoxFont">Písmo poľa pre dopyt</system:String>
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
@@ -56,7 +55,9 @@
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Klávesová skratka</system:String>
     <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
+    <system:String x:Key="openResultModifiers">Otvorte modifikátory výsledkov</system:String>
     <system:String x:Key="customQueryHotkey">Vlastná klávesová skratka pre dopyt</system:String>
+    <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
     <system:String x:Key="add">Pridať</system:String>

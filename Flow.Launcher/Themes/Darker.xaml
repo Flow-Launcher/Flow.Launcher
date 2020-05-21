@@ -6,16 +6,15 @@
     </ResourceDictionary.MergedDictionaries>
     
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="SelectionBrush" Value="#4D4D4D"/>
     </Style>
     
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
     </Style>
-    
+
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
     </Style>
-
     
-
     <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
     </Style>
 
@@ -25,16 +24,20 @@
     <Style x:Key="ItemSubTitleStyle" BasedOn="{StaticResource BaseItemSubTitleStyle}" TargetType="{x:Type TextBlock}" >
     </Style>
     <Style x:Key="ItemTitleSelectedStyle" BasedOn="{StaticResource BaseItemTitleSelectedStyle}"  TargetType="{x:Type TextBlock}" >
+        <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style x:Key="ItemSubTitleSelectedStyle" BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}" TargetType="{x:Type TextBlock}" >
+        <Setter Property="Cursor" Value="Arrow" />
     </Style>
-    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#4F6180</SolidColorBrush>
 
+    <Style x:Key="ItemImageSelectedStyle" BasedOn="{StaticResource BaseItemImageSelectedStyle}" TargetType="{x:Type Image}" >
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    
     <!-- button style in the middle of the scrollbar -->
     <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
     </Style>
 
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}">
-       
     </Style>
 </ResourceDictionary>
