@@ -11,14 +11,6 @@ assembly_info:
   assembly_version: $(flowVersion)
   assembly_file_version: $(flowVersion)
   assembly_informational_version: $(flowVersion)
-dotnet_csproj:
-  patch: true
-  file: 'Flow.*\*.csproj'
-  version: $(flowVersion)
-  package_version: $(flowVersion)
-  assembly_version: $(flowVersion)
-  file_version: $(flowVersion)
-  informational_version: $(flowVersion)
 
 skip_commits:
   files:
