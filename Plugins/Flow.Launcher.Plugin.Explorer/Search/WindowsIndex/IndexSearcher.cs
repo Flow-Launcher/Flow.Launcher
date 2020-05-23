@@ -1,5 +1,6 @@
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
+using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -99,6 +100,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 var constructedQuery = constructQuery(searchString);
                 return ExecuteWindowsIndexSearch(constructedQuery, connectionString);
             }
+        }
+
+        internal bool PathIsIndexed(string path)
+        {
+            var csm = new CSearchManager();
+            var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
+
+            return indexManager.IncludedInCrawlScope(path) == 0;
         }
     }
 }

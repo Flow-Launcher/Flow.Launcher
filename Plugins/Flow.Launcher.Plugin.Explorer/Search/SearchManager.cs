@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+﻿using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
 using System.Collections.Generic;
 
@@ -9,10 +9,31 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private Settings _settings;
         private PluginInitContext _context;
 
+        private IndexSearcher searcher;
+
         public SearchManager(Settings settings, PluginInitContext context)
         {
             _settings = settings;
             _context = context;
+            searcher = new IndexSearcher(_context);
+        }
+
+        public List<Result> Search(string querySearchString)
+        {
+            if (IsLocationPathString(querySearchString))
+            {
+                return TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
+                                                     DirectoryInfoClassSearch,
+                                                     WindowsIndexExists,
+                                                     querySearchString);
+            }
+
+            return WindowsIndexFilesAndFoldersSearch(querySearchString);
+        }
+
+        private List<Result> DirectoryInfoClassSearch(string arg)
+        {
+            throw new NotImplementedException();
         }
 
         ///<summary>
@@ -62,15 +83,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return results;
         }
 
-        internal List<Result> WindowsIndexFilesAndFoldersSearch(string querySearchString)
+        private List<Result> WindowsIndexFilesAndFoldersSearch(string querySearchString)
         {
             var queryConstructor = new QueryConstructor(_settings);
-
-            var searcher = new IndexSearcher(_context);
 
             return searcher.WindowsIndexSearch(querySearchString,
                                                queryConstructor.CreateQueryHelper().ConnectionString,
                                                queryConstructor.QueryForAllFilesAndFolders);
+        }
+
+        private List<Result> WindowsIndexTopLevelFolderSearch(string path)
+        {
+            var queryConstructor = new QueryConstructor(_settings);
+
+            return searcher.WindowsIndexSearch(path,
+                                               queryConstructor.CreateQueryHelper().ConnectionString,
+                                               queryConstructor.QueryForTopLevelDirectorySearch);
+        }
+
+        private bool WindowsIndexExists(string path)
+        {
+            return searcher.PathIsIndexed(path);
         }
     }
 }
