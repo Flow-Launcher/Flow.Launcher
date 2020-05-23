@@ -48,7 +48,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return false;
         }
 
-        public List<Result> TopLevelFolderSearch(
+        public List<Result> TopLevelFolderSearchBehaviour(
             Func<string, List<Result>> windowsIndexSearch,
             Func<string, List<Result>> directoryInfoClassSearch,
             Func<string, bool> indexExists,
