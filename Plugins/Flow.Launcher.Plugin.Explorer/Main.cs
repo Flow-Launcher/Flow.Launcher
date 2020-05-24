@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
@@ -15,9 +15,6 @@ namespace Flow.Launcher.Plugin.Explorer
         private Settings _settings;
 
         private SettingsViewModel _viewModel;
-
-        // Reserved keywords in oleDB
-        private string ReservedStringPattern = @"^[\/\\\$\%]+$";
 
         public Control CreateSettingPanel()
         {
@@ -44,10 +41,7 @@ namespace Flow.Launcher.Plugin.Explorer
             if (string.IsNullOrEmpty(query.Search))
                 return results;
 
-            var regexMatch = Regex.Match(query.Search, ReservedStringPattern);
-
-            if (regexMatch.Success)
-                return results;
+            return new SearchManager(_settings, Context).Search(query);
 
             return new SearchManager(_settings, Context).Search(query.Search);
         }

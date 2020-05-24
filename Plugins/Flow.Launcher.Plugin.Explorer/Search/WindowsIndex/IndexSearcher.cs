@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Search.Interop;
 using System;
@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.OleDb;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     internal class IndexSearcher
     {
+        private readonly object _lock = new object();
+
         public OleDbConnection conn;
 
         public OleDbCommand command;
@@ -18,8 +21,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public OleDbDataReader dataReaderResults;
 
         private PluginInitContext _context;
-        
-        private readonly object _lock = new object();
+
+        // Reserved keywords in oleDB
+        private string ReservedStringPattern = @"^[\/\\\$\%]+$";
 
         public IndexSearcher(PluginInitContext context)
         {
@@ -95,6 +99,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery)
         {
+            var regexMatch = Regex.Match(searchString, ReservedStringPattern);
+
+            if (regexMatch.Success)
+                return new List<Result>();
+
             lock (_lock)
             {
                 var constructedQuery = constructQuery(searchString);
