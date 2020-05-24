@@ -8,9 +8,9 @@ using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    class Main : ISettingProvider, IPlugin, ISavable, IContextMenu //, IPluginI18n <=== do later
+    public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu //, IPluginI18n <=== do later
     {
-        private PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; }
 
         private Settings _settings;
 
