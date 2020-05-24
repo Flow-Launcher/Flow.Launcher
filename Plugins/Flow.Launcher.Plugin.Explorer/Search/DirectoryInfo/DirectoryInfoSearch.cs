@@ -19,13 +19,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             _context = context;
             _settings = settings;
         }
-        public List<Result> TopLevelDirectorySearch(Query query, string search)
+
+        internal List<Result> DirectoryAllFilesFoldersSearch(Query query, string search)
+        {
+            return DirectorySearch(SearchOption.AllDirectories, query, search);
+        }
+
+        internal List<Result> TopLevelDirectorySearch(Query query, string search)
+        {
+            return DirectorySearch(SearchOption.TopDirectoryOnly, query, search);
+        }
+
+        private List<Result> DirectorySearch(SearchOption searchOption, Query query, string search)
         {
             var results = new List<Result>();
             //var hasSpecial = search.IndexOfAny(_specialSearchChars) >= 0;
             string incompleteName = "";
             //if (hasSpecial || !Directory.Exists(search + "\\"))
-            if (!FilesFolders.LocationExists(search + "\\"))
+            if (!Directory.Exists(search + "\\"))
             {
                 // if folder doesn't exist, we want to take the last part and use it afterwards to help the user 
                 // find the right folder.
@@ -34,7 +45,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                 {
                     incompleteName = search.Substring(index + 1).ToLower();
                     search = search.Substring(0, index + 1);
-                    if (!FilesFolders.LocationExists(search))
+                    if (!Directory.Exists(search))
                     {
                         return results;
                     }
@@ -55,7 +66,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
             results.Add(new ResultManager().CreateOpenCurrentFolderResult(incompleteName, search));
 
-            var searchOption = SearchOption.TopDirectoryOnly;
             incompleteName += "*";
 
             //// give the ability to search all folder when starting with >
@@ -108,7 +118,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
 
             // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-            return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList(); //<===== MOVE ORDERING OUT
+            return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList();
         }
     }
 }
