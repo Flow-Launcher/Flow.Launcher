@@ -2,6 +2,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Explorer;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Flow.Launcher.Test.Plugins
             return new List<Result>();
         }
 
-        private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(string dummyString)
+        private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString)
         {
             return new List<Result> 
             { 
@@ -111,7 +112,8 @@ namespace Flow.Launcher.Test.Plugins
                                             MethodWindowsIndexSearchReturnsZeroResults, 
                                             MethodDirectoryInfoClassSearchReturnsTwoResults, 
                                             MethodIndexExistsReturnsFalse, 
-                                            "path string not used");
+                                            new Query(),
+                                            "string not used");
 
             // Then
             Assert.IsTrue(results.Count == 2,
@@ -130,7 +132,8 @@ namespace Flow.Launcher.Test.Plugins
                                             MethodWindowsIndexSearchReturnsZeroResults,
                                             MethodDirectoryInfoClassSearchReturnsTwoResults,
                                             MethodIndexExistsReturnsTrue,
-                                            "path string not used");
+                                            new Query(),
+                                            "string not used");
 
             // Then
             Assert.IsTrue(results.Count == 0,
@@ -149,9 +152,7 @@ namespace Flow.Launcher.Test.Plugins
         public void WhenGivenQuerySearchString_ThenShouldIndicateIfItIsLocationString(string querySearchString, bool expectedResult)
         {
             // When, Given
-            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
-
-            var result = searchManager.IsLocationPathString(querySearchString);
+            var result = FilesFolders.IsLocationPathString(querySearchString);
 
             //Then
             Assert.IsTrue(result == expectedResult,

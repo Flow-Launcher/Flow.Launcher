@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Storage;
+﻿using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
@@ -42,8 +42,6 @@ namespace Flow.Launcher.Plugin.Explorer
                 return results;
 
             return new SearchManager(_settings, Context).Search(query);
-
-            return new SearchManager(_settings, Context).Search(query.Search);
         }
 
         public void Save()

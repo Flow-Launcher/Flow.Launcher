@@ -1,4 +1,6 @@
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             searcher = new IndexSearcher(_context);
         }
 
-        public List<Result> Search(string querySearchString)
+        internal List<Result> Search(Query query)
         {
             var querySearch = query.Search;
 
@@ -34,33 +36,36 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 querySearch = EnvironmentVariables.TranslateEnvironmentVariablePath(querySearch);
             }
 
+            if (FilesFolders.IsLocationPathString(querySearch))
+            {
                 return TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
                                                      DirectoryInfoClassSearch,
                                                      WindowsIndexExists,
-                                                     querySearchString);
+                                                     query,
+                                                     querySearch);
             }
 
-            return WindowsIndexFilesAndFoldersSearch(querySearchString);
+            return WindowsIndexFilesAndFoldersSearch(querySearch);
         }
 
-        private List<Result> DirectoryInfoClassSearch(string arg)
+        private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
         {
-            throw new NotImplementedException();
-        }
+            var directoryInfoSearch = new DirectoryInfoSearch(_settings, _context);
 
-        ///<summary>
+            return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch);
         }
 
         public List<Result> TopLevelFolderSearchBehaviour(
             Func<string, List<Result>> windowsIndexSearch,
-            Func<string, List<Result>> directoryInfoClassSearch,
+            Func<Query, string, List<Result>> directoryInfoClassSearch,
             Func<string, bool> indexExists,
-            string path)
+            Query query,
+            string querySearchString)
         {
-            var results = windowsIndexSearch(path);
+            var results = windowsIndexSearch(querySearchString);
 
-            if (results.Count == 0 && !indexExists(path))
-                return directoryInfoClassSearch(path);
+            if (results.Count == 0 && !indexExists(querySearchString))
+                return directoryInfoClassSearch(query, querySearchString);
 
             return results;
         }
@@ -73,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                queryConstructor.CreateQueryHelper().ConnectionString,
                                                queryConstructor.QueryForAllFilesAndFolders);
         }
-
+        
         private List<Result> WindowsIndexTopLevelFolderSearch(string path)
         {
             var queryConstructor = new QueryConstructor(_settings);

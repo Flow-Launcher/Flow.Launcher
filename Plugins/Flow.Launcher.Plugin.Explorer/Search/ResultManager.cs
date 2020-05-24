@@ -2,6 +2,8 @@
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -41,6 +43,55 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path }
             };
+        }
+
+        public Result CreateOpenCurrentFolderResult(string incompleteName, string search)
+        {
+            var firstResult = "Open current directory";
+            if (incompleteName.Length > 0)
+                firstResult = "Open " + search;
+
+            var folderName = search.TrimEnd('\\').Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
+
+            return new Result
+            {
+                Title = firstResult,
+                SubTitle = $"Use > to search files and subfolders within {folderName}, " +
+                                $"* to search for file extensions in {folderName} or both >* to combine the search",
+                IcoPath = search,
+                Score = 500,
+                Action = c =>
+                {
+                    FilesFolders.OpenPath(search);
+                    return true;
+                }
+            };
+        }
+
+        public Result CreateFileResult(string filePath, Query query)
+        {
+            var result = new Result
+            {
+                Title = Path.GetFileName(filePath),
+                SubTitle = filePath,
+                IcoPath = filePath,
+                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
+                Action = c =>
+                {
+                    try
+                    {
+                        FilesFolders.OpenPath(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Could not start " + filePath);
+                    }
+
+                    return true;
+                },
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath }
+            };
+            return result;
         }
     }
 
