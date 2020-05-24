@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Search.Interop;
 using System;
@@ -115,8 +115,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             var csm = new CSearchManager();
             var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
-
-            return indexManager.IncludedInCrawlScope(path) == 0;
+            return indexManager.IncludedInCrawlScope(path) > 0;
         }
     }
 }
