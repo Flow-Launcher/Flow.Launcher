@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
 using System.Collections.Generic;
 
@@ -20,8 +20,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         public List<Result> Search(string querySearchString)
         {
-            if (IsLocationPathString(querySearchString))
+            var querySearch = query.Search;
+
+            if (EnvironmentVariables.IsEnvironmentVariableSearch(querySearch)) 
             {
+                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query);
+            }
+
+            // Query is a location path with a full environment variable- starts with a % 
+            // and contains another % somewhere before the end of the path
+            if (querySearch.Substring(1).Contains("%"))
+            {
+                querySearch = EnvironmentVariables.TranslateEnvironmentVariablePath(querySearch);
+            }
+
                 return TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
                                                      DirectoryInfoClassSearch,
                                                      WindowsIndexExists,
