@@ -16,6 +16,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private SettingsViewModel _viewModel;
 
+        private IContextMenu _contextMenu;
+
         public Control CreateSettingPanel()
         {
             return new ExplorerSettings();
@@ -24,14 +26,14 @@ namespace Flow.Launcher.Plugin.Explorer
         public void Init(PluginInitContext context)
         {
             Context = context;
-
             _viewModel = new SettingsViewModel();
             _settings = _viewModel.Settings;
+            _contextMenu = new ContextMenu();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            return new List<Result>();
+            return _contextMenu.LoadContextMenus(selectedResult);
         }
 
         public List<Result> Query(Query query)
