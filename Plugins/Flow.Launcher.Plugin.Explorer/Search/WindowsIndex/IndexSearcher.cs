@@ -30,7 +30,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             _context = context;
         }
 
-        internal List<Result> ExecuteWindowsIndexSearch(string searchString, string connectionString)
+        internal List<Result> ExecuteWindowsIndexSearch(string searchString, string connectionString, Query query)
         {
             var results = new List<Result>();
 
@@ -54,7 +54,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                         results.Add(CreateResult(
                                                         dataReaderResults.GetString(0), 
                                                         dataReaderResults.GetString(1), 
-                                                        dataReaderResults.GetString(2)));
+                                                        dataReaderResults.GetString(2),
+                                                        query));
                                     }
                                 }
                             }
@@ -74,30 +75,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return results;
         }
 
-        private Result CreateResult(string filename, string path, string fileType)
+        private Result CreateResult(string filename, string path, string fileType, Query query)
         {
-            return new Result
+            if (fileType == "Directory")
+                return ResultManager.CreateFolderResult(filename, path, path, query);
+            else
             {
-                Title = filename,
-                SubTitle = path,
-                IcoPath = fileType == "Directory" ? Constants.FolderImagePath : Constants.FileImagePath,
-                Action = c =>
-                {
-                    try
-                    {
-                        FilesFolders.OpenPath(path);
-                    }
-                    catch (Win32Exception)
-                    {
-                        _context.API.ShowMsg("Explorer plugin: ", "Unable to open the selected file", string.Empty); //<=========
-                    }
-
-                    return true;
-                }
-            };
+                return ResultManager.CreateFileResult(path, query);
+            }
         }
 
-        internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery)
+        internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery, Query query)
         {
             var regexMatch = Regex.Match(searchString, ReservedStringPattern);
 
@@ -107,7 +95,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             lock (_lock)
             {
                 var constructedQuery = constructQuery(searchString);
-                return ExecuteWindowsIndexSearch(constructedQuery, connectionString);
+                return ExecuteWindowsIndexSearch(constructedQuery, connectionString, query);
             }
         }
 

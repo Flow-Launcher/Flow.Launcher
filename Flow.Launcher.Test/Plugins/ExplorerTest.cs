@@ -12,7 +12,7 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
-        private List<Result> MethodWindowsIndexSearchReturnsZeroResults(string dummyString)
+        private List<Result> MethodWindowsIndexSearchReturnsZeroResults(Query dummyQuery, string dummyString)
         {
             return new List<Result>();
         }
@@ -141,8 +141,6 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual number of results is {results.Count} {Environment.NewLine}");
         }
 
-        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
-
         [TestCase(@"c:\\", false)]
         [TestCase(@"i:\", true)]
         [TestCase(@"\c:\", false)]
@@ -160,5 +158,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual check result is {result} {Environment.NewLine}");
 
         }
+
+        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
     }
 }
