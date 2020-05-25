@@ -45,24 +45,41 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateOpenCurrentFolderResult(string incompleteName, string search)
+        internal static Result CreateOpenCurrentFolderResult(string path, bool isPreviousDirectoryLevel)
         {
-            var firstResult = "Open current directory";
-            if (incompleteName.Length > 0)
-                firstResult = "Open " + search;
+            var folderName = path;
 
-            var folderName = search.TrimEnd('\\').Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
+            if (folderName.EndsWith(":\\"))
+            {
+                var driveLetter = folderName.Substring(0, 1).ToUpper();
+                folderName = driveLetter + " drive";
+            }
+            else
+            {
+                folderName = folderName.TrimEnd('\\').Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
+            }
+
+            var firstResult = "";
+
+            if (isPreviousDirectoryLevel)
+            {
+                firstResult = "Open " + folderName;
+            }
+            else
+            {
+                firstResult = "Open current directory";
+            }
 
             return new Result
             {
                 Title = firstResult,
                 SubTitle = $"Use > to search files and subfolders within {folderName}, " +
                                 $"* to search for file extensions in {folderName} or both >* to combine the search",
-                IcoPath = search,
+                IcoPath = path,
                 Score = 500,
                 Action = c =>
                 {
-                    FilesFolders.OpenPath(search);
+                    FilesFolders.OpenPath(path);
                     return true;
                 }
             };

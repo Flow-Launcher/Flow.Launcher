@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -44,9 +44,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 querySearch = EnvironmentVariables.TranslateEnvironmentVariablePath(querySearch);
             }
 
-            if (FilesFolders.IsLocationPathString(querySearch))
-            {
-                return TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
+            var results = new List<Result>();
+
+            var currentFolderResult = CreateOpenCurrentFolderResult(FilesFolders.LocationExists, querySearch);
+
+            if (currentFolderResult == null)
+                return new List<Result>();
+            
+            results.Add(currentFolderResult);
                                                      DirectoryInfoClassSearch,
                                                      WindowsIndexExists,
                                                      query,
@@ -101,6 +106,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private bool WindowsIndexExists(string path)
         {
             return _indexSearch.PathIsIndexed(path);
+        }
+
+        private Result CreateOpenCurrentFolderResult(Func<string, bool> locationExists, string querySearchString)
+        {
+            if (locationExists(querySearchString))
+                return ResultManager.CreateOpenCurrentFolderResult(querySearchString, false);
+
+            var partialPath = "";
+            int index = querySearchString.LastIndexOf('\\');
+            if (index > 0 && index < (querySearchString.Length - 1))
+            {
+                partialPath = querySearchString.Substring(0, index + 1);
+                if (!locationExists(partialPath))
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return ResultManager.CreateOpenCurrentFolderResult(partialPath, true);
         }
     }
 }
