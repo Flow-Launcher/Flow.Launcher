@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private Settings _settings;
         private PluginInitContext _context;
 
-        private IndexSearcher searcher;
+        private IndexSearch _indexSearch;
 
         private QuickFolderAccess quickFolderAccess = new QuickFolderAccess();
 
@@ -20,7 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             _settings = settings;
             _context = context;
-            searcher = new IndexSearcher();
+            _indexSearch = new IndexSearch();
         }
 
         internal List<Result> Search(Query query)
@@ -82,7 +82,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var queryConstructor = new QueryConstructor(_settings);
 
-            return searcher.WindowsIndexSearch(querySearchString,
+            return _indexSearch.WindowsIndexSearch(querySearchString,
                                                queryConstructor.CreateQueryHelper().ConnectionString,
                                                queryConstructor.QueryForAllFilesAndFolders,
                                                query);
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var queryConstructor = new QueryConstructor(_settings);
 
-            return searcher.WindowsIndexSearch(path,
+            return _indexSearch.WindowsIndexSearch(path,
                                                queryConstructor.CreateQueryHelper().ConnectionString,
                                                queryConstructor.QueryForTopLevelDirectorySearch,
                                                query);
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool WindowsIndexExists(string path)
         {
-            return searcher.PathIsIndexed(path);
+            return _indexSearch.PathIsIndexed(path);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
-    internal class IndexSearcher
+    internal class IndexSearch
     {
         private readonly object _lock = new object();
 
