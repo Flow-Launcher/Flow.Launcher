@@ -20,15 +20,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         
         public OleDbDataReader dataReaderResults;
 
-        private PluginInitContext _context;
-
         // Reserved keywords in oleDB
         private string ReservedStringPattern = @"^[\/\\\$\%]+$";
-
-        public IndexSearcher(PluginInitContext context)
-        {
-            _context = context;
-        }
 
         internal List<Result> ExecuteWindowsIndexSearch(string searchString, string connectionString, Query query)
         {

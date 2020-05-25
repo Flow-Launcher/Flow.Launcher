@@ -20,7 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             _settings = settings;
             _context = context;
-            searcher = new IndexSearcher(_context);
+            searcher = new IndexSearcher();
         }
 
         internal List<Result> Search(Query query)
