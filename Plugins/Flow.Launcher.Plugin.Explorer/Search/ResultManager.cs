@@ -9,9 +9,9 @@ using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
-    public class ResultManager
+    internal static class ResultManager
     {
-        public Result CreateFolderResult(string title, string subtitle, string path, Query query)
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query)
         {
             return new Result
             {
@@ -45,7 +45,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        public Result CreateOpenCurrentFolderResult(string incompleteName, string search)
+        internal static Result CreateOpenCurrentFolderResult(string incompleteName, string search)
         {
             var firstResult = "Open current directory";
             if (incompleteName.Length > 0)
@@ -68,7 +68,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        public Result CreateFileResult(string filePath, Query query)
+        internal static Result CreateFileResult(string filePath, Query query)
         {
             var result = new Result
             {
@@ -95,13 +95,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         }
     }
 
-    public class SearchResult
+    internal class SearchResult
     {
         public string FullPath { get; set; }
         public ResultType Type { get; set; }
     }
 
-    public enum ResultType
+    internal enum ResultType
     {
         Volume,
         Folder,

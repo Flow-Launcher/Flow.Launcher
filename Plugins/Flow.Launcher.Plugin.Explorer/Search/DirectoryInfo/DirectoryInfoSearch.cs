@@ -64,7 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                 }
             }
 
-            results.Add(new ResultManager().CreateOpenCurrentFolderResult(incompleteName, search));
+            results.Add(ResultManager.CreateOpenCurrentFolderResult(incompleteName, search));
 
             incompleteName += "*";
 
@@ -97,11 +97,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                         if (searchOption == SearchOption.AllDirectories)
                             folderSubtitleString = fileSystemInfo.FullName;
 
-                        folderList.Add(new ResultManager().CreateFolderResult(fileSystemInfo.Name, folderSubtitleString, fileSystemInfo.FullName, query));
+                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, folderSubtitleString, fileSystemInfo.FullName, query));
                     }
                     else
                     {
-                        fileList.Add(new ResultManager().CreateFileResult(fileSystemInfo.FullName, query));
+                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query));
                     }
                 }
             }

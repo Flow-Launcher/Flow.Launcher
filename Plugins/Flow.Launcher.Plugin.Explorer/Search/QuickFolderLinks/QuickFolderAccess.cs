@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks
             var userFolderLinks = folderLinks.Where(
                 x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
             var results = userFolderLinks.Select(item =>
-                new ResultManager().CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query)).ToList();
+                ResultManager.CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query)).ToList();
             return results;
         }
     }

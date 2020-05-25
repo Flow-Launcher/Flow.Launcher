@@ -62,7 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     var expandedPath = environmentVariables[search];
                    
-                    results.Add(new ResultManager().CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
+                    results.Add(ResultManager.CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
                     
                     return results;
                 }
@@ -81,7 +81,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 if (p.Key.StartsWith(search))
                 {
-                    results.Add(new ResultManager().CreateFolderResult($"%{p.Key}%", p.Value, p.Value, query));
+                    results.Add(ResultManager.CreateFolderResult($"%{p.Key}%", p.Value, p.Value, query));
                 }
             }
             return results;
