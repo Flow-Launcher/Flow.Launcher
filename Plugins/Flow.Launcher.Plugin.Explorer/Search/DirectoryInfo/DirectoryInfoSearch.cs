@@ -36,35 +36,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             //var hasSpecial = search.IndexOfAny(_specialSearchChars) >= 0;
             string incompleteName = "";
             //if (hasSpecial || !Directory.Exists(search + "\\"))
-            if (!Directory.Exists(search + "\\"))
+            
+            // folder exist, add \ at the end of doesn't exist
+            if (!search.EndsWith("\\"))
             {
-                // if folder doesn't exist, we want to take the last part and use it afterwards to help the user 
-                // find the right folder.
-                int index = search.LastIndexOf('\\');
-                if (index > 0 && index < (search.Length - 1))
-                {
-                    incompleteName = search.Substring(index + 1).ToLower();
-                    search = search.Substring(0, index + 1);
-                    if (!Directory.Exists(search))
-                    {
-                        return results;
-                    }
-                }
-                else
-                {
-                    return results;
-                }
+                search += "\\";
             }
-            else
-            {
-                // folder exist, add \ at the end of doesn't exist
-                if (!search.EndsWith("\\"))
-                {
-                    search += "\\";
-                }
-            }
-
-            results.Add(ResultManager.CreateOpenCurrentFolderResult(incompleteName, search));
 
             incompleteName += "*";
 
@@ -118,7 +95,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
 
             // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-            return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList();
+            return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList(); //<============= MOVE OUT
         }
     }
 }
