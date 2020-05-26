@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure;
+﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -44,6 +44,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             //    // match everything before and after search term using supported wildcard '*', ie. *searchterm*
             //    incompleteName = "*" + incompleteName.Substring(1);
             //}
+
+            if (!search.EndsWith("\\"))
+            {
+                // not full path, get previous level directory string
+                var indexOfSeparator = search.LastIndexOf('\\');
+
+                incompleteName = search.Substring(indexOfSeparator + 1).ToLower();
+
+                search = search.Substring(0, indexOfSeparator + 1);
+            }
+
+            incompleteName += "*";
 
             var folderList = new List<Result>();
             var fileList = new List<Result>();
