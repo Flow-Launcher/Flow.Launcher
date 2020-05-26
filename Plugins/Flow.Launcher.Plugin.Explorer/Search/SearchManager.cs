@@ -32,6 +32,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (quickFolderLinks.Count > 0)
                 return quickFolderLinks;
 
+            if (!FilesFolders.IsLocationPathString(querySearch))
+                return WindowsIndexFilesAndFoldersSearch(query, querySearch);
+
             if (EnvironmentVariables.IsEnvironmentVariableSearch(querySearch)) 
             {
                 return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query);
