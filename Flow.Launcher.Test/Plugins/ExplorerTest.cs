@@ -68,6 +68,43 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
+        [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemPathDisplay\", \"System.ItemType\" " +
+            "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+                                        "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033))" +
+                                        " AND directory='file:C:\\Dropbox'")]
+        public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
+            string userSearchString, string expectedString)
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When            
+            var queryString = queryConstructor.QueryForTopLevelDirectorySearch(userSearchString);
+
+            // Then
+            Assert.IsTrue(queryString == expectedString,
+                $"Expected string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {queryString}{Environment.NewLine}");
+        }
+
+        [TestCase("C:\\Dropbox\\App", "WHERE (System.FileName LIKE 'App%' " +
+                    "OR CONTAINS(System.FileName,'\"App*\"',1033))" +
+                    " AND directory='file:C:\\Dropbox'")]
+        public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryWhereRestrictionsShouldUseDirectoryString(
+            string userSearchString, string expectedString)
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When            
+            var queryString = queryConstructor.QueryWhereRestrictionsForTopLevelDirectorySearch(userSearchString);
+
+            // Then
+            Assert.IsTrue(queryString == expectedString,
+                $"Expected string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {queryString}{Environment.NewLine}");
+        }
+
         [TestCase("scope='file:'")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString) 
         {
