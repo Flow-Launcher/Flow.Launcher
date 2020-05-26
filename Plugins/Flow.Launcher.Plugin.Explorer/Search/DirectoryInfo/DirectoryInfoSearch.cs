@@ -60,11 +60,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             var folderList = new List<Result>();
             var fileList = new List<Result>();
 
-            var folderSubtitleString = Constants.DefaultFolderSubtitleString;
-
             try
             {
-                // search folder and add results
                 var directoryInfo = new System.IO.DirectoryInfo(search);
                 var fileSystemInfos = directoryInfo.GetFileSystemInfos(incompleteName, searchOption);
 
@@ -74,10 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        if (searchOption == SearchOption.AllDirectories)
-                            folderSubtitleString = fileSystemInfo.FullName;
-
-                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, folderSubtitleString, fileSystemInfo.FullName, query));
+                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName, fileSystemInfo.FullName, query));
                     }
                     else
                     {
