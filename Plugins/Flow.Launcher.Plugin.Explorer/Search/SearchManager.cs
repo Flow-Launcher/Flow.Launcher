@@ -37,8 +37,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query);
             }
 
-            // Query is a location path with a full environment variable- starts with a % 
-            // and contains another % somewhere before the end of the path
+            // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
             if (querySearch.Substring(1).Contains("%"))
             {
                 querySearch = EnvironmentVariables.TranslateEnvironmentVariablePath(querySearch);

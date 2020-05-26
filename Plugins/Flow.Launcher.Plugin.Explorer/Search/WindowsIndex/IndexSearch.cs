@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         // Reserved keywords in oleDB
         private string ReservedStringPattern = @"^[\/\\\$\%]+$";
 
-        internal List<Result> ExecuteWindowsIndexSearch(string searchString, string connectionString, Query query)
+        internal List<Result> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
         {
             var results = new List<Result>();
 
@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 {
                     conn.Open();
 
-                    using (command = new OleDbCommand(searchString, conn))
+                    using (command = new OleDbCommand(indexQueryString, conn))
                     {
                         // Results return as an OleDbDataReader.
                         using (dataReaderResults = command.ExecuteReader())

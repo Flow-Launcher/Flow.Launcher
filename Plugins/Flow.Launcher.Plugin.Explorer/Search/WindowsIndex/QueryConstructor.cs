@@ -1,4 +1,4 @@
-﻿using Microsoft.Search.Interop;
+using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
@@ -57,11 +57,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///<summary>
         /// Search will be performed on all folders and files on the first level of a specified directory.
         ///</summary>
-        public string QueryForTopLevelDirectorySearch(string folderPath)
+        public string QueryForTopLevelDirectorySearch(string path)
         {
             string query = "SELECT TOP " + _settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
-            query += QueryWhereRestrictionsForTopLevelDirectorySearch(folderPath);
+            query += QueryWhereRestrictionsForTopLevelDirectorySearch(path);
 
             return query;
         }
