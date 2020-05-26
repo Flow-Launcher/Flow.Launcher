@@ -37,6 +37,10 @@ namespace Flow.Launcher.Test.Plugins
 
         private bool MethodIndexExistsReturnsFalse(string dummyString) => false;
 
+        private bool LocationExistsReturnsTrue(string dummyString) => true;
+
+        private bool LocationNotExistReturnsFalse(string dummyString) => false;
+
         [TestCase("C:\\Dropbox", "directory='file:C:\\Dropbox'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
@@ -193,6 +197,19 @@ namespace Flow.Launcher.Test.Plugins
             Assert.IsTrue(result == expectedResult,
                 $"Expected query search string check result is: {expectedResult} {Environment.NewLine} " +
                 $"Actual check result is {result} {Environment.NewLine}");
+
+        }
+        
+        [TestCase(@"C:\Dropbox\Drop", @"C:\Dropbox")]
+        [TestCase(@"C:\Dropbox\Drop\App", @"C:\Dropbox\Drop")]
+        public void GivenAPartialPath_WhenPreviousLevelDirectoryExists_ThenShouldReturnThePreviousDirectoryPathString()
+        {
+
+        }
+
+        [TestCase(@"C:\Dropbox\Drop", "")]
+        public void GivenAPartialPath_WhenPreviousLevelDirectoryNotExists_ThenShouldReturnEmptyString()
+        {
 
         }
 
