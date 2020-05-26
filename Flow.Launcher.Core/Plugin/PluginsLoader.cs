@@ -118,7 +118,7 @@ namespace Flow.Launcher.Core.Plugin
                 Task.Run(() =>
                 {
                     MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
-                                        $"{errorPluginString}{Environment.NewLine}{Environment.NewLine} " +
+                                        $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
                                         $"Please refer to the logs for more information","",
                                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 });
