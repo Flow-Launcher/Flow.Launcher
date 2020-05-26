@@ -160,5 +160,30 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
             return false;
         }
+
+        ///<summary>
+        /// Gets the previous level directory from a path string.
+        /// Checks that previous level directory exists and returns it 
+        /// as a path string, or empty string if doesnt exit
+        ///</summary>
+        public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
+        {
+            var previousDirectoryPath = "";
+            int index = path.LastIndexOf('\\');
+            if (index > 0 && index < (path.Length - 1))
+            {
+                previousDirectoryPath = path.Substring(0, index + 1);
+                if (!locationExists(path))
+                {
+                    return "";
+                }
+            }
+            else
+            {
+                return "";
+            }
+
+            return previousDirectoryPath;
+        }
     }
 }

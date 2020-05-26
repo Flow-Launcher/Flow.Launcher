@@ -113,22 +113,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (locationExists(querySearchString))
                 return ResultManager.CreateOpenCurrentFolderResult(querySearchString, false);
 
-            var partialPath = "";
-            int index = querySearchString.LastIndexOf('\\');
-            if (index > 0 && index < (querySearchString.Length - 1))
-            {
-                partialPath = querySearchString.Substring(0, index + 1);
-                if (!locationExists(partialPath))
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
-            }
+            var previousDirectoryPath = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, querySearchString);
 
-            return ResultManager.CreateOpenCurrentFolderResult(partialPath, true);
+            if (string.IsNullOrEmpty(previousDirectoryPath))
+                return null;
+
+            return ResultManager.CreateOpenCurrentFolderResult(previousDirectoryPath, true);
         }
     }
 }

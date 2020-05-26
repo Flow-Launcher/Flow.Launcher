@@ -37,9 +37,9 @@ namespace Flow.Launcher.Test.Plugins
 
         private bool MethodIndexExistsReturnsFalse(string dummyString) => false;
 
-        private bool LocationExistsReturnsTrue(string dummyString) => true;
+        private bool PreviousLocationExistsReturnsTrue(string dummyString) => true;
 
-        private bool LocationNotExistReturnsFalse(string dummyString) => false;
+        private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
 
         [TestCase("C:\\Dropbox", "directory='file:C:\\Dropbox'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
@@ -200,17 +200,30 @@ namespace Flow.Launcher.Test.Plugins
 
         }
         
-        [TestCase(@"C:\Dropbox\Drop", @"C:\Dropbox")]
-        [TestCase(@"C:\Dropbox\Drop\App", @"C:\Dropbox\Drop")]
-        public void GivenAPartialPath_WhenPreviousLevelDirectoryExists_ThenShouldReturnThePreviousDirectoryPathString()
+        [TestCase(@"C:\Dropbox\Drop", true, @"C:\Dropbox\")]
+        [TestCase(@"C:\Dropbox\Drop\App", true, @"C:\Dropbox\Drop\")]
+        [TestCase(@"C:\Dropbox\Drop", false, "")]
+        public void GivenAPartialPath_WhenPreviousLevelDirectoryExists_ThenShouldReturnThePreviousDirectoryPathString(
+            string path, bool previousDirectoryExists, string expectedString)
         {
+            // When
+            Func<string, bool> previousLocationExists = null;
+            if (previousDirectoryExists)
+            {
+                previousLocationExists = PreviousLocationExistsReturnsTrue;
+            }
+            else
+            {
+                previousLocationExists = PreviousLocationNotExistReturnsFalse;
+            }
 
-        }
+            // Given
+            var previousDirectoryPath = FilesFolders.GetPreviousExistingDirectory(previousLocationExists, path);
 
-        [TestCase(@"C:\Dropbox\Drop", "")]
-        public void GivenAPartialPath_WhenPreviousLevelDirectoryNotExists_ThenShouldReturnEmptyString()
-        {
-
+            //Then
+            Assert.IsTrue(previousDirectoryPath == expectedString,
+                $"Expected path string: {expectedString} {Environment.NewLine} " +
+                $"Actual path string is {previousDirectoryPath} {Environment.NewLine}");
         }
 
         public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
