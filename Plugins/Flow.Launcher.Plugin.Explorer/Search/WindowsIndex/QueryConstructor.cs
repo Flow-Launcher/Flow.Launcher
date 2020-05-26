@@ -51,7 +51,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string QueryWhereRestrictionsForTopLevelDirectorySearch(string path)
         {
-            return $"directory='file:{path}'";
+            var directoryWhereRestriction = $"directory='file:";
+
+            if (path.EndsWith("\\"))
+                return directoryWhereRestriction + $"{path}'";
+
+            var indexOfSeparator = path.LastIndexOf('\\');
+
+            var itemName = path.Substring(indexOfSeparator + 1);
+
+            var previousLevelDirectory = path.Substring(0, indexOfSeparator);
+
+            return $"(System.FileName LIKE '{itemName}%' " +
+                    $"OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND " +
+                    directoryWhereRestriction + $"{previousLevelDirectory}'";
         }
 
         ///<summary>

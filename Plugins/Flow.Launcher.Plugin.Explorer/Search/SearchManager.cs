@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -54,13 +54,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return new List<Result>();
             
             results.Add(currentFolderResult);
-                                                     DirectoryInfoClassSearch,
-                                                     WindowsIndexExists,
-                                                     query,
-                                                     querySearch);
-            }
 
-            return WindowsIndexFilesAndFoldersSearch(query, querySearch);
+            results.AddRange(TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
+                                                           DirectoryInfoClassSearch,
+                                                           WindowsIndexExists,
+                                                           query,
+                                                           querySearch));
+
+            return results;
         }
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
