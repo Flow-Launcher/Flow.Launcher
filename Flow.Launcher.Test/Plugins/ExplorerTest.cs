@@ -64,7 +64,7 @@ namespace Flow.Launcher.Test.Plugins
             
             // Then
             Assert.IsTrue(queryString == expectedString,
-                $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
+                $"Expected string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
