@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -117,7 +117,10 @@ namespace Flow.Launcher.Core.Plugin
 
                 Task.Run(() =>
                 {
-                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{errorPluginString}");
+                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                                        $"{errorPluginString}{Environment.NewLine}{Environment.NewLine} " +
+                                        $"Please refer to the logs for more information","",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 });
             }
 
