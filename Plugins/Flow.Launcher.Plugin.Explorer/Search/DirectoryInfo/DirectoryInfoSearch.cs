@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -36,15 +36,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             //var hasSpecial = search.IndexOfAny(_specialSearchChars) >= 0;
             string incompleteName = "";
             //if (hasSpecial || !Directory.Exists(search + "\\"))
-            
-            // folder exist, add \ at the end of doesn't exist
-            if (!search.EndsWith("\\"))
-            {
-                search += "\\";
-            }
-
-            incompleteName += "*";
-
             //// give the ability to search all folder when starting with >
             //if (incompleteName.StartsWith(">"))
             //{
