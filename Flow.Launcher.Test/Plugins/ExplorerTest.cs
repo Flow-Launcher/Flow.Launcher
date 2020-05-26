@@ -91,7 +91,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
-        [TestCase("C:\\Dropbox\\App", "WHERE (System.FileName LIKE 'App%' " +
+        [TestCase("C:\\Dropbox\\App", "(System.FileName LIKE 'App%' " +
                     "OR CONTAINS(System.FileName,'\"App*\"',1033))" +
                     " AND directory='file:C:\\Dropbox'")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryWhereRestrictionsShouldUseDirectoryString(
