@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Windows;
 using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -107,36 +108,20 @@ namespace Flow.Launcher.Core.Plugin
                 metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(configPath));
                 metadata.PluginDirectory = pluginDirectory;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                string error = $"Parse plugin config {configPath} failed: json format is not valid";
-#if (DEBUG)
-                {
-                    throw new Exception(error);
-                }
-#endif
+                Log.Exception($"|PluginInstaller.GetMetadataFromJson|plugin config {configPath} failed: invalid json format", e);
                 return null;
             }
 
-
             if (!AllowedLanguage.IsAllowed(metadata.Language))
             {
-                string error = $"Parse plugin config {configPath} failed: invalid language {metadata.Language}";
-#if (DEBUG)
-                {
-                    throw new Exception(error);
-                }
-#endif
+                Log.Error($"|PluginInstaller.GetMetadataFromJson|plugin config {configPath} failed: invalid language {metadata.Language}");
                 return null;
             }
             if (!File.Exists(metadata.ExecuteFilePath))
             {
-                string error = $"Parse plugin config {configPath} failed: ExecuteFile {metadata.ExecuteFilePath} didn't exist";
-#if (DEBUG)
-                {
-                    throw new Exception(error);
-                }
-#endif
+                Log.Error($"|PluginInstaller.GetMetadataFromJson|plugin config {configPath} failed: file {metadata.ExecuteFilePath} doesn't exist");
                 return null;
             }
 
