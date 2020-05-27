@@ -226,6 +226,22 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual path string is {previousDirectoryPath} {Environment.NewLine}");
         }
 
-        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString() { }
+        [TestCase("c:\\NonExistentFolder\\>", "scope='file:c:\\NonExistentFolder'")]
+        [TestCase("c:\\NonExistentFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' " +
+                                                        "OR CONTAINS(System.FileName,'\"SomeName*\"',1033)) AND " +
+                                                        "scope='file:c:\\NonExistentFolder'")]
+        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString(string path, string expectedString) 
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When
+            var resultString = queryConstructor.QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
+
+            // Then
+            Assert.IsTrue(resultString == expectedString,
+                $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {resultString}{Environment.NewLine}");
+        }
     }
 }
