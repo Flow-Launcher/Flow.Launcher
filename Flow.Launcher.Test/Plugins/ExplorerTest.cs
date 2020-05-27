@@ -1,6 +1,7 @@
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Explorer;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
@@ -242,6 +243,23 @@ namespace Flow.Launcher.Test.Plugins
             Assert.IsTrue(resultString == expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
+        }
+
+        [TestCase("c:\\somefolder\\>somefile","*somefile*")]
+        [TestCase("c:\\somefolder\\somefile", "somefile*")]
+        [TestCase("c:\\somefolder\\", "*")]
+        public void GivenDirectoryInfoSearch_WhenSearchPatternHotKeyIsSearchAll_ThenSearchCriteriaShouldUseCriteriaString(string path, string expectedString)
+        {
+            // Given
+            var criteriaConstructor = new DirectoryInfoSearch(new Settings());
+
+            //When
+            var resultString = criteriaConstructor.ConstructSearchCriteria(path);
+
+            // Then
+            Assert.IsTrue(resultString == expectedString,
+                $"Expected criteria string: {expectedString}{Environment.NewLine} " +
+                $"Actual criteria string was: {resultString}{Environment.NewLine}");
         }
     }
 }
