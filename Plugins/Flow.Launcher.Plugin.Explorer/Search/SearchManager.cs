@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
         {
-            var directoryInfoSearch = new DirectoryInfoSearch(_settings, _context);
+            var directoryInfoSearch = new DirectoryInfoSearch(_settings);
 
             return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch);
         }

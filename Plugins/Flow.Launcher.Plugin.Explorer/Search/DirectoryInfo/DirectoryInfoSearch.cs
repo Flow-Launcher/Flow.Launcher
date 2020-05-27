@@ -10,40 +10,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
     public class DirectoryInfoSearch
     {
-        private PluginInitContext _context;
-
         private Settings _settings;
 
-        public DirectoryInfoSearch(Settings settings, PluginInitContext context)
+        public DirectoryInfoSearch(Settings settings)
         {
-            _context = context;
             _settings = settings;
-        }
-
-        internal List<Result> DirectoryAllFilesFoldersSearch(Query query, string search)
-        {
-            return DirectorySearch(SearchOption.AllDirectories, query, search);
         }
 
         internal List<Result> TopLevelDirectorySearch(Query query, string search)
         {
-            return DirectorySearch(SearchOption.TopDirectoryOnly, query, search);
+            var criteria = ConstructSearchCriteria(search);
+
+            if (search.IndexOfAny(Constants.SpecialSearchChars) >= 0)
+                return DirectorySearch(SearchOption.AllDirectories, query, search, criteria);
+            
+            return DirectorySearch(SearchOption.TopDirectoryOnly, query, search, criteria);
         }
 
-        private List<Result> DirectorySearch(SearchOption searchOption, Query query, string search)
+        public string ConstructSearchCriteria(string search)
         {
-            var results = new List<Result>();
-            //var hasSpecial = search.IndexOfAny(_specialSearchChars) >= 0;
             string incompleteName = "";
-            //if (hasSpecial || !Directory.Exists(search + "\\"))
-            //// give the ability to search all folder when starting with >
-            //if (incompleteName.StartsWith(">"))
-            //{
-            //    searchOption = SearchOption.AllDirectories;
-
-            //    // match everything before and after search term using supported wildcard '*', ie. *searchterm*
-            //    incompleteName = "*" + incompleteName.Substring(1);
-            //}
 
             if (!search.EndsWith("\\"))
             {
@@ -52,18 +38,36 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
                 incompleteName = search.Substring(indexOfSeparator + 1).ToLower();
 
-                search = search.Substring(0, indexOfSeparator + 1);
+                if (incompleteName.StartsWith(">"))
+                    incompleteName = "*" + incompleteName.Substring(1);
             }
 
             incompleteName += "*";
+
+            return incompleteName;
+        }
+
+        private List<Result> DirectorySearch(SearchOption searchOption, Query query, string search, string searchCriteria)
+        {
+            var results = new List<Result>();
+
+            var path = search;
+
+            if (!search.EndsWith("\\"))
+            {
+                // not full path, get previous level directory string
+                var indexOfSeparator = search.LastIndexOf('\\');
+
+                path = search.Substring(0, indexOfSeparator + 1);
+            }
 
             var folderList = new List<Result>();
             var fileList = new List<Result>();
 
             try
             {
-                var directoryInfo = new System.IO.DirectoryInfo(search);
-                var fileSystemInfos = directoryInfo.GetFileSystemInfos(incompleteName, searchOption);
+                var directoryInfo = new System.IO.DirectoryInfo(path);
+                var fileSystemInfos = directoryInfo.GetFileSystemInfos(searchCriteria, searchOption);
 
                 foreach (var fileSystemInfo in fileSystemInfos)
                 {
