@@ -41,7 +41,7 @@ namespace Flow.Launcher.Test.Plugins
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
 
-        [TestCase("C:\\Dropbox", "directory='file:C:\\Dropbox'")]
+        [TestCase("C:\\SomeFolder", "directory='file:C:\\SomeFolder'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
             // Given
@@ -57,7 +57,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual: {result}{Environment.NewLine}");
         }
 
-        [TestCase("C:\\Dropbox", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType FROM SystemIndex WHERE directory='file:C:\\Dropbox'")]
+        [TestCase("C:\\SomeFolder", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder'")]
         public void GivenWindowsIndexSearch_WhenSearchTypeIsSearchTopFolderLevel_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
         {
             // Given
@@ -75,7 +75,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemPathDisplay\", \"System.ItemType\" " +
             "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
                                         "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033))" +
-                                        " AND directory='file:C:\\Dropbox'")]
+                                        " AND directory='file:C:\\SomeFolder'")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
@@ -91,9 +91,9 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
-        [TestCase("C:\\Dropbox\\App", "(System.FileName LIKE 'App%' " +
-                    "OR CONTAINS(System.FileName,'\"App*\"',1033))" +
-                    " AND directory='file:C:\\Dropbox'")]
+        [TestCase("C:\\SomeFolder\\SomeApp", "(System.FileName LIKE 'SomeApp%' " +
+                    "OR CONTAINS(System.FileName,'\"SomeApp*\"',1033))" +
+                    " AND directory='file:C:\\SomeFolder'")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryWhereRestrictionsShouldUseDirectoryString(
             string userSearchString, string expectedString)
         {
@@ -200,9 +200,9 @@ namespace Flow.Launcher.Test.Plugins
 
         }
         
-        [TestCase(@"C:\Dropbox\Drop", true, @"C:\Dropbox\")]
-        [TestCase(@"C:\Dropbox\Drop\App", true, @"C:\Dropbox\Drop\")]
-        [TestCase(@"C:\Dropbox\Drop", false, "")]
+        [TestCase(@"C:\SomeFolder\SomeApp", true, @"C:\SomeFolder\")]
+        [TestCase(@"C:\SomeFolder\SomeApp\SomeFile", true, @"C:\SomeFolder\SomeApp\")]
+        [TestCase(@"C:\NonExistentFolder\SomeApp", false, "")]
         public void GivenAPartialPath_WhenPreviousLevelDirectoryExists_ThenShouldReturnThePreviousDirectoryPathString(
             string path, bool previousDirectoryExists, string expectedString)
         {
@@ -226,10 +226,10 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual path string is {previousDirectoryPath} {Environment.NewLine}");
         }
 
-        [TestCase("c:\\NonExistentFolder\\>", "scope='file:c:\\NonExistentFolder'")]
-        [TestCase("c:\\NonExistentFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' " +
+        [TestCase("c:\\SomeFolder\\>", "scope='file:c:\\SomeFolder'")]
+        [TestCase("c:\\SomeFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' " +
                                                         "OR CONTAINS(System.FileName,'\"SomeName*\"',1033)) AND " +
-                                                        "scope='file:c:\\NonExistentFolder'")]
+                                                        "scope='file:c:\\SomeFolder'")]
         public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString(string path, string expectedString) 
         {
             // Given
