@@ -11,7 +11,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     internal static class ResultManager
     {
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query)
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, bool showIndexState = false, bool windowsIndexed = false)
         {
             return new Result
             {
@@ -41,7 +41,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         query.ActionKeyword + " " + changeTo);
                     return false;
                 },
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -85,7 +85,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query)
+        internal static Result CreateFileResult(string filePath, Query query, bool showIndexState = false, bool windowsIndexed = false)
         {
             var result = new Result
             {
@@ -106,7 +106,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                     return true;
                 },
-                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath }
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
             };
             return result;
         }
@@ -116,6 +116,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         public string FullPath { get; set; }
         public ResultType Type { get; set; }
+
+        public bool WindowsIndexed { get; set; }
+
+        public bool ShowIndexState { get; set; }
     }
 
     internal enum ResultType

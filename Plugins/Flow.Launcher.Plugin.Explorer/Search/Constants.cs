@@ -10,6 +10,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public const string FileImagePath = "Images\\file.png";
         public const string DeleteFileFolderImagePath = "Images\\deletefilefolder.png";
         public const string CopyImagePath = "Images\\copy.png";
+        public const string IndexImagePath = "Images\\index.png";
 
         public const string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
     }

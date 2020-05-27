@@ -71,11 +71,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName, fileSystemInfo.FullName, query));
+                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName, fileSystemInfo.FullName, query, true, false));
                     }
                     else
                     {
-                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query));
+                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
                     }
                 }
             }

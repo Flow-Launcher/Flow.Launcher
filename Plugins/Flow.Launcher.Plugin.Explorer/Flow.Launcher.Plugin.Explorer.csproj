@@ -27,6 +27,10 @@
     <None Include="Images\explorer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
+    <None Include="Images\index.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     
     <None Include="Images\copy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

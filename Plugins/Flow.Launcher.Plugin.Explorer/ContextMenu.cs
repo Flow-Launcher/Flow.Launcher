@@ -23,6 +23,10 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(CreateOpenContainingFolderResult(record));
                 }
 
+                if (record.ShowIndexState)
+                    contextMenus.Add(new Result { Title = "Indexed: " + (record.WindowsIndexed ? "Yes" : "No"), 
+                                                    Score = 501, IcoPath = Constants.IndexImagePath });
+
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
                 contextMenus.Add(new Result

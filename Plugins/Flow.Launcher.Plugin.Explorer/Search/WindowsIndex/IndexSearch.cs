@@ -71,10 +71,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private Result CreateResult(string filename, string path, string fileType, Query query)
         {
             if (fileType == "Directory")
-                return ResultManager.CreateFolderResult(filename, path, path, query);
+                return ResultManager.CreateFolderResult(filename, path, path, query, true, true);
             else
             {
-                return ResultManager.CreateFileResult(path, query);
+                return ResultManager.CreateFileResult(path, query, true, true);
             }
         }
 
