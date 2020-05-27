@@ -30,5 +30,3 @@ artifacts:
   name: Zip
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
-- path: 'Output\Release\Flow.Launcher.Plugin.*.snupkg'
-  name: Plugin snupkg
