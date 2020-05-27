@@ -51,20 +51,41 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string QueryWhereRestrictionsForTopLevelDirectorySearch(string path)
         {
-            var directoryWhereRestriction = $"directory='file:";
+            var searchDepth = $"directory='file:";
 
+            return QueryWhereRestrictionsFromLocationPath(path, searchDepth);
+        }
+
+        ///<summary>
+        /// Set the required WHERE clause restriction to search all files and subfolders of a specified directory.
+        ///</summary>
+        public string QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(string path)
+        {
+            var searchDepth = $"scope='file:";
+
+            return QueryWhereRestrictionsFromLocationPath(path, searchDepth);
+        }
+
+        private string QueryWhereRestrictionsFromLocationPath(string path, string searchDepth)
+        {
             if (path.EndsWith("\\"))
-                return directoryWhereRestriction + $"{path}'";
+                return searchDepth + $"{path}'";
 
             var indexOfSeparator = path.LastIndexOf('\\');
 
             var itemName = path.Substring(indexOfSeparator + 1);
 
+            if (itemName.StartsWith('>'))
+                itemName = itemName.Substring(1);
+
             var previousLevelDirectory = path.Substring(0, indexOfSeparator);
+
+            if (string.IsNullOrEmpty(itemName))
+                return searchDepth + $"{previousLevelDirectory}'";
 
             return $"(System.FileName LIKE '{itemName}%' " +
                     $"OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND " +
-                    directoryWhereRestriction + $"{previousLevelDirectory}'";
+                    searchDepth + $"{previousLevelDirectory}'";
         }
 
         ///<summary>
@@ -74,9 +95,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             string query = "SELECT TOP " + _settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
-            query += QueryWhereRestrictionsForTopLevelDirectorySearch(path);
+            if (path.IndexOfAny(Constants.SpecialSearchChars) >= 0)
+                return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
 
-            return query;
+            return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path);
         }
 
         ///<summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +12,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public const string CopyImagePath = "Images\\copy.png";
         public const string IndexImagePath = "Images\\index.png";
 
-        public const string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
+        internal static readonly char[] SpecialSearchChars = new char[]
+        {
+            '?', '*', '>'
+        };
     }
 }
