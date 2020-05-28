@@ -42,7 +42,7 @@ namespace Flow.Launcher.Test.Plugins
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
 
-        [TestCase("C:\\SomeFolder", "directory='file:C:\\SomeFolder'")]
+        [TestCase("C:\\SomeFolder\\", "directory='file:C:\\SomeFolder\\'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
             // Given
@@ -58,8 +58,9 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual: {result}{Environment.NewLine}");
         }
 
-        [TestCase("C:\\SomeFolder", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder'")]
-        public void GivenWindowsIndexSearch_WhenSearchTypeIsSearchTopFolderLevel_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
+        [TestCase("C:\\", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType FROM SystemIndex WHERE directory='file:C:\\'")]
+        [TestCase("C:\\SomeFolder\\", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder\\'")]
+        public void GivenWindowsIndexSearch_WhenSearchTypeIsTopLevelDirectorySearch_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -73,8 +74,8 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
-        [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemPathDisplay\", \"System.ItemType\" " +
-            "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+        [TestCase("C:\\SomeFolder\\flow.launcher.sln", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType " +
+            "FROM SystemIndex WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
                                         "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033))" +
                                         " AND directory='file:C:\\SomeFolder'")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
@@ -188,8 +189,8 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"\c:\", false)]
         [TestCase(@"cc:\", false)]
         [TestCase(@"\\\SomeNetworkLocation\", false)]
-        [TestCase("RandomString", false)]
-        public void WhenGivenQuerySearchString_ThenShouldIndicateIfItIsLocationString(string querySearchString, bool expectedResult)
+        [TestCase("RandomFile", false)]
+        public void WhenGivenQuerySearchString_ThenShouldIndicateIfIsLocationPathString(string querySearchString, bool expectedResult)
         {
             // When, Given
             var result = FilesFolders.IsLocationPathString(querySearchString);
