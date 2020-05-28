@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
                     
-                    string changeTo = path.EndsWith("\\") ? path : path + "\\";
+                    string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
                     Main.Context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
                         changeTo :
                         query.ActionKeyword + " " + changeTo);
@@ -56,7 +56,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
             else
             {
-                folderName = folderName.TrimEnd('\\').Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
+                folderName = folderName.TrimEnd(Constants.DirectorySeperator).Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
             }
 
             var firstResult = "";

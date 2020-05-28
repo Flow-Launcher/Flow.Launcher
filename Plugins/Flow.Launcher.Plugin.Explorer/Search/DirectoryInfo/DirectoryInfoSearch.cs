@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
         {
             var criteria = ConstructSearchCriteria(search);
 
-            if (search.LastIndexOf('>') > search.LastIndexOf('\\'))
+            if (search.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > search.LastIndexOf(Constants.DirectorySeperator))
                 return DirectorySearch(SearchOption.AllDirectories, query, search, criteria);
             
             return DirectorySearch(SearchOption.TopDirectoryOnly, query, search, criteria);
@@ -31,13 +31,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
         {
             string incompleteName = "";
 
-            if (!search.EndsWith("\\"))
+            if (!search.EndsWith(Constants.DirectorySeperator))
             {
-                var indexOfSeparator = search.LastIndexOf('\\');
+                var indexOfSeparator = search.LastIndexOf(Constants.DirectorySeperator);
 
                 incompleteName = search.Substring(indexOfSeparator + 1).ToLower();
 
-                if (incompleteName.StartsWith('>'))
+                if (incompleteName.StartsWith(Constants.AllFilesFolderSearchWildcard))
                     incompleteName = "*" + incompleteName.Substring(1);
             }
 

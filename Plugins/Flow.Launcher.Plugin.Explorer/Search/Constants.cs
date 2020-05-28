@@ -14,9 +14,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
 
-        internal static readonly char[] SpecialSearchChars = new char[]
-        {
-            '?', '*', '>'
-        };
+        internal const char AllFilesFolderSearchWildcard = '>';
+
+        internal const char DirectorySeperator = '\\';
     }
 }

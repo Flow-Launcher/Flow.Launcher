@@ -68,14 +68,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         private string QueryWhereRestrictionsFromLocationPath(string path, string searchDepth)
         {
-            if (path.EndsWith("\\"))
+            if (path.EndsWith(Constants.DirectorySeperator))
                 return searchDepth + $"{path}'";
 
-            var indexOfSeparator = path.LastIndexOf('\\');
+            var indexOfSeparator = path.LastIndexOf(Constants.DirectorySeperator);
 
             var itemName = path.Substring(indexOfSeparator + 1);
 
-            if (itemName.StartsWith('>'))
+            if (itemName.StartsWith(Constants.AllFilesFolderSearchWildcard))
                 itemName = itemName.Substring(1);
 
             var previousLevelDirectory = path.Substring(0, indexOfSeparator);
@@ -95,7 +95,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             string query = "SELECT TOP " + _settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
-            if (path.IndexOfAny(Constants.SpecialSearchChars) >= 0)
+            if (path.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > path.LastIndexOf(Constants.DirectorySeperator))
                 return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
 
             return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path);
