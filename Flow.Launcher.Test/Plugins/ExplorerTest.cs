@@ -228,6 +228,19 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual path string is {previousDirectoryPath} {Environment.NewLine}");
         }
 
+        [TestCase(@"C:\NonExistentFolder\SomeApp", @"C:\NonExistentFolder\")]
+        [TestCase(@"C:\NonExistentFolder\SomeApp\", @"C:\NonExistentFolder\SomeApp\")]
+        public void WhenGivenAPath_ThenShouldReturnThePreviousDirectoryPathIfIncompleteOrOriginalString(
+            string path, string expectedString)
+        {
+            var returnedPath = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
+
+            //Then
+            Assert.IsTrue(returnedPath == expectedString,
+                $"Expected path string: {expectedString} {Environment.NewLine} " +
+                $"Actual path string is {returnedPath} {Environment.NewLine}");
+        }
+
         [TestCase("c:\\SomeFolder\\>", "scope='file:c:\\SomeFolder'")]
         [TestCase("c:\\SomeFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' " +
                                                         "OR CONTAINS(System.FileName,'\"SomeName*\"',1033)) AND " +

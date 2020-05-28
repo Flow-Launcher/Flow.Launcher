@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
         {
             var criteria = ConstructSearchCriteria(search);
 
-            if (search.IndexOfAny(Constants.SpecialSearchChars) >= 0)
+            if (search.LastIndexOf('>') > search.LastIndexOf('\\'))
                 return DirectorySearch(SearchOption.AllDirectories, query, search, criteria);
             
             return DirectorySearch(SearchOption.TopDirectoryOnly, query, search, criteria);
@@ -33,12 +33,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
             if (!search.EndsWith("\\"))
             {
-                // not full path, get previous level directory string
                 var indexOfSeparator = search.LastIndexOf('\\');
 
                 incompleteName = search.Substring(indexOfSeparator + 1).ToLower();
 
-                if (incompleteName.StartsWith(">"))
+                if (incompleteName.StartsWith('>'))
                     incompleteName = "*" + incompleteName.Substring(1);
             }
 
@@ -51,15 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
         {
             var results = new List<Result>();
 
-            var path = search;
-
-            if (!search.EndsWith("\\"))
-            {
-                // not full path, get previous level directory string
-                var indexOfSeparator = search.LastIndexOf('\\');
-
-                path = search.Substring(0, indexOfSeparator + 1);
-            }
+            var path = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(search);
 
             var folderList = new List<Result>();
             var fileList = new List<Result>();

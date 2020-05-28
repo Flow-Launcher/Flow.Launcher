@@ -108,6 +108,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool WindowsIndexExists(string path)
         {
+            path = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
+
             return _indexSearch.PathIsIndexed(path);
         }
 
