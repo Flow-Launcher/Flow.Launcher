@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -35,31 +35,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (!FilesFolders.IsLocationPathString(querySearch))
                 return WindowsIndexFilesAndFoldersSearch(query, querySearch);
 
-            if (EnvironmentVariables.IsEnvironmentVariableSearch(querySearch)) 
+            var locationPath = query.Search;
+
+            if (EnvironmentVariables.IsEnvironmentVariableSearch(locationPath))
             {
-                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query);
+                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(locationPath, query);
             }
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
-            if (querySearch.Substring(1).Contains("%"))
+            if (locationPath.Substring(1).Contains("%"))
             {
-                querySearch = EnvironmentVariables.TranslateEnvironmentVariablePath(querySearch);
+                locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
             }
 
             var results = new List<Result>();
 
-            var currentFolderResult = CreateOpenCurrentFolderResult(FilesFolders.LocationExists, querySearch, WindowsIndexExists(querySearch));
+            if (!FilesFolders.LocationExists(FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath)))
+                return results;
 
-            if (currentFolderResult == null)
-                return new List<Result>();
+            var indexExists = _indexSearch.PathIsIndexed(locationPath);
             
-            results.Add(currentFolderResult);
+            results.Add(ResultManager.CreateOpenCurrentFolderResult(FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath), 
+                                                                    true, 
+                                                                    indexExists));
 
             results.AddRange(TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
                                                            DirectoryInfoClassSearch,
-                                                           WindowsIndexExists,
+                                                           indexExists,
                                                            query,
-                                                           querySearch));
+                                                           locationPath));
 
             return results;
         }
@@ -101,29 +105,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var queryConstructor = new QueryConstructor(_settings);
 
             return _indexSearch.WindowsIndexSearch(path,
-                                               queryConstructor.CreateQueryHelper().ConnectionString,
-                                               queryConstructor.QueryForTopLevelDirectorySearch,
-                                               query);
-        }
-
-        private bool WindowsIndexExists(string path)
-        {
-            path = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
-
-            return _indexSearch.PathIsIndexed(path);
-        }
-
-        private Result CreateOpenCurrentFolderResult(Func<string, bool> locationExists, string querySearchString, bool indexExists)
-        {
-            if (locationExists(querySearchString))
-                return ResultManager.CreateOpenCurrentFolderResult(querySearchString, false, indexExists);
-
-            var previousDirectoryPath = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, querySearchString);
-
-            if (string.IsNullOrEmpty(previousDirectoryPath))
-                return null;
-
-            return ResultManager.CreateOpenCurrentFolderResult(previousDirectoryPath, true, indexExists);
+                                                   queryConstructor.CreateQueryHelper().ConnectionString,
+                                                   queryConstructor.QueryForTopLevelDirectorySearch,
+                                                   query);
         }
     }
 }
