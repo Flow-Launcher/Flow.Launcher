@@ -45,7 +45,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateOpenCurrentFolderResult(string path, bool isPreviousDirectoryLevel)
+        internal static Result CreateOpenCurrentFolderResult(string path, bool isPreviousDirectoryLevel, bool windowsIndexed = false)
         {
             var folderName = path;
 
@@ -81,7 +81,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     FilesFolders.OpenPath(path);
                     return true;
-                }
+                },
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderName, ShowIndexState = true, WindowsIndexed = windowsIndexed }
             };
         }
 

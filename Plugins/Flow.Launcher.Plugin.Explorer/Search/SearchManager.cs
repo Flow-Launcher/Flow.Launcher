@@ -48,7 +48,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var results = new List<Result>();
 
-            var currentFolderResult = CreateOpenCurrentFolderResult(FilesFolders.LocationExists, querySearch);
+            var currentFolderResult = CreateOpenCurrentFolderResult(FilesFolders.LocationExists, querySearch, WindowsIndexExists(querySearch));
 
             if (currentFolderResult == null)
                 return new List<Result>();
@@ -113,17 +113,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return _indexSearch.PathIsIndexed(path);
         }
 
-        private Result CreateOpenCurrentFolderResult(Func<string, bool> locationExists, string querySearchString)
+        private Result CreateOpenCurrentFolderResult(Func<string, bool> locationExists, string querySearchString, bool indexExists)
         {
             if (locationExists(querySearchString))
-                return ResultManager.CreateOpenCurrentFolderResult(querySearchString, false);
+                return ResultManager.CreateOpenCurrentFolderResult(querySearchString, false, indexExists);
 
             var previousDirectoryPath = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, querySearchString);
 
             if (string.IsNullOrEmpty(previousDirectoryPath))
                 return null;
 
-            return ResultManager.CreateOpenCurrentFolderResult(previousDirectoryPath, true);
+            return ResultManager.CreateOpenCurrentFolderResult(previousDirectoryPath, true, indexExists);
         }
     }
 }
