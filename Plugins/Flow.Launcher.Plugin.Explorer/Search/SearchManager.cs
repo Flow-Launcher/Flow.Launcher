@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -78,16 +78,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public List<Result> TopLevelFolderSearchBehaviour(
             Func<Query, string, List<Result>> windowsIndexSearch,
             Func<Query, string, List<Result>> directoryInfoClassSearch,
-            Func<string, bool> indexExists,
+            bool indexExists,
             Query query,
             string querySearchString)
         {
-            var results = windowsIndexSearch(query, querySearchString);
-
-            if (results.Count == 0 && !indexExists(querySearchString))
+            if (!indexExists)
                 return directoryInfoClassSearch(query, querySearchString);
 
-            return results;
+            return windowsIndexSearch(query, querySearchString);
         }
 
         private List<Result> WindowsIndexFilesAndFoldersSearch(Query query, string querySearchString)

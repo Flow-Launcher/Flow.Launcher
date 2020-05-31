@@ -34,10 +34,6 @@ namespace Flow.Launcher.Test.Plugins
             };
         }
 
-        private bool MethodIndexExistsReturnsTrue(string dummyString) => true;
-
-        private bool MethodIndexExistsReturnsFalse(string dummyString) => false;
-
         private bool PreviousLocationExistsReturnsTrue(string dummyString) => true;
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
@@ -154,7 +150,7 @@ namespace Flow.Launcher.Test.Plugins
             var results = searchManager.TopLevelFolderSearchBehaviour(
                                             MethodWindowsIndexSearchReturnsZeroResults, 
                                             MethodDirectoryInfoClassSearchReturnsTwoResults, 
-                                            MethodIndexExistsReturnsFalse, 
+                                            false, 
                                             new Query(),
                                             "string not used");
 
@@ -174,7 +170,7 @@ namespace Flow.Launcher.Test.Plugins
             var results = searchManager.TopLevelFolderSearchBehaviour(
                                             MethodWindowsIndexSearchReturnsZeroResults,
                                             MethodDirectoryInfoClassSearchReturnsTwoResults,
-                                            MethodIndexExistsReturnsTrue,
+                                            true,
                                             new Query(),
                                             "string not used");
 
