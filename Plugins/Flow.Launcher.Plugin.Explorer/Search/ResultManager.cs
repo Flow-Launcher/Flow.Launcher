@@ -47,42 +47,41 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
-            var folderName = "";
+            var retrievedDirectoryPath = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
+
+            var folderName = retrievedDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
+
+            if (retrievedDirectoryPath.EndsWith(":\\"))
+            {
+                var driveLetter = path.Substring(0, 1).ToUpper();
+                folderName = driveLetter + " drive";
+            }
 
             var title = "Open current directory";
 
-            var previousDirectoryPath = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
-
-            if (previousDirectoryPath != path)
-            {
-                if (previousDirectoryPath.EndsWith(":\\"))
-                {
-                    var driveLetter = path.Substring(0, 1).ToUpper();
-                    folderName = driveLetter + " drive";
-                }
-                else
-                {
-                    folderName = previousDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
-                }
-
+            if (retrievedDirectoryPath != path)
                 title = "Open " + folderName;
-            }
 
-            var fullPath = previousDirectoryPath != path ? previousDirectoryPath : path;
+            
+            var subtitleFolderName = folderName;
+            
+            // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
+            if (folderName.Length > 19)
+                subtitleFolderName = "directory";
 
             return new Result
             {
                 Title = title,
-                SubTitle = $"Use > to search files and subfolders within {folderName}, " +
-                                $"* to search for file extensions in {folderName} or both >* to combine the search",
-                IcoPath = fullPath,
+                SubTitle = $"Use > to search within {subtitleFolderName}, " +
+                                $"* to search for file extensions or >* to combine both searches.",
+                IcoPath = retrievedDirectoryPath,
                 Score = 500,
                 Action = c =>
                 {
-                    FilesFolders.OpenPath(path);
+                    FilesFolders.OpenPath(retrievedDirectoryPath);
                     return true;
                 },
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = fullPath, ShowIndexState = true, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = retrievedDirectoryPath, ShowIndexState = true, WindowsIndexed = windowsIndexed }
             };
         }
 
