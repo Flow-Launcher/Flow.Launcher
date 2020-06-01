@@ -55,9 +55,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var indexExists = _indexSearch.PathIsIndexed(locationPath);
             
-            results.Add(ResultManager.CreateOpenCurrentFolderResult(FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath), 
-                                                                    true, 
-                                                                    indexExists));
+            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, indexExists));
 
             results.AddRange(TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
                                                            DirectoryInfoClassSearch,
