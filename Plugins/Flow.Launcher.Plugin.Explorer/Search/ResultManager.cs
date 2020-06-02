@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             
             // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
             if (folderName.Length > 19)
-                subtitleFolderName = "directory";
+                subtitleFolderName = "the directory";
 
             return new Result
             {
