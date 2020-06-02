@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -57,8 +57,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             
             results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, indexExists));
 
-            results.AddRange(TopLevelFolderSearchBehaviour(WindowsIndexTopLevelFolderSearch,
-                                                           DirectoryInfoClassSearch,
+            results.AddRange(TopLevelDirectorySearchBehaviour(WindowsIndexTopLevelFolderSearch,
+                                                                DirectoryInfoClassSearch,
                                                            indexExists,
                                                            query,
                                                            locationPath));
@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch);
         }
 
-        public List<Result> TopLevelFolderSearchBehaviour(
+        public List<Result> TopLevelDirectorySearchBehaviour(
             Func<Query, string, List<Result>> windowsIndexSearch,
             Func<Query, string, List<Result>> directoryInfoClassSearch,
             bool indexExists,

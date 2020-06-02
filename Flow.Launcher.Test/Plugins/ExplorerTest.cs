@@ -141,13 +141,13 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [TestCase]
-        public void GivenWindowsIndexSearch_WhenReturnedZeroResultsAndIsNotIndexed_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() 
+        public void GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() 
         {
             // Given
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
             
             // When
-            var results = searchManager.TopLevelFolderSearchBehaviour(
+            var results = searchManager.TopLevelDirectorySearchBehaviour(
                                             MethodWindowsIndexSearchReturnsZeroResults, 
                                             MethodDirectoryInfoClassSearchReturnsTwoResults, 
                                             false, 
@@ -161,13 +161,13 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [TestCase]
-        public void GivenWindowsIndexSearch_WhenReturnedZeroResultsAndIsIndexed_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
+        public void GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
         {
             // Given
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var results = searchManager.TopLevelFolderSearchBehaviour(
+            var results = searchManager.TopLevelDirectorySearchBehaviour(
                                             MethodWindowsIndexSearchReturnsZeroResults,
                                             MethodDirectoryInfoClassSearchReturnsTwoResults,
                                             true,
