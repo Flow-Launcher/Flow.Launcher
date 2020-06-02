@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using System.Windows.Media;
+using System.Linq;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -27,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
                 if (record.ShowIndexState)
-                    contextMenus.Add(new Result {Title = "Indexed: " + (record.WindowsIndexed ? "Yes" : "No"), 
+                    contextMenus.Add(new Result {Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"), 
                                                     SubTitle = "Location: " + record.FullPath,
                                                     Score = 501, IcoPath = Constants.IndexImagePath});
 
@@ -188,10 +189,11 @@ namespace Flow.Launcher.Plugin.Explorer
             return new Result
             {
                 Title = "Exclude path from index search",
-                SubTitle = record.FullPath,
+                SubTitle = "Path: " + record.FullPath,
                 Action = _ =>
                 {
-                    Main.Settings.IndexSearchExcludedDirectories.Add(record.FullPath);
+                    if(!Main.Settings.IndexSearchExcludedDirectories.Any(x => x == record.FullPath))
+                        Main.Settings.IndexSearchExcludedDirectories.Add(record.FullPath);
 
                     return false;
                 },
