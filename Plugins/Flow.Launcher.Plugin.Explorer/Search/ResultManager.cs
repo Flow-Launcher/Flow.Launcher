@@ -47,7 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
-            var retrievedDirectoryPath = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
+            var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
             var folderName = retrievedDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
 

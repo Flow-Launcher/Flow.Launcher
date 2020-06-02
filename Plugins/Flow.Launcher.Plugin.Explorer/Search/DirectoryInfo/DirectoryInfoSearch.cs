@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
         {
             var results = new List<Result>();
 
-            var path = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(search);
+            var path = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(search);
 
             var folderList = new List<Result>();
             var fileList = new List<Result>();

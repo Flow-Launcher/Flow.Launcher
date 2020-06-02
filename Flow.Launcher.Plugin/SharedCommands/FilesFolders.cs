@@ -187,11 +187,11 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         ///<summary>
-        /// Gets the previous level directory from a path string.
-        /// Does not check that previous level directory exists and returns
-        /// passed in string if is complete path
+        /// Returns the previous level directory if path incomplete.
+        /// Does not check if previous level directory exists.
+        /// Returns passed in string if is complete path
         ///</summary>
-        public static string GetPreviousLevelDirectoryIfPathIncomplete(string path)
+        public static string ReturnPreviousDirectoryIfIncompleteString(string path)
         {
             if (!path.EndsWith("\\"))
             {

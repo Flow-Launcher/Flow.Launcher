@@ -229,7 +229,7 @@ namespace Flow.Launcher.Test.Plugins
         public void WhenGivenAPath_ThenShouldReturnThePreviousDirectoryPathIfIncompleteOrOriginalString(
             string path, string expectedString)
         {
-            var returnedPath = FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(path);
+            var returnedPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
             //Then
             Assert.IsTrue(returnedPath == expectedString,

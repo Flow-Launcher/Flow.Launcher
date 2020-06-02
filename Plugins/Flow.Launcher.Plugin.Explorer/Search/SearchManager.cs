@@ -51,7 +51,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var results = new List<Result>();
 
-            if (!FilesFolders.LocationExists(FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath)))
+            if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
                 return results;
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
@@ -113,7 +113,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return false;
 
             if (_settings.WindowsIndexExcludedDirectories
-                            .Any(x => x.Path == FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath)))
+                            .Any(x => x.Path == FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
                 return false;
 
             return _indexSearch.PathIsIndexed(locationPath);
