@@ -1,9 +1,10 @@
-using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -53,15 +54,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (!FilesFolders.LocationExists(FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath)))
                 return results;
 
-            var indexExists = _indexSearch.PathIsIndexed(locationPath);
+            var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
             
-            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, indexExists));
+            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
 
             results.AddRange(TopLevelDirectorySearchBehaviour(WindowsIndexTopLevelFolderSearch,
                                                                 DirectoryInfoClassSearch,
-                                                           indexExists,
-                                                           query,
-                                                           locationPath));
+                                                                useIndexSearch,
+                                                                query,
+                                                                locationPath));
 
             return results;
         }
@@ -76,11 +77,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public List<Result> TopLevelDirectorySearchBehaviour(
             Func<Query, string, List<Result>> windowsIndexSearch,
             Func<Query, string, List<Result>> directoryInfoClassSearch,
-            bool indexExists,
+            bool useIndexSearch,
             Query query,
             string querySearchString)
         {
-            if (!indexExists)
+            if (!useIndexSearch)
                 return directoryInfoClassSearch(query, querySearchString);
 
             return windowsIndexSearch(query, querySearchString);
@@ -91,9 +92,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var queryConstructor = new QueryConstructor(_settings);
 
             return _indexSearch.WindowsIndexSearch(querySearchString,
-                                               queryConstructor.CreateQueryHelper().ConnectionString,
-                                               queryConstructor.QueryForAllFilesAndFolders,
-                                               query);
+                                                   queryConstructor.CreateQueryHelper().ConnectionString,
+                                                   queryConstructor.QueryForAllFilesAndFolders,
+                                                   query);
         }
         
         private List<Result> WindowsIndexTopLevelFolderSearch(Query query, string path)
@@ -104,6 +105,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForTopLevelDirectorySearch,
                                                    query);
+        }
+
+        private bool UseWindowsIndexForDirectorySearch(string locationPath)
+        {
+            if (!_settings.UseWindowsIndexForDirectorySearch)
+                return false;
+
+            if (_settings.WindowsIndexExcludedDirectories
+                            .Any(x => x.Path == FilesFolders.GetPreviousLevelDirectoryIfPathIncomplete(locationPath)))
+                return false;
+
+            return _indexSearch.PathIsIndexed(locationPath);
         }
     }
 }

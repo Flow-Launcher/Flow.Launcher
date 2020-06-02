@@ -12,5 +12,11 @@ namespace Flow.Launcher.Plugin.Explorer
 
         [JsonProperty]
         public List<FolderLink> FolderLinks { get; set; } = new List<FolderLink>();
+
+        [JsonProperty]
+        public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
+
+        [JsonProperty]
+        public List<FolderLink> WindowsIndexExcludedDirectories { get; set; } = new List<FolderLink>();
     }
 }
