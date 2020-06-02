@@ -112,7 +112,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (!_settings.UseWindowsIndexForDirectorySearch)
                 return false;
 
-            if (_settings.IndexSearchExcludedDirectories
+            if (_settings.IndexSearchExcludedPaths
                             .Any(x => x == FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
                 return false;
 
