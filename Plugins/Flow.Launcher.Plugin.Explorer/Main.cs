@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         internal static PluginInitContext Context { get; set; }
 
-        private Settings _settings;
+        internal static Settings Settings;
 
         private SettingsViewModel _viewModel;
 
@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             Context = context;
             _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
+            Settings = _viewModel.Settings;
             _contextMenu = new ContextMenu();
         }
 
@@ -43,7 +43,7 @@ namespace Flow.Launcher.Plugin.Explorer
             if (string.IsNullOrEmpty(query.Search))
                 return results;
 
-            return new SearchManager(_settings, Context).Search(query);
+            return new SearchManager(Settings, Context).Search(query);
         }
 
         public void Save()

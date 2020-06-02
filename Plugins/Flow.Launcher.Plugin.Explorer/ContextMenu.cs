@@ -7,6 +7,7 @@ using System.Windows;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
+using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -18,9 +19,10 @@ namespace Flow.Launcher.Plugin.Explorer
             if (selectedResult.ContextData is SearchResult record)
             {
                 if (record.Type == ResultType.File)
-                {
                     contextMenus.Add(CreateOpenWithEditorResult(record));
-                }
+
+                if (record.Type == ResultType.Folder && record.WindowsIndexed)
+                    contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
 
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
@@ -154,7 +156,6 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-
         private Result CreateOpenWithEditorResult(SearchResult record)
         {
             string editorPath = "notepad.exe"; // TODO add the ability to create a custom editor
@@ -179,6 +180,22 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                 },
                 IcoPath = editorPath
+            };
+        }
+
+        private Result CreateAddToIndexSearchExclusionListResult(SearchResult record)
+        {
+            return new Result
+            {
+                Title = "Exclude path from index search",
+                SubTitle = record.FullPath,
+                Action = _ =>
+                {
+                    Main.Settings.IndexSearchExcludedDirectories.Add(record.FullPath);
+
+                    return false;
+                },
+                IcoPath = Constants.ExcludeFromIndexImagePath
             };
         }
 
