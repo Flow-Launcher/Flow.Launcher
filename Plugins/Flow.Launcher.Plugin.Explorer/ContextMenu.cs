@@ -7,8 +7,8 @@ using System.Windows;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
-using System.Windows.Media;
 using System.Linq;
+using System.Reflection;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -188,12 +188,24 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return new Result
             {
-                Title = "Exclude path from index search",
+                Title = "Exclude current and sub-directories from index search",
                 SubTitle = "Path: " + record.FullPath,
                 Action = _ =>
                 {
                     if(!Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x == record.FullPath))
                         Main.Settings.IndexSearchExcludedSubdirectoryPaths.Add(record.FullPath);
+
+                    var pluginDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString());
+
+                    var iconPath = pluginDirectory + "\\" + Constants.ExplorerIconImagePath;
+
+                    Task.Run(() =>
+                    {
+                        Main.Context.API.ShowMsg("Excluded from Index Search", "Path: " + record.FullPath, iconPath);
+
+                        // so the new path can be persisted to storage and not wait till next ViewModel save.
+                        Main.Context.API.SaveAppAllSettings();
+                    });
 
                     return false;
                 },
