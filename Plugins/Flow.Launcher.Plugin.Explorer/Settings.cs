@@ -17,6 +17,6 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
 
         [JsonProperty]
-        public List<string> IndexSearchExcludedDirectoryPaths { get; set; } = new List<string>();
+        public List<string> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<string>();
     }
 }

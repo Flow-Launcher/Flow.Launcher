@@ -192,8 +192,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = "Path: " + record.FullPath,
                 Action = _ =>
                 {
-                    if(!Main.Settings.IndexSearchExcludedDirectoryPaths.Any(x => x == record.FullPath))
-                        Main.Settings.IndexSearchExcludedDirectoryPaths.Add(record.FullPath);
+                    if(!Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x == record.FullPath))
+                        Main.Settings.IndexSearchExcludedSubdirectoryPaths.Add(record.FullPath);
 
                     return false;
                 },
