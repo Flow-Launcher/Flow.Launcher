@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName, fileSystemInfo.FullName, query, true, false));
+                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, Constants.DefaultFolderSubtitleString, fileSystemInfo.FullName, query, true, false));
                     }
                     else
                     {

@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private Result CreateResult(string filename, string path, string fileType, Query query)
         {
             if (fileType == "Directory")
-                return ResultManager.CreateFolderResult(filename, path, path, query, true, true);
+                return ResultManager.CreateFolderResult(filename, Constants.DefaultFolderSubtitleString, path, query, true, true);
             else
             {
                 return ResultManager.CreateFileResult(path, query, true, true);
