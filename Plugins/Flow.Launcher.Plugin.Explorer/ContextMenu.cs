@@ -7,6 +7,7 @@ using System.Windows;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using System.Linq;
 using System.Reflection;
 
@@ -192,8 +193,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = "Path: " + record.FullPath,
                 Action = _ =>
                 {
-                    if(!Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x == record.FullPath))
-                        Main.Settings.IndexSearchExcludedSubdirectoryPaths.Add(record.FullPath);
+                    if(!Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
+                        Main.Settings.IndexSearchExcludedSubdirectoryPaths.Add(new FolderLink { Path = record.FullPath });
 
                     var pluginDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString());
 

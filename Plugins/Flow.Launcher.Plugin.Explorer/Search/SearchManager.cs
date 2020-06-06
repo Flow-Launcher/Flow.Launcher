@@ -1,5 +1,5 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var querySearch = query.Search;
 
-            var quickFolderLinks = quickFolderAccess.FolderList(query, _settings.FolderLinks);
+            var quickFolderLinks = quickFolderAccess.FolderList(query, _settings.QuickFolderAccessLinks);
 
             if (quickFolderLinks.Count > 0)
                 return quickFolderLinks;
@@ -113,7 +113,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return false;
 
             if (_settings.IndexSearchExcludedSubdirectoryPaths
-                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).StartsWith(x)))
+                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).StartsWith(x.Path)))
                 return false;
 
             return _indexSearch.PathIsIndexed(locationPath);

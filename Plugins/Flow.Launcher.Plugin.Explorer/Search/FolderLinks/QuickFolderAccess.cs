@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace Flow.Launcher.Plugin.Explorer.Search.QuickFolderLinks
+namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
 {
     public class QuickFolderAccess
     {

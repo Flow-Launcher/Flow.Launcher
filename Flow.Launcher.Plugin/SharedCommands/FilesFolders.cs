@@ -187,7 +187,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         ///<summary>
-        /// Returns the previous level directory if path incomplete.
+        /// Returns the previous level directory if path incomplete (does not end with '\').
         /// Does not check if previous level directory exists.
         /// Returns passed in string if is complete path
         ///</summary>
