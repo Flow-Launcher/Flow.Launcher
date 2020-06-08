@@ -57,8 +57,4 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  
 </Project>

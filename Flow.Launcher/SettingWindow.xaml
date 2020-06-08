@@ -227,12 +227,12 @@
                                 <RowDefinition Height="15"/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Query window shadow effect" Margin="0 30 0 0" FontSize="14" />
+                            <TextBlock Grid.Row="0" Text="{DynamicResource queryWindowShadowEffect}" Margin="0 30 0 0" FontSize="14" />
                             <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect}" Margin="210 23 0 0" Width="80"/>
-                            <TextBlock  Grid.Row="1" Text="Shadow effect has a substantial usage of GPU." 
+                            <TextBlock  Grid.Row="1" Text="{DynamicResource shadowEffectCPUUsage}"
                                         Width="280"
                                         FontSize="10" HorizontalAlignment="Left"/>
-                            <TextBlock  Grid.Row="2" Text="Not recommended if you computer performance is limited." 
+                            <TextBlock  Grid.Row="2" Text="{DynamicResource shadowEffectPerformance}"
                                         Width="320"
                                         FontSize="10" HorizontalAlignment="Left"/>
                         </Grid>
