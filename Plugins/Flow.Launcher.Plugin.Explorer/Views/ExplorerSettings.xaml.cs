@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (selectedRow != null)
             {
-                string msg = string.Format(viewModel.Context.API.GetTranslation("flowlauncher_plugin_folder_delete_folder_link"), selectedRow.Path);
+                string msg = string.Format(viewModel.Context.API.GetTranslation("plugin_explorer_delete_folder_link"), selectedRow.Path);
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -125,7 +125,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
             else
             {
-                string warning = viewModel.Context.API.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
+                string warning = viewModel.Context.API.GetTranslation("plugin_explorer_select_folder_link_warning");
                 MessageBox.Show(warning);
             }
         }
@@ -157,7 +157,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
             else
             {
-                string warning = viewModel.Context.API.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
+                string warning = viewModel.Context.API.GetTranslation("plugin_explorer_select_folder_link_warning");
                 MessageBox.Show(warning);
             }
         }

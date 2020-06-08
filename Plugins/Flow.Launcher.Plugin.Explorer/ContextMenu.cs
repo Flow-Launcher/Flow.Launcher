@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
-                contextMenus.Add(CreateOpenWindowsIndexingOptions(record));
+                contextMenus.Add(CreateOpenWindowsIndexingOptions());
 
                 if (record.ShowIndexState)
                     contextMenus.Add(new Result {Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"), 
@@ -49,7 +49,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
                 contextMenus.Add(new Result
                 {
-                    Title = "Copy path",
+                    Title = Context.API.GetTranslation("plugin_explorer_copypath"),
                     SubTitle = $"Copy the current {fileOrFolder} path to clipboard",
                     Action = (context) =>
                     {
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
-                    Title = $"Copy {fileOrFolder}",
+                    Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder") + $" {fileOrFolder}",
                     SubTitle = $"Copy the {fileOrFolder} to clipboard",
                     Action = (context) =>
                     {
@@ -95,8 +95,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type == ResultType.File || record.Type == ResultType.Folder)
                     contextMenus.Add(new Result
                     {
-                        Title = $"Delete {fileOrFolder}",
-                        SubTitle = $"Delete the selected {fileOrFolder}",
+                        Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder") + $" {fileOrFolder}",
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_deletefilefolder_subtitle") + $" {fileOrFolder}",
                         Action = (context) =>
                         {
                             try
@@ -122,7 +122,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type == ResultType.File && CanRunAsDifferentUser(record.FullPath))
                     contextMenus.Add(new Result
                     {
-                        Title = "Run as different user",
+                        Title = Context.API.GetTranslation("plugin_explorer_runasdifferentuser"),
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_runasdifferentuser_subtitle"),
                         Action = (context) =>
                         {
                             try
@@ -149,8 +150,8 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return new Result
             {
-                Title = "Open containing folder",
-                SubTitle = "Opens the location that contains the file or folder",
+                Title = Context.API.GetTranslation("plugin_explorer_opencontainingfolder"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_opencontainingfolder_subtitle"),
                 Action = _ =>
                 {
                     try
@@ -173,9 +174,11 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private Result CreateOpenWithEditorResult(SearchResult record)
         {
-            string editorPath = "notepad.exe"; // TODO add the ability to create a custom editor
+            string editorPath = "Notepad.exe"; // TODO add the ability to create a custom editor
 
-            var name = "Open With Editor: " + Path.GetFileNameWithoutExtension(editorPath);
+            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor") 
+                                    + " " + Path.GetFileNameWithoutExtension(editorPath);
+
             return new Result
             {
                 Title = name,
@@ -202,8 +205,8 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return new Result
             {
-                Title = "Exclude current and sub-directories from index search",
-                SubTitle = "Path: " + record.FullPath,
+                Title = Context.API.GetTranslation("plugin_explorer_excludefromindexsearch"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
                 Action = _ =>
                 {
                     if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
@@ -215,7 +218,9 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     Task.Run(() =>
                     {
-                        Context.API.ShowMsg("Excluded from Index Search", "Path: " + record.FullPath, iconPath);
+                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"), 
+                                                            Context.API.GetTranslation("plugin_explorer_path") + 
+                                                            " " + record.FullPath, iconPath);
 
                         // so the new path can be persisted to storage and not wait till next ViewModel save.
                         Context.API.SaveAppAllSettings();
@@ -227,12 +232,12 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-        private Result CreateOpenWindowsIndexingOptions(SearchResult record)
+        private Result CreateOpenWindowsIndexingOptions()
         {
             return new Result
             {
-                Title = "Open Windows Indexing Options",
-                SubTitle = "Manage indexed files and folders",
+                Title = Context.API.GetTranslation("plugin_explorer_openindexingoptions"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_openindexingoptions_subtitle"),
                 Action = _ =>
                 {
                     try
@@ -249,7 +254,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = $"Failed to open Windows Indexing Options";
+                        var message = Context.API.GetTranslation("plugin_explorer_openindexingoptions_errormsg");
                         LogException(message, e);
                         Context.API.ShowMsg(message);
                         return false;

@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu //, IPluginI18n <=== do later
+    public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu, IPluginI18n
     {
         internal PluginInitContext Context { get; set; }
 
@@ -48,6 +48,16 @@ namespace Flow.Launcher.Plugin.Explorer
         public void Save()
         {
             viewModel.Save();
+        }
+
+        public string GetTranslatedPluginTitle()
+        {
+            return Context.API.GetTranslation("plugin_explorer_plugin_name");
+        }
+
+        public string GetTranslatedPluginDescription()
+        {
+            return Context.API.GetTranslation("plugin_explorer_plugin_description");
         }
     }
 }

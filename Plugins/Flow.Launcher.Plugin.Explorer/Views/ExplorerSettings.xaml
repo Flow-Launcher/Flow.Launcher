@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <ScrollViewer Margin="20 35 0 0" HorizontalScrollBarVisibility="Hidden" Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <Expander Name="expFolderLinks" Header="Quick Folder Access Paths"  
+                <Expander Name="expFolderLinks" Header="{DynamicResource plugin_explorer_quickfolderaccess_header}"
                           Expanded="expFolderLinks_Click" Collapsed="expFolderLinks_Click">
                     <ListView
                         x:Name="lbxFolderLinks" AllowDrop="True"
@@ -33,7 +33,7 @@
                         DragEnter="lbxFolders_DragEnter"
                         ItemTemplate="{StaticResource ListViewTemplateFolderLinks}"/>
                 </Expander>
-                <Expander x:Name="expExcludedPaths" Header="Index Search Excluded Paths" 
+                <Expander x:Name="expExcludedPaths" Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}" 
                           Expanded="expExcludedPaths_Click" Collapsed="expExcludedPaths_Click"
                           Margin="0 10 0 0">
                     <ListView
@@ -50,12 +50,13 @@
                 <ColumnDefinition Width="350"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button x:Name="btnIndexingOptions" Click="btnOpenIndexingOptions_Click" Width="130" Margin="10" Content="Indexing Options"/>
+                <Button x:Name="btnIndexingOptions" Click="btnOpenIndexingOptions_Click" Width="130" Margin="10" 
+                        Content="{DynamicResource plugin_explorer_manageindexoptions}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button x:Name="btnDelete" Click="btnDelete_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_delete}"/>
-                <Button x:Name="btnEdit" Click="btnEdit_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_edit}"/>
-                <Button x:Name="btnAdd" Click="btnAdd_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_add}"/>
+                <Button x:Name="btnDelete" Click="btnDelete_Click" Width="100" Margin="10" Content="{DynamicResource plugin_explorer_delete}"/>
+                <Button x:Name="btnEdit" Click="btnEdit_Click" Width="100" Margin="10" Content="{DynamicResource plugin_explorer_edit}"/>
+                <Button x:Name="btnAdd" Click="btnAdd_Click" Width="100" Margin="10" Content="{DynamicResource plugin_explorer_add}"/>
             </StackPanel>
         </Grid>
     </Grid>
