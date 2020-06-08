@@ -3,37 +3,36 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
     public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu //, IPluginI18n <=== do later
     {
-        internal static PluginInitContext Context { get; set; }
+        internal PluginInitContext Context { get; set; }
 
-        internal static Settings Settings;
+        internal Settings Settings;
 
-        private SettingsViewModel _viewModel;
+        private SettingsViewModel viewModel;
 
-        private IContextMenu _contextMenu;
+        private IContextMenu contextMenu;
 
         public Control CreateSettingPanel()
         {
-            return new ExplorerSettings();
+            return new ExplorerSettings(viewModel);
         }
 
         public void Init(PluginInitContext context)
         {
             Context = context;
-            _viewModel = new SettingsViewModel();
-            Settings = _viewModel.Settings;
-            _contextMenu = new ContextMenu();
+            viewModel = new SettingsViewModel(context);
+            Settings = viewModel.Settings;
+            contextMenu = new ContextMenu(Context, Settings);
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            return _contextMenu.LoadContextMenus(selectedResult);
+            return contextMenu.LoadContextMenus(selectedResult);
         }
 
         public List<Result> Query(Query query)
@@ -48,7 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public void Save()
         {
-            _viewModel.Save();
+            viewModel.Save();
         }
     }
 }

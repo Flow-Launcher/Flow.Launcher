@@ -10,11 +10,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
     public class DirectoryInfoSearch
     {
-        private Settings _settings;
+        private readonly ResultManager resultManager;
 
-        public DirectoryInfoSearch(Settings settings)
+        public DirectoryInfoSearch(PluginInitContext context)
         {
-            _settings = settings;
+            resultManager = new ResultManager(context);
         }
 
         internal List<Result> TopLevelDirectorySearch(Query query, string search)
@@ -66,11 +66,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, Constants.DefaultFolderSubtitleString, fileSystemInfo.FullName, query, true, false));
+                        folderList.Add(resultManager.CreateFolderResult(fileSystemInfo.Name, Constants.DefaultFolderSubtitleString, fileSystemInfo.FullName, query, true, false));
                     }
                     else
                     {
-                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
+                        fileList.Add(resultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
                     }
                 }
             }

@@ -1,4 +1,5 @@
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,13 +19,16 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     /// </summary>
     public partial class ExplorerSettings
     {
-        public ExplorerSettings()
+        private readonly SettingsViewModel viewModel;
+        public ExplorerSettings(SettingsViewModel viewModel)
         {
             InitializeComponent();
 
-            lbxFolderLinks.ItemsSource = Main.Settings.QuickFolderAccessLinks;
+            this.viewModel = viewModel;
 
-            lbxExcludedPaths.ItemsSource = Main.Settings.IndexSearchExcludedSubdirectoryPaths;
+            lbxFolderLinks.ItemsSource = this.viewModel.Settings.QuickFolderAccessLinks;
+
+            lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
 
             RefreshView();
         }
@@ -106,22 +110,22 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (selectedRow != null)
             {
-                string msg = string.Format(Main.Context.API.GetTranslation("flowlauncher_plugin_folder_delete_folder_link"), selectedRow.Path);
+                string msg = string.Format(viewModel.Context.API.GetTranslation("flowlauncher_plugin_folder_delete_folder_link"), selectedRow.Path);
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     if (expFolderLinks.IsExpanded)
-                        Main.Settings.QuickFolderAccessLinks.Remove(selectedRow);
+                        viewModel.RemoveFolderLinkFromQuickFolders(selectedRow);
 
                     if (expExcludedPaths.IsExpanded)
-                        Main.Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
+                        viewModel.RemoveFolderLinkFromExcludedIndexPaths(selectedRow);
 
                     RefreshView();
                 }
             }
             else
             {
-                string warning = Main.Context.API.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
+                string warning = viewModel.Context.API.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
                 MessageBox.Show(warning);
             }
         }
@@ -138,13 +142,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 {
                     if (expFolderLinks.IsExpanded)
                     {
-                        var link = Main.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
+                        var link = viewModel.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
                         link.Path = folderBrowserDialog.SelectedPath;
                     }
 
                     if (expExcludedPaths.IsExpanded)
                     {
-                        var link = Main.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
+                        var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
                         link.Path = folderBrowserDialog.SelectedPath;
                     }
                 }
@@ -153,7 +157,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
             else
             {
-                string warning = Main.Context.API.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
+                string warning = viewModel.Context.API.GetTranslation("flowlauncher_plugin_folder_select_folder_link_warning");
                 MessageBox.Show(warning);
             }
         }
@@ -180,8 +184,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (files != null && files.Count() > 0)
             {
-                if (expFolderLinks.IsExpanded && Main.Settings.QuickFolderAccessLinks == null)
-                    Main.Settings.QuickFolderAccessLinks = new List<FolderLink>();
+                if (expFolderLinks.IsExpanded && viewModel.Settings.QuickFolderAccessLinks == null)
+                    viewModel.Settings.QuickFolderAccessLinks = new List<FolderLink>();
 
                 foreach (string s in files)
                 {
@@ -203,21 +207,21 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void AddFolderLink(FolderLink newFolderLink)
         {
             if (expFolderLinks.IsExpanded
-                    && !Main.Settings.QuickFolderAccessLinks.Any(x => x.Path == newFolderLink.Path))
+                    && !viewModel.Settings.QuickFolderAccessLinks.Any(x => x.Path == newFolderLink.Path))
             {
-                if (Main.Settings.QuickFolderAccessLinks == null)
-                    Main.Settings.QuickFolderAccessLinks = new List<FolderLink>();
+                if (viewModel.Settings.QuickFolderAccessLinks == null)
+                    viewModel.Settings.QuickFolderAccessLinks = new List<FolderLink>();
 
-                Main.Settings.QuickFolderAccessLinks.Add(newFolderLink);
+                viewModel.Settings.QuickFolderAccessLinks.Add(newFolderLink);
             }
 
             if (expExcludedPaths.IsExpanded
-                && !Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == newFolderLink.Path))
+                && !viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == newFolderLink.Path))
             {
-                if (Main.Settings.IndexSearchExcludedSubdirectoryPaths == null)
-                    Main.Settings.IndexSearchExcludedSubdirectoryPaths = new List<FolderLink>();
+                if (viewModel.Settings.IndexSearchExcludedSubdirectoryPaths == null)
+                    viewModel.Settings.IndexSearchExcludedSubdirectoryPaths = new List<FolderLink>();
 
-                Main.Settings.IndexSearchExcludedSubdirectoryPaths.Add(newFolderLink);
+                viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Add(newFolderLink);
             }
         }
 

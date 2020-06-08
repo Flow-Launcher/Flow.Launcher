@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -10,25 +10,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public class SearchManager
     {
-        private Settings _settings;
-        private PluginInitContext _context;
+        private readonly PluginInitContext context;
 
-        private IndexSearch _indexSearch;
+        private readonly IndexSearch indexSearch;
 
-        private QuickFolderAccess quickFolderAccess = new QuickFolderAccess();
+        private readonly QuickFolderAccess quickFolderAccess = new QuickFolderAccess();
+
+        private readonly ResultManager resultManager;
+
+        private readonly Settings settings;
 
         public SearchManager(Settings settings, PluginInitContext context)
         {
-            _settings = settings;
-            _context = context;
-            _indexSearch = new IndexSearch();
+            this.context = context;
+            indexSearch = new IndexSearch(context);
+            resultManager = new ResultManager(context);
+            this.settings = settings;
         }
 
         internal List<Result> Search(Query query)
         {
             var querySearch = query.Search;
 
-            var quickFolderLinks = quickFolderAccess.FolderList(query, _settings.QuickFolderAccessLinks);
+            var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
 
             if (quickFolderLinks.Count > 0)
                 return quickFolderLinks;
@@ -40,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (EnvironmentVariables.IsEnvironmentVariableSearch(locationPath))
             {
-                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(locationPath, query);
+                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(locationPath, query, context);
             }
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
@@ -56,7 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
             
-            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+            results.Add(resultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
 
             results.AddRange(TopLevelDirectorySearchBehaviour(WindowsIndexTopLevelFolderSearch,
                                                                 DirectoryInfoClassSearch,
@@ -69,7 +73,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
         {
-            var directoryInfoSearch = new DirectoryInfoSearch(_settings);
+            var directoryInfoSearch = new DirectoryInfoSearch(context);
 
             return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch);
         }
@@ -89,9 +93,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private List<Result> WindowsIndexFilesAndFoldersSearch(Query query, string querySearchString)
         {
-            var queryConstructor = new QueryConstructor(_settings);
+            var queryConstructor = new QueryConstructor(settings);
 
-            return _indexSearch.WindowsIndexSearch(querySearchString,
+            return indexSearch.WindowsIndexSearch(querySearchString,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForAllFilesAndFolders,
                                                    query);
@@ -99,9 +103,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         
         private List<Result> WindowsIndexTopLevelFolderSearch(Query query, string path)
         {
-            var queryConstructor = new QueryConstructor(_settings);
+            var queryConstructor = new QueryConstructor(settings);
 
-            return _indexSearch.WindowsIndexSearch(path,
+            return indexSearch.WindowsIndexSearch(path,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForTopLevelDirectorySearch,
                                                    query);
@@ -109,14 +113,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
         {
-            if (!_settings.UseWindowsIndexForDirectorySearch)
+            if (!settings.UseWindowsIndexForDirectorySearch)
                 return false;
 
-            if (_settings.IndexSearchExcludedSubdirectoryPaths
+            if (settings.IndexSearchExcludedSubdirectoryPaths
                             .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).StartsWith(x.Path)))
                 return false;
 
-            return _indexSearch.PathIsIndexed(locationPath);
+            return indexSearch.PathIsIndexed(locationPath);
         }
     }
 }

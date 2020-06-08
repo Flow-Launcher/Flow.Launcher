@@ -4,13 +4,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     public class QueryConstructor
     {
-        private Settings _settings;
+        private readonly Settings settings;
 
         private const string SystemIndex = "SystemIndex";
 
         public QueryConstructor(Settings settings)
         {
-            _settings = settings;
+            this.settings = settings;
         }
 
         public CSearchQueryHelper CreateBaseQuery()
@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var baseQuery = CreateQueryHelper();
 
             // Set the number of results we want. Don't set this property if all results are needed.
-            baseQuery.QueryMaxResults = _settings.MaxResult;
+            baseQuery.QueryMaxResults = settings.MaxResult;
 
             // Set list of columns we want to display, getting the path presently
             baseQuery.QuerySelectColumns = "System.FileName, System.ItemPathDisplay, System.ItemType";
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string QueryForTopLevelDirectorySearch(string path)
         {
-            string query = "SELECT TOP " + _settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
+            string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
             if (path.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > path.LastIndexOf(Constants.DirectorySeperator))
                 return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);

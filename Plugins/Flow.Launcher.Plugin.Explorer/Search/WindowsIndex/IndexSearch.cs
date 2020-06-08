@@ -14,14 +14,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
     {
         private readonly object _lock = new object();
 
-        public OleDbConnection conn;
+        private OleDbConnection conn;
 
-        public OleDbCommand command;
+        private OleDbCommand command;
         
-        public OleDbDataReader dataReaderResults;
+        private OleDbDataReader dataReaderResults;
+
+        private readonly ResultManager resultManager;
 
         // Reserved keywords in oleDB
-        private string ReservedStringPattern = @"^[\/\\\$\%]+$";
+        private readonly string reservedStringPattern = @"^[\/\\\$\%]+$";
+
+        internal IndexSearch(PluginInitContext context)
+        {
+            resultManager = new ResultManager(context);
+        }
 
         internal List<Result> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
         {
@@ -71,16 +78,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private Result CreateResult(string filename, string path, string fileType, Query query)
         {
             if (fileType == "Directory")
-                return ResultManager.CreateFolderResult(filename, Constants.DefaultFolderSubtitleString, path, query, true, true);
+                return resultManager.CreateFolderResult(filename, Constants.DefaultFolderSubtitleString, path, query, true, true);
             else
             {
-                return ResultManager.CreateFileResult(path, query, true, true);
+                return resultManager.CreateFileResult(path, query, true, true);
             }
         }
 
         internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery, Query query)
         {
-            var regexMatch = Regex.Match(searchString, ReservedStringPattern);
+            var regexMatch = Regex.Match(searchString, reservedStringPattern);
 
             if (regexMatch.Success)
                 return new List<Result>();

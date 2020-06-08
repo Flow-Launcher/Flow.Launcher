@@ -1,4 +1,5 @@
 ﻿using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,19 +8,26 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public class SettingsViewModel
     {
-        private readonly PluginJsonStorage<Settings> _storage;
+        private readonly PluginJsonStorage<Settings> storage;
 
-        public Settings Settings { get; set; }
+        internal Settings Settings { get; set; }
 
-        public SettingsViewModel()
+        internal PluginInitContext Context { get; set; }
+
+        public SettingsViewModel(PluginInitContext context)
         {
-            _storage = new PluginJsonStorage<Settings>();
-            Settings = _storage.Load();
+            Context = context;
+            storage = new PluginJsonStorage<Settings>();
+            Settings = storage.Load();
         }
 
         public void Save()
         {
-            _storage.Save();
+            storage.Save();
         }
+
+        internal void RemoveFolderLinkFromQuickFolders(FolderLink selectedRow) => Settings.QuickFolderAccessLinks.Remove(selectedRow);
+
+        internal void RemoveFolderLinkFromExcludedIndexPaths(FolderLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
     }
 }

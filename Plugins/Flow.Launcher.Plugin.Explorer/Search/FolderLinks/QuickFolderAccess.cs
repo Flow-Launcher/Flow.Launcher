@@ -10,13 +10,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
 {
     public class QuickFolderAccess
     {
-        internal List<Result> FolderList(Query query, List<FolderLink> folderLinks)
+        internal List<Result> FolderList(Query query, List<FolderLink> folderLinks, PluginInitContext context)
         {
             string search = query.Search.ToLower();
             var userFolderLinks = folderLinks.Where(
                 x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
             var results = userFolderLinks.Select(item =>
-                ResultManager.CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query)).ToList();
+                new ResultManager(context).CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query)).ToList();
             return results;
         }
     }

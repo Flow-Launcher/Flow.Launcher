@@ -15,6 +15,16 @@ namespace Flow.Launcher.Plugin.Explorer
 {
     internal class ContextMenu : IContextMenu
     {
+        private PluginInitContext Context { get; set; }
+
+        private Settings Settings { get; set; }
+
+        public ContextMenu(PluginInitContext context, Settings settings)
+        {
+            Context = context;
+            Settings = settings;
+        }
+
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             var contextMenus = new List<Result>();
@@ -50,7 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             var message = "Fail to set text in clipboard";
                             LogException(message, e);
-                            Main.Context.API.ShowMsg(message);
+                            Context.API.ShowMsg(message);
                             return false;
                         }
                     },
@@ -72,7 +82,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             var message = $"Fail to set {fileOrFolder} in clipboard";
                             LogException(message, e);
-                            Main.Context.API.ShowMsg(message);
+                            Context.API.ShowMsg(message);
                             return false;
                         }
 
@@ -98,7 +108,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 var message = $"Fail to delete {fileOrFolder} at {record.FullPath}";
                                 LogException(message, e);
-                                Main.Context.API.ShowMsg(message);
+                                Context.API.ShowMsg(message);
                                 return false;
                             }
 
@@ -121,7 +131,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 var name = "Plugin: Folder";
                                 var message = $"File not found: {e.Message}";
-                                Main.Context.API.ShowMsg(name, message);
+                                Context.API.ShowMsg(name, message);
                             }
 
                             return true;
@@ -148,7 +158,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         var message = $"Fail to open file at {record.FullPath}";
                         LogException(message, e);
-                        Main.Context.API.ShowMsg(message);
+                        Context.API.ShowMsg(message);
                         return false;
                     }
 
@@ -177,7 +187,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         var message = $"Fail to editor for file at {record.FullPath}";
                         LogException(message, e);
-                        Main.Context.API.ShowMsg(message);
+                        Context.API.ShowMsg(message);
                         return false;
                     }
                 },
@@ -193,8 +203,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = "Path: " + record.FullPath,
                 Action = _ =>
                 {
-                    if(!Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
-                        Main.Settings.IndexSearchExcludedSubdirectoryPaths.Add(new FolderLink { Path = record.FullPath });
+                    if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
+                        Settings.IndexSearchExcludedSubdirectoryPaths.Add(new FolderLink { Path = record.FullPath });
 
                     var pluginDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString());
 
@@ -202,10 +212,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     Task.Run(() =>
                     {
-                        Main.Context.API.ShowMsg("Excluded from Index Search", "Path: " + record.FullPath, iconPath);
+                        Context.API.ShowMsg("Excluded from Index Search", "Path: " + record.FullPath, iconPath);
 
                         // so the new path can be persisted to storage and not wait till next ViewModel save.
-                        Main.Context.API.SaveAppAllSettings();
+                        Context.API.SaveAppAllSettings();
                     });
 
                     return false;

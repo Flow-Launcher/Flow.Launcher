@@ -261,7 +261,7 @@ namespace Flow.Launcher.Test.Plugins
         public void GivenDirectoryInfoSearch_WhenSearchPatternHotKeyIsSearchAll_ThenSearchCriteriaShouldUseCriteriaString(string path, string expectedString)
         {
             // Given
-            var criteriaConstructor = new DirectoryInfoSearch(new Settings());
+            var criteriaConstructor = new DirectoryInfoSearch(new PluginInitContext());
 
             //When
             var resultString = criteriaConstructor.ConstructSearchCriteria(path);

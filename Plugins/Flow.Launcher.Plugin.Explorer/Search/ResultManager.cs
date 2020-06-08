@@ -1,17 +1,21 @@
 ﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
-    internal static class ResultManager
+    public class ResultManager
     {
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, bool showIndexState = false, bool windowsIndexed = false)
+        private readonly PluginInitContext context;
+
+        public ResultManager(PluginInitContext context)
+        {
+            this.context = context;
+        }
+        internal Result CreateFolderResult(string title, string subtitle, string path, Query query, bool showIndexState = false, bool windowsIndexed = false)
         {
             return new Result
             {
@@ -36,7 +40,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
                     
                     string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
-                    Main.Context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
+                    context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
                         changeTo :
                         query.ActionKeyword + " " + changeTo);
                     return false;
@@ -45,7 +49,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
+        internal Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
@@ -85,7 +89,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, bool showIndexState = false, bool windowsIndexed = false)
+        internal Result CreateFileResult(string filePath, Query query, bool showIndexState = false, bool windowsIndexed = false)
         {
             var result = new Result
             {
