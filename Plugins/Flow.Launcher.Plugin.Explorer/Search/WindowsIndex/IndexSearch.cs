@@ -3,6 +3,7 @@ using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
@@ -29,6 +30,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         internal List<Result> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
         {
+            var folderResults = new List<Result>();
+            var fileResults = new List<Result>();
             var results = new List<Result>();
 
             try
@@ -48,11 +51,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 {
                                     if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                                     {
-                                        results.Add(CreateResult(
-                                                        dataReaderResults.GetString(0), 
-                                                        dataReaderResults.GetString(1), 
-                                                        dataReaderResults.GetString(2),
-                                                        query));
+                                        if (dataReaderResults.GetString(2) == "Directory")
+                                        {
+                                            folderResults.Add(resultManager.CreateFolderResult(
+                                                                                dataReaderResults.GetString(0), 
+                                                                                Constants.DefaultFolderSubtitleString, 
+                                                                                dataReaderResults.GetString(1), 
+                                                                                query, true, true));
+                                        }
+                                        else
+                                        {
+                                            fileResults.Add(resultManager.CreateFileResult(dataReaderResults.GetString(1), query, true, true));
+                                        }
                                     }
                                 }
                             }
@@ -70,17 +80,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 LogException("General error from performing index search", e);
             }
 
-            return results;
-        }
-
-        private Result CreateResult(string filename, string path, string fileType, Query query)
-        {
-            if (fileType == "Directory")
-                return resultManager.CreateFolderResult(filename, Constants.DefaultFolderSubtitleString, path, query, true, true);
-            else
-            {
-                return resultManager.CreateFileResult(path, query, true, true);
-            }
+            // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
+            return results.Concat(folderResults.OrderBy(x => x.Title)).Concat(fileResults.OrderBy(x => x.Title)).ToList(); ;
         }
 
         internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery, Query query)
