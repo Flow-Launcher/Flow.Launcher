@@ -1,10 +1,9 @@
-﻿using Flow.Launcher.Infrastructure;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
@@ -83,7 +82,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                     return results;
                 }
 
-                throw;
+#if DEBUG // Please investigate and handle error from DirectoryInfo search
+                throw e;
+#else
+                Log.Exception($"|Flow.Launcher.Plugin.Explorer.DirectoryInfoSearch|Error from performing DirectoryInfoSearch", e);
+#endif          
             }
 
             // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.

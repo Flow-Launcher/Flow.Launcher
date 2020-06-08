@@ -1,11 +1,8 @@
 ﻿using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.OleDb;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
@@ -63,13 +60,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     }
                 }
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
                 // Internal error from ExecuteReader(): Connection closed.
+                LogException("Internal error from ExecuteReader()", e);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Log.Info(ex.ToString());//UPDATE THIS LOGGING
+                LogException("General error from performing index search", e);
             }
 
             return results;
@@ -104,6 +102,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var csm = new CSearchManager();
             var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
             return indexManager.IncludedInCrawlScope(path) > 0;
+        }
+
+        private void LogException(string message, Exception e)
+        {
+#if DEBUG // Please investigate and handle error from index search
+            throw e;
+#else
+            Log.Exception($"|Flow.Launcher.Plugin.Explorer.IndexSearch|{message}", e);
+#endif            
         }
     }
 }
