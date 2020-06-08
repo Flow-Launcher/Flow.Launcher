@@ -30,7 +30,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
-    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from index search</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
