@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -117,7 +117,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return false;
 
             if (settings.IndexSearchExcludedSubdirectoryPaths
-                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).StartsWith(x.Path)))
+                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)
+                                        .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
                 return false;
 
             return indexSearch.PathIsIndexed(locationPath);

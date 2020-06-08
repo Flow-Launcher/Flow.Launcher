@@ -136,7 +136,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
                             return true;
                         },
-                        IcoPath = "Images/user.png"
+                        IcoPath = Constants.DifferentUserIconImagePath
                     });
             }
 
@@ -148,6 +148,7 @@ namespace Flow.Launcher.Plugin.Explorer
             return new Result
             {
                 Title = "Open containing folder",
+                SubTitle = "Opens the location that contains the file or folder",
                 Action = _ =>
                 {
                     try
