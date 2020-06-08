@@ -236,5 +236,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 e.Effects = DragDropEffects.None;
             }
         }
+
+        private void btnOpenIndexingOptions_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.OpenWindowsIndexingOptions();
+        }
     }
 }

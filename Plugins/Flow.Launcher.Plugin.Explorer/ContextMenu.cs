@@ -38,6 +38,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
+                contextMenus.Add(CreateOpenWindowsIndexingOptions(record));
+
                 if (record.ShowIndexState)
                     contextMenus.Add(new Result {Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"), 
                                                     SubTitle = "Location: " + record.FullPath,
@@ -186,13 +188,13 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = $"Fail to editor for file at {record.FullPath}";
+                        var message = $"Failed to open editor for file at {record.FullPath}";
                         LogException(message, e);
                         Context.API.ShowMsg(message);
                         return false;
                     }
                 },
-                IcoPath = editorPath
+                IcoPath = Constants.FileImagePath
             };
         }
 
@@ -222,6 +224,38 @@ namespace Flow.Launcher.Plugin.Explorer
                     return false;
                 },
                 IcoPath = Constants.ExcludeFromIndexImagePath
+            };
+        }
+
+        private Result CreateOpenWindowsIndexingOptions(SearchResult record)
+        {
+            return new Result
+            {
+                Title = "Open Windows Indexing Options",
+                SubTitle = "Manage indexed files and folders",
+                Action = _ =>
+                {
+                    try
+                    {
+                        var psi = new ProcessStartInfo
+                                    {
+                                        FileName = "control.exe",
+                                        UseShellExecute = true,
+                                        Arguments = "srchadmin.dll"
+                                    };
+
+                        Process.Start(psi);
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        var message = $"Failed to open Windows Indexing Options";
+                        LogException(message, e);
+                        Context.API.ShowMsg(message);
+                        return false;
+                    }
+                },
+                IcoPath = Constants.IndexingOptionsIconImagePath
             };
         }
 

@@ -44,10 +44,19 @@
                 </Expander>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button x:Name="btnDelete" Click="btnDelete_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_delete}"/>
-            <Button x:Name="btnEdit" Click="btnEdit_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_edit}"/>
-            <Button x:Name="btnAdd" Click="btnAdd_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_add}"/>
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Button x:Name="btnIndexingOptions" Click="btnOpenIndexingOptions_Click" Width="130" Margin="10" Content="Indexing Options"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button x:Name="btnDelete" Click="btnDelete_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_delete}"/>
+                <Button x:Name="btnEdit" Click="btnEdit_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_edit}"/>
+                <Button x:Name="btnAdd" Click="btnAdd_Click" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_folder_add}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
