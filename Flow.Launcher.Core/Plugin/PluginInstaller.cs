@@ -4,6 +4,7 @@ using System.Windows;
 using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Core.Plugin
@@ -21,7 +22,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 UnZip(path, tempFoler, true);
 
-                string iniPath = Path.Combine(tempFoler, "plugin.json");
+                string iniPath = Path.Combine(tempFoler, Constant.PluginMetadataFileName);
                 if (!File.Exists(iniPath))
                 {
                     MessageBox.Show("Install failed: plugin config is missing");
@@ -95,7 +96,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginMetadata GetMetadataFromJson(string pluginDirectory)
         {
-            string configPath = Path.Combine(pluginDirectory, "plugin.json");
+            string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
             PluginMetadata metadata;
 
             if (!File.Exists(configPath))

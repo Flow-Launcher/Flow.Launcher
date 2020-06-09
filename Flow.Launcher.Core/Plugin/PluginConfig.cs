@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 
@@ -11,8 +12,6 @@ namespace Flow.Launcher.Core.Plugin
 
     internal abstract class PluginConfig
     {
-        private const string PluginConfigName = "plugin.json";
-
         /// <summary>
         /// Parse plugin metadata in the given directories
         /// </summary>
@@ -52,7 +51,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginMetadata GetPluginMetadata(string pluginDirectory)
         {
-            string configPath = Path.Combine(pluginDirectory, PluginConfigName);
+            string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
             if (!File.Exists(configPath))
             {
                 Log.Error($"|PluginConfig.GetPluginMetadata|Didn't find config file <{configPath}>");
