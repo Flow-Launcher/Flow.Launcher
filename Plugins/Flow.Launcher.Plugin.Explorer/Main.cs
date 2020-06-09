@@ -37,11 +37,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public List<Result> Query(Query query)
         {
-            var results = new List<Result>();
-
-            if (string.IsNullOrEmpty(query.Search))
-                return results;
-
             return new SearchManager(Settings, Context).Search(query);
         }
 

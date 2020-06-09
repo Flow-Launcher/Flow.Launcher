@@ -30,6 +30,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal List<Result> Search(Query query)
         {
+            var results = new List<Result>();
+
             var querySearch = query.Search;
 
             var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
@@ -37,23 +39,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (quickFolderLinks.Count > 0)
                 return quickFolderLinks;
 
+            if (string.IsNullOrEmpty(query.Search))
+                return results;
+
             if (!FilesFolders.IsLocationPathString(querySearch))
                 return WindowsIndexFilesAndFoldersSearch(query, querySearch);
 
             var locationPath = query.Search;
 
             if (EnvironmentVariables.IsEnvironmentVariableSearch(locationPath))
-            {
                 return EnvironmentVariables.GetEnvironmentStringPathSuggestions(locationPath, query, context);
-            }
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
             if (locationPath.Substring(1).Contains("%"))
-            {
                 locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
-            }
-
-            var results = new List<Result>();
 
             if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
                 return results;

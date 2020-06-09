@@ -1,10 +1,6 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
 {
@@ -12,12 +8,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
     {
         internal List<Result> FolderList(Query query, List<FolderLink> folderLinks, PluginInitContext context)
         {
+            if (string.IsNullOrEmpty(query.Search))
+                return folderLinks
+                        .Select(item =>
+                                    new ResultManager(context)
+                                            .CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query))
+                        .ToList();
+
             string search = query.Search.ToLower();
-            var userFolderLinks = folderLinks.Where(
-                x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
-            var results = userFolderLinks.Select(item =>
-                new ResultManager(context).CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query)).ToList();
-            return results;
+            
+            var queriedFolderLinks = folderLinks.Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
+
+            return queriedFolderLinks.Select(item =>
+                                                new ResultManager(context)
+                                                        .CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query))
+                                     .ToList();
         }
     }
 }
