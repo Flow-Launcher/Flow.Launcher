@@ -121,7 +121,7 @@ function Main {
             FixPublishLastWriteDateTimeError $p
         }
         
-        Delete-Unused $p $config
+        #Delete-Unused $p $config
         $o = "$p\Output\Packages"
         Validate-Directory $o
         # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
