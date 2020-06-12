@@ -19,7 +19,10 @@ skip_commits:
 image: Visual Studio 2019
 platform: Any CPU
 configuration: Release
-services: WSearch
+services: 
+- WSearch
+init:
+- net start WSearch
 before_build:
 - ps: nuget restore
 build:
