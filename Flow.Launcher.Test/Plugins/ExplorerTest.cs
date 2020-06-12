@@ -10,6 +10,10 @@ using System.Collections.Generic;
 
 namespace Flow.Launcher.Test.Plugins
 {
+    /// <summary>
+    /// These tests require the use of CSearchManager class from Microsoft.Search.Interop.
+    /// Windows Search service needs to be running to complete the tests
+    /// </summary>
     [TestFixture]
     public class ExplorerTest
     {
