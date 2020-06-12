@@ -134,7 +134,7 @@ function Main {
         }
 
         Get-Service WSearch
-        Start-Service WSearch
+        #Start-Service WSearch
 
         Write-Host "List output directory"
         Get-ChildItem $o
