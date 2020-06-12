@@ -133,6 +133,8 @@ function Main {
             Zip-Release $p $v $o
         }
 
+        Install-WindowsFeature Search-Service
+
         Write-Host "List output directory"
         Get-ChildItem $o
     }
