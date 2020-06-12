@@ -207,6 +207,6 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="sc config WSearch start= auto" />
+    <Exec Command="sc config WSearch start= auto&#xD;&#xA;" />
   </Target>
 </Project>
