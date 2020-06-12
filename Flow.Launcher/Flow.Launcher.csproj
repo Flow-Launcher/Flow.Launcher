@@ -207,6 +207,6 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="sc config WSearch start= auto&#xD;&#xA;" />
+    <Exec Command="sc config WSearch start= auto&#xD;&#xA;powershell.exe -NoProfile -ExecutionPolicy Bypass -File $(SolutionDir)Scripts\post_build.ps1 $(ConfigurationName) $(SolutionDir) $(TargetPath)" />
   </Target>
 </Project>

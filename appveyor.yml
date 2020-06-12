@@ -4,7 +4,6 @@ init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
-- net start WSearch
 
 assembly_info:
   patch: true

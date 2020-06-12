@@ -133,6 +133,9 @@ function Main {
             Zip-Release $p $v $o
         }
 
+        Get-Service WSearch
+        Start-Service WSearch
+
         Write-Host "List output directory"
         Get-ChildItem $o
     }
