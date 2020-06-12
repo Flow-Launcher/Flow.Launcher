@@ -4,8 +4,6 @@ init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
-- sc config WSearch start= auto
-- net start WSearch
 
 assembly_info:
   patch: true
@@ -22,7 +20,7 @@ image: Visual Studio 2019
 platform: Any CPU
 configuration: Release
 services:
-  - WSearch
+  - wsearch
 before_build:
 - ps: nuget restore
 build:
