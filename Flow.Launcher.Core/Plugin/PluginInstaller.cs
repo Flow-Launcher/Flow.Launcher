@@ -15,28 +15,28 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (File.Exists(path))
             {
-                string tempFoler = Path.Combine(Path.GetTempPath(), "flowlauncher\\plugins");
-                if (Directory.Exists(tempFoler))
+                string tempFolder = Path.Combine(Path.GetTempPath(), "flowlauncher", "plugins");
+                if (Directory.Exists(tempFolder))
                 {
-                    Directory.Delete(tempFoler, true);
+                    Directory.Delete(tempFolder, true);
                 }
-                UnZip(path, tempFoler, true);
+                UnZip(path, tempFolder, true);
 
-                string iniPath = Path.Combine(tempFoler, Constant.PluginMetadataFileName);
-                if (!File.Exists(iniPath))
+                string jsonPath = Path.Combine(tempFolder, Constant.PluginMetadataFileName);
+                if (!File.Exists(jsonPath))
                 {
                     MessageBox.Show("Install failed: plugin config is missing");
                     return;
                 }
 
-                PluginMetadata plugin = GetMetadataFromJson(tempFoler);
+                PluginMetadata plugin = GetMetadataFromJson(tempFolder);
                 if (plugin == null || plugin.Name == null)
                 {
                     MessageBox.Show("Install failed: plugin config is invalid");
                     return;
                 }
 
-                string pluginFolerPath = Infrastructure.UserSettings.DataLocation.PluginsDirectory;
+                string pluginFolderPath = Infrastructure.UserSettings.DataLocation.PluginsDirectory;
 
                 string newPluginName = plugin.Name
                     .Replace("/", "_")
@@ -48,7 +48,9 @@ namespace Flow.Launcher.Core.Plugin
                     .Replace("*", "_")
                     .Replace("|", "_")
                     + "-" + Guid.NewGuid();
-                string newPluginPath = Path.Combine(pluginFolerPath, newPluginName);
+
+                string newPluginPath = Path.Combine(pluginFolderPath, newPluginName);
+
                 string content = $"Do you want to install following plugin?{Environment.NewLine}{Environment.NewLine}" +
                                  $"Name: {plugin.Name}{Environment.NewLine}" +
                                  $"Version: {plugin.Version}{Environment.NewLine}" +
@@ -73,8 +75,7 @@ namespace Flow.Launcher.Core.Plugin
                         File.Create(Path.Combine(existingPlugin.Metadata.PluginDirectory, "NeedDelete.txt")).Close();
                     }
 
-                    UnZip(path, newPluginPath, true);
-                    Directory.Delete(tempFoler, true);
+                    Directory.Move(tempFolder, newPluginPath);
 
                     //exsiting plugins may be has loaded by application,
                     //if we try to delelte those kind of plugins, we will get a  error that indicate the
@@ -130,58 +131,38 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// unzip 
+        /// unzip plugin contents to the given directory.
         /// </summary>
-        /// <param name="zipedFile">The ziped file.</param>
-        /// <param name="strDirectory">The STR directory.</param>
+        /// <param name="zipFile">The path to the zip file.</param>
+        /// <param name="strDirectory">The output directory.</param>
         /// <param name="overWrite">overwirte</param>
-        private static void UnZip(string zipedFile, string strDirectory, bool overWrite)
+        private static void UnZip(string zipFile, string strDirectory, bool overWrite)
         {
             if (strDirectory == "")
                 strDirectory = Directory.GetCurrentDirectory();
-            if (!strDirectory.EndsWith("\\"))
-                strDirectory = strDirectory + "\\";
 
-            using (ZipInputStream s = new ZipInputStream(File.OpenRead(zipedFile)))
+            using (ZipInputStream zipStream = new ZipInputStream(File.OpenRead(zipFile)))
             {
                 ZipEntry theEntry;
 
-                while ((theEntry = s.GetNextEntry()) != null)
+                while ((theEntry = zipStream.GetNextEntry()) != null)
                 {
-                    string directoryName = "";
-                    string pathToZip = "";
-                    pathToZip = theEntry.Name;
+                    var pathToZip = theEntry.Name;
+                    var directoryName = String.IsNullOrEmpty(pathToZip) ? "" : Path.GetDirectoryName(pathToZip);
+                    var fileName = Path.GetFileName(pathToZip);
+                    var destinationDir = Path.Combine(strDirectory, directoryName);
+                    var destinationFile = Path.Combine(destinationDir, fileName);
 
-                    if (pathToZip != "")
-                        directoryName = Path.GetDirectoryName(pathToZip) + "\\";
+                    Directory.CreateDirectory(destinationDir);
 
-                    string fileName = Path.GetFileName(pathToZip);
+                    if (String.IsNullOrEmpty(fileName) || (File.Exists(destinationFile) && !overWrite))
+                        continue;
 
-                    Directory.CreateDirectory(strDirectory + directoryName);
-
-                    if (fileName != "")
+                    using (FileStream streamWriter = File.Create(destinationFile))
                     {
-                        if ((File.Exists(strDirectory + directoryName + fileName) && overWrite) || (!File.Exists(strDirectory + directoryName + fileName)))
-                        {
-                            using (FileStream streamWriter = File.Create(strDirectory + directoryName + fileName))
-                            {
-                                byte[] data = new byte[2048];
-                                while (true)
-                                {
-                                    int size = s.Read(data, 0, data.Length);
-
-                                    if (size > 0)
-                                        streamWriter.Write(data, 0, size);
-                                    else
-                                        break;
-                                }
-                                streamWriter.Close();
-                            }
-                        }
+                        zipStream.CopyTo(streamWriter);
                     }
                 }
-
-                s.Close();
             }
         }
     }
