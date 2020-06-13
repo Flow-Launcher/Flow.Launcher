@@ -32,10 +32,9 @@ namespace Flow.Launcher.Core.Configuration
             try
             {
                 MoveUserDataFolder(DataLocation.PortableDataPath, DataLocation.RoamingDataPath);
-#if DEBUG
+#if !DEBUG
                 // Create shortcuts and uninstaller are not required in debug mode, 
                 // otherwise will repoint the path of the actual installed production version to the debug version
-#else
                 CreateShortcuts();
                 CreateUninstallerEntry();
 #endif
@@ -60,10 +59,9 @@ namespace Flow.Launcher.Core.Configuration
             try
             {
                 MoveUserDataFolder(DataLocation.RoamingDataPath, DataLocation.PortableDataPath);
-#if DEBUG
+#if !DEBUG
                 // Remove shortcuts and uninstaller are not required in debug mode, 
                 // otherwise will delete the actual installed production version
-#else
                 RemoveShortcuts();
                 RemoveUninstallerEntry();
 #endif
@@ -126,13 +124,16 @@ namespace Flow.Launcher.Core.Configuration
         {
             var uninstallRegSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
             // NB: Sometimes the Uninstall key doesn't exist
-            using (var parentKey =
-                RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                    .CreateSubKey("Uninstall", RegistryKeyPermissionCheck.ReadWriteSubTree)) {; }
+            RegistryKey
+                .OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
+                .CreateSubKey("Uninstall", RegistryKeyPermissionCheck.ReadWriteSubTree)
+                .Dispose();
 
-            var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                .CreateSubKey(uninstallRegSubKey + "\\" + Constant.FlowLauncher, RegistryKeyPermissionCheck.ReadWriteSubTree);
-            key.SetValue("DisplayIcon", Constant.ApplicationDirectory + "\\app.ico", RegistryValueKind.String);
+            var key = RegistryKey
+                        .OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
+                        .CreateSubKey($@"{uninstallRegSubKey}\{Constant.FlowLauncher}", RegistryKeyPermissionCheck.ReadWriteSubTree);
+
+            key.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"), RegistryValueKind.String);
 
             using (var portabilityUpdater = NewUpdateManager())
             {
@@ -142,7 +143,8 @@ namespace Flow.Launcher.Core.Configuration
 
         internal void IndicateDeletion(string filePathTodelete)
         {
-            using (StreamWriter sw = File.CreateText(filePathTodelete + "\\" + DataLocation.DeletionIndicatorFile)){}
+            var deleteFilePath = Path.Combine(filePathTodelete, DataLocation.DeletionIndicatorFile);
+            File.CreateText(deleteFilePath).Close();
         }
 
         ///<summary>
@@ -152,21 +154,17 @@ namespace Flow.Launcher.Core.Configuration
         public void PreStartCleanUpAfterPortabilityUpdate()
         {
             // Specify here so this method does not rely on other environment variables to initialise
-            var portableDataPath = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(), "UserData");
-            var roamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
+            var portableDataDir = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(), "UserData");
+            var roamingDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
 
-            bool DataLocationPortableDeleteRequired = false;
-            bool DataLocationRoamingDeleteRequired = false;
+            // Get full path to the .dead files for each case
+            var portableDataDeleteFilePath = Path.Combine(portableDataDir, DataLocation.DeletionIndicatorFile);
+            var roamingDataDeleteFilePath = Path.Combine(roamingDataDir, DataLocation.DeletionIndicatorFile);
 
-            if ((roamingDataPath + "\\" + DataLocation.DeletionIndicatorFile).FileExits())
-                DataLocationRoamingDeleteRequired = true;
-
-            if ((portableDataPath + "\\" + DataLocation.DeletionIndicatorFile).FileExits())
-                DataLocationPortableDeleteRequired = true;
-
-            if (DataLocationRoamingDeleteRequired)
+            // Should we switch from %AppData% to portable mode?
+            if (File.Exists(roamingDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(roamingDataPath);
+                FilesFolders.RemoveFolderIfExists(roamingDataDir);
 
                 if (MessageBox.Show("Flow Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
@@ -176,18 +174,14 @@ namespace Flow.Launcher.Core.Configuration
 
                     Environment.Exit(0);
                 }
-
-                return;
             }
-
-            if(DataLocationPortableDeleteRequired)
+            // Should we switch from portable mode to %AppData%?
+            else if (File.Exists(portableDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(portableDataPath);
+                FilesFolders.RemoveFolderIfExists(portableDataDir);
 
                 MessageBox.Show("Flow Launcher has detected you disabled portable mode, " +
                                     "the relevant shortcuts and uninstaller entry have been created");
-
-                return;
             }
         }
 
@@ -196,7 +190,7 @@ namespace Flow.Launcher.Core.Configuration
             var roamingLocationExists = DataLocation.RoamingDataPath.LocationExists();
             var portableLocationExists = DataLocation.PortableDataPath.LocationExists();
 
-            if(roamingLocationExists && portableLocationExists)
+            if (roamingLocationExists && portableLocationExists)
             {
                 MessageBox.Show(string.Format("Flow Launcher detected your user data exists both in {0} and " +
                                     "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occured.", 
