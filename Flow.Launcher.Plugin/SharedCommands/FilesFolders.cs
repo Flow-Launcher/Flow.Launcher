@@ -127,5 +127,81 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #endif
             }
         }
+
+        ///<summary>
+        /// This checks whether a given string is a directory path or network location string. 
+        /// It does not check if location actually exists.
+        ///</summary>
+        public static bool IsLocationPathString(string querySearchString)
+        {
+            if (string.IsNullOrEmpty(querySearchString))
+                return false;
+
+            // // shared folder location, and not \\\location\
+            if (querySearchString.Length >= 3
+                && querySearchString.StartsWith(@"\\")
+                && char.IsLetter(querySearchString[2]))
+                return true;
+
+            // c:\
+            if (querySearchString.Length == 3
+                && char.IsLetter(querySearchString[0])
+                && querySearchString[1] == ':'
+                && querySearchString[2] == '\\')
+                return true;
+
+            // c:\\
+            if (querySearchString.Length >= 4
+                && char.IsLetter(querySearchString[0])
+                && querySearchString[1] == ':'
+                && querySearchString[2] == '\\'
+                && char.IsLetter(querySearchString[3]))
+                return true;
+
+            return false;
+        }
+
+        ///<summary>
+        /// Gets the previous level directory from a path string.
+        /// Checks that previous level directory exists and returns it 
+        /// as a path string, or empty string if doesn't exit
+        ///</summary>
+        public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
+        {
+            var previousDirectoryPath = "";
+            var index = path.LastIndexOf('\\');
+            if (index > 0 && index < (path.Length - 1))
+            {
+                previousDirectoryPath = path.Substring(0, index + 1);
+                if (!locationExists(previousDirectoryPath))
+                {
+                    return "";
+                }
+            }
+            else
+            {
+                return "";
+            }
+
+            return previousDirectoryPath;
+        }
+
+        ///<summary>
+        /// Returns the previous level directory if path incomplete (does not end with '\').
+        /// Does not check if previous level directory exists.
+        /// Returns passed in string if is complete path
+        ///</summary>
+        public static string ReturnPreviousDirectoryIfIncompleteString(string path)
+        {
+            if (!path.EndsWith("\\"))
+            {
+                // not full path, get previous level directory string
+                var indexOfSeparator = path.LastIndexOf('\\');
+
+                return path.Substring(0, indexOfSeparator + 1);
+            }
+
+            return path;
+        }
     }
 }
