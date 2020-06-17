@@ -1,0 +1,287 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using System.Linq;
+using System.Reflection;
+
+namespace Flow.Launcher.Plugin.Explorer
+{
+    internal class ContextMenu : IContextMenu
+    {
+        private PluginInitContext Context { get; set; }
+
+        private Settings Settings { get; set; }
+
+        public ContextMenu(PluginInitContext context, Settings settings)
+        {
+            Context = context;
+            Settings = settings;
+        }
+
+        public List<Result> LoadContextMenus(Result selectedResult)
+        {
+            var contextMenus = new List<Result>();
+            if (selectedResult.ContextData is SearchResult record)
+            {
+                if (record.Type == ResultType.File)
+                    contextMenus.Add(CreateOpenWithEditorResult(record));
+
+                if (record.Type == ResultType.Folder && record.WindowsIndexed)
+                    contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
+
+                contextMenus.Add(CreateOpenContainingFolderResult(record));
+
+                contextMenus.Add(CreateOpenWindowsIndexingOptions());
+
+                if (record.ShowIndexState)
+                    contextMenus.Add(new Result {Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"), 
+                                                    SubTitle = "Location: " + record.FullPath,
+                                                    Score = 501, IcoPath = Constants.IndexImagePath});
+
+                var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
+                var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
+                contextMenus.Add(new Result
+                {
+                    Title = Context.API.GetTranslation("plugin_explorer_copypath"),
+                    SubTitle = $"Copy the current {fileOrFolder} path to clipboard",
+                    Action = (context) =>
+                    {
+                        try
+                        {
+                            Clipboard.SetText(record.FullPath);
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            var message = "Fail to set text in clipboard";
+                            LogException(message, e);
+                            Context.API.ShowMsg(message);
+                            return false;
+                        }
+                    },
+                    IcoPath = Constants.CopyImagePath
+                });
+
+                contextMenus.Add(new Result
+                {
+                    Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder") + $" {fileOrFolder}",
+                    SubTitle = $"Copy the {fileOrFolder} to clipboard",
+                    Action = (context) =>
+                    {
+                        try
+                        {
+                            Clipboard.SetFileDropList(new System.Collections.Specialized.StringCollection { record.FullPath });
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            var message = $"Fail to set {fileOrFolder} in clipboard";
+                            LogException(message, e);
+                            Context.API.ShowMsg(message);
+                            return false;
+                        }
+
+                    },
+                    IcoPath = icoPath
+                });
+
+                if (record.Type == ResultType.File || record.Type == ResultType.Folder)
+                    contextMenus.Add(new Result
+                    {
+                        Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder") + $" {fileOrFolder}",
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_deletefilefolder_subtitle") + $" {fileOrFolder}",
+                        Action = (context) =>
+                        {
+                            try
+                            {
+                                if (record.Type == ResultType.File)
+                                    File.Delete(record.FullPath);
+                                else
+                                    Directory.Delete(record.FullPath, true);
+                            }
+                            catch (Exception e)
+                            {
+                                var message = $"Fail to delete {fileOrFolder} at {record.FullPath}";
+                                LogException(message, e);
+                                Context.API.ShowMsg(message);
+                                return false;
+                            }
+
+                            return true;
+                        },
+                        IcoPath = Constants.DeleteFileFolderImagePath
+                    });
+
+                if (record.Type == ResultType.File && CanRunAsDifferentUser(record.FullPath))
+                    contextMenus.Add(new Result
+                    {
+                        Title = Context.API.GetTranslation("plugin_explorer_runasdifferentuser"),
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_runasdifferentuser_subtitle"),
+                        Action = (context) =>
+                        {
+                            try
+                            {
+                                Task.Run(() => ShellCommand.RunAsDifferentUser(record.FullPath.SetProcessStartInfo()));
+                            }
+                            catch (FileNotFoundException e)
+                            {
+                                var name = "Plugin: Folder";
+                                var message = $"File not found: {e.Message}";
+                                Context.API.ShowMsg(name, message);
+                            }
+
+                            return true;
+                        },
+                        IcoPath = Constants.DifferentUserIconImagePath
+                    });
+            }
+
+            return contextMenus;
+        }
+
+        private Result CreateOpenContainingFolderResult(SearchResult record)
+        {
+            return new Result
+            {
+                Title = Context.API.GetTranslation("plugin_explorer_opencontainingfolder"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_opencontainingfolder_subtitle"),
+                Action = _ =>
+                {
+                    try
+                    {
+                        Process.Start("explorer.exe", $" /select,\"{record.FullPath}\"");
+                    }
+                    catch (Exception e)
+                    {
+                        var message = $"Fail to open file at {record.FullPath}";
+                        LogException(message, e);
+                        Context.API.ShowMsg(message);
+                        return false;
+                    }
+
+                    return true;
+                },
+                IcoPath = Constants.FolderImagePath
+            };
+        }
+
+        private Result CreateOpenWithEditorResult(SearchResult record)
+        {
+            string editorPath = "Notepad.exe"; // TODO add the ability to create a custom editor
+
+            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor") 
+                                    + " " + Path.GetFileNameWithoutExtension(editorPath);
+
+            return new Result
+            {
+                Title = name,
+                Action = _ =>
+                {
+                    try
+                    {
+                        Process.Start(editorPath, record.FullPath);
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        var message = $"Failed to open editor for file at {record.FullPath}";
+                        LogException(message, e);
+                        Context.API.ShowMsg(message);
+                        return false;
+                    }
+                },
+                IcoPath = Constants.FileImagePath
+            };
+        }
+
+        private Result CreateAddToIndexSearchExclusionListResult(SearchResult record)
+        {
+            return new Result
+            {
+                Title = Context.API.GetTranslation("plugin_explorer_excludefromindexsearch"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
+                Action = _ =>
+                {
+                    if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
+                        Settings.IndexSearchExcludedSubdirectoryPaths.Add(new FolderLink { Path = record.FullPath });
+
+                    var pluginDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString());
+
+                    var iconPath = pluginDirectory + "\\" + Constants.ExplorerIconImagePath;
+
+                    Task.Run(() =>
+                    {
+                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"), 
+                                                            Context.API.GetTranslation("plugin_explorer_path") + 
+                                                            " " + record.FullPath, iconPath);
+
+                        // so the new path can be persisted to storage and not wait till next ViewModel save.
+                        Context.API.SaveAppAllSettings();
+                    });
+
+                    return false;
+                },
+                IcoPath = Constants.ExcludeFromIndexImagePath
+            };
+        }
+
+        private Result CreateOpenWindowsIndexingOptions()
+        {
+            return new Result
+            {
+                Title = Context.API.GetTranslation("plugin_explorer_openindexingoptions"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_openindexingoptions_subtitle"),
+                Action = _ =>
+                {
+                    try
+                    {
+                        var psi = new ProcessStartInfo
+                                    {
+                                        FileName = "control.exe",
+                                        UseShellExecute = true,
+                                        Arguments = "srchadmin.dll"
+                                    };
+
+                        Process.Start(psi);
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        var message = Context.API.GetTranslation("plugin_explorer_openindexingoptions_errormsg");
+                        LogException(message, e);
+                        Context.API.ShowMsg(message);
+                        return false;
+                    }
+                },
+                IcoPath = Constants.IndexingOptionsIconImagePath
+            };
+        }
+
+        public void LogException(string message, Exception e)
+        {
+            Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
+        }
+
+        private bool CanRunAsDifferentUser(string path)
+        {
+            switch (Path.GetExtension(path))
+            {
+                case ".exe":
+                case ".bat":
+                case ".msi":
+                    return true;
+
+                default:
+                    return false;
+
+            }
+        }
+    }
+}
