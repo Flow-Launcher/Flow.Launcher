@@ -1,9 +1,10 @@
-﻿using System.Windows;
+using System.Windows;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Exception;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
@@ -12,13 +13,14 @@ namespace Flow.Launcher
         private PluginPair _plugin;
         private Settings _settings;
         private readonly Internationalization _translater = InternationalizationManager.Instance;
+        private readonly PluginViewModel pluginViewModel;
 
-        public ActionKeywords(string pluginId, Settings settings)
+        public ActionKeywords(string pluginId, Settings settings, PluginViewModel pluginViewModel)
         {
             InitializeComponent();
             _plugin = PluginManager.GetPluginForId(pluginId);
             _settings = settings;
-            if (_plugin == null)
+            this.pluginViewModel = pluginViewModel;
             {
                 MessageBox.Show(_translater.GetTranslation("cannotFindSpecifiedPlugin"));
                 Close();
@@ -41,10 +43,9 @@ namespace Flow.Launcher
             var oldActionKeyword = _plugin.Metadata.ActionKeywords[0];
             var newActionKeyword = tbAction.Text.Trim();
             newActionKeyword = newActionKeyword.Length > 0 ? newActionKeyword : "*";
-            if (!PluginManager.ActionKeywordRegistered(newActionKeyword))
+            if (!pluginViewModel.IsActionKeywordRegistered(newActionKeyword))
             {
-                var id = _plugin.Metadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldActionKeyword, newActionKeyword);
+                pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);
                 Close();
             }
             else

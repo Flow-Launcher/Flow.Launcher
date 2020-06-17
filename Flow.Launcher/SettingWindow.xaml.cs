@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -214,7 +214,7 @@ namespace Flow.Launcher
             if (e.ChangedButton == MouseButton.Left)
             {
                 var id = _viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, _settings);
+                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, _settings, _viewModel.SelectedPlugin);
                 changeKeywordsWindow.ShowDialog();
             }
         }

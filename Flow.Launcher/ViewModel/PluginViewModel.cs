@@ -1,8 +1,9 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -25,5 +26,14 @@ namespace Flow.Launcher.ViewModel
         public string InitilizaTime => string.Format(_translator.GetTranslation("plugin_init_time"), PluginPair.Metadata.InitTime);
         public string QueryTime => string.Format(_translator.GetTranslation("plugin_query_time"), PluginPair.Metadata.AvgQueryTime);
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeperater, PluginPair.Metadata.ActionKeywords);
+
+        public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
+        {
+            PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeyword, newActionKeyword);
+            
+            OnPropertyChanged(nameof(ActionKeywordsText));
+        }
+
+        public bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
     }
 }
