@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -21,17 +20,17 @@ namespace Flow.Launcher
     {
         private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
 
-        public readonly IPublicAPI _api;
-        private Settings _settings;
-        private SettingWindowViewModel _viewModel;
+        public readonly IPublicAPI API;
+        private Settings settings;
+        private SettingWindowViewModel viewModel;
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
             InitializeComponent();
-            _settings = viewModel.Settings;
+            settings = viewModel.Settings;
             DataContext = viewModel;
-            _viewModel = viewModel;
-            _api = api;
+            this.viewModel = viewModel;
+            API = api;
         }
 
         #region General
@@ -94,7 +93,7 @@ namespace Flow.Launcher
                     var pythonPath = Path.Combine(pythonDirectory, PluginsLoader.PythonExecutable);
                     if (File.Exists(pythonPath))
                     {
-                        _settings.PluginSettings.PythonDirectory = pythonDirectory;
+                        settings.PluginSettings.PythonDirectory = pythonDirectory;
                         MessageBox.Show("Remember to restart Flow Launcher use new Python path");
                     }
                     else
@@ -111,7 +110,7 @@ namespace Flow.Launcher
 
         private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
         {
-            HotkeyControl.SetHotkey(_viewModel.Settings.Hotkey, false);
+            HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
         }
 
         void OnHotkeyChanged(object sender, EventArgs e)
@@ -129,8 +128,8 @@ namespace Flow.Launcher
                         Application.Current.MainWindow.Visibility = Visibility.Hidden;
                     }
                 });
-                RemoveHotkey(_settings.Hotkey);
-                _settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+                RemoveHotkey(settings.Hotkey);
+                settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
             }
         }
 
@@ -159,7 +158,7 @@ namespace Flow.Launcher
 
         private void OnDeleteCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
-            var item = _viewModel.SelectedCustomPluginHotkey;
+            var item = viewModel.SelectedCustomPluginHotkey;
             if (item == null)
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
@@ -173,17 +172,17 @@ namespace Flow.Launcher
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                _settings.CustomPluginHotkeys.Remove(item);
+                settings.CustomPluginHotkeys.Remove(item);
                 RemoveHotkey(item.Hotkey);
             }
         }
 
         private void OnnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
-            var item = _viewModel.SelectedCustomPluginHotkey;
+            var item = viewModel.SelectedCustomPluginHotkey;
             if (item != null)
             {
-                CustomQueryHotkeySetting window = new CustomQueryHotkeySetting(this, _settings);
+                CustomQueryHotkeySetting window = new CustomQueryHotkeySetting(this, settings);
                 window.UpdateItem(item);
                 window.ShowDialog();
             }
@@ -195,7 +194,7 @@ namespace Flow.Launcher
 
         private void OnAddCustomeHotkeyClick(object sender, RoutedEventArgs e)
         {
-            new CustomQueryHotkeySetting(this, _settings).ShowDialog();
+            new CustomQueryHotkeySetting(this, settings).ShowDialog();
         }
 
         #endregion
@@ -204,17 +203,17 @@ namespace Flow.Launcher
 
         private void OnPluginToggled(object sender, RoutedEventArgs e)
         {
-            var id = _viewModel.SelectedPlugin.PluginPair.Metadata.ID;
+            var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
             // used to sync the current status from the plugin manager into the setting to keep consistency after save
-            _settings.PluginSettings.Plugins[id].Disabled = _viewModel.SelectedPlugin.PluginPair.Metadata.Disabled; 
+            settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled; 
         }
 
         private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                var id = _viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, _settings, _viewModel.SelectedPlugin);
+                var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
+                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
                 changeKeywordsWindow.ShowDialog();
             }
         }
@@ -223,7 +222,7 @@ namespace Flow.Launcher
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                var website = _viewModel.SelectedPlugin.PluginPair.Metadata.Website;
+                var website = viewModel.SelectedPlugin.PluginPair.Metadata.Website;
                 if (!string.IsNullOrEmpty(website))
                 {
                     var uri = new Uri(website);
@@ -239,7 +238,7 @@ namespace Flow.Launcher
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                var directory = _viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
+                var directory = viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
                 if (!string.IsNullOrEmpty(directory))
                     FilesFolders.OpenPath(directory);
             }
@@ -250,7 +249,7 @@ namespace Flow.Launcher
 
         private void OnTestProxyClick(object sender, RoutedEventArgs e)
         { // TODO: change to command
-            var msg = _viewModel.TestProxy();
+            var msg = viewModel.TestProxy();
             MessageBox.Show(msg); // TODO: add message box service
         }
 
@@ -258,7 +257,7 @@ namespace Flow.Launcher
 
         private async void OnCheckUpdates(object sender, RoutedEventArgs e)
         {
-            _viewModel.UpdateApp(); // TODO: change to command
+            viewModel.UpdateApp(); // TODO: change to command
         }
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -269,7 +268,7 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
-            _viewModel.Save();
+            viewModel.Save();
         }
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
