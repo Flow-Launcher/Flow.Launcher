@@ -105,7 +105,6 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Belirtilen eklenti bulunamadı</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Yeni anahtar kelime boş olamaz</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Yeni anahtar kelime başka bir eklentiye atanmış durumda. Lütfen başka bir anahtar kelime seçin</system:String>
-    <system:String x:Key="success">Başarılı</system:String>
     <system:String x:Key="actionkeyword_tips">Anahtar kelime belirlemek istemiyorsanız * kullanın</system:String>
 
     <!--Custom Query Hotkey Dialog-->
