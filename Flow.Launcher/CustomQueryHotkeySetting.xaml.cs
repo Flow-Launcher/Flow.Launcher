@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
+using NHotkey;
+using NHotkey.Wpf;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using NHotkey;
-using NHotkey.Wpf;
-using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.UserSettings;
+using System.Windows.Input;
 
 namespace Flow.Launcher
 {
@@ -124,6 +124,11 @@ namespace Flow.Launcher
                 string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
                 MessageBox.Show(errorMsg);
             }
+        }
+
+        private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

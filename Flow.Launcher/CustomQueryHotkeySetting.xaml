@@ -6,6 +6,12 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Title="Custom Plugin Hotkey" Height="200" Width="674.766">
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="cmdEsc_OnPress"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
