@@ -19,7 +19,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock FontSize="14" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                   HorizontalAlignment="Left" Text="{DynamicResource actionKeywords}" />
+                   HorizontalAlignment="Left" Text="{DynamicResource currentActionKeywords}" />
         <TextBlock x:Name="tbOldActionKeyword" Grid.Row="0" Grid.Column="1" Margin="170 10 10 10" FontSize="14"
                    VerticalAlignment="Center" HorizontalAlignment="Left" />
         
