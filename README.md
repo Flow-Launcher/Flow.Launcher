@@ -2,10 +2,10 @@ Flow Launcher
 =============
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
+[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
 ![GitHub Release Date](https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher)
-[![Build Status](https://dev.azure.com/Flow-Launcher/Flow.Launcher/_apis/build/status/Flow.Launcher?branchName=master)](https://dev.azure.com/Flow-Launcher/Flow.Launcher/_build/latest?definitionId=1&branchName=master)
 
 Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
 
