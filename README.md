@@ -2,10 +2,10 @@ Flow Launcher
 =============
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
+[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
 ![GitHub Release Date](https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher)
-[![Build Status](https://dev.azure.com/Flow-Launcher/Flow.Launcher/_apis/build/status/Flow.Launcher?branchName=master)](https://dev.azure.com/Flow-Launcher/Flow.Launcher/_build/latest?definitionId=1&branchName=master)
 
 Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
 
@@ -15,6 +15,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
+- Support search using environment variable paths
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
 - Support of wide range of plugins.
@@ -50,6 +51,8 @@ Flow is under heavy development, but the code base is stable, so contributions a
 We welcome all contributions. If you are unsure of a change you want to make, simply put an issue in for discussion, otherwise feel free to put in a pull request.
 
 You will find the main goals of flow placed under Projects board, so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+
+Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
 
 **Question/Suggestion**
 
