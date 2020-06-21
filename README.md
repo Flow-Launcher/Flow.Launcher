@@ -15,6 +15,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
+- Support search using environment variable paths
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
 - Support of wide range of plugins.
@@ -50,6 +51,8 @@ Flow is under heavy development, but the code base is stable, so contributions a
 We welcome all contributions. If you are unsure of a change you want to make, simply put an issue in for discussion, otherwise feel free to put in a pull request.
 
 You will find the main goals of flow placed under Projects board, so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+
+Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
 
 **Question/Suggestion**
 
