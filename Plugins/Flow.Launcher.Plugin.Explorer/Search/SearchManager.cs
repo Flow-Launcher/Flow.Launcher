@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
             var isEnvironmentVariablePath = querySearch.Substring(1).Contains("%\\");
 
-            if (!FilesFolders.IsLocationPathString(querySearch) && !isEnvironmentVariable && !isEnvironmentVariablePath)
+            if (!FilesFolders.IsLocationPathString(querySearch) && !isEnvironmentVariablePath)
                 return WindowsIndexFilesAndFoldersSearch(query, querySearch);
 
             var locationPath = querySearch;
