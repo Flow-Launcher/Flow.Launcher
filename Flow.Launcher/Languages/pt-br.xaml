@@ -41,7 +41,7 @@
     <system:String x:Key="pluginDirectory">Diretório de Plugins</system:String>
     <system:String x:Key="author">Autor</system:String>
     <system:String x:Key="plugin_init_time">Tempo de inicialização:</system:String>
-    <system:String x:Key="plugin_query_time">Tempo de consulta: {0}ms</system:String>
+    <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>

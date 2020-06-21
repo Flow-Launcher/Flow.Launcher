@@ -43,7 +43,7 @@
     <system:String x:Key="pluginDirectory">Eklenti Klasörü</system:String>
     <system:String x:Key="author">Yapımcı</system:String>
     <system:String x:Key="plugin_init_time">Açılış Süresi:</system:String>
-    <system:String x:Key="plugin_query_time">Sorgu Süresi: {0}ms</system:String>
+    <system:String x:Key="plugin_query_time">Sorgu Süresi:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Temalar</system:String>

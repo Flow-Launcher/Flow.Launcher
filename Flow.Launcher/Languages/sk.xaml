@@ -42,7 +42,7 @@
     <system:String x:Key="pluginDirectory">Priečinok s pluginmy</system:String>
     <system:String x:Key="author">Autor</system:String>
     <system:String x:Key="plugin_init_time">Čas inic.:</system:String>
-    <system:String x:Key="plugin_query_time">Čas dopytu: {0}ms</system:String>
+    <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
