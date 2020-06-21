@@ -175,7 +175,7 @@
                                     
                                     <TextBlock Text="{DynamicResource actionKeywords}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
-                                               Margin="20 0 0 0" MaxWidth="100"/>
+                                               Margin="20 0 0 0"/>
                                     <TextBlock Text="{Binding ActionKeywordsText}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
                                                ToolTip="Change Action Keywords"
