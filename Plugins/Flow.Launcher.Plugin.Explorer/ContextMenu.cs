@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +9,10 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using System.Linq;
-using System.Reflection;
+using MessageBox = System.Windows.Forms.MessageBox;
+using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
+using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
+using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -101,10 +104,25 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
+                                if (MessageBox.Show(
+                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"),fileOrFolder), 
+                                        string.Empty, 
+                                        MessageBoxButton.YesNo, 
+                                        MessageBoxIcon.Warning) 
+                                    == DialogResult.No)
+                                    return false;
+
                                 if (record.Type == ResultType.File)
                                     File.Delete(record.FullPath);
                                 else
                                     Directory.Delete(record.FullPath, true);
+
+                                Task.Run(() =>
+                                {
+                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess"),
+                                                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), fileOrFolder), 
+                                                                        Constants.ExplorerIconImageFullPath);
+                                });
                             }
                             catch (Exception e)
                             {
@@ -212,15 +230,11 @@ namespace Flow.Launcher.Plugin.Explorer
                     if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
                         Settings.IndexSearchExcludedSubdirectoryPaths.Add(new FolderLink { Path = record.FullPath });
 
-                    var pluginDirectory = Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString());
-
-                    var iconPath = pluginDirectory + "\\" + Constants.ExplorerIconImagePath;
-
                     Task.Run(() =>
                     {
                         Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"), 
                                                             Context.API.GetTranslation("plugin_explorer_path") + 
-                                                            " " + record.FullPath, iconPath);
+                                                            " " + record.FullPath, Constants.ExplorerIconImageFullPath);
 
                         // so the new path can be persisted to storage and not wait till next ViewModel save.
                         Context.API.SaveAppAllSettings();
