@@ -41,7 +41,7 @@
     <system:String x:Key="actionKeywords">Skratka akcie</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmy</system:String>
     <system:String x:Key="author">Autor</system:String>
-    <system:String x:Key="plugin_init_time">Čas inic.: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Čas inic.:</system:String>
     <system:String x:Key="plugin_query_time">Čas dopytu: {0}ms</system:String>
 
     <!--Setting Theme-->

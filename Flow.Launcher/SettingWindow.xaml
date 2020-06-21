@@ -181,7 +181,8 @@
                                                ToolTip="Change Action Keywords"
                                                Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
                                                MouseUp="OnPluginActionKeywordsClick" MaxWidth="100" />
-                                    <TextBlock Text="{Binding InitilizaTime}" Margin="10 0 0 0" MaxWidth="100"/>
+                                    <TextBlock Text="{DynamicResource plugin_init_time}" Margin="10 0 0 0" MaxWidth="100"/>
+                                    <TextBlock Text="{Binding InitilizaTime}" Margin="5 0 0 0" MaxWidth="100"/>
                                     <TextBlock Text="{Binding QueryTime}" Margin="10 0 0 0" MaxWidth="100"/>
                                     <TextBlock Text="{DynamicResource pluginDirectory}"
                                                MaxWidth="100" Cursor="Hand" Margin="40 0 0 0"

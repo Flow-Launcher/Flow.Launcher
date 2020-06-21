@@ -40,7 +40,7 @@
     <system:String x:Key="actionKeywords">Parole chiave</system:String>
     <system:String x:Key="pluginDirectory">Cartella Plugin</system:String>
     <system:String x:Key="author">Autore</system:String>
-    <system:String x:Key="plugin_init_time">Tempo di avvio: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Tempo di avvio:</system:String>
     <system:String x:Key="plugin_query_time">Tempo ricerca: {0}ms</system:String>
 
     <!--Setting Theme-->

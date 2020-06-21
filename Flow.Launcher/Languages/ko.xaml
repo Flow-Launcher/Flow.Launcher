@@ -40,7 +40,7 @@
     <system:String x:Key="actionKeywords">액션 키워드</system:String>
     <system:String x:Key="pluginDirectory">플러그인 디렉토리</system:String>
     <system:String x:Key="author">저자</system:String>
-    <system:String x:Key="plugin_init_time">초기화 시간: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
     <system:String x:Key="plugin_query_time">쿼리 시간: {0}ms</system:String>
 
     <!--Setting Theme-->

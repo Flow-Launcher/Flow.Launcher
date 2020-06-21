@@ -40,7 +40,7 @@
     <system:String x:Key="actionKeywords">Handlingsnøkkelord</system:String>
     <system:String x:Key="pluginDirectory">Utvidelseskatalog</system:String>
     <system:String x:Key="author">Forfatter</system:String>
-    <system:String x:Key="plugin_init_time">Oppstartstid: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Oppstartstid:</system:String>
     <system:String x:Key="plugin_query_time">Spørringstid: {0}ms</system:String>
 
     <!--Setting Theme-->

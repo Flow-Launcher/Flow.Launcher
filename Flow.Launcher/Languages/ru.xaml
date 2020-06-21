@@ -36,7 +36,7 @@
     <system:String x:Key="actionKeywords">Ключевое слово</system:String>
     <system:String x:Key="pluginDirectory">Папка</system:String>
     <system:String x:Key="author">Автор</system:String>
-    <system:String x:Key="plugin_init_time">Инициализация: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Инициализация:</system:String>
     <system:String x:Key="plugin_query_time">Запрос: {0}ms</system:String>
 
     <!--Setting Theme-->

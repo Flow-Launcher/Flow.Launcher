@@ -36,7 +36,7 @@
     <system:String x:Key="actionKeywords">Wyzwalacze</system:String>
     <system:String x:Key="pluginDirectory">Folder wtyczki</system:String>
     <system:String x:Key="author">Autor</system:String>
-    <system:String x:Key="plugin_init_time">Czas ładowania: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Czas ładowania:</system:String>
     <system:String x:Key="plugin_query_time">Czas zapytania: {0}ms</system:String>
 
     <!--Setting Theme-->

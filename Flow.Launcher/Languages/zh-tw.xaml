@@ -36,7 +36,7 @@
     <system:String x:Key="actionKeywords">觸發關鍵字</system:String>
     <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
     <system:String x:Key="author">作者</system:String>
-    <system:String x:Key="plugin_init_time">載入耗時：{0}ms</system:String>
+    <system:String x:Key="plugin_init_time">載入耗時：</system:String>
     <system:String x:Key="plugin_query_time">查詢耗時：{0}ms</system:String>
 
     <!--設定，主題-->

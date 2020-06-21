@@ -36,7 +36,7 @@
     <system:String x:Key="actionKeywords">Ключове слово</system:String>
     <system:String x:Key="pluginDirectory">Директорія плагіну</system:String>
     <system:String x:Key="author">Автор</system:String>
-    <system:String x:Key="plugin_init_time">Ініціалізація: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Ініціалізація:</system:String>
     <system:String x:Key="plugin_query_time">Запит: {0}ms</system:String>
 
     <!--Setting Theme-->
