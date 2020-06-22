@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--MainWindow-->
@@ -112,6 +112,7 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">New Action Keywords have been assigned to another plugin, please assign other new action keyword</system:String>
+    <system:String x:Key="success">Success</system:String>
     <system:String x:Key="actionkeyword_tips">Use * if you don't want to specify an action keyword</system:String>
 
     <!--Custom Query Hotkey Dialog-->
