@@ -225,5 +225,33 @@ namespace Flow.Launcher.Test
                 $"Raw Score: {matchResult.RawScore}{Environment.NewLine}" +
                 $"Precision Score: {(int)expectedPrecisionScore}");
         }
+
+        [TestCase("man", "Task Manager", "eManual")]
+        [TestCase("term", "Windows Terminal", "Character Map")]
+        [TestCase("winterm", "Windows Terminal", "Cygwin64 Terminal")]
+        public void WhenGivenAQueryResultsShouldGiveMoreScoreWeightToStartOfNewWord(string queryString, string compareString1, string compareString2)
+        {
+            // When
+            var matcher = new StringMatcher { UserSettingSearchPrecision = StringMatcher.SearchPrecisionScore.Regular };
+
+            // Given
+            var compareString1Result = matcher.FuzzyMatch(queryString, compareString1);
+            var compareString2Result = matcher.FuzzyMatch(queryString, compareString2);
+
+            Debug.WriteLine("");
+            Debug.WriteLine("###############################################");
+            Debug.WriteLine($"QueryString: \"{queryString}\"{Environment.NewLine}");
+            Debug.WriteLine($"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}");
+            Debug.WriteLine($"CompareString2: \"{compareString2}\", Score: {compareString2Result.Score}{Environment.NewLine}");
+            Debug.WriteLine("###############################################");
+            Debug.WriteLine("");
+
+            // Should
+            Assert.True(compareString1Result.Score > compareString2Result.Score,
+                $"Query: \"{queryString}\"{Environment.NewLine} " +
+                $"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}" +
+                $"Should be greater than{ Environment.NewLine}" +
+                $"CompareString2: \"{compareString2}\", Score: {compareString1Result.Score}{Environment.NewLine}");
+        }
     }
 }
