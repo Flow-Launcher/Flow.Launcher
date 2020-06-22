@@ -10,7 +10,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         internal static bool IsEnvironmentVariableSearch(string search)
         {
-            return LoadEnvironmentStringPaths().Count > 0 && search.StartsWith("%") && !search.Substring(1).Contains("%");
+            return LoadEnvironmentStringPaths().Count > 0 
+                    && search.StartsWith("%") 
+                    && search != "%%"
+                    && !search.Contains("\\");
         }
 
         internal static Dictionary<string, string> LoadEnvironmentStringPaths()
