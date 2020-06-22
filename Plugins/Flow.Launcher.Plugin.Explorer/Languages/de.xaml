@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--Controls-->
+    <system:String x:Key="plugin_explorer_delete">Löschen</system:String>
+    <system:String x:Key="plugin_explorer_edit">Bearbeiten</system:String>
+    <system:String x:Key="plugin_explorer_add">Hinzufügen</system:String>
+
+    <!--Dialogues-->
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">Bitte wähle eine Ordnerverknüpfung</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">Bist du sicher {0} zu löschen?</system:String>
+
+</ResourceDictionary>

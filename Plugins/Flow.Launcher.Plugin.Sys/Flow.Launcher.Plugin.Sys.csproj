@@ -124,7 +124,6 @@
   
   <ItemGroup>
     <Folder Include="Images\Images\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>

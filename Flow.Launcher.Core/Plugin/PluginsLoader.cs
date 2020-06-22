@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Exception;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -29,6 +30,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
         {
+            var erroredPlugins = new List<string>();
+
             var plugins = new List<PluginPair>();
             var metadatas = source.Where(o => AllowedLanguage.IsDotNet(o.Language));
 
@@ -50,20 +53,34 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for {metadata.Name}", e);
+                        erroredPlugins.Add(metadata.Name);
+
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
                         return;
                     }
-                    var types = assembly.GetTypes();
+
                     Type type;
                     try
                     {
+                        var types = assembly.GetTypes();
+                        
                         type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
                     }
                     catch (InvalidOperationException e)
                     {
-                        Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find class implement IPlugin for <{metadata.Name}>", e);
+                        erroredPlugins.Add(metadata.Name);
+
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
                         return;
                     }
+                    catch (ReflectionTypeLoadException e)
+                    {
+                        erroredPlugins.Add(metadata.Name);
+
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
+                        return;
+                    }
+
                     IPlugin plugin;
                     try
                     {
@@ -71,7 +88,9 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"|PluginsLoader.DotNetPlugins|Can't create instance for <{metadata.Name}>", e);
+                        erroredPlugins.Add(metadata.Name);
+
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
                         return;
                     }
 #endif
@@ -85,6 +104,26 @@ namespace Flow.Launcher.Core.Plugin
                 metadata.InitTime += milliseconds;
 
             }
+
+            if (erroredPlugins.Count > 0)
+            {
+                var errorPluginString = "";
+
+                var errorMessage = "The following "
+                                    + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
+                                    + "errored and cannot be loaded:";
+
+                erroredPlugins.ForEach(x => errorPluginString += x + Environment.NewLine);
+
+                Task.Run(() =>
+                {
+                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                                        $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
+                                        $"Please refer to the logs for more information","",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                });
+            }
+
             return plugins;
         }
 
