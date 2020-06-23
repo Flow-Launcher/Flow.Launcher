@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--MainWindow-->
@@ -36,8 +36,8 @@
     <system:String x:Key="actionKeywords">Action terfwoorden</system:String>
     <system:String x:Key="pluginDirectory">Plugin map</system:String>
     <system:String x:Key="author">Auteur</system:String>
-    <system:String x:Key="plugin_init_time">Init tijd: {0}ms</system:String>
-    <system:String x:Key="plugin_query_time">Query tijd: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Init tijd:</system:String>
+    <system:String x:Key="plugin_query_time">Query tijd:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Thema</system:String>
