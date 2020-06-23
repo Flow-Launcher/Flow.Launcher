@@ -77,7 +77,7 @@ namespace Flow.Launcher.Test
         }
 
         [TestCase("Chrome")]
-        public void WhenGivenNotAllCharactersFoundInSearchStringThenShouldReturnZeroScore(string searchString)
+        public void WhenNotAllCharactersFoundInSearchString_ThenShouldReturnZeroScore(string searchString)
         {
             var compareString = "Can have rum only in my glass";
             var matcher = new StringMatcher();
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Test
         [TestCase("cand")]
         [TestCase("cpywa")]
         [TestCase("ccs")]
-        public void WhenGivenStringsAndAppliedPrecisionFilteringThenShouldReturnGreaterThanPrecisionScoreResults(string searchTerm)
+        public void GivenQueryString_WhenAppliedPrecisionFiltering_ThenShouldReturnGreaterThanPrecisionScoreResults(string searchTerm)
         {
             var results = new List<Result>();
             var matcher = new StringMatcher();
@@ -107,7 +107,10 @@ namespace Flow.Launcher.Test
 
             foreach (var precisionScore in GetPrecisionScores())
             {
-                var filteredResult = results.Where(result => result.Score >= precisionScore).Select(result => result).OrderByDescending(x => x.Score).ToList();
+                var filteredResult = results.Where(result => result.Score >= precisionScore)
+                                            .Select(result => result)
+                                            .OrderByDescending(x => x.Score)
+                                            .ToList();
 
                 Debug.WriteLine("");
                 Debug.WriteLine("###############################################");
@@ -130,14 +133,16 @@ namespace Flow.Launcher.Test
         [TestCase(Chrome, CandyCrushSagaFromKing, 0)]
         [TestCase("sql", MicrosoftSqlServerManagementStudio, 110)]
         [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 121)]//double spacing intended
-        public void WhenGivenQueryStringThenShouldReturnCurrentScoring(string queryString, string compareString, int expectedScore)
+        public void WhenGivenQueryString_ThenShouldReturn_TheDesiredScoring(
+            string queryString, string compareString, int expectedScore)
         {
             // When, Given
             var matcher = new StringMatcher();
             var rawScore = matcher.FuzzyMatch(queryString, compareString).RawScore;
 
             // Should
-            Assert.AreEqual(expectedScore, rawScore, $"Expected score for compare string '{compareString}': {expectedScore}, Actual: {rawScore}");
+            Assert.AreEqual(expectedScore, rawScore, 
+                $"Expected score for compare string '{compareString}': {expectedScore}, Actual: {rawScore}");
         }
 
         [TestCase("goo", "Google Chrome", StringMatcher.SearchPrecisionScore.Regular, true)]
@@ -150,7 +155,7 @@ namespace Flow.Launcher.Test
         [TestCase("ccs", "Candy Crush Saga from King", StringMatcher.SearchPrecisionScore.Low, true)]
         [TestCase("cand", "Candy Crush Saga from King",StringMatcher.SearchPrecisionScore.Regular, true)]
         [TestCase("cand", "Help cure hope raise on mind entity Chrome", StringMatcher.SearchPrecisionScore.Regular, false)]
-        public void WhenGivenDesiredPrecisionThenShouldReturnAllResultsGreaterOrEqual(
+        public void WhenGivenDesiredPrecision_ThenShouldReturn_AllResultsGreaterOrEqual(
             string queryString,
             string compareString,
             StringMatcher.SearchPrecisionScore expectedPrecisionScore,
@@ -199,7 +204,7 @@ namespace Flow.Launcher.Test
         [TestCase("cod", VisualStudioCode, StringMatcher.SearchPrecisionScore.Regular, true)]
         [TestCase("code", VisualStudioCode, StringMatcher.SearchPrecisionScore.Regular, true)]
         [TestCase("codes", "Visual Studio Codes", StringMatcher.SearchPrecisionScore.Regular, true)]
-        public void WhenGivenQueryShouldReturnResultsContainingAllQuerySubstrings(
+        public void WhenGivenQuery_ShouldReturnResults_ContainingAllQuerySubstrings(
             string queryString,
             string compareString,
             StringMatcher.SearchPrecisionScore expectedPrecisionScore,
@@ -229,7 +234,8 @@ namespace Flow.Launcher.Test
         [TestCase("man", "Task Manager", "eManual")]
         [TestCase("term", "Windows Terminal", "Character Map")]
         [TestCase("winterm", "Windows Terminal", "Cygwin64 Terminal")]
-        public void WhenGivenAQueryResultsShouldGiveMoreScoreWeightToStartOfNewWord(string queryString, string compareString1, string compareString2)
+        public void WhenGivenAQuery_Scoring_ShouldGiveMoreWeightToStartOfNewWord(
+            string queryString, string compareString1, string compareString2)
         {
             // When
             var matcher = new StringMatcher { UserSettingSearchPrecision = StringMatcher.SearchPrecisionScore.Regular };
