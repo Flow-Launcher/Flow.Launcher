@@ -124,12 +124,12 @@ namespace Flow.Launcher.Test
         }
 
         [TestCase(Chrome, Chrome, 157)]
-        [TestCase(Chrome, LastIsChrome, 103)]
-        [TestCase(Chrome, HelpCureHopeRaiseOnMindEntityChrome, 21)]
-        [TestCase(Chrome, UninstallOrChangeProgramsOnYourComputer, 15)]
+        [TestCase(Chrome, LastIsChrome, 147)]
+        [TestCase(Chrome, HelpCureHopeRaiseOnMindEntityChrome, 25)]
+        [TestCase(Chrome, UninstallOrChangeProgramsOnYourComputer, 21)]
         [TestCase(Chrome, CandyCrushSagaFromKing, 0)]
-        [TestCase("sql", MicrosoftSqlServerManagementStudio, 56)]
-        [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 99)]//double spacing intended
+        [TestCase("sql", MicrosoftSqlServerManagementStudio, 110)]
+        [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 121)]//double spacing intended
         public void WhenGivenQueryStringThenShouldReturnCurrentScoring(string queryString, string compareString, int expectedScore)
         {
             // When, Given
