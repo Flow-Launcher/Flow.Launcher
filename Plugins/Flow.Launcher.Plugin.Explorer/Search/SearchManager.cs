@@ -39,19 +39,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (quickFolderLinks.Count > 0)
                 return quickFolderLinks;
 
-            if (string.IsNullOrEmpty(query.Search))
+            if (string.IsNullOrEmpty(querySearch))
                 return results;
 
-            if (!FilesFolders.IsLocationPathString(querySearch))
-                return WindowsIndexFilesAndFoldersSearch(query, querySearch);
+            var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
-            var locationPath = query.Search;
-
-            if (EnvironmentVariables.IsEnvironmentVariableSearch(locationPath))
-                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(locationPath, query, context);
+            if (isEnvironmentVariable)
+                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, context);
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
-            if (locationPath.Substring(1).Contains("%"))
+            var isEnvironmentVariablePath = querySearch.Substring(1).Contains("%\\");
+
+            if (!FilesFolders.IsLocationPathString(querySearch) && !isEnvironmentVariablePath)
+                return WindowsIndexFilesAndFoldersSearch(query, querySearch);
+
+            var locationPath = querySearch;
+
+            if (isEnvironmentVariablePath)
                 locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
 
             if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
