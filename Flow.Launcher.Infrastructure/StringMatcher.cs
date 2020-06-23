@@ -162,13 +162,13 @@ namespace Flow.Launcher.Infrastructure
                 return new MatchResult(true, UserSettingSearchPrecision, indexList, score);
             }
 
-            return new MatchResult (false, UserSettingSearchPrecision);
+            return new MatchResult(false, UserSettingSearchPrecision);
         }
 
         // To get the index of the closest space which preceeds the first matching index
         private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
         {
-            if(spaceIndices.Count == 0)
+            if (spaceIndices.Count == 0)
             {
                 return -1;
             }
@@ -180,7 +180,7 @@ namespace Flow.Launcher.Infrastructure
             }
         }
 
-        private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex, 
+        private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
                                                         string fullStringToCompareWithoutCase, string currentQuerySubstring)
         {
             var allMatch = true;
@@ -324,13 +324,13 @@ namespace Flow.Launcher.Infrastructure
     public class MatchOption
     {
         /// <summary>
-        /// prefix of match char, use for hightlight
+        /// prefix of match char, use for highlight
         /// </summary>
         [Obsolete("this is never used")]
         public string Prefix { get; set; } = "";
 
         /// <summary>
-        /// suffix of match char, use for hightlight
+        /// suffix of match char, use for highlight
         /// </summary>
         [Obsolete("this is never used")]
         public string Suffix { get; set; } = "";
