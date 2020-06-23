@@ -253,5 +253,31 @@ namespace Flow.Launcher.Test
                 $"Should be greater than{ Environment.NewLine}" +
                 $"CompareString2: \"{compareString2}\", Score: {compareString1Result.Score}{Environment.NewLine}");
         }
+
+        [TestCase("vim", "Vim", "ignoreDescription", "ignore.exe", "Vim Diff", "ignoreDescription", "ignore.exe")]
+        public void WhenMultipleResults_ExactMatchingResult_ShouldHaveGreatestScore(
+            string queryString, string firstName, string firstDescription, string firstExecutableName, 
+            string secondName, string secondDescription, string secondExecutableName)
+        {
+            // Act
+            var matcher = new StringMatcher();
+            var firstNameMatch = matcher.FuzzyMatch(queryString, firstName).RawScore;
+            var firstDescriptionMatch = matcher.FuzzyMatch(queryString, firstDescription).RawScore;
+            var firstExecutableNameMatch = matcher.FuzzyMatch(queryString, firstExecutableName).RawScore;
+
+            var secondNameMatch = matcher.FuzzyMatch(queryString, secondName).RawScore;
+            var secondDescriptionMatch = matcher.FuzzyMatch(queryString, secondDescription).RawScore;
+            var secondExecutableNameMatch = matcher.FuzzyMatch(queryString, secondExecutableName).RawScore;
+
+            var firstScore = new[] { firstNameMatch, firstDescriptionMatch, firstExecutableNameMatch }.Max();
+            var secondScore = new[] { secondNameMatch, secondDescriptionMatch, secondExecutableNameMatch }.Max();
+
+            // Assert
+            Assert.IsTrue(firstScore > secondScore,
+                $"Query: \"{queryString}\"{Environment.NewLine} " +
+                $"Name of first: \"{firstName}\", Final Score: {firstScore}{Environment.NewLine}" +
+                $"Should be greater than{ Environment.NewLine}" +
+                $"Name of second: \"{secondName}\", Final Score: {secondScore}{Environment.NewLine}");
+        }
     }
 }
