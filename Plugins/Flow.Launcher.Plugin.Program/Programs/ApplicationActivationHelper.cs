@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
     public class ApplicationActivationHelper
     {

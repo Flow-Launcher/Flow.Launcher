@@ -8,12 +8,11 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
-using Wox.Infrastructure;
-using Microsoft.Plugin.Program.Logger;
-using Wox.Plugin;
-using System.Reflection;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.Program.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
 
-namespace Microsoft.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
 
     [Serializable]
@@ -23,6 +22,7 @@ namespace Microsoft.Plugin.Program.Programs
         public string UniqueIdentifier { get; set; }
         public string IcoPath { get; set; }
         public string FullPath { get; set; }
+        public string LnkResolvedPath { get; set; }
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
         public string Description { get; set; }

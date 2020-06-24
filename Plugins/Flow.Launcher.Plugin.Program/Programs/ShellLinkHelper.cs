@@ -7,7 +7,7 @@ using Accessibility;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Policy;
 
-namespace Microsoft.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
     class ShellLinkHelper
     {
