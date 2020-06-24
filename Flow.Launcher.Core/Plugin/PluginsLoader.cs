@@ -21,7 +21,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
-            var dotnetPlugins = DotNetPlugins(metadatas).ToList();
+            var dotnetPlugins = DotNetPlugins(metadatas);
             var pythonPlugins = PythonPlugins(metadatas, settings.PythonDirectory);
             var executablePlugins = ExecutablePlugins(metadatas);
             var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
@@ -46,74 +46,57 @@ namespace Flow.Launcher.Core.Plugin
                     var type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
                     var plugin = (IPlugin)Activator.CreateInstance(type);
 #else
-                    Assembly assembly;
+                    Assembly assembly = null;
+                    IPlugin plugin = null;
+
                     try
                     {
                         assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(metadata.ExecuteFilePath);
-                    }
-                    catch (Exception e)
-                    {
-                        erroredPlugins.Add(metadata.Name);
 
-                        Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
-                        return;
-                    }
-
-                    Type type;
-                    try
-                    {
                         var types = assembly.GetTypes();
-                        
-                        type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
+                        var type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
+
+                        plugin = (IPlugin)Activator.CreateInstance(type);
+                    }
+                    catch (Exception e) when (assembly == null)
+                    {
+                        Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
                     }
                     catch (InvalidOperationException e)
                     {
-                        erroredPlugins.Add(metadata.Name);
-
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
-                        return;
                     }
                     catch (ReflectionTypeLoadException e)
                     {
-                        erroredPlugins.Add(metadata.Name);
-
                         Log.Exception($"|PluginsLoader.DotNetPlugins|The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
-                        return;
-                    }
-
-                    IPlugin plugin;
-                    try
-                    {
-                        plugin = (IPlugin)Activator.CreateInstance(type);
                     }
                     catch (Exception e)
                     {
-                        erroredPlugins.Add(metadata.Name);
-
                         Log.Exception($"|PluginsLoader.DotNetPlugins|The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
+                    }
+
+                    if (plugin == null)
+                    {
+                        erroredPlugins.Add(metadata.Name);
                         return;
                     }
 #endif
-                    PluginPair pair = new PluginPair
+                    plugins.Add(new PluginPair
                     {
                         Plugin = plugin,
                         Metadata = metadata
-                    };
-                    plugins.Add(pair);
+                    });
                 });
                 metadata.InitTime += milliseconds;
-
             }
 
             if (erroredPlugins.Count > 0)
             {
-                var errorPluginString = "";
+                var errorPluginString = String.Join(Environment.NewLine, erroredPlugins);
 
                 var errorMessage = "The following "
                                     + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
                                     + "errored and cannot be loaded:";
-
-                erroredPlugins.ForEach(x => errorPluginString += x + Environment.NewLine);
 
                 Task.Run(() =>
                 {
