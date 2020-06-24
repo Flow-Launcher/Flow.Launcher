@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using Wox.Infrastructure;
-using Microsoft.Plugin.Program.Logger;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Media;
-using System.Windows.Controls;
-using Wox.Plugin;
-using System.Reflection;
-using Wox.Plugin.SharedCommands;
-using System.Runtime.InteropServices.ComTypes;
 
-namespace Microsoft.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
     [Serializable]
     public class UWP
@@ -253,6 +247,7 @@ namespace Microsoft.Plugin.Program.Programs
             public string UserModelId { get; set; }
             public string BackgroundColor { get; set; }
 
+            public string EntryPoint { get; set; }
             public string Name => DisplayName;
             public string Location => Package.Location;
 

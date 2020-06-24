@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using Windows.Storage;
 
-namespace Microsoft.Plugin.Program.Programs
+namespace Flow.Launcher.Plugin.Program.Programs
 {
     public class AppxPackageHelper
     {
