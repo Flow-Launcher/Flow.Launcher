@@ -8,13 +8,14 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
-using Shell;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.Program.Logger;
-using Flow.Launcher.Plugin.SharedCommands;
+using Wox.Infrastructure;
+using Microsoft.Plugin.Program.Logger;
+using Wox.Plugin;
+using System.Reflection;
 
-namespace Flow.Launcher.Plugin.Program.Programs
+namespace Microsoft.Plugin.Program.Programs
 {
+
     [Serializable]
     public class Win32 : IProgram
     {
@@ -190,27 +191,21 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var program = Win32Program(path);
             try
             {
-                var link = new ShellLink();
-                const uint STGM_READ = 0;
-                ((IPersistFile)link).Load(path, STGM_READ);
-                var hwnd = new _RemotableHandle();
-                link.Resolve(ref hwnd, 0);
-
                 const int MAX_PATH = 260;
                 StringBuilder buffer = new StringBuilder(MAX_PATH);
+                ShellLinkHelper _helper = new ShellLinkHelper();
+                string target = _helper.retrieveTargetPath(path);
 
-                var data = new _WIN32_FIND_DATAW();
-                const uint SLGP_SHORTPATH = 1;
-                link.GetPath(buffer, buffer.Capacity, ref data, SLGP_SHORTPATH);
-                var target = buffer.ToString();
                 if (!string.IsNullOrEmpty(target))
                 {
                     var extension = Extension(target);
                     if (extension == ExeExtension && File.Exists(target))
                     {
-                        buffer = new StringBuilder(MAX_PATH);
-                        link.GetDescription(buffer, MAX_PATH);
-                        var description = buffer.ToString();
+                        program.LnkResolvedPath = program.FullPath;
+                        program.FullPath = Path.GetFullPath(target).ToLower();
+                        program.ExecutableName = Path.GetFileName(target);
+
+                        var description = _helper.description;
                         if (!string.IsNullOrEmpty(description))
                         {
                             program.Description = description;
@@ -276,6 +271,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var files = new List<string>();
             var folderQueue = new Queue<string>();
             folderQueue.Enqueue(directory);
+            
             do
             {
                 var currentDirectory = folderQueue.Dequeue();
