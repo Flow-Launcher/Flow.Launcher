@@ -12,14 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using AppxPackaing;
-using Shell;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.Program.Logger;
-using IStream = AppxPackaing.IStream;
+using Wox.Infrastructure;
+using Microsoft.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Media;
+using System.Windows.Controls;
+using Wox.Plugin;
+using System.Reflection;
+using Wox.Plugin.SharedCommands;
+using System.Runtime.InteropServices.ComTypes;
 
-namespace Flow.Launcher.Plugin.Program.Programs
+namespace Microsoft.Plugin.Program.Programs
 {
     [Serializable]
     public class UWP
@@ -51,12 +55,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void InitializeAppInfo()
         {
+            AppxPackageHelper _helper = new AppxPackageHelper();
             var path = Path.Combine(Location, "AppxManifest.xml");
 
             var namespaces = XmlNamespaces(path);
             InitPackageVersion(namespaces);
 
-            var appxFactory = new AppxFactory();
             IStream stream;
             const uint noAttribute = 0x80;
             const Stgm exclusiveRead = Stgm.Read | Stgm.ShareExclusive;
@@ -64,20 +68,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             if (hResult == Hresult.Ok)
             {
-                var reader = appxFactory.CreateManifestReader(stream);
-                var manifestApps = reader.GetApplications();
                 var apps = new List<Application>();
-                while (manifestApps.GetHasCurrent() != 0)
+             
+                List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
+                foreach(var _app in _apps)
                 {
-                    var manifestApp = manifestApps.GetCurrent();
-                    var appListEntry = manifestApp.GetStringValue("AppListEntry");
-                    if (appListEntry != "none")
-                    {
-                        var app = new Application(manifestApp, this);
-                        apps.Add(app);
-                    }
-                    manifestApps.MoveNext();
+                    var app = new Application(_app, this);
+                    apps.Add(app);
                 }
+                
                 Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
             }
             else
@@ -356,13 +355,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            public Application(IAppxManifestApplication manifestApp, UWP package)
+            public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
             {
-                UserModelId = manifestApp.GetAppUserModelId();
-                UniqueIdentifier = manifestApp.GetAppUserModelId();
-                DisplayName = manifestApp.GetStringValue("DisplayName");
-                Description = manifestApp.GetStringValue("Description");
-                BackgroundColor = manifestApp.GetStringValue("BackgroundColor");
+                // This is done because we cannot use the keyword 'out' along with a property
+                string tmpUserModelId;
+                string tmpUniqueIdentifier;
+                string tmpDisplayName;
+                string tmpDescription;
+                string tmpBackgroundColor;
+                string tmpEntryPoint;
+
+                manifestApp.GetAppUserModelId(out tmpUserModelId);
+                manifestApp.GetAppUserModelId(out tmpUniqueIdentifier);
+                manifestApp.GetStringValue("DisplayName", out tmpDisplayName);
+                manifestApp.GetStringValue("Description", out tmpDescription);
+                manifestApp.GetStringValue("BackgroundColor", out tmpBackgroundColor);
+                manifestApp.GetStringValue("EntryPoint", out tmpEntryPoint);
+
+                UserModelId = tmpUserModelId;
+                UniqueIdentifier = tmpUniqueIdentifier;
+                DisplayName = tmpDisplayName;
+                Description = tmpDescription;
+                BackgroundColor = tmpBackgroundColor;
+                EntryPoint = tmpEntryPoint;
+
                 Package = package;
 
                 DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
@@ -430,7 +446,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return $"{prefix}//{packageName}{key}";
             }
 
-            internal string LogoUriFromManifest(IAppxManifestApplication app)
+            internal string LogoUriFromManifest(AppxPackageHelper.IAppxManifestApplication app)
             {
                 var logoKeyFromVersion = new Dictionary<PackageVersion, string>
                 {
@@ -440,8 +456,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 };
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
+                    string logoUri;
                     var key = logoKeyFromVersion[Package.Version];
-                    var logoUri = app.GetStringValue(key);
+                    app.GetStringValue(key, out logoUri);
                     return logoUri;
                 }
                 else
