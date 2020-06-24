@@ -127,65 +127,74 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-        public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, string pythonDirecotry)
+        public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, string pythonDirectory)
         {
-            var metadatas = source.Where(o => o.Language.ToUpper() == AllowedLanguage.Python);
-            string filename;
-
-            if (string.IsNullOrEmpty(pythonDirecotry))
+            // try to set Constant.PythonPath, either from
+            // PATH or from the given pythonDirectory
+            if (string.IsNullOrEmpty(pythonDirectory))
             {
                 var paths = Environment.GetEnvironmentVariable(PATH);
                 if (paths != null)
                 {
-                    var pythonPaths = paths.Split(';').Where(p => p.ToLower().Contains(Python));
-                    if (pythonPaths.Any())
+                    var pythonInPath = paths
+                        .Split(';')
+                        .Where(p => p.ToLower().Contains(Python))
+                        .Any();
+
+                    if (pythonInPath)
                     {
-                        filename = PythonExecutable;
+                        Constant.PythonPath = PythonExecutable;
                     }
                     else
                     {
                         Log.Error("|PluginsLoader.PythonPlugins|Python can't be found in PATH.");
-                        return new List<PluginPair>();
                     }
                 }
                 else
                 {
                     Log.Error("|PluginsLoader.PythonPlugins|PATH environment variable is not set.");
-                    return new List<PluginPair>();
                 }
             }
             else
             {
-                var path = Path.Combine(pythonDirecotry, PythonExecutable);
+                var path = Path.Combine(pythonDirectory, PythonExecutable);
                 if (File.Exists(path))
                 {
-                    filename = path;
+                    Constant.PythonPath = path;
                 }
                 else
                 {
-                    Log.Error("|PluginsLoader.PythonPlugins|Can't find python executable in <b ");
-                    return new List<PluginPair>();
+                    Log.Error($"|PluginsLoader.PythonPlugins|Can't find python executable in {path}");
                 }
             }
-            Constant.PythonPath = filename;
-            var plugins = metadatas.Select(metadata => new PluginPair
+
+            // if we have a path to the python executable,
+            // load every python plugin pair.
+            if (String.IsNullOrEmpty(Constant.PythonPath))
             {
-                Plugin = new PythonPlugin(filename),
-                Metadata = metadata
-            });
-            return plugins;
+                return new List<PluginPair>();
+            }
+            else
+            {
+                return source
+                    .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
+                    .Select(metadata => new PluginPair
+                    {
+                        Plugin = new PythonPlugin(Constant.PythonPath),
+                        Metadata = metadata
+                    });
+            }
         }
 
         public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
-            var metadatas = source.Where(o => o.Language.ToUpper() == AllowedLanguage.Executable);
-
-            var plugins = metadatas.Select(metadata => new PluginPair
-            {
-                Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
-                Metadata = metadata
-            });
-            return plugins;
+            return source
+                .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)
+                .Select(metadata => new PluginPair
+                {
+                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                    Metadata = metadata
+                });
         }
 
     }
