@@ -36,8 +36,8 @@
     <system:String x:Key="actionKeywords">Nøgleord</system:String>
     <system:String x:Key="pluginDirectory">Plugin bibliotek</system:String>
     <system:String x:Key="author">Forfatter</system:String>
-    <system:String x:Key="plugin_init_time">Initaliseringstid: {0}ms</system:String>
-    <system:String x:Key="plugin_query_time">Søgetid: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Initaliseringstid:</system:String>
+    <system:String x:Key="plugin_query_time">Søgetid:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Tema</system:String>

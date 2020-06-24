@@ -4,30 +4,33 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Exception;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
     public partial class ActionKeywords : Window
     {
-        private PluginPair _plugin;
-        private Settings _settings;
-        private readonly Internationalization _translater = InternationalizationManager.Instance;
+        private readonly PluginPair plugin;
+        private Settings settings;
+        private readonly Internationalization translater = InternationalizationManager.Instance;
+        private readonly PluginViewModel pluginViewModel;
 
-        public ActionKeywords(string pluginId, Settings settings)
+        public ActionKeywords(string pluginId, Settings settings, PluginViewModel pluginViewModel)
         {
             InitializeComponent();
-            _plugin = PluginManager.GetPluginForId(pluginId);
-            _settings = settings;
-            if (_plugin == null)
+            plugin = PluginManager.GetPluginForId(pluginId);
+            this.settings = settings;
+            this.pluginViewModel = pluginViewModel;
+            if (plugin == null)
             {
-                MessageBox.Show(_translater.GetTranslation("cannotFindSpecifiedPlugin"));
+                MessageBox.Show(translater.GetTranslation("cannotFindSpecifiedPlugin"));
                 Close();
             }
         }
 
         private void ActionKeyword_OnLoaded(object sender, RoutedEventArgs e)
         {
-            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeperater, _plugin.Metadata.ActionKeywords.ToArray());
+            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeperater, plugin.Metadata.ActionKeywords.ToArray());
             tbAction.Focus();
         }
 
@@ -38,19 +41,17 @@ namespace Flow.Launcher
 
         private void btnDone_OnClick(object sender, RoutedEventArgs _)
         {
-            var oldActionKeyword = _plugin.Metadata.ActionKeywords[0];
+            var oldActionKeyword = plugin.Metadata.ActionKeywords[0];
             var newActionKeyword = tbAction.Text.Trim();
             newActionKeyword = newActionKeyword.Length > 0 ? newActionKeyword : "*";
-            if (!PluginManager.ActionKeywordRegistered(newActionKeyword))
+            if (!pluginViewModel.IsActionKeywordRegistered(newActionKeyword))
             {
-                var id = _plugin.Metadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldActionKeyword, newActionKeyword);
-                MessageBox.Show(_translater.GetTranslation("success"));
+                pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);
                 Close();
             }
             else
             {
-                string msg = _translater.GetTranslation("newActionKeywordsHasBeenAssigned");
+                string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
                 MessageBox.Show(msg);
             }
         }
