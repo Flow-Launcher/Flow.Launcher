@@ -47,10 +47,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-#if !DEBUG
-                Log.Exception("Portable", "Error occured while disabling portable mode", e);
-#endif
-                throw;
+                Log.Exception("|Portable.DisablePortableMode|Error occured while disabling portable mode", e);
             }
         }
 
@@ -74,10 +71,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-#if !DEBUG
-                Log.Exception("Portable", "Error occured while enabling portable mode", e);
-#endif
-                throw;
+                Log.Exception("|Portable.EnablePortableMode|Error occured while enabling portable mode", e);
             }
         }
 
@@ -159,7 +153,8 @@ namespace Flow.Launcher.Core.Configuration
             var portableDataDeleteFilePath = Path.Combine(portableDataDir, DataLocation.DeletionIndicatorFile);
             var roamingDataDeleteFilePath = Path.Combine(roamingDataDir, DataLocation.DeletionIndicatorFile);
 
-            // Should we switch from %AppData% to portable mode?
+            // If the data folder in %appdata% is marked for deletion,
+            // delete it and prompt the user to pick the portable data location
             if (File.Exists(roamingDataDeleteFilePath))
             {
                 FilesFolders.RemoveFolderIfExists(roamingDataDir);
@@ -173,7 +168,8 @@ namespace Flow.Launcher.Core.Configuration
                     Environment.Exit(0);
                 }
             }
-            // Should we switch from portable mode to %AppData%?
+            // Otherwise, if the portable data folder is marked for deletion,
+            // delete it and notify the user about it.
             else if (File.Exists(portableDataDeleteFilePath))
             {
                 FilesFolders.RemoveFolderIfExists(portableDataDir);
