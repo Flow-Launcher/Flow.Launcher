@@ -123,17 +123,13 @@ namespace Flow.Launcher.Core.Configuration
         public void CreateUninstallerEntry()
         {
             var uninstallRegSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
-            // NB: Sometimes the Uninstall key doesn't exist
-            RegistryKey
-                .OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                .CreateSubKey("Uninstall", RegistryKeyPermissionCheck.ReadWriteSubTree)
-                .Dispose();
 
-            var key = RegistryKey
-                        .OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default)
-                        .CreateSubKey($@"{uninstallRegSubKey}\{Constant.FlowLauncher}", RegistryKeyPermissionCheck.ReadWriteSubTree);
-
-            key.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"), RegistryValueKind.String);
+            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default))
+            using (var subKey1 = baseKey.CreateSubKey(uninstallRegSubKey, RegistryKeyPermissionCheck.ReadWriteSubTree))
+            using (var subKey2 = subKey1.CreateSubKey(Constant.FlowLauncher, RegistryKeyPermissionCheck.ReadWriteSubTree))
+            {
+                subKey2.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"), RegistryValueKind.String);
+            }
 
             using (var portabilityUpdater = NewUpdateManager())
             {
@@ -144,7 +140,9 @@ namespace Flow.Launcher.Core.Configuration
         internal void IndicateDeletion(string filePathTodelete)
         {
             var deleteFilePath = Path.Combine(filePathTodelete, DataLocation.DeletionIndicatorFile);
-            File.CreateText(deleteFilePath).Close();
+            using (var _ = File.CreateText(deleteFilePath))
+            {
+            }
         }
 
         ///<summary>
