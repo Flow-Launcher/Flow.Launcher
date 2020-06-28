@@ -86,8 +86,8 @@ namespace Flow.Launcher.Core
                 var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
                 FilesFolders.Copy(DataLocation.PortableDataPath, targetDestination);
                 if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
-                    MessageBox.Show(string.Format("Flow Launcher was not able to move your user profile data to the new update version. Please manually" +
-                        "move your profile data folder from {0} to {1}", DataLocation.PortableDataPath, targetDestination));
+                    MessageBox.Show("Flow Launcher was not able to move your user profile data to the new update version. Please manually " +
+                        $"move your profile data folder from {DataLocation.PortableDataPath} to {targetDestination}");
             }
             else
             {
