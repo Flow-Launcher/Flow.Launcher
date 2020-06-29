@@ -38,13 +38,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
-                    
+
                     string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
                     context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
                         changeTo :
                         query.ActionKeyword + " " + changeTo);
                     return false;
                 },
+                TitleToolTip = Constants.ToolTipOpenDirectory,
+                SubTitleToolTip = Constants.ToolTipOpenDirectory,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
             };
         }
@@ -85,6 +87,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     FilesFolders.OpenPath(retrievedDirectoryPath);
                     return true;
                 },
+                TitleToolTip = Constants.ToolTipOpenDirectory,
+                SubTitleToolTip = Constants.ToolTipOpenDirectory,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = retrievedDirectoryPath, ShowIndexState = true, WindowsIndexed = windowsIndexed }
             };
         }

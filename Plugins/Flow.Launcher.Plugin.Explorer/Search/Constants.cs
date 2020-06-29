@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const string DifferentUserIconImagePath = "Images\\user.png";
         internal const string IndexingOptionsIconImagePath = "Images\\windowsindexingoptions.png";
 
-        internal const string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
+        internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";
 
         internal const char AllFilesFolderSearchWildcard = '>';
 
