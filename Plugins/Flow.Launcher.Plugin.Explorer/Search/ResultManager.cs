@@ -87,8 +87,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     FilesFolders.OpenPath(retrievedDirectoryPath);
                     return true;
                 },
-                TitleToolTip = Constants.ToolTipOpenDirectory,
-                SubTitleToolTip = Constants.ToolTipOpenDirectory,
+                TitleToolTip = retrievedDirectoryPath,
+                SubTitleToolTip = retrievedDirectoryPath,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = retrievedDirectoryPath, ShowIndexState = true, WindowsIndexed = windowsIndexed }
             };
         }
