@@ -1,6 +1,7 @@
 ﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -105,7 +106,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     try
                     {
-                        FilesFolders.OpenPath(filePath);
+                        if (c.SpecialKeyState.CtrlPressed)
+                        {
+                            FilesFolders.OpenContainingFolder(filePath);
+                        }
+                        else
+                        {
+                            FilesFolders.OpenPath(filePath);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -114,6 +122,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                     return true;
                 },
+                TitleToolTip = Constants.ToolTipOpenContainingFolder,
+                SubTitleToolTip = Constants.ToolTipOpenContainingFolder,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
             };
             return result;

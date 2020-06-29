@@ -8,6 +8,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
     public static class FilesFolders
     {
         private const string FileExplorerProgramName = "explorer";
+
+        private const string FileExplorerProgramEXE = "explorer.exe";
+
         public static void Copy(this string sourcePath, string targetPath)
         {
             // Get the subdirectories for the specified directory.
@@ -126,6 +129,11 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
+        }
+
+        public static void OpenContainingFolder(string path)
+        {
+            Process.Start(FileExplorerProgramEXE, $" /select,\"{path}\"");
         }
 
         ///<summary>

@@ -18,6 +18,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";
 
+        internal const string ToolTipOpenContainingFolder = "Ctrl + Enter to open the containing folder";
+
         internal const char AllFilesFolderSearchWildcard = '>';
 
         internal const char DirectorySeperator = '\\';
