@@ -25,7 +25,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (Directory.Exists(special.Value.ToString()))
                 {
                     // Variables are returned with a mixture of all upper/lower case. 
-                    // Call ToLower() to make them look consitent
+                    // Call ToLower() to make the results look consistent
                     envStringPaths.Add(special.Key.ToString().ToLower(), special.Value.ToString());
                 }
             }
