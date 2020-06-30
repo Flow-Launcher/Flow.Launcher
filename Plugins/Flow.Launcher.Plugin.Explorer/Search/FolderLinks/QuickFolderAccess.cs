@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
                 return folderLinks
                         .Select(item =>
                                     new ResultManager(context)
-                                            .CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query))
+                                            .CreateFolderResult(item.Nickname, item.Path, item.Path, query))
                         .ToList();
 
             string search = query.Search.ToLower();
@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
 
             return queriedFolderLinks.Select(item =>
                                                 new ResultManager(context)
-                                                        .CreateFolderResult(item.Nickname, Constants.DefaultFolderSubtitleString, item.Path, query))
+                                                        .CreateFolderResult(item.Nickname, item.Path, item.Path, query))
                                      .ToList();
         }
     }
