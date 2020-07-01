@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--MainWindow-->
@@ -40,11 +40,13 @@
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
     <system:String x:Key="disable">Disable</system:String>
-    <system:String x:Key="actionKeywords">Action keywords</system:String>
+    <system:String x:Key="actionKeywords">Action keyword:</system:String>
+    <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
+    <system:String x:Key="newActionKeyword">New action keyword:</system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
     <system:String x:Key="author">Author</system:String>
-    <system:String x:Key="plugin_init_time">Init time: {0}ms</system:String>
-    <system:String x:Key="plugin_query_time">Query time: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Init time:</system:String>
+    <system:String x:Key="plugin_query_time">Query time:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Theme</system:String>

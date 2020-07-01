@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Process.Start("explorer.exe", $" /select,\"{record.FullPath}\"");
+                        FilesFolders.OpenContainingFolder(record.FullPath);
                     }
                     catch (Exception e)
                     {

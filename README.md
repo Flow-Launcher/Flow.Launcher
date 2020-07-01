@@ -1,5 +1,6 @@
-Flow Launcher
-=============
+<p align="center">
+  <img width="500px" src="https://github.com/Flow-Launcher/Flow.Launcher/blob/5ba4514f31e624c679628d4dfe89036c0e24006c/Doc/Logo/resources/flow-header-square-transparent.png">
+</p>
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 [![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)

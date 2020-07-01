@@ -40,8 +40,8 @@
     <system:String x:Key="actionKeywords">Mot-clé d'action :</system:String>
     <system:String x:Key="pluginDirectory">Répertoire</system:String>
     <system:String x:Key="author">Auteur </system:String>
-    <system:String x:Key="plugin_init_time">Chargement : {0}ms</system:String>
-    <system:String x:Key="plugin_query_time">Utilisation : {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Chargement :</system:String>
+    <system:String x:Key="plugin_query_time">Utilisation :</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Thèmes</system:String>

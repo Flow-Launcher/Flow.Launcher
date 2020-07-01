@@ -54,8 +54,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                         if (dataReaderResults.GetString(2) == "Directory")
                                         {
                                             folderResults.Add(resultManager.CreateFolderResult(
-                                                                                dataReaderResults.GetString(0), 
-                                                                                Constants.DefaultFolderSubtitleString, 
+                                                                                dataReaderResults.GetString(0),
+                                                                                dataReaderResults.GetString(1), 
                                                                                 dataReaderResults.GetString(1), 
                                                                                 query, true, true));
                                         }
