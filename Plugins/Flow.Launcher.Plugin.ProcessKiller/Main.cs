@@ -54,6 +54,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     IcoPath = path,
                     Title = p.ProcessName + " - " + p.Id,
                     SubTitle = path,
+                    TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
                     Action = (c) =>
                     {
