@@ -68,7 +68,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 results.Insert(0, new Result()
                 {
                     IcoPath = "Images\\app.png",
-                    Title = "kill all \"" + termToSearch + "\" process",
+                    Title = "kill all \"" + termToSearch + "\" processes",
                     SubTitle = "",
                     Score = 200,
                     Action = (c) =>
@@ -96,29 +96,25 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"Fail to kill process {p.ProcessName}", e);
+                    Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
                 }
             }
         }
         private List<ProcessResult> GetProcesslist(string termToSearch)
         {
             var processlist = new List<ProcessResult>();
-            var processes = Process.GetProcesses();
-            if (string.IsNullOrWhiteSpace(termToSearch))
-            {
-                // show all process
-                foreach (var p in processes)
-                {
-                    if (FilterSystemProcesses(p)) continue;
 
+            foreach (var p in Process.GetProcesses())
+            {
+                if (FilterSystemProcesses(p)) continue;
+
+                if (string.IsNullOrWhiteSpace(termToSearch))
+                {
+                    // show all non-system processes
                     processlist.Add(new ProcessResult(p,0));
                 }
-            }
-            else
-            {
-                foreach (var p in processes)
+                else
                 {
-                    if (FilterSystemProcesses(p)) continue;
                     var score = StringMatcher.FuzzySearch(termToSearch, p.ProcessName + p.Id).Score;
                     if (score > 0)
                     {
@@ -132,9 +128,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             bool FilterSystemProcesses(Process p)
             {
                 var name = p.ProcessName.ToLower();
-                if (_systemProcessList.Contains(name))
-                    return true;
-                return false;
+                return _systemProcessList.Contains(name);
             }
         }
 
