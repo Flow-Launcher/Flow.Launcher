@@ -37,6 +37,11 @@
     <Content Include="Images\app.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Languages\en.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="plugin.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

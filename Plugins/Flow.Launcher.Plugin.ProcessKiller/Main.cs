@@ -10,7 +10,7 @@ using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
-    public class Main : IPlugin
+    public class Main : IPlugin, IPluginI18n
     {
         private readonly HashSet<string> _systemProcessList = new HashSet<string>(){
             "conhost",
@@ -28,6 +28,13 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             "spoolsv",
             "explorer"};
 
+        private static PluginInitContext _context;
+
+        public void Init(PluginInitContext context)
+        {
+            _context = context;
+        }
+
         public List<Result> Query(Query query)
         {
             var termToSearch = query.Terms.Length == 1
@@ -39,6 +46,16 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 !processlist.Any()
                     ? null
                     : CreateResultsFromProcesses(processlist, termToSearch);
+        }
+
+        public string GetTranslatedPluginTitle()
+        {
+            return _context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_name");
+        }
+
+        public string GetTranslatedPluginDescription()
+        {
+            return _context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_description");
         }
 
         private List<Result> CreateResultsFromProcesses(List<ProcessResult> processlist, string termToSearch)
@@ -69,7 +86,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 results.Insert(0, new Result()
                 {
                     IcoPath = "Images\\app.png",
-                    Title = "kill all \"" + termToSearch + "\" processes",
+                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), termToSearch),
                     SubTitle = "",
                     Score = 200,
                     Action = (c) =>
@@ -156,10 +173,6 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             {
                 return "";
             }
-        }
-
-        public void Init(PluginInitContext context)
-        {
         }
 
         [Flags]
