@@ -81,7 +81,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 });
             }
 
-            if (processlist.Count > 1 && !string.IsNullOrEmpty(termToSearch))
+            // When there are multiple results AND all of them are instances of the same executable
+            // add a quick option to kill them all at the top of the results.
+            var firstResult = results.FirstOrDefault()?.SubTitle;
+            if (processlist.Count > 1 && !string.IsNullOrEmpty(termToSearch) && results.All(r => r.SubTitle == firstResult))
             {
                 results.Insert(0, new Result()
                 {
