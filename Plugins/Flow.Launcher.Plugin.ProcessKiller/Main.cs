@@ -150,8 +150,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             try
             {
-                var path = GetProcessFilename(p);
-                return path.ToLower();
+                return GetProcessFilename(p);
             }
             catch
             {
