@@ -130,5 +130,15 @@ namespace Flow.Launcher.Plugin
         /// Plugin ID that generated this result
         /// </summary>
         public string PluginID { get; internal set; }
+
+        /// <summary>
+        /// Show message as ToolTip on result Title hover over
+        /// </summary>
+        public string TitleToolTip { get; set; }
+
+        /// <summary>
+        /// Show message as ToolTip on result SubTitle hover over
+        /// </summary>
+        public string SubTitleToolTip { get; set; }
     }
 }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Flow.Launcher.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 
@@ -13,24 +12,16 @@ namespace Flow.Launcher.Core.Plugin
 
     internal abstract class PluginConfig
     {
-        private const string PluginConfigName = "plugin.json";
-        private static readonly List<PluginMetadata> PluginMetadatas = new List<PluginMetadata>();
-
         /// <summary>
-        /// Parse plugin metadata in giving directories
+        /// Parse plugin metadata in the given directories
         /// </summary>
         /// <param name="pluginDirectories"></param>
         /// <returns></returns>
         public static List<PluginMetadata> Parse(string[] pluginDirectories)
         {
-            PluginMetadatas.Clear();
+            var allPluginMetadata = new List<PluginMetadata>();
             var directories = pluginDirectories.SelectMany(Directory.GetDirectories);
-            ParsePluginConfigs(directories);
-            return PluginMetadatas;
-        }
 
-        private static void ParsePluginConfigs(IEnumerable<string> directories)
-        {
             // todo use linq when diable plugin is implmented since parallel.foreach + list is not thread saft
             foreach (var directory in directories)
             {
@@ -50,15 +41,17 @@ namespace Flow.Launcher.Core.Plugin
                     PluginMetadata metadata = GetPluginMetadata(directory);
                     if (metadata != null)
                     {
-                        PluginMetadatas.Add(metadata);
+                        allPluginMetadata.Add(metadata);
                     }
                 }
             }
+ 
+            return allPluginMetadata;
         }
 
         private static PluginMetadata GetPluginMetadata(string pluginDirectory)
         {
-            string configPath = Path.Combine(pluginDirectory, PluginConfigName);
+            string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
             if (!File.Exists(configPath))
             {
                 Log.Error($"|PluginConfig.GetPluginMetadata|Didn't find config file <{configPath}>");
@@ -80,7 +73,6 @@ namespace Flow.Launcher.Core.Plugin
                 Log.Exception($"|PluginConfig.GetPluginMetadata|invalid json for config <{configPath}>", e);
                 return null;
             }
-
 
             if (!AllowedLanguage.IsAllowed(metadata.Language))
             {

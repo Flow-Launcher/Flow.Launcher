@@ -29,6 +29,14 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
+        public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
+                                            ? Result.Title 
+                                            : Result.TitleToolTip;
+
+        public string ShowSubTitleToolTip => string.IsNullOrEmpty(Result.SubTitleToolTip)
+                                                ? Result.SubTitle 
+                                                : Result.SubTitleToolTip;
+
         public ImageSource Image
         {
             get
