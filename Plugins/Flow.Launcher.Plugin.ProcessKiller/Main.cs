@@ -10,7 +10,7 @@ using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
-    public class Main : IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n, IContextMenu
     {
         private readonly HashSet<string> _systemProcessList = new HashSet<string>(){
             "conhost",
@@ -56,6 +56,34 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         public string GetTranslatedPluginDescription()
         {
             return _context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_description");
+        }
+
+        public List<Result> LoadContextMenus(Result result)
+        {
+            var menuOptions = new List<Result>();
+            var processPath = result.SubTitle;
+
+            // get all non-system processes whose file path matches that of the given result (processPath)
+            var similarProcesses = Process.GetProcesses()
+                .Where(p => !IsSystemProcess(p) && GetProcessFilename(p) == processPath);
+
+            menuOptions.Add(new Result
+            {
+                Title = _context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
+                SubTitle = processPath,
+                Action = _ =>
+                {
+                    foreach (var p in similarProcesses)
+                    {
+                        KillProcess(p);
+                    }
+
+                    return true;
+                },
+                IcoPath = "Images/app.png"
+            });
+
+            return menuOptions;
         }
 
         private List<Result> CreateResultsFromProcesses(List<ProcessResult> processlist, string termToSearch)
@@ -105,29 +133,30 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             return results;
+        }
 
-            void KillProcess(Process p)
+        private void KillProcess(Process p)
+        {
+            try
             {
-                try
+                if (!p.HasExited)
                 {
-                    if (!p.HasExited)
-                    {
-                        p.Kill();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
+                    p.Kill();
                 }
             }
+            catch (Exception e)
+            {
+                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
+            }
         }
+
         private List<ProcessResult> GetProcesslist(string termToSearch)
         {
             var processlist = new List<ProcessResult>();
 
             foreach (var p in Process.GetProcesses())
             {
-                if (FilterSystemProcesses(p)) continue;
+                if (IsSystemProcess(p)) continue;
 
                 if (string.IsNullOrWhiteSpace(termToSearch))
                 {
@@ -145,13 +174,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             return processlist;
-
-            bool FilterSystemProcesses(Process p)
-            {
-                var name = p.ProcessName.ToLower();
-                return _systemProcessList.Contains(name);
-            }
         }
+
+        private bool IsSystemProcess(Process p) => _systemProcessList.Contains(p.ProcessName.ToLower());
 
         internal class ProcessResult
         {
