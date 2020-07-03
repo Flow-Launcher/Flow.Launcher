@@ -12,21 +12,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     public class Main : IPlugin, IPluginI18n, IContextMenu
     {
-        private readonly HashSet<string> _systemProcessList = new HashSet<string>(){
-            "conhost",
-            "svchost",
-            "idle",
-            "system",
-            "rundll32",
-            "csrss",
-            "lsass",
-            "lsm",
-            "smss",
-            "wininit",
-            "winlogon",
-            "services",
-            "spoolsv",
-            "explorer"};
+        private ProcessHelper processHelper = new ProcessHelper();
 
         private static PluginInitContext _context;
 
@@ -41,7 +27,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 ? null
                 : string.Join(Plugin.Query.TermSeperater, query.Terms.Skip(1)).ToLower();
 
-            var processlist = GetProcesslist(termToSearch);
+            var processlist = processHelper.GetMatchingProcesses(termToSearch);
 
             return !processlist.Any()
                 ? null
@@ -64,8 +50,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             var processPath = result.SubTitle;
 
             // get all non-system processes whose file path matches that of the given result (processPath)
-            var similarProcesses = Process.GetProcesses()
-                .Where(p => !IsSystemProcess(p) && GetProcessFilename(p) == processPath);
+            var similarProcesses = processHelper.GetSimilarProcesses(processPath);
 
             menuOptions.Add(new Result
             {
@@ -75,7 +60,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 {
                     foreach (var p in similarProcesses)
                     {
-                        KillProcess(p);
+                        processHelper.TryKill(p);
                     }
 
                     return true;
@@ -93,7 +78,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             foreach (var pr in processlist)
             {
                 var p = pr.Process;
-                var path = GetPath(p);
+                var path = processHelper.TryGetProcessFilename(p);
                 results.Add(new Result()
                 {
                     IcoPath = path,
@@ -103,7 +88,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     Score = pr.Score,
                     Action = (c) =>
                     {
-                        KillProcess(p);
+                        processHelper.TryKill(p);
                         return true;
                     }
                 });
@@ -116,7 +101,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             {
                 results.Insert(0, new Result()
                 {
-                    IcoPath = "Images\\app.png",
+                    IcoPath = "Images/app.png",
                     Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), termToSearch),
                     SubTitle = "",
                     Score = 200,
@@ -124,7 +109,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     {
                         foreach (var p in processlist)
                         {
-                            KillProcess(p.Process);
+                            processHelper.TryKill(p.Process);
                         }
 
                         return true;
@@ -133,106 +118,6 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             return results;
-        }
-
-        private void KillProcess(Process p)
-        {
-            try
-            {
-                if (!p.HasExited)
-                {
-                    p.Kill();
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
-            }
-        }
-
-        private List<ProcessResult> GetProcesslist(string termToSearch)
-        {
-            var processlist = new List<ProcessResult>();
-
-            foreach (var p in Process.GetProcesses())
-            {
-                if (IsSystemProcess(p)) continue;
-
-                if (string.IsNullOrWhiteSpace(termToSearch))
-                {
-                    // show all non-system processes
-                    processlist.Add(new ProcessResult(p,0));
-                }
-                else
-                {
-                    var score = StringMatcher.FuzzySearch(termToSearch, p.ProcessName + p.Id).Score;
-                    if (score > 0)
-                    {
-                        processlist.Add(new ProcessResult(p, score));
-                    }
-                }
-            }
-
-            return processlist;
-        }
-
-        private bool IsSystemProcess(Process p) => _systemProcessList.Contains(p.ProcessName.ToLower());
-
-        internal class ProcessResult
-        {
-            public ProcessResult(Process process, int score)
-            {
-                Process = process;
-                Score = score;
-            }
-
-            public Process Process { get; }
-
-            public int Score { get; }
-        }
-
-        private string GetPath(Process p)
-        {
-            try
-            {
-                return GetProcessFilename(p);
-            }
-            catch
-            {
-                return "";
-            }
-        }
-
-        [Flags]
-        private enum ProcessAccessFlags : uint
-        {
-            QueryLimitedInformation = 0x00001000
-        }
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool QueryFullProcessImageName(
-            [In] IntPtr hProcess,
-            [In] int dwFlags,
-            [Out] StringBuilder lpExeName,
-            ref int lpdwSize);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr OpenProcess(
-            ProcessAccessFlags processAccess,
-            bool bInheritHandle,
-            int processId);
-
-        private string GetProcessFilename(Process p)
-        {
-            int capacity = 2000;
-            StringBuilder builder = new StringBuilder(capacity);
-            IntPtr ptr = OpenProcess(ProcessAccessFlags.QueryLimitedInformation, false, p.Id);
-            if (!QueryFullProcessImageName(ptr, 0, builder, ref capacity))
-            {
-                return String.Empty;
-            }
-
-            return builder.ToString();
         }
     }
 }
