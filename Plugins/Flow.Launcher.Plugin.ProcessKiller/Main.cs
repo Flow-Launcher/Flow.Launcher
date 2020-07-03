@@ -65,7 +65,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
                     return true;
                 },
-                IcoPath = "Images/app.png"
+                IcoPath = processPath
             });
 
             return menuOptions;
