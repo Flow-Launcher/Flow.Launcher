@@ -37,15 +37,15 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         public List<Result> Query(Query query)
         {
-            var termToSearch = query.Terms.Length == 1
+            var termToSearch = query.Terms.Length <= 1
                 ? null
-                : query.FirstSearch.ToLower();
+                : string.Join(Plugin.Query.TermSeperater, query.Terms.Skip(1)).ToLower();
+
             var processlist = GetProcesslist(termToSearch);
 
-            return
-                !processlist.Any()
-                    ? null
-                    : CreateResultsFromProcesses(processlist, termToSearch);
+            return !processlist.Any()
+                ? null
+                : CreateResultsFromProcesses(processlist, termToSearch);
         }
 
         public string GetTranslatedPluginTitle()
