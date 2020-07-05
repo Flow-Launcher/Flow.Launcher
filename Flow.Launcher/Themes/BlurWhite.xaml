@@ -9,13 +9,10 @@
 
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#FF000000" />
-        <Setter Property="Background" Value="#01FFFFFF" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
-    <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
-        <Setter Property="Foreground" Value="#FF000000" />
-        <Setter Property="Background" Value="#01FFFFFF" />
-    </Style>
+    <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}" />
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="Background">
