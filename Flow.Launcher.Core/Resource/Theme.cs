@@ -137,18 +137,31 @@ namespace Flow.Launcher.Core.Resource
             var dict = CurrentThemeResourceDictionary();
 
             Style queryBoxStyle = dict["QueryBoxStyle"] as Style;
-            if (queryBoxStyle != null)
+            Style querySuggestionBoxStyle = dict["QuerySuggestionBoxStyle"] as Style;
+
+            if (queryBoxStyle != null && querySuggestionBoxStyle != null)
             {
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, new FontFamily(Settings.QueryBoxFont)));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.QueryBoxFontStyle)));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.QueryBoxFontWeight)));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.QueryBoxFontStretch)));
+                var fontFamily = new FontFamily(Settings.QueryBoxFont);
+                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.QueryBoxFontStyle);
+                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.QueryBoxFontWeight);
+                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.QueryBoxFontStretch);
+
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
 
                 var caretBrushPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
                 var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null) //otherwise BaseQueryBoxStyle will handle styling
                     queryBoxStyle.Setters.Add(new Setter(TextBox.CaretBrushProperty, foregroundPropertyValue));
+
+                // Query suggestion box's font style is aligned with query box
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
             }
 
             Style resultItemStyle = dict["ItemTitleStyle"] as Style;
