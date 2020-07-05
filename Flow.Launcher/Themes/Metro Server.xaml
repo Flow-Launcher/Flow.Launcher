@@ -6,6 +6,12 @@
 		<Setter Property="Background" Value="#ffffff"/>
 		<Setter Property="Foreground" Value="#000000" />
 	</Style>
+
+    <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#ffffff"/>
+        <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    
 	<Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
 		<Setter Property="Background" Value="#001e4e"></Setter>
 	</Style>
