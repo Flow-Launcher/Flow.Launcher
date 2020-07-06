@@ -118,12 +118,12 @@ namespace Flow.Launcher
                     var timer = new Timer(1000 * 60 * 60 * 5);
                     timer.Elapsed += async (s, e) =>
                     {
-                        await _updater.UpdateApp();
+                        await _updater.UpdateApp(API);
                     };
                     timer.Start();
 
                     // check updates on startup
-                    await _updater.UpdateApp();
+                    await _updater.UpdateApp(API);
                 }
             });
         }
