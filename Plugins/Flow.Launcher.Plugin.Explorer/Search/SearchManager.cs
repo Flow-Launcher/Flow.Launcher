@@ -42,6 +42,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (string.IsNullOrEmpty(querySearch))
                 return results;
 
+            if (IsFileContentSearch(querySearch))
+                return WindowsIndexFileContentSearch(query, querySearch);
+
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
             if (isEnvironmentVariable)
@@ -72,6 +75,30 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                                 locationPath));
 
             return results;
+        }
+
+        private List<Result> WindowsIndexFileContentSearch(Query query, string querySearchString)
+        {
+            var queryConstructor = new QueryConstructor(settings);
+
+            var updatedQuerySearchString = querySearchString
+                                            .Substring(querySearchString
+                                                .IndexOf(Constants.WindowsIndexFileContentSearchHotkey) 
+                                                            + Constants.WindowsIndexFileContentSearchHotkey.Length);
+
+            if (string.IsNullOrEmpty(updatedQuerySearchString))
+                return new List<Result>();
+
+            return indexSearch.WindowsIndexSearch(updatedQuerySearchString.TrimStart(),
+                                                    queryConstructor.CreateQueryHelper().ConnectionString,
+                                                    queryConstructor.QueryForFileContentSearch,
+                                                    query);
+        }
+
+        public bool IsFileContentSearch(string querySearch)
+        {
+            return querySearch.StartsWith(Constants.WindowsIndexFileContentSearchHotkey, 
+                                            StringComparison.OrdinalIgnoreCase);
         }
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)

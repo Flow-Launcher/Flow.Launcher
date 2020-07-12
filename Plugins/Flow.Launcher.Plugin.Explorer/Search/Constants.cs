@@ -25,5 +25,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const char DirectorySeperator = '\\';
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";
+
+        internal const string WindowsIndexFileContentSearchHotkey = "content:";
     }
 }
