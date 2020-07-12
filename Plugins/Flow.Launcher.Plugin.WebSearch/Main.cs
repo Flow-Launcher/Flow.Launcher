@@ -33,6 +33,9 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         public List<Result> Query(Query query)
         {
+            if (FilesFolders.IsLocationPathString(query.Search))
+                return new List<Result>();
+
             var searchSourceList = new List<SearchSource>();
             var results = new List<Result>();
 
