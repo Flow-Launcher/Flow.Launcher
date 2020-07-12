@@ -217,6 +217,21 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
+        [TestCase("content:some words")]
+        public void GivenQuery_WhenFileContentSearchHotkeyIsIncluded_ThenShouldReturnTrue(string querySearchString)
+        {
+            // Given
+            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
+
+            // When
+            var result = searchManager.IsFileContentSearch(querySearchString);
+
+            // Then
+            Assert.IsTrue(result,
+                $"Expected True for file content search. {Environment.NewLine} " +
+                $"Actual result was: {result}{Environment.NewLine}");
+        }
+
         [TestCase(@"c:\\", false)]
         [TestCase(@"i:\", true)]
         [TestCase(@"\c:\", false)]
