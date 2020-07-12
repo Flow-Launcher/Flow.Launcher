@@ -16,6 +16,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
+- Search for file contents
 - Support search using environment variable paths
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
