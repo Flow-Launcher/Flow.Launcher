@@ -1,6 +1,9 @@
 {
   "ID": "572be03c74c642baae319fc283e561a8",
-  "ActionKeyword": "*",
+  "ActionKeywords": [
+    "*", 
+    "doc:"
+  ],
   "Name": "Explorer",
   "Description": "Search and manage files and folders. Explorer utilises Windows Index Search",
   "Author": "Jeremy Wu",
