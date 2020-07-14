@@ -36,7 +36,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
 
-            if (quickFolderLinks.Count > 0)
+            if (quickFolderLinks.Count > 0 && query.ActionKeyword == settings.SearchActionKeyword)
                 return quickFolderLinks;
 
             if (string.IsNullOrEmpty(querySearch))
