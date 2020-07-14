@@ -28,7 +28,5 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static string ExplorerIconImageFullPath 
             => Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString()) + "\\" + ExplorerIconImagePath;
-
-        internal const string WindowsIndexFileContentSearchHotkey = "content:";
     }
 }
