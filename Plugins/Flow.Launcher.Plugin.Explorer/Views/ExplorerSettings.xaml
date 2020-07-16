@@ -17,6 +17,16 @@
                 Text="{Binding Nickname, Mode=OneTime}"
                 Margin="0,5,0,5" />
         </DataTemplate>
+        <DataTemplate x:Key="ListViewActionKeywords">
+            <Grid>
+                <TextBlock 
+                    Text="{Binding Description, Mode=OneTime}"
+                    Margin="0,5,0,0" />
+                <TextBlock 
+                    Text="{Binding Keyword, Mode=OneTime}"
+                    Margin="150,5,0,0" />
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -25,8 +35,14 @@
         </Grid.RowDefinitions>
         <ScrollViewer Margin="20 35 0 0" HorizontalScrollBarVisibility="Hidden" Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel>
+                <Expander Name="expActionKeywords" Header="{DynamicResource plugin_explorer_manageactionkeywords_header}"
+                          Expanded="expActionKeywords_Click" Collapsed="expActionKeywords_Click">
+                    <ListView x:Name="lbxActionKeywords"
+                        ItemTemplate="{StaticResource ListViewActionKeywords}"/>
+                </Expander>
                 <Expander Name="expFolderLinks" Header="{DynamicResource plugin_explorer_quickfolderaccess_header}"
-                          Expanded="expFolderLinks_Click" Collapsed="expFolderLinks_Click">
+                          Expanded="expFolderLinks_Click" Collapsed="expFolderLinks_Click"
+                          Margin="0 10 0 0">
                     <ListView
                         x:Name="lbxFolderLinks" AllowDrop="True"
                         Drop="lbxFolders_Drop"

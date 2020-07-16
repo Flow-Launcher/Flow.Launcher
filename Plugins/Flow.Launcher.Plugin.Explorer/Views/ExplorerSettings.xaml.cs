@@ -30,6 +30,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
 
+            var actionKeywordsListView = new List<ActionKeywordView>();
+
+            actionKeywordsListView.Add(new ActionKeywordView() { Description = "Search Activation:", Keyword = this.viewModel.Settings.SearchActionKeyword });
+            actionKeywordsListView.Add(new ActionKeywordView() { Description = "File Content Search:", Keyword = this.viewModel.Settings.FileContentSearchActionKeyword });
+
+            lbxActionKeywords.ItemsSource = actionKeywordsListView;
+
             RefreshView();
         }
 
@@ -77,6 +84,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             lbxFolderLinks.Items.Refresh();
 
             lbxExcludedPaths.Items.Refresh();
+
+            lbxActionKeywords.Items.Refresh();
+        }
+
+        private void expActionKeywords_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void expFolderLinks_Click(object sender, RoutedEventArgs e)
@@ -241,5 +255,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             viewModel.OpenWindowsIndexingOptions();
         }
+    }
+
+    public class ActionKeywordView
+    {
+        public string Description { get; set; }
+
+        public string Keyword { get; set; }
     }
 }
