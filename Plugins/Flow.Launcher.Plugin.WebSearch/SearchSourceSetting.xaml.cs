@@ -83,8 +83,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 _searchSources.Add(_searchSource);
 
-                var info = _api.GetTranslation("success");
-                MessageBox.Show(info);
                 Close();
             }
             else
@@ -106,8 +104,6 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;
 
-                var info = _api.GetTranslation("success");
-                MessageBox.Show(info);
                 Close();
             }
             else
