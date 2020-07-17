@@ -93,6 +93,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         }
 
+        private void expActionKeywords_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (!expActionKeywords.IsExpanded)
+                expActionKeywords.Height = Double.NaN;
+        }
+
         private void expFolderLinks_Click(object sender, RoutedEventArgs e)
         {
             if (expFolderLinks.IsExpanded)
@@ -105,6 +111,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 expExcludedPaths.IsExpanded = false;
             
             RefreshView();
+        }
+
+        private void expFolderLinks_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (!expFolderLinks.IsExpanded)
+                expFolderLinks.Height = Double.NaN;
         }
 
         private void expExcludedPaths_Click(object sender, RoutedEventArgs e)

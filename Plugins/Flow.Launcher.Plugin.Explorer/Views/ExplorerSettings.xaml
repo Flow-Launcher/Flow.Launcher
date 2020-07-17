@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
+<UserControl x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -36,12 +36,12 @@
         <ScrollViewer Margin="20 35 0 0" HorizontalScrollBarVisibility="Hidden" Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <Expander Name="expActionKeywords" Header="{DynamicResource plugin_explorer_manageactionkeywords_header}"
-                          Expanded="expActionKeywords_Click" Collapsed="expActionKeywords_Click">
+                          Expanded="expActionKeywords_Click" Collapsed="expActionKeywords_Collapsed">
                     <ListView x:Name="lbxActionKeywords"
                         ItemTemplate="{StaticResource ListViewActionKeywords}"/>
                 </Expander>
                 <Expander Name="expFolderLinks" Header="{DynamicResource plugin_explorer_quickfolderaccess_header}"
-                          Expanded="expFolderLinks_Click" Collapsed="expFolderLinks_Click"
+                          Expanded="expFolderLinks_Click" Collapsed="expFolderLinks_Collapsed"
                           Margin="0 10 0 0">
                     <ListView
                         x:Name="lbxFolderLinks" AllowDrop="True"
@@ -50,7 +50,7 @@
                         ItemTemplate="{StaticResource ListViewTemplateFolderLinks}"/>
                 </Expander>
                 <Expander x:Name="expExcludedPaths" Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}" 
-                          Expanded="expExcludedPaths_Click" Collapsed="expExcludedPaths_Click"
+                          Expanded="expExcludedPaths_Click"
                           Margin="0 10 0 0">
                     <ListView
                         x:Name="lbxExcludedPaths" AllowDrop="True"
