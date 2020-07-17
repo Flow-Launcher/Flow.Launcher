@@ -50,9 +50,14 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             btnEdit.Visibility = Visibility.Hidden;
             btnAdd.Visibility = Visibility.Hidden;
 
-            if (expFolderLinks.IsExpanded || expExcludedPaths.IsExpanded)
+            if (expFolderLinks.IsExpanded || expExcludedPaths.IsExpanded || expActionKeywords.IsExpanded)
             {
-                btnAdd.Visibility = Visibility.Visible;
+                if (!expActionKeywords.IsExpanded)
+                    btnAdd.Visibility = Visibility.Visible;
+
+                if (expActionKeywords.IsExpanded
+                    && btnEdit.Visibility == Visibility.Hidden)
+                    btnEdit.Visibility = Visibility.Visible;
 
                 if ((lbxFolderLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0)
                     && btnDelete.Visibility == Visibility.Visible
@@ -90,7 +95,16 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void expActionKeywords_Click(object sender, RoutedEventArgs e)
         {
+            if (expActionKeywords.IsExpanded)
+                expActionKeywords.Height = 215;
 
+            if (expExcludedPaths.IsExpanded)
+                expExcludedPaths.IsExpanded = false;
+
+            if (expFolderLinks.IsExpanded)
+                expFolderLinks.IsExpanded = false;
+
+            RefreshView();
         }
 
         private void expActionKeywords_Collapsed(object sender, RoutedEventArgs e)
@@ -102,13 +116,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void expFolderLinks_Click(object sender, RoutedEventArgs e)
         {
             if (expFolderLinks.IsExpanded)
-                expFolderLinks.Height = 235;
-            
-            if (!expFolderLinks.IsExpanded)
-                expFolderLinks.Height = Double.NaN;
+                expFolderLinks.Height = 215;
 
             if (expExcludedPaths.IsExpanded)
                 expExcludedPaths.IsExpanded = false;
+
+            if (expActionKeywords.IsExpanded)
+                expActionKeywords.IsExpanded = false;
             
             RefreshView();
         }
@@ -126,6 +140,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (expFolderLinks.IsExpanded)
                 expFolderLinks.IsExpanded = false;
+
+            if (expActionKeywords.IsExpanded)
+                expActionKeywords.IsExpanded = false;
 
             RefreshView();
         }
