@@ -20,6 +20,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     public partial class ExplorerSettings
     {
         private readonly SettingsViewModel viewModel;
+
+        private List<ActionKeywordView> actionKeywordsListView;
+
         public ExplorerSettings(SettingsViewModel viewModel)
         {
             InitializeComponent();
@@ -30,10 +33,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
 
-            var actionKeywordsListView = new List<ActionKeywordView>();
-
-            actionKeywordsListView.Add(new ActionKeywordView() { Description = "Search Activation:", Keyword = this.viewModel.Settings.SearchActionKeyword });
-            actionKeywordsListView.Add(new ActionKeywordView() { Description = "File Content Search:", Keyword = this.viewModel.Settings.FileContentSearchActionKeyword });
+            actionKeywordsListView = new List<ActionKeywordView>
+            {
+                new ActionKeywordView() 
+                        { 
+                            Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search"), 
+                            Keyword = this.viewModel.Settings.SearchActionKeyword 
+                        },
+                new ActionKeywordView() 
+                        { 
+                            Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"), 
+                            Keyword = this.viewModel.Settings.FileContentSearchActionKeyword 
+                        }
+            };
 
             lbxActionKeywords.ItemsSource = actionKeywordsListView;
 
@@ -175,33 +187,46 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            var selectedRow = lbxFolderLinks.SelectedItem as FolderLink ?? lbxExcludedPaths.SelectedItem as FolderLink;
-
-            if (selectedRow != null)
+            if (lbxActionKeywords.SelectedItem is ActionKeywordView)
             {
-                var folderBrowserDialog = new FolderBrowserDialog();
-                folderBrowserDialog.SelectedPath = selectedRow.Path;
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (expFolderLinks.IsExpanded)
-                    {
-                        var link = viewModel.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
-                        link.Path = folderBrowserDialog.SelectedPath;
-                    }
+                var selectedActionKeyword = lbxActionKeywords.SelectedItem as ActionKeywordView;
 
-                    if (expExcludedPaths.IsExpanded)
-                    {
-                        var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
-                        link.Path = folderBrowserDialog.SelectedPath;
-                    }
-                }
+                var actionKeywordWindow = new ActionKeywordSetting(viewModel, actionKeywordsListView, selectedActionKeyword);
+
+                actionKeywordWindow.ShowDialog();
 
                 RefreshView();
             }
             else
             {
-                string warning = viewModel.Context.API.GetTranslation("plugin_explorer_select_folder_link_warning");
-                MessageBox.Show(warning);
+                var selectedRow = lbxFolderLinks.SelectedItem as FolderLink ?? lbxExcludedPaths.SelectedItem as FolderLink;
+
+                if (selectedRow != null)
+                {
+                    var folderBrowserDialog = new FolderBrowserDialog();
+                    folderBrowserDialog.SelectedPath = selectedRow.Path;
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        if (expFolderLinks.IsExpanded)
+                        {
+                            var link = viewModel.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
+                            link.Path = folderBrowserDialog.SelectedPath;
+                        }
+
+                        if (expExcludedPaths.IsExpanded)
+                        {
+                            var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
+                            link.Path = folderBrowserDialog.SelectedPath;
+                        }
+                    }
+
+                    RefreshView();
+                }
+                else
+                {
+                    string warning = viewModel.Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+                    MessageBox.Show(warning);
+                }
             }
         }
 
