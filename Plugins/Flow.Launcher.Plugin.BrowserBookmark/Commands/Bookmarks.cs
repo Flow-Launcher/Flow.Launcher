@@ -21,6 +21,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
             
             var chromeBookmarks = new ChromeBookmarks();
             var mozBookmarks = new FirefoxBookmarks();
+            var edgeBookmarks = new EdgeBookmarks();
 
             //TODO: Let the user select which browser's bookmarks are displayed
             // Add Firefox bookmarks
@@ -28,6 +29,9 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
             // Add Chrome bookmarks
             chromeBookmarks.GetBookmarks().ForEach(x => allbookmarks.Add(x));
+
+            // Add Edge (Chromium) bookmarks
+            edgeBookmarks.GetBookmarks().ForEach(x => allbookmarks.Add(x));
 
             return allbookmarks.Distinct().ToList();
         }
