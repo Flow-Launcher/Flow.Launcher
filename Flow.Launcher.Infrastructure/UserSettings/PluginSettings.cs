@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -22,6 +22,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count != settings.ActionKeywords.Count)
                         settings.ActionKeywords = metadata.ActionKeywords;
 
+                    if (string.IsNullOrEmpty(settings.Version))
+                        settings.Version = metadata.Version;
+
                     if (settings.ActionKeywords?.Count > 0)
                     {
                         metadata.ActionKeywords = settings.ActionKeywords;
@@ -35,6 +38,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     {
                         ID = metadata.ID,
                         Name = metadata.Name,
+                        Version = metadata.Version,
                         ActionKeywords = metadata.ActionKeywords, 
                         Disabled = metadata.Disabled
                     };
@@ -46,6 +50,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public string ID { get; set; }
         public string Name { get; set; }
+        public string Version { get; set; }
         public List<string> ActionKeywords { get; set; } // a reference of the action keywords from plugin manager
 
         /// <summary>
