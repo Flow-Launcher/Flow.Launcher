@@ -217,14 +217,15 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
-        [TestCase("content:some words")]
-        public void GivenQuery_WhenFileContentSearchHotkeyIsIncluded_ThenShouldReturnTrue(string querySearchString)
+        public void GivenQuery_WhenActionKeywordForFileContentSearchExists_ThenFileContentSearchRequiredShouldReturnTrue()
         {
             // Given
-            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
+            var query = new Query { ActionKeyword = "doc:", Search = "search term" };
 
+            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
+            
             // When
-            var result = searchManager.IsFileContentSearch(querySearchString);
+            var result = searchManager.IsFileContentSearch(query.ActionKeyword);
 
             // Then
             Assert.IsTrue(result,
