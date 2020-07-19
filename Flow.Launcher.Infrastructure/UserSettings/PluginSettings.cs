@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -15,6 +15,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 if (Plugins.ContainsKey(metadata.ID))
                 {
                     var settings = Plugins[metadata.ID];
+
+                    // TODO: Remove. This is one off for 1.2.0 release.
+                    // Introduced a new action keyword in Explorer, so need to update plugin setting in the UserData folder.
+                    // This kind of plugin meta update should be handled by a dedicated method trigger by version bump.
+                    if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count != settings.ActionKeywords.Count)
+                        settings.ActionKeywords = metadata.ActionKeywords;
+
                     if (settings.ActionKeywords?.Count > 0)
                     {
                         metadata.ActionKeywords = settings.ActionKeywords;
