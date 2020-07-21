@@ -156,9 +156,8 @@ namespace Flow.Launcher.Infrastructure.Image
             if (Directory.Exists(path))
             {
                 /* Directories can also have thumbnails instead of shell icons.
-                 * Generating thumbnails for a bunch of folders while scrolling through
-                 * results from Everything makes a big impact on performance and 
-                 * Flow.Launcher responsibility. 
+                 * Generating thumbnails for a bunch of folder results while scrolling 
+                 * could have a big impact on performance and Flow.Launcher responsibility. 
                  * - Solution: just load the icon
                  */
                 type = ImageType.Folder;
