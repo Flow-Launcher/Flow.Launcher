@@ -11,6 +11,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         private const string FileExplorerProgramEXE = "explorer.exe";
 
+        /// <summary>
+        /// Copies the folder and all of its files and folders 
+        /// including subfolders to the target location
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="targetPath"></param>
         public static void Copy(this string sourcePath, string targetPath)
         {
             // Get the subdirectories for the specified directory.
