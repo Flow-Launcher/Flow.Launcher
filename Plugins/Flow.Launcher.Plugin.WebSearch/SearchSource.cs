@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Windows.Media;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -16,11 +16,26 @@ namespace Flow.Launcher.Plugin.WebSearch
         public string Icon { get; set; } = DefaultIcon;
 
         /// <summary>
-        /// All icon should be put under Images directory
+        /// Default icons are placed in Images directory in the app location. 
+        /// Custom icons are placed in the user data directory
         /// </summary>
         [NotNull]
-        [JsonIgnore]
-        internal string IconPath => Path.Combine(Main.ImagesDirectory, Icon);
+        public string IconPath 
+        { 
+            get
+            {
+                if (string.IsNullOrEmpty(iconPath))
+                    return Path.Combine(Main.ImagesDirectory, Icon);
+
+                return iconPath;
+            }
+            set
+            {
+                iconPath = value;
+            }
+        }
+
+        private string iconPath;
 
         [JsonIgnore]
         public ImageSource Image => ImageLoader.Load(IconPath);
