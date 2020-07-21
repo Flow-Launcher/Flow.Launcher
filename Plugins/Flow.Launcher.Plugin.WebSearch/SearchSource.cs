@@ -3,17 +3,20 @@ using System.Windows.Media;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure;
+using System.Reflection;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
     public class SearchSource : BaseModel
     {
-        public const string DefaultIcon = "web_search.png";
         public string Title { get; set; }
         public string ActionKeyword { get; set; }
 
         [NotNull]
-        public string Icon { get; set; } = DefaultIcon;
+        public string Icon { get; set; } = "web_search.png";
+
+        private string iconPath;
 
         /// <summary>
         /// Default icons are placed in Images directory in the app location. 
@@ -25,7 +28,13 @@ namespace Flow.Launcher.Plugin.WebSearch
             get
             {
                 if (string.IsNullOrEmpty(iconPath))
-                    return Path.Combine(Main.ImagesDirectory, Icon);
+                {
+                    var pluginDirectorys = Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString();
+
+                    var imagesDirectory = Path.Combine(pluginDirectorys, "Images");
+
+                    return Path.Combine(imagesDirectory, Icon);
+                }
 
                 return iconPath;
             }
@@ -34,8 +43,6 @@ namespace Flow.Launcher.Plugin.WebSearch
                 iconPath = value;
             }
         }
-
-        private string iconPath;
 
         [JsonIgnore]
         public ImageSource Image => ImageLoader.Load(IconPath);
@@ -51,6 +58,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 ActionKeyword = string.Copy(ActionKeyword),
                 Url = string.Copy(Url),
                 Icon = string.Copy(Icon),
+                IconPath = string.Copy(IconPath),
                 Enabled = Enabled
             };
             return webSearch;
