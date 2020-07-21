@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using Microsoft.Win32;
 using Flow.Launcher.Core.Plugin;
@@ -122,15 +121,20 @@ namespace Flow.Launcher.Plugin.WebSearch
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                var fullpath = dialog.FileName;
-                if (!string.IsNullOrEmpty(fullpath))
+                var fullpathToSelectedImage = dialog.FileName;
+                if (!string.IsNullOrEmpty(fullpathToSelectedImage))
                 {
-                    _searchSource.Icon = Path.GetFileName(fullpath);
-                    if (!File.Exists(_searchSource.IconPath))
+                    if (!_viewModel.ImageFileExistsInLocation(fullpathToSelectedImage))
                     {
-                        _searchSource.Icon = SearchSource.DefaultIcon;
-                        MessageBox.Show($"The file should be put under {directory}");
+                        var fullPathToOriginalImage = _searchSource.IconPath;
+                        _viewModel.UpdateIconPath(_searchSource, fullpathToSelectedImage);
+                        _viewModel.CopyNewImageToUserDataDirectory(_searchSource, fullpathToSelectedImage, fullPathToOriginalImage);
+
+                        return;
                     }
+                    
+                    MessageBox.Show($"An image of the same file name already exists in location {directory}. " +
+                                        $"The icon image has not been updated");
                 }
             }
         }
