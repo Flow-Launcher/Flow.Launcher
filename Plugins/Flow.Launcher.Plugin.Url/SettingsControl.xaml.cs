@@ -57,5 +57,10 @@ namespace Flow.Launcher.Plugin.Url
         {
             _settings.OpenInNewBrowserWindow = false;
         }
+
+        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _settings.BrowserPath = browserPathBox.Text;
+        }
     }
 }

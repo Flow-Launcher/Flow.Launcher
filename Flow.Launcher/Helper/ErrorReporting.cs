@@ -41,8 +41,7 @@ namespace Flow.Launcher.Helper
 
         public static string DependenciesInfo()
         {
-            var info = $"\nPython Path: {Constant.PythonPath}" +
-                       $"\nEverything SDK Path: {Constant.EverythingSDKPath}";
+            var info = $"\nPython Path: {Constant.PythonPath}";
             return info;
         }
     }
