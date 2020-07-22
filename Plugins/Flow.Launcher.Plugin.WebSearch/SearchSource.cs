@@ -47,6 +47,8 @@ namespace Flow.Launcher.Plugin.WebSearch
         [JsonIgnore]
         public ImageSource Image => ImageLoader.Load(IconPath);
 
+        internal void NotifyImageChange() => OnPropertyChanged(nameof(Image));
+
         public string Url { get; set; }
         public bool Enabled { get; set; }
 

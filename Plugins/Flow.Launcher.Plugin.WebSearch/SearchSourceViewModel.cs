@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class SearchSourceViewModel
+    public class SearchSourceViewModel : BaseModel
     {
         private readonly string destinationDirectory = 
             Path.Combine(DataLocation.DataDirectory(), @"Settings\Plugins\Flow.Launcher.Plugin.WebSearch\IconImages");
@@ -30,6 +30,8 @@ namespace Flow.Launcher.Plugin.WebSearch
                     Directory.CreateDirectory(destinationDirectory);
 
                 File.Copy(fullpathToSelectedImage, destinationFileNameFullPath);
+
+                selectedSearchSource.NotifyImageChange();
             }
             catch(Exception e)
             {
