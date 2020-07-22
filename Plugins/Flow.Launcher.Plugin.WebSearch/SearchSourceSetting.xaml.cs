@@ -38,6 +38,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             _action = action;
             _context = context;
             _api = _context.API;
+
+            _viewModel.SetupCustomImagesDirectory();
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -114,27 +116,23 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         private void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
-            var directory = Main.ImagesDirectory;
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
-            var dialog = new OpenFileDialog {InitialDirectory = directory, Filter = filter};
+            var dialog = new OpenFileDialog {InitialDirectory = _viewModel.DestinationDirectory, Filter = filter};
 
             var result = dialog.ShowDialog();
             if (result == true)
             {
                 var fullpathToSelectedImage = dialog.FileName;
+
+                if (_viewModel.ShouldProvideHint(fullpathToSelectedImage))
+                    MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+
                 if (!string.IsNullOrEmpty(fullpathToSelectedImage))
                 {
-                    if (!_viewModel.ImageFileExistsInLocation(fullpathToSelectedImage))
-                    {
                         var fullPathToOriginalImage = _searchSource.IconPath;
                         _viewModel.UpdateIconPath(_searchSource, fullpathToSelectedImage);
-                        _viewModel.CopyNewImageToUserDataDirectory(_searchSource, fullpathToSelectedImage, fullPathToOriginalImage);
-
-                        return;
-                    }
-                    
-                    MessageBox.Show($"An image of the same file name already exists in location {directory}. " +
-                                        $"The icon image has not been updated");
+                        _viewModel.CopyNewImageToUserDataDirectoryIfRequired(
+                                    _searchSource, fullpathToSelectedImage, fullPathToOriginalImage);
                 }
             }
         }

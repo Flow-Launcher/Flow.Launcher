@@ -1,57 +1,65 @@
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
     public class SearchSourceViewModel : BaseModel
     {
-        private readonly string destinationDirectory = 
-            Path.Combine(DataLocation.DataDirectory(), @"Settings\Plugins\Flow.Launcher.Plugin.WebSearch\IconImages");
+        internal readonly string DestinationDirectory = 
+            Path.Combine(DataLocation.DataDirectory(), @"Settings\Plugins\Flow.Launcher.Plugin.WebSearch\CustomIcons");
 
         public SearchSource SearchSource { get; set; }
 
         public void UpdateIconPath(SearchSource selectedSearchSource, string fullpathToSelectedImage)
         {
+            var parentDirectorySelectedImg = Directory.GetParent(fullpathToSelectedImage).ToString();
+
+            var iconPathDirectory = parentDirectorySelectedImg == DestinationDirectory
+                                    || parentDirectorySelectedImg == Main.ImagesDirectory 
+                                        ? parentDirectorySelectedImg : DestinationDirectory;
+
             var iconFileName = Path.GetFileName(fullpathToSelectedImage);
             selectedSearchSource.Icon = iconFileName;
-            selectedSearchSource.IconPath = Path.Combine(destinationDirectory, Path.GetFileName(fullpathToSelectedImage));
+            selectedSearchSource.IconPath = Path.Combine(iconPathDirectory, Path.GetFileName(fullpathToSelectedImage));
         }
 
-        public void CopyNewImageToUserDataDirectory(SearchSource selectedSearchSource, string fullpathToSelectedImage, string fullPathToOriginalImage)
+        public void CopyNewImageToUserDataDirectoryIfRequired(
+            SearchSource selectedSearchSource, string fullpathToSelectedImage, string fullPathToOriginalImage)
         {
-            var destinationFileNameFullPath = Path.Combine(destinationDirectory, Path.GetFileName(fullpathToSelectedImage));
+            var destinationFileNameFullPath = Path.Combine(DestinationDirectory, Path.GetFileName(fullpathToSelectedImage));
 
-            try
+            var parentDirectorySelectedImg = Directory.GetParent(fullpathToSelectedImage).ToString();
+
+            if (parentDirectorySelectedImg != DestinationDirectory && parentDirectorySelectedImg != Main.ImagesDirectory)
             {
-                if (!Directory.Exists(destinationDirectory))
-                    Directory.CreateDirectory(destinationDirectory);
-
-                File.Copy(fullpathToSelectedImage, destinationFileNameFullPath);
-
-                selectedSearchSource.NotifyImageChange();
-            }
-            catch(Exception e)
-            {
+                try
+                {
+                    File.Copy(fullpathToSelectedImage, destinationFileNameFullPath);
+                }
+                catch (Exception e)
+                {
 #if DEBUG
-                throw e;
+                    throw e;
 #else
                 MessageBox.Show(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
                 UpdateIconPath(selectedSearchSource, fullPathToOriginalImage);
 #endif
+                }
             }
 
+            selectedSearchSource.NotifyImageChange();
         }
 
-        public bool ImageFileExistsInLocation(string fullpathToSelectedImage)
+        internal void SetupCustomImagesDirectory()
         {
-            var fileName = Path.GetFileName(fullpathToSelectedImage);
+            if (!Directory.Exists(DestinationDirectory))
+                Directory.CreateDirectory(DestinationDirectory);
+        }
 
-            var newImageFilePathToBe = Path.Combine(destinationDirectory, fileName);
-
-            return File.Exists(newImageFilePathToBe);
+        internal bool ShouldProvideHint(string fullPathToSelectedImage)
+        {
+            return Directory.GetParent(fullPathToSelectedImage).ToString() == Main.ImagesDirectory;
         }
     }
 }
