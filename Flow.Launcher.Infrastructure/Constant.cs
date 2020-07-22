@@ -27,7 +27,6 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string ErrorIcon = Path.Combine(ProgramDirectory, "Images", "app_error.png");
 
         public static string PythonPath;
-        public static string EverythingSDKPath;
 
         public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.png";
 
