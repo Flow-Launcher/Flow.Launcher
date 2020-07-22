@@ -1,6 +1,7 @@
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.IO;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
