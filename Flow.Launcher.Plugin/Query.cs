@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -94,13 +94,6 @@ namespace Flow.Launcher.Plugin
         }
 
         public override string ToString() => RawQuery;
-
-        [Obsolete("Use ActionKeyword, this property will be removed in v1.3.0")]
-        public string ActionName { get; internal set; }
-
-        [Obsolete("Use Search instead, this property will be removed in v1.3.0")]
-        public List<string> ActionParameters { get; internal set; }
-
         [Obsolete("Use Search instead, this method will be removed in v1.3.0")]
         public string GetAllRemainingParameter() => Search;
     }
