@@ -14,9 +14,8 @@ namespace Flow.Launcher.Infrastructure.Image
     public static class ImageLoader
     {
         private static readonly ImageCache ImageCache = new ImageCache();
-        private static readonly ConcurrentDictionary<string, string> _guidToKey = new ConcurrentDictionary<string, string>();
+        private static BinaryStorage<ConcurrentDictionary<string, int>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
-        private static BinaryStorage<Dictionary<string, int>> _storage;
         private static IImageHashGenerator _hashGenerator;
         private static bool EnableImageHash = true;
 
@@ -33,7 +32,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public static void Initialize()
         {
-            _storage = new BinaryStorage<Dictionary<string, int>>("Image");
+            _storage = new BinaryStorage<ConcurrentDictionary<string, int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
             ImageCache.Usage = LoadStorageToConcurrentDictionary();
@@ -70,7 +69,7 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock(_storage)
             {
-                var loaded = _storage.TryLoad(new Dictionary<string, int>());
+                var loaded = _storage.TryLoad(new ConcurrentDictionary<string, int>());
 
                 return new ConcurrentDictionary<string, int>(loaded);
             }
