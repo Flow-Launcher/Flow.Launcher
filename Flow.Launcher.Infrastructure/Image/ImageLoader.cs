@@ -61,7 +61,8 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                _storage.Save(_imageCache.CleanupAndToDictionary());
+                ImageCache.Cleanup();
+                _storage.Save(ImageCache.Usage);
             }
         }
 
