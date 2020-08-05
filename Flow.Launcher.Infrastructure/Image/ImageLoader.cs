@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 
-namespace Flow.Launcher.Infrastructure.Image
+namespace Wox.Infrastructure.Image
 {
     public static class ImageLoader
     {
@@ -218,26 +218,28 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var img = imageResult.ImageSource;
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
-            { 
-                // we need to get image hash
-                string hash = _enableHashImage ? _hashGenerator.GetHashFromImage(img) : null;
+            { // we need to get image hash
+                string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-                    if (_guidToKey.TryGetValue(hash, out string key))
-                    { 
-                        // image already exists
-                        img = _imageCache[key];
+                    int ImageCacheValue;
+                    if (GuidToKey.TryGetValue(hash, out string key))
+                    { // image already exists
+                        if (ImageCache.Usage.TryGetValue(path, out ImageCacheValue))
+                        {
+                            img = ImageCache[key];
+                        }
                     }
                     else
-                    { 
-                        // new guid
-                        _guidToKey[hash] = path;
+                    { // new guid
+                        GuidToKey[hash] = path;
                     }
                 }
 
                 // update cache
-                _imageCache[path] = img;
+                ImageCache[path] = img;
             }
+
 
             return img;
         }
