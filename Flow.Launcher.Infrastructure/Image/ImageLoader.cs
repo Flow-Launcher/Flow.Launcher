@@ -9,16 +9,16 @@ using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 
-namespace Wox.Infrastructure.Image
+namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
-        private static readonly ImageCache _imageCache = new ImageCache();
+        private static readonly ImageCache ImageCache = new ImageCache();
         private static readonly ConcurrentDictionary<string, string> _guidToKey = new ConcurrentDictionary<string, string>();
-        private static readonly bool _enableHashImage = true;
-
+        private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
         private static BinaryStorage<Dictionary<string, int>> _storage;
         private static IImageHashGenerator _hashGenerator;
+        private static bool EnableImageHash = true;
 
         private static readonly string[] ImageExtensions =
         {
@@ -36,25 +36,25 @@ namespace Wox.Infrastructure.Image
             _storage = new BinaryStorage<Dictionary<string, int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
-            _imageCache.Usage = LoadStorageToConcurrentDictionary();
+            ImageCache.Usage = LoadStorageToConcurrentDictionary();
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.ErrorIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
-                _imageCache[icon] = img;
+                ImageCache[icon] = img;
             }
 
             Task.Run(() =>
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
-                    _imageCache.Usage.AsParallel().ForAll(x =>
+                    ImageCache.Usage.AsParallel().ForAll(x =>
                     {
                         Load(x.Key);
                     });
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{_imageCache.Usage.Count}>, Images Number: {_imageCache.CacheSize()}, Unique Items {_imageCache.UniqueImagesInCache()}");
+                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.Usage.Count}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
         }
 
@@ -106,11 +106,11 @@ namespace Wox.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(_imageCache[Constant.ErrorIcon], ImageType.Error);
+                    return new ImageResult(ImageCache[Constant.ErrorIcon], ImageType.Error);
                 }
-                if (_imageCache.ContainsKey(path))
+                if (ImageCache.ContainsKey(path))
                 {
-                    return new ImageResult(_imageCache[path], ImageType.Cache);
+                    return new ImageResult(ImageCache[path], ImageType.Cache);
                 }
 
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
@@ -139,8 +139,8 @@ namespace Wox.Infrastructure.Image
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
 
-                    ImageSource image = _imageCache[Constant.ErrorIcon];
-                    _imageCache[path] = image;
+                    ImageSource image = ImageCache[Constant.ErrorIcon];
+                    ImageCache[path] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
                 }
             }
@@ -191,7 +191,7 @@ namespace Wox.Infrastructure.Image
             }
             else
             {
-                image = _imageCache[Constant.ErrorIcon];
+                image = ImageCache[Constant.ErrorIcon];
                 path = Constant.ErrorIcon;
             }
 
