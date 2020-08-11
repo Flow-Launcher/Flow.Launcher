@@ -14,6 +14,7 @@ namespace Flow.Launcher.Plugin.WebSearch
         private PluginInitContext _context;
         private IPublicAPI _api;
         private SearchSourceViewModel _viewModel;
+        private string selectedNewIconImageFullPath;
 
 
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
@@ -40,6 +41,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             _api = _context.API;
 
             _viewModel.SetupCustomImagesDirectory();
+
+            imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(_searchSource.IconPath);
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -112,6 +115,14 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
                 MessageBox.Show(warning);
             }
+
+            if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
+            {
+                _viewModel.UpdateIconAttributes(_searchSource, selectedNewIconImageFullPath);
+
+                _viewModel.CopyNewImageToUserDataDirectoryIfRequired(
+                                   _searchSource, selectedNewIconImageFullPath, _oldSearchSource.IconPath);
+            }
         }
 
         private void OnSelectIconClick(object sender, RoutedEventArgs e)
@@ -122,17 +133,14 @@ namespace Flow.Launcher.Plugin.WebSearch
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                var fullpathToSelectedImage = dialog.FileName;
+                selectedNewIconImageFullPath = dialog.FileName;
 
-                if (_viewModel.ShouldProvideHint(fullpathToSelectedImage))
-                    MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
-
-                if (!string.IsNullOrEmpty(fullpathToSelectedImage))
+                if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
                 {
-                        var fullPathToOriginalImage = _searchSource.IconPath;
-                        _viewModel.UpdateIconAttributes(_searchSource, fullpathToSelectedImage);
-                        _viewModel.CopyNewImageToUserDataDirectoryIfRequired(
-                                    _searchSource, fullpathToSelectedImage, fullPathToOriginalImage);
+                    if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
+                        MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+                    
+                    imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(selectedNewIconImageFullPath);
                 }
             }
         }

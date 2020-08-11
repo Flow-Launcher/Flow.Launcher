@@ -1,5 +1,8 @@
+using Flow.Launcher.Infrastructure.Image;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -40,8 +43,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 #endif
                 }
             }
-
-            selectedSearchSource.NotifyImageChange();
         }
 
         internal void SetupCustomImagesDirectory()
@@ -53,6 +54,11 @@ namespace Flow.Launcher.Plugin.WebSearch
         internal bool ShouldProvideHint(string fullPathToSelectedImage)
         {
             return Directory.GetParent(fullPathToSelectedImage).ToString() == Main.DefaultImagesDirectory;
+        }
+
+        internal ImageSource LoadPreviewIcon(string pathToPreviewIconImage)
+        {
+            return ImageLoader.Load(pathToPreviewIconImage);
         }
     }
 }
