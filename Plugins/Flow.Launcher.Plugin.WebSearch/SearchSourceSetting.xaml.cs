@@ -130,7 +130,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (!string.IsNullOrEmpty(fullpathToSelectedImage))
                 {
                         var fullPathToOriginalImage = _searchSource.IconPath;
-                        _viewModel.UpdateIconPath(_searchSource, fullpathToSelectedImage);
+                        _viewModel.UpdateIconAttributes(_searchSource, fullpathToSelectedImage);
                         _viewModel.CopyNewImageToUserDataDirectoryIfRequired(
                                     _searchSource, fullpathToSelectedImage, fullPathToOriginalImage);
                 }

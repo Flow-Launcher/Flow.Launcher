@@ -7,7 +7,7 @@ namespace Flow.Launcher.Plugin.WebSearch
     {
         public SearchSource SearchSource { get; set; }
 
-        public void UpdateIconPath(SearchSource selectedSearchSource, string fullpathToSelectedImage)
+        public void UpdateIconAttributes(SearchSource selectedSearchSource, string fullpathToSelectedImage)
         {
             var parentDirectorySelectedImg = Directory.GetParent(fullpathToSelectedImage).ToString();
 
