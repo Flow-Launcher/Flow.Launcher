@@ -16,31 +16,21 @@ namespace Flow.Launcher.Plugin.WebSearch
         [NotNull]
         public string Icon { get; set; } = "web_search.png";
 
-        private string iconPath;
+        public bool CustomIcon { get; set; } = false;
 
         /// <summary>
         /// Default icons are placed in Images directory in the app location. 
         /// Custom icons are placed in the user data directory
         /// </summary>
-        [NotNull]
+        [JsonIgnore]
         public string IconPath 
-        { 
+        {
             get
             {
-                if (string.IsNullOrEmpty(iconPath))
-                {
-                    var pluginDirectorys = Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString();
+                if (CustomIcon)
+                    return Path.Combine(Main.CustomImagesDirectory, Icon);
 
-                    var imagesDirectory = Path.Combine(pluginDirectorys, "Images");
-
-                    return Path.Combine(imagesDirectory, Icon);
-                }
-
-                return iconPath;
-            }
-            set
-            {
-                iconPath = value;
+                return Path.Combine(Main.DefaultImagesDirectory, Icon);
             }
         }
 
@@ -60,7 +50,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 ActionKeyword = string.Copy(ActionKeyword),
                 Url = string.Copy(Url),
                 Icon = string.Copy(Icon),
-                IconPath = string.Copy(IconPath),
+                CustomIcon = CustomIcon,
                 Enabled = Enabled
             };
             return webSearch;

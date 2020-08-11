@@ -117,7 +117,7 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
-            var dialog = new OpenFileDialog {InitialDirectory = _viewModel.DestinationDirectory, Filter = filter};
+            var dialog = new OpenFileDialog {InitialDirectory = Main.CustomImagesDirectory, Filter = filter};
 
             var result = dialog.ShowDialog();
             if (result == true)
