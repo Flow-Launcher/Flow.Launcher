@@ -2,6 +2,7 @@ using Flow.Launcher.Infrastructure.Image;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -39,7 +40,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                     throw e;
 #else
                 MessageBox.Show(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
-                UpdateIconPath(selectedSearchSource, fullPathToOriginalImage);
+                UpdateIconAttributes(selectedSearchSource, fullPathToOriginalImage);
 #endif
                 }
             }
