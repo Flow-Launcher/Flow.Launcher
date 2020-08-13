@@ -248,12 +248,13 @@
                                         <RowDefinition Height="50" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBox Text="{DynamicResource hiThere}" IsReadOnly="True"
-                                             Style="{DynamicResource QueryBoxStyle}" Grid.Row="0" 
+                                    <TextBox Grid.Row="0"
+                                             Text="{DynamicResource hiThere}" IsReadOnly="True"
+                                             Style="{DynamicResource QueryBoxStyle}"
                                              Margin="18 0 56 0" />
                                     <Image Source="{Binding ThemeImage}" HorizontalAlignment="Right" />
-                                    <ContentControl Visibility="Visible" Grid.Row="1">
-                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults}" />
+                                    <ContentControl Grid.Row="1">
+                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
                                     </ContentControl>
                                 </Grid>
                             </Border>
