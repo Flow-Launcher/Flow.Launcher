@@ -95,27 +95,6 @@ namespace Flow.Launcher.Infrastructure
         private static string[] EmptyStringArray = new string[0];
         private static string[][] Empty2DStringArray = new string[0][];
 
-        [Obsolete("Not accurate, eg 音乐 will not return yinyue but returns yinle ")]
-        /// <summary>
-        /// replace chinese character with pinyin, non chinese character won't be modified
-        /// <param name="word"> should be word or sentence, instead of single character. e.g. 微软 </param>
-        /// </summary>
-        public string[] Pinyin(string word)
-        {
-            if (!_settings.ShouldUsePinyin)
-            {
-                return EmptyStringArray;
-            }
-
-            var pinyin = word.Select(c =>
-            {
-                var pinyins = PinyinHelper.toHanyuPinyinStringArray(c);
-                var result = pinyins == null ? c.ToString() : pinyins[0];
-                return result;
-            }).ToArray();
-            return pinyin;
-        }
-
         /// <summmary>
         /// replace chinese character with pinyin, non chinese character won't be modified
         /// Because we don't have words dictionary, so we can only return all possiblie pinyin combination

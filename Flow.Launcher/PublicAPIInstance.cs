@@ -48,12 +48,6 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query);
         }
 
-        [Obsolete]
-        public void CloseApp()
-        {
-            Application.Current.MainWindow.Close();
-        }
-
         public void RestartApp()
         {
             _mainVM.MainWindowVisibility = Visibility.Hidden;
@@ -88,18 +82,6 @@ namespace Flow.Launcher
         public void ReloadAllPluginData()
         {
             PluginManager.ReloadData();
-        }
-
-        [Obsolete]
-        public void HideApp()
-        {
-            _mainVM.MainWindowVisibility = Visibility.Hidden;
-        }
-
-        [Obsolete]
-        public void ShowApp()
-        {
-            _mainVM.MainWindowVisibility = Visibility.Visible;
         }
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "")
@@ -150,21 +132,6 @@ namespace Flow.Launcher
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
-
-        [Obsolete("This will be removed in Flow Launcher 1.3")]
-        public void PushResults(Query query, PluginMetadata plugin, List<Result> results)
-        {
-            results.ForEach(o =>
-            {
-                o.PluginDirectory = plugin.PluginDirectory;
-                o.PluginID = plugin.ID;
-                o.OriginQuery = query;
-            });
-            Task.Run(() =>
-            {
-                _mainVM.UpdateResultView(results, plugin, query);
-            });
-        }
 
         #endregion
 

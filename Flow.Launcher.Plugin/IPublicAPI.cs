@@ -9,15 +9,6 @@ namespace Flow.Launcher.Plugin
     public interface IPublicAPI
     {
         /// <summary>
-        /// Push result to query box
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="plugin"></param>
-        /// <param name="results"></param>
-        [Obsolete("This method will be removed in Flow Launcher 1.3")]
-        void PushResults(Query query, PluginMetadata plugin, List<Result> results);
-
-        /// <summary>
         /// Change Flow.Launcher query
         /// </summary>
         /// <param name="query">query text</param>
@@ -28,40 +19,9 @@ namespace Flow.Launcher.Plugin
         void ChangeQuery(string query, bool requery = false);
 
         /// <summary>
-        /// Just change the query text, this won't raise search
-        /// </summary>
-        /// <param name="query"></param>
-        [Obsolete]
-        void ChangeQueryText(string query, bool selectAll = false);
-
-        /// <summary>
-        /// Close Flow Launcher
-        /// </summary>
-        [Obsolete]
-        void CloseApp();
-
-        /// <summary>
         /// Restart Flow Launcher
         /// </summary>
         void RestartApp();
-
-        /// <summary>
-        /// Restart Flow Launcher
-        /// </summary>
-        [Obsolete("Use RestartApp instead. This method will be removed in Flow Launcher 1.3")]
-        void RestarApp();
-
-        /// <summary>
-        /// Hide Flow Launcher
-        /// </summary>
-        [Obsolete]
-        void HideApp();
-
-        /// <summary>
-        /// Show Flow Launcher
-        /// </summary>
-        [Obsolete]
-        void ShowApp();
 
         /// <summary>
         /// Save all Flow Launcher settings
@@ -102,18 +62,6 @@ namespace Flow.Launcher.Plugin
         /// Open setting dialog
         /// </summary>
         void OpenSettingDialog();
-
-        /// <summary>
-        /// Show loading animation
-        /// </summary>
-        [Obsolete("automatically start")]
-        void StartLoadingBar();
-
-        /// <summary>
-        /// Stop loading animation
-        /// </summary>
-        [Obsolete("automatically stop")]
-        void StopLoadingBar();
 
         /// <summary>
         /// Install Flow Launcher plugin
