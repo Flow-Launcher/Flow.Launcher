@@ -174,11 +174,14 @@ namespace Flow.Launcher.Plugin.WebSearch
             _context = context;
             var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
             var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
+            
+            // Default images directory is in the WebSearch's application folder  
             DefaultImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginDirectory, Images);
             Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
 
+            // Custom images directory is in the WebSearch's data location folder 
             var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
-            CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, $"{name}\\CustomIcons");
+            CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
         }
 
         #region ISettingProvider Members
