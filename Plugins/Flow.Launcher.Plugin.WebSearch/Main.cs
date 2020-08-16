@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -21,8 +22,9 @@ namespace Flow.Launcher.Plugin.WebSearch
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
 
-        public const string Images = "Images";
-        public static string ImagesDirectory;
+        internal const string Images = "Images";
+        internal static string DefaultImagesDirectory;
+        internal static string CustomImagesDirectory;
 
         private readonly string SearchSourceGlobalPluginWildCardSign = "*";
 
@@ -172,8 +174,14 @@ namespace Flow.Launcher.Plugin.WebSearch
             _context = context;
             var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
             var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
-            ImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginDirectory, Images);
-            Helper.ValidateDataDirectory(bundledImagesDirectory, ImagesDirectory);
+            
+            // Default images directory is in the WebSearch's application folder  
+            DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
+            Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+
+            // Custom images directory is in the WebSearch's data location folder 
+            var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
+            CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
         }
 
         #region ISettingProvider Members
