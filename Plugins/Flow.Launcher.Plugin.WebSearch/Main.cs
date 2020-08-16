@@ -176,7 +176,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
             
             // Default images directory is in the WebSearch's application folder  
-            DefaultImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginDirectory, Images);
+            DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
             Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
 
             // Custom images directory is in the WebSearch's data location folder 
