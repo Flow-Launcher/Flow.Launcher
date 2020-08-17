@@ -38,6 +38,7 @@
   
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
+    <None Include="FodyWeavers.xml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -55,6 +56,7 @@
     <PackageReference Include="Pinyin4DotNet" Version="2016.4.23.4" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="2.5.13" />
   </ItemGroup>
 
   <ItemGroup>

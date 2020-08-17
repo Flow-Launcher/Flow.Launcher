@@ -30,5 +30,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         public static readonly string PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
+        public static readonly string PluginSettingsDirectory = Path.Combine(DataDirectory(), "Settings", Constant.Plugins);
     }
 }

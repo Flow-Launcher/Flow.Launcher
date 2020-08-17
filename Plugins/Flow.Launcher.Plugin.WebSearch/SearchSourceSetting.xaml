@@ -47,7 +47,7 @@
         <TextBlock Margin="10" FontSize="14" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
                    HorizontalAlignment="Right" Text="{DynamicResource flowlauncher_plugin_websearch_icon}" />
         <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="10">
-            <Image Source="{Binding SearchSource.Image ,IsAsync=True}" Width="24" Height="24" Margin="0 0 20 0" />
+            <Image Name="imgPreviewIcon" Width="24" Height="24" Margin="0 0 20 0" />
             <Button Click="OnSelectIconClick" Height="35"
                     Content="{DynamicResource flowlauncher_plugin_websearch_select_icon}" />
         </StackPanel>

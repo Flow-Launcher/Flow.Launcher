@@ -16,6 +16,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
+- Search for file contents
 - Support search using environment variable paths
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
@@ -30,7 +31,6 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
 **Integrations:**
-  - If you want to integrate with [everything](https://www.voidtools.com/): `.exe` installer + use x64 if your windows is x64 + everything service is running. Supported version is 1.3.4.686
   - If you use python plugins, install [python3](https://www.python.org/downloads/): `.exe` installer + add it to `%PATH%` or set it in flow's settings
 
 **Usage**

@@ -45,7 +45,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void UpdateApp()
         {
-            await _updater.UpdateApp(false);
+            await _updater.UpdateApp(App.API, false);
         }
 
         public bool AutoUpdates
@@ -319,36 +319,30 @@ namespace Flow.Launcher.ViewModel
                 {
                     new Result
                     {
-                        Title = "WoX is a launcher for Windows that simply works.",
-                        SubTitle = "You can call it Windows omni-eXecutor if you want a long name."
+                        Title = "Explorer",
+                        SubTitle = "Search for files, folders and file contents",
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png")
                     },
                     new Result
                     {
-                        Title = "Search for everything—applications, folders, files and more.",
-                        SubTitle = "Use pinyin to search for programs. (yyy / wangyiyun → 网易云音乐)"
+                        Title = "WebSearch",
+                        SubTitle = "Search the web with different search engine support",
+                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
-                        Title = "Keyword plugin search.",
-                        SubTitle = "search google with g search_term."
+                        Title = "Program",
+                        SubTitle = "Launch programs as admin or a different user",
+                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
-                        Title = "Build custom themes at: ",
-                        SubTitle = Theme
-                    },
-                    new Result
-                    {
-                        Title = "Install plugins from: ",
-                        SubTitle = Plugin
-                    },
-                    new Result
-                    {
-                        Title = $"Open Source: {_updater.GitHubRepository}",
-                        SubTitle = "Please star it!"
+                        Title = "ProcessKiller",
+                        SubTitle = "Terminate unwanted processes",
+                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
-                var vm = new ResultsViewModel();
+                var vm = new ResultsViewModel(Settings);
                 vm.AddResults(results, "PREVIEW");
                 return vm;
             }
