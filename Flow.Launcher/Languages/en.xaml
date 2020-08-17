@@ -111,7 +111,7 @@
     <system:String x:Key="done">Done</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">New Action Keywords have been assigned to another plugin, please assign other new action keyword</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
     <system:String x:Key="success">Success</system:String>
     <system:String x:Key="actionkeyword_tips">Use * if you don't want to specify an action keyword</system:String>
 

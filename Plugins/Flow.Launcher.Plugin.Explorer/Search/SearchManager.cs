@@ -36,11 +36,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
 
-            if (quickFolderLinks.Count > 0)
+            if (quickFolderLinks.Count > 0 && query.ActionKeyword == settings.SearchActionKeyword)
                 return quickFolderLinks;
 
             if (string.IsNullOrEmpty(querySearch))
                 return results;
+
+            if (IsFileContentSearch(query.ActionKeyword))
+                return WindowsIndexFileContentSearch(query, querySearch);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
@@ -72,6 +75,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                                 locationPath));
 
             return results;
+        }
+
+        private List<Result> WindowsIndexFileContentSearch(Query query, string querySearchString)
+        {
+            var queryConstructor = new QueryConstructor(settings);
+
+            if (string.IsNullOrEmpty(querySearchString))
+                return new List<Result>();
+
+            return indexSearch.WindowsIndexSearch(querySearchString,
+                                                    queryConstructor.CreateQueryHelper().ConnectionString,
+                                                    queryConstructor.QueryForFileContentSearch,
+                                                    query);
+        }
+
+        public bool IsFileContentSearch(string actionKeyword)
+        {
+            return actionKeyword == settings.FileContentSearchActionKeyword;
         }
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)

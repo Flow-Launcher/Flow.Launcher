@@ -117,5 +117,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             return $"scope='file:'";
         }
+
+        ///<summary>
+        /// Search will be performed on all indexed file contents for the specified search keywords.
+        ///</summary>
+        public string QueryForFileContentSearch(string userSearchString)
+        {
+            string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
+
+            return query + QueryWhereRestrictionsForFileContentSearch(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+        }
+
+        ///<summary>
+        /// Set the required WHERE clause restriction to search within file content.
+        ///</summary>
+        public string QueryWhereRestrictionsForFileContentSearch(string searchQuery)
+        {
+            return $"FREETEXT('{searchQuery}')";
+        }
     }
 }

@@ -184,6 +184,55 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual number of results is {results.Count} {Environment.NewLine}");
         }
 
+        [TestCase(@"some words", @"FREETEXT('some words')")]
+        public void GivenWindowsIndexSearch_WhenQueryWhereRestrictionsIsForFileContentSearch_ThenShouldReturnFreeTextString(
+            string querySearchString, string expectedString)
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When
+            var resultString = queryConstructor.QueryWhereRestrictionsForFileContentSearch(querySearchString);
+
+            // Then
+            Assert.IsTrue(resultString == expectedString,
+                $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {resultString}{Environment.NewLine}");
+        }
+
+        [TestCase("some words", "SELECT TOP 100 System.FileName, System.ItemPathDisplay, System.ItemType " +
+                    "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:'")]
+        public void GivenWindowsIndexSearch_WhenSearchForFileContent_ThenQueryShouldUseExpectedString(
+            string userSearchString, string expectedString)
+        {
+            // Given
+            var queryConstructor = new QueryConstructor(new Settings());
+
+            //When
+            var resultString = queryConstructor.QueryForFileContentSearch(userSearchString);
+
+            // Then
+            Assert.IsTrue(resultString == expectedString,
+                $"Expected query string: {expectedString}{Environment.NewLine} " +
+                $"Actual string was: {resultString}{Environment.NewLine}");
+        }
+
+        public void GivenQuery_WhenActionKeywordForFileContentSearchExists_ThenFileContentSearchRequiredShouldReturnTrue()
+        {
+            // Given
+            var query = new Query { ActionKeyword = "doc:", Search = "search term" };
+
+            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
+            
+            // When
+            var result = searchManager.IsFileContentSearch(query.ActionKeyword);
+
+            // Then
+            Assert.IsTrue(result,
+                $"Expected True for file content search. {Environment.NewLine} " +
+                $"Actual result was: {result}{Environment.NewLine}");
+        }
+
         [TestCase(@"c:\\", false)]
         [TestCase(@"i:\", true)]
         [TestCase(@"\c:\", false)]
