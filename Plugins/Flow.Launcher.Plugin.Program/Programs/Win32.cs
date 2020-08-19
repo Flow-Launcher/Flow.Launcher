@@ -54,7 +54,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var result = new Result
             {
-                SubTitle = FullPath,
+                SubTitle = LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = score,
                 ContextData = this,
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     var info = new ProcessStartInfo
                     {
-                        FileName = FullPath,
+                        FileName = LnkResolvedPath ?? FullPath,
                         WorkingDirectory = ParentDirectory,
                         UseShellExecute = true
                     };
