@@ -51,8 +51,17 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
                 return;
             }
+
+            if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword) 
+                && currentActionKeyword.Description 
+                    == settingsViewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"))
+            {
+                MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+
+                return;
+            }
             
-            if(!settingsViewModel.IsActionKeywordAlreadyAssigned(newActionKeyword))
+            if (!settingsViewModel.IsActionKeywordAlreadyAssigned(newActionKeyword))
             {
                 settingsViewModel.UpdateActionKeyword(newActionKeyword, currentActionKeyword.Keyword);
 
