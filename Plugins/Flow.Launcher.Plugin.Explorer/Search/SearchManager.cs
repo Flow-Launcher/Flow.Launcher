@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -36,8 +36,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
 
-            if (quickFolderLinks.Count > 0 && query.ActionKeyword == settings.SearchActionKeyword)
-                return quickFolderLinks;
+            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
 
             if (string.IsNullOrEmpty(querySearch))
                 return results;
