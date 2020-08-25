@@ -28,9 +28,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
                     // for example, if %systemdrive% is C: we turn it to C:\
                     path = path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
                     // if we don't have an absolute path, we use Path.GetFullPath to get one.
                     // for example, if %homepath% is \Users\John we turn it to C:\Users\John
                     path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path);
+
                     // Variables are returned with a mixture of all upper/lower case. 
                     // Call ToLower() to make the results look consistent
                     envStringPaths.Add(special.Key.ToString().ToLower(), path);
