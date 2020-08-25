@@ -34,7 +34,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var querySearch = query.Search;
 
-            var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
+            if (IsFileContentSearch(query.ActionKeyword))
+                return WindowsIndexFileContentSearch(query, querySearch);
 
             var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
 
