@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private readonly ResultManager resultManager;
 
         // Reserved keywords in oleDB
-        private readonly string reservedStringPattern = @"^[\/\\\$\%]+$";
+        private readonly string reservedStringPattern = @"^[\/\\\$\%_]+$";
 
         internal IndexSearch(PluginInitContext context)
         {
