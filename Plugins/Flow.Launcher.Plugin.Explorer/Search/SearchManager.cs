@@ -144,15 +144,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
         {
+            var pathToDirectory = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
+
             if (!settings.UseWindowsIndexForDirectorySearch)
                 return false;
 
             if (settings.IndexSearchExcludedSubdirectoryPaths
-                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)
+                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory)
                                         .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
                 return false;
 
-            return indexSearch.PathIsIndexed(locationPath);
+            return indexSearch.PathIsIndexed(pathToDirectory);
         }
     }
 }
