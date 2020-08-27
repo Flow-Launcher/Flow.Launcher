@@ -51,17 +51,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 {
                                     if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                                     {
+                                        var path = new Uri(dataReaderResults.GetString(1)).LocalPath;
+
                                         if (dataReaderResults.GetString(2) == "Directory")
                                         {
                                             folderResults.Add(resultManager.CreateFolderResult(
                                                                                 dataReaderResults.GetString(0),
-                                                                                dataReaderResults.GetString(1), 
-                                                                                dataReaderResults.GetString(1), 
+                                                                                path,
+                                                                                path, 
                                                                                 query, true, true));
                                         }
                                         else
                                         {
-                                            fileResults.Add(resultManager.CreateFileResult(dataReaderResults.GetString(1), query, true, true));
+                                            fileResults.Add(resultManager.CreateFileResult(path, query, true, true));
                                         }
                                     }
                                 }
