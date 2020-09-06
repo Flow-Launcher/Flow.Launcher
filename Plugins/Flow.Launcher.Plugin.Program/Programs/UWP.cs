@@ -536,7 +536,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
                                                     $"|Unable to get logo for {UserModelId} from {path} and" +
                                                     $" located in {Package.Location}", new FileNotFoundException());
-                    return new BitmapImage(new Uri(Constant.ErrorIcon));
+                    return new BitmapImage(new Uri(Constant.MissingImgIcon));
                 }
             }
 
@@ -586,7 +586,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                     $"|Unable to convert background string {BackgroundColor} " +
                                                     $"to color for {Package.Location}", new InvalidOperationException());
 
-                        return new BitmapImage(new Uri(Constant.ErrorIcon));
+                        return new BitmapImage(new Uri(Constant.MissingImgIcon));
                     }
                 }
                 else
