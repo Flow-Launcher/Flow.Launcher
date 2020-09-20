@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ProjectGuid>{FDB3555B-58EF-4AE6-B5F1-904719637AB4}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -8,6 +9,7 @@
     <AssemblyName>Flow.Launcher.Plugin.Program</AssemblyName>
     <UseWpf>true</UseWpf>
     <UseWindowsForms>true</UseWindowsForms>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
