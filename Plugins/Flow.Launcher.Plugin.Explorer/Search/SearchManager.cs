@@ -37,16 +37,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (IsFileContentSearch(query.ActionKeyword))
                 return WindowsIndexFileContentSearch(query, querySearch);
 
-            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
-
-            if (quickFolderLinks.Count > 0)
-                results.AddRange(quickFolderLinks);
-            
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
             if (settings.QuickFolderAccessLinks.Count > 0
                 && query.ActionKeyword == settings.SearchActionKeyword
                 && string.IsNullOrEmpty(query.Search))
                     return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
+
+            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
+
+            if (quickFolderLinks.Count > 0)
+                results.AddRange(quickFolderLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
