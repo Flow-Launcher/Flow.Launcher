@@ -13,6 +13,8 @@ namespace Flow.Launcher.Infrastructure.Http
     {
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
+        private static HttpClient client = new HttpClient();
+
         static Http()
         {
             // need to be added so it would work on a win10 machine
@@ -20,6 +22,8 @@ namespace Flow.Launcher.Infrastructure.Http
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls
                                                     | SecurityProtocolType.Tls11
                                                     | SecurityProtocolType.Tls12;
+
+            client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
         }
 
         public static HttpProxy Proxy { private get; set; }
@@ -78,6 +82,19 @@ namespace Flow.Launcher.Infrastructure.Http
                     throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
                 }
             }
+
+
+
+            //var response = await client.GetAsync(url);
+
+            //if (response.StatusCode == HttpStatusCode.OK)
+            //{
+            //    return await response.Content.ReadAsStringAsync();
+            //}
+            //else
+            //{
+            //    throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{await response.Content.ReadAsStringAsync()}> returned from <{url}>");
+            //}
         }
     }
 }

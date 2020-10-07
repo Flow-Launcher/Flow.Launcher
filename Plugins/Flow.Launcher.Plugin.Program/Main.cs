@@ -76,9 +76,10 @@ namespace Flow.Launcher.Plugin.Program
                 win32 = _win32s;
                 uwps = _uwps;
             }
-
+             
             var results1 = win32.AsParallel()
-                .Where(p => p.Enabled)
+                .Where(p => 
+                p.Enabled)
                 .Select(p => p.Result(query.Search, _context.API));
 
             var results2 = uwps.AsParallel()
