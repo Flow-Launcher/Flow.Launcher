@@ -36,9 +36,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private int Score(string query)
         {
             var nameMatch = StringMatcher.FuzzySearch(query, Name);
+            var acronymMatch = StringMatcher.FuzzySearch(query, new string(Name.Trim().Split().Select(x => x.FirstOrDefault()).ToArray()));
             var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
             var executableNameMatch = StringMatcher.FuzzySearch(query, ExecutableName);
-            var score = new[] { nameMatch.Score, descriptionMatch.Score, executableNameMatch.Score }.Max();
+            var score = new[] { nameMatch.Score, acronymMatch.Score, descriptionMatch.Score, executableNameMatch.Score }.Max();
             return score;
         }
 
