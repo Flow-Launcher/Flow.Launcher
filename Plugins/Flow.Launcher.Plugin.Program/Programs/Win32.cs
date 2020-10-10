@@ -12,6 +12,8 @@ using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
+using Windows.UI.Core;
+using NLog.Filters;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -33,32 +35,51 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ApplicationReferenceExtension = "appref-ms";
         private const string ExeExtension = "exe";
 
-        private int Score(string query)
-        {
-            var nameMatch = StringMatcher.FuzzySearch(query, Name);
-            var acronymMatch = StringMatcher.FuzzySearch(query, new string(Name.Trim().Split().Select(x => x.FirstOrDefault()).ToArray()));
-            var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-            var executableNameMatch = StringMatcher.FuzzySearch(query, ExecutableName);
-            var score = new[] { nameMatch.Score, acronymMatch.Score, descriptionMatch.Score, executableNameMatch.Score }.Max();
-            return score;
-        }
+
 
 
         public Result Result(string query, IPublicAPI api)
         {
-            var score = Score(query);
-            if (score <= 0)
-            { // no need to create result if this is zero
+            string title = Description switch
+            {
+                string d when d.Length >= Name.Length && d.Substring(0, Name.Length) == Name => d,
+                string d when !string.IsNullOrEmpty(d) => $"{Name}: {Description}",
+                _ => Name
+            };
+
+            var match = StringMatcher.FuzzySearch(query, title);
+
+            var acronymMatch = StringMatcher.FuzzySearch(query, string.Concat(
+                    Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => x.FirstOrDefault())));
+
+            int score;
+            List<int> titleHighlightData;
+
+            if (acronymMatch.Score < match.Score)
+            {
+                score = match.Score;
+                titleHighlightData = match.MatchData;
+            }
+            else if (acronymMatch.Score == 0 && match.Score == 0)
+            {
                 return null;
+            }
+            else
+            {
+                score = acronymMatch.Score;
+                titleHighlightData = Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Take(query.Length).Select(x => title.IndexOf(x)).ToList();
             }
 
             var result = new Result
             {
+                Title = title,
+                Score = score,
+                TitleHighlightData = titleHighlightData,
                 SubTitle = FullPath,
                 IcoPath = IcoPath,
-                Score = score,
                 ContextData = this,
-                Action = e =>
+                Action = _ =>
                 {
                     var info = new ProcessStartInfo
                     {
@@ -72,24 +93,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return true;
                 }
             };
-
-            if (Description.Length >= Name.Length &&
-                Description.Substring(0, Name.Length) == Name)
-            {
-                result.Title = Description;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, Description).MatchData;
-            }
-            else if (!string.IsNullOrEmpty(Description))
-            {
-                var title = $"{Name}: {Description}";
-                result.Title = title;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, title).MatchData;
-            }
-            else
-            {
-                result.Title = Name;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, Name).MatchData;
-            }
+            
 
             return result;
         }
