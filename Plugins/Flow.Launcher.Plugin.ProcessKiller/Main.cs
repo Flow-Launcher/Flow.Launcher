@@ -52,21 +52,24 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             // get all non-system processes whose file path matches that of the given result (processPath)
             var similarProcesses = processHelper.GetSimilarProcesses(processPath);
 
-            menuOptions.Add(new Result
+            if (similarProcesses.Count() > 0)
             {
-                Title = _context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
-                SubTitle = processPath,
-                Action = _ =>
+                menuOptions.Add(new Result
                 {
-                    foreach (var p in similarProcesses)
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
+                    SubTitle = processPath,
+                    Action = _ =>
                     {
-                        processHelper.TryKill(p);
-                    }
+                        foreach (var p in similarProcesses)
+                        {
+                            processHelper.TryKill(p);
+                        }
 
-                    return true;
-                },
-                IcoPath = processPath
-            });
+                        return true;
+                    },
+                    IcoPath = processPath
+                });
+            }
 
             return menuOptions;
         }
