@@ -38,7 +38,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
             _imageCache.Usage = LoadStorageToConcurrentDictionary();
 
-            foreach (var icon in new[] { Constant.DefaultIcon, Constant.ErrorIcon })
+            foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
@@ -106,7 +106,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(_imageCache[Constant.ErrorIcon], ImageType.Error);
+                    return new ImageResult(_imageCache[Constant.MissingImgIcon], ImageType.Error);
                 }
                 if (_imageCache.ContainsKey(path))
                 {
@@ -139,7 +139,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
 
-                    ImageSource image = _imageCache[Constant.ErrorIcon];
+                    ImageSource image = _imageCache[Constant.MissingImgIcon];
                     _imageCache[path] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
                 }
@@ -191,8 +191,8 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             else
             {
-                image = _imageCache[Constant.ErrorIcon];
-                path = Constant.ErrorIcon;
+                image = _imageCache[Constant.MissingImgIcon];
+                path = Constant.MissingImgIcon;
             }
 
             if (type != ImageType.Error)
