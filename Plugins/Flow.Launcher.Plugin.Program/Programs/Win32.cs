@@ -14,6 +14,7 @@ using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Windows.UI.Core;
 using NLog.Filters;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -49,13 +50,39 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var match = StringMatcher.FuzzySearch(query, title);
 
-            var splitName = Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var acronymMatch = StringMatcher.FuzzySearch(query, string.Concat(
-                    splitName
-                    .Select(x => x.FirstOrDefault())));
 
-            acronymMatch.MatchData = acronymMatch.MatchData.Select((x, i) => splitName.Take(x).Sum(x => x.Length + 1)).ToList();
+            (string[] spaceSplitName, string[] upperSplitName) = Name switch
+            {
+                string n when n.Contains(' ') => (Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), default(string[])),
+
+                string n when n.Any(x => x == char.ToUpper(x)) && n.Any(x => x == char.ToLower(x)) => (null,
+                    Regex.Split(Name, @"(?<!^)(?=[A-Z])")),
+                _ => (null, null)
+            };
+
+
+
+            var acronymMatch = (spaceSplitName, upperSplitName) switch
+            {
+                (null, null) => null,
+
+                (var s, null) => StringMatcher.FuzzySearch(query, string.Concat(
+                    s.Select(x => x.FirstOrDefault()))),
+
+                (null, var s) => StringMatcher.FuzzySearch(query, string.Concat(
+                s.Select(x => x.FirstOrDefault()))),
+
+                _ => null
+            };
+
+            if (acronymMatch != null && acronymMatch.Score != 0)
+                acronymMatch.MatchData = (spaceSplitName, upperSplitName) switch
+                {
+                    (var s, null) => acronymMatch.MatchData.Select((x, i) => s.Take(x).Sum(x => x.Length + 1)).ToList(),
+                    (null, var u) => acronymMatch.MatchData.Select((x, i) => u.Take(x).Sum(x => x.Length)).ToList(),
+                    _ => null
+                };
 
             int score;
             List<int> titleHighlightData;
@@ -64,10 +91,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //     by which score is higher
             (score, titleHighlightData) = (match, acronymMatch) switch
             {
+                (null, var aM) => (aM.Score, aM.MatchData),
+                (var m, null) => (m.Score, m.MatchData),
                 (var m, var aM) when m.Score < aM.Score => (aM.Score, aM.MatchData),
                 (var m, var aM) when m.Score > aM.Score => (m.Score, m.MatchData),
                 _ => (0, null)
             };
+
+            if (score == 0)
+                return null;
 
             var result = new Result
             {
@@ -91,7 +123,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return true;
                 }
             };
-            
+
 
             return result;
         }
