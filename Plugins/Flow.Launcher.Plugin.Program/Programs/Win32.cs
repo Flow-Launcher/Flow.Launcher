@@ -49,27 +49,25 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var match = StringMatcher.FuzzySearch(query, title);
 
+            var splitName = Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
             var acronymMatch = StringMatcher.FuzzySearch(query, string.Concat(
-                    Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                    splitName
                     .Select(x => x.FirstOrDefault())));
+
+            acronymMatch.MatchData = acronymMatch.MatchData.Select((x, i) => splitName.Take(x).Sum(x => x.Length + 1)).ToList();
 
             int score;
             List<int> titleHighlightData;
 
-            if (acronymMatch.Score < match.Score)
+            // Give value to score and highlightdata from match or acronym match
+            //     by which score is higher
+            (score, titleHighlightData) = (match, acronymMatch) switch
             {
-                score = match.Score;
-                titleHighlightData = match.MatchData;
-            }
-            else if (acronymMatch.Score == 0 && match.Score == 0)
-            {
-                return null;
-            }
-            else
-            {
-                score = acronymMatch.Score;
-                titleHighlightData = Name.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Take(query.Length).Select(x => title.IndexOf(x)).ToList();
-            }
+                (var m, var aM) when m.Score < aM.Score => (aM.Score, aM.MatchData),
+                (var m, var aM) when m.Score > aM.Score => (m.Score, m.MatchData),
+                _ => (0, null)
+            };
 
             var result = new Result
             {
