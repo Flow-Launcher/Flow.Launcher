@@ -139,7 +139,7 @@ namespace Flow.Launcher.Core
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
-            var client = new WebClient { Proxy = Http.WebProxy() };
+            var client = new WebClient { Proxy = Http.WebProxy };
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);
