@@ -24,6 +24,7 @@ namespace Flow.Launcher.Infrastructure.Http
                                                     | SecurityProtocolType.Tls12;
 
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+            
         }
 
         public static HttpProxy Proxy { private get; set; }
