@@ -29,6 +29,7 @@ namespace Flow.Launcher.Infrastructure.Http
                                                     | SecurityProtocolType.Tls11
                                                     | SecurityProtocolType.Tls12;
 
+            client = new HttpClient(socketsHttpHandler, false);
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
         }
@@ -46,7 +47,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        public static WebProxy WebProxy { get; private set; }
+        public static WebProxy WebProxy { get; private set; } = new WebProxy();
 
         /// <summary>
         /// Update the Address of the Proxy to modify the client Proxy
@@ -74,11 +75,18 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        public static void Download([NotNull] string url, [NotNull] string filePath)
+        public async static Task Download([NotNull] string url, [NotNull] string filePath)
         {
-            var client = new WebClient { Proxy = WebProxy };
-            client.Headers.Add("user-agent", UserAgent);
-            client.DownloadFile(url, filePath);
+            using var response = await client.GetAsync(url);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                await response.Content.CopyToAsync(fileStream);
+            }
+            else
+            {
+                throw new WebException($"Error code <{response.StatusCode}> returned from <{url}>");
+            }
         }
 
         public static async Task<string> Get([NotNull] string url, string encoding = "UTF-8")
