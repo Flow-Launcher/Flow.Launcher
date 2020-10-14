@@ -72,22 +72,17 @@ namespace Flow.Launcher.Plugin.Program
             Win32[] win32;
             UWP.Application[] uwps;
 
-            lock (IndexLock)
-            { // just take the reference inside the lock to eliminate query time issues.
-                win32 = _win32s;
-                uwps = _uwps;
-            }
+            win32 = _win32s;
+            uwps = _uwps;
 
+            var result = win32.Cast<IProgram>()
+                 .Concat(uwps)
+                 .AsParallel()
+                 .Where(p => p.Enabled)
+                 .Select(p => p.Result(query.Search, _context.API))
+                 .Where(r => r != null && r.Score > 0)
+                 .OrderBy(r=>r.Score).ToList();
 
-            var results1 = win32.AsParallel()
-                .Where(p => p.Enabled)
-                .Select(p => p.Result(query.Search, _context.API));
-
-            var results2 = uwps.AsParallel()
-                .Where(p => p.Enabled)
-                .Select(p => p.Result(query.Search, _context.API));
-
-            var result = results1.Concat(results2).Where(r => r != null && r.Score > 0).ToList();
             return result;
         }
 
@@ -99,10 +94,9 @@ namespace Flow.Launcher.Plugin.Program
         public static void IndexWin32Programs()
         {
             var win32S = Win32.All(_settings);
-            lock (IndexLock)
-            {
-                _win32s = win32S;
-            }
+
+            _win32s = win32S;
+
         }
 
         public static void IndexUWPPrograms()
@@ -111,10 +105,9 @@ namespace Flow.Launcher.Plugin.Program
             var support = Environment.OSVersion.Version.Major >= windows10.Major;
 
             var applications = support ? UWP.All() : new UWP.Application[] { };
-            lock (IndexLock)
-            {
-                _uwps = applications;
-            }
+
+            _uwps = applications;
+
         }
 
         public static void IndexPrograms()
