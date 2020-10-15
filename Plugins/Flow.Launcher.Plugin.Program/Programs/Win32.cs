@@ -340,8 +340,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
                 .SelectMany(s => ProgramPaths(s.Location, suffixes))
                 .Where(t1 => !Main._settings.DisabledProgramSources.Any(x => t1 == x.UniqueIdentifier))
-                .Distinct()
-                .ToList();
+                .Distinct();
 
             var programs = paths.AsParallel().Select(x => Extension(x) switch
             {
@@ -370,10 +369,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
                         .Distinct()
                         .Select(x => Extension(x) switch
-            {
-                ShortcutExtension => LnkProgram(x),
-                _ => Win32Program(x)
-            }).Where(x => x.Valid);
+                                {
+                                    ShortcutExtension => LnkProgram(x),
+                                    _ => Win32Program(x)
+                                })
+                        .Where(x => x.Valid);
             return programs;
         }
 
@@ -381,26 +381,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
-            var programs = new List<Win32>();
-            using (var root = Registry.LocalMachine.OpenSubKey(appPaths))
+
+            using var localRoot = Registry.LocalMachine.OpenSubKey(appPaths);
+            using var userRoot = Registry.CurrentUser.OpenSubKey(appPaths);
+
+            var programs = (localRoot, userRoot) switch
             {
-                if (root != null)
-                {
-                    programs.AddRange(GetProgramsFromRegistry(root));
-                }
-            }
-            using (var root = Registry.CurrentUser.OpenSubKey(appPaths))
-            {
-                if (root != null)
-                {
-                    programs.AddRange(GetProgramsFromRegistry(root));
-                }
-            }
+                (null, null)=>new List<Win32>(),
+                (var l, null) => GetProgramsFromRegistry(l),
+                (null, var u)=>GetProgramsFromRegistry(u),
+                (var l,var u)=> GetProgramsFromRegistry(l).Concat(GetProgramsFromRegistry(u))
+            };
+
 
             var disabledProgramsList = Main._settings.DisabledProgramSources;
-            var toFilter = programs.AsParallel().Where(p => suffixes.Contains(Extension(p.ExecutableName)));
-
-            var filtered = toFilter.Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier)).Select(t1 => t1);
+            var filtered = programs.AsParallel()
+                                   .Where(p => suffixes.Contains(Extension(p.ExecutableName)))
+                                   .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier));
 
             return filtered;
         }
