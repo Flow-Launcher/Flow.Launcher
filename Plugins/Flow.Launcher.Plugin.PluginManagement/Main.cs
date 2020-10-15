@@ -144,7 +144,7 @@ namespace Flow.Launcher.Plugin.PluginManagement
                     IcoPath = "Images\\plugin.png",
                     TitleHighlightData = StringMatcher.FuzzySearch(query.SecondSearch, r.name).MatchData,
                     SubTitleHighlightData = StringMatcher.FuzzySearch(query.SecondSearch, r.description).MatchData,
-                    Action = c =>
+                    Action = _ =>
                     {
                         MessageBoxResult result = MessageBox.Show("Are you sure you wish to install the \'" + r.name + "\' plugin",
                             "Install plugin", MessageBoxButton.YesNo);
@@ -157,17 +157,19 @@ namespace Flow.Launcher.Plugin.PluginManagement
 
                             string pluginUrl = APIBASE + "/media/" + r1.plugin_file;
 
-                            try
+                            Task.Run(async () =>
                             {
-                                Http.Download(pluginUrl, filePath);
-                            }
-                            catch (WebException e)
-                            {
-                                context.API.ShowMsg($"PluginManagement.ResultForInstallPlugin: download failed for <{r.name}>");
-                                Log.Exception($"|PluginManagement.ResultForInstallPlugin|download failed for <{r.name}>", e);
-                                return false;
-                            }
-                            context.API.InstallPlugin(filePath);
+                                try
+                                {
+                                    await Http.Download(pluginUrl, filePath);
+                                    context.API.InstallPlugin(filePath);
+                                }
+                                catch (WebException e)
+                                {
+                                    context.API.ShowMsg($"PluginManagement.ResultForInstallPlugin: download failed for <{r.name}>");
+                                    Log.Exception($"|PluginManagement.ResultForInstallPlugin|download failed for <{r.name}>", e);
+                                }
+                            });
                         }
                         return false;
                     }
