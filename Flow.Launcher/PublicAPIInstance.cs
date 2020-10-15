@@ -76,7 +76,6 @@ namespace Flow.Launcher
             _settingsVM.Save();
             PluginManager.Save();
             ImageLoader.Save();
-            _alphabet.Save();
         }
 
         public void ReloadAllPluginData()
