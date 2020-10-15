@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -23,11 +24,11 @@ namespace Flow.Launcher.Infrastructure
         private ConcurrentDictionary<string, string[][]> PinyinCache;
         private BinaryStorage<Dictionary<string, string[][]>> _pinyinStorage;
         private Settings _settings;
-         
+
         public void Initialize([NotNull] Settings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            InitializePinyinHelpers();
+            Task.Run(() => InitializePinyinHelpers());
         }
 
         private void InitializePinyinHelpers()
@@ -37,18 +38,16 @@ namespace Flow.Launcher.Infrastructure
             Stopwatch.Normal("|Flow Launcher.Infrastructure.Alphabet.Initialize|Preload pinyin cache", () =>
             {
                 _pinyinStorage = new BinaryStorage<Dictionary<string, string[][]>>("Pinyin");
-                
-                lock(_pinyinStorage)
-                {
-                    var loaded = _pinyinStorage.TryLoad(new Dictionary<string, string[][]>());
 
-                    PinyinCache = new ConcurrentDictionary<string, string[][]>(loaded);
-                }
+                var loaded = _pinyinStorage.TryLoad(new Dictionary<string, string[][]>());
+
+                PinyinCache = new ConcurrentDictionary<string, string[][]>(loaded);
 
                 // force pinyin library static constructor initialize
                 PinyinHelper.toHanyuPinyinStringArray('T', Format);
             });
             Log.Info($"|Flow Launcher.Infrastructure.Alphabet.Initialize|Number of preload pinyin combination<{PinyinCache.Count}>");
+
         }
 
         public string Translate(string str)
@@ -66,10 +65,10 @@ namespace Flow.Launcher.Infrastructure
 
             if (!ContainsChinese(source))
                 return source;
-                
+
             var combination = PinyinCombination(source);
-            
-            var pinyinArray=combination.Select(x => string.Join("", x));
+
+            var pinyinArray = combination.Select(x => string.Join("", x));
             var acronymArray = combination.Select(Acronym).Distinct();
 
             var joinedSingleStringCombination = new StringBuilder();
@@ -83,13 +82,13 @@ namespace Flow.Launcher.Infrastructure
         {
             if (!_settings.ShouldUsePinyin)
             {
-                return; 
+                return;
             }
 
-            lock(_pinyinStorage)
+            lock (_pinyinStorage)
             {
                 _pinyinStorage.Save(PinyinCache.ToDictionary(i => i.Key, i => i.Value));
-            }            
+            }
         }
 
         private static string[] EmptyStringArray = new string[0];
@@ -110,21 +109,15 @@ namespace Flow.Launcher.Infrastructure
 
             if (!PinyinCache.ContainsKey(characters))
             {
-                var allPinyins = new List<string[]>();
-                foreach (var c in characters)
-                {
-                    var pinyins = PinyinHelper.toHanyuPinyinStringArray(c, Format);
-                    if (pinyins != null)
+                // var allPinyins = new List<string[]>();
+
+                var allPinyins = characters.Select(c =>
+                    PinyinHelper.toHanyuPinyinStringArray(c) switch
                     {
-                        var r = pinyins.Distinct().ToArray();
-                        allPinyins.Add(r);
+                        null => new string[] { c.ToString() },
+                        string[] pinyins => pinyins.Distinct().ToArray()
                     }
-                    else
-                    {
-                        var r = new[] { c.ToString() };
-                        allPinyins.Add(r);
-                    }
-                }
+                );
 
                 var combination = allPinyins.Aggregate(Combination).Select(c => c.Split(';')).ToArray();
                 PinyinCache[characters] = combination;
@@ -138,7 +131,7 @@ namespace Flow.Launcher.Infrastructure
 
         public string Acronym(string[] pinyin)
         {
-            var acronym = string.Join("", pinyin.Select(p => p[0]));
+            var acronym = string.Concat(pinyin.Select(p => p[0]));
             return acronym;
         }
 
@@ -172,7 +165,7 @@ namespace Flow.Launcher.Infrastructure
                 from a2 in array2
                 select $"{a1};{a2}"
             ).ToArray();
-            return combination;
+           return combination;
         }
     }
 }
