@@ -20,6 +20,7 @@ using IStream = AppxPackaing.IStream;
 using Rect = System.Windows.Rect;
 using System.Security.Policy;
 using System.Windows.Navigation;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -90,6 +91,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 Apps = new List<Application>().ToArray();
             }
+
+            Marshal.ReleaseComObject(stream);
         }
 
 
