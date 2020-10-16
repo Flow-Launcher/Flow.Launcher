@@ -23,8 +23,10 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
 
         public static readonly int ThumbnailSize = 64;
-        public static readonly string DefaultIcon = Path.Combine(ProgramDirectory, "Images", "app.png");
-        public static readonly string ErrorIcon = Path.Combine(ProgramDirectory, "Images", "app_error.png");
+        private static readonly string ImagesDirectory = Path.Combine(ProgramDirectory, "Images");
+        public static readonly string DefaultIcon = Path.Combine(ImagesDirectory, "app.png");
+        public static readonly string ErrorIcon = Path.Combine(ImagesDirectory, "app_error.png");
+        public static readonly string MissingImgIcon = Path.Combine(ImagesDirectory, "app_missing_img.png");
 
         public static string PythonPath;
 

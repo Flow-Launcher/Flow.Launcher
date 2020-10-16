@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
-        public static void Copy(this string sourcePath, string targetPath)
+        public static void CopyAll(this string sourcePath, string targetPath)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourcePath);
@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string temppath = Path.Combine(targetPath, subdir.Name);
-                    Copy(subdir.FullName, temppath);
+                    CopyAll(subdir.FullName, temppath);
                 }
             }
             catch (Exception e)
@@ -114,7 +114,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return Directory.Exists(path);
         }
 
-        public static bool FileExits(this string filePath)
+        public static bool FileExists(this string filePath)
         {
             return File.Exists(filePath);
         }
@@ -124,7 +124,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
             try
             {
-                if (LocationExists(fileOrFolderPath) || FileExits(fileOrFolderPath))
+                if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
                     Process.Start(psi);
             }
             catch (Exception e)
