@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -84,6 +85,8 @@ namespace Flow.Launcher
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
                 Http.Proxy = _settings.Proxy;
+
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
 
