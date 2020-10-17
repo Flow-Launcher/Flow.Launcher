@@ -56,7 +56,7 @@ namespace Flow.Launcher.Infrastructure
 
         private string GetFirstPinyinChar(string content)
         {
-            return new string(content.Split(";").Select(c => c.First()).ToArray());
+            return string.Concat(content.Split(';').Select(x => x.First()));
         }
     }
 }
