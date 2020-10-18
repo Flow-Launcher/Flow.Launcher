@@ -76,16 +76,11 @@ namespace Flow.Launcher.Infrastructure
                 if (currentQueryIndex >= queryWithoutCase.Length)
                     break;
 
-                if (compareIndex == 0 && queryWithoutCase[currentQueryIndex] == char.ToLower(stringToCompare[compareIndex]))
-                {
-                    acronymMatchData.Add(compareIndex);
-                    currentQueryIndex++;
-                    continue;
-                }
 
                 switch (stringToCompare[compareIndex])
                 {
-                    case char c when (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
+                    case char c when compareIndex == 0 && queryWithoutCase[currentQueryIndex] == char.ToLower(stringToCompare[compareIndex])
+                                  || (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
                                   || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex]):
                         acronymMatchData.Add(compareIndex);
                         currentQueryIndex++;
