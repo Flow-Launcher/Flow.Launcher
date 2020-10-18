@@ -32,21 +32,20 @@ namespace Flow.Launcher.Infrastructure
         {
             if (_settings.ShouldUsePinyin)
             {
-                string result = _pinyinCache.GetValueOrDefault(content);
-                if (result == null)
+                if (_pinyinCache.ContainsKey(content))
                 {
                     if (WordsHelper.HasChinese(content))
                     {
-                        result = WordsHelper.GetPinyin(content,";");
+                        var result = WordsHelper.GetPinyin(content,";");
                         result = GetFirstPinyinChar(result) + result.Replace(";","");
                         _pinyinCache[content] = result;
+                        return result;
                     }
                     else
                     {
-                        result = content;
+                        return content;
                     }
                 }
-                return result;
             }
             else
             {
