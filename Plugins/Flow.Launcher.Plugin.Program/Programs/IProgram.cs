@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -9,5 +10,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         string UniqueIdentifier { get; set; }
         string Name { get; }
         string Location { get; }
+        bool Enabled { get; }
     }
 }

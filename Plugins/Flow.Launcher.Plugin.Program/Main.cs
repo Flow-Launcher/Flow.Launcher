@@ -80,15 +80,13 @@ namespace Flow.Launcher.Plugin.Program
 
             var searchText = WordsHelper.HasChinese(query.Search) ? WordsHelper.GetPinyin(query.Search) : query.Search;
 
-            var results1 = win32.AsParallel()
-                .Where(p => p.Enabled)
-                .Select(p => p.Result(searchText, _context.API));
-
-            var results2 = uwps.AsParallel()
-                .Where(p => p.Enabled)
-                .Select(p => p.Result(searchText, _context.API));
-
-            var result = results1.Concat(results2).Where(r => r != null && r.Score > 0).ToList();
+            var result = win32
+                    .Cast<IProgram>()
+                    .Concat(uwps)
+                    .AsParallel()
+                    .Where(p => p.Enabled)
+                    .Select(p => p.Result(searchText, _context.API))
+                    .Where(r=>r?.Score > 0).ToList();
             return result;
         }
 
