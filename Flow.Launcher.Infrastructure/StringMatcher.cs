@@ -102,6 +102,9 @@ namespace Flow.Launcher.Infrastructure
                 }
             }
 
+            if (acronymMatchData.Count == query.Length && acronymScore >= 60)
+                return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
 
                         
