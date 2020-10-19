@@ -32,7 +32,7 @@ namespace Flow.Launcher.Infrastructure
         {
             if (_settings.ShouldUsePinyin)
             {
-                if (_pinyinCache.ContainsKey(content))
+                if (!_pinyinCache.ContainsKey(content))
                 {
                     if (WordsHelper.HasChinese(content))
                     {
