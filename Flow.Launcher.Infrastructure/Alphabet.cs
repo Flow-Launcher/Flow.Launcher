@@ -47,7 +47,9 @@ namespace Flow.Launcher.Infrastructure
                     }
                 }
                 else
+                {
                     return _pinyinCache[content];
+                }
             }
             else
             {
