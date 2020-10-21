@@ -48,15 +48,55 @@ namespace Flow.Launcher.Infrastructure
             
             query = query.Trim();
 
-            if (_alphabet != null)
+            stringToCompare = _alphabet?.Translate(stringToCompare) ?? stringToCompare;
+
+            // This also can be done by spliting the query
+
+            //(var spaceSplit, var upperSplit) = stringToCompare switch
+            //{
+            //    string s when s.Contains(' ') => (s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(w => w.First()),
+            //                                        default(IEnumerable<char>)),
+            //    string s when s.Any(c => char.IsUpper(c)) && s.Any(c => char.IsLower(c)) =>
+            //                        (null, Regex.Split(s, @"(?<!^)(?=[A-Z])").Select(w => w.First())),
+            //    _ => ((IEnumerable<char>)null, (IEnumerable<char>)null)
+            //};
+
+            var currentQueryIndex = 0;
+            var acronymMatchData = new List<int>();
+            var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
+
+            int acronymScore = 100;
+
+            for (int compareIndex = 0; compareIndex < stringToCompare.Length; compareIndex++)
             {
-                query = _alphabet.Translate(query);
-                stringToCompare = _alphabet.Translate(stringToCompare);
+                if (currentQueryIndex >= queryWithoutCase.Length)
+                    break;
+
+
+                switch (stringToCompare[compareIndex])
+                {
+                    case char c when (compareIndex == 0 && queryWithoutCase[currentQueryIndex] == char.ToLower(stringToCompare[compareIndex]))
+                                  || (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
+                                  || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex]):
+                        acronymMatchData.Add(compareIndex);
+                        currentQueryIndex++;
+                        continue;
+
+                    case char c when char.IsWhiteSpace(c):
+                        compareIndex++;
+                        acronymScore -= 10;
+                        break;
+                    case char c when char.IsUpper(c):
+                        acronymScore -= 10;
+                        break;
+                }
             }
+
+            if (acronymMatchData.Count == query.Length && acronymScore >= 60)
+                return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
 
-            var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
                         
             var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
