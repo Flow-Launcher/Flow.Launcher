@@ -14,12 +14,12 @@ namespace Flow.Launcher.Infrastructure
 {
     public interface IAlphabet
     {
-        string Translate(string stringToTranslate);
+        string Translate(string stringToTranslate,out bool translated);
     }
 
     public class Alphabet : IAlphabet
     {
-        private ConcurrentDictionary<string, string> _pinyinCache;
+        private ConcurrentDictionary<string, string> _pinyinCache = new ConcurrentDictionary<string, string>();
         private Settings _settings;
 
         public void Initialize([NotNull] Settings settings)
@@ -28,18 +28,16 @@ namespace Flow.Launcher.Infrastructure
         }
 
 
-        public string Translate(string content)
+        public string Translate(string content,out bool translated)
         {
             if (_settings.ShouldUsePinyin)
             {
                 if (!_pinyinCache.ContainsKey(content))
                 {
-                    if (WordsHelper.HasChinese(content))
+                    if (translated = WordsHelper.HasChinese(content))
                     {
-                        var result = WordsHelper.GetPinyin(content, ";");
-                        result = GetFirstPinyinChar(result) + result.Replace(";", "");
-                        _pinyinCache[content] = result;
-                        return result;
+                        var result = WordsHelper.GetPinyin(content);
+                        return _pinyinCache[content] = result;
                     }
                     else
                     {
@@ -48,11 +46,13 @@ namespace Flow.Launcher.Infrastructure
                 }
                 else
                 {
+                    translated = true;
                     return _pinyinCache[content];
                 }
             }
             else
             {
+                translated = false;
                 return content;
             }
         }
