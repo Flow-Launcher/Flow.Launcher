@@ -222,10 +222,9 @@ namespace Flow.Launcher.Infrastructure.Image
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-                    int ImageCacheValue;
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
-                        if (ImageCache.Usage.TryGetValue(path, out ImageCacheValue))
+                        if (ImageCache.Usage.TryGetValue(path, out _))
                         {
                             img = ImageCache[key];
                         }
