@@ -205,6 +205,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return new ImageResult(image, type);
         }
 
+        [Obsolete]
         private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly)
         {
             return WindowsThumbnailProvider.GetThumbnail(
