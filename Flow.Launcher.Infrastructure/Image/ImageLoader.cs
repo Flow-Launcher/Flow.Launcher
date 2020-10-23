@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -161,7 +162,7 @@ namespace Flow.Launcher.Infrastructure.Image
                  * - Solution: just load the icon
                  */
                 type = ImageType.Folder;
-                image = GetThumbnail(path, ThumbnailOptions.IconOnly);
+                image = ShellFileSystemFolder.FromFolderPath(path).Thumbnail.SmallBitmapSource;
             }
             else if (File.Exists(path))
             {
@@ -171,7 +172,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
-                        image = LoadFullImage(path);
+                        image = ShellFile.FromFilePath(path).Thumbnail.BitmapSource;
                     }
                     else
                     {
@@ -180,13 +181,14 @@ namespace Flow.Launcher.Infrastructure.Image
                          * be the case in many situations while testing. 
                          * - Solution: explicitly pass the ThumbnailOnly flag
                          */
-                        image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
+                        image = ShellFile.FromFilePath(path).Thumbnail.SmallBitmapSource;
                     }
                 }
                 else
                 {
+                    ShellObject shell = ShellFile.FromFilePath(path);
                     type = ImageType.File;
-                    image = GetThumbnail(path, ThumbnailOptions.None);
+                    image = shell.Thumbnail.SmallBitmapSource;
                 }
             }
             else
