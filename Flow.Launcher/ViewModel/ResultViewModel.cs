@@ -18,6 +18,7 @@ namespace Flow.Launcher.ViewModel
             if (result != null)
             {
                 Result = result;
+                Image = new Lazy<ImageSource>(() => SetImage);
             }
 
             Settings = settings;
@@ -36,8 +37,10 @@ namespace Flow.Launcher.ViewModel
         public string ShowSubTitleToolTip => string.IsNullOrEmpty(Result.SubTitleToolTip)
                                                 ? Result.SubTitle 
                                                 : Result.SubTitleToolTip;
+        
+        public Lazy<ImageSource> Image { get; set; }
 
-        public ImageSource Image
+        private ImageSource SetImage
         {
             get
             {
@@ -75,6 +78,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        
         public override int GetHashCode()
         {
             return Result.GetHashCode();
