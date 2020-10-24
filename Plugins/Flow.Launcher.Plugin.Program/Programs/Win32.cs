@@ -311,12 +311,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-            var paths1 = ProgramPaths(directory1, suffixes);
-            var paths2 = ProgramPaths(directory2, suffixes);
+            var paths = ProgramPaths(directory1, suffixes).Concat(ProgramPaths(directory2, suffixes));
 
-            var toFilter = paths1.Concat(paths2);
-
-            var programs = toFilter
+            var programs = paths
                         .AsParallel()
                         .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
                         .Distinct()
