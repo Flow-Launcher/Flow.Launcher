@@ -139,7 +139,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
-
+                    
                     ImageSource image = ImageCache[Constant.MissingImgIcon];
                     ImageCache[path] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
@@ -172,7 +172,8 @@ namespace Flow.Launcher.Infrastructure.Image
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
-                        image = ShellFile.FromFilePath(path).Thumbnail.BitmapSource;
+                        using var shell = ShellFile.FromFilePath(path);
+                        image = shell.Thumbnail.BitmapSource;
                     }
                     else
                     {
@@ -181,12 +182,13 @@ namespace Flow.Launcher.Infrastructure.Image
                          * be the case in many situations while testing. 
                          * - Solution: explicitly pass the ThumbnailOnly flag
                          */
-                        image = ShellFile.FromFilePath(path).Thumbnail.SmallBitmapSource;
+                        using ShellObject shell = ShellFile.FromFilePath(path);
+                        image = shell.Thumbnail.SmallBitmapSource;
                     }
                 }
                 else
                 {
-                    ShellObject shell = ShellFile.FromFilePath(path);
+                    using ShellObject shell = ShellFile.FromFilePath(path);
                     type = ImageType.File;
                     image = shell.Thumbnail.SmallBitmapSource;
                 }
