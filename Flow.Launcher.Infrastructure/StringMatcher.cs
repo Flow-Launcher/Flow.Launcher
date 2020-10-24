@@ -66,7 +66,7 @@ namespace Flow.Launcher.Infrastructure
 
             // this is for compare string that has been translated
             // because one chinese character may match multiple letter, so this will help to get the currect matchdata
-            var currentAcronymIndex = 0; 
+            var currentAcronymIndex = 0;
 
             var acronymMatchData = new List<int>();
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
@@ -83,7 +83,8 @@ namespace Flow.Launcher.Infrastructure
                 {
                     case char c when (compareIndex == 0 && queryWithoutCase[currentQueryIndex] == char.ToLower(stringToCompare[compareIndex]))
                                   || (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
-                                  || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex]):
+                                  || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex])
+                                  || (char.IsNumber(c) && c == queryWithoutCase[currentQueryIndex]):
                         acronymMatchData.Add(translated ? currentAcronymIndex++ : compareIndex);
                         currentQueryIndex++;
                         continue;
@@ -91,11 +92,14 @@ namespace Flow.Launcher.Infrastructure
                         currentAcronymIndex++;
                         compareIndex++;
                         acronymScore -= 10;
-                        continue;
-                    case char c when char.IsUpper(c):
+                        break;
+                    case char c when char.IsUpper(c) || char.IsNumber(c):
                         currentAcronymIndex++;
                         acronymScore -= 10;
                         continue;
+                    case ':':
+                        compareIndex = int.MaxValue - 1;
+                        break;
                 }
             }
 
@@ -103,6 +107,7 @@ namespace Flow.Launcher.Infrastructure
                 return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
+
 
 
             var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
