@@ -128,14 +128,14 @@ namespace Flow.Launcher.Infrastructure.Image
 
                 imageResult = GetThumbnailResult(ref path, loadFullImage);
             }
-            catch (System.Exception e)
+            catch (ShellException e)
             {
                 try
                 {
                     // Get thumbnail may fail for certain images on the first try, retry again has proven to work
                     imageResult = GetThumbnailResult(ref path, loadFullImage);
                 }
-                catch (System.Exception e2)
+                catch (ShellException e2)
                 {
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
