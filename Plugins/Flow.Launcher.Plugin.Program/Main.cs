@@ -43,21 +43,15 @@ namespace Flow.Launcher.Plugin.Program
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
 
-            var a = Task.Run(() =>
+            Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_win32s.Any())
                     Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
-            });
-
-            var b = Task.Run(() =>
-            {
                 if (IsStartupIndexProgramsRequired || !_uwps.Any())
                     Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUWPPrograms);
+                _settings.LastIndexTime = DateTime.Today;
+
             });
-
-            Task.WaitAll(a, b);
-
-            _settings.LastIndexTime = DateTime.Today;
         }
 
         public void Save()
@@ -80,7 +74,7 @@ namespace Flow.Launcher.Plugin.Program
                  .AsParallel()
                  .Where(p => p.Enabled)
                  .Select(p => p.Result(query.Search, _context.API))
-                 .Where(r => r != null && r.Score > 0)
+                 .Where(r =>r?.Score > 0)
                  .ToList();
 
             return result;
@@ -110,13 +104,13 @@ namespace Flow.Launcher.Plugin.Program
 
         }
 
-        public static void IndexPrograms()
+        public async static Task IndexPrograms()
         {
-            var t1 = Task.Run(() => IndexWin32Programs());
-
-            var t2 = Task.Run(() => IndexUWPPrograms());
-
-            Task.WaitAll(t1, t2);
+            await Task.Run(() =>
+            {
+                IndexWin32Programs();
+                IndexUWPPrograms();
+            });
 
             _settings.LastIndexTime = DateTime.Today;
         }
@@ -145,20 +139,21 @@ namespace Flow.Launcher.Plugin.Program
                 menuOptions = program.ContextMenus(_context.API);
             }
 
-            menuOptions.Add(
-                                new Result
-                                {
-                                    Title = _context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
-                                    Action = c =>
-                                    {
-                                        DisableProgram(program);
-                                        _context.API.ShowMsg(_context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
-                                                                _context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success_message"));
-                                        return false;
-                                    },
-                                    IcoPath = "Images/disable.png"
-                                }
-                           );
+            menuOptions
+                .Add(
+                    new Result
+                    {
+                        Title = _context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
+                        Action = c =>
+                        {
+                            DisableProgram(program);
+                            _context.API.ShowMsg(_context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                                                    _context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success_message"));
+                            return false;
+                        },
+                        IcoPath = "Images/disable.png"
+                    }
+                    );
 
             return menuOptions;
         }
@@ -188,7 +183,6 @@ namespace Flow.Launcher.Plugin.Program
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)
         {
-            bool hide;
             try
             {
                 runProcess(info);

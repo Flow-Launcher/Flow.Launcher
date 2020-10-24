@@ -18,6 +18,9 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using IStream = AppxPackaing.IStream;
 using Rect = System.Windows.Rect;
+using System.Security.Policy;
+using System.Windows.Navigation;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -88,6 +91,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 Apps = new List<Application>().ToArray();
             }
+
+            Marshal.ReleaseComObject(stream);
         }
 
 
@@ -206,12 +211,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP" ,"CurrentUserPackages", $"id","An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"id", "An unexpected error occured and "
                                                    + $"unable to verify if package is valid", e);
                         return false;
                     }
-                    
-                    
+
+
                     return valid;
                 });
                 return ps;
@@ -263,54 +268,41 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string LogoPath { get; set; }
             public UWP Package { get; set; }
 
-            public Application(){}
-
-            private int Score(string query)
-            {
-                var displayNameMatch = StringMatcher.FuzzySearch(query, DisplayName);
-                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-                var score = new[] { displayNameMatch.Score, descriptionMatch.Score }.Max();
-                return score;
-            }
+            public Application() { }
 
             public Result Result(string query, IPublicAPI api)
             {
-                var score = Score(query);
-                if (score <= 0)
-                { // no need to create result if score is 0
+                string title = Description switch
+                {
+                    string d when d.Length >= Name.Length && d.Substring(0, Name.Length) == Name => d,
+                    string d when !string.IsNullOrEmpty(d) => $"{Name}: {Description}",
+                    _ => Name
+                };
+
+                var match = StringMatcher.FuzzySearch(query, title);
+
+                // Give value to score and highlightdata from match or acronym match
+                //     by which score is higher
+
+                if (!(match?.Score > 0))
                     return null;
-                }
 
                 var result = new Result
                 {
+                    Title = title,
                     SubTitle = Package.Location,
                     Icon = Logo,
-                    Score = score,
+                    Score = match.Score,
                     ContextData = this,
-                    Action = e =>
+                    TitleHighlightData = match.MatchData,
+                    Action = _ =>
                     {
                         Launch(api);
                         return true;
                     }
                 };
 
-                if (Description.Length >= DisplayName.Length &&
-                    Description.Substring(0, DisplayName.Length) == DisplayName)
-                {
-                    result.Title = Description;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, Description).MatchData;
-                }
-                else if (!string.IsNullOrEmpty(Description))
-                {
-                    var title = $"{DisplayName}: {Description}";
-                    result.Title = title;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, title).MatchData;
-                }
-                else
-                {
-                    result.Title = DisplayName;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, DisplayName).MatchData;
-                }
+
                 return result;
             }
 
@@ -409,14 +401,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
             {
                 const string prefix = "ms-resource:";
-                
+
                 if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
                     return rawPriReferenceValue;
 
                 string key = rawPriReferenceValue.Substring(prefix.Length);
                 if (key.StartsWith("//"))
                     return $"{prefix}{key}";
-                
+
                 if (!key.StartsWith("/"))
                 {
                     key = $"/{key}";

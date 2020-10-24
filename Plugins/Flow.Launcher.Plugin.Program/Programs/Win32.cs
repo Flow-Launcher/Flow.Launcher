@@ -12,6 +12,9 @@ using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
+using Windows.UI.Core;
+using NLog.Filters;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -33,31 +36,32 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ApplicationReferenceExtension = "appref-ms";
         private const string ExeExtension = "exe";
 
-        private int Score(string query)
-        {
-            var nameMatch = StringMatcher.FuzzySearch(query, Name);
-            var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-            var executableNameMatch = StringMatcher.FuzzySearch(query, ExecutableName);
-            var score = new[] { nameMatch.Score, descriptionMatch.Score, executableNameMatch.Score }.Max();
-            return score;
-        }
+
 
 
         public Result Result(string query, IPublicAPI api)
         {
-            var score = Score(query);
-            if (score <= 0)
-            { // no need to create result if this is zero
+            string title = Description switch
+            {
+                string d when d.Length >= Name.Length && d.Substring(0, Name.Length) == Name => d,
+                string d when !string.IsNullOrEmpty(d) => $"{Name}: {Description}",
+                _ => Name
+            };
+
+            var match = StringMatcher.FuzzySearch(query, title);
+
+            if (!(match?.Score > 0))
                 return null;
-            }
 
             var result = new Result
             {
+                Title = title,
+                Score = match.Score,
+                TitleHighlightData = match.MatchData,
                 SubTitle = FullPath,
                 IcoPath = IcoPath,
-                Score = score,
                 ContextData = this,
-                Action = e =>
+                Action = _ =>
                 {
                     var info = new ProcessStartInfo
                     {
@@ -72,23 +76,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             };
 
-            if (Description.Length >= Name.Length &&
-                Description.Substring(0, Name.Length) == Name)
-            {
-                result.Title = Description;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, Description).MatchData;
-            }
-            else if (!string.IsNullOrEmpty(Description))
-            {
-                var title = $"{Name}: {Description}";
-                result.Title = title;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, title).MatchData;
-            }
-            else
-            {
-                result.Title = Name;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, Name).MatchData;
-            }
 
             return result;
         }
@@ -140,8 +127,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
                     {
-
-
                         Main.StartProcess(Process.Start, new ProcessStartInfo("explorer", ParentDirectory));
 
                         return true;
@@ -254,10 +239,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var program = Win32Program(path);
                 var info = FileVersionInfo.GetVersionInfo(path);
-                if (!string.IsNullOrEmpty(info.FileDescription))
-                {
-                    program.Description = info.FileDescription;
-                }
+                program.Description = info.FileDescription;
                 return program;
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
@@ -273,47 +255,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             if (!Directory.Exists(directory))
                 return new string[] { };
-            var files = new List<string>();
-            var folderQueue = new Queue<string>();
-            folderQueue.Enqueue(directory);
-            do
+            try
             {
-                var currentDirectory = folderQueue.Dequeue();
-                try
-                {
-                    foreach (var suffix in suffixes)
-                    {
-                        try
-                        {
-                            files.AddRange(Directory.EnumerateFiles(currentDirectory, $"*.{suffix}", SearchOption.TopDirectoryOnly));
-                        }
-                        catch (DirectoryNotFoundException e)
-                        {
-                            ProgramLogger.LogException($"|Win32|ProgramPaths|{currentDirectory}" +
-                                                "|The directory trying to load the program from does not exist", e);
-                        }
-                    }
-                }
-                catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
-                {
-                    ProgramLogger.LogException($"|Win32|ProgramPaths|{currentDirectory}" +
-                                                $"|Permission denied when trying to load programs from {currentDirectory}", e);
-                }
+                var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+                                     .Where(x => suffixes.Contains(Extension(x)));
+                return paths;
 
-                try
-                {
-                    foreach (var childDirectory in Directory.EnumerateDirectories(currentDirectory, "*", SearchOption.TopDirectoryOnly))
-                    {
-                        folderQueue.Enqueue(childDirectory);
-                    }
-                }
-                catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
-                {
-                    ProgramLogger.LogException($"|Win32|ProgramPaths|{currentDirectory}" +
-                                                $"|Permission denied when trying to load programs from {currentDirectory}", e);
-                }
-            } while (folderQueue.Any());
-            return files;
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                ProgramLogger.LogException($"Directory not found {directory}", e);
+                return new string[] { };
+            }
+            catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
+            {
+                ProgramLogger.LogException($"Permission denied {directory}", e);
+                return new string[] { };
+            }
         }
 
         private static string Extension(string path)
@@ -331,23 +289,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static ParallelQuery<Win32> UnregisteredPrograms(List<Settings.ProgramSource> sources, string[] suffixes)
         {
-            var listToAdd = new List<string>();
-            sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
+            var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
                 .SelectMany(s => ProgramPaths(s.Location, suffixes))
-                .ToList()
                 .Where(t1 => !Main._settings.DisabledProgramSources.Any(x => t1 == x.UniqueIdentifier))
-                .ToList()
-                .ForEach(x => listToAdd.Add(x));
+                .Distinct();
 
-            var paths = listToAdd.Distinct().ToArray();
+            var programs = paths.AsParallel().Select(x => Extension(x) switch
+            {
+                ExeExtension => ExeProgram(x),
+                ShortcutExtension => LnkProgram(x),
+                _ => Win32Program(x)
+            });
 
-            var programs1 = paths.AsParallel().Where(p => Extension(p) == ExeExtension).Select(ExeProgram);
-            var programs2 = paths.AsParallel().Where(p => Extension(p) == ShortcutExtension).Select(LnkProgram);
-            var programs3 = from p in paths.AsParallel()
-                            let e = Extension(p)
-                            where e != ShortcutExtension && e != ExeExtension
-                            select Win32Program(p);
-            return programs1.Concat(programs2).Concat(programs3);
+
+            return programs;
         }
 
         private static ParallelQuery<Win32> StartMenuPrograms(string[] suffixes)
@@ -360,15 +315,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var paths2 = ProgramPaths(directory2, suffixes);
 
             var toFilter = paths1.Concat(paths2);
-            var paths = toFilter
-                        .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
-                        .Select(t1 => t1)
-                        .Distinct()
-                        .ToArray();
 
-            var programs1 = paths.AsParallel().Where(p => Extension(p) == ShortcutExtension).Select(LnkProgram);
-            var programs2 = paths.AsParallel().Where(p => Extension(p) == ApplicationReferenceExtension).Select(Win32Program);
-            var programs = programs1.Concat(programs2).Where(p => p.Valid);
+            var programs = toFilter
+                        .AsParallel()
+                        .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
+                        .Distinct()
+                        .Select(x => Extension(x) switch
+                                {
+                                    ShortcutExtension => LnkProgram(x),
+                                    _ => Win32Program(x)
+                                })
+                        .Where(x => x.Valid);
             return programs;
         }
 
@@ -376,26 +333,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
-            var programs = new List<Win32>();
-            using (var root = Registry.LocalMachine.OpenSubKey(appPaths))
+
+            using var localRoot = Registry.LocalMachine.OpenSubKey(appPaths);
+            using var userRoot = Registry.CurrentUser.OpenSubKey(appPaths);
+
+            var programs = (localRoot, userRoot) switch
             {
-                if (root != null)
-                {
-                    programs.AddRange(GetProgramsFromRegistry(root));
-                }
-            }
-            using (var root = Registry.CurrentUser.OpenSubKey(appPaths))
-            {
-                if (root != null)
-                {
-                    programs.AddRange(GetProgramsFromRegistry(root));
-                }
-            }
+                (null, null)=>new List<Win32>(),
+                (var l, null) => GetProgramsFromRegistry(l),
+                (null, var u)=>GetProgramsFromRegistry(u),
+                (var l,var u)=> GetProgramsFromRegistry(l).Concat(GetProgramsFromRegistry(u))
+            };
+
 
             var disabledProgramsList = Main._settings.DisabledProgramSources;
-            var toFilter = programs.AsParallel().Where(p => suffixes.Contains(Extension(p.ExecutableName)));
-
-            var filtered = toFilter.Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier)).Select(t1 => t1);
+            var filtered = programs.AsParallel()
+                                   .Where(p => suffixes.Contains(Extension(p.ExecutableName)))
+                                   .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier));
 
             return filtered;
         }
