@@ -44,8 +44,8 @@ namespace Flow.Launcher.Infrastructure
         /// </summary>
         public MatchResult FuzzyMatch(string query, string stringToCompare, MatchOption opt)
         {
-            if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query)) return new MatchResult (false, UserSettingSearchPrecision);
-            
+            if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query)) return new MatchResult(false, UserSettingSearchPrecision);
+
             query = query.Trim();
 
             stringToCompare = _alphabet?.Translate(stringToCompare) ?? stringToCompare;
@@ -77,7 +77,8 @@ namespace Flow.Launcher.Infrastructure
                 {
                     case char c when (compareIndex == 0 && queryWithoutCase[currentQueryIndex] == char.ToLower(stringToCompare[compareIndex]))
                                   || (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
-                                  || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex]):
+                                  || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex])
+                                  || (char.IsNumber(c) && c == queryWithoutCase[currentQueryIndex]):
                         acronymMatchData.Add(compareIndex);
                         currentQueryIndex++;
                         continue;
@@ -86,7 +87,7 @@ namespace Flow.Launcher.Infrastructure
                         compareIndex++;
                         acronymScore -= 10;
                         break;
-                    case char c when char.IsUpper(c):
+                    case char c when char.IsUpper(c) || char.IsNumber(c):
                         acronymScore -= 10;
                         break;
                 }
@@ -97,7 +98,7 @@ namespace Flow.Launcher.Infrastructure
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
 
-                        
+
             var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
@@ -180,7 +181,7 @@ namespace Flow.Launcher.Infrastructure
                     currentQuerySubstringCharacterIndex = 0;
                 }
             }
-            
+
             // proceed to calculate score if every char or substring without whitespaces matched
             if (allQuerySubstringsMatched)
             {
@@ -223,7 +224,7 @@ namespace Flow.Launcher.Infrastructure
 
             return allMatch;
         }
-        
+
         private static List<int> GetUpdatedIndexList(int startIndexToVerify, int currentQuerySubstringCharacterIndex, int firstMatchIndexInWord, List<int> indexList)
         {
             var updatedList = new List<int>();
