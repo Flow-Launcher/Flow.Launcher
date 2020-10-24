@@ -5,7 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Process Killer</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Kill running processes from Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">kill all "{0}" processes</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">kill all instances of "{0}"</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">kill {0} processes</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">kill all instances</system:String>
 
 </ResourceDictionary>

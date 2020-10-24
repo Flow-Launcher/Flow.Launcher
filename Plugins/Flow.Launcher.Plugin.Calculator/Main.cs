@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.Caculator
         {
             MagesEngine = new Engine();
         }
-        
+
         public void Init(PluginInitContext context)
         {
             Context = context;
@@ -78,16 +78,16 @@ namespace Flow.Launcher.Plugin.Caculator
                             {
                                 try
                                 {
-                                    Clipboard.SetText(newResult);
+                                    Clipboard.SetDataObject(newResult);
                                     return true;
                                 }
-                                catch (ExternalException)
+                                catch (ExternalException e)
                                 {
                                     MessageBox.Show("Copy failed, please try later");
                                     return false;
                                 }
                             }
-                        } 
+                        }
                     };
                 }
             }
@@ -111,7 +111,7 @@ namespace Flow.Launcher.Plugin.Caculator
             {
                 return false;
             }
-                
+
             if (!IsBracketComplete(query.Search))
             {
                 return false;
@@ -164,7 +164,7 @@ namespace Flow.Launcher.Plugin.Caculator
 
             return leftBracketCount == 0;
         }
-        
+
         public string GetTranslatedPluginTitle()
         {
             return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_name");
