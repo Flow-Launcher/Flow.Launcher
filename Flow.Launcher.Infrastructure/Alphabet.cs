@@ -19,7 +19,7 @@ namespace Flow.Launcher.Infrastructure
 
     public class Alphabet : IAlphabet
     {
-        private ConcurrentDictionary<string, string> _pinyinCache;
+        private ConcurrentDictionary<string, string> _pinyinCache = new ConcurrentDictionary<string, string>();
         private Settings _settings;
 
         public void Initialize([NotNull] Settings settings)
