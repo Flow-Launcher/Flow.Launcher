@@ -37,29 +37,29 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ExeExtension = "exe";
 
 
-
-
         public Result Result(string query, IPublicAPI api)
         {
-            string title = Description switch
+            var title = (Name, Description) switch
             {
-                string d when d.Length >= Name.Length && d.Substring(0, Name.Length) == Name => d,
-                string d when !string.IsNullOrEmpty(d) => $"{Name}: {Description}",
+                (var n, null) => n,
+                (var n, var d) when d.Contains(n) => d,
+                (var n, var d) when n.Contains(d) => n,
+                (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
                 _ => Name
             };
 
-            var match = StringMatcher.FuzzySearch(query, title);
+            var matchResult = StringMatcher.FuzzySearch(query, title);
 
-            if (!(match?.Score > 0))
+            if (!matchResult.Success)
                 return null;
 
             var result = new Result
             {
                 Title = title,
-                Score = match.Score,
-                TitleHighlightData = match.MatchData,
                 SubTitle = FullPath,
                 IcoPath = IcoPath,
+                Score = matchResult.Score,
+                TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
                 Action = _ =>
                 {
@@ -75,7 +75,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return true;
                 }
             };
-
 
             return result;
         }
@@ -318,11 +317,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
                         .Distinct()
                         .Select(x => Extension(x) switch
-                                {
-                                    ShortcutExtension => LnkProgram(x),
-                                    _ => Win32Program(x)
-                                })
-                        .Where(x => x.Valid);
+            {
+                ShortcutExtension => LnkProgram(x),
+                _ => Win32Program(x)
+            }).Where(x => x.Valid);
             return programs;
         }
 

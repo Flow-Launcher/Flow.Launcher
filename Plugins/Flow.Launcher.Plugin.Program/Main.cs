@@ -74,7 +74,7 @@ namespace Flow.Launcher.Plugin.Program
                  .AsParallel()
                  .Where(p => p.Enabled)
                  .Select(p => p.Result(query.Search, _context.API))
-                 .Where(r =>r?.Score > 0)
+                 .Where(r => r?.Score > 0)
                  .ToList();
 
             return result;

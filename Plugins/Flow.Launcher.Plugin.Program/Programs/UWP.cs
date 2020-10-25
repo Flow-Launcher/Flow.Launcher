@@ -270,21 +270,21 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             public Application() { }
 
+
             public Result Result(string query, IPublicAPI api)
             {
-                string title = Description switch
+                var title = (Name, Description) switch
                 {
-                    string d when d.Length >= Name.Length && d.Substring(0, Name.Length) == Name => d,
-                    string d when !string.IsNullOrEmpty(d) => $"{Name}: {Description}",
+                    (var n, null) => n,
+                    (var n, var d) when d.Contains(n) => d,
+                    (var n, var d) when n.Contains(d) => n,
+                    (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
                     _ => Name
                 };
 
-                var match = StringMatcher.FuzzySearch(query, title);
+                var matchResult = StringMatcher.FuzzySearch(query, title);
 
-                // Give value to score and highlightdata from match or acronym match
-                //     by which score is higher
-
-                if (!(match?.Score > 0))
+                if (!matchResult.Success)
                     return null;
 
                 var result = new Result
@@ -292,9 +292,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = title,
                     SubTitle = Package.Location,
                     Icon = Logo,
-                    Score = match.Score,
+                    Score = matchResult.Score,
+                    TitleHighlightData = matchResult.MatchData,
                     ContextData = this,
-                    TitleHighlightData = match.MatchData,
+                    TitleHighlightData = matchResult.MatchData,
                     Action = _ =>
                     {
                         Launch(api);
