@@ -33,29 +33,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ApplicationReferenceExtension = "appref-ms";
         private const string ExeExtension = "exe";
 
-        private int Score(string query)
-        {
-            var nameMatch = StringMatcher.FuzzySearch(query, Name);
-            var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-            var executableNameMatch = StringMatcher.FuzzySearch(query, ExecutableName);
-            var score = new[] { nameMatch.Score, descriptionMatch.Score, executableNameMatch.Score }.Max();
-            return score;
-        }
-
 
         public Result Result(string query, IPublicAPI api)
         {
-            var score = Score(query);
-            if (score <= 0)
-            { // no need to create result if this is zero
+            var title = (Name, Description) switch
+            {
+                (var n, null) => n,
+                (var n, var d) when d.Contains(n) => d,
+                (var n, var d) when n.Contains(d) => n,
+                (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
+                _ => Name
+            };
+
+            var matchResult = StringMatcher.FuzzySearch(query, title);
+
+            if (!matchResult.Success)
                 return null;
-            }
 
             var result = new Result
             {
+                Title = title,
                 SubTitle = FullPath,
                 IcoPath = IcoPath,
-                Score = score,
+                Score = matchResult.Score,
+                TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
                 Action = e =>
                 {
@@ -71,24 +72,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return true;
                 }
             };
-
-            if (Description.Length >= Name.Length &&
-                Description.Substring(0, Name.Length) == Name)
-            {
-                result.Title = Description;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, Description).MatchData;
-            }
-            else if (!string.IsNullOrEmpty(Description))
-            {
-                var title = $"{Name}: {Description}";
-                result.Title = title;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, title).MatchData;
-            }
-            else
-            {
-                result.Title = Name;
-                result.TitleHighlightData = StringMatcher.FuzzySearch(query, Name).MatchData;
-            }
 
             return result;
         }
