@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static ParallelQuery<Win32> AppPathsPrograms(string[] suffixes)
+        private static List<Win32> AppPathsPrograms(string[] suffixes)
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
@@ -334,27 +334,29 @@ namespace Flow.Launcher.Plugin.Program.Programs
             using var localRoot = Registry.LocalMachine.OpenSubKey(appPaths);
             using var userRoot = Registry.CurrentUser.OpenSubKey(appPaths);
 
+
             var programs = (localRoot, userRoot) switch
             {
-                (null, null)=>new List<Win32>(),
+                (null, null) => new List<Win32>().AsParallel(),
                 (var l, null) => GetProgramsFromRegistry(l),
-                (null, var u)=>GetProgramsFromRegistry(u),
-                (var l,var u)=> GetProgramsFromRegistry(l).Concat(GetProgramsFromRegistry(u))
+                (null, var u) => GetProgramsFromRegistry(u),
+                (var l, var u) => GetProgramsFromRegistry(l).Concat(GetProgramsFromRegistry(u))
             };
 
 
             var disabledProgramsList = Main._settings.DisabledProgramSources;
-            var filtered = programs.AsParallel()
-                                   .Where(p => suffixes.Contains(Extension(p.ExecutableName)))
+            var filtered = programs.Where(p => suffixes.Contains(Extension(p.ExecutableName)))
                                    .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier));
 
-            return filtered;
+            return filtered.ToList();
+
         }
 
-        private static IEnumerable<Win32> GetProgramsFromRegistry(RegistryKey root)
+        private static ParallelQuery<Win32> GetProgramsFromRegistry(RegistryKey root)
         {
             return root
                     .GetSubKeyNames()
+                    .AsParallel()
                     .Select(x => GetProgramPathFromRegistrySubKeys(root, x))
                     .Distinct()
                     .Select(x => GetProgramFromPath(x));
@@ -416,7 +418,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (settings.EnableRegistrySource)
                 {
                     var appPaths = AppPathsPrograms(settings.ProgramSuffixes);
-                    programs = programs.Concat(appPaths);
+                    programs = programs.Concat(appPaths.AsParallel());
                 }
 
                 if (settings.EnableStartMenuSource)
