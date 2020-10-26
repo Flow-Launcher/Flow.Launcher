@@ -49,7 +49,7 @@ namespace Flow.Launcher.Infrastructure
             query = query.Trim();
 
             var translated = false;
-            stringToCompare = _alphabet?.Translate(stringToCompare, out translated) ?? stringToCompare;
+            stringToCompare = _alphabet?.Translate(stringToCompare, out translated)?.Trim() ?? stringToCompare;
 
             // This also can be done by spliting the query
 
