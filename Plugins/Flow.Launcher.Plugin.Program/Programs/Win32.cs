@@ -42,13 +42,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var title = (Name, Description) switch
             {
                 (var n, null) => n,
-                (var n, var d) when d.Contains(n) => d,
-                (var n, var d) when n.Contains(d) => n,
+                (var n, var d) when d.StartsWith(n) => d,
+                (var n, var d) when n.StartsWith(d) => n,
                 (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
                 _ => Name
             };
 
-            var matchResult = StringMatcher.FuzzySearch(query, title);
+            var matchResult = StringMatcher.FuzzySearch(query, Name);
 
             if (!matchResult.Success)
                 return null;
