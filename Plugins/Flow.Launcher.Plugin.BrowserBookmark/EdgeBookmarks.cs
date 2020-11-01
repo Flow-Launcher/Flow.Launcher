@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             return bookmarks;
         }
 
-        private void ParseEdgeBookmarks(String path, string source)
+        private void ParseEdgeBookmarks(string path, string source)
         {
             if (!File.Exists(path)) return;
 
@@ -72,12 +72,13 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private void LoadEdgeBookmarks()
         {
-            String platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             LoadEdgeBookmarks(Path.Combine(platformPath, @"Microsoft\Edge\User Data"), "Microsoft Edge");
+            LoadEdgeBookmarks(Path.Combine(platformPath, @"Microsoft\Edge Dev\User Data"), "Microsoft Edge Dev");
             LoadEdgeBookmarks(Path.Combine(platformPath, @"Microsoft\Edge SxS\User Data"), "Microsoft Edge Canary");
         }
 
-        private String DecodeUnicode(String dataStr)
+        private string DecodeUnicode(string dataStr)
         {
             Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
             return reg.Replace(dataStr, m => ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString());

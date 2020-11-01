@@ -19,10 +19,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             set
             {
                 m_Name = value;
-                PinyinName = m_Name.Unidecode();
             }
         }
-        public string PinyinName { get; private set; }
         public string Url { get; set; }
         public string Source { get; set; }
         public int Score { get; set; }
