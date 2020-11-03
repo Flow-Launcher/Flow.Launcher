@@ -43,6 +43,8 @@ namespace Flow.Launcher.Plugin.Program.Views
             StartMenuEnabled.IsChecked = _settings.EnableStartMenuSource;
             RegistryEnabled.IsChecked = _settings.EnableRegistrySource;
 
+            CustomizeExplorerBox.Text = _settings.CustomizedExploere;
+
             ViewRefresh();
         }
 
@@ -325,6 +327,11 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 btnProgramSourceStatus.Content = "Enable";
             }
+        }
+
+        private void CustomizeExplorer(object sender, TextChangedEventArgs e)
+        {
+            _settings.CustomizedExploere = CustomizeExplorerBox.Text;
         }
     }
 }

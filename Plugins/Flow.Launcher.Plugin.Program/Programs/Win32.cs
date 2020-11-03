@@ -126,8 +126,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
                     {
-                        Main.StartProcess(Process.Start, new ProcessStartInfo("explorer", ParentDirectory));
-
+                        Main.StartProcess(Process.Start, new ProcessStartInfo(
+                            !string.IsNullOrEmpty(Main._settings.CustomizedExploere)?Main._settings.CustomizedExploere:"exploere"
+                            , ParentDirectory));
                         return true;
                     },
                     IcoPath = "Images/folder.png"

@@ -14,6 +14,7 @@ namespace Flow.Launcher.Plugin.Program
         public bool EnableStartMenuSource { get; set; } = true;
 
         public bool EnableRegistrySource { get; set; } = true;
+        public string CustomizedExploere { get; set; } = "exploere";
 
         internal const char SuffixSeperator = ';';
 
