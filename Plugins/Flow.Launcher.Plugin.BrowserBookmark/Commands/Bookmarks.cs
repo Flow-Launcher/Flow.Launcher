@@ -11,8 +11,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
             var match = StringMatcher.FuzzySearch(queryString, bookmark.Name);
             if (match.IsSearchPrecisionScoreMet())
                 return match;
-            else
-                return StringMatcher.FuzzySearch(queryString, bookmark.Url);
+
+            return StringMatcher.FuzzySearch(queryString, bookmark.Url);
         }
 
         internal static List<Bookmark> LoadAllBookmarks()
