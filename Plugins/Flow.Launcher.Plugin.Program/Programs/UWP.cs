@@ -317,8 +317,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         Action = _ =>
                         {
                             Main.StartProcess(Process.Start, new ProcessStartInfo(
-                            !string.IsNullOrEmpty(Main._settings.CustomizedExploere)?Main._settings.CustomizedExploere:"exploere"
-                            , Package.Location));
+                            !string.IsNullOrEmpty(Main._settings.CustomizedExploere) ? Main._settings.CustomizedExploere:"exploere",
+                            $"{Main._settings.CustomizedArgs} \"{Package.Location}\"".Trim()));
 
                             return true;
                         },

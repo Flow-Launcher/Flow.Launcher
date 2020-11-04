@@ -44,6 +44,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             RegistryEnabled.IsChecked = _settings.EnableRegistrySource;
 
             CustomizeExplorerBox.Text = _settings.CustomizedExploere;
+            CustomizeArgsBox.Text = _settings.CustomizedArgs;
 
             ViewRefresh();
         }
@@ -332,6 +333,11 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void CustomizeExplorer(object sender, TextChangedEventArgs e)
         {
             _settings.CustomizedExploere = CustomizeExplorerBox.Text;
+        }
+
+        private void CustomizeExplorerArgs(object sender, TextChangedEventArgs e)
+        {
+            _settings.CustomizedArgs = CustomizeArgsBox.Text;
         }
     }
 }

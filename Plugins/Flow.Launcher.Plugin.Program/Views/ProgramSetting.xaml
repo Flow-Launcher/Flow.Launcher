@@ -75,12 +75,17 @@
                 <Button x:Name="btnAddProgramSource" Click="btnAddProgramSource_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_add}"/>
             </StackPanel>
         </DockPanel>
-        <TextBlock Text="Customized Explorer" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Row="3" VerticalAlignment="Center" FontSize="15"
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <TextBlock Text="Customized Explorer" Margin="10,0,0,0"  VerticalAlignment="Center" FontSize="15"
                    ToolTip="You can customized the exploere for opening the container folder
                    by inputing the Environmental Variable of the exploere you want to use.
                    It will be useful to use CMD to test whether the Environmental Variable is avaliable."/>
-        <TextBox HorizontalAlignment="Right" Margin="0,0,30,0" Grid.Row="3" Text=""  TextWrapping="NoWrap" VerticalAlignment="Center" Width="250" Height="30" FontSize="15"
+            <TextBox Margin="20,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="200" Height="30" FontSize="15"
                  TextChanged="CustomizeExplorer" x:Name="CustomizeExplorerBox"/>
+            <TextBlock Text="args" VerticalAlignment="Center" FontSize="15"
+                       ToolTip="Enter the customized args you want to add for customized exploere. Check the exploerer websites for detail."></TextBlock>
+            <TextBox Margin="10,0,0,0" Width="80" Height="30" FontSize="15" x:Name="CustomizeArgsBox" TextChanged="CustomizeExplorerArgs"></TextBox>
+        </StackPanel>
     </Grid>
 </UserControl>
 
