@@ -141,8 +141,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Action = _ =>
                     {
                         Main.StartProcess(Process.Start, new ProcessStartInfo(
-                            !string.IsNullOrEmpty(Main._settings.CustomizedExploere)?Main._settings.CustomizedExploere:"exploere"
-                            , (Main._settings.CustomizedArgs + " " + ParentDirectory).Trim()));
+                            !string.IsNullOrEmpty(Main._settings.CustomizedExploere) ? Main._settings.CustomizedExploere:"exploere",
+                            $"{Main._settings.CustomizedArgs} \"{ParentDirectory}\"".Trim()));
                         return true;
                     },
                     IcoPath = "Images/folder.png"
