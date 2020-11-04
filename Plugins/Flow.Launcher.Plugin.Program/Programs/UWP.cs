@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         {
                             Main.StartProcess(Process.Start, new ProcessStartInfo(
                             !string.IsNullOrEmpty(Main._settings.CustomizedExploere)?Main._settings.CustomizedExploere:"exploere"
-                            , Package.Location));
+                            , (Main._settings.CustomizedArgs + " " + ParentDirectory).Trim()));
 
                             return true;
                         },
