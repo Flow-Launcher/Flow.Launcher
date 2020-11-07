@@ -36,7 +36,7 @@ namespace Flow.Launcher.Infrastructure.Image
             _storage = new BinaryStorage<Dictionary<string, int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
-            ImageCache.Usage = LoadStorageToConcurrentDictionary();
+            var usage = LoadStorageToConcurrentDictionary();
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
@@ -49,12 +49,12 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
-                    ImageCache.Usage.AsParallel().ForAll(x =>
+                    ImageCache.Data.AsParallel().ForAll(x =>
                     {
                         Load(x.Key);
                     });
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.Usage.Count}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
         }
 
@@ -62,14 +62,13 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                ImageCache.Cleanup();
-                _storage.Save(new Dictionary<string, int>(ImageCache.Usage));
+                _storage.Save(ImageCache.Data.Select(x => (x.Key, x.Value.usage)).ToDictionary(x => x.Key, y => y.usage));
             }
         }
 
         private static ConcurrentDictionary<string, int> LoadStorageToConcurrentDictionary()
         {
-            lock(_storage)
+            lock (_storage)
             {
                 var loaded = _storage.TryLoad(new Dictionary<string, int>());
 
@@ -139,7 +138,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
-                    
+
                     ImageSource image = ImageCache[Constant.MissingImgIcon];
                     ImageCache[path] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
@@ -227,12 +226,10 @@ namespace Flow.Launcher.Infrastructure.Image
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
+                    
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
-                        if (ImageCache.Usage.TryGetValue(path, out _))
-                        {
-                            img = ImageCache[key];
-                        }
+                        img = ImageCache[key] ?? img;
                     }
                     else
                     { // new guid
