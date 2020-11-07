@@ -11,61 +11,65 @@ namespace Flow.Launcher.Infrastructure.Image
     public class ImageCache
     {
         private const int MaxCached = 50;
-        public ConcurrentDictionary<string, int> Usage = new ConcurrentDictionary<string, int>();
-        private readonly ConcurrentDictionary<string, ImageSource> _data = new ConcurrentDictionary<string, ImageSource>();
+        public ConcurrentDictionary<string, (int usage, ImageSource imageSource)> Data { get; private set; } = new ConcurrentDictionary<string, (int, ImageSource)>();
         private const int permissibleFactor = 2;
+
+        public void Initialization(Dictionary<string, int> usage)
+        {
+            foreach (var key in usage.Keys)
+            {
+                Data[key] = (usage[key], null);
+            }
+        }
 
         public ImageSource this[string path]
         {
             get
             {
-                Usage.AddOrUpdate(path, 1, (k, v) => v + 1);
-                var i = _data[path];
-                return i;
+                if (Data.TryGetValue(path, out var value))
+                {
+                    value.usage++;
+                    return value.imageSource;
+                }
+                else return null;
             }
             set
             {
-                _data[path] = value;
+                Data.AddOrUpdate(path, (1, value), (k, v) =>
+                {
+                    v.imageSource = value;
+                    v.usage++;
+                    return v;
+                });
 
                 // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
                 // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
-                if (_data.Count > permissibleFactor * MaxCached)
+                if (Data.Count > permissibleFactor * MaxCached)
                 {
-                    // This function resizes the Usage dictionary, taking the top 'maxCached' number of items and filtering the image icons that are not accessed frequently.
-                    Cleanup();
-
                     // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
-                    foreach (var key in _data.Keys)
+
+                    
+                    foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
                     {
-                        int dictValue;
-                        if (!Usage.TryGetValue(key, out dictValue) && !(key.Equals(Constant.ErrorIcon) || key.Equals(Constant.DefaultIcon)))
+                        if (!(key.Equals(Constant.ErrorIcon) || key.Equals(Constant.DefaultIcon)))
                         {
-                            ImageSource imgSource;
-                            _data.TryRemove(key, out imgSource);
+                            Data.TryRemove(key, out _);
                         }
                     }
                 }
             }
         }
 
-        public void Cleanup()
-        {
-            var images = Usage
-                .OrderByDescending(o => o.Value)
-                .Take(MaxCached)
-                .ToDictionary(i => i.Key, i => i.Value);
-            Usage = new ConcurrentDictionary<string, int>(images);
-        }
 
         public bool ContainsKey(string key)
         {
-            var contains = _data.ContainsKey(key);
+            var contains = Data.ContainsKey(key);
             return contains;
         }
 
         public int CacheSize()
         {
-            return _data.Count;
+            return Data.Count;
         }
 
         /// <summary>
@@ -73,7 +77,7 @@ namespace Flow.Launcher.Infrastructure.Image
         /// </summary>
         public int UniqueImagesInCache()
         {
-            return _data.Values.Distinct().Count();
+            return Data.Values.Select(x => x.imageSource).Distinct().Count();
         }
     }
 
