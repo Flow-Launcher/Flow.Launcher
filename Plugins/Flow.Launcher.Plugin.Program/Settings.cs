@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -14,10 +14,12 @@ namespace Flow.Launcher.Plugin.Program
         public bool EnableStartMenuSource { get; set; } = true;
 
         public bool EnableRegistrySource { get; set; } = true;
-        public string CustomizedExploere { get; set; } = "exploere";
+        public string CustomizedExplorer { get; set; } = Explorer;
         public string CustomizedArgs { get; set; } = "";
 
         internal const char SuffixSeperator = ';';
+
+        internal const string Explorer = "explorer";
 
         /// <summary>
         /// Contains user added folder location contents as well as all user disabled applications
