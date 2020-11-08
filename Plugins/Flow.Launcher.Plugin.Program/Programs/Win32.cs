@@ -141,7 +141,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Action = _ =>
                     {
                         Main.StartProcess(Process.Start, new ProcessStartInfo(
-                            !string.IsNullOrEmpty(Main._settings.CustomizedExploere) ? Main._settings.CustomizedExploere:"exploere",
+                            !string.IsNullOrEmpty(Main._settings.CustomizedExplorer) ? Main._settings.CustomizedExplorer:Settings.Explorer,
                             $"{Main._settings.CustomizedArgs} \"{ParentDirectory}\"".Trim()));
                         return true;
                     },
