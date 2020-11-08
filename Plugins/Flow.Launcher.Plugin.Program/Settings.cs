@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public bool EnableRegistrySource { get; set; } = true;
         public string CustomizedExplorer { get; set; } = Explorer;
-        public string CustomizedArgs { get; set; } = "";
+        public string CustomizedArgs { get; set; }
 
         internal const char SuffixSeperator = ';';
 
