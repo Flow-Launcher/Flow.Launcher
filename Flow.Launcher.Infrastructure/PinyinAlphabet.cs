@@ -17,7 +17,7 @@ namespace Flow.Launcher.Infrastructure
         string Translate(string stringToTranslate,out bool translated);
     }
 
-    public class Alphabet : IAlphabet
+    public class PinyinAlphabet : IAlphabet
     {
         private ConcurrentDictionary<string, string> _pinyinCache = new ConcurrentDictionary<string, string>();
         private Settings _settings;
