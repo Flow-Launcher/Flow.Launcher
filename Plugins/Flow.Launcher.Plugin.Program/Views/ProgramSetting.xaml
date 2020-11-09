@@ -78,11 +78,11 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Stretch">
             <TextBlock Text="{DynamicResource flowlauncher_plugin_program_customizedexplorer}" VerticalAlignment="Center" FontSize="15"
                    ToolTip= "{DynamicResource flowlauncher_plugin_program_tooltip_customizedexplorer}"/>
-            <TextBox Margin="10,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="205" Height="30" FontSize="15"
+            <TextBox Margin="10,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="200" Height="30" FontSize="15"
                  TextChanged="CustomizeExplorer" x:Name="CustomizeExplorerBox"/>
             <TextBlock Text="{DynamicResource flowlauncher_plugin_program_args}" VerticalAlignment="Center" FontSize="15"
                        ToolTip="{DynamicResource flowlauncher_plugin_program_tooltip_args}" />
-            <TextBox Margin="10,0,0,0" Width="150" Height="30" FontSize="15" x:Name="CustomizeArgsBox" TextChanged="CustomizeExplorerArgs"></TextBox>
+            <TextBox Margin="10,0,0,0" Width="135" Height="30" FontSize="15" x:Name="CustomizeArgsBox" TextChanged="CustomizeExplorerArgs"></TextBox>
         </StackPanel>
     </Grid>
 </UserControl>
