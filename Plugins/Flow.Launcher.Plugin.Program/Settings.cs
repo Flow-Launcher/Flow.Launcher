@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Program
 
         internal const string Explorer = "explorer";
 
-        internal const string ExplorerArgs = "/select,%f";
+        internal const string ExplorerArgs = "%s";
 
         /// <summary>
         /// Contains user added folder location contents as well as all user disabled applications
