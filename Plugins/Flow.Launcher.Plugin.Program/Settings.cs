@@ -15,11 +15,13 @@ namespace Flow.Launcher.Plugin.Program
 
         public bool EnableRegistrySource { get; set; } = true;
         public string CustomizedExplorer { get; set; } = Explorer;
-        public string CustomizedArgs { get; set; }
+        public string CustomizedArgs { get; set; } = ExplorerArgs;
 
         internal const char SuffixSeperator = ';';
 
         internal const string Explorer = "explorer";
+
+        internal const string ExplorerArgs = "/select,%f";
 
         /// <summary>
         /// Contains user added folder location contents as well as all user disabled applications
