@@ -21,6 +21,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
+using System.Collections.Concurrent;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -47,6 +48,8 @@ namespace Flow.Launcher.ViewModel
         private bool _saved;
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
+        private BlockingCollection<ResultsForUpdate> _resultsUpdateQueue;
+
 
         #endregion
 
@@ -76,6 +79,8 @@ namespace Flow.Launcher.ViewModel
             InitializeKeyCommands();
             RegisterResultsUpdatedEvent();
 
+            RegisterResultUpdate();
+
             SetHotkey(_settings.Hotkey, OnHotkey);
             SetCustomPluginHotkey();
             SetOpenResultModifiers();
@@ -91,10 +96,25 @@ namespace Flow.Launcher.ViewModel
                     Task.Run(() =>
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        UpdateResultView(e.Results, pair.Metadata, e.Query);
+                        _resultsUpdateQueue.Add(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
                     }, _updateToken);
                 };
             }
+        }
+
+        private void RegisterResultUpdate()
+        {
+            _resultsUpdateQueue = new BlockingCollection<ResultsForUpdate>();
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    var resultToUpdate = _resultsUpdateQueue.Take();
+                    if (!resultToUpdate.Token.IsCancellationRequested)
+                        UpdateResultView(resultToUpdate.Results, resultToUpdate.Metadata, resultToUpdate.Query);
+                }
+            });
         }
 
 
@@ -415,7 +435,7 @@ namespace Flow.Launcher.ViewModel
                                 if (!plugin.Metadata.Disabled)
                                 {
                                     var results = PluginManager.QueryForPlugin(plugin, query);
-                                    UpdateResultView(results, plugin.Metadata, query);
+                                    _resultsUpdateQueue.Add(new ResultsForUpdate(results, plugin.Metadata, query, _updateToken));
                                 }
                             });
                         }
