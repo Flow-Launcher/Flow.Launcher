@@ -17,7 +17,6 @@ namespace Flow.Launcher.ViewModel
 
         public ResultCollection Results { get; }
 
-        private readonly object _addResultsLock = new object();
         private readonly object _collectionLock = new object();
         private readonly Settings _settings;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
@@ -134,70 +133,37 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(List<Result> newRawResults, string resultId)
         {
-            lock (_addResultsLock)
+            var newResults = NewResults(newRawResults, resultId);
+
+            // update UI in one run, so it can avoid UI flickering
+            Results.Update(newResults);
+
+            if (Results.Count > 0)
             {
-                var newResults = NewResults(newRawResults, resultId);
-
-                // update UI in one run, so it can avoid UI flickering
-                Results.Update(newResults);
-
-                if (Results.Count > 0)
-                {
-                    Margin = new Thickness { Top = 8 };
-                    SelectedIndex = 0;
-                }
-                else
-                {
-                    Margin = new Thickness { Top = 0 };
-                }
+                Margin = new Thickness { Top = 8 };
+                SelectedIndex = 0;
+            }
+            else
+            {
+                Margin = new Thickness { Top = 0 };
             }
         }
 
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
-            var results = Results.ToList();
+            if (newRawResults.Count == 0)
+                return Results.ToList();
+
+            var results = Results as IEnumerable<ResultViewModel>;
+
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
-            var oldResults = results.Where(r => r.Result.PluginID == resultId).ToList();
 
-            // Find the same results in A (old results) and B (new newResults)          
-            var sameResults = oldResults
-                                .Where(t1 => newResults.Any(x => x.Result.Equals(t1.Result)))
-                                .ToList();
 
-            // remove result of relative complement of B in A
-            foreach (var result in oldResults.Except(sameResults))
-            {
-                results.Remove(result);
-            }
-
-            // update result with B's score and index position
-            foreach (var sameResult in sameResults)
-            {
-                int oldIndex = results.IndexOf(sameResult);
-                int oldScore = results[oldIndex].Result.Score;
-                var newResult = newResults[newResults.IndexOf(sameResult)];
-                int newScore = newResult.Result.Score;
-                if (newScore != oldScore)
-                {
-                    var oldResult = results[oldIndex];
-
-                    oldResult.Result.Score = newScore;
-                    oldResult.Result.OriginQuery = newResult.Result.OriginQuery;
-
-                    results.RemoveAt(oldIndex);
-                    int newIndex = InsertIndexOf(newScore, results);
-                    results.Insert(newIndex, oldResult);
-                }
-            }
-
-            // insert result in relative complement of A in B
-            foreach (var result in newResults.Except(sameResults))
-            {
-                int newIndex = InsertIndexOf(result.Result.Score, results);
-                results.Insert(newIndex, result);
-            }
-
-            return results;
+            return results.Where(r => r.Result.PluginID != resultId)
+                .Concat(newResults)
+                .OrderByDescending(r => r.Result.Score)
+                .Take(MaxResults * 2)
+                .ToList();
         }
         #endregion
 
@@ -254,6 +220,17 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems)
             {
+                ClearItems();
+
+                foreach (var item in newItems)
+                {
+                    Add(item);
+                }
+
+                
+                
+                return;
+
                 int newCount = newItems.Count;
                 int oldCount = Items.Count;
                 int location = newCount > oldCount ? oldCount : newCount;
