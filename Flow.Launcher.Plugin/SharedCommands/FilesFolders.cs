@@ -11,7 +11,13 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         private const string FileExplorerProgramEXE = "explorer.exe";
 
-        public static void Copy(this string sourcePath, string targetPath)
+        /// <summary>
+        /// Copies the folder and all of its files and folders 
+        /// including subfolders to the target location
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="targetPath"></param>
+        public static void CopyAll(this string sourcePath, string targetPath)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourcePath);
@@ -44,7 +50,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string temppath = Path.Combine(targetPath, subdir.Name);
-                    Copy(subdir.FullName, temppath);
+                    CopyAll(subdir.FullName, temppath);
                 }
             }
             catch (Exception e)
@@ -108,7 +114,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return Directory.Exists(path);
         }
 
-        public static bool FileExits(this string filePath)
+        public static bool FileExists(this string filePath)
         {
             return File.Exists(filePath);
         }
@@ -118,7 +124,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
             try
             {
-                if (LocationExists(fileOrFolderPath) || FileExits(fileOrFolderPath))
+                if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
                     Process.Start(psi);
             }
             catch (Exception e)
@@ -172,7 +178,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         ///<summary>
         /// Gets the previous level directory from a path string.
         /// Checks that previous level directory exists and returns it 
-        /// as a path string, or empty string if doesn't exit
+        /// as a path string, or empty string if doesn't exist
         ///</summary>
         public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
         {

@@ -70,12 +70,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
-        [Obsolete]
-        public double Opacity { get; set; } = 1;
-
-        [Obsolete]
-        public OpacityMode OpacityMode { get; set; } = OpacityMode.Normal;
-
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
 
@@ -107,13 +101,5 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Selected,
         Empty,
         Preserved
-    }
-
-    [Obsolete]
-    public enum OpacityMode
-    {
-        Normal = 0,
-        LayeredWindow = 1,
-        DWM = 2
     }
 }

@@ -7,6 +7,7 @@
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
 ![GitHub Release Date](https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher)
+[![Discord](https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white)](https://discord.gg/AvgAQgh)
 
 Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at being more than an app launcher, it searches, integrates and expands on functionalities. Flow will continue to evolve, designed to be open and built with the community at heart.
 
@@ -16,6 +17,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
+- Search for file contents
 - Support search using environment variable paths
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
@@ -57,6 +59,8 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 **Question/Suggestion**
 
 Yes please, submit an issue to let us know.
+
+**Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
 ## Developing/Debugging
 

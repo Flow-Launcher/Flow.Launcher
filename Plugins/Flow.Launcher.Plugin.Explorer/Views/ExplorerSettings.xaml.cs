@@ -20,6 +20,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     public partial class ExplorerSettings
     {
         private readonly SettingsViewModel viewModel;
+
+        private List<ActionKeywordView> actionKeywordsListView;
+
         public ExplorerSettings(SettingsViewModel viewModel)
         {
             InitializeComponent();
@@ -29,6 +32,22 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             lbxFolderLinks.ItemsSource = this.viewModel.Settings.QuickFolderAccessLinks;
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
+
+            actionKeywordsListView = new List<ActionKeywordView>
+            {
+                new ActionKeywordView() 
+                        { 
+                            Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search"), 
+                            Keyword = this.viewModel.Settings.SearchActionKeyword 
+                        },
+                new ActionKeywordView() 
+                        { 
+                            Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"), 
+                            Keyword = this.viewModel.Settings.FileContentSearchActionKeyword 
+                        }
+            };
+
+            lbxActionKeywords.ItemsSource = actionKeywordsListView;
 
             RefreshView();
         }
@@ -43,9 +62,14 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             btnEdit.Visibility = Visibility.Hidden;
             btnAdd.Visibility = Visibility.Hidden;
 
-            if (expFolderLinks.IsExpanded || expExcludedPaths.IsExpanded)
+            if (expFolderLinks.IsExpanded || expExcludedPaths.IsExpanded || expActionKeywords.IsExpanded)
             {
-                btnAdd.Visibility = Visibility.Visible;
+                if (!expActionKeywords.IsExpanded)
+                    btnAdd.Visibility = Visibility.Visible;
+
+                if (expActionKeywords.IsExpanded
+                    && btnEdit.Visibility == Visibility.Hidden)
+                    btnEdit.Visibility = Visibility.Visible;
 
                 if ((lbxFolderLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0)
                     && btnDelete.Visibility == Visibility.Visible
@@ -77,20 +101,48 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             lbxFolderLinks.Items.Refresh();
 
             lbxExcludedPaths.Items.Refresh();
+
+            lbxActionKeywords.Items.Refresh();
+        }
+
+        private void expActionKeywords_Click(object sender, RoutedEventArgs e)
+        {
+            if (expActionKeywords.IsExpanded)
+                expActionKeywords.Height = 215;
+
+            if (expExcludedPaths.IsExpanded)
+                expExcludedPaths.IsExpanded = false;
+
+            if (expFolderLinks.IsExpanded)
+                expFolderLinks.IsExpanded = false;
+
+            RefreshView();
+        }
+
+        private void expActionKeywords_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (!expActionKeywords.IsExpanded)
+                expActionKeywords.Height = Double.NaN;
         }
 
         private void expFolderLinks_Click(object sender, RoutedEventArgs e)
         {
             if (expFolderLinks.IsExpanded)
-                expFolderLinks.Height = 235;
-            
-            if (!expFolderLinks.IsExpanded)
-                expFolderLinks.Height = Double.NaN;
+                expFolderLinks.Height = 215;
 
             if (expExcludedPaths.IsExpanded)
                 expExcludedPaths.IsExpanded = false;
+
+            if (expActionKeywords.IsExpanded)
+                expActionKeywords.IsExpanded = false;
             
             RefreshView();
+        }
+
+        private void expFolderLinks_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (!expFolderLinks.IsExpanded)
+                expFolderLinks.Height = Double.NaN;
         }
 
         private void expExcludedPaths_Click(object sender, RoutedEventArgs e)
@@ -100,6 +152,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (expFolderLinks.IsExpanded)
                 expFolderLinks.IsExpanded = false;
+
+            if (expActionKeywords.IsExpanded)
+                expActionKeywords.IsExpanded = false;
 
             RefreshView();
         }
@@ -132,33 +187,46 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            var selectedRow = lbxFolderLinks.SelectedItem as FolderLink ?? lbxExcludedPaths.SelectedItem as FolderLink;
-
-            if (selectedRow != null)
+            if (lbxActionKeywords.SelectedItem is ActionKeywordView)
             {
-                var folderBrowserDialog = new FolderBrowserDialog();
-                folderBrowserDialog.SelectedPath = selectedRow.Path;
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (expFolderLinks.IsExpanded)
-                    {
-                        var link = viewModel.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
-                        link.Path = folderBrowserDialog.SelectedPath;
-                    }
+                var selectedActionKeyword = lbxActionKeywords.SelectedItem as ActionKeywordView;
 
-                    if (expExcludedPaths.IsExpanded)
-                    {
-                        var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
-                        link.Path = folderBrowserDialog.SelectedPath;
-                    }
-                }
+                var actionKeywordWindow = new ActionKeywordSetting(viewModel, actionKeywordsListView, selectedActionKeyword);
+
+                actionKeywordWindow.ShowDialog();
 
                 RefreshView();
             }
             else
             {
-                string warning = viewModel.Context.API.GetTranslation("plugin_explorer_select_folder_link_warning");
-                MessageBox.Show(warning);
+                var selectedRow = lbxFolderLinks.SelectedItem as FolderLink ?? lbxExcludedPaths.SelectedItem as FolderLink;
+
+                if (selectedRow != null)
+                {
+                    var folderBrowserDialog = new FolderBrowserDialog();
+                    folderBrowserDialog.SelectedPath = selectedRow.Path;
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        if (expFolderLinks.IsExpanded)
+                        {
+                            var link = viewModel.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
+                            link.Path = folderBrowserDialog.SelectedPath;
+                        }
+
+                        if (expExcludedPaths.IsExpanded)
+                        {
+                            var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
+                            link.Path = folderBrowserDialog.SelectedPath;
+                        }
+                    }
+
+                    RefreshView();
+                }
+                else
+                {
+                    string warning = viewModel.Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+                    MessageBox.Show(warning);
+                }
             }
         }
 
@@ -241,5 +309,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             viewModel.OpenWindowsIndexingOptions();
         }
+    }
+
+    public class ActionKeywordView
+    {
+        public string Description { get; set; }
+
+        public string Keyword { get; set; }
     }
 }

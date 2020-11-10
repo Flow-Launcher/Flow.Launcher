@@ -21,18 +21,6 @@ namespace Flow.Launcher.Infrastructure
 
         public static StringMatcher Instance { get; internal set; }
 
-        [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
-        public static int Score(string source, string target)
-        {
-            return FuzzySearch(target, source).Score;
-        }
-
-        [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
-        public static bool IsMatch(string source, string target)
-        {
-            return Score(source, target) > 0;
-        }
-
         public static MatchResult FuzzySearch(string query, string stringToCompare)
         {
             return Instance.FuzzyMatch(query, stringToCompare);
@@ -323,18 +311,6 @@ namespace Flow.Launcher.Infrastructure
 
     public class MatchOption
     {
-        /// <summary>
-        /// prefix of match char, use for highlight
-        /// </summary>
-        [Obsolete("this is never used")]
-        public string Prefix { get; set; } = "";
-
-        /// <summary>
-        /// suffix of match char, use for highlight
-        /// </summary>
-        [Obsolete("this is never used")]
-        public string Suffix { get; set; } = "";
-
         public bool IgnoreCase { get; set; } = true;
     }
 }

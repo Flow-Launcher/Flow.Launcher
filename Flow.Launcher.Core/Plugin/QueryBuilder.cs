@@ -29,7 +29,6 @@ namespace Flow.Launcher.Core.Plugin
             else
             { // non action keyword
                 actionKeyword = string.Empty;
-                actionParameters = terms.ToList();
                 search = rawQuery;
             }
 
@@ -38,10 +37,7 @@ namespace Flow.Launcher.Core.Plugin
                 Terms = terms,
                 RawQuery = rawQuery,
                 ActionKeyword = actionKeyword,
-                Search = search,
-                // Obsolete value initialisation
-                ActionName = actionKeyword,
-                ActionParameters = actionParameters
+                Search = search
             };
 
             return query;

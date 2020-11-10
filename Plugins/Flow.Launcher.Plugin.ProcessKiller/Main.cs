@@ -52,21 +52,24 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             // get all non-system processes whose file path matches that of the given result (processPath)
             var similarProcesses = processHelper.GetSimilarProcesses(processPath);
 
-            menuOptions.Add(new Result
+            if (similarProcesses.Count() > 0)
             {
-                Title = _context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
-                SubTitle = processPath,
-                Action = _ =>
+                menuOptions.Add(new Result
                 {
-                    foreach (var p in similarProcesses)
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
+                    SubTitle = processPath,
+                    Action = _ =>
                     {
-                        processHelper.TryKill(p);
-                    }
+                        foreach (var p in similarProcesses)
+                        {
+                            processHelper.TryKill(p);
+                        }
 
-                    return true;
-                },
-                IcoPath = processPath
-            });
+                        return true;
+                    },
+                    IcoPath = processPath
+                });
+            }
 
             return menuOptions;
         }
@@ -86,6 +89,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     SubTitle = path,
                     TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
+                    ContextData = p.ProcessName,
                     Action = (c) =>
                     {
                         processHelper.TryKill(p);
@@ -94,16 +98,18 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 });
             }
 
+            var sortedResults = results.OrderBy(x => x.Title).ToList();
+
             // When there are multiple results AND all of them are instances of the same executable
             // add a quick option to kill them all at the top of the results.
-            var firstResult = results.FirstOrDefault()?.SubTitle;
-            if (processlist.Count > 1 && !string.IsNullOrEmpty(termToSearch) && results.All(r => r.SubTitle == firstResult))
+            var firstResult = sortedResults.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubTitle));
+            if (processlist.Count > 1 && !string.IsNullOrEmpty(termToSearch) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
             {
-                results.Insert(0, new Result()
+                sortedResults.Insert(1, new Result()
                 {
-                    IcoPath = "Images/app.png",
-                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), termToSearch),
-                    SubTitle = "",
+                    IcoPath = firstResult?.IcoPath,
+                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), firstResult?.ContextData),
+                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processlist.Count),
                     Score = 200,
                     Action = (c) =>
                     {
@@ -117,7 +123,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 });
             }
 
-            return results;
+            return sortedResults;
         }
     }
 }
