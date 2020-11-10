@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         {
                             Main.StartProcess(Process.Start, new ProcessStartInfo(
                             !string.IsNullOrEmpty(Main._settings.CustomizedExplorer) ? Main._settings.CustomizedExplorer:Settings.Explorer,
-                            $"{Main._settings.CustomizedArgs} \"{Package.Location}\"".Trim()));
+                            Main._settings.CustomizedArgs.Replace("%s",$"\"{Package.Location}\"").Trim()));
 
                             return true;
                         },
