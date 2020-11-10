@@ -106,7 +106,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(_imageCache[Constant.MissingImgIcon], ImageType.Error);
+                    return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
                 }
                 if (ImageCache.ContainsKey(path))
                 {
@@ -139,8 +139,8 @@ namespace Flow.Launcher.Infrastructure.Image
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
 
-                    ImageSource image = _imageCache[Constant.MissingImgIcon];
-                    _imageCache[path] = image;
+                    ImageSource image = ImageCache[Constant.MissingImgIcon];
+                    ImageCache[path] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
                 }
             }
@@ -191,7 +191,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             else
             {
-                image = _imageCache[Constant.MissingImgIcon];
+                image = ImageCache[Constant.MissingImgIcon];
                 path = Constant.MissingImgIcon;
             }
 
