@@ -106,13 +106,25 @@ namespace Flow.Launcher.ViewModel
         {
             _resultsUpdateQueue = new BlockingCollection<ResultsForUpdate>();
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while (true)
                 {
-                    var resultToUpdate = _resultsUpdateQueue.Take();
-                    if (!resultToUpdate.Token.IsCancellationRequested)
-                        UpdateResultView(resultToUpdate.Results, resultToUpdate.Metadata, resultToUpdate.Query);
+                    List<ResultsForUpdate> queue = new List<ResultsForUpdate>() { _resultsUpdateQueue.Take() };
+                    await Task.Delay(50);
+
+                    while (_resultsUpdateQueue.TryTake(out var resultsForUpdate))
+                    {
+                        queue.Add(resultsForUpdate);
+                    }
+
+                    //foreach (var update in queue)
+                    //{
+                    //    UpdateResultView(update.Results, update.Metadata, update.Query);
+                    //}
+
+                    UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
+
                 }
             });
         }
@@ -412,7 +424,7 @@ namespace Flow.Launcher.ViewModel
                 if (query != null)
                 {
                     // handle the exclusiveness of plugin using action keyword
-                    RemoveOldQueryResults(query);
+                    // RemoveOldQueryResults(query);
 
                     _lastQuery = query;
                     Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
@@ -443,7 +455,7 @@ namespace Flow.Launcher.ViewModel
                         {
                             // nothing to do here
                         }
-                        
+
 
                         // this should happen once after all queries are done so progress bar should continue
                         // until the end of all querying
@@ -459,6 +471,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
+                
             }
         }
 
@@ -683,6 +696,23 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        {
+            foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
+            {
+                if (_topMostRecord.IsTopMost(result))
+                {
+                    result.Score = int.MaxValue;
+                }
+                else
+                {
+                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5;
+                }
+            }
+
+            Results.AddResults(resultsForUpdates);
+        }
+
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
@@ -705,10 +735,6 @@ namespace Flow.Launcher.ViewModel
                 Results.AddResults(list, metadata.ID);
             }
 
-            if (Results.Visbility != Visibility.Visible && list.Count > 0)
-            {
-                Results.Visbility = Visibility.Visible;
-            }
         }
 
         #endregion
