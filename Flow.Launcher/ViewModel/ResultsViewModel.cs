@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -115,18 +116,19 @@ namespace Flow.Launcher.ViewModel
 
         public void Clear()
         {
-            Results.Clear();
+            Results.RemoveAll();
         }
 
         public void RemoveResultsExcept(PluginMetadata metadata)
         {
-            Results.RemoveAll(r => r.Result.PluginID != metadata.ID);
+            //Results.RemoveAll(r => r.Result.PluginID != metadata.ID);
         }
 
         public void RemoveResultsFor(PluginMetadata metadata)
         {
-            Results.RemoveAll(r => r.Result.PluginID == metadata.ID);
+            //Results.RemoveAll(r => r.Result.PluginID == metadata.ID);
         }
+
 
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
@@ -138,16 +140,44 @@ namespace Flow.Launcher.ViewModel
             // update UI in one run, so it can avoid UI flickering
             Results.Update(newResults);
 
-            if (Results.Count > 0)
+            if (Visbility != Visibility.Visible && Results.Count > 0)
             {
                 Margin = new Thickness { Top = 8 };
                 SelectedIndex = 0;
+                Visbility = Visibility.Visible;
             }
             else
             {
                 Margin = new Thickness { Top = 0 };
+                Visbility = Visibility.Collapsed;
             }
         }
+        /// <summary>
+        /// To avoid deadlock, this method should not called from main thread
+        /// </summary>
+        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        {
+            var newResults = NewResults(resultsForUpdates);
+            lock (_collectionLock)
+            {
+                Results.Update(newResults);
+            }
+
+            switch (Visbility)
+            {
+                case Visibility.Collapsed when Results.Count > 0:
+                    Margin = new Thickness { Top = 8 };
+                    SelectedIndex = 0;
+                    Visbility = Visibility.Visible;
+                    break;
+                case Visibility.Visible when Results.Count == 0:
+                    Margin = new Thickness { Top = 0 };
+                    Visbility = Visibility.Collapsed;
+                    break;
+
+            }
+        }
+
 
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
@@ -165,7 +195,24 @@ namespace Flow.Launcher.ViewModel
                 .Take(MaxResults * 2)
                 .ToList();
         }
+
+        private List<ResultViewModel> NewResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        {
+            if (!resultsForUpdates.Any())
+                return Results.ToList();
+
+            var results = Results as IEnumerable<ResultViewModel>;
+
+            return results.Where(r => !resultsForUpdates.Any(u => u.Metadata.ID == r.Result.PluginID))
+                          .Concat(resultsForUpdates
+                               .SelectMany(u => u.Results)
+                               .Select(r => new ResultViewModel(r, _settings)))
+                          .OrderByDescending(rv => rv.Result.Score)
+                          .Take(MaxResults * 2)
+                          .ToList();
+        }
         #endregion
+
 
         #region FormattedText Dependency Property
         public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
@@ -198,20 +245,12 @@ namespace Flow.Launcher.ViewModel
         }
         #endregion
 
-        public class ResultCollection : ObservableCollection<ResultViewModel>
+        public class ResultCollection : ObservableCollection<ResultViewModel>, INotifyCollectionChanged
         {
-
-            public void RemoveAll(Predicate<ResultViewModel> predicate)
+            public event NotifyCollectionChangedEventHandler CollectionChanged;
+            public void RemoveAll()
             {
-                CheckReentrancy();
-
-                for (int i = Count - 1; i >= 0; i--)
-                {
-                    if (predicate(this[i]))
-                    {
-                        RemoveAt(i);
-                    }
-                }
+                ClearItems();
             }
 
             /// <summary>
@@ -226,44 +265,10 @@ namespace Flow.Launcher.ViewModel
                 {
                     Add(item);
                 }
+                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-                
-                
                 return;
 
-                int newCount = newItems.Count;
-                int oldCount = Items.Count;
-                int location = newCount > oldCount ? oldCount : newCount;
-
-                for (int i = 0; i < location; i++)
-                {
-                    ResultViewModel oldResult = this[i];
-                    ResultViewModel newResult = newItems[i];
-                    if (!oldResult.Equals(newResult))
-                    { // result is not the same update it in the current index
-                        this[i] = newResult;
-                    }
-                    else if (oldResult.Result.Score != newResult.Result.Score)
-                    {
-                        this[i].Result.Score = newResult.Result.Score;
-                    }
-                }
-
-
-                if (newCount >= oldCount)
-                {
-                    for (int i = oldCount; i < newCount; i++)
-                    {
-                        Add(newItems[i]);
-                    }
-                }
-                else
-                {
-                    for (int i = oldCount - 1; i >= newCount; i--)
-                    {
-                        RemoveAt(i);
-                    }
-                }
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
-    class ResultsForUpdate
+    public class ResultsForUpdate
     {
         public List<Result> Results { get; }
 
