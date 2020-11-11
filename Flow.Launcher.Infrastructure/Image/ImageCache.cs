@@ -8,17 +8,30 @@ using System.Windows.Media;
 namespace Flow.Launcher.Infrastructure.Image
 {
     [Serializable]
+    public class ImageUsage
+    {
+
+        public int usage;
+        public ImageSource imageSource;
+
+        public ImageUsage(int usage, ImageSource image)
+        {
+            this.usage = usage;
+            imageSource = image;
+        }
+    }
+
     public class ImageCache
     {
         private const int MaxCached = 50;
-        public ConcurrentDictionary<string, (int usage, ImageSource imageSource)> Data { get; private set; } = new ConcurrentDictionary<string, (int, ImageSource)>();
+        public ConcurrentDictionary<string, ImageUsage> Data { get; private set; } = new ConcurrentDictionary<string, ImageUsage>();
         private const int permissibleFactor = 2;
 
         public void Initialization(Dictionary<string, int> usage)
         {
             foreach (var key in usage.Keys)
             {
-                Data[key] = (usage[key], null);
+                Data[key] = new ImageUsage(usage[key], null);
             }
         }
 
@@ -35,12 +48,12 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             set
             {
-                Data.AddOrUpdate(path, (1, value), (k, v) =>
-                {
-                    v.imageSource = value;
-                    v.usage++;
-                    return v;
-                });
+                Data.AddOrUpdate(path, new ImageUsage(0, value), (k, v) =>
+                 {
+                     v.imageSource = value;
+                     v.usage++;
+                     return v;
+                 });
 
                 // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
                 // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
@@ -48,7 +61,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
 
-                    
+
                     foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
                     {
                         if (!(key.Equals(Constant.ErrorIcon) || key.Equals(Constant.DefaultIcon)))
