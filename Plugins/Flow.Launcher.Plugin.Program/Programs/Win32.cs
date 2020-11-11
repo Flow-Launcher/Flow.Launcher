@@ -331,10 +331,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
                         .Distinct()
                         .Select(x => Extension(x) switch
-            {
-                ShortcutExtension => LnkProgram(x),
-                _ => Win32Program(x)
-            }).Where(x => x.Valid);
+                            {
+                                ShortcutExtension => LnkProgram(x),
+                                _ => Win32Program(x)
+                            }).Where(x => x.Valid);
             return programs;
         }
 
