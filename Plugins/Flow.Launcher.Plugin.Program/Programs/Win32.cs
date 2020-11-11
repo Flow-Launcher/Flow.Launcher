@@ -235,7 +235,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var program = Win32Program(path);
                 var info = FileVersionInfo.GetVersionInfo(path);
-                program.Description = info.FileDescription;
+                if (!string.IsNullOrEmpty(info.FileDescription))
+                    program.Description = info.FileDescription;
                 return program;
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
