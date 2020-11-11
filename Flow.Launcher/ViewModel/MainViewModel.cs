@@ -469,9 +469,9 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
+                _updateSource?.Cancel();
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
-                
             }
         }
 
@@ -695,7 +695,9 @@ namespace Flow.Launcher.ViewModel
                 _saved = true;
             }
         }
-
+        /// <summary>
+        /// To avoid deadlock, this method should not called from main thread
+        /// </summary>
         public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
             foreach (var result in resultsForUpdates.SelectMany(u => u.Results))

@@ -174,7 +174,6 @@ namespace Flow.Launcher.ViewModel
                     Margin = new Thickness { Top = 0 };
                     Visbility = Visibility.Collapsed;
                     break;
-
             }
         }
 
@@ -247,7 +246,7 @@ namespace Flow.Launcher.ViewModel
 
         public class ResultCollection : ObservableCollection<ResultViewModel>, INotifyCollectionChanged
         {
-            public event NotifyCollectionChangedEventHandler CollectionChanged;
+            public override event NotifyCollectionChangedEventHandler CollectionChanged;
             public void RemoveAll()
             {
                 ClearItems();
@@ -259,12 +258,16 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems)
             {
+
+
                 ClearItems();
 
                 foreach (var item in newItems)
                 {
                     Add(item);
                 }
+
+                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
                 CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
                 return;
