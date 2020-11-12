@@ -424,7 +424,7 @@ namespace Flow.Launcher.ViewModel
                 if (query != null)
                 {
                     // handle the exclusiveness of plugin using action keyword
-                    // RemoveOldQueryResults(query);
+                    RemoveOldQueryResults(query);
 
                     _lastQuery = query;
                     Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
@@ -483,18 +483,18 @@ namespace Flow.Launcher.ViewModel
             {
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Metadata);
+                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(keyword))
                 {
-                    Results.RemoveResultsFor(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
+                    Results.KeepResultsExcept(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
                 }
                 else if (lastKeyword != keyword)
                 {
-                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Metadata);
+                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
                 }
             }
         }
