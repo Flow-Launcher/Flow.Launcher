@@ -44,16 +44,21 @@ namespace Flow.Launcher.Infrastructure.Image
                     value.usage++;
                     return value.imageSource;
                 }
-                else return null;
+                
+                return null;
             }
             set
             {
-                Data.AddOrUpdate(path, new ImageUsage(0, value), (k, v) =>
-                 {
-                     v.imageSource = value;
-                     v.usage++;
-                     return v;
-                 });
+                Data.AddOrUpdate(
+                        path, 
+                        new ImageUsage(0, value), 
+                        (k, v) =>
+                            {
+                                v.imageSource = value;
+                                v.usage++;
+                                return v;
+                            }
+                );
 
                 // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
                 // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
@@ -72,7 +77,6 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
             }
         }
-
 
         public bool ContainsKey(string key)
         {
