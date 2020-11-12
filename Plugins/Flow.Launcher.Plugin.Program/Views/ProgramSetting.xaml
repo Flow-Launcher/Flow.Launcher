@@ -72,17 +72,17 @@
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button x:Name="btnProgramSourceStatus" Click="btnProgramSourceStatus_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_disable}" />
                 <Button x:Name="btnEditProgramSource" Click="btnEditProgramSource_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_edit}"/>
-                <Button x:Name="btnAddProgramSource" Click="btnAddProgramSource_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_add}"/>
+                <Button x:Name="btnAddProgramSource" Click="btnAddProgramSource_OnClick" Width="100" Margin="10 10 0 10" Content="{DynamicResource flowlauncher_plugin_program_add}"/>
             </StackPanel>
         </DockPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <TextBlock Text="{DynamicResource flowlauncher_plugin_program_customizedexplorer}" Margin="10,0,0,0"  VerticalAlignment="Center" FontSize="15"
+            <TextBlock Text="{DynamicResource flowlauncher_plugin_program_customizedexplorer}" VerticalAlignment="Center" FontSize="15"
                    ToolTip= "{DynamicResource flowlauncher_plugin_program_tooltip_customizedexplorer}"/>
-            <TextBox Margin="20,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="200" Height="30" FontSize="15"
+            <TextBox Margin="10,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="200" Height="30" FontSize="15"
                  TextChanged="CustomizeExplorer" x:Name="CustomizeExplorerBox"/>
             <TextBlock Text="{DynamicResource flowlauncher_plugin_program_args}" VerticalAlignment="Center" FontSize="15"
                        ToolTip="{DynamicResource flowlauncher_plugin_program_tooltip_args}" />
-            <TextBox Margin="10,0,0,0" Width="80" Height="30" FontSize="15" x:Name="CustomizeArgsBox" TextChanged="CustomizeExplorerArgs"></TextBox>
+            <TextBox Margin="10,0,0,0" Width="135" Height="30" FontSize="15" x:Name="CustomizeArgsBox" TextChanged="CustomizeExplorerArgs"></TextBox>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -126,10 +126,21 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
                     {
-                        Main.StartProcess(Process.Start, new ProcessStartInfo(
-                            !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer) ? Main._settings.CustomizedExplorer:Settings.Explorer,
-                            !string.IsNullOrWhiteSpace(Main._settings.CustomizedArgs)?Main._settings.CustomizedArgs.Replace("%s",$"\"{ParentDirectory}\"").Replace("%f",$"\"{FullPath}\""):
-                            Settings.ExplorerArgs));
+                        var args = !string.IsNullOrWhiteSpace(Main._settings.CustomizedArgs)
+                                    ? Main._settings.CustomizedArgs
+                                        .Replace("%s",$"\"{ParentDirectory}\"")
+                                        .Replace("%f",$"\"{FullPath}\"")
+                                    : Main._settings.CustomizedExplorer==Settings.Explorer
+                                        ? $"/select,\"{FullPath}\""
+                                        : Settings.ExplorerArgs;
+
+                        Main.StartProcess(Process.Start, 
+                                            new ProcessStartInfo(
+                                                !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer)
+                                                ? Main._settings.CustomizedExplorer
+                                                : Settings.Explorer,
+                                                args));
+
                         return true;
                     },
                     IcoPath = "Images/folder.png"
@@ -240,7 +251,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var program = Win32Program(path);
                 var info = FileVersionInfo.GetVersionInfo(path);
-                program.Description = info.FileDescription;
+                if (!string.IsNullOrEmpty(info.FileDescription))
+                    program.Description = info.FileDescription;
                 return program;
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
@@ -319,10 +331,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
                         .Distinct()
                         .Select(x => Extension(x) switch
-            {
-                ShortcutExtension => LnkProgram(x),
-                _ => Win32Program(x)
-            }).Where(x => x.Valid);
+                            {
+                                ShortcutExtension => LnkProgram(x),
+                                _ => Win32Program(x)
+                            }).Where(x => x.Valid);
             return programs;
         }
 
