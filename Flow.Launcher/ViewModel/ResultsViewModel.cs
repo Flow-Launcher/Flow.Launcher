@@ -119,14 +119,14 @@ namespace Flow.Launcher.ViewModel
             Results.RemoveAll();
         }
 
-        public void RemoveResultsExcept(PluginMetadata metadata)
+        public void KeepResultsFor(PluginMetadata metadata)
         {
-            //Results.RemoveAll(r => r.Result.PluginID != metadata.ID);
+            Results.Update(Results.Where(r => r.Result.PluginID == metadata.ID).ToList());
         }
 
-        public void RemoveResultsFor(PluginMetadata metadata)
+        public void KeepResultsExcept(PluginMetadata metadata)
         {
-            //Results.RemoveAll(r => r.Result.PluginID == metadata.ID);
+            Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
         }
 
 
