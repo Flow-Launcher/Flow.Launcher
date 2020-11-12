@@ -191,7 +191,6 @@ namespace Flow.Launcher.ViewModel
             return results.Where(r => r.Result.PluginID != resultId)
                 .Concat(newResults)
                 .OrderByDescending(r => r.Result.Score)
-                .Take(MaxResults * 2)
                 .ToList();
         }
 
@@ -207,7 +206,6 @@ namespace Flow.Launcher.ViewModel
                                .SelectMany(u => u.Results)
                                .Select(r => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
-                          .Take(MaxResults * 2)
                           .ToList();
         }
         #endregion
