@@ -118,11 +118,6 @@ namespace Flow.Launcher.ViewModel
                         queue.Add(resultsForUpdate);
                     }
 
-                    //foreach (var update in queue)
-                    //{
-                    //    UpdateResultView(update.Results, update.Metadata, update.Query);
-                    //}
-
                     UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
 
                 }
