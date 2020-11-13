@@ -111,7 +111,7 @@ namespace Flow.Launcher.ViewModel
                 while (true)
                 {
                     List<ResultsForUpdate> queue = new List<ResultsForUpdate>() { _resultsUpdateQueue.Take() };
-                    await Task.Delay(50);
+                    await Task.Delay(30);
 
                     while (_resultsUpdateQueue.TryTake(out var resultsForUpdate))
                     {

@@ -158,6 +158,11 @@ namespace Flow.Launcher.ViewModel
         public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
             var newResults = NewResults(resultsForUpdates);
+
+            // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
+            // fix selected index flow
+            SelectedIndex = 0;
+
             lock (_collectionLock)
             {
                 Results.Update(newResults);
@@ -167,7 +172,6 @@ namespace Flow.Launcher.ViewModel
             {
                 case Visibility.Collapsed when Results.Count > 0:
                     Margin = new Thickness { Top = 8 };
-                    SelectedIndex = 0;
                     Visbility = Visibility.Visible;
                     break;
                 case Visibility.Visible when Results.Count == 0:
@@ -175,6 +179,7 @@ namespace Flow.Launcher.ViewModel
                     Visbility = Visibility.Collapsed;
                     break;
             }
+
         }
 
 
