@@ -217,10 +217,9 @@ namespace Flow.Launcher.ViewModel
 
             var results = Results as IEnumerable<ResultViewModel>;
 
-            return results.Where(r => !resultsForUpdates.Any(u => u.Metadata.ID == r.Result.PluginID))
-                          .Concat(resultsForUpdates
-                               .SelectMany(u => u.Results)
-                               .Select(r => new ResultViewModel(r, _settings)))
+            return results.Where(r => r != null && !resultsForUpdates.Any(u => u.Metadata.ID == r.Result.PluginID))
+                          .Concat(
+                               resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
                           .ToList();
         }
