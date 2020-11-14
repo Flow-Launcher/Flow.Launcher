@@ -296,7 +296,7 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems)
             {
-                ClearItems();
+                Clear();
 
                 AddRange(newItems);
             }
