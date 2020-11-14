@@ -21,11 +21,11 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly Alphabet _alphabet;
+        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, Alphabet alphabet)
+        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
         {
             _settingsVM = settingsVM;
             _mainVM = mainVM;
@@ -76,7 +76,6 @@ namespace Flow.Launcher
             _settingsVM.Save();
             PluginManager.Save();
             ImageLoader.Save();
-            _alphabet.Save();
         }
 
         public void ReloadAllPluginData()
