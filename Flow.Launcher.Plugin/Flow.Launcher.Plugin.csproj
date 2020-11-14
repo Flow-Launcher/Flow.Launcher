@@ -15,10 +15,10 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>1.2.1</Version>
-    <PackageVersion>1.2.1</PackageVersion>
-    <AssemblyVersion>1.2.1</AssemblyVersion>
-    <FileVersion>1.2.1</FileVersion>
+    <Version>1.2.2</Version>
+    <PackageVersion>1.2.2</PackageVersion>
+    <AssemblyVersion>1.2.2</AssemblyVersion>
+    <FileVersion>1.2.2</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <Authors>Flow-Launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
