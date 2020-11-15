@@ -275,5 +275,10 @@ namespace Flow.Launcher
         {
             Close();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer",$"{DataLocation.DataDirectory()}\\Themes");
+        }
     }
 }
