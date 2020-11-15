@@ -201,9 +201,10 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
 
+            
 
             return results.Where(r => r.Result.PluginID != resultId)
-                .Concat(newResults)
+                .Concat(results.Intersect(newResults).Union(newResults))
                 .OrderByDescending(r => r.Result.Score)
                 .ToList();
         }
