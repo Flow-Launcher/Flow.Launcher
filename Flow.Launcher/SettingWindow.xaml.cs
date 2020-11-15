@@ -278,7 +278,7 @@ namespace Flow.Launcher
 
         private void OpenPluginFolder(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer",$"{DataLocation.DataDirectory()}\\Themes");
+            FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), "Themes"));
         }
     }
 }
