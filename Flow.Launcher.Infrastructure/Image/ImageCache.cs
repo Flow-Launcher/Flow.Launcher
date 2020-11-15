@@ -44,14 +44,14 @@ namespace Flow.Launcher.Infrastructure.Image
                     value.usage++;
                     return value.imageSource;
                 }
-                
+
                 return null;
             }
             set
             {
                 Data.AddOrUpdate(
-                        path, 
-                        new ImageUsage(0, value), 
+                        path,
+                        new ImageUsage(0, value),
                         (k, v) =>
                             {
                                 v.imageSource = value;
@@ -65,14 +65,13 @@ namespace Flow.Launcher.Infrastructure.Image
                 if (Data.Count > permissibleFactor * MaxCached)
                 {
                     // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
-
-
-                    foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
+                    foreach (var key in Data
+                        .Where(x => x.Key != Constant.MissingImgIcon
+                                 && x.Key != Constant.ErrorIcon
+                                 && x.Key != Constant.DefaultIcon)
+                        .OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
                     {
-                        if (!(key.Equals(Constant.ErrorIcon) || key.Equals(Constant.DefaultIcon)))
-                        {
-                            Data.TryRemove(key, out _);
-                        }
+                        Data.TryRemove(key, out _);
                     }
                 }
             }
@@ -80,7 +79,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public bool ContainsKey(string key)
         {
-            var contains = Data.ContainsKey(key);
+            var contains = Data.ContainsKey(key) && Data[key] != null;
             return contains;
         }
 

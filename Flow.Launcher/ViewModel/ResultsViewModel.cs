@@ -171,9 +171,7 @@ namespace Flow.Launcher.ViewModel
             {
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
                 // fix selected index flow
-                if (Results.Count > 0)
-                    SelectedIndex = 0;
-
+                SelectedIndex = 0;
 
                 Results.Update(newResults);
             }
@@ -203,9 +201,10 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
 
+            
 
             return results.Where(r => r.Result.PluginID != resultId)
-                .Concat(newResults)
+                .Concat(results.Intersect(newResults).Union(newResults))
                 .OrderByDescending(r => r.Result.Score)
                 .ToList();
         }
@@ -268,6 +267,7 @@ namespace Flow.Launcher.ViewModel
 
             public override event NotifyCollectionChangedEventHandler CollectionChanged;
 
+            // https://peteohanlon.wordpress.com/2008/10/22/bulk-loading-in-observablecollection/
             public void AddRange(IEnumerable<ResultViewModel> Items)
             {
                 _suppressNotification = true;
@@ -294,7 +294,7 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems)
             {
-                ClearItems();
+                Clear();
 
                 AddRange(newItems);
             }

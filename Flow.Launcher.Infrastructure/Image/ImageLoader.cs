@@ -62,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                _storage.Save(ImageCache.Data.Select(x => (x.Key, x.Value.usage)).ToDictionary(x => x.Key, y => y.usage));
+                _storage.Save(ImageCache.Data.Select(x => (x.Key, x.Value.usage)).ToDictionary(x => x.Key, x => x.usage));
             }
         }
 
@@ -214,6 +214,15 @@ namespace Flow.Launcher.Infrastructure.Image
                 Constant.ThumbnailSize,
                 Constant.ThumbnailSize,
                 option);
+        }
+
+        public static bool CacheContainImage(string path)
+        {
+            return ImageCache.ContainsKey(path);
+        }
+        public static ImageSource LoadDefault(bool loadFullImage = false)
+        {
+            return LoadInternal(Constant.MissingImgIcon, loadFullImage).ImageSource;
         }
 
         public static ImageSource Load(string path, bool loadFullImage = false)

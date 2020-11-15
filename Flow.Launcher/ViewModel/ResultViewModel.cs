@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -26,18 +27,18 @@ namespace Flow.Launcher.ViewModel
 
         public Settings Settings { get; private set; }
 
-        public Visibility ShowOpenResultHotkey =>  Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Hidden;
+        public Visibility ShowOpenResultHotkey => Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Hidden;
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
-                                            ? Result.Title 
+                                            ? Result.Title
                                             : Result.TitleToolTip;
 
         public string ShowSubTitleToolTip => string.IsNullOrEmpty(Result.SubTitleToolTip)
-                                                ? Result.SubTitle 
+                                                ? Result.SubTitle
                                                 : Result.SubTitleToolTip;
-        
+
         public Lazy<ImageSource> Image { get; set; }
 
         private ImageSource SetImage
@@ -57,9 +58,20 @@ namespace Flow.Launcher.ViewModel
                         imagePath = Constant.MissingImgIcon;
                     }
                 }
-                
-                // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                return ImageLoader.Load(imagePath);
+
+                if (ImageLoader.CacheContainImage(imagePath))
+                    // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
+                    return ImageLoader.Load(imagePath);
+                else
+                {
+                    Task.Run(() =>
+                    {
+                        Image = new Lazy<ImageSource>(() => ImageLoader.Load(imagePath));
+                        OnPropertyChanged(nameof(Image));
+                    });
+
+                    return ImageLoader.LoadDefault();
+                }
             }
         }
 
@@ -78,7 +90,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        
+
         public override int GetHashCode()
         {
             return Result.GetHashCode();
