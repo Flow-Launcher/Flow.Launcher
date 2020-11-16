@@ -22,6 +22,7 @@ using Flow.Launcher.Storage;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
 using System.Collections.Concurrent;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -442,7 +443,7 @@ namespace Flow.Launcher.ViewModel
                                 if (!plugin.Metadata.Disabled)
                                 {
                                     var results = PluginManager.QueryForPlugin(plugin, query);
-                                    _resultsUpdateQueue.Add(new ResultsForUpdate(results, plugin.Metadata, query, _updateToken));
+                                    _resultsUpdateQueue.Add(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
                                 }
                             });
                         }
@@ -695,6 +696,11 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
+            if (!resultsForUpdates.Any())
+                return;
+            CancellationToken token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
+
+
             foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
             {
                 if (_topMostRecord.IsTopMost(result))
@@ -707,10 +713,10 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            Results.AddResults(resultsForUpdates);
+            Results.AddResults(resultsForUpdates, token);
         }
 
-        /// <summary>
+        /// <summary>U
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
         public void UpdateResultView(List<Result> list, PluginMetadata metadata, Query originQuery)

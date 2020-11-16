@@ -8,18 +8,57 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-
+using Microsoft.FSharp.Core;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
+        public class LazyAsync<T> : Lazy<Task<T>>
+        {
+            private T defaultValue;
+
+
+            private readonly Action _updateCallback;
+            public T Value
+            {
+                get
+                {
+                    if (!IsValueCreated)
+                    {
+                        base.Value.ContinueWith(_ =>
+                        {
+                            _updateCallback();
+                        });
+                        return defaultValue;
+                    }
+                    else if (!base.Value.IsCompleted)
+                    {
+                        return defaultValue;
+                    }
+                    else return base.Value.Result;
+                }
+            }
+            public LazyAsync(Func<Task<T>> factory, T defaultValue, Action updateCallback) : base(factory)
+            {
+                if (defaultValue != null)
+                {
+                    this.defaultValue = defaultValue;
+                }
+                _updateCallback = updateCallback;
+                
+            }
+        }
+
         public ResultViewModel(Result result, Settings settings)
         {
             if (result != null)
             {
                 Result = result;
-                Image = new Lazy<ImageSource>(() => SetImage);
+                Image = new LazyAsync<ImageSource>(SetImage, ImageLoader.DefaultImage, () =>
+                    {
+                        OnPropertyChanged(nameof(Image));
+                    });
             }
 
             Settings = settings;
@@ -39,40 +78,32 @@ namespace Flow.Launcher.ViewModel
                                                 ? Result.SubTitle
                                                 : Result.SubTitleToolTip;
 
-        public Lazy<ImageSource> Image { get; set; }
+        public LazyAsync<ImageSource> Image { get; set; }
 
-        private ImageSource SetImage
+        private async Task<ImageSource> SetImage()
         {
-            get
+            var imagePath = Result.IcoPath;
+            if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
             {
-                var imagePath = Result.IcoPath;
-                if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
+                try
                 {
-                    try
-                    {
-                        return Result.Icon();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception($"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>", e);
-                        imagePath = Constant.MissingImgIcon;
-                    }
+                    return Result.Icon();
                 }
-
-                if (ImageLoader.CacheContainImage(imagePath))
-                    // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                    return ImageLoader.Load(imagePath);
-                else
+                catch (Exception e)
                 {
-                    Task.Run(() =>
-                    {
-                        Image = new Lazy<ImageSource>(() => ImageLoader.Load(imagePath));
-                        OnPropertyChanged(nameof(Image));
-                    });
-
-                    return ImageLoader.LoadDefault();
+                    Log.Exception($"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>", e);
+                    imagePath = Constant.MissingImgIcon;
                 }
             }
+
+            if (ImageLoader.CacheContainImage(imagePath))
+                // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
+                return ImageLoader.Load(imagePath);
+            else
+            {
+                return await Task.Run(() => ImageLoader.Load(imagePath));
+            }
+
         }
 
         public Result Result { get; }
