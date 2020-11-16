@@ -18,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
         private static IImageHashGenerator _hashGenerator;
         private static bool EnableImageHash = true;
-        public static ImageSource defaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
+        public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
 
 
         private static readonly string[] ImageExtensions =
