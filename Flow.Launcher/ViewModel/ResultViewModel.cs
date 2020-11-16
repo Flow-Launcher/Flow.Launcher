@@ -55,7 +55,7 @@ namespace Flow.Launcher.ViewModel
             if (result != null)
             {
                 Result = result;
-                Image = new LazyAsync<ImageSource>(SetImage, ImageLoader.defaultImage, () =>
+                Image = new LazyAsync<ImageSource>(SetImage, ImageLoader.DefaultImage, () =>
                     {
                         OnPropertyChanged(nameof(Image));
                     });
