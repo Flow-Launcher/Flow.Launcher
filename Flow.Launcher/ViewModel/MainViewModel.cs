@@ -22,6 +22,7 @@ using Flow.Launcher.Storage;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
 using System.Collections.Concurrent;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -442,7 +443,7 @@ namespace Flow.Launcher.ViewModel
                                 if (!plugin.Metadata.Disabled)
                                 {
                                     var results = PluginManager.QueryForPlugin(plugin, query);
-                                    _resultsUpdateQueue.Add(new ResultsForUpdate(results, plugin.Metadata, query, _updateToken));
+                                    _resultsUpdateQueue.Add(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
                                 }
                             });
                         }
@@ -695,6 +696,20 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
+            if (!resultsForUpdates.Any())
+                return;
+
+            try
+            {
+                var token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
+            }
+            catch (Exception e)
+            {
+                Log.Debug("Illegal token information");
+            }
+
+
+
             foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
             {
                 if (_topMostRecord.IsTopMost(result))
