@@ -19,7 +19,7 @@ namespace Flow.Launcher.ViewModel
             if (result != null)
             {
                 Result = result;
-                Image = new Lazy<ImageSource>(() => SetImage);
+                Image = new Lazy<ImageSource>(SetImage);
             }
 
             Settings = settings;
@@ -41,37 +41,34 @@ namespace Flow.Launcher.ViewModel
 
         public Lazy<ImageSource> Image { get; set; }
 
-        private ImageSource SetImage
+        private ImageSource SetImage()
         {
-            get
+            var imagePath = Result.IcoPath;
+            if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
             {
-                var imagePath = Result.IcoPath;
-                if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
+                try
                 {
-                    try
-                    {
-                        return Result.Icon();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception($"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>", e);
-                        imagePath = Constant.MissingImgIcon;
-                    }
+                    return Result.Icon();
                 }
-
-                if (ImageLoader.CacheContainImage(imagePath))
-                    // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                    return ImageLoader.Load(imagePath);
-                else
+                catch (Exception e)
                 {
-                    Task.Run(() =>
-                    {
-                        Image = new Lazy<ImageSource>(() => ImageLoader.Load(imagePath));
-                        OnPropertyChanged(nameof(Image));
-                    });
-
-                    return ImageLoader.LoadDefault();
+                    Log.Exception($"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>", e);
+                    imagePath = Constant.MissingImgIcon;
                 }
+            }
+
+            if (ImageLoader.CacheContainImage(imagePath))
+                // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
+                return ImageLoader.Load(imagePath);
+            else
+            {
+                Task.Run(() =>
+                {
+                    Image = new Lazy<ImageSource>(() => ImageLoader.Load(imagePath));
+                    OnPropertyChanged(nameof(Image));
+                });
+
+                return ImageLoader.LoadDefault();
             }
         }
 
