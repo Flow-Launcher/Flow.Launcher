@@ -698,16 +698,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (!resultsForUpdates.Any())
                 return;
-
-            try
-            {
-                var token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
-            }
-            catch (Exception e)
-            {
-                Log.Debug("Illegal token information");
-            }
-
+            CancellationToken token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
 
 
             foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
@@ -722,10 +713,10 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            Results.AddResults(resultsForUpdates);
+            Results.AddResults(resultsForUpdates, token);
         }
 
-        /// <summary>
+        /// <summary>U
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
         public void UpdateResultView(List<Result> list, PluginMetadata metadata, Query originQuery)

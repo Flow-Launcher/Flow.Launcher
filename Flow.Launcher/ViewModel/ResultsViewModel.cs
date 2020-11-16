@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -136,7 +137,6 @@ namespace Flow.Launcher.ViewModel
         public void AddResults(List<Result> newRawResults, string resultId)
         {
             var newResults = NewResults(newRawResults, resultId);
-
             lock (_collectionLock)
             {
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
@@ -163,9 +163,11 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
         {
             var newResults = NewResults(resultsForUpdates);
+            if (token.IsCancellationRequested)
+                return;
 
             lock (_collectionLock)
             {
@@ -173,7 +175,7 @@ namespace Flow.Launcher.ViewModel
                 // fix selected index flow
                 SelectedIndex = 0;
 
-                Results.Update(newResults);
+                Results.Update(newResults, token);
             }
 
             switch (Visbility)
@@ -201,7 +203,7 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
 
-            
+
 
             return results.Where(r => r.Result.PluginID != resultId)
                 .Concat(results.Intersect(newResults).Union(newResults))
@@ -292,10 +294,17 @@ namespace Flow.Launcher.ViewModel
             /// Update the results collection with new results, try to keep identical results
             /// </summary>
             /// <param name="newItems"></param>
+            public void Update(List<ResultViewModel> newItems, CancellationToken token)
+            {
+                Clear();
+                if (token.IsCancellationRequested)
+                    return;
+                AddRange(newItems);
+            }
+
             public void Update(List<ResultViewModel> newItems)
             {
                 Clear();
-
                 AddRange(newItems);
             }
         }
