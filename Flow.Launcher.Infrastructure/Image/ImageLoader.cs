@@ -216,7 +216,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public static bool CacheContainImage(string path)
         {
-            return ImageCache.ContainsKey(path) && ImageCache[path] != null;
+            return ImageCache.ContainsKey(path);
         }
 
 
