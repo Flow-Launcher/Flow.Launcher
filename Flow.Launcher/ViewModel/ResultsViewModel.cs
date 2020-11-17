@@ -258,32 +258,17 @@ namespace Flow.Launcher.ViewModel
         }
         #endregion
 
-        public class ResultCollection : ObservableCollection<ResultViewModel>, INotifyCollectionChanged
+        public class ResultCollection : ObservableCollection<ResultViewModel>
         {
-            private bool _suppressNotification = false;
-            protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-            {
-                if (!_suppressNotification)
-                    base.OnCollectionChanged(e);
-            }
-
-            public override event NotifyCollectionChangedEventHandler CollectionChanged;
-
             // https://peteohanlon.wordpress.com/2008/10/22/bulk-loading-in-observablecollection/
             public void AddRange(IEnumerable<ResultViewModel> Items)
             {
-                _suppressNotification = true;
-
                 foreach (var item in Items)
                 {
                     Add(item);
                 }
 
-
-                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
-                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 return;
-
             }
             public void RemoveAll()
             {
@@ -300,6 +285,7 @@ namespace Flow.Launcher.ViewModel
                 if (token.IsCancellationRequested)
                     return;
                 AddRange(newItems);
+                
             }
 
             public void Update(List<ResultViewModel> newItems)
