@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -137,6 +139,7 @@ namespace Flow.Launcher.ViewModel
         public void AddResults(List<Result> newRawResults, string resultId)
         {
             var newResults = NewResults(newRawResults, resultId);
+
             lock (_collectionLock)
             {
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
@@ -260,7 +263,28 @@ namespace Flow.Launcher.ViewModel
 
         public class ResultCollection : ObservableCollection<ResultViewModel>
         {
+            private bool _suppressNotification = false;
+
+            private long editTime = 0;
+
             // https://peteohanlon.wordpress.com/2008/10/22/bulk-loading-in-observablecollection/
+            protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+            {
+                if (!_suppressNotification)
+                    base.OnCollectionChanged(e);
+            }
+
+            public void BulkAddRange(IEnumerable<ResultViewModel> resultViews)
+            {
+                _suppressNotification = true;
+                foreach (var item in resultViews)
+                {
+                    Add(item);
+                }
+                _suppressNotification = false;
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+            }
             public void AddRange(IEnumerable<ResultViewModel> Items)
             {
                 foreach (var item in Items)
@@ -268,6 +292,7 @@ namespace Flow.Launcher.ViewModel
                     Add(item);
                 }
 
+                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
                 return;
             }
             public void RemoveAll()
@@ -281,17 +306,32 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems, CancellationToken token)
             {
-                Clear();
+
                 if (token.IsCancellationRequested)
                     return;
-                AddRange(newItems);
-                
+                Update(newItems);
             }
 
             public void Update(List<ResultViewModel> newItems)
             {
+                if (editTime == 0)
+                {
+                    AddRange(newItems);
+                    editTime++;
+                    return;
+                }
+                else if (editTime < 15 || newItems.Count < 50)
+                {
+                    ClearItems();
+                    AddRange(newItems);
+                    editTime++;
+                    return;
+                }
                 Clear();
-                AddRange(newItems);
+
+                BulkAddRange(newItems);
+                editTime++;
+
             }
         }
     }
