@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -174,8 +175,8 @@ namespace Flow.Launcher.Infrastructure.Image
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
-                        using var shell = ShellFile.FromFilePath(path);
-                        image = shell.Thumbnail.BitmapSource;
+                        image = new BitmapImage(new Uri(path));
+                        
                     }
                     else
                     {
@@ -184,8 +185,12 @@ namespace Flow.Launcher.Infrastructure.Image
                          * be the case in many situations while testing. 
                          * - Solution: explicitly pass the ThumbnailOnly flag
                          */
-                        using ShellObject shell = ShellFile.FromFilePath(path);
-                        image = shell.Thumbnail.SmallBitmapSource;
+                        image = new BitmapImage(new Uri(path))
+                        {
+                            DecodePixelHeight = 48,
+                            DecodePixelWidth = 48
+                        };
+
                     }
                 }
                 else

@@ -93,7 +93,7 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <Image Source="{Binding Image, IsAsync=True}" Width="48"  HorizontalAlignment="Right" />
+                    <Image Source="{Binding Image, IsAsync=True}" Width="48" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Right" />
                 </Grid>
                 <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay}" 
