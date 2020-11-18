@@ -263,7 +263,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            SearchWeb.NewBrowserWindow(e.Uri.AbsoluteUri);
+            SearchWeb.NewTabInBrowser(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
