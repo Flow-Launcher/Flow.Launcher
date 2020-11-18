@@ -1,18 +1,45 @@
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
+
 namespace Flow.Launcher.Plugin.SharedCommands
 {
     public static class SearchWeb
     {
+        private static string GetDefaultBrowserPath()
+        {
+            string name = string.Empty;
+            try
+            {
+                var regDefault = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.htm\\UserChoice", false);
+                var stringDefault = regDefault.GetValue("ProgId");
+
+                using var regKey = Registry.ClassesRoot.OpenSubKey(stringDefault + "\\shell\\open\\command", false);
+                name = regKey.GetValue(null).ToString().ToLower().Replace("" + (char)34, "");
+
+                if (!name.EndsWith("exe"))
+                    name = name.Substring(0, name.LastIndexOf(".exe") + 4);
+
+            }
+            catch
+            {
+                return string.Empty;
+            }
+
+            return name;
+        }
+
         /// <summary> 
         /// Opens search in a new browser. If no browser path is passed in then Chrome is used. 
         /// Leave browser path blank to use Chrome.
         /// </summary>
 		public static void NewBrowserWindow(this string url, string browserPath = "")
         {
+            browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
+
             var browserExecutableName = browserPath?
                                         .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
                                         .Last();
@@ -44,7 +71,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         public static void NewTabInBrowser(this string url, string browserPath = "")
         {
-            var psi = new ProcessStartInfo() { UseShellExecute = true};
+            browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
+
+
+            var psi = new ProcessStartInfo() { UseShellExecute = true };
             try
             {
                 if (!string.IsNullOrEmpty(browserPath))
