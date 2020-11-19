@@ -14,11 +14,11 @@ namespace Flow.Launcher.Plugin.SharedCommands
             string name = string.Empty;
             try
             {
-                var regDefault = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.htm\\UserChoice", false);
+                using var regDefault = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice", false);
                 var stringDefault = regDefault.GetValue("ProgId");
 
                 using var regKey = Registry.ClassesRoot.OpenSubKey(stringDefault + "\\shell\\open\\command", false);
-                name = regKey.GetValue(null).ToString().ToLower().Replace("" + (char)34, "");
+                name = regKey.GetValue(null).ToString().ToLower().Replace("\"", "");
 
                 if (!name.EndsWith("exe"))
                     name = name.Substring(0, name.LastIndexOf(".exe") + 4);
