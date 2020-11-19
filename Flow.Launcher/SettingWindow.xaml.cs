@@ -8,6 +8,7 @@ using NHotkey;
 using NHotkey.Wpf;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -276,9 +277,9 @@ namespace Flow.Launcher
             Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OpenPluginFolder(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer",$"{DataLocation.DataDirectory()}\\Themes");
+            FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
     }
 }

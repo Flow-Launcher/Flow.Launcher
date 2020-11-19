@@ -33,6 +33,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 **Integrations:**
   - If you use python plugins, install [python3](https://www.python.org/downloads/): `.exe` installer + add it to `%PATH%` or set it in flow's settings
+  - Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest)
 
 **Usage**
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey
