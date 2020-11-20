@@ -98,17 +98,17 @@ namespace Flow.Launcher.Plugin.Program.Logger
         internal static void LogException(string message, Exception e)
         {
             //Index 0 is always empty.
-            var parts = message.Split('|');
+            var parts = message.Split('|', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 4)
             {
                 var logger = LogManager.GetLogger("");
                 logger.Error(e, $"fail to log exception in program logger, parts length is too small: {parts.Length}, message: {message}");
             }
 
-            var classname = parts[1];
-            var callingMethodName = parts[2];
-            var loadingProgramPath = parts[3];
-            var interpretationMessage = parts[4];
+            var classname = parts[0];
+            var callingMethodName = parts[1];
+            var loadingProgramPath = parts[2];
+            var interpretationMessage = parts[3];
 
             LogException(classname, callingMethodName, loadingProgramPath, interpretationMessage, e);
         }

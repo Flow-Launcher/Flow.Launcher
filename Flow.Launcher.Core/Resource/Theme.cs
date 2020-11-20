@@ -21,7 +21,7 @@ namespace Flow.Launcher.Core.Resource
         private ResourceDictionary _oldResource;
         private string _oldTheme;
         public Settings Settings { get; set; }
-        private const string Folder = "Themes";
+        private const string Folder = Constant.Themes;
         private const string Extension = ".xaml";
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);

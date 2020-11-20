@@ -33,5 +33,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.png";
 
         public const string DefaultTheme = "Darker";
+
+        public const string Themes = "Themes";
     }
 }
