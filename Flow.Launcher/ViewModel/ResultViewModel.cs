@@ -20,7 +20,7 @@ namespace Flow.Launcher.ViewModel
 
 
             private readonly Action _updateCallback;
-            public T Value
+            public new T Value
             {
                 get
                 {
