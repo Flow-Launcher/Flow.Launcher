@@ -23,6 +23,7 @@ using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
 using System.Collections.Concurrent;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Threading.Tasks.Dataflow;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -49,7 +50,7 @@ namespace Flow.Launcher.ViewModel
         private bool _saved;
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
-        private BlockingCollection<ResultsForUpdate> _resultsUpdateQueue;
+        private BufferBlock<ResultsForUpdate> _resultsUpdateQueue;
 
 
         #endregion
@@ -94,10 +95,10 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        _resultsUpdateQueue.Add(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
+                        await _resultsUpdateQueue.SendAsync(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
                     }, _updateToken);
                 };
             }
@@ -105,20 +106,14 @@ namespace Flow.Launcher.ViewModel
 
         private void RegisterResultUpdate()
         {
-            _resultsUpdateQueue = new BlockingCollection<ResultsForUpdate>();
+            _resultsUpdateQueue = new BufferBlock<ResultsForUpdate>();
 
             Task.Run(async () =>
             {
-                while (true)
+                while (await _resultsUpdateQueue.OutputAvailableAsync())
                 {
-                    List<ResultsForUpdate> queue = new List<ResultsForUpdate>() { _resultsUpdateQueue.Take() };
                     await Task.Delay(30);
-
-                    while (_resultsUpdateQueue.TryTake(out var resultsForUpdate))
-                    {
-                        queue.Add(resultsForUpdate);
-                    }
-
+                    _resultsUpdateQueue.TryReceiveAll(out var queue);
                     UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
 
                 }
@@ -443,7 +438,7 @@ namespace Flow.Launcher.ViewModel
                                 if (!plugin.Metadata.Disabled)
                                 {
                                     var results = PluginManager.QueryForPlugin(plugin, query);
-                                    _resultsUpdateQueue.Add(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
+                                    _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
                                 }
                             });
                         }
