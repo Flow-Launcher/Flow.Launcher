@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-
 namespace Flow.Launcher.Plugin.SharedCommands
 {
     public static class SearchWeb
@@ -72,7 +71,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
         public static void NewTabInBrowser(this string url, string browserPath = "")
         {
             browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
-
 
             var psi = new ProcessStartInfo() { UseShellExecute = true };
             try
