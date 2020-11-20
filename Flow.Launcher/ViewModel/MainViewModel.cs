@@ -229,6 +229,7 @@ namespace Flow.Launcher.ViewModel
         public ResultsViewModel Results { get; private set; }
         public ResultsViewModel ContextMenu { get; private set; }
         public ResultsViewModel History { get; private set; }
+        private string _lastQueryText;
 
         private string _queryText;
         public string QueryText
@@ -427,8 +428,14 @@ namespace Flow.Launcher.ViewModel
                     }, currentCancellationToken);
 
                     var plugins = PluginManager.ValidPluginsForQuery(query);
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
+                        // Wait 50 millisecond for query change
+                        // if query stay the same, update the view
+                        await Task.Delay(50);
+                        if (!(_lastQuery.RawQuery == QueryText))
+                            return;
+
                         // so looping will stop once it was cancelled
                         var parallelOptions = new ParallelOptions { CancellationToken = currentCancellationToken };
                         try
