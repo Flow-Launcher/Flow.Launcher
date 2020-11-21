@@ -419,13 +419,6 @@ namespace Flow.Launcher.ViewModel
                     RemoveOldQueryResults(query);
 
                     _lastQuery = query;
-                    Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                    { // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                        if (currentUpdateSource == _updateSource && _isQueryRunning)
-                        {
-                            ProgressBarVisibility = Visibility.Visible;
-                        }
-                    }, currentCancellationToken);
 
                     var plugins = PluginManager.ValidPluginsForQuery(query);
                     Task.Run(async () =>
@@ -433,8 +426,17 @@ namespace Flow.Launcher.ViewModel
                         // Wait 45 millisecond for query change
                         // if query stay the same, update the view
                         await Task.Delay(45);
-                        if (!(_lastQuery.RawQuery == QueryText))
+                        if (!(_lastQuery.Search == query.Search))
                             return;
+
+                        _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                        { 
+                            // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                            if (currentUpdateSource == _updateSource && _isQueryRunning)
+                            {
+                                ProgressBarVisibility = Visibility.Visible;
+                            }
+                        }, currentCancellationToken);
 
                         // so looping will stop once it was cancelled
                         var parallelOptions = new ParallelOptions { CancellationToken = currentCancellationToken };
