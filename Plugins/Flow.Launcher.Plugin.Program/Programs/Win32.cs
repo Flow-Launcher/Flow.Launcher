@@ -8,13 +8,13 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
-using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Windows.UI.Core;
 using NLog.Filters;
 using System.Text.RegularExpressions;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -187,41 +187,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var program = Win32Program(path);
             try
             {
-                var link = new ShellLink();
-                const uint STGM_READ = 0;
-                ((IPersistFile)link).Load(path, STGM_READ);
-                var hwnd = new _RemotableHandle();
-                link.Resolve(ref hwnd, 0);
-
-                const int MAX_PATH = 260;
-                StringBuilder buffer = new StringBuilder(MAX_PATH);
-
-                var data = new _WIN32_FIND_DATAW();
-                const uint SLGP_SHORTPATH = 1;
-                link.GetPath(buffer, buffer.Capacity, ref data, SLGP_SHORTPATH);
-                var target = buffer.ToString();
-                if (!string.IsNullOrEmpty(target))
-                {
-                    var extension = Extension(target);
-                    if (extension == ExeExtension && File.Exists(target))
-                    {
-                        buffer = new StringBuilder(MAX_PATH);
-                        link.GetDescription(buffer, MAX_PATH);
-                        var description = buffer.ToString();
-                        if (!string.IsNullOrEmpty(description))
-                        {
-                            program.Description = description;
-                        }
-                        else
-                        {
-                            var info = FileVersionInfo.GetVersionInfo(target);
-                            if (!string.IsNullOrEmpty(info.FileDescription))
-                            {
-                                program.Description = info.FileDescription;
-                            }
-                        }
-                    }
-                }
+                var link = ShellObject.FromParsingName(path) as ShellLink;
+                program.Name = link.Name;
+                program.ExecutableName = link.Path;
+                var comments = link.Comments;
+                program.Description = string.IsNullOrEmpty(comments) ? string.Empty : comments;
                 return program;
             }
             catch (COMException e)
