@@ -112,7 +112,7 @@ namespace Flow.Launcher.ViewModel
             {
                 while (await _resultsUpdateQueue.OutputAvailableAsync())
                 {
-                    await Task.Delay(30);
+                    await Task.Delay(20);
                     _resultsUpdateQueue.TryReceiveAll(out var queue);
                     UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
 
@@ -430,9 +430,9 @@ namespace Flow.Launcher.ViewModel
                     var plugins = PluginManager.ValidPluginsForQuery(query);
                     Task.Run(async () =>
                     {
-                        // Wait 50 millisecond for query change
+                        // Wait 45 millisecond for query change
                         // if query stay the same, update the view
-                        await Task.Delay(50);
+                        await Task.Delay(45);
                         if (!(_lastQuery.RawQuery == QueryText))
                             return;
 
