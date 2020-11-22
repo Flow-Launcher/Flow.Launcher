@@ -131,7 +131,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                         ? $"/select,\"{FullPath}\""
                                         : Settings.ExplorerArgs;
 
-                        Main.StartProcess(Process.Start, 
+                        Main.StartProcess(Process.Start,
                                             new ProcessStartInfo(
                                                 !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer)
                                                 ? Main._settings.CustomizedExplorer
@@ -267,10 +267,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return new string[] { };
             try
             {
-                var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+                var paths = Directory.EnumerateFiles(directory, "*", new EnumerationOptions
+                                                        {
+                                                            IgnoreInaccessible = true,
+                                                            RecurseSubdirectories = true
+                                                        })
                                      .Where(x => suffixes.Contains(Extension(x)));
-                return paths;
 
+                return paths;
             }
             catch (DirectoryNotFoundException e)
             {
