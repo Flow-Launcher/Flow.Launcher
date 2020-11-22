@@ -41,9 +41,9 @@ namespace Flow.Launcher.Core.Plugin
                 {
 
 #if DEBUG
-                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(metadata.ExecuteFilePath);
-                    var types = assembly.GetTypes();
-                    var type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
+                    var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                    var assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                    var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly, typeof(IPlugin));
                     var plugin = (IPlugin)Activator.CreateInstance(type);
 #else
                     Assembly assembly = null;
@@ -51,10 +51,10 @@ namespace Flow.Launcher.Core.Plugin
 
                     try
                     {
-                        assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(metadata.ExecuteFilePath);
+                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                        assembly = assemblyLoader.LoadAssemblyAndDependencies();
 
-                        var types = assembly.GetTypes();
-                        var type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
+                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly, typeof(IPlugin));
 
                         plugin = (IPlugin)Activator.CreateInstance(type);
                     }
