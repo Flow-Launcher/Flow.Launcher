@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Microsoft.WindowsAPICodePack.Shell;
 
 namespace Flow.Launcher.Infrastructure.Image
@@ -170,13 +171,17 @@ namespace Flow.Launcher.Infrastructure.Image
             else if (File.Exists(path))
             {
                 var extension = Path.GetExtension(path).ToLower();
-                if (ImageExtensions.Contains(extension))
+
+                var fullPath = Path.GetFullPath(path);
+                var imageFromFlow = path.StartsWith(Constant.ProgramDirectory) || path.StartsWith(DataLocation.DataDirectory());
+
+                if (imageFromFlow && ImageExtensions.Contains(extension))
                 {
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
                         image = new BitmapImage(new Uri(path));
-                        
+
                     }
                     else
                     {
@@ -187,8 +192,8 @@ namespace Flow.Launcher.Infrastructure.Image
                          */
                         image = new BitmapImage(new Uri(path))
                         {
-                            DecodePixelHeight = 48,
-                            DecodePixelWidth = 48
+                            DecodePixelHeight = 32,
+                            DecodePixelWidth = 32
                         };
 
                     }
