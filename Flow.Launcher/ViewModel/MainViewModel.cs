@@ -79,9 +79,10 @@ namespace Flow.Launcher.ViewModel
             _selectedResults = Results;
 
             InitializeKeyCommands();
-            RegisterResultsUpdatedEvent();
 
             RegisterResultUpdate();
+            RegisterResultsUpdatedEvent();
+
 
             SetHotkey(_settings.Hotkey, OnHotkey);
             SetCustomPluginHotkey();
@@ -423,11 +424,14 @@ namespace Flow.Launcher.ViewModel
                     var plugins = PluginManager.ValidPluginsForQuery(query);
                     Task.Run(async () =>
                     {
-                        // Wait 45 millisecond for query change
-                        // if query stay the same, update the view
-                        await Task.Delay(45);
-                        if (!(_lastQuery.Search == query.Search))
-                            return;
+                        if (plugins.Count > 1)
+                        {
+                            // Wait 45 millisecond for query change in global query
+                            // if query changes, return so that it won't be calculated
+                            await Task.Delay(45);
+                            if (!(_lastQuery.Search == query.Search))
+                                return;
+                        }
 
                         _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
                         { 
