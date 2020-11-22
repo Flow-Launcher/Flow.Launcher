@@ -229,7 +229,7 @@ namespace Flow.Launcher
                     var uri = new Uri(website);
                     if (Uri.CheckSchemeName(uri.Scheme))
                     {
-                        SearchWeb.NewBrowserWindow(website);
+                        SearchWeb.NewTabInBrowser(website);
                     }
                 }
             }
@@ -263,7 +263,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            SearchWeb.NewBrowserWindow(e.Uri.AbsoluteUri);
+            SearchWeb.NewTabInBrowser(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
