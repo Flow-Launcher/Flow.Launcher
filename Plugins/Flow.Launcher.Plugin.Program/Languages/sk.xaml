@@ -40,7 +40,12 @@
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Vyhľadávanie programov vo Flow Launcheri</system:String>
 	
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Neplatná cesta</system:String>
-    
+
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Vlastný správca súborov</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Arg.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Môžete si prispôsobiť otváranie umiestnenia priečinka vložením Premenných prostredia, ktoré chcete použiť. Dostupnosť premenných prostredia môžete vyskúšať cez príkazový riadok.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadajte argumenty, ktoré chcete pridať pre správcu súborov. %s pre rodičovský priečinok, %f pre celú cestu (funguje iba pre win32). Pre podrobnosti pozrite webovú stránku správcu súborov.</system:String>
+	
     <!--Dialogs-->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspešné</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Úspešne zakázané zobrazovanie tohto programu vo výsledkoch vyhľadávania</system:String>

@@ -12,5 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Použiť podľa systému</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Čiarka (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Bodka (.)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Max. desatinných miest</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Desatinné miesta</system:String>
 </ResourceDictionary>
