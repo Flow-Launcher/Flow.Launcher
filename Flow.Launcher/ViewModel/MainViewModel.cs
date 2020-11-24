@@ -434,7 +434,7 @@ namespace Flow.Launcher.ViewModel
                         }
 
                         _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                        { 
+                        {
                             // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                             if (currentUpdateSource == _updateSource && _isQueryRunning)
                             {
@@ -442,24 +442,13 @@ namespace Flow.Launcher.ViewModel
                             }
                         }, currentCancellationToken);
 
-                        // so looping will stop once it was cancelled
-                        var parallelOptions = new ParallelOptions { CancellationToken = currentCancellationToken };
-                        try
-                        {
-                            Parallel.ForEach(plugins, parallelOptions, plugin =>
+                        await Task.WhenAll(
+                            plugins.Select(async plugin =>
                             {
-                                if (!plugin.Metadata.Disabled)
-                                {
-                                    var results = PluginManager.QueryForPlugin(plugin, query);
-                                    _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
-                                }
-                            });
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            // nothing to do here
-                        }
-
+                                var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
+                                _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
+                            })
+                        );
 
                         // this should happen once after all queries are done so progress bar should continue
                         // until the end of all querying

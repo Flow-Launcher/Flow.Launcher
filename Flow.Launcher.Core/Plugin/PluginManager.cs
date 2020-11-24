@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
@@ -54,7 +55,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static void ReloadData()
         {
-            foreach(var plugin in AllPlugins)
+            foreach (var plugin in AllPlugins)
             {
                 var reloadablePlugin = plugin.Plugin as IReloadable;
                 reloadablePlugin?.ReloadData();
@@ -108,7 +109,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    pair.Metadata.Disabled = true; 
+                    pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
             });
@@ -151,17 +152,17 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static List<Result> QueryForPlugin(PluginPair pair, Query query)
+        public async static Task<List<Result>> QueryForPlugin(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             try
             {
                 var metadata = pair.Metadata;
-                var milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}", () =>
-                {
-                    results = pair.Plugin.Query(query) ?? new List<Result>();
-                    UpdatePluginMetadata(results, metadata, query);
-                });
+                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}", async () =>
+                 {
+                     results = await pair.Plugin.QueryAsync(query, token) ?? new List<Result>();
+                     UpdatePluginMetadata(results, metadata, query);
+                 });
                 metadata.QueryCount += 1;
                 metadata.AvgQueryTime = metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
             }
@@ -273,10 +274,10 @@ namespace Flow.Launcher.Core.Plugin
             {
                 GlobalPlugins.Remove(plugin);
             }
-            
+
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
-            
+
 
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
         }
