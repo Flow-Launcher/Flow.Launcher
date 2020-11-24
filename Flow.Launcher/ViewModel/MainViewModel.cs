@@ -449,7 +449,8 @@ namespace Flow.Launcher.ViewModel
                                 if (!plugin.Metadata.Disabled)
                                 {
                                     var results = PluginManager.QueryForPlugin(plugin, query);
-                                    _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
+                                    if (!currentCancellationToken.IsCancellationRequested)
+                                        _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
                                 }
                             });
                         }
