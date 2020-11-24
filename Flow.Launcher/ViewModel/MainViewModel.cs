@@ -96,11 +96,9 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    Task.Run(async () =>
-                    {
-                        PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        await _resultsUpdateQueue.SendAsync(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
-                    }, _updateToken);
+                    PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
+                    if (e.Query.Search == _lastQuery.Search)
+                        _resultsUpdateQueue.Post(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
                 };
             }
         }
@@ -428,13 +426,13 @@ namespace Flow.Launcher.ViewModel
                         {
                             // Wait 45 millisecond for query change in global query
                             // if query changes, return so that it won't be calculated
-                            await Task.Delay(45);
+                            await Task.Delay(45, currentCancellationToken);
                             if (!(_lastQuery.Search == query.Search))
                                 return;
                         }
 
                         _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                        { 
+                        {
                             // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                             if (currentUpdateSource == _updateSource && _isQueryRunning)
                             {
