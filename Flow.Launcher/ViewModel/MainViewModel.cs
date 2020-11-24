@@ -404,6 +404,8 @@ namespace Flow.Launcher.ViewModel
             if (!string.IsNullOrEmpty(QueryText))
             {
                 _updateSource?.Cancel();
+                _updateSource?.Dispose();
+
                 var currentUpdateSource = new CancellationTokenSource();
                 _updateSource = currentUpdateSource;
                 var currentCancellationToken = _updateSource.Token;
@@ -427,14 +429,14 @@ namespace Flow.Launcher.ViewModel
                             // Wait 45 millisecond for query change in global query
                             // if query changes, return so that it won't be calculated
                             await Task.Delay(45, currentCancellationToken);
-                            if (!(_lastQuery.Search == query.Search))
+                            if (currentCancellationToken.IsCancellationRequested)
                                 return;
                         }
 
                         _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
                         {
                             // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                            if (currentUpdateSource == _updateSource && _isQueryRunning)
+                            if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
                             {
                                 ProgressBarVisibility = Visibility.Visible;
                             }
@@ -463,7 +465,7 @@ namespace Flow.Launcher.ViewModel
                         // this should happen once after all queries are done so progress bar should continue
                         // until the end of all querying
                         _isQueryRunning = false;
-                        if (currentUpdateSource == _updateSource)
+                        if (!currentCancellationToken.IsCancellationRequested)
                         { // update to hidden if this is still the current query
                             ProgressBarVisibility = Visibility.Hidden;
                         }
