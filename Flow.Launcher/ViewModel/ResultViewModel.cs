@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
@@ -18,7 +17,6 @@ namespace Flow.Launcher.ViewModel
         {
             private T defaultValue;
 
-
             private readonly Action _updateCallback;
             public new T Value
             {
@@ -30,13 +28,14 @@ namespace Flow.Launcher.ViewModel
                         {
                             _updateCallback();
                         });
+
                         return defaultValue;
                     }
-                    else if (!base.Value.IsCompleted)
-                    {
+                    
+                    if (!base.Value.IsCompleted || base.Value.IsFaulted)
                         return defaultValue;
-                    }
-                    else return base.Value.Result;
+
+                    return base.Value.Result;
                 }
             }
             public LazyAsync(Func<Task<T>> factory, T defaultValue, Action updateCallback) : base(factory)
@@ -45,8 +44,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     this.defaultValue = defaultValue;
                 }
+
                 _updateCallback = updateCallback;
-                
             }
         }
 
@@ -55,10 +54,14 @@ namespace Flow.Launcher.ViewModel
             if (result != null)
             {
                 Result = result;
-                Image = new LazyAsync<ImageSource>(SetImage, ImageLoader.DefaultImage, () =>
-                    {
-                        OnPropertyChanged(nameof(Image));
-                    });
+
+                Image = new LazyAsync<ImageSource>(
+                            SetImage, 
+                            ImageLoader.DefaultImage,
+                            () =>
+                                {
+                                    OnPropertyChanged(nameof(Image));
+                                });
             }
 
             Settings = settings;
@@ -97,13 +100,17 @@ namespace Flow.Launcher.ViewModel
             }
 
             if (ImageLoader.CacheContainImage(imagePath))
+            {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
                 return ImageLoader.Load(imagePath);
             else
             {
                 return await Task.Run(() => ImageLoader.Load(imagePath));
             }
-
+            else
+            {
+                return await Task.Run(() => ImageLoader.Load(imagePath));
+            }
         }
 
         public Result Result { get; }
@@ -131,6 +138,5 @@ namespace Flow.Launcher.ViewModel
         {
             return Result.ToString();
         }
-
     }
 }
