@@ -100,17 +100,10 @@ namespace Flow.Launcher.ViewModel
             }
 
             if (ImageLoader.CacheContainImage(imagePath))
-            {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
                 return ImageLoader.Load(imagePath);
-            else
-            {
-                return await Task.Run(() => ImageLoader.Load(imagePath));
-            }
-            else
-            {
-                return await Task.Run(() => ImageLoader.Load(imagePath));
-            }
+            
+            return await Task.Run(() => ImageLoader.Load(imagePath));
         }
 
         public Result Result { get; }
