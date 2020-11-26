@@ -66,9 +66,10 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
 
-
                     foreach (var key in Data.Where(x => x.Key != Constant.MissingImgIcon)
-                        .OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
+                                            .OrderBy(x => x.Value.usage)
+                                            .Take(Data.Count - MaxCached)
+                                            .Select(x => x.Key))
                     {
                         if (!(key.Equals(Constant.ErrorIcon) || key.Equals(Constant.DefaultIcon)))
                         {
@@ -98,5 +99,4 @@ namespace Flow.Launcher.Infrastructure.Image
             return Data.Values.Select(x => x.imageSource).Distinct().Count();
         }
     }
-
 }
