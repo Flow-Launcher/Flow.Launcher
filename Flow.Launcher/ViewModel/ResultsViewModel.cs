@@ -144,11 +144,10 @@ namespace Flow.Launcher.ViewModel
             {
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
                 // fix selected index flow
-                if (Results.Count > 0)
-                    SelectedIndex = 0;
 
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults);
+                SelectedItem = newResults[0];
             }
 
             if (Visbility != Visibility.Visible && Results.Count > 0)
@@ -176,9 +175,11 @@ namespace Flow.Launcher.ViewModel
             {
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
                 // fix selected index flow
-                SelectedIndex = 0;
 
                 Results.Update(newResults, token);
+                SelectedItem = newResults[0];
+
+
             }
 
             switch (Visbility)
@@ -317,13 +318,6 @@ namespace Flow.Launcher.ViewModel
             {
                 if (editTime == 0)
                 {
-                    AddRange(newItems);
-                    editTime++;
-                    return;
-                }
-                else if (editTime < 15 || newItems.Count < 50)
-                {
-                    ClearItems();
                     AddRange(newItems);
                     editTime++;
                     return;
