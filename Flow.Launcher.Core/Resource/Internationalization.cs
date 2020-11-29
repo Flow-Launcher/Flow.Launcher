@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using Flow.Launcher;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
@@ -88,7 +89,6 @@ namespace Flow.Launcher.Core.Resource
         {
             language = language.NonNull();
 
-            Settings.Language = language.LanguageCode;
 
             RemoveOldLanguageFiles();
             if (language != AvailableLanguages.English)
@@ -96,6 +96,7 @@ namespace Flow.Launcher.Core.Resource
                 LoadLanguage(language);
             }
             UpdatePluginMetadataTranslations();
+            Settings.Language = language.LanguageCode;
 
         }
 

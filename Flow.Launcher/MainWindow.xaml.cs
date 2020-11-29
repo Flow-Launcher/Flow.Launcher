@@ -52,11 +52,12 @@ namespace Flow.Launcher
 
         private void OnInitialized(object sender, EventArgs e)
         {
-            // show notify icon when flowlauncher is hided
+            
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
 
             // todo is there a way to set blur only once?
@@ -88,11 +89,19 @@ namespace Flow.Launcher
             };
             _settings.PropertyChanged += (o, e) =>
             {
-                if (e.PropertyName == nameof(Settings.HideNotifyIcon))
+                switch (e.PropertyName)
                 {
-                    _notifyIcon.Visible = !_settings.HideNotifyIcon;
+                    case nameof(Settings.HideNotifyIcon):
+                        _notifyIcon.Visible = !_settings.HideNotifyIcon;
+                        break;
+                    case nameof(Settings.Language):
+                        UpdateNotifyIconText();
+                        break;
                 }
             };
+
+            
+
             InitializePosition();
         }
 
@@ -102,6 +111,18 @@ namespace Flow.Launcher
             Left = WindowLeft();
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left;
+        }
+
+        private void UpdateNotifyIconText()
+        {
+            var menu = _notifyIcon.ContextMenuStrip;
+            var open = menu.Items[0];
+            var setting = menu.Items[1];
+            var exit = menu.Items[2];
+
+            open.Text = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
+            setting.Text = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            exit.Text = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
