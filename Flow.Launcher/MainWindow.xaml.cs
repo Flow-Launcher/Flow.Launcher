@@ -53,11 +53,12 @@ namespace Flow.Launcher
         private void OnInitialized(object sender, EventArgs e)
         {
             // show notify icon when flowlauncher is hided
-            InitializeNotifyIcon();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            InitializeNotifyIcon();
+
             // todo is there a way to set blur only once?
             ThemeManager.Instance.SetBlurForWindow();
             WindowsInteropHelper.DisableControlBox(this);
