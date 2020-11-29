@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Microsoft.FSharp.Control;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -177,6 +178,8 @@ namespace Flow.Launcher.ViewModel
                 // fix selected index flow
 
                 Results.Update(newResults, token);
+                if (token.IsCancellationRequested)
+                    return;
                 SelectedItem = newResults[0];
 
 
@@ -262,35 +265,33 @@ namespace Flow.Launcher.ViewModel
         }
         #endregion
 
-        public class ResultCollection : ObservableCollection<ResultViewModel>
+        public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
         {
-            private bool _suppressNotification = false;
+
+            public event NotifyCollectionChangedEventHandler CollectionChanged;
 
             private long editTime = 0;
 
+
             // https://peteohanlon.wordpress.com/2008/10/22/bulk-loading-in-observablecollection/
-            protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+            protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
-                if (!_suppressNotification)
-                    base.OnCollectionChanged(e);
+                if (CollectionChanged != null && CollectionChanged.GetInvocationList().Length == 1)
+                    CollectionChanged.Invoke(this, e);
             }
 
-            public void BulkAddRange(IEnumerable<ResultViewModel> resultViews)
+            public void BulkAddRange(IEnumerable<ResultViewModel> resultViews, CancellationToken? token)
             {
-                _suppressNotification = true;
-                foreach (var item in resultViews)
-                {
-                    Add(item);
-                }
-                _suppressNotification = false;
+                AddRange(resultViews);
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-
             }
-            public void AddRange(IEnumerable<ResultViewModel> Items)
+            public void AddAll(IEnumerable<ResultViewModel> Items, CancellationToken? token)
             {
                 foreach (var item in Items)
                 {
+                    if (token?.IsCancellationRequested ?? false) return;
                     Add(item);
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
                 }
 
                 // wpf use directx / double buffered already, so just reset all won't cause ui flickering
@@ -299,33 +300,34 @@ namespace Flow.Launcher.ViewModel
             }
             public void RemoveAll()
             {
-                ClearItems();
+                Clear();
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
 
             /// <summary>
             /// Update the results collection with new results, try to keep identical results
             /// </summary>
-            /// <param name="newItems"></param>
-            public void Update(List<ResultViewModel> newItems, CancellationToken token)
+            /// <param name="newItems">New Items to add into the list view</param>
+            /// <param name="token">Cancellation Token</param>
+            public void Update(List<ResultViewModel> newItems, CancellationToken? token = null)
             {
-
-                if (token.IsCancellationRequested)
+                if (newItems.Count == 0 || (token?.IsCancellationRequested ?? false))
                     return;
-                Update(newItems);
-            }
+                
 
-            public void Update(List<ResultViewModel> newItems)
-            {
-                if (editTime == 0)
+                if (editTime < 5 || newItems.Count < 30)
                 {
-                    AddRange(newItems);
+                    if (Count > 0) RemoveAll();
+                    if (token?.IsCancellationRequested ?? false) return;
+                    AddAll(newItems, token);
                     editTime++;
-                    return;
                 }
-                Clear();
-
-                BulkAddRange(newItems);
-                editTime++;
+                else
+                {
+                    Clear();
+                    BulkAddRange(newItems, token);
+                    editTime++;
+                }
 
             }
         }
