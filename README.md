@@ -17,7 +17,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
-- Search for file contents
+- Search for file contents.
 - Support search using environment variable paths
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
@@ -26,20 +26,24 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 ## Running Flow Launcher
 
-| [Windows 7 and up](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
-| ------------- |
+| [Windows 7 and up](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) |
+| ---------------------------------------------------------------------------------- |
 
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
-**Integrations:**
-  - If you use python plugins, install [python3](https://www.python.org/downloads/): `.exe` installer + add it to `%PATH%` or set it in flow's settings
-  - Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest)
+**Integrations**
+  - If you use Python plugins:
+    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
+    - Add Python to `%PATH%` or set it in flow's settings.
+    - Use `pip` to install `flowlauncher`, cmd in `pip install flowlauncher`.
+    - Start to launch your Python plugins.
+  - Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest).
 
 **Usage**
-- Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey
-- Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>
-- Cancel/Return to previous screen: <kbd>Esc</kbd>
-- Install/Uninstall plugins: in the search window, type `wpm install/uninstall` + the plugin name
+- Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
+- Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
+- Cancel/Return to previous screen: <kbd>Esc</kbd>.
+- Install/Uninstall plugins: in the search window, type `wpm install/uninstall` + the plugin name.
 - Saved user settings are located:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
