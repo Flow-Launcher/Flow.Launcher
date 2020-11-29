@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Flow.Launcher;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;

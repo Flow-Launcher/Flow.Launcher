@@ -100,8 +100,6 @@ namespace Flow.Launcher
                 }
             };
 
-            
-
             InitializePosition();
         }
 
@@ -200,7 +198,6 @@ namespace Flow.Launcher
                 }
             }
         }
-
 
         private void OnDrop(object sender, DragEventArgs e)
         {
@@ -316,7 +313,5 @@ namespace Flow.Launcher
                 _viewModel.QueryTextCursorMovedToEnd = false;
             }
         }
-
-
     }
 }
