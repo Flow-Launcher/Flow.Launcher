@@ -53,8 +53,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 Settings.SearchActionKeyword = newActionKeyword;
         }
 
-        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
-
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
     }
 }

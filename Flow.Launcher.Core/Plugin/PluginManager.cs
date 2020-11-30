@@ -243,11 +243,6 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
-        public static bool ActionKeywordRegistered(string actionKeyword)
-        {
-            return actionKeyword != Query.GlobalPluginWildcardSign
-                && NonGlobalPlugins.ContainsKey(actionKeyword);
-        }
 
         /// <summary>
         /// used to add action keyword for multiple action keyword plugin

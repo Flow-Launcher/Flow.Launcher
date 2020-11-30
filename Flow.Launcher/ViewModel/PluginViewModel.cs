@@ -34,6 +34,5 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
-        public bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
     }
 }

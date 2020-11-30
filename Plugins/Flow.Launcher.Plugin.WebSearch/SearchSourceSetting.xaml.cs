@@ -20,13 +20,13 @@ namespace Flow.Launcher.Plugin.WebSearch
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
         {
             _oldSearchSource = old;
-            _viewModel = new SearchSourceViewModel {SearchSource = old.DeepCopy()};
+            _viewModel = new SearchSourceViewModel { SearchSource = old.DeepCopy() };
             Initilize(sources, context, Action.Edit);
         }
 
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context)
         {
-            _viewModel = new SearchSourceViewModel {SearchSource = new SearchSource()};
+            _viewModel = new SearchSourceViewModel { SearchSource = new SearchSource() };
             Initilize(sources, context, Action.Add);
         }
 
@@ -80,41 +80,26 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void AddSearchSource()
         {
             var keyword = _searchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(keyword))
-            {
-                var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.AddActionKeyword(id, keyword);
+            var id = _context.CurrentPluginMetadata.ID;
+            PluginManager.AddActionKeyword(id, keyword);
 
-                _searchSources.Add(_searchSource);
+            _searchSources.Add(_searchSource);
 
-                Close();
-            }
-            else
-            {
-                var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
-            }
+            Close();
         }
 
         private void EditSearchSource()
         {
             var newKeyword = _searchSource.ActionKeyword;
             var oldKeyword = _oldSearchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(newKeyword) || oldKeyword == newKeyword)
-            {
-                var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+            var id = _context.CurrentPluginMetadata.ID;
+            PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
 
-                var index = _searchSources.IndexOf(_oldSearchSource);
-                _searchSources[index] = _searchSource;
+            var index = _searchSources.IndexOf(_oldSearchSource);
+            _searchSources[index] = _searchSource;
 
-                Close();
-            }
-            else
-            {
-                var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
-            }
+            Close();
+
 
             if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
             {
@@ -128,7 +113,7 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
-            var dialog = new OpenFileDialog {InitialDirectory = Main.CustomImagesDirectory, Filter = filter};
+            var dialog = new OpenFileDialog { InitialDirectory = Main.CustomImagesDirectory, Filter = filter };
 
             var result = dialog.ShowDialog();
             if (result == true)
@@ -139,7 +124,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 {
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
                         MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
-                    
+
                     imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(selectedNewIconImageFullPath);
                 }
             }

@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             txtCurrentActionKeyword.Text = selectedActionKeyword.Keyword;
 
-            this.actionKeywordListView = actionKeywordListView; 
+            this.actionKeywordListView = actionKeywordListView;
         }
 
         private void OnConfirmButtonClick(object sender, RoutedEventArgs e)
@@ -52,27 +52,23 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 return;
             }
 
-            if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword) 
-                && currentActionKeyword.Description 
+            if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword)
+                && currentActionKeyword.Description
                     == settingsViewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"))
             {
                 MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
 
                 return;
             }
-            
-            if (!settingsViewModel.IsActionKeywordAlreadyAssigned(newActionKeyword))
-            {
-                settingsViewModel.UpdateActionKeyword(newActionKeyword, currentActionKeyword.Keyword);
 
-                actionKeywordListView.Where(x => x.Description == currentActionKeyword.Description).FirstOrDefault().Keyword = newActionKeyword;
 
-                Close();
+            settingsViewModel.UpdateActionKeyword(newActionKeyword, currentActionKeyword.Keyword);
 
-                return;
-            }
+            actionKeywordListView.Where(x => x.Description == currentActionKeyword.Description).FirstOrDefault().Keyword = newActionKeyword;
 
-            MessageBox.Show(settingsViewModel.Context.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
+            Close();
+
+            return;
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
