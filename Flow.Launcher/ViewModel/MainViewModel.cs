@@ -450,18 +450,18 @@ namespace Flow.Launcher.ViewModel
             {
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Metadata);
+                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Select(p=>p.Metadata));
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(keyword))
                 {
-                    Results.RemoveResultsFor(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
+                    Results.RemoveResultsFor(PluginManager.NonGlobalPlugins[lastKeyword].Select(p => p.Metadata));
                 }
                 else if (lastKeyword != keyword)
                 {
-                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Metadata);
+                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Select(p => p.Metadata));
                 }
             }
         }

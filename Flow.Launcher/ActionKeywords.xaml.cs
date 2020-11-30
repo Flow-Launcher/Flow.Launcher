@@ -44,16 +44,9 @@ namespace Flow.Launcher
             var oldActionKeyword = plugin.Metadata.ActionKeywords[0];
             var newActionKeyword = tbAction.Text.Trim();
             newActionKeyword = newActionKeyword.Length > 0 ? newActionKeyword : "*";
-            if (!pluginViewModel.IsActionKeywordRegistered(newActionKeyword))
-            {
-                pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);
-                Close();
-            }
-            else
-            {
-                string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(msg);
-            }
+            pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);
+            Close();
+
         }
     }
 }

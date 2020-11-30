@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.PluginIndicator
@@ -12,7 +13,9 @@ namespace Flow.Launcher.Plugin.PluginIndicator
         {
             var results = from keyword in PluginManager.NonGlobalPlugins.Keys
                           where keyword.StartsWith(query.Terms[0])
-                          let metadata = PluginManager.NonGlobalPlugins[keyword].Metadata
+                          from metadata in 
+                              from plugin in PluginManager.NonGlobalPlugins[keyword]
+                              select plugin.Metadata
                           where !metadata.Disabled
                           select new Result
                           {

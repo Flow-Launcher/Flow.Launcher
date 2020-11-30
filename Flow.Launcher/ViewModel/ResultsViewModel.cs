@@ -119,14 +119,16 @@ namespace Flow.Launcher.ViewModel
             Results.Clear();
         }
 
-        public void RemoveResultsExcept(PluginMetadata metadata)
+        public void RemoveResultsExcept(IEnumerable<PluginMetadata> metadatas)
         {
-            Results.RemoveAll(r => r.Result.PluginID != metadata.ID);
+            var ids = metadatas.Select(m => m.ID).ToHashSet();
+            Results.RemoveAll(r => !ids.Contains(r.Result.PluginID));
         }
 
-        public void RemoveResultsFor(PluginMetadata metadata)
+        public void RemoveResultsFor(IEnumerable<PluginMetadata> metadatas)
         {
-            Results.RemoveAll(r => r.Result.PluginID == metadata.ID);
+            var ids = metadatas.Select(m => m.ID).ToHashSet();
+            Results.RemoveAll(r => ids.Contains(r.Result.PluginID));
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Microsoft.AspNetCore.Routing;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -21,7 +22,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly List<PluginPair> GlobalPlugins = new List<PluginPair>();
-        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new Dictionary<string, PluginPair>();
+        public static readonly Dictionary<string, List<PluginPair>> NonGlobalPlugins = new Dictionary<string, List<PluginPair>>();
 
         public static IPublicAPI API { private set; get; }
 
@@ -54,7 +55,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static void ReloadData()
         {
-            foreach(var plugin in AllPlugins)
+            foreach (var plugin in AllPlugins)
             {
                 var reloadablePlugin = plugin.Plugin as IReloadable;
                 reloadablePlugin?.ReloadData();
@@ -108,7 +109,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    pair.Metadata.Disabled = true; 
+                    pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
             });
@@ -123,7 +124,17 @@ namespace Flow.Launcher.Core.Plugin
                 plugin.Metadata.ActionKeywords
                     .Where(x => x != Query.GlobalPluginWildcardSign)
                     .ToList()
-                    .ForEach(x => NonGlobalPlugins[x] = plugin);
+                    .ForEach(x =>
+                    {
+                        if (NonGlobalPlugins.ContainsKey(x))
+                        {
+                            NonGlobalPlugins[x].Add(plugin);
+                        }
+                        else
+                        {
+                            NonGlobalPlugins[x] = new List<PluginPair> { plugin };
+                        }
+                    });
             }
 
             if (failedPlugins.Any())
@@ -142,8 +153,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
             {
-                var plugin = NonGlobalPlugins[query.ActionKeyword];
-                return new List<PluginPair> { plugin };
+                return NonGlobalPlugins[query.ActionKeyword];
             }
             else
             {
@@ -252,7 +262,14 @@ namespace Flow.Launcher.Core.Plugin
             }
             else
             {
-                NonGlobalPlugins[newActionKeyword] = plugin;
+                if (NonGlobalPlugins.ContainsKey(newActionKeyword))
+                {
+                    NonGlobalPlugins[newActionKeyword].Add(plugin);
+                }
+                else
+                {
+                    NonGlobalPlugins[newActionKeyword] = new List<PluginPair> { plugin };
+                }
             }
             plugin.Metadata.ActionKeywords.Add(newActionKeyword);
         }
@@ -268,15 +285,17 @@ namespace Flow.Launcher.Core.Plugin
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
                                     .Where(x => x == Query.GlobalPluginWildcardSign)
-                                    .ToList()
-                                    .Count == 1)
+                                    .Count() == 1)
             {
                 GlobalPlugins.Remove(plugin);
             }
-            
-            if (oldActionkeyword != Query.GlobalPluginWildcardSign)
-                NonGlobalPlugins.Remove(oldActionkeyword);
-            
+
+            if (oldActionkeyword != Query.GlobalPluginWildcardSign
+                && plugin.Metadata.ActionKeywords.Where(x => x == oldActionkeyword).Count() == 1)
+            {
+                NonGlobalPlugins[oldActionkeyword].Remove(plugin);
+            }
+
 
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
         }

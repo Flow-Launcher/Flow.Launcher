@@ -7,7 +7,7 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class QueryBuilder
     {
-        public static Query Build(string text, Dictionary<string, PluginPair> nonGlobalPlugins)
+        public static Query Build(string text, Dictionary<string, List<PluginPair>> nonGlobalPlugins)
         {
             // replace multiple white spaces with one white space
             var terms = text.Split(new[] { Query.TermSeperater }, StringSplitOptions.RemoveEmptyEntries);
@@ -20,7 +20,8 @@ namespace Flow.Launcher.Core.Plugin
             string actionKeyword, search;
             string possibleActionKeyword = terms[0];
             List<string> actionParameters;
-            if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPair) && !pluginPair.Metadata.Disabled)
+            if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPairs)
+                && pluginPairs.Any(pluginPair => !pluginPair.Metadata.Disabled))
             { // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
                 actionParameters = terms.Skip(1).ToList();
