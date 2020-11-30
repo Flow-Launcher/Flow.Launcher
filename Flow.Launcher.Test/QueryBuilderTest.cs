@@ -10,9 +10,9 @@ namespace Flow.Launcher.Test
         [Test]
         public void ExclusivePluginQueryTest()
         {
-            var nonGlobalPlugins = new Dictionary<string, PluginPair>
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>
             {
-                {">", new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}}}}
+                {">", new List<PluginPair>{ new PluginPair {Metadata = new PluginMetadata { ActionKeywords = new List<string> { ">" } } }}}
             };
 
             Query q = QueryBuilder.Build(">   file.txt    file2 file3", nonGlobalPlugins);
@@ -24,9 +24,9 @@ namespace Flow.Launcher.Test
         [Test]
         public void ExclusivePluginQueryIgnoreDisabledTest()
         {
-            var nonGlobalPlugins = new Dictionary<string, PluginPair>
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>
             {
-                {">", new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}, Disabled = true}}}
+                {">", new List<PluginPair>{new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}, Disabled = true}} } }
             };
 
             Query q = QueryBuilder.Build(">   file.txt    file2 file3", nonGlobalPlugins);
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Test
         [Test]
         public void GenericPluginQueryTest()
         {
-            Query q = QueryBuilder.Build("file.txt file2 file3", new Dictionary<string, PluginPair>());
+            Query q = QueryBuilder.Build("file.txt file2 file3", new Dictionary<string, List<PluginPair>>());
 
             Assert.AreEqual("file.txt file2 file3", q.Search);
             Assert.AreEqual("", q.ActionKeyword);
