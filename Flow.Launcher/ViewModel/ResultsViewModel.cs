@@ -120,17 +120,20 @@ namespace Flow.Launcher.ViewModel
 
         public void Clear()
         {
-            Results.RemoveAll();
+            lock (_collectionLock)
+                Results.RemoveAll();
         }
 
         public void KeepResultsFor(PluginMetadata metadata)
         {
-            Results.Update(Results.Where(r => r.Result.PluginID == metadata.ID).ToList());
+            lock (_collectionLock)
+                Results.Update(Results.Where(r => r.Result.PluginID == metadata.ID).ToList());
         }
 
         public void KeepResultsExcept(PluginMetadata metadata)
         {
-            Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
+            lock (_collectionLock)
+                Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
         }
 
 
@@ -148,7 +151,8 @@ namespace Flow.Launcher.ViewModel
 
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults);
-                SelectedItem = newResults[0];
+                if (newResults.Any())
+                    SelectedItem = newResults[0];
             }
 
             if (Visbility != Visibility.Visible && Results.Count > 0)
@@ -304,6 +308,9 @@ namespace Flow.Launcher.ViewModel
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
 
+
+
+
             /// <summary>
             /// Update the results collection with new results, try to keep identical results
             /// </summary>
@@ -311,9 +318,9 @@ namespace Flow.Launcher.ViewModel
             /// <param name="token">Cancellation Token</param>
             public void Update(List<ResultViewModel> newItems, CancellationToken? token = null)
             {
-                if (newItems.Count == 0 || (token?.IsCancellationRequested ?? false))
+                if (token?.IsCancellationRequested ?? false)
                     return;
-                
+
 
                 if (editTime < 5 || newItems.Count < 30)
                 {
