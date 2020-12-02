@@ -141,17 +141,18 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(List<Result> newRawResults, string resultId)
         {
-            var newResults = NewResults(newRawResults, resultId);
 
             lock (_collectionLock)
             {
+                var newResults = NewResults(newRawResults, resultId);
+
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
                 // fix selected index flow
 
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults);
-                if (newResults.Any())
-                    SelectedItem = newResults[0];
+                if (Results.Any())
+                    SelectedItem = Results[0];
             }
 
             if (Visbility != Visibility.Visible && Results.Count > 0)
@@ -171,17 +172,20 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
         {
-            var newResults = NewResults(resultsForUpdates);
-            if (token.IsCancellationRequested)
-                return;
-
             lock (_collectionLock)
             {
+                var newResults = NewResults(resultsForUpdates);
+                if (token.IsCancellationRequested)
+                    return;
+
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
                 // fix selected index flow
 
                 Results.Update(newResults, token);
-                SelectedItem = newResults[0];
+                if (token.IsCancellationRequested)
+                    return;
+                if (Results.Any())
+                    SelectedItem = Results[0];
 
 
             }
@@ -268,33 +272,38 @@ namespace Flow.Launcher.ViewModel
 
         public class ResultCollection : ObservableCollection<ResultViewModel>
         {
-            private bool _suppressNotification = false;
 
             private long editTime = 0;
 
-            // https://peteohanlon.wordpress.com/2008/10/22/bulk-loading-in-observablecollection/
+            private bool _suppressNotifying = false;
+
             protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
-                if (!_suppressNotification)
-                    base.OnCollectionChanged(e);
+                if (_suppressNotifying)
+                    return;
+                base.OnCollectionChanged(e);
             }
 
             public void BulkAddRange(IEnumerable<ResultViewModel> resultViews)
             {
-                _suppressNotification = true;
+                _suppressNotifying = true;
+
                 foreach (var item in resultViews)
                 {
                     Add(item);
                 }
-                _suppressNotification = false;
+                _suppressNotifying = false;
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-
             }
-            public void AddRange(IEnumerable<ResultViewModel> Items)
+            public void AddRange(IEnumerable<ResultViewModel> Items, CancellationToken? token)
             {
                 foreach (var item in Items)
                 {
+                    if (token?.IsCancellationRequested ?? false)
+                        return;
+
                     Add(item);
+
                 }
 
                 // wpf use directx / double buffered already, so just reset all won't cause ui flickering
@@ -313,27 +322,25 @@ namespace Flow.Launcher.ViewModel
             /// Update the results collection with new results, try to keep identical results
             /// </summary>
             /// <param name="newItems"></param>
-            public void Update(List<ResultViewModel> newItems, CancellationToken token)
+            public void Update(List<ResultViewModel> newItems, CancellationToken? token = null)
             {
 
-                if (token.IsCancellationRequested)
+                if (token?.IsCancellationRequested ?? false)
                     return;
-                Update(newItems);
-            }
 
-            public void Update(List<ResultViewModel> newItems)
-            {
-                if (editTime == 0)
+                if (editTime < 5 || newItems.Count < 30)
                 {
-                    AddRange(newItems);
+                    if (Count != 0) ClearItems();
+                    AddRange(newItems, token);
                     editTime++;
                     return;
                 }
-                Clear();
-
-                BulkAddRange(newItems);
-                editTime++;
-
+                else
+                {
+                    Clear();
+                    BulkAddRange(newItems);
+                    editTime++;
+                }
             }
         }
     }
