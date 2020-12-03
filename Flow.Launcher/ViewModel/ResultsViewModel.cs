@@ -6,10 +6,12 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -172,12 +174,11 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
         {
+            var newResults = NewResults(resultsForUpdates);
+            if (token.IsCancellationRequested)
+                return;
             lock (_collectionLock)
             {
-                var newResults = NewResults(resultsForUpdates);
-                if (token.IsCancellationRequested)
-                    return;
-
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
                 // fix selected index flow
 
@@ -186,8 +187,6 @@ namespace Flow.Launcher.ViewModel
                     return;
                 if (Results.Any())
                     SelectedItem = Results[0];
-
-
             }
 
             switch (Visbility)
@@ -277,38 +276,46 @@ namespace Flow.Launcher.ViewModel
 
             private bool _suppressNotifying = false;
 
+            private CancellationToken _token;
+
             protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
-                if (_suppressNotifying)
-                    return;
-                base.OnCollectionChanged(e);
+                if (!_suppressNotifying)
+                {
+                    var notifyChangeTask = Task.Run(() => base.OnCollectionChanged(e));
+                    if (notifyChangeTask.Wait(300))
+                        return;
+                    else
+                    {
+                        notifyChangeTask.Dispose();
+                        throw new TimeoutException();
+                    }
+                }
             }
 
             public void BulkAddRange(IEnumerable<ResultViewModel> resultViews)
             {
+                // suppress notifying before adding all element
                 _suppressNotifying = true;
-
                 foreach (var item in resultViews)
                 {
                     Add(item);
                 }
                 _suppressNotifying = false;
+                // manually update event
+                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
+                if (_token.IsCancellationRequested)
+                    return;
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
-            public void AddRange(IEnumerable<ResultViewModel> Items, CancellationToken? token)
+            public void AddRange(IEnumerable<ResultViewModel> Items)
             {
                 foreach (var item in Items)
                 {
-                    if (token?.IsCancellationRequested ?? false)
+                    if (_token.IsCancellationRequested)
                         return;
-
                     Add(item);
-
                 }
-
-                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
-                return;
-
             }
             public void RemoveAll()
             {
@@ -322,16 +329,16 @@ namespace Flow.Launcher.ViewModel
             /// Update the results collection with new results, try to keep identical results
             /// </summary>
             /// <param name="newItems"></param>
-            public void Update(List<ResultViewModel> newItems, CancellationToken? token = null)
+            public void Update(List<ResultViewModel> newItems, CancellationToken token = default)
             {
-
-                if (token?.IsCancellationRequested ?? false)
+                _token = token;
+                if (_token.IsCancellationRequested)
                     return;
 
                 if (editTime < 5 || newItems.Count < 30)
                 {
                     if (Count != 0) ClearItems();
-                    AddRange(newItems, token);
+                    AddRange(newItems);
                     editTime++;
                     return;
                 }
