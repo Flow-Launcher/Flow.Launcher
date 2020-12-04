@@ -83,6 +83,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\NetCore3.1-SelfContained.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="ModernWpfUI" Version="0.9.2" />
     <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
