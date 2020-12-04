@@ -723,7 +723,7 @@ namespace Flow.Launcher.ViewModel
 #else
             catch
             {
-
+                token = default;
             }
 #endif
 
