@@ -24,6 +24,7 @@ using Flow.Launcher.Infrastructure.Image;
 using System.Collections.Concurrent;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Threading.Tasks.Dataflow;
+using NLog;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -51,6 +52,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
         private BufferBlock<ResultsForUpdate> _resultsUpdateQueue;
+        private Task _resultsViewUpdateTask;
 
 
         #endregion
@@ -80,7 +82,7 @@ namespace Flow.Launcher.ViewModel
 
             InitializeKeyCommands();
 
-            RegisterResultUpdate();
+            RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
 
 
@@ -103,20 +105,31 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void RegisterResultUpdate()
+        private void RegisterViewUpdate()
         {
             _resultsUpdateQueue = new BufferBlock<ResultsForUpdate>();
+            _resultsViewUpdateTask = Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 
-            Task.Run(async () =>
+
+            async Task updateAction()
             {
                 while (await _resultsUpdateQueue.OutputAvailableAsync())
                 {
                     await Task.Delay(20);
                     _resultsUpdateQueue.TryReceiveAll(out var queue);
                     UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
-
                 }
-            });
+            };
+
+            void continueAction(Task t)
+            {
+#if DEBUG
+                throw t.Exception;
+#else
+                Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
+                _resultsViewUpdateTask = Task.Run(updateAction).ContinueWith(continuationAction, TaskContinuationOptions.OnlyOnFaulted);
+#endif
+            }
         }
 
 
@@ -707,7 +720,23 @@ namespace Flow.Launcher.ViewModel
         {
             if (!resultsForUpdates.Any())
                 return;
-            CancellationToken token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
+            CancellationToken token;
+
+            try
+            {
+                token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
+            }
+#if DEBUG
+            catch
+            {
+                throw new ArgumentException("Unacceptable token");
+            }
+#else
+            catch
+            {
+
+            }
+#endif
 
 
             foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
