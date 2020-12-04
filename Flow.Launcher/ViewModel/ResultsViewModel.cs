@@ -188,22 +188,12 @@ namespace Flow.Launcher.ViewModel
                 return;
             lock (_collectionLock)
             {
+                // update UI in one run, so it can avoid UI flickering
 
-                // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
-                // fix selected index flow
-                var updateTask = Task.Run(() =>
-                {
-                    // update UI in one run, so it can avoid UI flickering
+                Results.Update(newResults, token);
+                if (Results.Any())
+                    SelectedItem = Results[0];
 
-                    Results.Update(newResults, token);
-                    if (Results.Any())
-                        SelectedItem = Results[0];
-                });
-                if (!updateTask.Wait(300))
-                {
-                    updateTask.Dispose();
-                    throw new TimeoutException("Update result use too much time.");
-                }
 
             }
 
