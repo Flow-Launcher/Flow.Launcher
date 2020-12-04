@@ -127,7 +127,7 @@ namespace Flow.Launcher.ViewModel
                 throw t.Exception;
 #else
                 Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
-                _resultsViewUpdateTask = Task.Run(updateAction).ContinueWith(continuationAction, TaskContinuationOptions.OnlyOnFaulted);
+                _resultsViewUpdateTask = Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 #endif
             }
         }
