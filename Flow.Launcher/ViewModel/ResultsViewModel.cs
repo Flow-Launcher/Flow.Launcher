@@ -333,7 +333,7 @@ namespace Flow.Launcher.ViewModel
             public void Update(List<ResultViewModel> newItems, CancellationToken token = default)
             {
                 _token = token;
-                if (_token.IsCancellationRequested)
+                if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
                     return;
 
                 if (editTime < 5 || newItems.Count < 30)
