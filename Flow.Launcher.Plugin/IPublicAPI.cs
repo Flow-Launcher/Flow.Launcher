@@ -88,5 +88,7 @@ namespace Flow.Launcher.Plugin
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+
+        public (List<int> MatchedData, int Score, bool Success) MatchString(string query, string stringToCompare);
     }
 }

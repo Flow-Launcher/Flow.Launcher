@@ -132,6 +132,12 @@ namespace Flow.Launcher
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
+        public (List<int> MatchedData, int Score, bool Success) MatchString(string query, string stringToCompare)
+        {
+            var result = StringMatcher.FuzzySearch(query, stringToCompare);
+            return (result.MatchData, result.Score, result.Success);
+        }
+
         #endregion
 
         #region Private Methods
@@ -144,6 +150,7 @@ namespace Flow.Launcher
             }
             return true;
         }
+
         #endregion
     }
 }
