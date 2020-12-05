@@ -724,7 +724,8 @@ namespace Flow.Launcher.ViewModel
 
             try
             {
-                token = resultsForUpdates.Select(r => r.Token).Distinct().Single();
+                // Don't know why sometimes even resultsForUpdates is empty, the method won't return;
+                token = resultsForUpdates.Select(r => r.Token).Distinct().SingleOrDefault();
             }
 #if DEBUG
             catch
