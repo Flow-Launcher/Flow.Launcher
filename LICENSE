@@ -4,8 +4,15 @@ FlowLauncher are licensed under the terms of the MIT license, reproduced below.
 A. HISTORY OF THE SOFTWARE
 ==========================
 
-- Copyright (c) 2015-2019 Wox. All rights reserved.
-- Copyright (c) 2019-2020+ Flow-Launcher. All rights reserved.
+- Copyright (c) 2015-2019 Wox
+- Copyright (c) 2019-2020+ Flow-Launcher
+
+Flow's roots came from a rebrand of the JJW24/Wox fork and WoX.
+A big thank you and all credits to Bao, the author of WoX,
+and its contrbutors for all the amazing work.
+The JJW24/Wox fork started adding new changes on top of
+main WoX repo's code base from release v1.3.524.
+Flow is a continuation of the work from JJW24/Wox
 
 
 B. FlowLauncher LICENSE
@@ -13,7 +20,7 @@ B. FlowLauncher LICENSE
 
 The MIT License (MIT)
 
-Copyright (c) 2019-2020+ Flow-Launcher. All rights reserved.
+Copyright (c) 2019-2020+ Flow-Launcher
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -38,7 +45,7 @@ C. Wox LICENSE
 
 The MIT License (MIT)
 
-Copyright (c) 2020 Wox https://github.com/Wox-launcher/Wox
+Copyright (c) 2015 Wox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
