@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--Dialogues-->
+    
+    <!--Controls-->
+    
+    <!--Plugin Infos-->
+    <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
+
+    <!--Context menu items-->
+    
+</ResourceDictionary>

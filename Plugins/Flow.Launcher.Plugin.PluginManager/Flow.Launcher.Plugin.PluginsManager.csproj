@@ -27,4 +27,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Languages\" />
+  </ItemGroup>
 </Project>

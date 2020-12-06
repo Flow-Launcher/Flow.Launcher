@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace Flow.Launcher.Plugin.PluginsManager
+namespace Flow.Launcher.Plugin.PluginsManager.Models
 {
     class PluginsManifest
     {
