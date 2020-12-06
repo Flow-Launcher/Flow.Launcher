@@ -8,10 +8,10 @@ using System.Text;
 
 namespace Flow.Launcher.Plugin.PluginsManager.Models
 {
-    class PluginsManifest
+    internal class PluginsManifest
     {
-        public List<Plugin> Plugins { get; private set; }
-        public PluginsManifest()
+        internal List<UserPlugin> UserPlugins { get; private set; }
+        internal PluginsManifest()
         {
             var json = string.Empty;
 
@@ -25,11 +25,11 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
                 {
                     Log.Exception("|PluginManagement.GetManifest|Encountered error trying to download plugins manifest", e);
 
-                    Plugins = new List<Plugin>();
+                    UserPlugins = new List<UserPlugin>();
                 }
             }
 
-            Plugins = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<List<Plugin>>(json) : new List<Plugin>();
+            UserPlugins = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<List<UserPlugin>>(json) : new List<UserPlugin>();
         }
     }
 }

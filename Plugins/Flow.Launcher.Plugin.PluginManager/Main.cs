@@ -37,7 +37,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public List<Result> Query(Query query)
         {
-            return new List<Result>();
+            var search = query.Search;
+
+            var pluginManager = new PluginsManager();
+
+            return pluginManager.PluginsSearch(search);
         }
 
         public void Save()
