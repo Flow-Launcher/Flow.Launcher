@@ -12,6 +12,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
     internal class PluginsManager
     {
         private PluginsManifest pluginsManifest;
+
+        private string icoPath = "Images\\plugin.png";
+
         internal PluginsManager()
         {
             pluginsManifest = new PluginsManifest();
@@ -63,7 +66,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             Title = $"{x.Name} by {x.Author}",
                             SubTitle = x.Description,
-                            IcoPath = "Images\\plugin.png",
+                            IcoPath = icoPath,
                             Action = e =>
                             {
                                 PluginInstall(x);
@@ -83,7 +86,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     {
                         Title = $"{x.Name} by {x.Author}",
                         SubTitle = x.Description,
-                        IcoPath = "Images\\plugin.png",
+                        IcoPath = icoPath,
                         Action = e =>
                         {
                             PluginInstall(x);
