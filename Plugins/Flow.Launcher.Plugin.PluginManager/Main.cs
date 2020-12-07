@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             var search = query.Search;
 
-            var pluginManager = new PluginsManager();
+            var pluginManager = new PluginsManager(Context);
 
             return pluginManager.PluginsSearch(search);
         }
