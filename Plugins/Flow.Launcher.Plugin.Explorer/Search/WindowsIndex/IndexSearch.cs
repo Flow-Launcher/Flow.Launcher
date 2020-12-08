@@ -2,6 +2,7 @@
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         private OleDbCommand command;
         
-        private DbDataReader dataReaderResults;
+        private OleDbDataReader dataReaderResults;
 
         private readonly ResultManager resultManager;
 
@@ -44,8 +45,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     using (command = new OleDbCommand(indexQueryString, conn))
                     {
                         // Results return as an OleDbDataReader.
-                        using (dataReaderResults = command.ExecuteReaderAsync(Main.updateSource.Token).GetAwaiter().GetResult())
+                        var updateToken = Main.updateToken;
+                        using (dataReaderResults = command.ExecuteReaderAsync(updateToken).GetAwaiter().GetResult() as OleDbDataReader)
                         {
+                            if (updateToken.IsCancellationRequested)
+                                return new List<Result>();
                             if (dataReaderResults.HasRows)
                             {
                                 while (dataReaderResults.Read())

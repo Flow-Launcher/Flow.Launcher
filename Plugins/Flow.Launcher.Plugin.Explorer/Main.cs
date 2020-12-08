@@ -18,7 +18,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private IContextMenu contextMenu;
 
-        public static CancellationTokenSource updateSource;
+        private static CancellationTokenSource updateSource;
+        public static CancellationToken updateToken;
 
         public Control CreateSettingPanel()
         {
@@ -42,6 +43,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             updateSource?.Cancel();
             updateSource = new CancellationTokenSource();
+            updateToken = updateSource.Token;
             return new SearchManager(Settings, Context).Search(query);
         }
 
