@@ -55,7 +55,6 @@
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="4.7.1" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" />
-    <PackageReference Include="SharpZipLib" Version="1.2.0" />
   </ItemGroup>
   
   <ItemGroup>
