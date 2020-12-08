@@ -36,8 +36,8 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (WordsHelper.HasChinese(content))
                     {
-                        var result = WordsHelper.GetPinyin(content, ";");
-                        result = GetFirstPinyinChar(result) + result.Replace(";", "");
+                        var result = WordsHelper.GetPinyin(content, " ");
+                        result = GetFirstPinyinChar(result) + result;
                         _pinyinCache[content] = result;
                         return result;
                     }
@@ -59,7 +59,7 @@ namespace Flow.Launcher.Infrastructure
 
         private string GetFirstPinyinChar(string content)
         {
-            return string.Concat(content.Split(';').Select(x => x.First()));
+            return string.Concat(content.Split(' ').Select(x => x.First()));
         }
     }
 }
