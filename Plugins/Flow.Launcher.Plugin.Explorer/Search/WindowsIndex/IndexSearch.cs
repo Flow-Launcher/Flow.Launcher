@@ -7,6 +7,7 @@ using System.Data.Common;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
@@ -30,7 +31,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             resultManager = new ResultManager(context);
         }
 
-        internal List<Result> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
+        internal async Task<List<Result>> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
         {
             var folderResults = new List<Result>();
             var fileResults = new List<Result>();
@@ -46,7 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     {
                         // Results return as an OleDbDataReader.
                         var updateToken = Main.updateToken;
-                        using (dataReaderResults = command.ExecuteReaderAsync(updateToken).GetAwaiter().GetResult() as OleDbDataReader)
+                        using (dataReaderResults = await command.ExecuteReaderAsync(updateToken) as OleDbDataReader)
                         {
                             if (updateToken.IsCancellationRequested)
                                 return new List<Result>();
@@ -106,7 +107,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             lock (_lock)
             {
                 var constructedQuery = constructQuery(searchString);
-                return ExecuteWindowsIndexSearch(constructedQuery, connectionString, query);
+                return ExecuteWindowsIndexSearch(constructedQuery, connectionString, query).GetAwaiter().GetResult();
             }
         }
 
