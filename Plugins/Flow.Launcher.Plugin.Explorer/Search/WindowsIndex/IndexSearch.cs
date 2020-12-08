@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 LogException("General error from performing index search", e);
             }
 
-            // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
+            // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
             return results.Concat(folderResults.OrderBy(x => x.Title)).Concat(fileResults.OrderBy(x => x.Title)).ToList(); ;
         }
 
