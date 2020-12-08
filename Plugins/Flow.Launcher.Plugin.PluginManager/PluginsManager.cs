@@ -4,6 +4,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
 using ICSharpCode.SharpZipLib.Zip;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +38,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}.zip");
             PluginDownload(plugin.UrlDownload, filePath);
-            context.API.InstallPlugin(filePath);
+            Application.Current.Dispatcher.Invoke(() => Install(plugin, filePath));
         }
 
         private void PluginDownload(string downloadUrl, string toFilePath)
@@ -108,51 +109,62 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     .ToList();
         }
 
-        private void Install(string path)
+        private void Install(UserPlugin plugin, string downloadedFilePath)
         {
-            if (File.Exists(path))
+            if (File.Exists(downloadedFilePath))
             {
-                string tempFolder = Path.Combine(Path.GetTempPath(), "flowlauncher", "plugins");
-                if (Directory.Exists(tempFolder))
+                var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
+                var tempPluginFolderPath = Path.Combine(tempFolderPath, "plugin");
+                
+                if (Directory.Exists(tempFolderPath))
                 {
-                    Directory.Delete(tempFolder, true);
+                    Directory.Delete(tempFolderPath, true);
                 }
-                UnZip(path, tempFolder, true);
 
-                string jsonPath = Path.Combine(tempFolder, Constant.PluginMetadataFileName);
-                if (!File.Exists(jsonPath))
+                Directory.CreateDirectory(tempFolderPath);
+
+                var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
+
+                File.Move(downloadedFilePath, zipFilePath);
+
+                UnZip(zipFilePath, tempPluginFolderPath, true);
+
+                var unzippedParentFolderPath = tempPluginFolderPath;
+
+                var metadataJsonFilePath = string.Empty;
+
+                var pluginFolderPath = string.Empty;
+
+                var unzippedFolderCount = Directory.GetDirectories(unzippedParentFolderPath).Length;
+                var unzippedFilesCount = Directory.GetFiles(unzippedParentFolderPath).Length;
+
+                // addjust path depending on how the plugin is zipped up
+                // the recommended should be to zip up the folder not the contents
+                if (unzippedFolderCount == 1 && unzippedFilesCount == 0)
+                    // folder is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/pluginFolderName/
+                    pluginFolderPath = Directory.GetDirectories(unzippedParentFolderPath)[0];
+
+                if (unzippedFilesCount > 1)
+                    // content is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/
+                    pluginFolderPath = unzippedParentFolderPath;
+
+                if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
+                    metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
+
+                if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
                 {
-                    MessageBox.Show("Install failed: plugin config is missing");
+                    MessageBox.Show("Install failed: unable to find the plugin.json metadata file");
                     return;
                 }
 
-                PluginMetadata plugin = GetMetadataFromJson(tempFolder);
-                if (plugin == null || plugin.Name == null)
-                {
-                    MessageBox.Show("Install failed: plugin config is invalid");
-                    return;
-                }
-
-                string pluginFolderPath = Infrastructure.UserSettings.DataLocation.PluginsDirectory;
-
-                string newPluginName = plugin.Name
-                    .Replace("/", "_")
-                    .Replace("\\", "_")
-                    .Replace(":", "_")
-                    .Replace("<", "_")
-                    .Replace(">", "_")
-                    .Replace("?", "_")
-                    .Replace("*", "_")
-                    .Replace("|", "_")
-                    + "-" + Guid.NewGuid();
-
-                string newPluginPath = Path.Combine(pluginFolderPath, newPluginName);
+                string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}");
 
                 string content = $"Do you want to install following plugin?{Environment.NewLine}{Environment.NewLine}" +
                                  $"Name: {plugin.Name}{Environment.NewLine}" +
                                  $"Version: {plugin.Version}{Environment.NewLine}" +
                                  $"Author: {plugin.Author}";
-                PluginPair existingPlugin = PluginManager.GetPluginForId(plugin.ID);
+
+                var existingPlugin = context.API.GetAllPlugins().Where(x => x.Metadata.ID == plugin.ID).FirstOrDefault();
 
                 if (existingPlugin != null)
                 {
@@ -172,7 +184,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         File.Create(Path.Combine(existingPlugin.Metadata.PluginDirectory, "NeedDelete.txt")).Close();
                     }
 
-                    Directory.Move(tempFolder, newPluginPath);
+                    Directory.Move(pluginFolderPath, newPluginPath);
 
                     //exsiting plugins may be has loaded by application,
                     //if we try to delelte those kind of plugins, we will get a  error that indicate the
@@ -186,73 +198,38 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                         "Restart Flow Launcher to take effect?",
                                         "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        PluginManager.API.RestartApp();
+                        context.API.RestartApp();
                     }
                 }
             }
         }
 
-        private PluginMetadata GetMetadataFromJson(string pluginDirectory)
-        {
-            string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
-            PluginMetadata metadata;
-
-            if (!File.Exists(configPath))
-            {
-                return null;
-            }
-
-            try
-            {
-                metadata = JsonConvert.DeserializeObject<PluginMetadata>(File.ReadAllText(configPath));
-                metadata.PluginDirectory = pluginDirectory;
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|PluginInstaller.GetMetadataFromJson|plugin config {configPath} failed: invalid json format", e);
-                return null;
-            }
-
-            if (!AllowedLanguage.IsAllowed(metadata.Language))
-            {
-                Log.Error($"|PluginInstaller.GetMetadataFromJson|plugin config {configPath} failed: invalid language {metadata.Language}");
-                return null;
-            }
-            if (!File.Exists(metadata.ExecuteFilePath))
-            {
-                Log.Error($"|PluginInstaller.GetMetadataFromJson|plugin config {configPath} failed: file {metadata.ExecuteFilePath} doesn't exist");
-                return null;
-            }
-
-            return metadata;
-        }
-
         /// <summary>
         /// unzip plugin contents to the given directory.
         /// </summary>
-        /// <param name="zipFile">The path to the zip file.</param>
+        /// <param name="zipFilePath">The path to the zip file.</param>
         /// <param name="strDirectory">The output directory.</param>
-        /// <param name="overWrite">overwirte</param>
-        private void UnZip(string zipFile, string strDirectory, bool overWrite)
+        /// <param name="overwrite">overwrite</param>
+        private void UnZip(string zipFilePath, string strDirectory, bool overwrite)
         {
             if (strDirectory == "")
                 strDirectory = Directory.GetCurrentDirectory();
 
-            using (ZipInputStream zipStream = new ZipInputStream(File.OpenRead(zipFile)))
+            using (ZipInputStream zipStream = new ZipInputStream(File.OpenRead(zipFilePath)))
             {
                 ZipEntry theEntry;
 
                 while ((theEntry = zipStream.GetNextEntry()) != null)
                 {
                     var pathToZip = theEntry.Name;
-                    var directoryName = String.IsNullOrEmpty(pathToZip) ? "" : Path.GetDirectoryName(pathToZip);
+                    var directoryName = string.IsNullOrEmpty(pathToZip) ? "" : Path.GetDirectoryName(pathToZip);
                     var fileName = Path.GetFileName(pathToZip);
                     var destinationDir = Path.Combine(strDirectory, directoryName);
                     var destinationFile = Path.Combine(destinationDir, fileName);
 
                     Directory.CreateDirectory(destinationDir);
 
-                    if (String.IsNullOrEmpty(fileName) || (File.Exists(destinationFile) && !overWrite))
+                    if (string.IsNullOrEmpty(fileName) || (File.Exists(destinationFile) && !overwrite))
                         continue;
 
                     using (FileStream streamWriter = File.Create(destinationFile))
@@ -262,5 +239,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 }
             }
         }
+
+        //delete the zip file when done
     }
 }
