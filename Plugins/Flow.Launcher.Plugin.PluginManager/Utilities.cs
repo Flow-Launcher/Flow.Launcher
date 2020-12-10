@@ -1,0 +1,50 @@
+﻿using Flow.Launcher.Infrastructure.Http;
+using ICSharpCode.SharpZipLib.Zip;
+using System.IO;
+using System.Net;
+
+namespace Flow.Launcher.Plugin.PluginsManager
+{
+    internal static class Utilities
+    {
+        /// <summary>
+        /// Unzip contents to the given directory.
+        /// </summary>
+        /// <param name="zipFilePath">The path to the zip file.</param>
+        /// <param name="strDirectory">The output directory.</param>
+        /// <param name="overwrite">overwrite</param>
+        internal static void UnZip(string zipFilePath, string strDirectory, bool overwrite)
+        {
+            if (strDirectory == "")
+                strDirectory = Directory.GetCurrentDirectory();
+
+            using var zipStream = new ZipInputStream(File.OpenRead(zipFilePath));
+
+            ZipEntry theEntry;
+
+            while ((theEntry = zipStream.GetNextEntry()) != null)
+            {
+                var pathToZip = theEntry.Name;
+                var directoryName = string.IsNullOrEmpty(pathToZip) ? "" : Path.GetDirectoryName(pathToZip);
+                var fileName = Path.GetFileName(pathToZip);
+                var destinationDir = Path.Combine(strDirectory, directoryName);
+                var destinationFile = Path.Combine(destinationDir, fileName);
+
+                Directory.CreateDirectory(destinationDir);
+
+                if (string.IsNullOrEmpty(fileName) || (File.Exists(destinationFile) && !overwrite))
+                    continue;
+
+                using var streamWriter = File.Create(destinationFile);
+                zipStream.CopyTo(streamWriter);
+            }
+        }
+
+        internal static void Download(string downloadUrl, string toFilePath)
+        {
+            using var wc = new WebClient { Proxy = Http.WebProxy() };
+
+            wc.DownloadFile(downloadUrl, toFilePath);
+        }
+    }
+}

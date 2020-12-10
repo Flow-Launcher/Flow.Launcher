@@ -3,14 +3,11 @@ using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
-using ICSharpCode.SharpZipLib.Zip;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
@@ -37,29 +34,23 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}.zip");
-            PluginDownload(plugin.UrlDownload, filePath);
-            Application.Current.Dispatcher.Invoke(() => Install(plugin, filePath));
-        }
-
-        private void PluginDownload(string downloadUrl, string toFilePath)
-        {
+            
             try
             {
-                using (var wc = new WebClient { Proxy = Http.WebProxy() })
-                {
-                    wc.DownloadFile(downloadUrl, toFilePath);
-                }
+                Utilities.Download(plugin.UrlDownload, filePath);
 
                 context.API.ShowMsg(context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                                    context.API.GetTranslation("plugin_pluginsmanager_download_success"));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 context.API.ShowMsg(context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                                 context.API.GetTranslation("plugin_pluginsmanager_download_success"));
 
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
             }
+
+            Application.Current.Dispatcher.Invoke(() => Install(plugin, filePath));
         }
 
         internal void PluginUpdate()
@@ -127,7 +118,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 File.Move(downloadedFilePath, zipFilePath);
 
-                UnZip(zipFilePath, tempPluginFolderPath, true);
+                Utilities.UnZip(zipFilePath, tempPluginFolderPath, true);
 
                 var unzippedParentFolderPath = tempPluginFolderPath;
 
@@ -203,43 +194,5 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 }
             }
         }
-
-        /// <summary>
-        /// unzip plugin contents to the given directory.
-        /// </summary>
-        /// <param name="zipFilePath">The path to the zip file.</param>
-        /// <param name="strDirectory">The output directory.</param>
-        /// <param name="overwrite">overwrite</param>
-        private void UnZip(string zipFilePath, string strDirectory, bool overwrite)
-        {
-            if (strDirectory == "")
-                strDirectory = Directory.GetCurrentDirectory();
-
-            using (ZipInputStream zipStream = new ZipInputStream(File.OpenRead(zipFilePath)))
-            {
-                ZipEntry theEntry;
-
-                while ((theEntry = zipStream.GetNextEntry()) != null)
-                {
-                    var pathToZip = theEntry.Name;
-                    var directoryName = string.IsNullOrEmpty(pathToZip) ? "" : Path.GetDirectoryName(pathToZip);
-                    var fileName = Path.GetFileName(pathToZip);
-                    var destinationDir = Path.Combine(strDirectory, directoryName);
-                    var destinationFile = Path.Combine(destinationDir, fileName);
-
-                    Directory.CreateDirectory(destinationDir);
-
-                    if (string.IsNullOrEmpty(fileName) || (File.Exists(destinationFile) && !overwrite))
-                        continue;
-
-                    using (FileStream streamWriter = File.Create(destinationFile))
-                    {
-                        zipStream.CopyTo(streamWriter);
-                    }
-                }
-            }
-        }
-
-        //delete the zip file when done
     }
 }
