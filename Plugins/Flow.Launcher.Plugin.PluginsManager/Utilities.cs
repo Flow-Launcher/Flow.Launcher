@@ -40,6 +40,24 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
         }
 
+        internal static string GetContainingFolderPathAfterUnzip(string unzippedParentFolderPath)
+        {
+            var unzippedFolderCount = Directory.GetDirectories(unzippedParentFolderPath).Length;
+            var unzippedFilesCount = Directory.GetFiles(unzippedParentFolderPath).Length;
+
+            // addjust path depending on how the plugin is zipped up
+            // the recommended should be to zip up the folder not the contents
+            if (unzippedFolderCount == 1 && unzippedFilesCount == 0)
+                // folder is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/pluginFolderName/
+                return Directory.GetDirectories(unzippedParentFolderPath)[0];
+
+            if (unzippedFilesCount > 1)
+                // content is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/
+               return unzippedParentFolderPath;
+
+            return string.Empty;
+        }
+
         internal static void Download(string downloadUrl, string toFilePath)
         {
             using var wc = new WebClient { Proxy = Http.WebProxy() };

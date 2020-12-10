@@ -24,12 +24,23 @@ namespace Flow.Launcher.Plugin.PluginsManager
         }
         internal void InstallOrUpdate(UserPlugin plugin)
         {
-            if (PluginExists())
+            if (PluginExists(plugin.ID))
             {
-                //prompt user if want to install
+                var updateMessage = $"Do you want to update following plugin?{Environment.NewLine}{Environment.NewLine}" +
+                          $"Name: {plugin.Name}{Environment.NewLine}" +
+                          $"{Environment.NewLine}New Version: {plugin.Version}" +
+                          $"{Environment.NewLine}Author: {plugin.Author}";
 
-                return;
+                throw new NotImplementedException();
             }
+
+             var message = $"Do you want to install following plugin?{Environment.NewLine}{Environment.NewLine}" +
+                           $"Name: {plugin.Name}{Environment.NewLine}" +
+                           $"Version: {plugin.Version}{Environment.NewLine}" +
+                           $"Author: {plugin.Author}";
+
+            if(MessageBox.Show(message, "Install plugin", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
 
             var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}.zip");
             
@@ -53,17 +64,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal void Update()
         {
-
+            throw new NotImplementedException();
         }
 
-        internal bool PluginExists()
+        internal bool PluginExists(string id)
         {
-            return false;
+            return Context.API.GetAllPlugins().Any(x => x.Metadata.ID == id);
         }
 
         internal void PluginsManifestSiteOpen()
         {
             //Open from context menu https://git.vcmq.workers.dev/Flow-Launcher/Flow.Launcher.PluginsManifest
+            throw new NotImplementedException();
         }
 
         internal List<Result> Search(List<Result> results, string searchName)
@@ -105,89 +117,43 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private void Install(UserPlugin plugin, string downloadedFilePath)
         {
-            if (File.Exists(downloadedFilePath))
+            if (!File.Exists(downloadedFilePath))
+                return;
+            
+            var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
+            var tempFolderPluginPath = Path.Combine(tempFolderPath, "plugin");
+            
+            if (Directory.Exists(tempFolderPath))
+                Directory.Delete(tempFolderPath, true);
+
+            Directory.CreateDirectory(tempFolderPath);
+
+            var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
+
+            File.Move(downloadedFilePath, zipFilePath);
+
+            Utilities.UnZip(zipFilePath, tempFolderPluginPath, true);
+
+            var pluginFolderPath = Utilities.GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
+
+            var metadataJsonFilePath = string.Empty;
+            if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
+                metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
+
+            if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
-                var tempPluginFolderPath = Path.Combine(tempFolderPath, "plugin");
-                
-                if (Directory.Exists(tempFolderPath))
-                {
-                    Directory.Delete(tempFolderPath, true);
-                }
-
-                Directory.CreateDirectory(tempFolderPath);
-
-                var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
-
-                File.Move(downloadedFilePath, zipFilePath);
-
-                Utilities.UnZip(zipFilePath, tempPluginFolderPath, true);
-
-                var unzippedParentFolderPath = tempPluginFolderPath;
-
-                var metadataJsonFilePath = string.Empty;
-
-                var pluginFolderPath = string.Empty;
-
-                var unzippedFolderCount = Directory.GetDirectories(unzippedParentFolderPath).Length;
-                var unzippedFilesCount = Directory.GetFiles(unzippedParentFolderPath).Length;
-
-                // addjust path depending on how the plugin is zipped up
-                // the recommended should be to zip up the folder not the contents
-                if (unzippedFolderCount == 1 && unzippedFilesCount == 0)
-                    // folder is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/pluginFolderName/
-                    pluginFolderPath = Directory.GetDirectories(unzippedParentFolderPath)[0];
-
-                if (unzippedFilesCount > 1)
-                    // content is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/
-                    pluginFolderPath = unzippedParentFolderPath;
-
-                if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
-                    metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
-
-                if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
-                {
-                    MessageBox.Show("Install failed: unable to find the plugin.json metadata file");
-                    return;
-                }
-
-                string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}");
-
-                string content = $"Do you want to install following plugin?{Environment.NewLine}{Environment.NewLine}" +
-                                 $"Name: {plugin.Name}{Environment.NewLine}" +
-                                 $"Version: {plugin.Version}{Environment.NewLine}" +
-                                 $"Author: {plugin.Author}";
-
-                var existingPlugin = Context.API.GetAllPlugins().Where(x => x.Metadata.ID == plugin.ID).FirstOrDefault();
-
-                if (existingPlugin != null)
-                {
-                    content = $"Do you want to update following plugin?{Environment.NewLine}{Environment.NewLine}" +
-                              $"Name: {plugin.Name}{Environment.NewLine}" +
-                              $"Old Version: {existingPlugin.Metadata.Version}" +
-                              $"{Environment.NewLine}New Version: {plugin.Version}" +
-                              $"{Environment.NewLine}Author: {plugin.Author}";
-                }
-
-                var result = MessageBox.Show(content, "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    if (existingPlugin != null && Directory.Exists(existingPlugin.Metadata.PluginDirectory))
-                    {
-                        //when plugin is in use, we can't delete them. That's why we need to make plugin folder a random name
-                        File.Create(Path.Combine(existingPlugin.Metadata.PluginDirectory, "NeedDelete.txt")).Close();
-                    }
-
-                    Directory.Move(pluginFolderPath, newPluginPath);
-
-                    if (MessageBox.Show($"You have installed plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                        "Restart Flow Launcher to take effect?",
-                                        "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        Context.API.RestartApp();
-                    }
-                }
+                MessageBox.Show("Install failed: unable to find the plugin.json metadata file from the new plugin");
+                return;
             }
+
+            string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}");
+            
+            Directory.Move(pluginFolderPath, newPluginPath);
+
+            if (MessageBox.Show($"You have installed plugin {plugin.Name} successfully.{Environment.NewLine}" +
+                                "Restart Flow Launcher to take effect?",
+                                "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Context.API.RestartApp();
         }
 
         internal List<Result> RequestUninstall(string search)
@@ -221,14 +187,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if (MessageBox.Show(message, "Flow Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                File.Create(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt")).Close();
+                using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
+
                 var result = MessageBox.Show($"You have uninstalled plugin {plugin.Name} successfully.{Environment.NewLine}" +
                                              "Restart Flow Launcher to take effect?",
                                              "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
-                {
                     Context.API.RestartApp();
-                }
             }
         }
     }
