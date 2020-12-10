@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
-        private PluginsManifest pluginsManifest;
+        private readonly PluginsManifest pluginsManifest;
         private PluginInitContext Context { get; set; }
 
         private readonly string icoPath = "Images\\plugin.png";
@@ -202,7 +202,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     {
                         Title = $"{x.Metadata.Name} by {x.Metadata.Author}",
                         SubTitle = x.Metadata.Description,
-                        IcoPath = icoPath,
+                        IcoPath = x.Metadata.IcoPath,
                         Action = e =>
                         {
                             Application.Current.MainWindow.Hide();
