@@ -39,9 +39,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             var search = query.Search;
 
-            var pluginManager = new PluginsManager(Context);
+            var uninstallCmd = "uninstall";
 
-            return pluginManager.Search(search);
+            var pluginManager = new PluginsManager(Context);
+            
+            if (search.ToLower().StartsWith($"{uninstallCmd} ") || search.ToLower() == uninstallCmd)
+                return pluginManager.RequestUninstall(search.Replace(uninstallCmd, string.Empty).Trim());
+            
+            return pluginManager.RequestInstallOrUpdate(search);
         }
 
         public void Save()

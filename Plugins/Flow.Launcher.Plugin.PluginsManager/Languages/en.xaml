@@ -6,6 +6,7 @@
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Downloading plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_please_wait">Please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">Do you want to uninstall the following plugin?</system:String>
     <!--Controls-->
     
     <!--Plugin Infos-->

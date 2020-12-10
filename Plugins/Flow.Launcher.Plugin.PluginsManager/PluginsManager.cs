@@ -15,14 +15,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
     internal class PluginsManager
     {
         private PluginsManifest pluginsManifest;
-        private PluginInitContext context { get; set; }
+        private PluginInitContext Context { get; set; }
 
         private readonly string icoPath = "Images\\plugin.png";
 
         internal PluginsManager(PluginInitContext context)
         {
             pluginsManifest = new PluginsManifest();
-            this.context = context;
+            Context = context;
         }
         internal void InstallOrUpdate(UserPlugin plugin)
         {
@@ -39,13 +39,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 Utilities.Download(plugin.UrlDownload, filePath);
 
-                context.API.ShowMsg(context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                    context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
             }
             catch (Exception e)
             {
-                context.API.ShowMsg(context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
+                                Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
 
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
             }
@@ -68,7 +68,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
             //Open https://git.vcmq.workers.dev/Flow-Launcher/Flow.Launcher.PluginsManifest
         }
 
-        internal List<Result> Search(string searchName)
+        internal List<Result> Search(List<Result> results, string searchName)
+        {
+            if (string.IsNullOrEmpty(searchName))
+                return results;
+
+            return results
+                    .Where(x => StringMatcher.FuzzySearch(searchName, x.Title).IsSearchPrecisionScoreMet())
+                    .Select(x => x)
+                    .ToList();
+        }
+
+        internal List<Result> RequestInstallOrUpdate(string searchName)
         {
             var results = new List<Result>();
 
@@ -82,8 +93,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             IcoPath = icoPath,
                             Action = e =>
                             {
-                                context.API.ShowMsg(context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                    context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
+                                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
                                 Application.Current.MainWindow.Hide();
                                 InstallOrUpdate(x);
 
@@ -91,13 +102,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
                         }));
 
-            if (string.IsNullOrEmpty(searchName))
-                return results;
-
-            return results
-                    .Where(x => StringMatcher.FuzzySearch(searchName, x.Title).IsSearchPrecisionScoreMet())
-                    .Select(x => x)
-                    .ToList();
+            return Search(results, searchName);
         }
 
         private void Install(UserPlugin plugin, string downloadedFilePath)
@@ -155,7 +160,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                  $"Version: {plugin.Version}{Environment.NewLine}" +
                                  $"Author: {plugin.Author}";
 
-                var existingPlugin = context.API.GetAllPlugins().Where(x => x.Metadata.ID == plugin.ID).FirstOrDefault();
+                var existingPlugin = Context.API.GetAllPlugins().Where(x => x.Metadata.ID == plugin.ID).FirstOrDefault();
 
                 if (existingPlugin != null)
                 {
@@ -177,20 +182,54 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                     Directory.Move(pluginFolderPath, newPluginPath);
 
-                    //exsiting plugins may be has loaded by application,
-                    //if we try to delelte those kind of plugins, we will get a  error that indicate the
-                    //file is been used now.
-                    //current solution is to restart Flow Launcher. Ugly.
-                    //if (MainWindow.Initialized)
-                    //{
-                    //    Plugins.Initialize();
-                    //}
                     if (MessageBox.Show($"You have installed plugin {plugin.Name} successfully.{Environment.NewLine}" +
                                         "Restart Flow Launcher to take effect?",
                                         "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        context.API.RestartApp();
+                        Context.API.RestartApp();
                     }
+                }
+            }
+        }
+
+        internal List<Result> RequestUninstall(string search)
+        {
+            var results = new List<Result>();
+
+            Context.API.GetAllPlugins()
+                .ForEach(x => results.Add(
+                    new Result
+                    {
+                        Title = $"{x.Metadata.Name} by {x.Metadata.Author}",
+                        SubTitle = x.Metadata.Description,
+                        IcoPath = icoPath,
+                        Action = e =>
+                        {
+                            Application.Current.MainWindow.Hide();
+                            Uninstall(x.Metadata);
+
+                            return true;
+                        }
+                    }));
+
+            return Search(results, search);
+        }
+
+        private void Uninstall(PluginMetadata plugin)
+        {
+            string message = Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt")+
+                                            $"{Environment.NewLine}{Environment.NewLine}" +
+                                            $"{plugin.Name} by {plugin.Author}";
+
+            if (MessageBox.Show(message, "Flow Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                File.Create(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt")).Close();
+                var result = MessageBox.Show($"You have uninstalled plugin {plugin.Name} successfully.{Environment.NewLine}" +
+                                             "Restart Flow Launcher to take effect?",
+                                             "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Context.API.RestartApp();
                 }
             }
         }
