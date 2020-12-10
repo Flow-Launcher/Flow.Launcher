@@ -24,28 +24,26 @@ namespace Flow.Launcher.Plugin.PluginsManager
         }
         internal void InstallOrUpdate(UserPlugin plugin)
         {
-            if (PluginExists(plugin.ID))
+            if (PluginExists(plugin.ID)) 
             {
-                var updateMessage = $"Do you want to update following plugin?{Environment.NewLine}{Environment.NewLine}" +
-                          $"Name: {plugin.Name}{Environment.NewLine}" +
-                          $"{Environment.NewLine}New Version: {plugin.Version}" +
-                          $"{Environment.NewLine}Author: {plugin.Author}";
-
-                throw new NotImplementedException();
+                Context.API.ShowMsg("Plugin already installed");
+                return;
             }
 
-             var message = $"Do you want to install following plugin?{Environment.NewLine}{Environment.NewLine}" +
-                           $"Name: {plugin.Name}{Environment.NewLine}" +
-                           $"Version: {plugin.Version}{Environment.NewLine}" +
-                           $"Author: {plugin.Author}";
+            var message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt"), 
+                                                                        Environment.NewLine, Environment.NewLine, 
+                                                                        plugin.Name, plugin.Author);
 
-            if(MessageBox.Show(message, "Install plugin", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if(MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"), MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
             var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}.zip");
             
             try
             {
+                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
+
                 Utilities.Download(plugin.UrlDownload, filePath);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
@@ -103,8 +101,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             IcoPath = icoPath,
                             Action = e =>
                             {
-                                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                    Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
                                 Application.Current.MainWindow.Hide();
                                 InstallOrUpdate(x);
 
@@ -142,7 +138,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                MessageBox.Show("Install failed: unable to find the plugin.json metadata file from the new plugin");
+                MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
                 return;
             }
 
@@ -150,9 +146,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             
             Directory.Move(pluginFolderPath, newPluginPath);
 
-            if (MessageBox.Show($"You have installed plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                "Restart Flow Launcher to take effect?",
-                                "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_successandrestart"), 
+                                                                            plugin.Name, Environment.NewLine),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_install_title"), 
+                                                                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 Context.API.RestartApp();
         }
 
@@ -181,18 +178,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private void Uninstall(PluginMetadata plugin)
         {
-            string message = Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt")+
-                                            $"{Environment.NewLine}{Environment.NewLine}" +
-                                            $"{plugin.Name} by {plugin.Author}";
+            string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
+                                                                        Environment.NewLine, Environment.NewLine,
+                                                                        plugin.Name, plugin.Author);
 
-            if (MessageBox.Show(message, "Flow Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"), 
+                                                                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
 
-                var result = MessageBox.Show($"You have uninstalled plugin {plugin.Name} successfully.{Environment.NewLine}" +
-                                             "Restart Flow Launcher to take effect?",
-                                             "Install plugin", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                if (MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_successandrestart"),
+                                                                            plugin.Name, Environment.NewLine),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
+                                                                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     Context.API.RestartApp();
             }
         }
