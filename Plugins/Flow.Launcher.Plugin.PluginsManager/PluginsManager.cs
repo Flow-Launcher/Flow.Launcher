@@ -17,14 +17,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private PluginsManifest pluginsManifest;
         private PluginInitContext context { get; set; }
 
-        private string icoPath = "Images\\plugin.png";
+        private readonly string icoPath = "Images\\plugin.png";
 
         internal PluginsManager(PluginInitContext context)
         {
             pluginsManifest = new PluginsManifest();
             this.context = context;
         }
-        internal void PluginInstall(UserPlugin plugin)
+        internal void InstallOrUpdate(UserPlugin plugin)
         {
             if (PluginExists())
             {
@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Application.Current.Dispatcher.Invoke(() => Install(plugin, filePath));
         }
 
-        internal void PluginUpdate()
+        internal void Update()
         {
 
         }
@@ -65,10 +65,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal void PluginsManifestSiteOpen()
         {
-
+            //Open https://git.vcmq.workers.dev/Flow-Launcher/Flow.Launcher.PluginsManifest
         }
 
-        internal List<Result> PluginsSearch(string searchName)
+        internal List<Result> Search(string searchName)
         {
             var results = new List<Result>();
 
@@ -85,7 +85,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 context.API.ShowMsg(context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                                     context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
                                 Application.Current.MainWindow.Hide();
-                                PluginInstall(x);
+                                InstallOrUpdate(x);
 
                                 return true;
                             }

@@ -41,7 +41,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var pluginManager = new PluginsManager(Context);
 
-            return pluginManager.PluginsSearch(search);
+            return pluginManager.Search(search);
         }
 
         public void Save()
