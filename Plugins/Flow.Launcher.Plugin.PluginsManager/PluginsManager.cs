@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private readonly PluginsManifest pluginsManifest;
         private PluginInitContext Context { get; set; }
 
-        private readonly string icoPath = "Images\\plugin.png";
+        private readonly string icoPath = "Images\\pluginsmanager.png";
 
         internal PluginsManager(PluginInitContext context)
         {
