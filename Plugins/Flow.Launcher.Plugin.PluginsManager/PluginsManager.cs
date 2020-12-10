@@ -1,5 +1,4 @@
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
@@ -65,7 +63,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal void PluginsManifestSiteOpen()
         {
-            //Open https://git.vcmq.workers.dev/Flow-Launcher/Flow.Launcher.PluginsManifest
+            //Open from context menu https://git.vcmq.workers.dev/Flow-Launcher/Flow.Launcher.PluginsManifest
         }
 
         internal List<Result> Search(List<Result> results, string searchName)
