@@ -9,6 +9,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Localization;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -36,10 +37,43 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (WordsHelper.HasChinese(content))
                     {
-                        var result = WordsHelper.GetPinyin(content, " ");
-                        result = GetFirstPinyinChar(result) + result;
-                        _pinyinCache[content] = result;
-                        return result;
+                        var resultList = WordsHelper.GetPinyinList(content);
+
+                        List<int> chineseIndexs = new List<int>();
+
+                        for (int i = 0; i < content.Length; i++)
+                        {
+                            if (resultList[i].Length != 1 || !(resultList[i][0] == content[i]))
+                                chineseIndexs.Add(i);
+                        }
+                        StringBuilder resultBuilder = new StringBuilder();
+                        resultBuilder.Append(string.Concat(resultList.Where((r, i) => chineseIndexs.Contains(i)).Select(s => s.First())));
+                        resultBuilder.Append(' ');
+
+                        int currentChineseIndex = 0;
+                        int lastChineseIndex = -1;
+                        for (int i = 0; i < resultList.Length; i++)
+                        {
+                            if (currentChineseIndex < chineseIndexs.Count && chineseIndexs[currentChineseIndex] == i)
+                            {
+                                resultBuilder.Append(' ');
+
+                                resultBuilder.Append(resultList[i]);
+                                currentChineseIndex++;
+                                lastChineseIndex = i;
+                            }
+                            else
+                            {
+                                if (i == lastChineseIndex + 1)
+                                {
+                                    resultBuilder.Append(' ');
+                                }
+                                resultBuilder.Append(resultList[i]);
+                            }
+                        }
+
+
+                        return _pinyinCache[content] = resultBuilder.ToString();
                     }
                     else
                     {
