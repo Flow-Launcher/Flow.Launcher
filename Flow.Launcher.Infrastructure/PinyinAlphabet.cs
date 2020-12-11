@@ -47,7 +47,11 @@ namespace Flow.Launcher.Infrastructure
                                 chineseIndexs.Add(i);
                         }
                         StringBuilder resultBuilder = new StringBuilder();
-                        resultBuilder.Append(string.Concat(resultList.Where((r, i) => chineseIndexs.Contains(i)).Select(s => s.First())));
+
+                        foreach (var chineseIndex in chineseIndexs)
+                        {
+                            resultBuilder.Append(resultList[chineseIndex].First());
+                        }
                         resultBuilder.Append(' ');
 
                         int currentChineseIndex = 0;
@@ -89,11 +93,6 @@ namespace Flow.Launcher.Infrastructure
             {
                 return content;
             }
-        }
-
-        private string GetFirstPinyinChar(string content)
-        {
-            return string.Concat(content.Split(' ').Select(x => x.First()));
         }
     }
 }
