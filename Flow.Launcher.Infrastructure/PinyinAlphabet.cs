@@ -39,37 +39,32 @@ namespace Flow.Launcher.Infrastructure
                     {
                         var resultList = WordsHelper.GetPinyinList(content);
 
-                        List<int> chineseIndexs = new List<int>();
-
-                        for (int i = 0; i < content.Length; i++)
-                        {
-                            if (resultList[i].Length != 1 || !(resultList[i][0] == content[i]))
-                                chineseIndexs.Add(i);
-                        }
                         StringBuilder resultBuilder = new StringBuilder();
+                        
 
-                        foreach (var chineseIndex in chineseIndexs)
-                        {
-                            resultBuilder.Append(resultList[chineseIndex].First());
-                        }
-                        resultBuilder.Append(' ');
-
-                        int currentChineseIndex = 0;
-                        int lastChineseIndex = -1;
                         for (int i = 0; i < resultList.Length; i++)
                         {
-                            if (currentChineseIndex < chineseIndexs.Count && chineseIndexs[currentChineseIndex] == i)
+                            if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                                resultBuilder.Append(resultList[i].First());
+                        }
+
+                        resultBuilder.Append(' ');
+
+                        bool pre = false;
+
+                        for (int i = 0; i < resultList.Length; i++)
+                        {
+                            if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                             {
                                 resultBuilder.Append(' ');
-
                                 resultBuilder.Append(resultList[i]);
-                                currentChineseIndex++;
-                                lastChineseIndex = i;
+                                pre = true;
                             }
                             else
                             {
-                                if (i == lastChineseIndex + 1)
+                                if (pre)
                                 {
+                                    pre = false;
                                     resultBuilder.Append(' ');
                                 }
                                 resultBuilder.Append(resultList[i]);
