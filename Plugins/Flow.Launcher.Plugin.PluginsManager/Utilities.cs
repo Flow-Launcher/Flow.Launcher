@@ -45,7 +45,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var unzippedFolderCount = Directory.GetDirectories(unzippedParentFolderPath).Length;
             var unzippedFilesCount = Directory.GetFiles(unzippedParentFolderPath).Length;
 
-            // addjust path depending on how the plugin is zipped up
+            // adjust path depending on how the plugin is zipped up
             // the recommended should be to zip up the folder not the contents
             if (unzippedFolderCount == 1 && unzippedFilesCount == 0)
                 // folder is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/pluginFolderName/
