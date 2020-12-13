@@ -1,4 +1,5 @@
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
@@ -44,7 +45,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                                     Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
 
-                Utilities.Download(plugin.UrlDownload, filePath);
+                Http.Download(plugin.UrlDownload, filePath);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                                     Context.API.GetTranslation("plugin_pluginsmanager_download_success"));

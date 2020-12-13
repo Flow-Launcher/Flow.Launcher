@@ -57,12 +57,5 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             return string.Empty;
         }
-
-        internal static void Download(string downloadUrl, string toFilePath)
-        {
-            using var wc = new WebClient { Proxy = Http.WebProxy() };
-
-            wc.DownloadFile(downloadUrl, toFilePath);
-        }
     }
 }
