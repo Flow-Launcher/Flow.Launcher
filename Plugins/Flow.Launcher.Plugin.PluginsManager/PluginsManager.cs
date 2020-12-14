@@ -90,24 +90,24 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal List<Result> RequestInstallOrUpdate(string searchName)
         {
-            var results = new List<Result>();
-
-            pluginsManifest
+            var results = 
+                pluginsManifest
                 .UserPlugins
-                    .ForEach(x => results.Add(
-                        new Result
+                .Select(x =>
+                    new Result
+                    {
+                        Title = $"{x.Name} by {x.Author}",
+                        SubTitle = x.Description,
+                        IcoPath = icoPath,
+                        Action = e =>
                         {
-                            Title = $"{x.Name} by {x.Author}",
-                            SubTitle = x.Description,
-                            IcoPath = icoPath,
-                            Action = e =>
-                            {
-                                Application.Current.MainWindow.Hide();
-                                InstallOrUpdate(x);
+                            Application.Current.MainWindow.Hide();
+                            InstallOrUpdate(x);
 
-                                return true;
-                            }
-                        }));
+                            return true;
+                        }
+                    })
+                .ToList();
 
             return Search(results, searchName);
         }
@@ -156,23 +156,23 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal List<Result> RequestUninstall(string search)
         {
-            var results = new List<Result>();
+            var results= Context.API
+                                .GetAllPlugins()
+                                .Select(x =>
+                                    new Result
+                                    {
+                                        Title = $"{x.Metadata.Name} by {x.Metadata.Author}",
+                                        SubTitle = x.Metadata.Description,
+                                        IcoPath = x.Metadata.IcoPath,
+                                        Action = e =>
+                                        {
+                                            Application.Current.MainWindow.Hide();
+                                            Uninstall(x.Metadata);
 
-            Context.API.GetAllPlugins()
-                .ForEach(x => results.Add(
-                    new Result
-                    {
-                        Title = $"{x.Metadata.Name} by {x.Metadata.Author}",
-                        SubTitle = x.Metadata.Description,
-                        IcoPath = x.Metadata.IcoPath,
-                        Action = e =>
-                        {
-                            Application.Current.MainWindow.Hide();
-                            Uninstall(x.Metadata);
-
-                            return true;
-                        }
-                    }));
+                                            return true;
+                                        }
+                                    })
+                                .ToList();
 
             return Search(results, search);
         }
