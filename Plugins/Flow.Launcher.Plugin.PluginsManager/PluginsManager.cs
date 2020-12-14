@@ -84,7 +84,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             return results
                     .Where(x => StringMatcher.FuzzySearch(searchName, x.Title).IsSearchPrecisionScoreMet())
-                    .Select(x => x)
                     .ToList();
         }
 
