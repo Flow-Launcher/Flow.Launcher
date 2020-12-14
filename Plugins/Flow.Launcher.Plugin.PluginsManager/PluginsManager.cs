@@ -14,32 +14,36 @@ namespace Flow.Launcher.Plugin.PluginsManager
     internal class PluginsManager
     {
         private readonly PluginsManifest pluginsManifest;
+
         private PluginInitContext Context { get; set; }
+
+        private Settings Settings { get; set; }
 
         private readonly string icoPath = "Images\\pluginsmanager.png";
 
-        internal PluginsManager(PluginInitContext context)
+        internal PluginsManager(PluginInitContext context, Settings settings)
         {
             pluginsManifest = new PluginsManifest();
             Context = context;
+            Settings = settings;
         }
         internal void InstallOrUpdate(UserPlugin plugin)
         {
-            if (PluginExists(plugin.ID)) 
+            if (PluginExists(plugin.ID))
             {
                 Context.API.ShowMsg("Plugin already installed");
                 return;
             }
 
-            var message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt"), 
-                                                                        Environment.NewLine, Environment.NewLine, 
+            var message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt"),
+                                                                        Environment.NewLine, Environment.NewLine,
                                                                         plugin.Name, plugin.Author);
 
-            if(MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"), MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"), MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
             var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}.zip");
-            
+
             try
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
@@ -89,14 +93,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 if (matchResult.IsSearchPrecisionScoreMet())
                                     x.Score = matchResult.Score;
 
-                                return matchResult.IsSearchPrecisionScoreMet(); 
+                                return matchResult.IsSearchPrecisionScoreMet();
                             })
                     .ToList();
         }
 
         internal List<Result> RequestInstallOrUpdate(string searchName)
         {
-            var results = 
+            var results =
                 pluginsManifest
                 .UserPlugins
                 .Select(x =>
@@ -122,10 +126,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             if (!File.Exists(downloadedFilePath))
                 return;
-            
+
             var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
             var tempFolderPluginPath = Path.Combine(tempFolderPath, "plugin");
-            
+
             if (Directory.Exists(tempFolderPath))
                 Directory.Delete(tempFolderPath, true);
 
@@ -150,18 +154,44 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}");
-            
+
             Directory.Move(pluginFolderPath, newPluginPath);
 
-            if (MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_successandrestart"), 
+            if (MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_successandrestart"),
                                                                             plugin.Name, Environment.NewLine),
-                                    Context.API.GetTranslation("plugin_pluginsmanager_install_title"), 
+                                    Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
                                                                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 Context.API.RestartApp();
         }
 
         internal List<Result> RequestUninstall(string search)
         {
+            if (!string.IsNullOrEmpty(search)
+                && Settings.UninstallHotkey.StartsWith(search)
+                && (Settings.UninstallHotkey != search || !search.StartsWith(Settings.UninstallHotkey)))
+            {
+                return 
+                    new List<Result>
+                    {
+                        new Result
+                        {
+                            Title = "Uninstall",
+                            IcoPath = icoPath,
+                            SubTitle = "Select a plugin to uninstall",
+                            Action = e =>
+                            {
+                                Context
+                                .API
+                                .ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UninstallHotkey} ");
+
+                                return false;
+                            }
+                        }
+                    };
+            }
+
+            var uninstallSearch = search.Replace(Settings.UninstallHotkey, string.Empty).TrimStart();
+
             var results= Context.API
                                 .GetAllPlugins()
                                 .Select(x =>
@@ -180,7 +210,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     })
                                 .ToList();
 
-            return Search(results, search);
+            return Search(results, uninstallSearch);
         }
 
         private void Uninstall(PluginMetadata plugin)
