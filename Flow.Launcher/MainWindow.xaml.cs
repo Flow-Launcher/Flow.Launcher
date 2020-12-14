@@ -199,24 +199,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                // Note that you can have more than one file.
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files[0].ToLower().EndsWith(".flowlauncher"))
-                {
-                    PluginManager.InstallPlugin(files[0]);
-                }
-                else
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidFlowLauncherPluginFileFormat"));
-                }
-            }
-            e.Handled = false;
-        }
-
         private void OnPreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
