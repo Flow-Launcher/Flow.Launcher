@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Localization;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -28,7 +23,6 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-
         public string Translate(string content)
         {
             if (_settings.ShouldUsePinyin)
@@ -40,7 +34,6 @@ namespace Flow.Launcher.Infrastructure
                         var resultList = WordsHelper.GetPinyinList(content);
 
                         StringBuilder resultBuilder = new StringBuilder();
-                        
 
                         for (int i = 0; i < resultList.Length; i++)
                         {
@@ -70,7 +63,6 @@ namespace Flow.Launcher.Infrastructure
                                 resultBuilder.Append(resultList[i]);
                             }
                         }
-
 
                         return _pinyinCache[content] = resultBuilder.ToString();
                     }
