@@ -1,5 +1,7 @@
 <p align="center">
-  <img width="500px" src="https://github.com/Flow-Launcher/Flow.Launcher/blob/5ba4514f31e624c679628d4dfe89036c0e24006c/Doc/Logo/resources/flow-header-square-transparent.png">
+  <a href="https://flow-launcher.github.io">
+	<img width="500px" src="https://github.com/Flow-Launcher/Flow.Launcher/blob/5ba4514f31e624c679628d4dfe89036c0e24006c/Doc/Logo/resources/flow-header-square-transparent.png">
+  </a>
 </p>
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
