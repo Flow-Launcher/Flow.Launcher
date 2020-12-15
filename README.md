@@ -80,10 +80,3 @@ Install .Net Core 3.1 SDK via Visual Studio installer or manually from [here](ht
 ## Documentation
 
 [Wiki](https://github.com/Flow-Launcher/Flow.Launcher/wiki)
-
-## A history of the flow
-Flow's roots came from a rebrand of the [JJW24/Wox fork](https://github.com/jjw24/Wox/issues/156) and WoX.
-
-A big thank you and all credits to [Bao](https://github.com/bao-qian), the author of WoX, and its contrbutors for all the amazing work.
-
-The JJW24/Wox fork started adding new changes on top of main WoX repo's code base from release v1.3.524. Flow is a continuation of the work from JJW24/Wox
