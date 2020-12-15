@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
-using System.Threading.Tasks;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -27,7 +23,6 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-
         public string Translate(string content)
         {
             if (_settings.ShouldUsePinyin)
@@ -36,10 +31,40 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (WordsHelper.HasChinese(content))
                     {
-                        var result = WordsHelper.GetPinyin(content, ";");
-                        result = GetFirstPinyinChar(result) + result.Replace(";", "");
-                        _pinyinCache[content] = result;
-                        return result;
+                        var resultList = WordsHelper.GetPinyinList(content);
+
+                        StringBuilder resultBuilder = new StringBuilder();
+
+                        for (int i = 0; i < resultList.Length; i++)
+                        {
+                            if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                                resultBuilder.Append(resultList[i].First());
+                        }
+
+                        resultBuilder.Append(' ');
+
+                        bool pre = false;
+
+                        for (int i = 0; i < resultList.Length; i++)
+                        {
+                            if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                            {
+                                resultBuilder.Append(' ');
+                                resultBuilder.Append(resultList[i]);
+                                pre = true;
+                            }
+                            else
+                            {
+                                if (pre)
+                                {
+                                    pre = false;
+                                    resultBuilder.Append(' ');
+                                }
+                                resultBuilder.Append(resultList[i]);
+                            }
+                        }
+
+                        return _pinyinCache[content] = resultBuilder.ToString();
                     }
                     else
                     {
@@ -55,11 +80,6 @@ namespace Flow.Launcher.Infrastructure
             {
                 return content;
             }
-        }
-
-        private string GetFirstPinyinChar(string content)
-        {
-            return string.Concat(content.Split(';').Select(x => x.First()));
         }
     }
 }
