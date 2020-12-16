@@ -36,8 +36,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             var message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt"),
-                                                                        Environment.NewLine, Environment.NewLine,
-                                                                        plugin.Name, plugin.Author);
+                                                                        plugin.Name, plugin.Author,
+                                                                        Environment.NewLine, Environment.NewLine);
 
             if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"), MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
@@ -157,12 +157,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
             string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}");
 
             Directory.Move(pluginFolderPath, newPluginPath);
-
-            if (MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_successandrestart"),
-                                                                            plugin.Name, Environment.NewLine),
-                                    Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
-                                                                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                Context.API.RestartApp();
+            
+            Context.API.RestartApp();
         }
 
         internal List<Result> RequestUninstall(string search)
@@ -217,19 +213,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private void Uninstall(PluginMetadata plugin)
         {
             string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
-                                                                        Environment.NewLine, Environment.NewLine,
-                                                                        plugin.Name, plugin.Author);
+                                                                        plugin.Name, plugin.Author,
+                                                                        Environment.NewLine, Environment.NewLine);
 
             if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"), 
                                                                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
-
-                if (MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_successandrestart"),
-                                                                            plugin.Name, Environment.NewLine),
-                                    Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
-                                                                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    Context.API.RestartApp();
+                
+                Context.API.RestartApp();
             }
         }
     }
