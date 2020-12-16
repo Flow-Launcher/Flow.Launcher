@@ -104,21 +104,6 @@ namespace Flow.Launcher.Plugin
             return Title + SubTitle;
         }
 
-
-        /// <summary>
-        /// Context menus associate with this result
-        /// </summary>
-        [Obsolete("Use IContextMenu instead")]
-        public List<Result> ContextMenu { get; set; }
-
-        [Obsolete("Use Object initializer instead")]
-        public Result(string Title, string IcoPath, string SubTitle = null)
-        {
-            this.Title = Title;
-            this.IcoPath = IcoPath;
-            this.SubTitle = SubTitle;
-        }
-
         public Result() { }
 
         /// <summary>
@@ -130,5 +115,15 @@ namespace Flow.Launcher.Plugin
         /// Plugin ID that generated this result
         /// </summary>
         public string PluginID { get; internal set; }
+
+        /// <summary>
+        /// Show message as ToolTip on result Title hover over
+        /// </summary>
+        public string TitleToolTip { get; set; }
+
+        /// <summary>
+        /// Show message as ToolTip on result SubTitle hover over
+        /// </summary>
+        public string SubTitleToolTip { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
-            var dotnetPlugins = DotNetPlugins(metadatas).ToList();
+            var dotnetPlugins = DotNetPlugins(metadatas);
             var pythonPlugins = PythonPlugins(metadatas, settings.PythonDirectory);
             var executablePlugins = ExecutablePlugins(metadatas);
             var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
@@ -41,79 +41,62 @@ namespace Flow.Launcher.Core.Plugin
                 {
 
 #if DEBUG
-                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(metadata.ExecuteFilePath);
-                    var types = assembly.GetTypes();
-                    var type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
+                    var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                    var assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                    var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly, typeof(IPlugin));
                     var plugin = (IPlugin)Activator.CreateInstance(type);
 #else
-                    Assembly assembly;
+                    Assembly assembly = null;
+                    IPlugin plugin = null;
+
                     try
                     {
-                        assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(metadata.ExecuteFilePath);
-                    }
-                    catch (Exception e)
-                    {
-                        erroredPlugins.Add(metadata.Name);
+                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                        assembly = assemblyLoader.LoadAssemblyAndDependencies();
 
+                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly, typeof(IPlugin));
+
+                        plugin = (IPlugin)Activator.CreateInstance(type);
+                    }
+                    catch (Exception e) when (assembly == null)
+                    {
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
-                        return;
-                    }
-
-                    Type type;
-                    try
-                    {
-                        var types = assembly.GetTypes();
-                        
-                        type = types.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(typeof(IPlugin)));
                     }
                     catch (InvalidOperationException e)
                     {
-                        erroredPlugins.Add(metadata.Name);
-
                         Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
-                        return;
                     }
                     catch (ReflectionTypeLoadException e)
                     {
-                        erroredPlugins.Add(metadata.Name);
-
                         Log.Exception($"|PluginsLoader.DotNetPlugins|The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
-                        return;
-                    }
-
-                    IPlugin plugin;
-                    try
-                    {
-                        plugin = (IPlugin)Activator.CreateInstance(type);
                     }
                     catch (Exception e)
                     {
-                        erroredPlugins.Add(metadata.Name);
-
                         Log.Exception($"|PluginsLoader.DotNetPlugins|The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
+                    }
+
+                    if (plugin == null)
+                    {
+                        erroredPlugins.Add(metadata.Name);
                         return;
                     }
 #endif
-                    PluginPair pair = new PluginPair
+                    plugins.Add(new PluginPair
                     {
                         Plugin = plugin,
                         Metadata = metadata
-                    };
-                    plugins.Add(pair);
+                    });
                 });
                 metadata.InitTime += milliseconds;
-
             }
 
             if (erroredPlugins.Count > 0)
             {
-                var errorPluginString = "";
+                var errorPluginString = String.Join(Environment.NewLine, erroredPlugins);
 
                 var errorMessage = "The following "
                                     + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
                                     + "errored and cannot be loaded:";
-
-                erroredPlugins.ForEach(x => errorPluginString += x + Environment.NewLine);
 
                 Task.Run(() =>
                 {
@@ -127,65 +110,74 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-        public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, string pythonDirecotry)
+        public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, string pythonDirectory)
         {
-            var metadatas = source.Where(o => o.Language.ToUpper() == AllowedLanguage.Python);
-            string filename;
-
-            if (string.IsNullOrEmpty(pythonDirecotry))
+            // try to set Constant.PythonPath, either from
+            // PATH or from the given pythonDirectory
+            if (string.IsNullOrEmpty(pythonDirectory))
             {
                 var paths = Environment.GetEnvironmentVariable(PATH);
                 if (paths != null)
                 {
-                    var pythonPaths = paths.Split(';').Where(p => p.ToLower().Contains(Python));
-                    if (pythonPaths.Any())
+                    var pythonInPath = paths
+                        .Split(';')
+                        .Where(p => p.ToLower().Contains(Python))
+                        .Any();
+
+                    if (pythonInPath)
                     {
-                        filename = PythonExecutable;
+                        Constant.PythonPath = PythonExecutable;
                     }
                     else
                     {
                         Log.Error("|PluginsLoader.PythonPlugins|Python can't be found in PATH.");
-                        return new List<PluginPair>();
                     }
                 }
                 else
                 {
                     Log.Error("|PluginsLoader.PythonPlugins|PATH environment variable is not set.");
-                    return new List<PluginPair>();
                 }
             }
             else
             {
-                var path = Path.Combine(pythonDirecotry, PythonExecutable);
+                var path = Path.Combine(pythonDirectory, PythonExecutable);
                 if (File.Exists(path))
                 {
-                    filename = path;
+                    Constant.PythonPath = path;
                 }
                 else
                 {
-                    Log.Error("|PluginsLoader.PythonPlugins|Can't find python executable in <b ");
-                    return new List<PluginPair>();
+                    Log.Error($"|PluginsLoader.PythonPlugins|Can't find python executable in {path}");
                 }
             }
-            Constant.PythonPath = filename;
-            var plugins = metadatas.Select(metadata => new PluginPair
+
+            // if we have a path to the python executable,
+            // load every python plugin pair.
+            if (String.IsNullOrEmpty(Constant.PythonPath))
             {
-                Plugin = new PythonPlugin(filename),
-                Metadata = metadata
-            });
-            return plugins;
+                return new List<PluginPair>();
+            }
+            else
+            {
+                return source
+                    .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
+                    .Select(metadata => new PluginPair
+                    {
+                        Plugin = new PythonPlugin(Constant.PythonPath),
+                        Metadata = metadata
+                    });
+            }
         }
 
         public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
-            var metadatas = source.Where(o => o.Language.ToUpper() == AllowedLanguage.Executable);
-
-            var plugins = metadatas.Select(metadata => new PluginPair
-            {
-                Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
-                Metadata = metadata
-            });
-            return plugins;
+            return source
+                .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)
+                .Select(metadata => new PluginPair
+                {
+                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                    Metadata = metadata
+                });
         }
 
     }

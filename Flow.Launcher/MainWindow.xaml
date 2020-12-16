@@ -22,7 +22,6 @@
         Loaded="OnLoaded"
         Initialized="OnInitialized"
         Closing="OnClosing"
-        Drop="OnDrop"
         LocationChanged="OnLocationChanged"
         Deactivated="OnDeactivated"
         PreviewKeyDown="OnKeyDown"
@@ -64,8 +63,7 @@
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <TextBox x:Name="QueryTextSuggestionBox"
-                         Style="{DynamicResource QueryBoxStyle}"
-                         Foreground="DarkGray"
+                         Style="{DynamicResource QuerySuggestionBoxStyle}"
                          IsEnabled="False"
                          Margin="18,0,56,0">
                         <TextBox.Text>

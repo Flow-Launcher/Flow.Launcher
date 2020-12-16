@@ -83,5 +83,10 @@ namespace Flow.Launcher.Plugin.WebSearch
                 _settings.BrowserPath = fileBrowserDialog.FileName;
             }
         }
+
+        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _settings.BrowserPath = browserPathBox.Text;
+        }
     }
 }

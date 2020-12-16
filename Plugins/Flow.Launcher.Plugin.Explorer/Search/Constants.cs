@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Reflection;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -16,12 +16,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const string DifferentUserIconImagePath = "Images\\user.png";
         internal const string IndexingOptionsIconImagePath = "Images\\windowsindexingoptions.png";
 
-        internal const string DefaultFolderSubtitleString = "Ctrl + Enter to open the directory";
+        internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";
+
+        internal const string ToolTipOpenContainingFolder = "Ctrl + Enter to open the containing folder";
 
         internal const char AllFilesFolderSearchWildcard = '>';
+
+        internal const string DefaultContentSearchActionKeyword = "doc:";
 
         internal const char DirectorySeperator = '\\';
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";
+
+        internal static string ExplorerIconImageFullPath 
+            => Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString()) + "\\" + ExplorerIconImagePath;
     }
 }
