@@ -31,7 +31,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = "Images\\website.png",
                     Action = _ => 
                     {
-                        SharedCommands.SearchWeb.NewBrowserWindow(pluginManifestInfo.Website);
+                        SharedCommands.SearchWeb.NewTabInBrowser(pluginManifestInfo.Website);
                         return true;
                     }
                 },
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = "Images\\sourcecode.png",
                     Action = _ =>
                     {
-                        SharedCommands.SearchWeb.NewBrowserWindow(pluginManifestInfo.UrlSourceCode);
+                        SharedCommands.SearchWeb.NewTabInBrowser(pluginManifestInfo.UrlSourceCode);
                         return true;
                     }
                 },
