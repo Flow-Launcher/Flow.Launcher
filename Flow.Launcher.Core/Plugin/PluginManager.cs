@@ -19,10 +19,6 @@ namespace Flow.Launcher.Core.Plugin
     {
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
-        /// <summary>
-        /// Directories that will hold Flow Launcher plugin directory
-        /// </summary>
-
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly List<PluginPair> GlobalPlugins = new List<PluginPair>();
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new Dictionary<string, PluginPair>();
@@ -32,27 +28,18 @@ namespace Flow.Launcher.Core.Plugin
         // todo happlebao, this should not be public, the indicator function should be embeded 
         public static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
-        private static readonly string[] Directories = { Constant.PreinstalledDirectory, DataLocation.PluginsDirectory };
 
-        private static void ValidateUserDirectory()
-        {
-            if (!Directory.Exists(DataLocation.PluginsDirectory))
-            {
-                Directory.CreateDirectory(DataLocation.PluginsDirectory);
-            }
-        }
+        /// <summary>
+        /// Directories that will hold Flow Launcher plugin directory
+        /// </summary>
+        private static readonly string[] Directories = { Constant.PreinstalledDirectory, DataLocation.PluginsDirectory };
 
         private static void DeletePythonBinding()
         {
             const string binding = "flowlauncher.py";
-            var directory = DataLocation.PluginsDirectory;
-            foreach (var subDirectory in Directory.GetDirectories(directory))
+            foreach (var subDirectory in Directory.GetDirectories(DataLocation.PluginsDirectory))
             {
-                var path = Path.Combine(subDirectory, binding);
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
+                File.Delete(Path.Combine(subDirectory, binding));
             }
         }
 
@@ -76,7 +63,8 @@ namespace Flow.Launcher.Core.Plugin
 
         static PluginManager()
         {
-            ValidateUserDirectory();
+            // validate user directory
+            Directory.CreateDirectory(DataLocation.PluginsDirectory);
             // force old plugins use new python binding
             DeletePythonBinding();
         }
@@ -132,9 +120,10 @@ namespace Flow.Launcher.Core.Plugin
                     GlobalPlugins.Add(plugin);
 
                 // Plugins may have multiple ActionKeywords, eg. WebSearch
-                plugin.Metadata.ActionKeywords.Where(x => x != Query.GlobalPluginWildcardSign)
-                                                .ToList()
-                                                .ForEach(x => NonGlobalPlugins[x] = plugin);
+                plugin.Metadata.ActionKeywords
+                    .Where(x => x != Query.GlobalPluginWildcardSign)
+                    .ToList()
+                    .ForEach(x => NonGlobalPlugins[x] = plugin);
             }
 
             if (failedPlugins.Any())
@@ -142,11 +131,6 @@ namespace Flow.Launcher.Core.Plugin
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
                 API.ShowMsg($"Fail to Init Plugins", $"Plugins: {failed} - fail to load and would be disabled, please contact plugin creator for help", "", false);
             }
-        }
-
-        public static void InstallPlugin(string path)
-        {
-            PluginInstaller.Install(path);
         }
 
         public static List<PluginPair> ValidPluginsForQuery(Query query)
@@ -164,9 +148,9 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<Result> QueryForPlugin(PluginPair pair, Query query)
         {
+            var results = new List<Result>();
             try
             {
-                List<Result> results = null;
                 var metadata = pair.Metadata;
                 var milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}", () =>
                 {
@@ -175,13 +159,12 @@ namespace Flow.Launcher.Core.Plugin
                 });
                 metadata.QueryCount += 1;
                 metadata.AvgQueryTime = metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
-                return results;
             }
             catch (Exception e)
             {
                 Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
-                return new List<Result>();
             }
+            return results;
         }
 
         public static void UpdatePluginMetadata(List<Result> results, PluginMetadata metadata, Query query)
@@ -221,47 +204,34 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
+            var results = new List<Result>();
             var pluginPair = _contextMenuPlugins.FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
-                var metadata = pluginPair.Metadata;
                 var plugin = (IContextMenu)pluginPair.Plugin;
 
                 try
                 {
-                    var results = plugin.LoadContextMenus(result);
+                    results = plugin.LoadContextMenus(result);
                     foreach (var r in results)
                     {
-                        r.PluginDirectory = metadata.PluginDirectory;
-                        r.PluginID = metadata.ID;
+                        r.PluginDirectory = pluginPair.Metadata.PluginDirectory;
+                        r.PluginID = pluginPair.Metadata.ID;
                         r.OriginQuery = result.OriginQuery;
                     }
-                    return results;
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{metadata.Name}>", e);
-                    return new List<Result>();
+                    Log.Exception($"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{pluginPair.Metadata.Name}>", e);
                 }
             }
-            else
-            {
-                return new List<Result>();
-            }
-
+            return results;
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
-            if (actionKeyword != Query.GlobalPluginWildcardSign &&
-                NonGlobalPlugins.ContainsKey(actionKeyword))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return actionKeyword != Query.GlobalPluginWildcardSign
+                && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
 
         /// <summary>
@@ -299,7 +269,7 @@ namespace Flow.Launcher.Core.Plugin
                 GlobalPlugins.Remove(plugin);
             }
             
-            if(oldActionkeyword != Query.GlobalPluginWildcardSign)
+            if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
             
 

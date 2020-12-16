@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="404.508" d:DesignWidth="600">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -24,7 +25,7 @@
             </StackPanel>
         </StackPanel>
         <ListView x:Name="programSourceView" Grid.Row="1" AllowDrop="True" SelectionMode="Extended" Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
-                  Margin="0 13 0 0"
+                  Margin="0,13,0,10"
                   BorderBrush="DarkGray"
                   BorderThickness="1"
                   GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
@@ -63,7 +64,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DockPanel  Grid.Row="2">
+        <DockPanel  Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="1">
             <StackPanel x:Name="indexingPanel" Visibility="Hidden" HorizontalAlignment="Left" Orientation="Horizontal">
                 <ProgressBar x:Name="progressBarIndexing" Height="20" Width="80" Minimum="0" Maximum="100" IsIndeterminate="True" />
                 <TextBlock Margin="10 0 0 0" Height="20" HorizontalAlignment="Center" Text="{DynamicResource flowlauncher_plugin_program_indexing}" />
@@ -71,9 +72,18 @@
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button x:Name="btnProgramSourceStatus" Click="btnProgramSourceStatus_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_disable}" />
                 <Button x:Name="btnEditProgramSource" Click="btnEditProgramSource_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_edit}"/>
-                <Button x:Name="btnAddProgramSource" Click="btnAddProgramSource_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_add}"/>
+                <Button x:Name="btnAddProgramSource" Click="btnAddProgramSource_OnClick" Width="100" Margin="10 10 0 10" Content="{DynamicResource flowlauncher_plugin_program_add}"/>
             </StackPanel>
         </DockPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <TextBlock Text="{DynamicResource flowlauncher_plugin_program_customizedexplorer}" VerticalAlignment="Center" FontSize="15"
+                   ToolTip= "{DynamicResource flowlauncher_plugin_program_tooltip_customizedexplorer}"/>
+            <TextBox Margin="10,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="200" Height="30" FontSize="15"
+                 TextChanged="CustomizeExplorer" x:Name="CustomizeExplorerBox"/>
+            <TextBlock Text="{DynamicResource flowlauncher_plugin_program_args}" VerticalAlignment="Center" FontSize="15"
+                       ToolTip="{DynamicResource flowlauncher_plugin_program_tooltip_args}" />
+            <TextBox Margin="10,0,0,0" Width="135" Height="30" FontSize="15" x:Name="CustomizeArgsBox" TextChanged="CustomizeExplorerArgs"></TextBox>
+        </StackPanel>
     </Grid>
 </UserControl>
 

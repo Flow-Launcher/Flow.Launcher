@@ -21,11 +21,11 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly Alphabet _alphabet;
+        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, Alphabet alphabet)
+        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
         {
             _settingsVM = settingsVM;
             _mainVM = mainVM;
@@ -46,12 +46,6 @@ namespace Flow.Launcher
         public void ChangeQueryText(string query, bool selectAll = false)
         {
             _mainVM.ChangeQueryText(query);
-        }
-
-        [Obsolete]
-        public void CloseApp()
-        {
-            Application.Current.MainWindow.Close();
         }
 
         public void RestartApp()
@@ -82,24 +76,11 @@ namespace Flow.Launcher
             _settingsVM.Save();
             PluginManager.Save();
             ImageLoader.Save();
-            _alphabet.Save();
         }
 
         public void ReloadAllPluginData()
         {
             PluginManager.ReloadData();
-        }
-
-        [Obsolete]
-        public void HideApp()
-        {
-            _mainVM.MainWindowVisibility = Visibility.Hidden;
-        }
-
-        [Obsolete]
-        public void ShowApp()
-        {
-            _mainVM.MainWindowVisibility = Visibility.Visible;
         }
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "")
@@ -134,11 +115,6 @@ namespace Flow.Launcher
             _mainVM.ProgressBarVisibility = Visibility.Collapsed;
         }
 
-        public void InstallPlugin(string path)
-        {
-            Application.Current.Dispatcher.Invoke(() => PluginManager.InstallPlugin(path));
-        }
-
         public string GetTranslation(string key)
         {
             return InternationalizationManager.Instance.GetTranslation(key);
@@ -150,21 +126,6 @@ namespace Flow.Launcher
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
-
-        [Obsolete("This will be removed in Flow Launcher 1.3")]
-        public void PushResults(Query query, PluginMetadata plugin, List<Result> results)
-        {
-            results.ForEach(o =>
-            {
-                o.PluginDirectory = plugin.PluginDirectory;
-                o.PluginID = plugin.ID;
-                o.OriginQuery = query;
-            });
-            Task.Run(() =>
-            {
-                _mainVM.UpdateResultView(results, plugin, query);
-            });
-        }
 
         #endregion
 

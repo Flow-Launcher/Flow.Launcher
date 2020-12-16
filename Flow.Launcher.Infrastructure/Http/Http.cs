@@ -66,18 +66,12 @@ namespace Flow.Launcher.Infrastructure.Http
             response = response.NonNull();
             var stream = response.GetResponseStream().NonNull();
 
-            using (var reader = new StreamReader(stream, Encoding.GetEncoding(encoding)))
-            {
-                var content = await reader.ReadToEndAsync();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    return content;
-                }
-                else
-                {
-                    throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
-                }
-            }
+            using var reader = new StreamReader(stream, Encoding.GetEncoding(encoding));
+            var content = await reader.ReadToEndAsync();
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
+            
+            return content;
         }
     }
 }

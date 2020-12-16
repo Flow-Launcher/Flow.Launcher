@@ -57,7 +57,6 @@ namespace Flow.Launcher
                     App.API.ChangeQuery(pluginHotkey.ActionKeyword);
                     Application.Current.MainWindow.Visibility = Visibility.Visible;
                 });
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("success"));
             }
             else
             {
@@ -76,7 +75,6 @@ namespace Flow.Launcher
                     App.API.ChangeQuery(updateCustomHotkey.ActionKeyword);
                     Application.Current.MainWindow.Visibility = Visibility.Visible;
                 });
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("success"));
             }
 
             Close();

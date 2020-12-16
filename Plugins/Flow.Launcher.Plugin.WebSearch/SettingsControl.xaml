@@ -40,7 +40,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" HorizontalAlignment="Left" Margin="0 3 0 0">
             <Label Content="Set browser from path:" Margin="0 0 350 0" HorizontalAlignment="Left" Width="140"/>
-            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Margin="160,-22,0,0" 
+            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Margin="160,-22,0,0" TextChanged="OnBrowserPathTextChanged"
                      Width="214" Style="{StaticResource BrowserPathBoxStyle}"/>
             <Button x:Name="viewButton" HorizontalAlignment="Left" Margin="400,-30,0,0"  
                     Click="OnChooseClick" FontSize="13" Content="Choose" Width="80"/>

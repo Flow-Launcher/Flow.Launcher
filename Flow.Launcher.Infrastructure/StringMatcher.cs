@@ -21,18 +21,6 @@ namespace Flow.Launcher.Infrastructure
 
         public static StringMatcher Instance { get; internal set; }
 
-        [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
-        public static int Score(string source, string target)
-        {
-            return FuzzySearch(target, source).Score;
-        }
-
-        [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
-        public static bool IsMatch(string source, string target)
-        {
-            return Score(source, target) > 0;
-        }
-
         public static MatchResult FuzzySearch(string query, string stringToCompare)
         {
             return Instance.FuzzyMatch(query, stringToCompare);
@@ -83,9 +71,18 @@ namespace Flow.Launcher.Infrastructure
             bool allSubstringsContainedInCompareString = true;
 
             var indexList = new List<int>();
+            List<int> spaceIndices = new List<int>();
 
             for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
+
+                // To maintain a list of indices which correspond to spaces in the string to compare
+                // To populate the list only for the first query substring
+                if (fullStringToCompareWithoutCase[compareStringIndex].Equals(' ') && currentQuerySubstringIndex == 0)
+                {
+                    spaceIndices.Add(compareStringIndex);
+                }
+
                 if (fullStringToCompareWithoutCase[compareStringIndex] != currentQuerySubstring[currentQuerySubstringCharacterIndex])
                 {
                     matchFoundInPreviousLoop = false;
@@ -147,15 +144,31 @@ namespace Flow.Launcher.Infrastructure
             // proceed to calculate score if every char or substring without whitespaces matched
             if (allQuerySubstringsMatched)
             {
-                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex, lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
+                var nearestSpaceIndex = CalculateClosestSpaceIndex(spaceIndices, firstMatchIndex);
+                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1, lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
 
                 return new MatchResult(true, UserSettingSearchPrecision, indexList, score);
             }
 
-            return new MatchResult (false, UserSettingSearchPrecision);
+            return new MatchResult(false, UserSettingSearchPrecision);
         }
 
-        private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex, 
+        // To get the index of the closest space which preceeds the first matching index
+        private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
+        {
+            if (spaceIndices.Count == 0)
+            {
+                return -1;
+            }
+            else
+            {
+                int? ind = spaceIndices.OrderBy(item => (firstMatchIndex - item)).Where(item => firstMatchIndex > item).FirstOrDefault();
+                int closestSpaceIndex = ind ?? -1;
+                return closestSpaceIndex;
+            }
+        }
+
+        private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
                                                         string fullStringToCompareWithoutCase, string currentQuerySubstring)
         {
             var allMatch = true;
@@ -298,18 +311,6 @@ namespace Flow.Launcher.Infrastructure
 
     public class MatchOption
     {
-        /// <summary>
-        /// prefix of match char, use for hightlight
-        /// </summary>
-        [Obsolete("this is never used")]
-        public string Prefix { get; set; } = "";
-
-        /// <summary>
-        /// suffix of match char, use for hightlight
-        /// </summary>
-        [Obsolete("this is never used")]
-        public string Suffix { get; set; } = "";
-
         public bool IgnoreCase { get; set; } = true;
     }
 }

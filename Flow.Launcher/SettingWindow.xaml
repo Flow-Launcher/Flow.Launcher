@@ -172,7 +172,7 @@
                                 <TextBlock Text="{Binding PluginPair.Metadata.Description}"
                                            Grid.Row="1" Opacity="0.5" />
                                 <DockPanel Grid.Row="2" Margin="0 10 0 8" HorizontalAlignment="Right">
-                                    
+
                                     <TextBlock Text="{DynamicResource actionKeywords}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
                                                Margin="20 0 0 0"/>
@@ -211,10 +211,10 @@
                             <Run Text="{DynamicResource browserMoreThemes}" />
                         </Hyperlink>
                     </TextBlock>
+                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" Click="OpenPluginFolder">Open Theme Folder</Button>
+                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}"
+                             Margin="10, 0, 10, 10" Width="180" Height="394" />
 
-                    <ListBox SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}"
-                             Margin="10, 0, 10, 10" Width="180"
-                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 </DockPanel>
                 <Grid Margin="0" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -248,12 +248,13 @@
                                         <RowDefinition Height="50" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBox Text="{DynamicResource hiThere}" IsReadOnly="True"
-                                             Style="{DynamicResource QueryBoxStyle}" Grid.Row="0" 
+                                    <TextBox Grid.Row="0"
+                                             Text="{DynamicResource hiThere}" IsReadOnly="True"
+                                             Style="{DynamicResource QueryBoxStyle}"
                                              Margin="18 0 56 0" />
                                     <Image Source="{Binding ThemeImage}" HorizontalAlignment="Right" />
-                                    <ContentControl Visibility="Visible" Grid.Row="1">
-                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults}" />
+                                    <ContentControl Grid.Row="1">
+                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
                                     </ContentControl>
                                 </Grid>
                             </Border>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using Microsoft.Win32;
 using Flow.Launcher.Core.Plugin;
@@ -15,6 +14,7 @@ namespace Flow.Launcher.Plugin.WebSearch
         private PluginInitContext _context;
         private IPublicAPI _api;
         private SearchSourceViewModel _viewModel;
+        private string selectedNewIconImageFullPath;
 
 
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
@@ -39,6 +39,10 @@ namespace Flow.Launcher.Plugin.WebSearch
             _action = action;
             _context = context;
             _api = _context.API;
+
+            _viewModel.SetupCustomImagesDirectory();
+
+            imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(_searchSource.IconPath);
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -83,8 +87,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 _searchSources.Add(_searchSource);
 
-                var info = _api.GetTranslation("success");
-                MessageBox.Show(info);
                 Close();
             }
             else
@@ -106,8 +108,6 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;
 
-                var info = _api.GetTranslation("success");
-                MessageBox.Show(info);
                 Close();
             }
             else
@@ -115,26 +115,32 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
                 MessageBox.Show(warning);
             }
+
+            if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
+            {
+                _viewModel.UpdateIconAttributes(_searchSource, selectedNewIconImageFullPath);
+
+                _viewModel.CopyNewImageToUserDataDirectoryIfRequired(
+                                   _searchSource, selectedNewIconImageFullPath, _oldSearchSource.IconPath);
+            }
         }
 
         private void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
-            var directory = Main.ImagesDirectory;
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
-            var dialog = new OpenFileDialog {InitialDirectory = directory, Filter = filter};
+            var dialog = new OpenFileDialog {InitialDirectory = Main.CustomImagesDirectory, Filter = filter};
 
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                var fullpath = dialog.FileName;
-                if (!string.IsNullOrEmpty(fullpath))
+                selectedNewIconImageFullPath = dialog.FileName;
+
+                if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
                 {
-                    _searchSource.Icon = Path.GetFileName(fullpath);
-                    if (!File.Exists(_searchSource.IconPath))
-                    {
-                        _searchSource.Icon = SearchSource.DefaultIcon;
-                        MessageBox.Show($"The file should be put under {directory}");
-                    }
+                    if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
+                        MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+                    
+                    imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(selectedNewIconImageFullPath);
                 }
             }
         }

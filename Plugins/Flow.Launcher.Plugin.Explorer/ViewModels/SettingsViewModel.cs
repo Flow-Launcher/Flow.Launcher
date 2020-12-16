@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
+﻿using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using System.Diagnostics;
@@ -40,5 +41,20 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
             Process.Start(psi);
         }
+
+        internal void UpdateActionKeyword(string newActionKeyword, string oldActionKeyword)
+        {
+            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+
+            if (Settings.FileContentSearchActionKeyword == oldActionKeyword)
+                Settings.FileContentSearchActionKeyword = newActionKeyword;
+
+            if (Settings.SearchActionKeyword == oldActionKeyword)
+                Settings.SearchActionKeyword = newActionKeyword;
+        }
+
+        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+
+        internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
     }
 }

@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             browserPathBox.Text = _settings.BrowserPath;
             NewWindowBrowser.IsChecked = _settings.OpenInNewBrowserWindow;
             NewTabInBrowser.IsChecked = !_settings.OpenInNewBrowserWindow;
-        }        
+        }
 
         private void OnNewBrowserWindowClick(object sender, RoutedEventArgs e)
         {
@@ -42,6 +42,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
                 browserPathBox.Text = fileBrowserDialog.FileName;
                 _settings.BrowserPath = fileBrowserDialog.FileName;
             }
+        }
+
+        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _settings.BrowserPath = browserPathBox.Text;
         }
     }
 }

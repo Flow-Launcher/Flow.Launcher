@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             baseQuery.QueryMaxResults = settings.MaxResult;
 
             // Set list of columns we want to display, getting the path presently
-            baseQuery.QuerySelectColumns = "System.FileName, System.ItemPathDisplay, System.ItemType";
+            baseQuery.QuerySelectColumns = "System.FileName, System.ItemUrl, System.ItemType";
 
             // Filter based on file name
             baseQuery.QueryContentProperties = "System.FileName";
@@ -116,6 +116,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string QueryWhereRestrictionsForAllFilesAndFoldersSearch()
         {
             return $"scope='file:'";
+        }
+
+        ///<summary>
+        /// Search will be performed on all indexed file contents for the specified search keywords.
+        ///</summary>
+        public string QueryForFileContentSearch(string userSearchString)
+        {
+            string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
+
+            return query + QueryWhereRestrictionsForFileContentSearch(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+        }
+
+        ///<summary>
+        /// Set the required WHERE clause restriction to search within file content.
+        ///</summary>
+        public string QueryWhereRestrictionsForFileContentSearch(string searchQuery)
+        {
+            return $"FREETEXT('{searchQuery}')";
         }
     }
 }

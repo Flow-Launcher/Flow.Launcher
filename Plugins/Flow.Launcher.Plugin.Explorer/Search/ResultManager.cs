@@ -1,6 +1,7 @@
 ﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -38,13 +39,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
-                    
+
                     string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
                     context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
                         changeTo :
                         query.ActionKeyword + " " + changeTo);
                     return false;
                 },
+                TitleToolTip = Constants.ToolTipOpenDirectory,
+                SubTitleToolTip = Constants.ToolTipOpenDirectory,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
             };
         }
@@ -85,6 +88,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     FilesFolders.OpenPath(retrievedDirectoryPath);
                     return true;
                 },
+                TitleToolTip = retrievedDirectoryPath,
+                SubTitleToolTip = retrievedDirectoryPath,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = retrievedDirectoryPath, ShowIndexState = true, WindowsIndexed = windowsIndexed }
             };
         }
@@ -101,7 +106,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     try
                     {
-                        FilesFolders.OpenPath(filePath);
+                        if (c.SpecialKeyState.CtrlPressed)
+                        {
+                            FilesFolders.OpenContainingFolder(filePath);
+                        }
+                        else
+                        {
+                            FilesFolders.OpenPath(filePath);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -110,6 +122,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                     return true;
                 },
+                TitleToolTip = Constants.ToolTipOpenContainingFolder,
+                SubTitleToolTip = Constants.ToolTipOpenContainingFolder,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
             };
             return result;

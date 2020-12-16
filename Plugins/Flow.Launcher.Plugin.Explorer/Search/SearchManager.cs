@@ -34,13 +34,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var querySearch = query.Search;
 
-            var quickFolderLinks = quickFolderAccess.FolderList(query, settings.QuickFolderAccessLinks, context);
+            if (IsFileContentSearch(query.ActionKeyword))
+                return WindowsIndexFileContentSearch(query, querySearch);
+
+            // This allows the user to type the assigned action keyword and only see the list of quick folder links
+            if (settings.QuickFolderAccessLinks.Count > 0
+                && query.ActionKeyword == settings.SearchActionKeyword
+                && string.IsNullOrEmpty(query.Search))
+                    return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
+
+            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
 
             if (quickFolderLinks.Count > 0)
-                return quickFolderLinks;
-
-            if (string.IsNullOrEmpty(querySearch))
-                return results;
+                results.AddRange(quickFolderLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
@@ -51,7 +57,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var isEnvironmentVariablePath = querySearch.Substring(1).Contains("%\\");
 
             if (!FilesFolders.IsLocationPathString(querySearch) && !isEnvironmentVariablePath)
-                return WindowsIndexFilesAndFoldersSearch(query, querySearch);
+            {
+                results.AddRange(WindowsIndexFilesAndFoldersSearch(query, querySearch));
+
+                return results;
+            }
 
             var locationPath = querySearch;
 
@@ -72,6 +82,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                                 locationPath));
 
             return results;
+        }
+
+        private List<Result> WindowsIndexFileContentSearch(Query query, string querySearchString)
+        {
+            var queryConstructor = new QueryConstructor(settings);
+
+            if (string.IsNullOrEmpty(querySearchString))
+                return new List<Result>();
+
+            return indexSearch.WindowsIndexSearch(querySearchString,
+                                                    queryConstructor.CreateQueryHelper().ConnectionString,
+                                                    queryConstructor.QueryForFileContentSearch,
+                                                    query);
+        }
+
+        public bool IsFileContentSearch(string actionKeyword)
+        {
+            return actionKeyword == settings.FileContentSearchActionKeyword;
         }
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
@@ -116,15 +144,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
         {
+            var pathToDirectory = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
+
             if (!settings.UseWindowsIndexForDirectorySearch)
                 return false;
 
             if (settings.IndexSearchExcludedSubdirectoryPaths
-                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)
+                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory)
                                         .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
                 return false;
 
-            return indexSearch.PathIsIndexed(locationPath);
+            return indexSearch.PathIsIndexed(pathToDirectory);
         }
     }
 }

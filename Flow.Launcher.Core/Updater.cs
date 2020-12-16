@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.IO;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core
 {
@@ -28,10 +29,13 @@ namespace Flow.Launcher.Core
             GitHubRepository = gitHubRepository;
         }
 
-        public async Task UpdateApp(bool silentIfLatestVersion = true)
+        public async Task UpdateApp(IPublicAPI api , bool silentUpdate = true)
         {
             UpdateManager updateManager;
             UpdateInfo newUpdateInfo;
+
+            if (!silentUpdate)
+                api.ShowMsg("Please wait...", "Checking for new update");
 
             try
             {
@@ -62,12 +66,15 @@ namespace Flow.Launcher.Core
 
             if (newReleaseVersion <= currentVersion)
             {
-                if (!silentIfLatestVersion)
+                if (!silentUpdate)
                     MessageBox.Show("You already have the latest Flow Launcher version");
                 updateManager.Dispose();
                 return;
             }
-            
+
+            if (!silentUpdate)
+                api.ShowMsg("Update found", "Updating...");
+
             try
             {
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply);
@@ -84,10 +91,10 @@ namespace Flow.Launcher.Core
             if (DataLocation.PortableDataLocationInUse())
             {
                 var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                FilesFolders.Copy(DataLocation.PortableDataPath, targetDestination);
+                FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
                 if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
-                    MessageBox.Show(string.Format("Flow Launcher was not able to move your user profile data to the new update version. Please manually" +
-                        "move your profile data folder from {0} to {1}", DataLocation.PortableDataPath, targetDestination));
+                    MessageBox.Show("Flow Launcher was not able to move your user profile data to the new update version. Please manually " +
+                        $"move your profile data folder from {DataLocation.PortableDataPath} to {targetDestination}");
             }
             else
             {
@@ -96,11 +103,15 @@ namespace Flow.Launcher.Core
 
             var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
             
-            MessageBox.Show(newVersionTips);
             Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
             // always dispose UpdateManager
             updateManager.Dispose();
+
+            if (MessageBox.Show(newVersionTips, "New Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                UpdateManager.RestartApp(Constant.ApplicationFileName);
+            }
         }
 
         [UsedImplicitly]

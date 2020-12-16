@@ -264,27 +264,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             public Application(){}
 
-            private int Score(string query)
-            {
-                var displayNameMatch = StringMatcher.FuzzySearch(query, DisplayName);
-                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-                var score = new[] { displayNameMatch.Score, descriptionMatch.Score }.Max();
-                return score;
-            }
 
             public Result Result(string query, IPublicAPI api)
             {
-                var score = Score(query);
-                if (score <= 0)
-                { // no need to create result if score is 0
+                var title = (Name, Description) switch
+                {
+                    (var n, null) => n,
+                    (var n, var d) when d.StartsWith(n) => d,
+                    (var n, var d) when n.StartsWith(d) => n,
+                    (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
+                    _ => Name
+                };
+
+                var matchResult = StringMatcher.FuzzySearch(query, title);
+
+                if (!matchResult.Success)
                     return null;
-                }
 
                 var result = new Result
                 {
+                    Title = title,
                     SubTitle = Package.Location,
                     Icon = Logo,
-                    Score = score,
+                    Score = matchResult.Score,
+                    TitleHighlightData = matchResult.MatchData,
                     ContextData = this,
                     Action = e =>
                     {
@@ -293,23 +296,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                 };
 
-                if (Description.Length >= DisplayName.Length &&
-                    Description.Substring(0, DisplayName.Length) == DisplayName)
-                {
-                    result.Title = Description;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, Description).MatchData;
-                }
-                else if (!string.IsNullOrEmpty(Description))
-                {
-                    var title = $"{DisplayName}: {Description}";
-                    result.Title = title;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, title).MatchData;
-                }
-                else
-                {
-                    result.Title = DisplayName;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, DisplayName).MatchData;
-                }
+
                 return result;
             }
 
@@ -323,7 +310,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         Action = _ =>
                         {
-                            Main.StartProcess(Process.Start, new ProcessStartInfo(Package.Location));
+                            Main.StartProcess(Process.Start, 
+                                                new ProcessStartInfo(
+                                                    !string.IsNullOrEmpty(Main._settings.CustomizedExplorer)
+                                                    ? Main._settings.CustomizedExplorer
+                                                    : Settings.Explorer,
+                                                    Main._settings.CustomizedArgs
+                                                        .Replace("%s",$"\"{Package.Location}\"")
+                                                        .Trim()));
 
                             return true;
                         },
@@ -535,7 +529,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
                                                     $"|Unable to get logo for {UserModelId} from {path} and" +
                                                     $" located in {Package.Location}", new FileNotFoundException());
-                    return new BitmapImage(new Uri(Constant.ErrorIcon));
+                    return new BitmapImage(new Uri(Constant.MissingImgIcon));
                 }
             }
 
@@ -585,7 +579,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                     $"|Unable to convert background string {BackgroundColor} " +
                                                     $"to color for {Package.Location}", new InvalidOperationException());
 
-                        return new BitmapImage(new Uri(Constant.ErrorIcon));
+                        return new BitmapImage(new Uri(Constant.MissingImgIcon));
                     }
                 }
                 else

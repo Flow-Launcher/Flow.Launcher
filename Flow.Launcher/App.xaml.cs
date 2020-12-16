@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace Flow.Launcher
         private SettingWindowViewModel _settingsVM;
         private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
         private readonly Portable _portable = new Portable();
-        private readonly Alphabet _alphabet = new Alphabet();
+        private readonly PinyinAlphabet _alphabet = new PinyinAlphabet();
         private StringMatcher _stringMatcher;
 
         [STAThread]
@@ -85,6 +86,8 @@ namespace Flow.Launcher
 
                 Http.Proxy = _settings.Proxy;
 
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
                 RegisterExitEvents();
 
                 AutoStartup();
@@ -118,12 +121,12 @@ namespace Flow.Launcher
                     var timer = new Timer(1000 * 60 * 60 * 5);
                     timer.Elapsed += async (s, e) =>
                     {
-                        await _updater.UpdateApp();
+                        await _updater.UpdateApp(API);
                     };
                     timer.Start();
 
                     // check updates on startup
-                    await _updater.UpdateApp();
+                    await _updater.UpdateApp(API);
                 }
             });
         }
