@@ -15,6 +15,8 @@
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">All plugins are up to date</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Plugin Update</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_exists">This plugin has an update, would you like to see it?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">This plugin is already installed</system:String>
     
     <!--Controls-->
     

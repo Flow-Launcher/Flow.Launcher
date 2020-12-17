@@ -46,7 +46,22 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             if (PluginExists(plugin.ID))
             {
-                Context.API.ShowMsg("Plugin already installed");
+                if (Context.API.GetAllPlugins().Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version != plugin.Version))
+                {
+                    if (MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_update_exists"),
+                                        Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                         Context
+                                .API
+                                .ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.HotkeyUpdate} {plugin.Name}");
+
+                    Application.Current.MainWindow.Show();
+                    shouldHideWindow = false;
+
+                    return;
+                }
+
+                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_alreadyexists"));
                 return;
             }
 
