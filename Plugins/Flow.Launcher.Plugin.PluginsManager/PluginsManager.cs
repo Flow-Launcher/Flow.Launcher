@@ -147,7 +147,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}");
+            string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}-{plugin.Version}");
 
             Directory.Move(pluginFolderPath, newPluginPath);
             
