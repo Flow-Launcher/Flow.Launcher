@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"), MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
-            var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}{plugin.ID}.zip");
+            var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}-{plugin.Version}.zip");
 
             try
             {
@@ -65,20 +65,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Application.Current.Dispatcher.Invoke(() => Install(plugin, filePath));
         }
 
-        internal void Update()
+        internal void Update(string search)
         {
-            throw new NotImplementedException();
+
         }
 
         internal bool PluginExists(string id)
         {
             return Context.API.GetAllPlugins().Any(x => x.Metadata.ID == id);
-        }
-
-        internal void PluginsManifestSiteOpen()
-        {
-            //Open from context menu https://git.vcmq.workers.dev/Flow-Launcher/Flow.Launcher.PluginsManifest
-            throw new NotImplementedException();
         }
 
         internal List<Result> Search(List<Result> results, string searchName)
@@ -162,29 +156,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal List<Result> RequestUninstall(string search)
         {
-            if (!string.IsNullOrEmpty(search)
-                && Settings.UninstallHotkey.StartsWith(search)
-                && (Settings.UninstallHotkey != search || !search.StartsWith(Settings.UninstallHotkey)))
-            {
-                return 
-                    new List<Result>
-                    {
-                        new Result
-                        {
-                            Title = "Uninstall",
-                            IcoPath = icoPath,
-                            SubTitle = "Select a plugin to uninstall",
-                            Action = e =>
-                            {
-                                Context
-                                .API
-                                .ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UninstallHotkey} ");
+            var autocompletedResults = AutoCompleteReturnAllResults(search, 
+                                                                    Settings.UninstallHotkey, 
+                                                                    "Uninstall", 
+                                                                    "Select a plugin to uninstall");
 
-                                return false;
-                            }
-                        }
-                    };
-            }
+            if (autocompletedResults.Any())
+                return autocompletedResults;
 
             var uninstallSearch = search.Replace(Settings.UninstallHotkey, string.Empty).TrimStart();
 
@@ -222,6 +200,35 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 
                 Context.API.RestartApp();
             }
+        }
+
+        private List<Result> AutoCompleteReturnAllResults(string search, string hotkey, string title, string subtitle)
+        {
+            if (!string.IsNullOrEmpty(search)
+                && hotkey.StartsWith(search)
+                && (hotkey != search || !search.StartsWith(hotkey)))
+            {
+                return
+                    new List<Result>
+                    {
+                        new Result
+                        {
+                            Title = title,
+                            IcoPath = icoPath,
+                            SubTitle = subtitle,
+                            Action = e =>
+                            {
+                                Context
+                                .API
+                                .ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {hotkey} ");
+
+                                return false;
+                            }
+                        }
+                    };
+            }
+
+            return new List<Result>();
         }
     }
 }
