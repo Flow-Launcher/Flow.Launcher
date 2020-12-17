@@ -62,12 +62,82 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
             }
 
-            Application.Current.Dispatcher.Invoke(() => Install(plugin, filePath));
+            Application.Current.Dispatcher.Invoke(() => { Install(plugin, filePath); Context.API.RestartApp(); });
         }
 
-        internal void Update(string search)
+        internal List<Result> RequestUpdate(string search)
         {
+            var autocompletedResults = AutoCompleteReturnAllResults(search,
+                                                                    Settings.HotkeyUpdate,
+                                                                    "Update",
+                                                                    "Select a plugin to update");
 
+            if (autocompletedResults.Any())
+                return autocompletedResults;
+
+            var uninstallSearch = search.Replace(Settings.HotkeyUpdate, string.Empty).TrimStart();
+
+
+            var resultsForUpdate = 
+                    from existingPlugin in Context.API.GetAllPlugins()
+                    join pluginFromManifest in pluginsManifest.UserPlugins
+                        on existingPlugin.Metadata.ID equals pluginFromManifest.ID
+                    where existingPlugin.Metadata.Version != pluginFromManifest.Version
+                    select 
+                      new 
+                      {
+                          pluginFromManifest.Name, 
+                          pluginFromManifest.Author, 
+                          CurrentVersion = existingPlugin.Metadata.Version, 
+                          NewVersion = pluginFromManifest.Version,
+                          existingPlugin.Metadata.IcoPath,
+                          PluginExistingMetadata = existingPlugin.Metadata,
+                          PluginNewUserPlugin = pluginFromManifest
+                      };
+
+            if (!resultsForUpdate.Any())
+                return new List<Result> { 
+                                new Result 
+                                    {
+                                        Title = Context.API.GetTranslation("plugin_pluginsmanager_update_noresult_title"),
+                                        SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_update_noresult_subtitle"),
+                                        IcoPath = icoPath
+                                    }};
+
+
+            var results = resultsForUpdate
+                            .Select(x =>
+                                new Result
+                                    {
+                                        Title = $"{x.Name} by {x.Author}",
+                                        SubTitle = $"Update from version {x.CurrentVersion} to {x.NewVersion}",
+                                        IcoPath = x.IcoPath,
+                                        Action = e =>
+                                        {
+                                            string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
+                                                                        x.Name, x.Author,
+                                                                        Environment.NewLine, Environment.NewLine);
+
+                                            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                                                                                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                                            {
+                                                Uninstall(x.PluginExistingMetadata);
+
+                                                var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory, $"{x.Name}-{x.NewVersion}.zip");
+                                                Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath);
+                                                Install(x.PluginNewUserPlugin, downloadToFilePath);
+
+                                                Context.API.RestartApp();
+
+                                                return true;
+                                            }
+
+                                            return false;
+                                        }
+                                    })
+                            .ToList();
+
+            return Search(results, uninstallSearch);
         }
 
         internal bool PluginExists(string id)
@@ -150,21 +220,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
             string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}-{plugin.Version}");
 
             Directory.Move(pluginFolderPath, newPluginPath);
-            
-            Context.API.RestartApp();
         }
 
         internal List<Result> RequestUninstall(string search)
         {
             var autocompletedResults = AutoCompleteReturnAllResults(search, 
-                                                                    Settings.UninstallHotkey, 
+                                                                    Settings.HotkeyUninstall, 
                                                                     "Uninstall", 
                                                                     "Select a plugin to uninstall");
 
             if (autocompletedResults.Any())
                 return autocompletedResults;
 
-            var uninstallSearch = search.Replace(Settings.UninstallHotkey, string.Empty).TrimStart();
+            var uninstallSearch = search.Replace(Settings.HotkeyUninstall, string.Empty).TrimStart();
 
             var results= Context.API
                                 .GetAllPlugins()
@@ -176,10 +244,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                         IcoPath = x.Metadata.IcoPath,
                                         Action = e =>
                                         {
-                                            Application.Current.MainWindow.Hide();
-                                            Uninstall(x.Metadata);
+                                            string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
+                                                                        x.Metadata.Name, x.Metadata.Author,
+                                                                        Environment.NewLine, Environment.NewLine);
 
-                                            return true;
+                                            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
+                                                                                                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                                            {
+                                                Application.Current.MainWindow.Hide();
+                                                Uninstall(x.Metadata);
+                                                Context.API.RestartApp();
+
+                                                return true;
+                                            }
+
+                                            return false;
                                         }
                                     })
                                 .ToList();
@@ -189,17 +268,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private void Uninstall(PluginMetadata plugin)
         {
-            string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
-                                                                        plugin.Name, plugin.Author,
-                                                                        Environment.NewLine, Environment.NewLine);
-
-            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"), 
-                                                                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
-                
-                Context.API.RestartApp();
-            }
+            // Marked for deletion. Will be deleted on next start up
+            using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
         }
 
         private List<Result> AutoCompleteReturnAllResults(string search, string hotkey, string title, string subtitle)
