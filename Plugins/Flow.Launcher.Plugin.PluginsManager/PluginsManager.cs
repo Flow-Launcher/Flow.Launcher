@@ -19,6 +19,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private Settings Settings { get; set; }
 
+        private bool shouldHideWindow = true;
+        private bool ShouldHideWindow 
+        {
+            set { shouldHideWindow = value; }
+            get
+            {
+                var setValue = shouldHideWindow;
+                // Default value for hide main window is true. Revert after get call.
+                // This ensures when set by another method to false, it is only used once.
+                shouldHideWindow = true;
+
+                return setValue;
+            }
+        }
+
         private readonly string icoPath = "Images\\pluginsmanager.png";
 
         internal PluginsManager(PluginInitContext context, Settings settings)
@@ -178,7 +193,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Application.Current.MainWindow.Hide();
                             InstallOrUpdate(x);
 
-                            return true;
+                            return ShouldHideWindow;
                         }
                     })
                 .ToList();
