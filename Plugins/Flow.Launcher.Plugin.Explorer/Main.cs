@@ -3,6 +3,7 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
@@ -16,6 +17,9 @@ namespace Flow.Launcher.Plugin.Explorer
         private SettingsViewModel viewModel;
 
         private IContextMenu contextMenu;
+
+        private static CancellationTokenSource updateSource;
+        public static CancellationToken updateToken;
 
         public Control CreateSettingPanel()
         {
@@ -37,6 +41,9 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public List<Result> Query(Query query)
         {
+            updateSource?.Cancel();
+            updateSource = new CancellationTokenSource();
+            updateToken = updateSource.Token;
             return new SearchManager(Settings, Context).Search(query);
         }
 

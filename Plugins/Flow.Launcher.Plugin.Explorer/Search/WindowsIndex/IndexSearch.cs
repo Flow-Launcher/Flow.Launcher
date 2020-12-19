@@ -2,9 +2,12 @@
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
@@ -28,7 +31,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             resultManager = new ResultManager(context);
         }
 
-        internal List<Result> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
+        internal async Task<List<Result>> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
         {
             var folderResults = new List<Result>();
             var fileResults = new List<Result>();
@@ -43,8 +46,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     using (command = new OleDbCommand(indexQueryString, conn))
                     {
                         // Results return as an OleDbDataReader.
-                        using (dataReaderResults = command.ExecuteReader())
+                        var updateToken = Main.updateToken;
+                        using (dataReaderResults = await command.ExecuteReaderAsync(updateToken) as OleDbDataReader)
                         {
+                            if (updateToken.IsCancellationRequested)
+                                return new List<Result>();
                             if (dataReaderResults.HasRows)
                             {
                                 while (dataReaderResults.Read())
@@ -87,7 +93,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 LogException("General error from performing index search", e);
             }
 
-            // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
+            // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
             return results.Concat(folderResults.OrderBy(x => x.Title)).Concat(fileResults.OrderBy(x => x.Title)).ToList(); ;
         }
 
@@ -101,7 +107,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             lock (_lock)
             {
                 var constructedQuery = constructQuery(searchString);
-                return ExecuteWindowsIndexSearch(constructedQuery, connectionString, query);
+                return ExecuteWindowsIndexSearch(constructedQuery, connectionString, query).GetAwaiter().GetResult();
             }
         }
 
