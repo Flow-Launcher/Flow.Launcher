@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,6 +10,9 @@ using Microsoft.Win32;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure.Logger;
+using System.Diagnostics;
+using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -53,6 +55,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var result = new Result
             {
+                Title = title,
                 SubTitle = LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
@@ -262,10 +265,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             try
             {
                 var paths = Directory.EnumerateFiles(directory, "*", new EnumerationOptions
-                                                        {
-                                                            IgnoreInaccessible = true,
-                                                            RecurseSubdirectories = true
-                                                        })
+                {
+                    IgnoreInaccessible = true,
+                    RecurseSubdirectories = true
+                })
                                      .Where(x => suffixes.Contains(Extension(x)));
 
                 return paths;
@@ -295,14 +298,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static ParallelQuery<Win32> UnregisteredPrograms(List<Settings.ProgramSource> sources, string[] suffixes)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<Settings.ProgramSource> sources, string[] suffixes)
         {
             var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
                 .SelectMany(s => ProgramPaths(s.Location, suffixes))
                 .Where(t1 => !Main._settings.DisabledProgramSources.Any(x => t1 == x.UniqueIdentifier))
                 .Distinct();
 
-            var programs = paths.AsParallel().Select(x => Extension(x) switch
+            var programs = paths.Select(x => Extension(x) switch
             {
                 ExeExtension => ExeProgram(x),
                 ShortcutExtension => LnkProgram(x),
@@ -313,7 +316,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static ParallelQuery<Win32> StartMenuPrograms(string[] suffixes)
+        private static IEnumerable<Win32> StartMenuPrograms(string[] suffixes)
         {
             var disabledProgramsList = Main._settings.DisabledProgramSources;
 
@@ -325,7 +328,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var toFilter = paths1.Concat(paths2);
 
             var programs = toFilter
-                        .AsParallel()
                         .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
                         .Distinct()
                         .Select(x => Extension(x) switch
@@ -336,32 +338,31 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static ParallelQuery<Win32> AppPathsPrograms(string[] suffixes)
+        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes)
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
-            var programs = new List<Win32>();
-            using (var root = Registry.LocalMachine.OpenSubKey(appPaths))
+            IEnumerable<Win32> programs = Enumerable.Empty<Win32>();
+
+            using var rootMachine = Registry.LocalMachine.OpenSubKey(appPaths);
+            using var rootUser = Registry.CurrentUser.OpenSubKey(appPaths);
+
+            if (rootMachine != null)
             {
-                if (root != null)
-                {
-                    programs.AddRange(GetProgramsFromRegistry(root));
-                }
+                programs = programs.Concat(GetProgramsFromRegistry(rootMachine));
             }
-            using (var root = Registry.CurrentUser.OpenSubKey(appPaths))
+            if (rootUser != null)
             {
-                if (root != null)
-                {
-                    programs.AddRange(GetProgramsFromRegistry(root));
-                }
+                programs = programs.Concat(GetProgramsFromRegistry(rootUser));
             }
 
+
             var disabledProgramsList = Main._settings.DisabledProgramSources;
-            var toFilter = programs.AsParallel().Where(p => suffixes.Contains(Extension(p.ExecutableName)));
+            var toFilter = programs.Where(p => suffixes.Contains(Extension(p.ExecutableName)));
 
             var filtered = toFilter.Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier)).Select(t1 => t1);
 
-            return filtered;
+            return filtered.ToList();
         }
 
         private static IEnumerable<Win32> GetProgramsFromRegistry(RegistryKey root)
@@ -418,14 +419,43 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return entry;
         }
 
+        private class Win32ComparatorBasedonDescription : IEqualityComparer<Win32>
+        {
+            public readonly static Win32ComparatorBasedonDescription Default = new Win32ComparatorBasedonDescription();
+
+            public bool Equals(Win32 x, Win32 y)
+            {
+                return x.Description == y.Description;
+            }
+
+            public int GetHashCode(Win32 obj)
+            {
+                return obj.Description.GetHashCode();
+            }
+        }
+
+        private static Win32[] ProgramsHasher(IEnumerable<Win32> programs)
+            => programs.GroupBy(p => p.FullPath.ToLower())
+                       .SelectMany(g =>
+                        {
+                            var tempList = g.ToList();
+                            if (tempList.Count() > 1)
+                                return g.Where(p => !string.IsNullOrEmpty(p.Description))
+                                        .Distinct(Win32ComparatorBasedonDescription.Default);
+                            else
+                                return g.Take(1);
+                        }).ToArray();
+
+
         public static Win32[] All(Settings settings)
         {
             try
             {
-                var programs = new List<Win32>().AsParallel();
+                var programs = Enumerable.Empty<Win32>();
 
                 var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
                 programs = programs.Concat(unregistered);
+
                 if (settings.EnableRegistrySource)
                 {
                     var appPaths = AppPathsPrograms(settings.ProgramSuffixes);
@@ -437,8 +467,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
                     programs = programs.Concat(startMenu);
                 }
-
-                return programs.ToArray();
+                return ProgramsHasher(programs);
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception e)
