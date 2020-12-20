@@ -209,7 +209,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             InstallOrUpdate(x);
 
                             return ShouldHideWindow;
-                        }
+                        },
+                        ContextData = x
                     })
                 .ToList();
 
