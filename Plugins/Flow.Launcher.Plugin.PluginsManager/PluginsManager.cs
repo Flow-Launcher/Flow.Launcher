@@ -115,7 +115,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             InstallOrUpdate(x);
 
                             return true;
-                        }
+                        },
+                        ContextData = x
                     })
                 .ToList();
 
