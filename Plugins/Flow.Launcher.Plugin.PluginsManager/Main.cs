@@ -42,9 +42,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var pluginManager = new PluginsManager(Context, Settings);
 
             if (!string.IsNullOrEmpty(search)
-                    && ($"{Settings.UninstallHotkey} ".StartsWith(search) || search.StartsWith($"{Settings.UninstallHotkey} ")))
+                    && ($"{Settings.HotkeyUninstall} ".StartsWith(search) || search.StartsWith($"{Settings.HotkeyUninstall} ")))
                 return pluginManager.RequestUninstall(search);
-            
+
+            if (!string.IsNullOrEmpty(search)
+                    && ($"{Settings.HotkeyUpdate} ".StartsWith(search) || search.StartsWith($"{Settings.HotkeyUpdate} ")))
+                return pluginManager.RequestUpdate(search);
+
             return pluginManager.RequestInstallOrUpdate(search);
         }
 
