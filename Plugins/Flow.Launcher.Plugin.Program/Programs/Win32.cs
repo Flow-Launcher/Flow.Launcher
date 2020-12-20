@@ -481,7 +481,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 ProgramLogger.LogException("|Win32|All|Not available|An unexpected error occurred", e);
 
-                return new Win32[0];
+                return Array.Empty<Win32>();
             }
 #endif
         }
