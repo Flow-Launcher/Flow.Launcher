@@ -138,34 +138,33 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var results = resultsForUpdate
                             .Select(x =>
                                 new Result
+                                {
+                                    Title = $"{x.Name} by {x.Author}",
+                                    SubTitle = $"Update from version {x.CurrentVersion} to {x.NewVersion}",
+                                    IcoPath = x.IcoPath,
+                                    Action = e =>
                                     {
-                                        Title = $"{x.Name} by {x.Author}",
-                                        SubTitle = $"Update from version {x.CurrentVersion} to {x.NewVersion}",
-                                        IcoPath = x.IcoPath,
-                                        Action = e =>
+                                        string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
+                                                                    x.Name, x.Author,
+                                                                    Environment.NewLine, Environment.NewLine);
+
+                                        if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                                                                                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                                         {
-                                            string message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
-                                                                        x.Name, x.Author,
-                                                                        Environment.NewLine, Environment.NewLine);
+                                            Uninstall(x.PluginExistingMetadata);
 
-                                            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                                                                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                                            {
-                                                Uninstall(x.PluginExistingMetadata);
+                                            var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory, $"{x.Name}-{x.NewVersion}.zip");
+                                            Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath);
+                                            Install(x.PluginNewUserPlugin, downloadToFilePath);
 
-                                                var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory, $"{x.Name}-{x.NewVersion}.zip");
-                                                Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath);
-                                                Install(x.PluginNewUserPlugin, downloadToFilePath);
+                                            Context.API.RestartApp();
 
-                                                Context.API.RestartApp();
-
-                                                return true;
-                                            }
-
-                                            return false;
+                                            return true;
                                         }
-                                    })
-                            .ToList();
+
+                                        return false;
+                                    }
+                                });
 
             return Search(results, uninstallSearch);
         }
@@ -175,10 +174,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Context.API.GetAllPlugins().Any(x => x.Metadata.ID == id);
         }
 
-        internal List<Result> Search(List<Result> results, string searchName)
+        internal List<Result> Search(IEnumerable<Result> results, string searchName)
         {
             if (string.IsNullOrEmpty(searchName))
-                return results;
+                return results.ToList();
 
             return results
                     .Where(x =>
@@ -211,8 +210,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             return ShouldHideWindow;
                         },
                         ContextData = x
-                    })
-                .ToList();
+                    });
 
             return Search(results, searchName);
         }
@@ -265,7 +263,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var uninstallSearch = search.Replace(Settings.HotkeyUninstall, string.Empty).TrimStart();
 
-            var results= Context.API
+            var results = Context.API
                                 .GetAllPlugins()
                                 .Select(x =>
                                     new Result
@@ -291,8 +289,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                             return false;
                                         }
-                                    })
-                                .ToList();
+                                    });
 
             return Search(results, uninstallSearch);
         }
