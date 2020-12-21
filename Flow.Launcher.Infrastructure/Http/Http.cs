@@ -47,7 +47,14 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        public static WebProxy WebProxy { get; private set; } = new WebProxy();
+        private static WebProxy _proxy = new WebProxy();
+        public static WebProxy WebProxy {
+            get
+            {
+                UpdateProxy();
+                return _proxy;
+            }
+        }
 
         /// <summary>
         /// Update the Address of the Proxy to modify the client Proxy
@@ -77,6 +84,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         public static async Task Download([NotNull] string url, [NotNull] string filePath)
         {
+            UpdateProxy();
             using var response = await client.GetAsync(url);
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -91,6 +99,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         public static async Task<string> Get([NotNull] string url, string encoding = "UTF-8")
         {
+            UpdateProxy();
             Log.Debug($"|Http.Get|Url <{url}>");
             var response = await client.GetAsync(url);
             await using var stream = await response.Content.ReadAsStreamAsync();
