@@ -1,0 +1,15 @@
+<Project>
+	<Target Name="ExcludePluginProjectReferenceOutput"
+			AfterTargets="AssignProjectConfiguration" 
+			BeforeTargets="ResolveProjectReferences" 
+			Condition="'$(OutputType)' == 'Library' and '$(CopyLocalLockFileAssemblies)' == 'true' and $(AssemblyName.EndsWith('Tests')) == 'false' ">
+	  <ItemGroup>
+		<ProjectReferenceWithConfiguration Update="@(ProjectReferenceWithConfiguration)" >
+		  <Private>false</Private>
+		</ProjectReferenceWithConfiguration>
+		<ProjectReference Update="@(ProjectReference)" >
+		  <Private>false</Private>
+		</ProjectReference>
+	  </ItemGroup>
+	</Target>
+</Project>

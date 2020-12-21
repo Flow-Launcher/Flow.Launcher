@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private readonly ResultManager resultManager;
 
         // Reserved keywords in oleDB
-        private readonly string reservedStringPattern = @"^[\/\\\$\%]+$";
+        private readonly string reservedStringPattern = @"^[\/\\\$\%_]+$";
 
         internal IndexSearch(PluginInitContext context)
         {
@@ -51,7 +51,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 {
                                     if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                                     {
-                                        var path = new Uri(dataReaderResults.GetString(1)).LocalPath;
+                                        // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
+                                        var encodedFragmentPath = dataReaderResults
+                                                                    .GetString(1)
+                                                                    .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+                                        
+                                        var path = new Uri(encodedFragmentPath).LocalPath;
 
                                         if (dataReaderResults.GetString(2) == "Directory")
                                         {
