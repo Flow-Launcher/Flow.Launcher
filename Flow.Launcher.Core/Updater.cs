@@ -89,7 +89,7 @@ namespace Flow.Launcher.Core
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
-                api.ShowMsg("Update Fail!", "Check your connection and proxy settings to github-cloud.s3.amazonaws.com.");
+                api.ShowMsg("Update Failed", "Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.");
                 return;
             }
         }
