@@ -75,12 +75,12 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        public async static Task Download([NotNull] string url, [NotNull] string filePath)
+        public static async Task Download([NotNull] string url, [NotNull] string filePath)
         {
             using var response = await client.GetAsync(url);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
                 await response.Content.CopyToAsync(fileStream);
             }
             else
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             Log.Debug($"|Http.Get|Url <{url}>");
             var response = await client.GetAsync(url);
-            using var stream = await response.Content.ReadAsStreamAsync();
+            await using var stream = await response.Content.ReadAsStreamAsync();
             using var reader = new StreamReader(stream, Encoding.GetEncoding(encoding));
             var content = await reader.ReadToEndAsync();
             if (response.StatusCode == HttpStatusCode.OK)
