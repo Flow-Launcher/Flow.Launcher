@@ -10,7 +10,7 @@ namespace Flow.Launcher.Infrastructure
 {
     public interface IAlphabet
     {
-        string Translate(string stringToTranslate);
+        string Translate(string stringToTranslate, out bool translated);
     }
 
     public class PinyinAlphabet : IAlphabet
@@ -23,7 +23,7 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public string Translate(string content)
+        public string Translate(string content, out bool translated)
         {
             if (_settings.ShouldUsePinyin)
             {
@@ -31,17 +31,11 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (WordsHelper.HasChinese(content))
                     {
+                        translated = true;
+
                         var resultList = WordsHelper.GetPinyinList(content);
 
                         StringBuilder resultBuilder = new StringBuilder();
-
-                        for (int i = 0; i < resultList.Length; i++)
-                        {
-                            if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
-                                resultBuilder.Append(resultList[i].First());
-                        }
-
-                        resultBuilder.Append(' ');
 
                         bool pre = false;
 
@@ -68,16 +62,19 @@ namespace Flow.Launcher.Infrastructure
                     }
                     else
                     {
+                        translated = false;
                         return content;
                     }
                 }
                 else
                 {
+                    translated = true;
                     return _pinyinCache[content];
                 }
             }
             else
             {
+                translated = false;
                 return content;
             }
         }
