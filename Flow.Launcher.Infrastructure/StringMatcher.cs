@@ -71,7 +71,7 @@ namespace Flow.Launcher.Infrastructure
                                     || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) ==
                                         queryWithoutCase[currentQueryIndex])
                                     || (char.IsNumber(c) && c == queryWithoutCase[currentQueryIndex]):
-                        acronymMatchData.Add(map?.MapToOriginalIndex(compareIndex) ?? compareIndex);
+                        acronymMatchData.Add(compareIndex);
                         currentQueryIndex++;
                         continue;
 
@@ -86,7 +86,10 @@ namespace Flow.Launcher.Infrastructure
             }
 
             if (acronymMatchData.Count == query.Length && acronymScore >= 60)
+            {
+                acronymMatchData = acronymMatchData.Select(x => map?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
                 return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+            }
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
 
@@ -188,7 +191,7 @@ namespace Flow.Launcher.Infrastructure
                 var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1,
                     lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
 
-                var resultList = indexList.Distinct().Select(x => map?.MapToOriginalIndex(x) ?? x).ToList();
+                var resultList = indexList.Select(x => map?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
                 return new MatchResult(true, UserSettingSearchPrecision, resultList, score);
             }
 
