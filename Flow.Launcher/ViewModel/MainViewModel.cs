@@ -474,6 +474,8 @@ namespace Flow.Launcher.ViewModel
                             // nothing to do here
                         }
 
+                        if (currentCancellationToken.IsCancellationRequested)
+                            return;
 
                         // this should happen once after all queries are done so progress bar should continue
                         // until the end of all querying
