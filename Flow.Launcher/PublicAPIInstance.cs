@@ -21,11 +21,11 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly Alphabet _alphabet;
+        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, Alphabet alphabet)
+        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
         {
             _settingsVM = settingsVM;
             _mainVM = mainVM;
@@ -76,7 +76,6 @@ namespace Flow.Launcher
             _settingsVM.Save();
             PluginManager.Save();
             ImageLoader.Save();
-            _alphabet.Save();
         }
 
         public void ReloadAllPluginData()
@@ -114,11 +113,6 @@ namespace Flow.Launcher
         public void StopLoadingBar()
         {
             _mainVM.ProgressBarVisibility = Visibility.Collapsed;
-        }
-
-        public void InstallPlugin(string path)
-        {
-            Application.Current.Dispatcher.Invoke(() => PluginManager.InstallPlugin(path));
         }
 
         public string GetTranslation(string key)

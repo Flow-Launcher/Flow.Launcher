@@ -22,7 +22,6 @@
         Loaded="OnLoaded"
         Initialized="OnInitialized"
         Closing="OnClosing"
-        Drop="OnDrop"
         LocationChanged="OnLocationChanged"
         Deactivated="OnDeactivated"
         PreviewKeyDown="OnKeyDown"

@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
     public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, ISavable
     {
         private PluginInitContext context;
-        
+
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
         private readonly Settings _settings;
@@ -37,36 +37,56 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
             // Should top results be returned? (true if no search parameters have been passed)
             var topResults = string.IsNullOrEmpty(param);
-            
-            var returnList = cachedBookmarks;
+
 
             if (!topResults)
             {
                 // Since we mixed chrome and firefox bookmarks, we should order them again                
-                returnList = cachedBookmarks.Where(o => Bookmarks.MatchProgram(o, param)).ToList();
-                returnList = returnList.OrderByDescending(o => o.Score).ToList();
-            }
-            
-            return returnList.Select(c => new Result()
-            {
-                Title = c.Name,
-                SubTitle = c.Url,
-                IcoPath = @"Images\bookmark.png",
-                Score = 5,
-                Action = (e) =>
+                var returnList = cachedBookmarks.Select(c => new Result()
                 {
-                    if (_settings.OpenInNewBrowserWindow)
+                    Title = c.Name,
+                    SubTitle = c.Url,
+                    IcoPath = @"Images\bookmark.png",
+                    Score = Bookmarks.MatchProgram(c, param).Score,
+                    Action = _ =>
                     {
-                        c.Url.NewBrowserWindow(_settings.BrowserPath);
-                    }
-                    else
-                    {
-                        c.Url.NewTabInBrowser(_settings.BrowserPath);
-                    }
+                        if (_settings.OpenInNewBrowserWindow)
+                        {
+                            c.Url.NewBrowserWindow(_settings.BrowserPath);
+                        }
+                        else
+                        {
+                            c.Url.NewTabInBrowser(_settings.BrowserPath);
+                        }
 
-                    return true;
-                }
-            }).ToList();
+                        return true;
+                    }
+                }).Where(r => r.Score > 0);
+                return returnList.ToList();
+            }
+            else
+            {
+                return cachedBookmarks.Select(c => new Result()
+                {
+                    Title = c.Name,
+                    SubTitle = c.Url,
+                    IcoPath = @"Images\bookmark.png",
+                    Score = 5,
+                    Action = _ =>
+                    {
+                        if (_settings.OpenInNewBrowserWindow)
+                        {
+                            c.Url.NewBrowserWindow(_settings.BrowserPath);
+                        }
+                        else
+                        {
+                            c.Url.NewTabInBrowser(_settings.BrowserPath);
+                        }
+
+                        return true;
+                    }
+                }).ToList();
+            }
         }
 
         public void ReloadData()

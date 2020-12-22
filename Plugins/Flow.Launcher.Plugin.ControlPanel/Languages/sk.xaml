@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_plugin_management_plugin_name">Flow Launcher插件管理</system:String>
-    <system:String x:Key="flowlauncher_plugin_plugin_management_plugin_description">安装/卸载/更新Flow Launcher插件</system:String>
-
+    <system:String x:Key="flowlauncher_plugin_controlpanel_plugin_name">Ovládací panel</system:String>
+    <system:String x:Key="flowlauncher_plugin_controlpanel_plugin_description">Vyhľadáva položky Ovládacieho panela</system:String>
+    
 </ResourceDictionary>
