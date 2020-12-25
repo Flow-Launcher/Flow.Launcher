@@ -18,6 +18,13 @@ namespace Flow.Launcher.Infrastructure
         private List<int> translatedIndexs = new List<int>();
         private int translaedLength = 0;
 
+        public string key { get; private set; }
+
+        public void setKey(string key)
+        {
+            this.key = key;
+        }
+
         public void AddNewIndex(int originalIndex, int translatedIndex, int length)
         {
             if (constructed)
@@ -29,28 +36,64 @@ namespace Flow.Launcher.Infrastructure
             translaedLength += length - 1;
         }
 
-        public int? MapToOriginalIndex(int translatedIndex)
+        public int MapToOriginalIndex(int translatedIndex)
         {
             if (translatedIndex > translatedIndexs.Last())
                 return translatedIndex - translaedLength - 1;
-            
-            for (var i = 0; i < originalIndexs.Count; i++)
-            {
-                if (translatedIndex >= translatedIndexs[i * 2] && translatedIndex < translatedIndexs[i * 2 + 1])
-                    return originalIndexs[i];
-                if (translatedIndex < translatedIndexs[i * 2])
-                {
-                    int indexDiff = 0;
-                    for (int j = 0; j < i; j++)
-                    {
-                        indexDiff += translatedIndexs[i * 2 + 1] - translatedIndexs[i * 2] - 1;
-                    }
 
-                    return translatedIndex - indexDiff;
+            int lowerBound = 0;
+            int upperBound = originalIndexs.Count - 1;
+
+            int count = 0;
+
+
+            // Corner case handle
+            if (translatedIndex < translatedIndexs[0])
+                return translatedIndex;
+            if (translatedIndex > translatedIndexs.Last())
+            {
+                int indexDef = 0;
+                for (int k = 0; k < originalIndexs.Count; k++)
+                {
+                    indexDef += translatedIndexs[k * 2 + 1] - translatedIndexs[k * 2];
                 }
+
+                return translatedIndex - indexDef - 1;
             }
 
-            return translatedIndex;
+            // Binary Search with Range
+            for (int i = originalIndexs.Count / 2;; count++)
+            {
+                if (translatedIndex < translatedIndexs[i * 2])
+                {
+                    // move to lower middle
+                    upperBound = i;
+                    i = (i + lowerBound) / 2;
+                }
+                else if (translatedIndex > translatedIndexs[i * 2 + 1] - 1)
+                {
+                    lowerBound = i;
+                    // move to upper middle
+                    // due to floor of integer division, move one up on corner case
+                    i = (i + upperBound + 1) / 2;
+                }
+                else
+                    return originalIndexs[i];
+
+                if (upperBound - lowerBound <= 1 &&
+                    translatedIndex > translatedIndexs[lowerBound * 2 + 1] &&
+                    translatedIndex < translatedIndexs[upperBound * 2])
+                {
+                    int indexDef = 0;
+                    
+                    for (int j = 0; j < upperBound; j++)
+                    {
+                        indexDef += translatedIndexs[j * 2 + 1] - translatedIndexs[j * 2];
+                    }
+
+                    return translatedIndex - indexDef - 1;
+                }
+            }
         }
 
         public void endConstruct()
@@ -117,7 +160,10 @@ namespace Flow.Launcher.Infrastructure
 
                         map.endConstruct();
 
-                        return _pinyinCache[content] = (resultBuilder.ToString(), map);
+                        var key = resultBuilder.ToString();
+                        map.setKey(key);
+
+                        return _pinyinCache[content] = (key, map);
                     }
                     else
                     {
