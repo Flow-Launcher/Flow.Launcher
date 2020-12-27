@@ -207,6 +207,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal List<Result> RequestInstallOrUpdate(string searchName)
         {
+            var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
+
             var results =
                 pluginsManifest
                     .UserPlugins
@@ -226,7 +228,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             ContextData = x
                         });
 
-            return Search(results, searchName);
+            return Search(results, searchNameWithoutKeyword);
         }
 
         private void Install(UserPlugin plugin, string downloadedFilePath)
