@@ -3,19 +3,23 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
+using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
     public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu, IPluginI18n
     {
-        internal PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; }
 
         internal Settings Settings;
 
         private SettingsViewModel viewModel;
 
         private IContextMenu contextMenu;
+
+        internal PluginsManager pluginManager;
 
         public Control CreateSettingPanel()
         {
@@ -28,6 +32,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context);
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context, Settings);
+            pluginManager = new PluginsManager(Context, Settings);
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -38,18 +43,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public List<Result> Query(Query query)
         {
             var search = query.Search.ToLower();
+            
+            if (string.IsNullOrWhiteSpace(search))
+                return Settings.HotKeys;
 
-            var pluginManager = new PluginsManager(Context, Settings);
-
-            if (!string.IsNullOrEmpty(search)
-                    && ($"{Settings.HotkeyUninstall} ".StartsWith(search) || search.StartsWith($"{Settings.HotkeyUninstall} ")))
-                return pluginManager.RequestUninstall(search);
-
-            if (!string.IsNullOrEmpty(search)
-                    && ($"{Settings.HotkeyUpdate} ".StartsWith(search) || search.StartsWith($"{Settings.HotkeyUpdate} ")))
-                return pluginManager.RequestUpdate(search);
-
-            return pluginManager.RequestInstallOrUpdate(search);
+            return search switch
+            {
+                var s when s.StartsWith(Settings.HotKeyInstall) => pluginManager.RequestInstallOrUpdate(s),
+                var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
+                var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
+                _ => Settings.HotKeys.Where(hotkey =>
+                {
+                    hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
+                    return hotkey.Score > 0;
+                }).ToList()
+            };
         }
 
         public void Save()
