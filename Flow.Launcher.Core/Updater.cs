@@ -29,88 +29,68 @@ namespace Flow.Launcher.Core
             GitHubRepository = gitHubRepository;
         }
 
-        public async Task UpdateApp(IPublicAPI api , bool silentUpdate = true)
+        public async Task UpdateApp(IPublicAPI api, bool silentUpdate = true)
         {
-            UpdateManager updateManager;
-            UpdateInfo newUpdateInfo;
-
-            if (!silentUpdate)
-                api.ShowMsg("Please wait...", "Checking for new update");
-
             try
             {
-                updateManager = await GitHubUpdateManager(GitHubRepository);
-            }
-            catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
-            {
-                Log.Exception($"|Updater.UpdateApp|Please check your connection and proxy settings to api.github.com.", e);
-                return;
-            }
+                UpdateInfo newUpdateInfo;
 
-            try
-            {
+                if (!silentUpdate)
+                    api.ShowMsg("Please wait...", "Checking for new update");
+
+                using var updateManager = await GitHubUpdateManager(GitHubRepository);
+
+
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
                 newUpdateInfo = await updateManager.CheckForUpdate().NonNull();
-            }
-            catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
-            {
-                Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to api.github.com.", e);
-                updateManager.Dispose();
-                return;
-            }
 
-            var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
-            var currentVersion = Version.Parse(Constant.Version);
+                var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
+                var currentVersion = Version.Parse(Constant.Version);
 
-            Log.Info($"|Updater.UpdateApp|Future Release <{newUpdateInfo.FutureReleaseEntry.Formatted()}>");
+                Log.Info($"|Updater.UpdateApp|Future Release <{newUpdateInfo.FutureReleaseEntry.Formatted()}>");
 
-            if (newReleaseVersion <= currentVersion)
-            {
+                if (newReleaseVersion <= currentVersion)
+                {
+                    if (!silentUpdate)
+                        MessageBox.Show("You already have the latest Flow Launcher version");
+                    updateManager.Dispose();
+                    return;
+                }
+
                 if (!silentUpdate)
-                    MessageBox.Show("You already have the latest Flow Launcher version");
-                updateManager.Dispose();
-                return;
-            }
+                    api.ShowMsg("Update found", "Updating...");
 
-            if (!silentUpdate)
-                api.ShowMsg("Update found", "Updating...");
-
-            try
-            {
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply);
+
+                await updateManager.ApplyReleases(newUpdateInfo);
+
+                if (DataLocation.PortableDataLocationInUse())
+                {
+                    var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
+                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
+                        MessageBox.Show("Flow Launcher was not able to move your user profile data to the new update version. Please manually " +
+                            $"move your profile data folder from {DataLocation.PortableDataPath} to {targetDestination}");
+                }
+                else
+                {
+                    await updateManager.CreateUninstallerRegistryEntry();
+                }
+
+                var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
+
+                Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
+
+                if (MessageBox.Show(newVersionTips, "New Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    UpdateManager.RestartApp(Constant.ApplicationFileName);
+                }
             }
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
-                updateManager.Dispose();
+                api.ShowMsg("Update Fail!", "Check your connection and proxy settings to github-cloud.s3.amazonaws.com.");
                 return;
-            }
-            
-            await updateManager.ApplyReleases(newUpdateInfo);
-
-            if (DataLocation.PortableDataLocationInUse())
-            {
-                var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
-                if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
-                    MessageBox.Show("Flow Launcher was not able to move your user profile data to the new update version. Please manually " +
-                        $"move your profile data folder from {DataLocation.PortableDataPath} to {targetDestination}");
-            }
-            else
-            {
-                await updateManager.CreateUninstallerRegistryEntry();
-            }
-
-            var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
-            
-            Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
-
-            // always dispose UpdateManager
-            updateManager.Dispose();
-
-            if (MessageBox.Show(newVersionTips, "New Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
         }
 
