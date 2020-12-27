@@ -44,24 +44,12 @@ namespace Flow.Launcher.Infrastructure
         /// </summary>
         public MatchResult FuzzyMatch(string query, string stringToCompare, MatchOption opt)
         {
-            if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query)) return new MatchResult(false, UserSettingSearchPrecision);
+            if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query))
+                return new MatchResult(false, UserSettingSearchPrecision);
 
             query = query.Trim();
-
-            var translated = false;
-
-            stringToCompare = _alphabet?.Translate(stringToCompare, out translated)?.Trim() ?? stringToCompare;
-
-            // This also can be done by spliting the query
-
-            //(var spaceSplit, var upperSplit) = stringToCompare switch
-            //{
-            //    string s when s.Contains(' ') => (s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(w => w.First()),
-            //                                        default(IEnumerable<char>)),
-            //    string s when s.Any(c => char.IsUpper(c)) && s.Any(c => char.IsLower(c)) =>
-            //                        (null, Regex.Split(s, @"(?<!^)(?=[A-Z])").Select(w => w.First())),
-            //    _ => ((IEnumerable<char>)null, (IEnumerable<char>)null)
-            //};
+            TranslationMapping map;
+            (stringToCompare, map) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
 
             var currentQueryIndex = 0;
 
@@ -82,20 +70,21 @@ namespace Flow.Launcher.Infrastructure
 
                 switch (stringToCompare[compareIndex])
                 {
-                    case char c when (compareIndex == 0 && queryWithoutCase[currentQueryIndex] == char.ToLower(stringToCompare[compareIndex]))
-                                  || (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
-                                  || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) == queryWithoutCase[currentQueryIndex])
-                                  || (char.IsNumber(c) && c == queryWithoutCase[currentQueryIndex]):
-                        acronymMatchData.Add(translated ? currentAcronymIndex++ : compareIndex);
+                    case var c when (compareIndex == 0 && queryWithoutCase[currentQueryIndex] ==
+                                        char.ToLower(stringToCompare[compareIndex]))
+                                    || (char.IsUpper(c) && char.ToLower(c) == queryWithoutCase[currentQueryIndex])
+                                    || (char.IsWhiteSpace(c) && char.ToLower(stringToCompare[++compareIndex]) ==
+                                        queryWithoutCase[currentQueryIndex])
+                                    || (char.IsNumber(c) && c == queryWithoutCase[currentQueryIndex]):
+                        acronymMatchData.Add(compareIndex);
                         currentQueryIndex++;
                         continue;
-                    case char c when char.IsWhiteSpace(c):
-                        currentAcronymIndex++;
+
+                    case var c when char.IsWhiteSpace(c):
                         compareIndex++;
                         acronymScore -= 10;
                         break;
-                    case char c when char.IsUpper(c) || char.IsNumber(c):
-                        currentAcronymIndex++;
+                    case var c when char.IsUpper(c) || char.IsNumber(c):
                         acronymScore -= 10;
                         continue;
                     case ':':
@@ -105,13 +94,15 @@ namespace Flow.Launcher.Infrastructure
             }
 
             if (acronymMatchData.Count == query.Length && acronymScore >= 60)
+            {
+                acronymMatchData = acronymMatchData.Select(x => map?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
                 return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+            }
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
 
 
-
-            var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var querySubstrings = queryWithoutCase.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
             var currentQuerySubstringCharacterIndex = 0;
@@ -126,9 +117,10 @@ namespace Flow.Launcher.Infrastructure
             var indexList = new List<int>();
             List<int> spaceIndices = new List<int>();
 
-            for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
+            for (var compareStringIndex = 0;
+                compareStringIndex < fullStringToCompareWithoutCase.Length;
+                compareStringIndex++)
             {
-
                 // To maintain a list of indices which correspond to spaces in the string to compare
                 // To populate the list only for the first query substring
                 if (fullStringToCompareWithoutCase[compareStringIndex].Equals(' ') && currentQuerySubstringIndex == 0)
@@ -136,7 +128,8 @@ namespace Flow.Launcher.Infrastructure
                     spaceIndices.Add(compareStringIndex);
                 }
 
-                if (fullStringToCompareWithoutCase[compareStringIndex] != currentQuerySubstring[currentQuerySubstringCharacterIndex])
+                if (fullStringToCompareWithoutCase[compareStringIndex] !=
+                    currentQuerySubstring[currentQuerySubstringCharacterIndex])
                 {
                     matchFoundInPreviousLoop = false;
                     continue;
@@ -160,14 +153,16 @@ namespace Flow.Launcher.Infrastructure
                     // in order to do so we need to verify all previous chars are part of the pattern
                     var startIndexToVerify = compareStringIndex - currentQuerySubstringCharacterIndex;
 
-                    if (AllPreviousCharsMatched(startIndexToVerify, currentQuerySubstringCharacterIndex, fullStringToCompareWithoutCase, currentQuerySubstring))
+                    if (AllPreviousCharsMatched(startIndexToVerify, currentQuerySubstringCharacterIndex,
+                        fullStringToCompareWithoutCase, currentQuerySubstring))
                     {
                         matchFoundInPreviousLoop = true;
 
                         // if it's the beginning character of the first query substring that is matched then we need to update start index
                         firstMatchIndex = currentQuerySubstringIndex == 0 ? startIndexToVerify : firstMatchIndex;
 
-                        indexList = GetUpdatedIndexList(startIndexToVerify, currentQuerySubstringCharacterIndex, firstMatchIndexInWord, indexList);
+                        indexList = GetUpdatedIndexList(startIndexToVerify, currentQuerySubstringCharacterIndex,
+                            firstMatchIndexInWord, indexList);
                     }
                 }
 
@@ -180,11 +175,13 @@ namespace Flow.Launcher.Infrastructure
                 if (currentQuerySubstringCharacterIndex == currentQuerySubstring.Length)
                 {
                     // if any of the substrings was not matched then consider as all are not matched
-                    allSubstringsContainedInCompareString = matchFoundInPreviousLoop && allSubstringsContainedInCompareString;
+                    allSubstringsContainedInCompareString =
+                        matchFoundInPreviousLoop && allSubstringsContainedInCompareString;
 
                     currentQuerySubstringIndex++;
 
-                    allQuerySubstringsMatched = AllQuerySubstringsMatched(currentQuerySubstringIndex, querySubstrings.Length);
+                    allQuerySubstringsMatched =
+                        AllQuerySubstringsMatched(currentQuerySubstringIndex, querySubstrings.Length);
                     if (allQuerySubstringsMatched)
                         break;
 
@@ -194,13 +191,16 @@ namespace Flow.Launcher.Infrastructure
                 }
             }
 
+
             // proceed to calculate score if every char or substring without whitespaces matched
             if (allQuerySubstringsMatched)
             {
                 var nearestSpaceIndex = CalculateClosestSpaceIndex(spaceIndices, firstMatchIndex);
-                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1, lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
+                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1,
+                    lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
 
-                return new MatchResult(true, UserSettingSearchPrecision, indexList, score);
+                var resultList = indexList.Select(x => map?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                return new MatchResult(true, UserSettingSearchPrecision, resultList, score);
             }
 
             return new MatchResult(false, UserSettingSearchPrecision);
@@ -215,14 +215,15 @@ namespace Flow.Launcher.Infrastructure
             }
             else
             {
-                int? ind = spaceIndices.OrderBy(item => (firstMatchIndex - item)).Where(item => firstMatchIndex > item).FirstOrDefault();
+                int? ind = spaceIndices.OrderBy(item => (firstMatchIndex - item))
+                    .FirstOrDefault(item => firstMatchIndex > item);
                 int closestSpaceIndex = ind ?? -1;
                 return closestSpaceIndex;
             }
         }
 
         private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
-                                                        string fullStringToCompareWithoutCase, string currentQuerySubstring)
+            string fullStringToCompareWithoutCase, string currentQuerySubstring)
         {
             var allMatch = true;
             for (int indexToCheck = 0; indexToCheck < currentQuerySubstringCharacterIndex; indexToCheck++)
@@ -237,7 +238,8 @@ namespace Flow.Launcher.Infrastructure
             return allMatch;
         }
 
-        private static List<int> GetUpdatedIndexList(int startIndexToVerify, int currentQuerySubstringCharacterIndex, int firstMatchIndexInWord, List<int> indexList)
+        private static List<int> GetUpdatedIndexList(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
+            int firstMatchIndexInWord, List<int> indexList)
         {
             var updatedList = new List<int>();
 
@@ -258,7 +260,8 @@ namespace Flow.Launcher.Infrastructure
             return currentQuerySubstringIndex >= querySubstringsLength;
         }
 
-        private static int CalculateSearchScore(string query, string stringToCompare, int firstIndex, int matchLen, bool allSubstringsContainedInCompareString)
+        private static int CalculateSearchScore(string query, string stringToCompare, int firstIndex, int matchLen,
+            bool allSubstringsContainedInCompareString)
         {
             // A match found near the beginning of a string is scored more than a match found near the end
             // A match is scored more if the characters in the patterns are closer to each other, 
@@ -353,7 +356,7 @@ namespace Flow.Launcher.Infrastructure
 
         private bool IsSearchPrecisionScoreMet(int rawScore)
         {
-            return rawScore >= (int)SearchPrecision;
+            return rawScore >= (int) SearchPrecision;
         }
 
         private int ScoreAfterSearchPrecisionFilter(int rawScore)
