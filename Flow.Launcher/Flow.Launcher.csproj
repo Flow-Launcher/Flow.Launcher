@@ -213,9 +213,6 @@
   </Target>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="pwsh.exe -NoProfile -ExecutionPolicy Bypass -File $(SolutionDir)Scripts\post_build.ps1 $(ConfigurationName) $(SolutionDir) $(TargetPath)" />
-	</Target>
-	<Target Name="PostCopy" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<Exec Command="pwsh.exe -c copy-item -Force -Recurse D:\Document\Dotnet\Flow.Launcher\Output\Release\* C:\Users\1\AppData\Local\FlowLauncher\app-1.3.1" />
+		<Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File $(SolutionDir)Scripts\post_build.ps1 $(ConfigurationName) $(SolutionDir) $(TargetPath)" />
 	</Target>
 </Project>

@@ -130,7 +130,6 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (WordsHelper.HasChinese(content))
                     {
-                        translated = true;
 
                         var resultList = WordsHelper.GetPinyinList(content);
 
@@ -174,7 +173,6 @@ namespace Flow.Launcher.Infrastructure
                 }
                 else
                 {
-                    translated = true;
                     return _pinyinCache[content];
                 }
             }
