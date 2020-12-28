@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
+using System;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -21,6 +23,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal PluginsManager pluginManager;
 
+        internal DateTime _lastUpdateTime;
+
         public Control CreateSettingPanel()
         {
             return new PluginsManagerSettings(viewModel);
@@ -33,6 +37,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context, Settings);
             pluginManager = new PluginsManager(Context, Settings);
+            _lastUpdateTime = DateTime.Now;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -43,9 +48,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public List<Result> Query(Query query)
         {
             var search = query.Search.ToLower();
-            
+
             if (string.IsNullOrWhiteSpace(search))
                 return Settings.HotKeys;
+
+            if ((DateTime.Now - _lastUpdateTime).TotalSeconds > 43200) // 12 hours
+            {
+                Task.Run(async () =>
+                {
+                    await pluginManager.UpdateManifest();
+                    _lastUpdateTime = DateTime.Now;
+                });
+            }
 
             return search switch
             {

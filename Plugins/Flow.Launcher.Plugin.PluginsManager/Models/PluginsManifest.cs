@@ -12,19 +12,15 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
         internal List<UserPlugin> UserPlugins { get; private set; }
         internal PluginsManifest()
         {
-            DownloadManifest();
+            Task.Run(() => DownloadManifest()).Wait();
         }
 
-        private void DownloadManifest()
+        internal async Task DownloadManifest()
         {
             var json = string.Empty;
             try
             {
-                var t = Task.Run(
-                            async () => 
-                                json = await Http.Get("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json"));
-
-                t.Wait();
+                json = await Http.Get("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json");
 
                 UserPlugins = JsonConvert.DeserializeObject<List<UserPlugin>>(json);
             }

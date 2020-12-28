@@ -7,13 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
-        private readonly PluginsManifest pluginsManifest;
+        private PluginsManifest pluginsManifest;
 
         private PluginInitContext Context { get; set; }
 
@@ -42,6 +43,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
             pluginsManifest = new PluginsManifest();
             Context = context;
             Settings = settings;
+        }
+
+        internal async Task UpdateManifest()
+        {
+            await pluginsManifest.DownloadManifest();
         }
 
         internal void InstallOrUpdate(UserPlugin plugin)
