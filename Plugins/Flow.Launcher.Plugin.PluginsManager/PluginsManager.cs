@@ -50,6 +50,43 @@ namespace Flow.Launcher.Plugin.PluginsManager
             await pluginsManifest.DownloadManifest();
         }
 
+        internal List<Result> GetDefaultHotKeys()
+        {
+            return new List<Result>()
+            {
+                new Result()
+                {
+                    Title = Settings.HotKeyInstall,
+                    IcoPath = icoPath,
+                    Action = _ =>
+                    {
+                        Context.API.ChangeQuery("pm install ");
+                        return false;
+                    }
+                },
+                    new Result()
+                    {
+                        Title = Settings.HotkeyUninstall,
+                        IcoPath = icoPath,
+                        Action = _ =>
+                        {
+                            Context.API.ChangeQuery("pm uninstall ");
+                            return false;
+                        }
+                    },
+                    new Result()
+                    {
+                        Title = Settings.HotkeyUpdate,
+                        IcoPath = icoPath,
+                        Action = _ =>
+                        {
+                            Context.API.ChangeQuery("pm update ");
+                            return false;
+                        }
+                    }
+                };
+        }
+
         internal void InstallOrUpdate(UserPlugin plugin)
         {
             if (PluginExists(plugin.ID))

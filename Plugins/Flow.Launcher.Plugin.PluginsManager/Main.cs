@@ -13,7 +13,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu, IPluginI18n
     {
-        internal static PluginInitContext Context { get; set; }
+        internal PluginInitContext Context { get; set; }
 
         internal Settings Settings;
 
