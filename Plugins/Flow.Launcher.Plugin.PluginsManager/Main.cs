@@ -52,7 +52,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (string.IsNullOrWhiteSpace(search))
                 return Settings.HotKeys;
 
-            if ((DateTime.Now - _lastUpdateTime).TotalSeconds > 43200) // 12 hours
+            if ((DateTime.Now - _lastUpdateTime).TotalHours > 12) // 12 hours
             {
                 Task.Run(async () =>
                 {
