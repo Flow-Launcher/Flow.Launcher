@@ -59,7 +59,7 @@ namespace Flow.Launcher.Infrastructure.Http
             Log.Debug($"|Http.Get|Url <{url}>");
             var request = WebRequest.CreateHttp(url);
             request.Method = "GET";
-            request.Timeout = 1000;
+            request.Timeout = 6000;
             request.Proxy = WebProxy();
             request.UserAgent = UserAgent;
             var response = await request.GetResponseAsync() as HttpWebResponse;
@@ -72,6 +72,19 @@ namespace Flow.Launcher.Infrastructure.Http
                 throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
             
             return content;
+        }
+
+        public static async Task<Stream> GetStreamAsync([NotNull] string url)
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            var request = WebRequest.CreateHttp(url);
+            request.Method = "GET";
+            request.Timeout = 6000;
+            request.Proxy = WebProxy();
+            request.UserAgent = UserAgent;
+            var response = await request.GetResponseAsync() as HttpWebResponse;
+            response = response.NonNull();
+            return response.GetResponseStream().NonNull();
         }
     }
 }
