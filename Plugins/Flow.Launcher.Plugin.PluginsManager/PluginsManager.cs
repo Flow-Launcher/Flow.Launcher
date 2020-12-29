@@ -361,7 +361,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
         }
 
-
         private List<Result> AutoCompleteReturnAllResults(string search, string hotkey, string title, string subtitle)
         {
             if (!string.IsNullOrEmpty(search)
