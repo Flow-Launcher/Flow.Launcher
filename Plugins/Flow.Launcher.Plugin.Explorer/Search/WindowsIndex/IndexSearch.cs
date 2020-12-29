@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private OleDbConnection conn;
 
         private OleDbCommand command;
-        
+
         private OleDbDataReader dataReaderResults;
 
         private readonly ResultManager resultManager;
@@ -47,7 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     {
                         // Results return as an OleDbDataReader.
                         var updateToken = Main.updateToken;
-                        using (dataReaderResults = await command.ExecuteReaderAsync(updateToken) as OleDbDataReader)
+                        using (dataReaderResults = await command.ExecuteReaderAsync(updateToken).ConfigureAwait(false) as OleDbDataReader)
                         {
                             if (updateToken.IsCancellationRequested)
                                 return new List<Result>();
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                         var encodedFragmentPath = dataReaderResults
                                                                     .GetString(1)
                                                                     .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
-                                        
+
                                         var path = new Uri(encodedFragmentPath).LocalPath;
 
                                         if (dataReaderResults.GetString(2) == "Directory")
@@ -69,7 +69,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                             folderResults.Add(resultManager.CreateFolderResult(
                                                                                 dataReaderResults.GetString(0),
                                                                                 path,
-                                                                                path, 
+                                                                                path,
                                                                                 query, true, true));
                                         }
                                         else
