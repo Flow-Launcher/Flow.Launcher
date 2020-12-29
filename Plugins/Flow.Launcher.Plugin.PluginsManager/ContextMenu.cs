@@ -10,12 +10,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
     {
         private PluginInitContext Context { get; set; }
 
-        private Settings Settings { get; set; }
-
-        public ContextMenu(PluginInitContext context, Settings settings)
+        public ContextMenu(PluginInitContext context)
         {
             Context = context;
-            Settings = settings;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -58,7 +55,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                                 ? pluginManifestInfo.UrlSourceCode.Replace("/tree/master", "/issues/new/choose") 
                                                                 : pluginManifestInfo.UrlSourceCode;
 
-                        SharedCommands.SearchWeb.NewBrowserWindow(link);
+                        SharedCommands.SearchWeb.NewTabInBrowser(link);
                         return true;
                     }
                 },
@@ -69,7 +66,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = selectedResult.IcoPath,
                     Action = _ =>
                     {
-                        SharedCommands.SearchWeb.NewBrowserWindow("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
+                        SharedCommands.SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
                         return true;
                     }
                 }

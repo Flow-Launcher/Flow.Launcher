@@ -42,7 +42,7 @@ namespace Flow.Launcher.Core
 
 
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
-                newUpdateInfo = await updateManager.CheckForUpdate().NonNull();
+                newUpdateInfo = (await updateManager.CheckForUpdate().ConfigureAwait(false)).NonNull();
 
                 var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
                 var currentVersion = Version.Parse(Constant.Version);
@@ -53,16 +53,15 @@ namespace Flow.Launcher.Core
                 {
                     if (!silentUpdate)
                         MessageBox.Show("You already have the latest Flow Launcher version");
-                    updateManager.Dispose();
                     return;
                 }
 
                 if (!silentUpdate)
                     api.ShowMsg("Update found", "Updating...");
 
-                await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply);
+                await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
-                await updateManager.ApplyReleases(newUpdateInfo);
+                await updateManager.ApplyReleases(newUpdateInfo).ConfigureAwait(false);
 
                 if (DataLocation.PortableDataLocationInUse())
                 {
@@ -74,7 +73,7 @@ namespace Flow.Launcher.Core
                 }
                 else
                 {
-                    await updateManager.CreateUninstallerRegistryEntry();
+                    await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
                 }
 
                 var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
@@ -115,10 +114,10 @@ namespace Flow.Launcher.Core
 
             
 
-            var json = await Http.Get(api);
+            var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
             
 
-            var releases = JsonConvert.DeserializeObject<List<GithubRelease>>(json);
+            var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
