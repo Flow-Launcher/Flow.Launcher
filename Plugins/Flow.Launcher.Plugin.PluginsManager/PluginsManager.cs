@@ -164,7 +164,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 from existingPlugin in Context.API.GetAllPlugins()
                 join pluginFromManifest in pluginsManifest.UserPlugins
                     on existingPlugin.Metadata.ID equals pluginFromManifest.ID
-                where existingPlugin.Metadata.Version != pluginFromManifest.Version
+                where existingPlugin.Metadata.Version.CompareTo(pluginFromManifest.Version) > 0
                 select
                     new
                     {
