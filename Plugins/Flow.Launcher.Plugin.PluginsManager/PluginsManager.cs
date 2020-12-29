@@ -87,12 +87,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 };
         }
 
-        internal void InstallOrUpdate(UserPlugin plugin)
+        internal async Task InstallOrUpdate(UserPlugin plugin)
         {
             if (PluginExists(plugin.ID))
             {
                 if (Context.API.GetAllPlugins()
-                    .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version != plugin.Version))
+                    .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
                 {
                     if (MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_update_exists"),
                         Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -127,7 +127,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
 
-                Http.Download(plugin.UrlDownload, filePath);
+                await Http.Download(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
@@ -140,11 +140,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Install(plugin, filePath);
-                Context.API.RestartApp();
-            });
+            Install(plugin, filePath);
+            Context.API.RestartApp();
         }
 
         internal List<Result> RequestUpdate(string search)
@@ -211,10 +208,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory,
                                     $"{x.Name}-{x.NewVersion}.zip");
-                                Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath);
-                                Install(x.PluginNewUserPlugin, downloadToFilePath);
 
-                                Context.API.RestartApp();
+                                Task.Run(async delegate
+                                {
+                                    await Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath).ConfigureAwait(false);
+                                    Install(x.PluginNewUserPlugin, downloadToFilePath);
+
+                                    Context.API.RestartApp();
+                                });
 
                                 return true;
                             }
@@ -264,8 +265,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Action = e =>
                             {
                                 Application.Current.MainWindow.Hide();
-                                InstallOrUpdate(x);
-
+                                _ = InstallOrUpdate(x); // No need to wait
                                 return ShouldHideWindow;
                             },
                             ContextData = x

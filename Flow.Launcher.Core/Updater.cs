@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using JetBrains.Annotations;
 using Squirrel;
-using Newtonsoft.Json;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
@@ -17,6 +16,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using System.IO;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Core
 {
@@ -96,13 +96,13 @@ namespace Flow.Launcher.Core
         [UsedImplicitly]
         private class GithubRelease
         {
-            [JsonProperty("prerelease")]
+            [JsonPropertyName("prerelease")]
             public bool Prerelease { get; [UsedImplicitly] set; }
 
-            [JsonProperty("published_at")]
+            [JsonPropertyName("published_at")]
             public DateTime PublishedAt { get; [UsedImplicitly] set; }
 
-            [JsonProperty("html_url")]
+            [JsonPropertyName("html_url")]
             public string HtmlUrl { get; [UsedImplicitly] set; }
         }
 
