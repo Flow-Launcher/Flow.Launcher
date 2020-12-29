@@ -1,8 +1,8 @@
 ﻿using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.PluginsManager.Models
@@ -13,18 +13,17 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
 
         internal PluginsManifest()
         {
-            DownloadManifest().Wait();
+            Task.Run(async () => await DownloadManifest()).Wait();
         }
 
-        private async Task DownloadManifest()
+        internal async Task DownloadManifest()
         {
-            var json = string.Empty;
             try
             {
-                json = await Http.Get(
-                    "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json");
+                await using var jsonStream = await Http.GetStreamAsync("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json")
+                                 .ConfigureAwait(false);
 
-                UserPlugins = JsonConvert.DeserializeObject<List<UserPlugin>>(json);
+                UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(jsonStream).ConfigureAwait(false);
             }
             catch (Exception e)
             {
