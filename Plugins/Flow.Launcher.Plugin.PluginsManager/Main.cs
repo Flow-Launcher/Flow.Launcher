@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var search = query.Search.ToLower();
 
             if (string.IsNullOrWhiteSpace(search))
-                return Settings.HotKeys;
+                return pluginManager.GetDefaultHotKeys();
 
             if ((DateTime.Now - _lastUpdateTime).TotalHours > 12) // 12 hours
             {
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 var s when s.StartsWith(Settings.HotKeyInstall) => pluginManager.RequestInstallOrUpdate(s),
                 var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
                 var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
-                _ => Settings.HotKeys.Where(hotkey =>
+                _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
                     return hotkey.Score > 0;
