@@ -61,7 +61,7 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             (_proxy.Address, _proxy.Credentials) = property switch
             {
-                ProxyProperty.Enabled => (Proxy.Enabled) switch
+                ProxyProperty.Enabled => Proxy.Enabled switch
                 {
                     true => Proxy.UserName switch
                     {
@@ -75,7 +75,8 @@ namespace Flow.Launcher.Infrastructure.Http
                 ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), _proxy.Credentials),
                 ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), _proxy.Credentials),
                 ProxyProperty.UserName => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
-                ProxyProperty.Password => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password))
+                ProxyProperty.Password => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
