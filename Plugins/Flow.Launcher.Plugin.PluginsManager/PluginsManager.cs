@@ -140,11 +140,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Install(plugin, filePath);
-                Context.API.RestartApp();
-            });
+            Install(plugin, filePath);
+            Context.API.RestartApp();
         }
 
         internal List<Result> RequestUpdate(string search)
@@ -211,10 +208,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory,
                                     $"{x.Name}-{x.NewVersion}.zip");
-                                Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath);
-                                Install(x.PluginNewUserPlugin, downloadToFilePath);
 
-                                Context.API.RestartApp();
+                                Task.Run(async delegate
+                                {
+                                    await Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath).ConfigureAwait(false);
+                                    Install(x.PluginNewUserPlugin, downloadToFilePath);
+
+                                    Context.API.RestartApp();
+                                });
 
                                 return true;
                             }
