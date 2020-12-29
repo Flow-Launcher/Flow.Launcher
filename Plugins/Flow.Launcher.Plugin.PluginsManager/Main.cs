@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal PluginsManager pluginManager;
 
-        internal DateTime _lastUpdateTime;
+        private DateTime lastUpdateTime;
 
         public Control CreateSettingPanel()
         {
@@ -36,7 +36,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            _lastUpdateTime = DateTime.Now;
+            lastUpdateTime = DateTime.Now;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -51,12 +51,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (string.IsNullOrWhiteSpace(search))
                 return pluginManager.GetDefaultHotKeys();
 
-            if ((DateTime.Now - _lastUpdateTime).TotalHours > 12) // 12 hours
+            if ((DateTime.Now - lastUpdateTime).TotalHours > 12) // 12 hours
             {
                 Task.Run(async () =>
                 {
                     await pluginManager.UpdateManifest();
-                    _lastUpdateTime = DateTime.Now;
+                    lastUpdateTime = DateTime.Now;
                 });
             }
 
