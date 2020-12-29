@@ -47,19 +47,14 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        private static readonly WebProxy _proxy = new WebProxy();
-
-        public static WebProxy WebProxy
-        {
-            get { return _proxy; }
-        }
+        public static WebProxy WebProxy { get; } = new WebProxy();
 
         /// <summary>
         /// Update the Address of the Proxy to modify the client Proxy
         /// </summary>
         public static void UpdateProxy(ProxyProperty property)
         {
-            (_proxy.Address, _proxy.Credentials) = property switch
+            (WebProxy.Address, WebProxy.Credentials) = property switch
             {
                 ProxyProperty.Enabled => Proxy.Enabled switch
                 {
@@ -72,10 +67,10 @@ namespace Flow.Launcher.Infrastructure.Http
                     },
                     false => (null, null)
                 },
-                ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), _proxy.Credentials),
-                ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), _proxy.Credentials),
-                ProxyProperty.UserName => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
-                ProxyProperty.Password => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
+                ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
+                ProxyProperty.UserName => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                ProxyProperty.Password => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
