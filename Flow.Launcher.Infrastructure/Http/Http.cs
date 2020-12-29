@@ -89,7 +89,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             else
             {
-                throw new WebException($"Error code <{response.StatusCode}> returned from <{url}>");
+                throw new HttpRequestException($"Error code <{response.StatusCode}> returned from <{url}>");
             }
         }
 
