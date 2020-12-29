@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
     {
         private PluginInitContext Context { get; set; }
 
-        private Settings Settings { get; set; }
-
-        public ContextMenu(PluginInitContext context, Settings settings)
+        public ContextMenu(PluginInitContext context)
         {
             Context = context;
-            Settings = settings;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)

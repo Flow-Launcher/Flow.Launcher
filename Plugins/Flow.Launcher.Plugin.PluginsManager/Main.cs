@@ -1,5 +1,4 @@
 ﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
 using System.Collections.Generic;
@@ -35,7 +34,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context = context;
             viewModel = new SettingsViewModel(context);
             Settings = viewModel.Settings;
-            contextMenu = new ContextMenu(Context, Settings);
+            contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
             _lastUpdateTime = DateTime.Now;
         }
