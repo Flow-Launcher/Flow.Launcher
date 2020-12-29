@@ -109,7 +109,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 IndexWin32Programs();
                 IndexUWPPrograms();
-            });
+            }).ConfigureAwait(false);
 
             _settings.LastIndexTime = DateTime.Today;
         }
