@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (PluginExists(plugin.ID))
             {
                 if (Context.API.GetAllPlugins()
-                    .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version != plugin.Version))
+                    .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
                 {
                     if (MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_update_exists"),
                         Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
