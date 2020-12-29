@@ -73,5 +73,18 @@ namespace Flow.Launcher.Infrastructure.Http
             
             return content;
         }
+
+        public static async Task<Stream> GetStreamAsync([NotNull] string url, string encoding = "UTF-8")
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            var request = WebRequest.CreateHttp(url);
+            request.Method = "GET";
+            request.Timeout = 6000;
+            request.Proxy = WebProxy();
+            request.UserAgent = UserAgent;
+            var response = await request.GetResponseAsync() as HttpWebResponse;
+            response = response.NonNull();
+            return response.GetResponseStream().NonNull();
+        }
     }
 }
