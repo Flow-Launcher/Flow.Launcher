@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.UserSettings;
+﻿using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
 using System;
 using System.Collections.Generic;
@@ -55,7 +55,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                                 ? pluginManifestInfo.UrlSourceCode.Replace("/tree/master", "/issues/new/choose") 
                                                                 : pluginManifestInfo.UrlSourceCode;
 
-                        SharedCommands.SearchWeb.NewBrowserWindow(link);
+                        SharedCommands.SearchWeb.NewTabInBrowser(link);
                         return true;
                     }
                 },
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = selectedResult.IcoPath,
                     Action = _ =>
                     {
-                        SharedCommands.SearchWeb.NewBrowserWindow("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
+                        SharedCommands.SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
                         return true;
                     }
                 }
