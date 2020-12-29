@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Net.Http;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
@@ -18,13 +19,12 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
-                result = await Http.Get(api + Uri.EscapeUriString(query));
+                result = await Http.GetAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
             }
-            catch (WebException e)
+            catch (HttpRequestException e)
             {
                 Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
-                ;
             }
             if (string.IsNullOrEmpty(result)) return new List<string>();
             JContainer json;

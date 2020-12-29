@@ -89,13 +89,23 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        public static async Task<string> Get([NotNull] string url, string encoding = "UTF-8")
+        /// <summary>
+        /// Asynchrously get the result as string from url.
+        /// When supposing the result is long and large, try using GetStreamAsync to avoid reading as string
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static Task<string> GetAsync([NotNull] string url)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            var response = await client.GetAsync(url);
-            await using var stream = await response.Content.ReadAsStreamAsync();
-            using var reader = new StreamReader(stream, Encoding.GetEncoding(encoding));
-            var content = await reader.ReadToEndAsync();
+            return GetAsync(new Uri(url.Replace("#", "%23")));
+        }
+
+        public static async Task<string> GetAsync([NotNull] Uri url)
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            using var response = await client.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 return content;
@@ -107,6 +117,11 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
+        /// <summary>
+        /// Asynchrously get the result as stream from url.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<Stream> GetStreamAsync([NotNull] string url)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
