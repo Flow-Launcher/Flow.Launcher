@@ -74,7 +74,7 @@ namespace Flow.Launcher.Infrastructure.Http
             return content;
         }
 
-        public static async Task<Stream> GetStreamAsync([NotNull] string url, string encoding = "UTF-8")
+        public static async Task<Stream> GetStreamAsync([NotNull] string url)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
             var request = WebRequest.CreateHttp(url);
