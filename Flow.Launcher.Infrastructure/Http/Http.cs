@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
+using System.ComponentModel;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -15,6 +16,7 @@ namespace Flow.Launcher.Infrastructure.Http
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
         private static HttpClient client;
+
         private static SocketsHttpHandler socketsHttpHandler = new SocketsHttpHandler()
         {
             UseProxy = true,
@@ -31,56 +33,58 @@ namespace Flow.Launcher.Infrastructure.Http
 
             client = new HttpClient(socketsHttpHandler, false);
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
-
         }
+
         private static HttpProxy proxy;
+
         public static HttpProxy Proxy
         {
-            private get
-            {
-                return proxy;
-            }
+            private get { return proxy; }
             set
             {
                 proxy = value;
-                UpdateProxy();
+                proxy.PropertyChanged += UpdateProxy;
             }
         }
 
-        public static WebProxy WebProxy { get; private set; } = new WebProxy();
+        private static readonly WebProxy _proxy = new WebProxy();
+
+        public static WebProxy WebProxy
+        {
+            get { return _proxy; }
+        }
 
         /// <summary>
         /// Update the Address of the Proxy to modify the client Proxy
         /// </summary>
-        public static void UpdateProxy()
-        // TODO: need test with a proxy
+        public static void UpdateProxy(ProxyProperty property)
         {
-            if (Proxy != null && Proxy.Enabled && !string.IsNullOrEmpty(Proxy.Server))
+            (_proxy.Address, _proxy.Credentials) = property switch
             {
-                if (string.IsNullOrEmpty(Proxy.UserName) || string.IsNullOrEmpty(Proxy.Password))
+                ProxyProperty.Enabled => (Proxy.Enabled) switch
                 {
-                    WebProxy.Address = new Uri($"http://{Proxy.Server}:{Proxy.Port}");
-                    WebProxy.Credentials = null;
-                }
-                else
-                {
-                    WebProxy.Address = new Uri($"http://{Proxy.Server}:{Proxy.Port}");
-                    WebProxy.Credentials = new NetworkCredential(Proxy.UserName, Proxy.Password);
-                }
-            }
-            else
-            {
-                WebProxy.Address = new WebProxy().Address;
-                WebProxy.Credentials = null;
-            }
+                    true => Proxy.UserName switch
+                    {
+                        var userName when !string.IsNullOrEmpty(userName) =>
+                            (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), null),
+                        _ => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"),
+                            new NetworkCredential(Proxy.UserName, Proxy.Password))
+                    },
+                    false => (null, null)
+                },
+                ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), _proxy.Credentials),
+                ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), _proxy.Credentials),
+                ProxyProperty.UserName => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                ProxyProperty.Password => (_proxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password))
+            };
         }
 
-        public async static Task Download([NotNull] string url, [NotNull] string filePath)
+        public static async Task Download([NotNull] string url, [NotNull] string filePath)
         {
             using var response = await client.GetAsync(url);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
                 await response.Content.CopyToAsync(fileStream);
             }
             else
@@ -93,7 +97,7 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             Log.Debug($"|Http.Get|Url <{url}>");
             var response = await client.GetAsync(url);
-            using var stream = await response.Content.ReadAsStreamAsync();
+            await using var stream = await response.Content.ReadAsStreamAsync();
             using var reader = new StreamReader(stream, Encoding.GetEncoding(encoding));
             var content = await reader.ReadToEndAsync();
             if (response.StatusCode == HttpStatusCode.OK)
@@ -102,7 +106,8 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             else
             {
-                throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
+                throw new HttpRequestException(
+                    $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
             }
         }
     }
