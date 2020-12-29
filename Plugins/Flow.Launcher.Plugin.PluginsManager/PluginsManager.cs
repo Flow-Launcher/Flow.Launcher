@@ -87,7 +87,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 };
         }
 
-        internal void InstallOrUpdate(UserPlugin plugin)
+        internal async Task InstallOrUpdate(UserPlugin plugin)
         {
             if (PluginExists(plugin.ID))
             {
@@ -127,7 +127,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
 
-                Http.Download(plugin.UrlDownload, filePath);
+                await Http.Download(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
@@ -264,8 +264,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Action = e =>
                             {
                                 Application.Current.MainWindow.Hide();
-                                InstallOrUpdate(x);
-
+                                _ = InstallOrUpdate(x); // No need to wait
                                 return ShouldHideWindow;
                             },
                             ContextData = x
