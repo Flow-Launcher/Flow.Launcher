@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using JetBrains.Annotations;
 using Squirrel;
-using Newtonsoft.Json;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
@@ -17,6 +16,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using System.IO;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Core
 {
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Core
             GitHubRepository = gitHubRepository;
         }
 
-        public async Task UpdateApp(IPublicAPI api , bool silentUpdate = true)
+        public async Task UpdateApp(IPublicAPI api, bool silentUpdate = true)
         {
             UpdateManager updateManager;
             UpdateInfo newUpdateInfo;
@@ -39,7 +39,7 @@ namespace Flow.Launcher.Core
 
             try
             {
-                updateManager = await GitHubUpdateManager(GitHubRepository);
+                updateManager = await GitHubUpdateManager(GitHubRepository).ConfigureAwait(false);
             }
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
             {
@@ -50,7 +50,7 @@ namespace Flow.Launcher.Core
             try
             {
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
-                newUpdateInfo = await updateManager.CheckForUpdate().NonNull();
+                newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
             }
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
             {
@@ -85,8 +85,8 @@ namespace Flow.Launcher.Core
                 updateManager.Dispose();
                 return;
             }
-            
-            await updateManager.ApplyReleases(newUpdateInfo);
+
+            await updateManager.ApplyReleases(newUpdateInfo).ConfigureAwait(false);
 
             if (DataLocation.PortableDataLocationInUse())
             {
@@ -98,11 +98,11 @@ namespace Flow.Launcher.Core
             }
             else
             {
-                await updateManager.CreateUninstallerRegistryEntry();
+                await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
             }
 
             var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
-            
+
             Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
             // always dispose UpdateManager
@@ -117,13 +117,13 @@ namespace Flow.Launcher.Core
         [UsedImplicitly]
         private class GithubRelease
         {
-            [JsonProperty("prerelease")]
+            [JsonPropertyName("prerelease")]
             public bool Prerelease { get; [UsedImplicitly] set; }
 
-            [JsonProperty("published_at")]
+            [JsonPropertyName("published_at")]
             public DateTime PublishedAt { get; [UsedImplicitly] set; }
 
-            [JsonProperty("html_url")]
+            [JsonPropertyName("html_url")]
             public string HtmlUrl { get; [UsedImplicitly] set; }
         }
 
@@ -133,13 +133,13 @@ namespace Flow.Launcher.Core
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
 
-            var json = await Http.Get(api);
+            var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
 
-            var releases = JsonConvert.DeserializeObject<List<GithubRelease>>(json);
+            var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
-            var client = new WebClient { Proxy = Http.WebProxy() };
+            var client = new WebClient { Proxy = Http.WebProxy };
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);

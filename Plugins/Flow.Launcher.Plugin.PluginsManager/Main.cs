@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal PluginsManager pluginManager;
 
-        private DateTime lastUpdateTime;
+        private DateTime lastUpdateTime = DateTime.MinValue;
 
         public Control CreateSettingPanel()
         {
