@@ -10,8 +10,5 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal string HotkeyUninstall { get; set; } = "uninstall";
 
         internal string HotkeyUpdate { get; set; } = "update";
-        
-        internal readonly string icoPath = "Images\\pluginsmanager.png";
-        
     }
 }
