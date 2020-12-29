@@ -110,5 +110,12 @@ namespace Flow.Launcher.Infrastructure.Http
                     $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
             }
         }
+
+        public static async Task<Stream> GetStreamAsync([NotNull] string url)
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            var response = await client.GetAsync(url);
+            return await response.Content.ReadAsStreamAsync();
+        }
     }
 }
