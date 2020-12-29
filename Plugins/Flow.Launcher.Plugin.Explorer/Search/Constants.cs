@@ -22,6 +22,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const char AllFilesFolderSearchWildcard = '>';
 
+        internal const string DefaultContentSearchActionKeyword = "doc:";
+
         internal const char DirectorySeperator = '\\';
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";

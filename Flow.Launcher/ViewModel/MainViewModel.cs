@@ -136,7 +136,7 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                SearchWeb.NewBrowserWindow("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+                SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
 
             OpenResultCommand = new RelayCommand(index =>
