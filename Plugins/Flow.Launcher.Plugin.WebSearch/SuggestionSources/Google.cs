@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
+using System.Text.Json;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
@@ -27,25 +26,20 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 return new List<string>();
             }
             if (string.IsNullOrEmpty(result)) return new List<string>();
-            JContainer json;
+            JsonDocument json;
             try
             {
-                json = JsonConvert.DeserializeObject(result) as JContainer;
+                json = JsonDocument.Parse(result);
             }
-            catch (JsonSerializationException e)
+            catch (JsonException e)
             {
                 Log.Exception("|Google.Suggestions|can't parse suggestions", e);
                 return new List<string>();
             }
-            if (json != null)
-            {
-                var results = json[1] as JContainer;
-                if (results != null)
-                {
-                    return results.OfType<JValue>().Select(o => o.Value).OfType<string>().ToList();
-                }
-            }
-            return new List<string>();
+
+            var results = json?.RootElement.EnumerateArray().ElementAt(1);
+
+            return results?.EnumerateArray().Select(o => o.GetString()).ToList() ?? new List<string>();
         }
 
         public override string ToString()

@@ -13,7 +13,6 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
-using System.IO;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;

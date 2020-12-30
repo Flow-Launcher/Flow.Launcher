@@ -1,10 +1,10 @@
 using System.IO;
 using System.Windows.Media;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
