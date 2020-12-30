@@ -7,6 +7,7 @@ using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
 using System.Text.Json;
+using System.IO;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
@@ -14,22 +15,22 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
     {
         public override async Task<List<string>> Suggestions(string query)
         {
-            string result;
+            Stream resultStream;
             try
             {
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
             }
             catch (HttpRequestException e)
             {
                 Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
             }
-            if (string.IsNullOrEmpty(result)) return new List<string>();
+            if (resultStream.Length == 0) return new List<string>();
             JsonDocument json;
             try
             {
-                json = JsonDocument.Parse(result);
+                json = await JsonDocument.ParseAsync(resultStream);
             }
             catch (JsonException e)
             {
