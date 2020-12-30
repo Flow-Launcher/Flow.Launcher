@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
@@ -35,25 +34,20 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             Match match = _reg.Match(result);
             if (match.Success)
             {
-                JContainer json;
+                JsonDocument json;
                 try
                 {
-                    json = JsonConvert.DeserializeObject(match.Groups[1].Value) as JContainer;
+                    json = JsonDocument.Parse(match.Groups[1].Value);
                 }
-                catch (JsonSerializationException e)
+                catch(JsonException e)
                 {
                     Log.Exception("|Baidu.Suggestions|can't parse suggestions", e);
                     return new List<string>();
                 }
 
-                if (json != null)
-                {
-                    var results = json["s"] as JArray;
-                    if (results != null)
-                    {
-                        return results.OfType<JValue>().Select(o => o.Value).OfType<string>().ToList();
-                    }
-                }
+                var results = json?.RootElement.GetProperty("s");
+
+                return results?.EnumerateArray().Select(o => o.GetString()).ToList() ?? new List<string>();
             }
 
             return new List<string>();

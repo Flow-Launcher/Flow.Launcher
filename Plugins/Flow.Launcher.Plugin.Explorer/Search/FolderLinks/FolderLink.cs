@@ -1,15 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
 {
-    [JsonObject(MemberSerialization.OptIn)]
     public class FolderLink
     {
-        [JsonProperty]
         public string Path { get; set; }
 
+        [JsonIgnore]
         public string Nickname
         {
             get
