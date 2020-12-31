@@ -213,7 +213,7 @@ namespace Flow.Launcher.ViewModel
 
         #region plugin
 
-        public static string Plugin => "http://www.wox.one/plugin";
+        public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
         public PluginViewModel SelectedPlugin { get; set; }
 
         public IList<PluginViewModel> PluginViewModels
@@ -450,7 +450,7 @@ namespace Flow.Launcher.ViewModel
 
         #region about
 
-        public string Github => _updater.GitHubRepository;
+        public string Website => Constant.Website;
         public string ReleaseNotes => _updater.GitHubRepository +  @"/releases/latest";
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
