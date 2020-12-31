@@ -9,6 +9,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Linq;
+using System.Runtime.Versioning;
 
 namespace Flow.Launcher.Core.Configuration
 {
@@ -114,6 +115,7 @@ namespace Flow.Launcher.Core.Configuration
             }
         }
 
+        [SupportedOSPlatform("windows")]
         public void CreateUninstallerEntry()
         {
             var uninstallRegSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";

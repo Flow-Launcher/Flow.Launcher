@@ -53,10 +53,6 @@ namespace Flow.Launcher.Infrastructure
 
             var currentQueryIndex = 0;
 
-            // this is for compare string that has been translated
-            // because one chinese character may match multiple letter, so this will help to get the currect matchdata
-            var currentAcronymIndex = 0;
-
             var acronymMatchData = new List<int>();
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
 

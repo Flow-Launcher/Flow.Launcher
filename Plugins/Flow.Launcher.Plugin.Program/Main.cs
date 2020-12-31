@@ -196,7 +196,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public void ReloadData()
         {
-            IndexPrograms();
+            _ = IndexPrograms();
         }
     }
 }

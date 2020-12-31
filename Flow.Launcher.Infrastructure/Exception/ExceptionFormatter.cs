@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Xml;
 using Microsoft.Win32;
@@ -16,6 +17,7 @@ namespace Flow.Launcher.Infrastructure.Exception
         }
 
         //todo log /display line by line 
+        [SupportedOSPlatform("windows")]
         private static string CreateExceptionReport(System.Exception ex)
         {
             var sb = new StringBuilder();
@@ -105,6 +107,7 @@ namespace Flow.Launcher.Infrastructure.Exception
         }
 
         // http://msdn.microsoft.com/en-us/library/hh925568%28v=vs.110%29.aspx
+        [SupportedOSPlatform("windows")]
         private static List<string> GetFrameworkVersionFromRegistry()
         {
             try
@@ -166,7 +169,7 @@ namespace Flow.Launcher.Infrastructure.Exception
                 }
                 return result;
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 return new List<string>();
             }

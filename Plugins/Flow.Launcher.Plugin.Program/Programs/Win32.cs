@@ -416,9 +416,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return programs.ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 #endif
 

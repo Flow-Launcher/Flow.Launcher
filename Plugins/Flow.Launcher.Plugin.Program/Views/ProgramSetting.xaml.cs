@@ -73,10 +73,10 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void ReIndexing()
         {
             ViewRefresh();
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Visible; });
-                Main.IndexPrograms();
+                await Main.IndexPrograms();
                 Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Hidden; });
             });
         }

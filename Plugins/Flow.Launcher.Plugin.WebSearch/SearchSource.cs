@@ -41,10 +41,10 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             var webSearch = new SearchSource
             {
-                Title = string.Copy(Title),
-                ActionKeyword = string.Copy(ActionKeyword),
-                Url = string.Copy(Url),
-                Icon = string.Copy(Icon),
+                Title = Title,
+                ActionKeyword = ActionKeyword,
+                Url = Url,
+                Icon = Icon,
                 CustomIcon = CustomIcon,
                 Enabled = Enabled
             };

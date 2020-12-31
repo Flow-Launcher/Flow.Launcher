@@ -206,7 +206,7 @@ namespace Flow.Launcher
         {
             var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
             // used to sync the current status from the plugin manager into the setting to keep consistency after save
-            settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled; 
+            settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled;
         }
 
         private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
@@ -256,7 +256,7 @@ namespace Flow.Launcher
 
         #endregion
 
-        private async void OnCheckUpdates(object sender, RoutedEventArgs e)
+        private void OnCheckUpdates(object sender, RoutedEventArgs e)
         {
             viewModel.UpdateApp(); // TODO: change to command
         }
