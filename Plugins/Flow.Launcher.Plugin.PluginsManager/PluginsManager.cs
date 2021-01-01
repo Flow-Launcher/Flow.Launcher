@@ -135,7 +135,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (Exception e)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_download_error_title"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_download_error_subtitle"));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_error_subtitle"), plugin.Name));
 
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
             }
