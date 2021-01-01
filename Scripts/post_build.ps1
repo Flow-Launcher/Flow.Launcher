@@ -45,7 +45,7 @@ function Delete-Unused ($path, $config) {
     $included = Get-ChildItem $target -Filter "*.dll"
     foreach ($i in $included){
         $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where {$_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion} 
-        $deleteList | foreach-object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
         $deleteList | Remove-Item
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse 
