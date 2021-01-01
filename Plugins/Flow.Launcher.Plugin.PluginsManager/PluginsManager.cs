@@ -140,6 +140,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"), plugin.Name));
 
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "InstallOrUpdate");
+
+                return;
             }
 
             Context.API.RestartApp();
