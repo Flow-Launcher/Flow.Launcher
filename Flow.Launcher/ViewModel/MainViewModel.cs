@@ -442,7 +442,8 @@ namespace Flow.Launcher.ViewModel
                         async Task QueryTask(PluginPair plugin, Query query, CancellationToken token)
                         {
                             var results = await PluginManager.QueryForPlugin(plugin, query, token);
-                            UpdateResultView(results, plugin.Metadata, query);
+                            if (!currentCancellationToken.IsCancellationRequested)
+                                UpdateResultView(results, plugin.Metadata, query);
                         }
 
                     }, currentCancellationToken).ContinueWith(t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
