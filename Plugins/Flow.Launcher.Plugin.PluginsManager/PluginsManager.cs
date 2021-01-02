@@ -131,16 +131,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+
+                Install(plugin, filePath);
             }
             catch (Exception e)
             {
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"), plugin.Name));
 
-                Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "PluginDownload");
+                Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "InstallOrUpdate");
+
+                return;
             }
 
-            Install(plugin, filePath);
             Context.API.RestartApp();
         }
 
