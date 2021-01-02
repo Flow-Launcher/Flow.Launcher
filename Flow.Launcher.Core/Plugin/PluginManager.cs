@@ -33,7 +33,7 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
-        private static readonly string[] Directories = {Constant.PreinstalledDirectory, DataLocation.PluginsDirectory};
+        private static readonly string[] Directories = { Constant.PreinstalledDirectory, DataLocation.PluginsDirectory };
 
         private static void DeletePythonBinding()
         {
@@ -55,18 +55,21 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task ReloadData()
         {
-            foreach(var plugin in AllPlugins)
+            await Task.WhenAll(AllPlugins.Select(plugin =>
             {
-                switch (plugin.Plugin)
                 {
-                    case IReloadable p:
-                        p.ReloadData();
-                        break;
-                    case IAsyncReloadable p:
-                        await p.ReloadDataAsync();
-                        break;
+                    switch (plugin)
+                    {
+                        case IReloadable p:
+                            p.ReloadData(); // Sync reload means low time consuming
+                            return Task.CompletedTask;
+                        case IAsyncReloadable p:
+                            return p.ReloadDataAsync();
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
-            }
+            }));
         }
 
         static PluginManager()
@@ -142,7 +145,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    pair.Metadata.Disabled = true; 
+                    pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
             }));
@@ -180,7 +183,7 @@ namespace Flow.Launcher.Core.Plugin
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
             {
                 var plugin = NonGlobalPlugins[query.ActionKeyword];
-                return new List<PluginPair> {plugin};
+                return new List<PluginPair> { plugin };
             }
             else
             {
@@ -262,7 +265,7 @@ namespace Flow.Launcher.Core.Plugin
             var pluginPair = _contextMenuPlugins.FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
-                var plugin = (IContextMenu) pluginPair.Plugin;
+                var plugin = (IContextMenu)pluginPair.Plugin;
 
                 try
                 {
@@ -326,10 +329,10 @@ namespace Flow.Launcher.Core.Plugin
             {
                 GlobalPlugins.Remove(plugin);
             }
-            
+
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
-            
+
 
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
         }
