@@ -422,7 +422,7 @@ namespace Flow.Launcher.ViewModel
                                     }
                                     catch(Exception e)
                                     {
-                                        Log.Exception($"|MainViewModel|Exception when querying {plugin.Metadata.Name}", e);
+                                        Log.Exception("MainViewModel", $"Exception when querying the plugin {plugin.Metadata.Name}", e, "QueryResults");
                                     }
                                 }
                             });
@@ -442,7 +442,7 @@ namespace Flow.Launcher.ViewModel
                         }
                     }, currentCancellationToken).ContinueWith(t =>
                     {
-                        Log.Exception("|MainViewModel|Error when querying plugin", t.Exception?.InnerException);
+                        Log.Exception("MainViewModel", "Error when querying plugins", t.Exception?.InnerException, "QueryResults");
                     }, TaskContinuationOptions.OnlyOnFaulted);
                 }
             }
