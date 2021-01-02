@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure.Logger;
@@ -12,9 +13,8 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IPlugin, IPluginI18n, IContextMenu, ISavable, IReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable
     {
-        private static readonly object IndexLock = new object();
         internal static Win32[] _win32s { get; set; }
         internal static UWP.Application[] _uwps { get; set; }
         internal static Settings _settings { get; set; }
@@ -30,17 +30,58 @@ namespace Flow.Launcher.Plugin.Program
         public Main()
         {
             _settingsStorage = new PluginJsonStorage<Settings>();
-            _settings = _settingsStorage.Load();
+        }
 
-            Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
+        public void Save()
+        {
+            _settingsStorage.Save();
+            _win32Storage.Save(_win32s);
+            _uwpStorage.Save(_uwps);
+        }
+
+        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
+        {
+            Win32[] win32;
+            UWP.Application[] uwps;
+
+            win32 = _win32s;
+            uwps = _uwps;
+
+
+            var result = await Task.Run(delegate
             {
-                _win32Storage = new BinaryStorage<Win32[]>("Win32");
-                _win32s = _win32Storage.TryLoad(new Win32[] { });
-                _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
-                _uwps = _uwpStorage.TryLoad(new UWP.Application[] { });
+                return win32.Cast<IProgram>()
+                    .Concat(uwps)
+                    .AsParallel()
+                    .WithCancellation(token)
+                    .Where(p => p.Enabled)
+                    .Select(p => p.Result(query.Search, _context.API))
+                    .Where(r => r?.Score > 0)
+                    .ToList();
+            }, token).ConfigureAwait(false);
+
+            return result;
+        }
+
+        public async Task InitAsync(PluginInitContext context)
+        {
+            _context = context;
+
+            await Task.Run(() =>
+            {
+                _settings = _settingsStorage.Load();
+
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
+                {
+                    _win32Storage = new BinaryStorage<Win32[]>("Win32");
+                    _win32s = _win32Storage.TryLoad(new Win32[] { });
+                    _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
+                    _uwps = _uwpStorage.TryLoad(new UWP.Application[] { });
+                });
+                Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
+                Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
             });
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
+
 
             var a = Task.Run(() =>
             {
@@ -51,43 +92,12 @@ namespace Flow.Launcher.Plugin.Program
             var b = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_uwps.Any())
-                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUWPPrograms);
+                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
             });
 
-            Task.WaitAll(a, b);
+            await Task.WhenAll(a, b);
 
             _settings.LastIndexTime = DateTime.Today;
-        }
-
-        public void Save()
-        {
-            _settingsStorage.Save();
-            _win32Storage.Save(_win32s);
-            _uwpStorage.Save(_uwps);
-        }
-
-        public List<Result> Query(Query query)
-        {
-            Win32[] win32;
-            UWP.Application[] uwps;
-
-            win32 = _win32s;
-            uwps = _uwps;
-
-            var result = win32.Cast<IProgram>()
-                 .Concat(uwps)
-                 .AsParallel()
-                 .Where(p => p.Enabled)
-                 .Select(p => p.Result(query.Search, _context.API))
-                 .Where(r => r?.Score > 0)
-                 .ToList();
-
-            return result;
-        }
-
-        public void Init(PluginInitContext context)
-        {
-            _context = context;
         }
 
         public static void IndexWin32Programs()
@@ -95,10 +105,9 @@ namespace Flow.Launcher.Plugin.Program
             var win32S = Win32.All(_settings);
 
             _win32s = win32S;
-
         }
 
-        public static void IndexUWPPrograms()
+        public static void IndexUwpPrograms()
         {
             var windows10 = new Version(10, 0);
             var support = Environment.OSVersion.Version.Major >= windows10.Major;
@@ -106,16 +115,15 @@ namespace Flow.Launcher.Plugin.Program
             var applications = support ? UWP.All() : new UWP.Application[] { };
 
             _uwps = applications;
-
         }
 
-        public static void IndexPrograms()
+        public static async Task IndexPrograms()
         {
-            var t1 = Task.Run(() => IndexWin32Programs());
+            var t1 = Task.Run(IndexWin32Programs);
 
-            var t2 = Task.Run(() => IndexUWPPrograms());
+            var t2 = Task.Run(IndexUwpPrograms);
 
-            Task.WaitAll(t1, t2);
+            await Task.WhenAll(t1, t2);
 
             _settings.LastIndexTime = DateTime.Today;
         }
@@ -145,19 +153,21 @@ namespace Flow.Launcher.Plugin.Program
             }
 
             menuOptions.Add(
-                                new Result
-                                {
-                                    Title = _context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
-                                    Action = c =>
-                                    {
-                                        DisableProgram(program);
-                                        _context.API.ShowMsg(_context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
-                                                                _context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success_message"));
-                                        return false;
-                                    },
-                                    IcoPath = "Images/disable.png"
-                                }
-                           );
+                new Result
+                {
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
+                    Action = c =>
+                    {
+                        DisableProgram(program);
+                        _context.API.ShowMsg(
+                            _context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                            _context.API.GetTranslation(
+                                "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
+                        return false;
+                    },
+                    IcoPath = "Images/disable.png"
+                }
+            );
 
             return menuOptions;
         }
@@ -168,21 +178,23 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _uwps.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier).FirstOrDefault().Enabled = false;
+                _uwps.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier).FirstOrDefault().Enabled =
+                    false;
 
             if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _win32s.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier).FirstOrDefault().Enabled = false;
+                _win32s.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier).FirstOrDefault().Enabled =
+                    false;
 
             _settings.DisabledProgramSources
-                     .Add(
-                             new Settings.DisabledProgramSource
-                             {
-                                 Name = programToDelete.Name,
-                                 Location = programToDelete.Location,
-                                 UniqueIdentifier = programToDelete.UniqueIdentifier,
-                                 Enabled = false
-                             }
-                         );
+                .Add(
+                    new Settings.DisabledProgramSource
+                    {
+                        Name = programToDelete.Name,
+                        Location = programToDelete.Location,
+                        UniqueIdentifier = programToDelete.UniqueIdentifier,
+                        Enabled = false
+                    }
+                );
         }
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)
@@ -200,9 +212,9 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public void ReloadData()
+        public async Task ReloadDataAsync()
         {
-            IndexPrograms();
+            await IndexPrograms();
         }
     }
 }
