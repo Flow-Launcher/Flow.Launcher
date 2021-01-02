@@ -90,11 +90,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public void ReloadData()
         {
-            Task.Run(async () =>
-            {
-                await pluginManager.UpdateManifest();
-                lastUpdateTime = DateTime.Now;
-            });
+            Task.Run(() => pluginManager.UpdateManifest()).Wait();
+            lastUpdateTime = DateTime.Now;
         }
     }
 }
