@@ -151,7 +151,7 @@ namespace Flow.Launcher.Test.Plugins
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
             
             // When
-            var results = searchManager.TopLevelDirectorySearchBehaviour(
+            var results = searchManager.TopLevelDirectorySearchBehaviourAsync(
                                             MethodWindowsIndexSearchReturnsZeroResults, 
                                             MethodDirectoryInfoClassSearchReturnsTwoResults, 
                                             false, 
@@ -171,7 +171,7 @@ namespace Flow.Launcher.Test.Plugins
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var results = searchManager.TopLevelDirectorySearchBehaviour(
+            var results = searchManager.TopLevelDirectorySearchBehaviourAsync(
                                             MethodWindowsIndexSearchReturnsZeroResults,
                                             MethodDirectoryInfoClassSearchReturnsTwoResults,
                                             true,
