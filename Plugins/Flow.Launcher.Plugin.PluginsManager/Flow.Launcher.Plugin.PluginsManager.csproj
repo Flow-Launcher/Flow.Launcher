@@ -35,7 +35,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Content Include="Languages\**">
+    <Content Include="Languages\*.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
