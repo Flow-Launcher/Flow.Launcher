@@ -45,7 +45,7 @@ namespace Flow.Launcher
             }
         }
 
-        private async void OnStartup(object sender, StartupEventArgs e)
+        private async void OnStartupAsync(object sender, StartupEventArgs e)
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
