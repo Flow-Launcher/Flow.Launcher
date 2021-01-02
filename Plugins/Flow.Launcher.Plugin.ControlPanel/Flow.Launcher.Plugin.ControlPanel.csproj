@@ -45,9 +45,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="Images\ControlPanel.png">
+    <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Languages\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
