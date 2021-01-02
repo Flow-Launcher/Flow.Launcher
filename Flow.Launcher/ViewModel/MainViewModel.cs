@@ -417,7 +417,7 @@ namespace Flow.Launcher.ViewModel
                             {
                                 if (!plugins[i].Metadata.Disabled)
                                 {
-                                    tasks[i] = QueryTask(i, query, currentCancellationToken);
+                                    tasks[i] = QueryTask(plugins[i], query, currentCancellationToken);
                                 }
                                 else tasks[i] = Task.CompletedTask; // Avoid Null
                             });
@@ -438,10 +438,11 @@ namespace Flow.Launcher.ViewModel
                             ProgressBarVisibility = Visibility.Hidden;
                         }
 
-                        async Task QueryTask(int pairIndex, Query query, CancellationToken token)
+                        // Local Function
+                        async Task QueryTask(PluginPair plugin, Query query, CancellationToken token)
                         {
-                            var result = await PluginManager.QueryForPlugin(plugins[pairIndex], query, token);
-                            UpdateResultView(result, plugins[pairIndex].Metadata, query);
+                            var results = await PluginManager.QueryForPlugin(plugin, query, token);
+                            UpdateResultView(results, plugin.Metadata, query);
                         }
 
                     }, currentCancellationToken).ContinueWith(t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
