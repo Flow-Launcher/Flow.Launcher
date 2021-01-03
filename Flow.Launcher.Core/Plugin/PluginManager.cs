@@ -221,7 +221,7 @@ namespace Flow.Launcher.Core.Plugin
                     metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
                 token.ThrowIfCancellationRequested();
             }
-            catch (Exception e) when (e is OperationCanceledException || e is TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return results = null;
             }
