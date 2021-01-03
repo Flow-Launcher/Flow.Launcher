@@ -214,11 +214,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 Task.Run(async delegate
                                 {
+                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
+                                                        Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
+
                                     await Http.Download(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath).ConfigureAwait(false);
+
+                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
+                                                        Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+
                                     Install(x.PluginNewUserPlugin, downloadToFilePath);
 
                                     Context.API.RestartApp();
-                                });
+                                }).ContinueWith(t => Log.Exception($"|PluginsManager|Update fail for {x.Name}", t.Exception.InnerException),
+                                                TaskContinuationOptions.OnlyOnFaulted);
 
                                 return true;
                             }
