@@ -49,7 +49,7 @@ namespace Flow.Launcher.Core.Plugin
                         var plugin = Activator.CreateInstance(type);
 #else
                         Assembly assembly = null;
-                        IPlugin plugin = null;
+                        object plugin = null;
 
                         try
                         {
