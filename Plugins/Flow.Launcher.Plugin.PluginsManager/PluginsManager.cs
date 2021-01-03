@@ -225,8 +225,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Install(x.PluginNewUserPlugin, downloadToFilePath);
 
                                     Context.API.RestartApp();
-                                }).ContinueWith(t => Log.Exception($"|PluginsManager|Update fail for {x.Name}", t.Exception.InnerException),
-                                                TaskContinuationOptions.OnlyOnFaulted);
+                                }).ContinueWith(t =>
+                                {
+                                    Log.Exception($"|PluginsManager|Update fail for {x.Name}", t.Exception.InnerException);
+                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                                        string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"), x.Name));
+                                }, TaskContinuationOptions.OnlyOnFaulted);
 
                                 return true;
                             }
