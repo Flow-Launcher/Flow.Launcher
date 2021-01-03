@@ -197,36 +197,41 @@ namespace Flow.Launcher.Core.Plugin
             try
             {
                 var metadata = pair.Metadata;
-                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
-                    async () =>
-                    {
-                        switch (pair.Plugin)
-                        {
-                            case IAsyncPlugin plugin:
-                                results = await plugin.QueryAsync(query, token).ConfigureAwait(false) ??
-                                          new List<Result>();
-                                UpdatePluginMetadata(results, metadata, query);
-                                break;
-                            case IPlugin plugin:
-                                results = await Task.Run(() => plugin.Query(query), token).ConfigureAwait(false) ??
-                                          new List<Result>();
-                                UpdatePluginMetadata(results, metadata, query);
-                                break;
-                        }
-                    });
+
+                long milliseconds = -1L;
+
+                switch (pair.Plugin)
+                {
+                    case IAsyncPlugin plugin:
+                        milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                            async () => results = await plugin.QueryAsync(query, token).ConfigureAwait(false));
+                        break;
+                    case IPlugin plugin:
+                        await Task.Run(() => milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}", () =>
+                             results = plugin.Query(query)), token).ConfigureAwait(false);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                token.ThrowIfCancellationRequested();
+                UpdatePluginMetadata(results, metadata, query);
+
                 metadata.QueryCount += 1;
                 metadata.AvgQueryTime =
                     metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
+                token.ThrowIfCancellationRequested();
+            }
+            catch (Exception e) when (e is OperationCanceledException || e is TaskCanceledException)
+            {
+                return results = null;
             }
             catch (Exception e)
             {
-                Log.Exception(
-                    $"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>",
-                    e);
+                Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
             // null will be fine since the results will only be added into queue if the token hasn't been cancelled
-            return token.IsCancellationRequested ? results = null : results;
+            return results;
         }
 
         public static void UpdatePluginMetadata(List<Result> results, PluginMetadata metadata, Query query)
