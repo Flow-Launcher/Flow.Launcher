@@ -81,7 +81,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="PropertyChanged.Fody" Version="2.5.13" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.3.1" />
   </ItemGroup>
 
   <ItemGroup>
