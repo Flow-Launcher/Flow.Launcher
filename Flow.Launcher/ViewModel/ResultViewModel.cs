@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -12,7 +13,7 @@ namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        public class LazyAsync<T> : Lazy<Task<T>>
+        public class LazyAsync<T> : Lazy<ValueTask<T>>
         {
             private T defaultValue;
 
@@ -23,21 +24,27 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (!IsValueCreated)
                     {
-                        base.Value.ContinueWith(_ =>
-                        {
-                            _updateCallback();
-                        });
+                        _ = Exercute();
 
                         return defaultValue;
                     }
-                    
+
                     if (!base.Value.IsCompleted || base.Value.IsFaulted)
                         return defaultValue;
 
                     return base.Value.Result;
+
+                    // If none of the variables captured by the local function are captured by other lambdas
+                    // , the compiler can avoid heap allocations.
+                    async ValueTask Exercute()
+                    {
+                        await base.Value.ConfigureAwait(false);
+                        _updateCallback();
+                    }
+
                 }
             }
-            public LazyAsync(Func<Task<T>> factory, T defaultValue, Action updateCallback) : base(factory)
+            public LazyAsync(Func<ValueTask<T>> factory, T defaultValue, Action updateCallback) : base(factory)
             {
                 if (defaultValue != null)
                 {
@@ -55,7 +62,7 @@ namespace Flow.Launcher.ViewModel
                 Result = result;
 
                 Image = new LazyAsync<ImageSource>(
-                            SetImage, 
+                            SetImage,
                             ImageLoader.DefaultImage,
                             () =>
                                 {
@@ -82,7 +89,7 @@ namespace Flow.Launcher.ViewModel
 
         public LazyAsync<ImageSource> Image { get; set; }
 
-        private async Task<ImageSource> SetImage()
+        private async ValueTask<ImageSource> SetImage()
         {
             var imagePath = Result.IcoPath;
             if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
