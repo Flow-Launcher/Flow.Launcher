@@ -15,7 +15,7 @@ namespace Flow.Launcher.ViewModel
     {
         public class LazyAsync<T> : Lazy<ValueTask<T>>
         {
-            private T defaultValue;
+            private readonly T defaultValue;
 
             private readonly Action _updateCallback;
             public new T Value
@@ -24,7 +24,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (!IsValueCreated)
                     {
-                        _ = Exercute();
+                        _ = Exercute(); // manually use callback strategy
 
                         return defaultValue;
                     }
@@ -34,8 +34,8 @@ namespace Flow.Launcher.ViewModel
 
                     return base.Value.Result;
 
-                    // If none of the variables captured by the local function are captured by other lambdas
-                    // , the compiler can avoid heap allocations.
+                    // If none of the variables captured by the local function are captured by other lambdas,
+                    // the compiler can avoid heap allocations.
                     async ValueTask Exercute()
                     {
                         await base.Value.ConfigureAwait(false);
