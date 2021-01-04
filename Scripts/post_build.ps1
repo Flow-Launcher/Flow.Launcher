@@ -1,13 +1,13 @@
 param(
     [string]$config = "Release", 
-    [string]$solution,
-    [string]$targetpath
+    [string]$solution = (Join-Path $PSScriptRoot ".." -Resolve)
 )
 Write-Host "Config: $config"
 
 function Build-Version {
     if ([string]::IsNullOrEmpty($env:flowVersion)) {
-        $v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
+        $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
+        $v = (Get-Command ${targetPath}).FileVersionInfo.FileVersion
     } else {
         $v = $env:flowVersion
     }
@@ -75,6 +75,8 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
+    # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
+    New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
     # TODO: can we use dotnet pack here?
     nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
@@ -100,13 +102,14 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
-function IsDotNetCoreAppSelfContainedPublishEvent{
-    return Test-Path $solution\Output\Release\coreclr.dll
-}
+function Publish-Self-Contained ($p) {
 
-function FixPublishLastWriteDateTimeError ($solutionPath) {
-    #Fix error from publishing self contained app, when nuget tries to pack core dll references throws the error 'The DateTimeOffset specified cannot be converted into a Zip file timestamp' 
-    gci -path "$solutionPath\Output\Release" -rec -file *.dll | Where-Object {$_.LastWriteTime -lt (Get-Date).AddYears(-20)} | %  { try { $_.LastWriteTime = '01/01/2000 00:00:00' } catch {} }
+    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
+    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/NetCore3.1-SelfContained.pubxml" -Resolve
+
+    # we call dotnet publish on the main project. 
+    # The other projects should have been built in Release at this point.
+    dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
 function Main {
@@ -116,15 +119,12 @@ function Main {
 
     if ($config -eq "Release"){
         
-        if(IsDotNetCoreAppSelfContainedPublishEvent) {
-            FixPublishLastWriteDateTimeError $p
-        }
-        
         Delete-Unused $p $config
+
+        Publish-Self-Contained $p
+
         $o = "$p\Output\Packages"
         Validate-Directory $o
-        # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-        New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
         Pack-Squirrel-Installer $p $v $o
     
         $isInCI = $env:APPVEYOR
