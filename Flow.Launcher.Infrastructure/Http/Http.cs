@@ -91,7 +91,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         /// <summary>
         /// Asynchrously get the result as string from url.
-        /// When supposing the result is long and large, try using GetStreamAsync to avoid reading as string
+        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
@@ -101,19 +101,33 @@ namespace Flow.Launcher.Infrastructure.Http
             return GetAsync(new Uri(url.Replace("#", "%23")));
         }
 
+        /// <summary>
+        /// Asynchrously get the result as string from url.
+        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async Task<string> GetAsync([NotNull] Uri url)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            using var response = await client.GetAsync(url);
-            var content = await response.Content.ReadAsStringAsync();
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                return content;
+                using var response = await client.GetAsync(url);
+                var content = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    return content;
+                }
+                else
+                {
+                    throw new HttpRequestException(
+                        $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
+                }
             }
-            else
+            catch (HttpRequestException e)
             {
-                throw new HttpRequestException(
-                    $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "GetAsync");
+                throw;
             }
         }
 
@@ -124,9 +138,17 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns></returns>
         public static async Task<Stream> GetStreamAsync([NotNull] string url)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
-            var response = await client.GetAsync(url);
-            return await response.Content.ReadAsStreamAsync();
+            try
+            {
+                Log.Debug($"|Http.Get|Url <{url}>");
+                var response = await client.GetAsync(url);
+                return await response.Content.ReadAsStreamAsync();
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "GetStreamAsync");
+                throw;
+            }
         }
     }
 }
