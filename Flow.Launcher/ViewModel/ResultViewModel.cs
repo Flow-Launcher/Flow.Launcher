@@ -29,7 +29,7 @@ namespace Flow.Launcher.ViewModel
                         return defaultValue;
                     }
 
-                    if (!base.Value.IsCompleted || base.Value.IsFaulted)
+                    if (!base.Value.IsCompletedSuccessfully)
                         return defaultValue;
 
                     return base.Value.Result;
