@@ -26,6 +26,8 @@ before_build:
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
+after_build:
+  - ps: .\Scripts\post_build.ps1
 
 artifacts:
 - path: 'Output\Packages\Flow-Launcher-*.zip'
