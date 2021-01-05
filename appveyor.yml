@@ -34,6 +34,12 @@ artifacts:
   name: Zip
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
+- path: 'Output\Packages\Flow-Launcher-*.exe'
+  name: Squirrel Installer
+- path: 'Output\Packages\FlowLauncher-*-full.nupkg'
+  name: Squirrel nupkg
+- path: 'Output\Packages\RELEASES'
+  name: Squirrel RELEASES
 
 deploy:
   provider: NuGet
