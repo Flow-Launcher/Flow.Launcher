@@ -30,8 +30,6 @@ after_build:
   - ps: .\Scripts\post_build.ps1
 
 artifacts:
-- path: 'Output\Packages\Flow-Launcher-*.zip'
-  name: Zip
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
 - path: 'Output\Packages\Flow-Launcher-*.exe'
