@@ -31,13 +31,9 @@ function Build-Path {
     return $p
 }
 
-function Copy-Resources ($path, $config) {
-    $project = "$path\Flow.Launcher"
-    $output = "$path\Output"
-    $target = "$output\$config"
-    Copy-Item -Recurse -Force $project\Images\* $target\Images\
+function Copy-Resources ($path) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $output\Update.exe
+    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
 }
 
 function Delete-Unused ($path, $config) {
@@ -53,17 +49,6 @@ function Delete-Unused ($path, $config) {
 
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
-}
-
-function Zip-Release ($path, $version, $output) {
-    Write-Host "Begin zip release"
-
-    $content = "$path\Output\Release\*"
-    $zipFile = "$output\Flow-Launcher-v$version.zip"
-
-    Compress-Archive -Force -Path $content -DestinationPath $zipFile
-
-    Write-Host "End zip release"
 }
 
 function Pack-Squirrel-Installer ($path, $version, $output) {
@@ -115,7 +100,7 @@ function Publish-Self-Contained ($p) {
 function Main {
     $p = Build-Path
     $v = Build-Version
-    Copy-Resources $p $config
+    Copy-Resources $p
 
     if ($config -eq "Release"){
         
@@ -126,14 +111,6 @@ function Main {
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
-    
-        $isInCI = $env:APPVEYOR
-        if ($isInCI) {
-            Zip-Release $p $v $o
-        }
-
-        Write-Host "List output directory"
-        Get-ChildItem $o
     }
 }
 
