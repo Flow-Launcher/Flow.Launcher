@@ -420,7 +420,7 @@ namespace Flow.Launcher.ViewModel
                                         var results = PluginManager.QueryForPlugin(plugin, query);
                                         UpdateResultView(results, plugin.Metadata, query);
                                     }
-                                    catch(Exception e)
+                                    catch (Exception e)
                                     {
                                         Log.Exception("MainViewModel", $"Exception when querying the plugin {plugin.Metadata.Name}", e, "QueryResults");
                                     }
@@ -431,7 +431,7 @@ namespace Flow.Launcher.ViewModel
                         {
                             // nothing to do here
                         }
-                        
+
 
                         // this should happen once after all queries are done so progress bar should continue
                         // until the end of all querying
@@ -687,7 +687,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5;
+                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + metadata.Priority * 50;
                 }
             }
 

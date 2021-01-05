@@ -37,11 +37,14 @@ namespace Flow.Launcher.Plugin
         public List<string> ActionKeywords { get; set; }
 
         public string IcoPath { get; set;}
-
+        
         public override string ToString()
         {
             return Name;
         }
+        [JsonIgnore]
+        public int Priority { get; set; }
+
 
         /// <summary>
         /// Init time include both plugin load time and init time

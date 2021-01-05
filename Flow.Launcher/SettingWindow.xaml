@@ -172,10 +172,14 @@
                                 <TextBlock Text="{Binding PluginPair.Metadata.Description}"
                                            Grid.Row="1" Opacity="0.5" />
                                 <DockPanel Grid.Row="2" Margin="0 10 0 8" HorizontalAlignment="Right">
-
+                                    <TextBlock Text="Priority" Margin="20,0,0,0"/>
+                                    <TextBlock Text="{Binding Priority}"
+                                               ToolTip="Change Plugin Results Priority"
+                                               Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
+                                               MouseUp="OnPluginPriorityClick"/>
                                     <TextBlock Text="{DynamicResource actionKeywords}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
-                                               Margin="20 0 0 0"/>
+                                               Margin="5 0 0 0"/>
                                     <TextBlock Text="{Binding ActionKeywordsText}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
                                                ToolTip="Change Action Keywords"

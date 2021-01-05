@@ -206,7 +206,16 @@ namespace Flow.Launcher
         {
             var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
             // used to sync the current status from the plugin manager into the setting to keep consistency after save
-            settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled; 
+            settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled;
+        }
+
+        private void OnPluginPriorityClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(viewModel.SelectedPlugin.PluginPair.Metadata.ID, settings, viewModel.SelectedPlugin);
+                priorityChangeWindow.ShowDialog();
+            }
         }
 
         private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
@@ -281,5 +290,6 @@ namespace Flow.Launcher
         {
             FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
+
     }
 }
