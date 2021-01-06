@@ -176,8 +176,8 @@ namespace Flow.Launcher.Core.Plugin
                             async () => results = await plugin.QueryAsync(query, token).ConfigureAwait(false));
                         break;
                     case IPlugin plugin:
-                        await Task.Run(() => milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}", () =>
-                             results = plugin.Query(query)), token).ConfigureAwait(false);
+                        await Task.Run(() => milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                            () => results = plugin.Query(query)), token).ConfigureAwait(false);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -192,6 +192,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (OperationCanceledException)
             {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return results = null;
             }
             catch (Exception e)
@@ -199,7 +200,6 @@ namespace Flow.Launcher.Core.Plugin
                 Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
-            // null will be fine since the results will only be added into queue if the token hasn't been cancelled
             return results;
         }
 
