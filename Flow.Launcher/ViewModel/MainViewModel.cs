@@ -285,7 +285,7 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers { get; private set; }
 
-        public ImageSource Image => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
+        public string Image => Constant.QueryTextBoxIconImagePath;
 
         #endregion
 

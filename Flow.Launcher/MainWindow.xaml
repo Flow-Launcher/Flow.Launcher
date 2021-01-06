@@ -6,6 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:Flow.Launcher.Converters"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="Flow Launcher"
         Topmost="True"
@@ -68,8 +69,8 @@
                          Margin="18,0,56,0">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                <Binding ElementName="QueryTextBox" Path="Text"/>
-                                <Binding ElementName="ResultListBox" Path="SelectedItem"/>
+                                <Binding ElementName="QueryTextBox" Path="Text" Mode="OneWay"/>
+                                <Binding ElementName="ResultListBox" Path="SelectedItem" Mode="OneWay"/>
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
@@ -81,7 +82,7 @@
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"
-                    Margin="18,0,56,0">
+                    Margin="18,1,0,1" HorizontalAlignment="Left" Width="660">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut"/>
@@ -92,7 +93,7 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <Image Source="{Binding Image, IsAsync=True}" Width="48" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Right" />
+                    <svgc:SvgControl Source="{Binding Image, Mode=OneWay}" HorizontalAlignment="Right" Width="48" Height="48"/>
                 </Grid>
                 <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay}" 
