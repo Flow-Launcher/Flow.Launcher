@@ -36,7 +36,6 @@ function Copy-Resources ($path, $config) {
     $output = "$path\Output"
     $target = "$output\$config"
     Copy-Item -Recurse -Force $project\Images\* $target\Images\
-    Copy-Item -Recurse -Force $path\JsonRPC $target\JsonRPC
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
     Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $output\Update.exe
 }
@@ -45,8 +44,9 @@ function Delete-Unused ($path, $config) {
     $target = "$path\Output\$config"
     $included = Get-ChildItem $target -Filter "*.dll"
     foreach ($i in $included){
-        Remove-Item -Path $target\Plugins -Include $i -Recurse 
-        Write-Host "Deleting duplicated $i"
+        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" } 
+        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+        $deleteList | Remove-Item
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse 
 }

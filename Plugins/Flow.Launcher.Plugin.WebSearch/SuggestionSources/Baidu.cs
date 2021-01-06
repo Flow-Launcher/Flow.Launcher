@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Net.Http;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
@@ -22,9 +23,9 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
-                result = await Http.Get(api + Uri.EscapeUriString(query), "GB2312");
+                result = await Http.GetAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
             }
-            catch (WebException e)
+            catch (HttpRequestException e)
             {
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
                 return new List<string>();

@@ -320,7 +320,7 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers { get; private set; }
 
-        public ImageSource Image => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
+        public string Image => Constant.QueryTextBoxIconImagePath;
 
         #endregion
 
@@ -463,9 +463,15 @@ namespace Flow.Launcher.ViewModel
                             {
                                 if (!plugin.Metadata.Disabled)
                                 {
-                                    var results = PluginManager.QueryForPlugin(plugin, query);
-                                    if (!currentCancellationToken.IsCancellationRequested)
-                                        _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken));
+                                    try
+                                    {
+                                        var results = PluginManager.QueryForPlugin(plugin, query);
+                                        UpdateResultView(results, plugin.Metadata, query);
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Log.Exception("MainViewModel", $"Exception when querying the plugin {plugin.Metadata.Name}", e, "QueryResults");
+                                    }
                                 }
                             });
                         }
@@ -482,7 +488,10 @@ namespace Flow.Launcher.ViewModel
                         { // update to hidden if this is still the current query
                             ProgressBarVisibility = Visibility.Hidden;
                         }
-                    }, currentCancellationToken);
+                    }, currentCancellationToken).ContinueWith(t =>
+                    {
+                        Log.Exception("MainViewModel", "Error when querying plugins", t.Exception?.InnerException, "QueryResults");
+                    }, TaskContinuationOptions.OnlyOnFaulted);
                 }
             }
             else
