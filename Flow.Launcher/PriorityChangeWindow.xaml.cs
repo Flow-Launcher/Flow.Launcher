@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace Flow.Launcher
 {
     /// <summary>
-    /// PriorityChangeWindow.xaml 的交互逻辑
+    /// Interaction Logic of PriorityChangeWindow.xaml
     /// </summary>
     public partial class PriorityChangeWindow : Window
     {
