@@ -55,21 +55,12 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task ReloadData()
         {
-            await Task.WhenAll(AllPlugins.Select(plugin =>
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
             {
-                {
-                    switch (plugin)
-                    {
-                        case IReloadable p:
-                            p.ReloadData(); // Sync reload means low time consuming
-                            return Task.CompletedTask;
-                        case IAsyncReloadable p:
-                            return p.ReloadDataAsync();
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
-            }));
+                IReloadable p => Task.Run(p.ReloadData),
+                IAsyncReloadable p => p.ReloadDataAsync(),
+                _ => Task.CompletedTask,
+            }).ToArray());
         }
 
         static PluginManager()
@@ -106,38 +97,16 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    long milliseconds;
-
-                    switch (pair.Plugin)
+                    var milliseconds = pair.Plugin switch
                     {
-                        case IAsyncPlugin plugin:
-                            milliseconds = await Stopwatch.DebugAsync(
-                                $"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                async delegate
-                                {
-                                    await plugin.InitAsync(new PluginInitContext
-                                    {
-                                        CurrentPluginMetadata = pair.Metadata,
-                                        API = API
-                                    });
-                                });
-                            break;
-                        case IPlugin plugin:
-                            milliseconds = Stopwatch.Debug(
-                                $"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                () =>
-                                {
-                                    plugin.Init(new PluginInitContext
-                                    {
-                                        CurrentPluginMetadata = pair.Metadata,
-                                        API = API
-                                    });
-                                });
-                            break;
-                        default:
-                            throw new ArgumentException();
-                    }
-
+                        IAsyncPlugin plugin
+                            => await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                                                        () => plugin.InitAsync(new PluginInitContext(pair.Metadata, API))),
+                        IPlugin plugin
+                            => Stopwatch.Debug($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                                        () => plugin.Init(new PluginInitContext(pair.Metadata, API))),
+                        _ => throw new ArgumentException(),
+                    };
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
                         $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");

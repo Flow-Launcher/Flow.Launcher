@@ -78,9 +78,9 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public async Task ReloadAllPluginData()
+        public Task ReloadAllPluginData()
         {
-            await PluginManager.ReloadData();
+            return PluginManager.ReloadData();
         }
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "")
@@ -92,7 +92,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
+                var msg = useMainWindowAsOwner ? new Msg { Owner = Application.Current.MainWindow } : new Msg();
                 msg.Show(title, subTitle, iconPath);
             });
         }
