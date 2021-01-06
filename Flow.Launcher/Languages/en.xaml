@@ -43,6 +43,8 @@
     <system:String x:Key="actionKeywords">Action keyword:</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
     <system:String x:Key="newActionKeyword">New action keyword:</system:String>
+    <system:String x:Key="currentPriority">Current Priority: </system:String>
+    <system:String x:Key="newPriority">New Priority: </system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
     <system:String x:Key="author">Author</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
@@ -104,6 +106,10 @@
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
 
+    <!--Priority Setting Dialog-->
+    <system:String x:Key="priority_tips">Higher the number, the closer the result will be to the top. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
+    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
     <system:String x:Key="newActionKeywords">New Action Keyword</system:String>

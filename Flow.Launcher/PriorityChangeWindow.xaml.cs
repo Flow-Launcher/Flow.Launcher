@@ -54,7 +54,7 @@ namespace Flow.Launcher
             }
             else
             {
-                string msg = "Please provide an valid integer";// translater.GetTranslation("newActionKeywordsHasBeenAssigned");
+                string msg = translater.GetTranslation("invalidPriority");
                 MessageBox.Show(msg);
             }
 

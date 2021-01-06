@@ -19,18 +19,19 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock FontSize="14" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                   HorizontalAlignment="Left" Text="Current Priority:" />
+                   HorizontalAlignment="Left" Text="{DynamicResource currentPriority}" />
         <TextBlock x:Name="OldPriority" Grid.Row="0" Grid.Column="1" Margin="170 10 10 10" FontSize="14"
                    VerticalAlignment="Center" HorizontalAlignment="Left" />
 
         <TextBlock FontSize="14" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                   HorizontalAlignment="Left" Text="New Priority:" />
+                   HorizontalAlignment="Left" Text="{DynamicResource newPriority}" />
         <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.Column="1">
             <TextBox x:Name="tbAction" Margin="140 10 15 10" Width="105" VerticalAlignment="Center" HorizontalAlignment="Left" />
         </StackPanel>
 
         <TextBlock Grid.Row="2" Grid.ColumnSpan="1" Grid.Column="1" Foreground="Gray"
-                   Text="Higher means display more ahead, if you want the results show lower than any other plugins, provide a negative number" TextWrapping="Wrap"/>
+                   Text="{DynamicResource priority_tips}" TextWrapping="Wrap"
+                   Margin="0,0,20,0"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1">
             <Button x:Name="btnCancel" Click="BtnCancel_OnClick" Margin="10 0 10 0" Width="80" Height="30"
