@@ -42,6 +42,7 @@ namespace Flow.Launcher.Plugin
         {
             return Name;
         }
+
         [JsonIgnore]
         public int Priority { get; set; }
 
