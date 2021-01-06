@@ -253,7 +253,8 @@
                                              Text="{DynamicResource hiThere}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}"
                                              Margin="18 0 56 0" />
-                                    <svgc:SvgControl Source="{Binding ThemeImage}" Height="46" Width="46" HorizontalAlignment="Right" />
+                                    <svgc:SvgControl Source="{Binding ThemeImage}" Height="48" Width="48" HorizontalAlignment="Right" 
+                                                     Background="Transparent" />
                                     <ContentControl Grid.Row="1">
                                         <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
                                     </ContentControl>
