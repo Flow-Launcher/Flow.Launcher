@@ -82,7 +82,7 @@
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"
-                    Margin="18,1,0,1" HorizontalAlignment="Left" Width="660">
+                    Margin="18,0,56,0" HorizontalAlignment="Left" Width="660">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut"/>
@@ -93,7 +93,7 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <svgc:SvgControl Source="{Binding Image, Mode=OneWay}" HorizontalAlignment="Right" Width="48" Height="48"
+                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="48" Height="48"
                                      Background="Transparent"/>
                 </Grid>
                 <Line x:Name="ProgressBar" HorizontalAlignment="Right"
