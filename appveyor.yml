@@ -49,8 +49,9 @@ deploy:
 
   - provider: GitHub
     release: v$(flowVersion)
+    repository: JohnTheGr8/Flow.Launcher
     auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+      secure: /JyhWb33OM0SbDzwxApk/j/RRzlj3RZG1D0fBjDBvt2om4zvv3ORB8/Vnh/yOsRb
     artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
     draft: true
     force_update: true
@@ -60,8 +61,9 @@ deploy:
 
   - provider: GitHub
     release: v$(flowVersion)
+    repository: JohnTheGr8/Flow.Launcher
     auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+      secure: /JyhWb33OM0SbDzwxApk/j/RRzlj3RZG1D0fBjDBvt2om4zvv3ORB8/Vnh/yOsRb
     artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
     force_update: true
     on:
