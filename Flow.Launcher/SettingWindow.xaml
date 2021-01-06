@@ -8,6 +8,7 @@
         xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         x:Class="Flow.Launcher.SettingWindow"
         mc:Ignorable="d"
         Icon="Images\app.png"
@@ -252,7 +253,7 @@
                                              Text="{DynamicResource hiThere}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}"
                                              Margin="18 0 56 0" />
-                                    <Image Source="{Binding ThemeImage}" HorizontalAlignment="Right" />
+                                    <svgc:SvgControl Source="{Binding ThemeImage}" Height="46" Width="46" HorizontalAlignment="Right" />
                                     <ContentControl Grid.Row="1">
                                         <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
                                     </ContentControl>
