@@ -437,7 +437,7 @@ namespace Flow.Launcher.ViewModel
                     var plugins = PluginManager.ValidPluginsForQuery(query);
                     Task.Run(async () =>
                     {
-                        if (plugins.Count > 1)
+                        if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
                         {
                             // Wait 45 millisecond for query change in global query
                             // if query changes, return so that it won't be calculated
@@ -468,7 +468,7 @@ namespace Flow.Launcher.ViewModel
                                         var results = PluginManager.QueryForPlugin(plugin, query);
                                         UpdateResultView(results, plugin.Metadata, query);
                                     }
-                                    catch(Exception e)
+                                    catch (Exception e)
                                     {
                                         Log.Exception("MainViewModel", $"Exception when querying the plugin {plugin.Metadata.Name}", e, "QueryResults");
                                     }
