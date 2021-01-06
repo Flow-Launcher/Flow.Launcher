@@ -438,7 +438,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public ImageSource ThemeImage => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
+        public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
         #endregion
 
