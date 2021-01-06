@@ -56,7 +56,6 @@ deploy:
     force_update: true
     on:
       branch: master
-      APPVEYOR_REPO_TAG: false
 
   - provider: GitHub
     release: v$(flowVersion)
@@ -65,5 +64,4 @@ deploy:
     artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
     force_update: true
     on:
-      branch: master
       APPVEYOR_REPO_TAG: true
