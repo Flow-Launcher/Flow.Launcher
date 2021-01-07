@@ -74,7 +74,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU.</system:String>
-    <system:String x:Key="shadowEffectPerformance">Not recommended if you computer performance is limited.</system:String>
+    <system:String x:Key="shadowEffectPerformance">Not recommended if your computer performance is limited.</system:String>
 
     <!--Setting Proxy-->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
