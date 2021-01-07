@@ -16,11 +16,15 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
     {
         public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
-            Stream resultStream;
+            JsonDocument json;
+
             try
             {
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
-                resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                if (resultStream.Length == 0) return new List<string>();
+                json = await JsonDocument.ParseAsync(resultStream);
+
             }
             catch (TaskCanceledException)
             {
@@ -30,15 +34,6 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             {
                 Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
-            }
-
-
-            if (resultStream.Length == 0) return new List<string>();
-            JsonDocument json;
-            try
-            {
-                using (resultStream)
-                    json = await JsonDocument.ParseAsync(resultStream);
             }
             catch (JsonException e)
             {
