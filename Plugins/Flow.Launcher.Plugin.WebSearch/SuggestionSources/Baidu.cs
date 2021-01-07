@@ -26,6 +26,10 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
                 result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
             }
+            catch (TaskCanceledException)
+            {
+                return null;
+            }
             catch (HttpRequestException e)
             {
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);

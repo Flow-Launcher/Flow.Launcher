@@ -24,6 +24,10 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
                 resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
             }
+            catch (TaskCanceledException)
+            {
+                return null;
+            }
             catch (HttpRequestException e)
             {
                 Log.Exception("|Bing.Suggestions|Can't get suggestion from Bing", e);

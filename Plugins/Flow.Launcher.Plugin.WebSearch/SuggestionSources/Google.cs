@@ -22,6 +22,10 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
                 result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
             }
+            catch (TaskCanceledException)
+            {
+                return null;
+            }
             catch (HttpRequestException e)
             {
                 Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
