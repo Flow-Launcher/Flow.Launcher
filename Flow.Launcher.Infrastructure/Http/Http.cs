@@ -113,7 +113,7 @@ namespace Flow.Launcher.Infrastructure.Http
             Log.Debug($"|Http.Get|Url <{url}>");
             using var response = await client.GetAsync(url, token);
             if (token.IsCancellationRequested)
-                return null;
+                return string.Empty;
             var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.OK)
             {
