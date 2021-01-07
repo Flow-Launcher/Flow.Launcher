@@ -4,6 +4,10 @@ namespace Flow.Launcher.Plugin
 {
     public class PluginInitContext
     {
+        public PluginInitContext()
+        {
+        }
+
         public PluginInitContext(PluginMetadata currentPluginMetadata, IPublicAPI api)
         {
             CurrentPluginMetadata = currentPluginMetadata;
