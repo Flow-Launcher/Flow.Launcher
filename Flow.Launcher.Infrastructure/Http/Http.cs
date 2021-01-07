@@ -76,23 +76,31 @@ namespace Flow.Launcher.Infrastructure.Http
             };
         }
 
-        public static async Task Download([NotNull] string url, [NotNull] string filePath)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath)
         {
-            using var response = await client.GetAsync(url);
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-                await response.Content.CopyToAsync(fileStream);
+                using var response = await client.GetAsync(url);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                    await response.Content.CopyToAsync(fileStream);
+                }
+                else
+                {
+                    throw new HttpRequestException($"Error code <{response.StatusCode}> returned from <{url}>");
+                }
             }
-            else
+            catch (HttpRequestException e)
             {
-                throw new HttpRequestException($"Error code <{response.StatusCode}> returned from <{url}>");
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "DownloadAsync");
+                throw;
             }
         }
 
         /// <summary>
         /// Asynchrously get the result as string from url.
-        /// When supposing the result is long and large, try using GetStreamAsync to avoid reading as string
+        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
         /// </summary>
         /// <param name="url"></param>
         /// <returns>The Http result as string. Null if cancellation requested</returns>
