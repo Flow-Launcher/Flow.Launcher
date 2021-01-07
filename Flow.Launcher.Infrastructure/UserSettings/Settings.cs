@@ -102,7 +102,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
 
 
-        // Order defaults to 0 or -1, so 1 will let this property appear last
+        // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
     }
 
