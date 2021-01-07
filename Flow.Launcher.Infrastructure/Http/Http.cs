@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -94,17 +95,25 @@ namespace Flow.Launcher.Infrastructure.Http
         /// When supposing the result is long and large, try using GetStreamAsync to avoid reading as string
         /// </summary>
         /// <param name="url"></param>
-        /// <returns></returns>
-        public static Task<string> GetAsync([NotNull] string url)
+        /// <returns>The Http result as string. Null if cancellation requested</returns>
+        public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            return GetAsync(new Uri(url.Replace("#", "%23")));
+            return GetAsync(new Uri(url.Replace("#", "%23")), token);
         }
 
-        public static async Task<string> GetAsync([NotNull] Uri url)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="token"></param>
+        /// <returns>The Http result as string. Null if cancellation requested</returns>
+        public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            using var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url, token);
+            if (token.IsCancellationRequested)
+                return null;
             var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -122,10 +131,12 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static async Task<Stream> GetStreamAsync([NotNull] string url)
+        public static async Task<Stream> GetStreamAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            var response = await client.GetAsync(url);
+            var response = await client.GetAsync(url, token);
+            if (token.IsCancellationRequested)
+                return Stream.Null;
             return await response.Content.ReadAsStreamAsync();
         }
     }
