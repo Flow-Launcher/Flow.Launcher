@@ -39,7 +39,8 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             JsonElement json;
             try
             {
-                json = (await JsonDocument.ParseAsync(resultStream)).RootElement.GetProperty("AS");
+                using (resultStream)
+                    json = (await JsonDocument.ParseAsync(resultStream)).RootElement.GetProperty("AS");
             }
             catch (JsonException e)
             {
