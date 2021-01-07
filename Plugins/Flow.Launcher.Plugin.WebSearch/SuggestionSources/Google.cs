@@ -32,24 +32,24 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 return new List<string>();
             }
 
-            using (resultStream)
+
+            if (resultStream.Length == 0) return new List<string>();
+            JsonDocument json;
+            try
             {
-                if (resultStream.Length == 0) return new List<string>();
-                JsonDocument json;
-                try
-                {
+                using (resultStream)
                     json = await JsonDocument.ParseAsync(resultStream);
-                }
-                catch (JsonException e)
-                {
-                    Log.Exception("|Google.Suggestions|can't parse suggestions", e);
-                    return new List<string>();
-                }
-
-                var results = json?.RootElement.EnumerateArray().ElementAt(1);
-
-                return results?.EnumerateArray().Select(o => o.GetString()).ToList() ?? new List<string>();
             }
+            catch (JsonException e)
+            {
+                Log.Exception("|Google.Suggestions|can't parse suggestions", e);
+                return new List<string>();
+            }
+
+            var results = json?.RootElement.EnumerateArray().ElementAt(1);
+
+            return results?.EnumerateArray().Select(o => o.GetString()).ToList() ?? new List<string>();
+
         }
 
         public override string ToString()
