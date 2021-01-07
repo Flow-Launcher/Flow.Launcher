@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -13,14 +14,12 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, ISavable, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, ISavable, IResultUpdated
     {
         private PluginInitContext _context;
 
         private readonly Settings _settings;
         private readonly SettingsViewModel _viewModel;
-        private CancellationTokenSource _updateSource;
-        private CancellationToken _updateToken;
 
         internal const string Images = "Images";
         internal static string DefaultImagesDirectory;
@@ -33,7 +32,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             _viewModel.Save();
         }
 
-        public List<Result> Query(Query query)
+        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
             if (FilesFolders.IsLocationPathString(query.Search))
                 return new List<Result>();
@@ -41,11 +40,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             var searchSourceList = new List<SearchSource>();
             var results = new List<Result>();
 
-            _updateSource?.Cancel();
-            _updateSource = new CancellationTokenSource();
-            _updateToken = _updateSource.Token;
-            
-            _settings.SearchSources.Where(o => (o.ActionKeyword == query.ActionKeyword || o.ActionKeyword == SearchSourceGlobalPluginWildCardSign) 
+            _settings.SearchSources.Where(o => (o.ActionKeyword == query.ActionKeyword || o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
                                                && o.Enabled)
                                     .ToList()
                                     .ForEach(x => searchSourceList.Add(x));
@@ -94,49 +89,45 @@ namespace Flow.Launcher.Plugin.WebSearch
                         };
 
                         results.Add(result);
-                        ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
-                        {
-                            Results = results,
-                            Query = query
-                        });
-
-                        UpdateResultsFromSuggestion(results, keyword, subtitle, searchSource, query);                        
                     }
+
+                    ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
+                    {
+                        Results = results,
+                        Query = query
+                    });
+
+                    await UpdateResultsFromSuggestionAsync(results, keyword, subtitle, searchSource, query, token).ConfigureAwait(false);
                 }
             }
 
             return results;
         }
 
-        private void UpdateResultsFromSuggestion(List<Result> results, string keyword, string subtitle,
-            SearchSource searchSource, Query query)
+        private async Task UpdateResultsFromSuggestionAsync(List<Result> results, string keyword, string subtitle,
+            SearchSource searchSource, Query query, CancellationToken token)
         {
             if (_settings.EnableSuggestion)
             {
-                const int waittime = 300;
-                var task = Task.Run(async () =>
-                {
-                    var suggestions = await Suggestions(keyword, subtitle, searchSource);
-                    results.AddRange(suggestions);
-                }, _updateToken);
+                var suggestions = await SuggestionsAsync(keyword, subtitle, searchSource, token).ConfigureAwait(false);
+                results.AddRange(suggestions);
 
-                if (!task.Wait(waittime))
+                token.ThrowIfCancellationRequested();
+
+                ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
                 {
-                    task.ContinueWith(_ => ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
-                    {
-                        Results = results,
-                        Query = query
-                    }), _updateToken);
-                }
+                    Results = results,
+                    Query = query
+                });
             }
         }
 
-        private async Task<IEnumerable<Result>> Suggestions(string keyword, string subtitle, SearchSource searchSource)
+        private async Task<IEnumerable<Result>> SuggestionsAsync(string keyword, string subtitle, SearchSource searchSource, CancellationToken token)
         {
             var source = _settings.SelectedSuggestion;
             if (source != null)
             {
-                var suggestions = await source.Suggestions(keyword);
+                var suggestions = await source.Suggestions(keyword, token);
                 var resultsFromSuggestion = suggestions.Select(o => new Result
                 {
                     Title = o,
@@ -169,19 +160,24 @@ namespace Flow.Launcher.Plugin.WebSearch
             _settings = _viewModel.Settings;
         }
 
-        public void Init(PluginInitContext context)
+        public Task InitAsync(PluginInitContext context)
         {
-            _context = context;
-            var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
-            var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
-            
-            // Default images directory is in the WebSearch's application folder  
-            DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
-            Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+            return Task.Run(Init);
 
-            // Custom images directory is in the WebSearch's data location folder 
-            var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
-            CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
+            void Init()
+            {
+                _context = context;
+                var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
+                var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
+
+                // Default images directory is in the WebSearch's application folder  
+                DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
+                Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+
+                // Custom images directory is in the WebSearch's data location folder 
+                var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
+                CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
+            };
         }
 
         #region ISettingProvider Members

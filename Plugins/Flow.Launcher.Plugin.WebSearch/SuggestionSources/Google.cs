@@ -8,18 +8,19 @@ using Newtonsoft.Json.Linq;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Google : SuggestionSource
     {
-        public override async Task<List<string>> Suggestions(string query)
+        public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
             string result;
             try
             {
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
             }
             catch (HttpRequestException e)
             {
