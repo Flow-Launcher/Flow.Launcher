@@ -76,11 +76,11 @@ namespace Flow.Launcher.Infrastructure.Http
             };
         }
 
-        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
         {
             try
             {
-                using var response = await client.GetAsync(url);
+                using var response = await client.GetAsync(url, token);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
@@ -120,8 +120,6 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             Log.Debug($"|Http.Get|Url <{url}>");
             using var response = await client.GetAsync(url, token);
-            if (token.IsCancellationRequested)
-                return string.Empty;
             var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -143,8 +141,6 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             Log.Debug($"|Http.Get|Url <{url}>");
             var response = await client.GetAsync(url, token);
-            if (token.IsCancellationRequested)
-                return Stream.Null;
             return await response.Content.ReadAsStreamAsync();
         }
     }
