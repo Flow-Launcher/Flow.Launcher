@@ -40,65 +40,63 @@ namespace Flow.Launcher.Plugin.WebSearch
             var searchSourceList = new List<SearchSource>();
             var results = new List<Result>();
 
-            _settings.SearchSources.Where(o => (o.ActionKeyword == query.ActionKeyword || o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
-                                               && o.Enabled)
-                                    .ToList()
-                                    .ForEach(x => searchSourceList.Add(x));
-
-            if (searchSourceList.Any())
+            foreach (SearchSource searchSource in _settings.SearchSources.Where(o => (o.ActionKeyword == query.ActionKeyword ||
+                                                                  o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
+                                                && o.Enabled))
             {
-                foreach (SearchSource searchSource in searchSourceList)
+                string keyword = string.Empty;
+                keyword = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? query.ToString() : query.Search;
+                var title = keyword;
+                string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
+
+                if (string.IsNullOrEmpty(keyword))
                 {
-                    string keyword = string.Empty;
-                    keyword = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? query.ToString() : query.Search;
-                    var title = keyword;
-                    string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
-
-                    if (string.IsNullOrEmpty(keyword))
+                    var result = new Result
                     {
-                        var result = new Result
-                        {
-                            Title = subtitle,
-                            SubTitle = string.Empty,
-                            IcoPath = searchSource.IconPath
-                        };
-                        results.Add(result);
-                    }
-                    else
-                    {
-                        var result = new Result
-                        {
-                            Title = title,
-                            SubTitle = subtitle,
-                            Score = 6,
-                            IcoPath = searchSource.IconPath,
-                            ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
-                            Action = c =>
-                            {
-                                if (_settings.OpenInNewBrowser)
-                                {
-                                    searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewBrowserWindow(_settings.BrowserPath);
-                                }
-                                else
-                                {
-                                    searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewTabInBrowser(_settings.BrowserPath);
-                                }
-
-                                return true;
-                            }
-                        };
-
-                        results.Add(result);
-                    }
-
-                    ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
-                    {
-                        Results = results,
-                        Query = query
-                    });
-
-                    await UpdateResultsFromSuggestionAsync(results, keyword, subtitle, searchSource, query, token).ConfigureAwait(false);
+                        Title = subtitle,
+                        SubTitle = string.Empty,
+                        IcoPath = searchSource.IconPath
+                    };
+                    results.Add(result);
                 }
+                else
+                {
+                    var result = new Result
+                    {
+                        Title = title,
+                        SubTitle = subtitle,
+                        Score = 6,
+                        IcoPath = searchSource.IconPath,
+                        ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
+                        Action = c =>
+                        {
+                            if (_settings.OpenInNewBrowser)
+                            {
+                                searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewBrowserWindow(_settings.BrowserPath);
+                            }
+                            else
+                            {
+                                searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewTabInBrowser(_settings.BrowserPath);
+                            }
+
+                            return true;
+                        }
+                    };
+
+                    results.Add(result);
+                }
+
+                ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
+                {
+                    Results = results,
+                    Query = query
+                });
+
+                await UpdateResultsFromSuggestionAsync(results, keyword, subtitle, searchSource, query, token).ConfigureAwait(false);
+
+                if (token.IsCancellationRequested)
+                    return null;
+
             }
 
             return results;
@@ -110,15 +108,13 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (_settings.EnableSuggestion)
             {
                 var suggestions = await SuggestionsAsync(keyword, subtitle, searchSource, token).ConfigureAwait(false);
+                if (token.IsCancellationRequested || !suggestions.Any())
+                    return;
+
+
                 results.AddRange(suggestions);
 
                 token.ThrowIfCancellationRequested();
-
-                ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
-                {
-                    Results = results,
-                    Query = query
-                });
             }
         }
 
@@ -128,6 +124,10 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (source != null)
             {
                 var suggestions = await source.Suggestions(keyword, token);
+
+                if (token.IsCancellationRequested)
+                    return null;
+
                 var resultsFromSuggestion = suggestions.Select(o => new Result
                 {
                     Title = o,
