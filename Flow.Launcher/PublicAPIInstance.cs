@@ -17,6 +17,7 @@ using Flow.Launcher.ViewModel;
 using Flow.Launcher.Plugin.SharedModel;
 using System.Threading;
 using System.IO;
+using Flow.Launcher.Infrastructure.Http;
 
 namespace Flow.Launcher
 {
@@ -134,12 +135,12 @@ namespace Flow.Launcher
 
         public Task<string> HttpGetStringAsync(string url, CancellationToken token = default)
         {
-            return null;
+            return Http.GetAsync(url);
         }
 
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default)
         {
-            return null;
+            return Http.GetStreamAsync(url);
         }
 
         #endregion
