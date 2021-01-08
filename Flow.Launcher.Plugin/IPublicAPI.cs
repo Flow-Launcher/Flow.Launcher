@@ -1,4 +1,5 @@
 ﻿using Flow.Launcher.Plugin.SharedModel;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -92,5 +93,7 @@ namespace Flow.Launcher.Plugin
         Task<string> HttpGetStringAsync(string url, CancellationToken token = default);
 
         Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default);
+
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath);
     }
 }

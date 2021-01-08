@@ -18,6 +18,7 @@ using Flow.Launcher.Plugin.SharedModel;
 using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher
 {
@@ -96,7 +97,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
+                var msg = useMainWindowAsOwner ? new Msg { Owner = Application.Current.MainWindow } : new Msg();
                 msg.Show(title, subTitle, iconPath);
             });
         }
@@ -141,6 +142,11 @@ namespace Flow.Launcher
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default)
         {
             return Http.GetStreamAsync(url);
+        }
+
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath)
+        {
+            return Http.DownloadAsync(url, filePath);
         }
 
         #endregion
