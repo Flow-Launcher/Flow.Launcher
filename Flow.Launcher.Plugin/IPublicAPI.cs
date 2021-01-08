@@ -95,5 +95,10 @@ namespace Flow.Launcher.Plugin
         Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default);
 
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath);
+
+        void AddActionKeyword(string pluginId, string newActionKeyword);
+
+        void RemoveActionKeyword(string pluginId, string oldActionKeyword);
+
     }
 }

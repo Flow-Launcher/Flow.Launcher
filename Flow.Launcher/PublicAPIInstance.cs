@@ -149,6 +149,15 @@ namespace Flow.Launcher
             return Http.DownloadAsync(url, filePath);
         }
 
+        public void AddActionKeyword(string pluginId, string newActionKeyword)
+        {
+            PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+        }
+
+        public void RemoveActionKeyword(string pluginId, string oldActionKeyword)
+        {
+            PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
+        }
         #endregion
 
         #region Private Methods
