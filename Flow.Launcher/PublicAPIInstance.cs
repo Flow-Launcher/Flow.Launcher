@@ -14,6 +14,7 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Plugin.SharedModel;
 
 namespace Flow.Launcher
 {
@@ -132,11 +133,7 @@ namespace Flow.Launcher
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
-        public (List<int> MatchedData, int Score, bool Success) MatchString(string query, string stringToCompare)
-        {
-            var result = StringMatcher.FuzzySearch(query, stringToCompare);
-            return (result.MatchData, result.Score, result.Success);
-        }
+        public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
 
         #endregion
 

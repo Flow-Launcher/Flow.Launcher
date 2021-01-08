@@ -17,6 +17,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModel;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -152,7 +153,7 @@ namespace Flow.Launcher.ViewModel
             {
                 var precisionStrings = new List<string>();
 
-                var enumList = Enum.GetValues(typeof(StringMatcher.SearchPrecisionScore)).Cast<StringMatcher.SearchPrecisionScore>().ToList();
+                var enumList = Enum.GetValues(typeof(SearchPrecisionScore)).Cast<SearchPrecisionScore>().ToList();
 
                 enumList.ForEach(x => precisionStrings.Add(x.ToString()));
 

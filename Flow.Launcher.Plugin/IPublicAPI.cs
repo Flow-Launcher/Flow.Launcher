@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flow.Launcher.Plugin.SharedModel;
+using System;
 using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin
@@ -89,6 +90,6 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
-        public (List<int> MatchedData, int Score, bool Success) MatchString(string query, string stringToCompare);
+        public MatchResult FuzzySearch(string query, string stringToCompare);
     }
 }

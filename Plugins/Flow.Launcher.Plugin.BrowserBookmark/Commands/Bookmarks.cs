@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.SharedModel;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 {
