@@ -15,6 +15,8 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Plugin.SharedModel;
+using System.Threading;
+using System.IO;
 
 namespace Flow.Launcher
 {
@@ -134,6 +136,16 @@ namespace Flow.Launcher
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
         public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
+
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default)
+        {
+            return null;
+        }
+
+        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default)
+        {
+            return null;
+        }
 
         #endregion
 

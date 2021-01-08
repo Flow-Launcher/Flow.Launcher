@@ -1,6 +1,9 @@
 ﻿using Flow.Launcher.Plugin.SharedModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin
 {
@@ -90,6 +93,10 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
-        public MatchResult FuzzySearch(string query, string stringToCompare);
+        MatchResult FuzzySearch(string query, string stringToCompare);
+
+        Task<string> HttpGetStringAsync(string url, CancellationToken token = default);
+
+        Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default);
     }
 }
