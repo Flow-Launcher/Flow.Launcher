@@ -68,12 +68,6 @@ namespace Flow.Launcher.Plugin
         void OpenSettingDialog();
 
         /// <summary>
-        /// Install Flow Launcher plugin
-        /// </summary>
-        /// <param name="path">Plugin path (ends with .flowlauncher)</param>
-        void InstallPlugin(string path);
-
-        /// <summary>
         /// Get translation of current language
         /// You need to implement IPluginI18n if you want to support multiple languages for your plugin
         /// </summary>

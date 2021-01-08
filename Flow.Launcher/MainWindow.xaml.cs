@@ -52,12 +52,14 @@ namespace Flow.Launcher
 
         private void OnInitialized(object sender, EventArgs e)
         {
-            // show notify icon when flowlauncher is hided
-            InitializeNotifyIcon();
+            
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // show notify icon when flowlauncher is hidden
+            InitializeNotifyIcon();
+
             // todo is there a way to set blur only once?
             ThemeManager.Instance.SetBlurForWindow();
             WindowsInteropHelper.DisableControlBox(this);
@@ -87,11 +89,17 @@ namespace Flow.Launcher
             };
             _settings.PropertyChanged += (o, e) =>
             {
-                if (e.PropertyName == nameof(Settings.HideNotifyIcon))
+                switch (e.PropertyName)
                 {
-                    _notifyIcon.Visible = !_settings.HideNotifyIcon;
+                    case nameof(Settings.HideNotifyIcon):
+                        _notifyIcon.Visible = !_settings.HideNotifyIcon;
+                        break;
+                    case nameof(Settings.Language):
+                        UpdateNotifyIconText();
+                        break;
                 }
             };
+
             InitializePosition();
         }
 
@@ -101,6 +109,18 @@ namespace Flow.Launcher
             Left = WindowLeft();
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left;
+        }
+
+        private void UpdateNotifyIconText()
+        {
+            var menu = _notifyIcon.ContextMenuStrip;
+            var open = menu.Items[0];
+            var setting = menu.Items[1];
+            var exit = menu.Items[2];
+
+            open.Text = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
+            setting.Text = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            exit.Text = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -177,25 +197,6 @@ namespace Flow.Launcher
                     }
                 }
             }
-        }
-
-
-        private void OnDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                // Note that you can have more than one file.
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files[0].ToLower().EndsWith(".flowlauncher"))
-                {
-                    PluginManager.InstallPlugin(files[0]);
-                }
-                else
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidFlowLauncherPluginFileFormat"));
-                }
-            }
-            e.Handled = false;
         }
 
         private void OnPreviewDragOver(object sender, DragEventArgs e)
@@ -294,7 +295,5 @@ namespace Flow.Launcher
                 _viewModel.QueryTextCursorMovedToEnd = false;
             }
         }
-
-
     }
 }

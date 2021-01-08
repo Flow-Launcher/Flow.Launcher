@@ -6,12 +6,22 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using System;
+using System.ComponentModel;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
     public static class Http
     {
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
+
+        private static HttpClient client;
+
+        private static SocketsHttpHandler socketsHttpHandler = new SocketsHttpHandler()
+        {
+            UseProxy = true,
+            Proxy = WebProxy
+        };
 
         static Http()
         {
@@ -20,63 +30,132 @@ namespace Flow.Launcher.Infrastructure.Http
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls
                                                     | SecurityProtocolType.Tls11
                                                     | SecurityProtocolType.Tls12;
+
+            client = new HttpClient(socketsHttpHandler, false);
+            client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
         }
 
-        public static HttpProxy Proxy { private get; set; }
-        public static IWebProxy WebProxy()
+        private static HttpProxy proxy;
+
+        public static HttpProxy Proxy
         {
-            if (Proxy != null && Proxy.Enabled && !string.IsNullOrEmpty(Proxy.Server))
+            private get { return proxy; }
+            set
             {
-                if (string.IsNullOrEmpty(Proxy.UserName) || string.IsNullOrEmpty(Proxy.Password))
+                proxy = value;
+                proxy.PropertyChanged += UpdateProxy;
+            }
+        }
+
+        public static WebProxy WebProxy { get; } = new WebProxy();
+
+        /// <summary>
+        /// Update the Address of the Proxy to modify the client Proxy
+        /// </summary>
+        public static void UpdateProxy(ProxyProperty property)
+        {
+            (WebProxy.Address, WebProxy.Credentials) = property switch
+            {
+                ProxyProperty.Enabled => Proxy.Enabled switch
                 {
-                    var webProxy = new WebProxy(Proxy.Server, Proxy.Port);
-                    return webProxy;
+                    true => Proxy.UserName switch
+                    {
+                        var userName when !string.IsNullOrEmpty(userName) =>
+                            (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), null),
+                        _ => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"),
+                            new NetworkCredential(Proxy.UserName, Proxy.Password))
+                    },
+                    false => (null, null)
+                },
+                ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
+                ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
+                ProxyProperty.UserName => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                ProxyProperty.Password => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath)
+        {
+            try
+            {
+                using var response = await client.GetAsync(url);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                    await response.Content.CopyToAsync(fileStream);
                 }
                 else
                 {
-                    var webProxy = new WebProxy(Proxy.Server, Proxy.Port)
-                    {
-                        Credentials = new NetworkCredential(Proxy.UserName, Proxy.Password)
-                    };
-                    return webProxy;
+                    throw new HttpRequestException($"Error code <{response.StatusCode}> returned from <{url}>");
                 }
             }
-            else
+            catch (HttpRequestException e)
             {
-                return WebRequest.GetSystemWebProxy();
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "DownloadAsync");
+                throw;
             }
         }
 
-        public static void Download([NotNull] string url, [NotNull] string filePath)
-        {
-            var client = new WebClient { Proxy = WebProxy() };
-            client.Headers.Add("user-agent", UserAgent);
-            client.DownloadFile(url, filePath);
-        }
-
-        public static async Task<string> Get([NotNull] string url, string encoding = "UTF-8")
+        /// <summary>
+        /// Asynchrously get the result as string from url.
+        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static Task<string> GetAsync([NotNull] string url)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            var request = WebRequest.CreateHttp(url);
-            request.Method = "GET";
-            request.Timeout = 1000;
-            request.Proxy = WebProxy();
-            request.UserAgent = UserAgent;
-            var response = await request.GetResponseAsync() as HttpWebResponse;
-            response = response.NonNull();
-            var stream = response.GetResponseStream().NonNull();
+            return GetAsync(new Uri(url.Replace("#", "%23")));
+        }
 
-            using (var reader = new StreamReader(stream, Encoding.GetEncoding(encoding)))
+        /// <summary>
+        /// Asynchrously get the result as string from url.
+        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static async Task<string> GetAsync([NotNull] Uri url)
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            try
             {
-                var content = await reader.ReadToEndAsync();
+                using var response = await client.GetAsync(url);
+                var content = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return content;
                 }
                 else
                 {
-                    throw new HttpRequestException($"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
+                    throw new HttpRequestException(
+                        $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
                 }
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "GetAsync");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Asynchrously get the result as stream from url.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static async Task<Stream> GetStreamAsync([NotNull] string url)
+        {
+            try
+            {
+                Log.Debug($"|Http.Get|Url <{url}>");
+                var response = await client.GetAsync(url);
+                return await response.Content.ReadAsStreamAsync();
+            }
+            catch (HttpRequestException e)
+            {
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "GetStreamAsync");
+                throw;
             }
         }
     }
