@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.WebSearch.SuggestionSources;
 
 namespace Flow.Launcher.Plugin.WebSearch

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
-    [JsonObject(MemberSerialization.OptOut)]
     public class PluginMetadata : BaseModel
     {
         private string _pluginDirectory;
