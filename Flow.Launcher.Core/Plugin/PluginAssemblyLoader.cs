@@ -20,7 +20,7 @@ namespace Flow.Launcher.Core.Plugin
             dependencyResolver = new AssemblyDependencyResolver(assemblyFilePath);
             assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
 
-            referencedPluginPackageDependencyResolver = 
+            referencedPluginPackageDependencyResolver =
                 new AssemblyDependencyResolver(Path.Combine(Constant.ProgramDirectory, "Flow.Launcher.Plugin.dll"));
         }
 
@@ -38,15 +38,15 @@ namespace Flow.Launcher.Core.Plugin
             // that use Newtonsoft.Json
             if (assemblyPath == null || ExistsInReferencedPluginPackage(assemblyName))
                 return null;
-            
+
             return LoadFromAssemblyPath(assemblyPath);
         }
 
-        internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, Type type)
+        internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, params Type[] types)
         {
             var allTypes = assembly.ExportedTypes;
 
-            return allTypes.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Contains(type));
+            return allTypes.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Intersect(types).Any());
         }
 
         internal bool ExistsInReferencedPluginPackage(AssemblyName assemblyName)

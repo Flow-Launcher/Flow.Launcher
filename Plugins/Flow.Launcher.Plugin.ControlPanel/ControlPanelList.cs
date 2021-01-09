@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.ControlPanel
         int cxDesired, int cyDesired, uint fuLoad);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        extern static bool DestroyIcon(IntPtr handle);
+        static extern bool DestroyIcon(IntPtr handle);
 
         [DllImport("kernel32.dll")]
         static extern IntPtr FindResource(IntPtr hModule, IntPtr lpName, IntPtr lpType);

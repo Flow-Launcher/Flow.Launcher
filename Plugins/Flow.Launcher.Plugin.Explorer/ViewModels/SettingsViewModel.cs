@@ -3,6 +3,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
@@ -19,6 +20,11 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Context = context;
             storage = new PluginJsonStorage<Settings>();
             Settings = storage.Load();
+        }
+
+        public Task LoadStorage()
+        {
+            return Task.Run(() => Settings = storage.Load());
         }
 
         public void Save()
