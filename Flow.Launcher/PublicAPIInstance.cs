@@ -115,11 +115,6 @@ namespace Flow.Launcher
             _mainVM.ProgressBarVisibility = Visibility.Collapsed;
         }
 
-        public void InstallPlugin(string path)
-        {
-            Application.Current.Dispatcher.Invoke(() => PluginManager.InstallPlugin(path));
-        }
-
         public string GetTranslation(string key)
         {
             return InternationalizationManager.Instance.GetTranslation(key);

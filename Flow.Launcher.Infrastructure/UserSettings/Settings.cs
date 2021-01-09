@@ -9,10 +9,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel
     {
+        private string language = "en";
+
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public bool ShowOpenResultHotkey { get; set; } = true;
-        public string Language { get; set; } = "en";
+        public string Language
+        {
+            get => language; set {
+                language = value;
+                OnPropertyChanged();
+            }
+        }
         public string Theme { get; set; } = Constant.DefaultTheme;
         public bool UseDropShadowEffect { get; set; } = false;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
