@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 
@@ -7,7 +6,6 @@ namespace Flow.Launcher.Storage
 {
     public class UserSelectedRecord
     {
-        [JsonProperty]
         private Dictionary<string, int> records = new Dictionary<string, int>();
 
         public void Add(Result result)

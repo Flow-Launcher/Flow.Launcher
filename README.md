@@ -4,7 +4,7 @@
   </a>
 </p>
 
-![Maintenance](https://img.shields.io/maintenance/yes/2020)
+![Maintenance](https://img.shields.io/maintenance/yes/2021)
 [![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
@@ -45,7 +45,7 @@ Windows may complain about security due to code not being signed, this will be c
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
 - Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
 - Cancel/Return to previous screen: <kbd>Esc</kbd>.
-- Install/Uninstall/Update plugins: in the search window, type `pm`/`pm uninstall`/`pm update` + the plugin name.
+- Install/Uninstall/Update plugins: in the search window, type `pm install`/`pm uninstall`/`pm update` + the plugin name.
 - Saved user settings are located:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
