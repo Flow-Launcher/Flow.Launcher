@@ -133,11 +133,6 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static void InstallPlugin(string path)
-        {
-            PluginInstaller.Install(path);
-        }
-
         public static List<PluginPair> ValidPluginsForQuery(Query query)
         {
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))

@@ -30,10 +30,12 @@ namespace Flow.Launcher.Infrastructure
 
         public static string PythonPath;
 
-        public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.png";
+        public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.svg";
 
         public const string DefaultTheme = "Darker";
 
         public const string Themes = "Themes";
+
+        public const string Website = "https://flow-launcher.github.io";
     }
 }

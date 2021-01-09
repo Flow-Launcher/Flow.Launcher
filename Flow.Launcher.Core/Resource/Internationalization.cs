@@ -88,7 +88,6 @@ namespace Flow.Launcher.Core.Resource
         {
             language = language.NonNull();
 
-            Settings.Language = language.LanguageCode;
 
             RemoveOldLanguageFiles();
             if (language != AvailableLanguages.English)
@@ -96,6 +95,7 @@ namespace Flow.Launcher.Core.Resource
                 LoadLanguage(language);
             }
             UpdatePluginMetadataTranslations();
+            Settings.Language = language.LanguageCode;
 
         }
 

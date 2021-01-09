@@ -65,14 +65,8 @@ namespace Flow.Launcher.Infrastructure.Image
                 if (Data.Count > permissibleFactor * MaxCached)
                 {
                     // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
-
                     foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
-                    {
-                        if (!(key.Equals(Constant.ErrorIcon) || key.Equals(Constant.DefaultIcon)))
-                        {
-                            Data.TryRemove(key, out _);
-                        }
-                    }
+                        Data.TryRemove(key, out _);
                 }
             }
         }
