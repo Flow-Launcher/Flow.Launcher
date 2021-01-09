@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Microsoft.FSharp.Core;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -106,14 +107,10 @@ namespace Flow.Launcher.ViewModel
             }
 
             if (ImageLoader.CacheContainImage(imagePath))
-            {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
                 return ImageLoader.Load(imagePath);
-            }
-            else
-            {
-                return await Task.Run(() => ImageLoader.Load(imagePath));
-            }
+            
+            return await Task.Run(() => ImageLoader.Load(imagePath));
         }
 
         public Result Result { get; }
@@ -130,6 +127,7 @@ namespace Flow.Launcher.ViewModel
                 return false;
             }
         }
+
 
         public override int GetHashCode()
         {

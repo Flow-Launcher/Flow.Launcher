@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -17,7 +23,6 @@ namespace Flow.Launcher.ViewModel
 
         public ResultCollection Results { get; }
 
-        private readonly object _addResultsLock = new object();
         private readonly object _collectionLock = new object();
         private readonly Settings _settings;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
@@ -116,90 +121,130 @@ namespace Flow.Launcher.ViewModel
 
         public void Clear()
         {
-            Results.Clear();
+            lock (_collectionLock)
+                Results.RemoveAll();
         }
 
-        public void RemoveResultsExcept(PluginMetadata metadata)
+        public void KeepResultsFor(PluginMetadata metadata)
         {
-            Results.RemoveAll(r => r.Result.PluginID != metadata.ID);
+            lock (_collectionLock)
+                Results.Update(Results.Where(r => r.Result.PluginID == metadata.ID).ToList());
         }
 
-        public void RemoveResultsFor(PluginMetadata metadata)
+        public void KeepResultsExcept(PluginMetadata metadata)
         {
-            Results.RemoveAll(r => r.Result.PluginID == metadata.ID);
+            lock (_collectionLock)
+                Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
         }
+
 
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
         public void AddResults(List<Result> newRawResults, string resultId)
         {
-            lock (_addResultsLock)
+
+            lock (_collectionLock)
             {
                 var newResults = NewResults(newRawResults, resultId);
 
-                // update UI in one run, so it can avoid UI flickering
-                Results.Update(newResults);
+                // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
+                // fix selected index flow
+                var updateTask = Task.Run(() =>
+                {
+                    // update UI in one run, so it can avoid UI flickering
 
-                if (Results.Count > 0)
+                    Results.Update(newResults);
+                    if (Results.Any())
+                        SelectedItem = Results[0];
+                });
+                if (!updateTask.Wait(300))
                 {
-                    Margin = new Thickness { Top = 8 };
-                    SelectedIndex = 0;
+                    updateTask.Dispose();
+                    throw new TimeoutException("Update result use too much time.");
                 }
-                else
-                {
-                    Margin = new Thickness { Top = 0 };
-                }
+
+            }
+
+            if (Visbility != Visibility.Visible && Results.Count > 0)
+            {
+                Margin = new Thickness { Top = 8 };
+                SelectedIndex = 0;
+                Visbility = Visibility.Visible;
+            }
+            else
+            {
+                Margin = new Thickness { Top = 0 };
+                Visbility = Visibility.Collapsed;
             }
         }
+        /// <summary>
+        /// To avoid deadlock, this method should not called from main thread
+        /// </summary>
+        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
+        {
+            var newResults = NewResults(resultsForUpdates);
+            if (token.IsCancellationRequested)
+                return;
+            lock (_collectionLock)
+            {
+                // update UI in one run, so it can avoid UI flickering
+
+                Results.Update(newResults, token);
+                if (Results.Any())
+                    SelectedItem = Results[0];
+
+
+            }
+
+            switch (Visbility)
+            {
+                case Visibility.Collapsed when Results.Count > 0:
+                    Margin = new Thickness { Top = 8 };
+                    SelectedIndex = 0;
+                    Visbility = Visibility.Visible;
+                    break;
+                case Visibility.Visible when Results.Count == 0:
+                    Margin = new Thickness { Top = 0 };
+                    Visbility = Visibility.Collapsed;
+                    break;
+            }
+
+        }
+
 
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
-            var results = Results.ToList();
+            if (newRawResults.Count == 0)
+                return Results.ToList();
+
+            var results = Results as IEnumerable<ResultViewModel>;
+
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
-            var oldResults = results.Where(r => r.Result.PluginID == resultId).ToList();
 
-            // Find the same results in A (old results) and B (new newResults)          
-            var sameResults = oldResults
-                                .Where(t1 => newResults.Any(x => x.Result.Equals(t1.Result)))
-                                .ToList();
 
-            // remove result of relative complement of B in A
-            foreach (var result in oldResults.Except(sameResults))
-            {
-                results.Remove(result);
-            }
 
-            // update result with B's score and index position
-            foreach (var sameResult in sameResults)
-            {
-                int oldIndex = results.IndexOf(sameResult);
-                int oldScore = results[oldIndex].Result.Score;
-                var newResult = newResults[newResults.IndexOf(sameResult)];
-                int newScore = newResult.Result.Score;
-                if (newScore != oldScore)
-                {
-                    var oldResult = results[oldIndex];
+            return results.Where(r => r.Result.PluginID != resultId)
+                .Concat(results.Intersect(newResults).Union(newResults))
+                .OrderByDescending(r => r.Result.Score)
+                .ToList();
+        }
 
-                    oldResult.Result.Score = newScore;
-                    oldResult.Result.OriginQuery = newResult.Result.OriginQuery;
+        private List<ResultViewModel> NewResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        {
+            if (!resultsForUpdates.Any())
+                return Results.ToList();
 
-                    results.RemoveAt(oldIndex);
-                    int newIndex = InsertIndexOf(newScore, results);
-                    results.Insert(newIndex, oldResult);
-                }
-            }
+            var results = Results as IEnumerable<ResultViewModel>;
 
-            // insert result in relative complement of A in B
-            foreach (var result in newResults.Except(sameResults))
-            {
-                int newIndex = InsertIndexOf(result.Result.Score, results);
-                results.Insert(newIndex, result);
-            }
-
-            return results;
+            return results.Where(r => r != null && !resultsForUpdates.Any(u => u.Metadata.ID == r.Result.PluginID))
+                          .Concat(
+                               resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
+                          .OrderByDescending(rv => rv.Result.Score)
+                          .ToList();
         }
         #endregion
+
 
         #region FormattedText Dependency Property
         public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
@@ -235,57 +280,74 @@ namespace Flow.Launcher.ViewModel
         public class ResultCollection : ObservableCollection<ResultViewModel>
         {
 
-            public void RemoveAll(Predicate<ResultViewModel> predicate)
-            {
-                CheckReentrancy();
+            private long editTime = 0;
 
-                for (int i = Count - 1; i >= 0; i--)
+            private bool _suppressNotifying = false;
+
+            private CancellationToken _token;
+
+            protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+            {
+                if (!_suppressNotifying)
                 {
-                    if (predicate(this[i]))
-                    {
-                        RemoveAt(i);
-                    }
+                    base.OnCollectionChanged(e);
                 }
             }
+
+            public void BulkAddRange(IEnumerable<ResultViewModel> resultViews)
+            {
+                // suppress notifying before adding all element
+                _suppressNotifying = true;
+                foreach (var item in resultViews)
+                {
+                    Add(item);
+                }
+                _suppressNotifying = false;
+                // manually update event
+                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
+                if (_token.IsCancellationRequested)
+                    return;
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+            public void AddRange(IEnumerable<ResultViewModel> Items)
+            {
+                foreach (var item in Items)
+                {
+                    if (_token.IsCancellationRequested)
+                        return;
+                    Add(item);
+                }
+            }
+            public void RemoveAll()
+            {
+                ClearItems();
+            }
+
+
+
 
             /// <summary>
             /// Update the results collection with new results, try to keep identical results
             /// </summary>
             /// <param name="newItems"></param>
-            public void Update(List<ResultViewModel> newItems)
+            public void Update(List<ResultViewModel> newItems, CancellationToken token = default)
             {
-                int newCount = newItems.Count;
-                int oldCount = Items.Count;
-                int location = newCount > oldCount ? oldCount : newCount;
+                _token = token;
+                if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
+                    return;
 
-                for (int i = 0; i < location; i++)
+                if (editTime < 5 || newItems.Count < 30)
                 {
-                    ResultViewModel oldResult = this[i];
-                    ResultViewModel newResult = newItems[i];
-                    if (!oldResult.Equals(newResult))
-                    { // result is not the same update it in the current index
-                        this[i] = newResult;
-                    }
-                    else if (oldResult.Result.Score != newResult.Result.Score)
-                    {
-                        this[i].Result.Score = newResult.Result.Score;
-                    }
-                }
-
-
-                if (newCount >= oldCount)
-                {
-                    for (int i = oldCount; i < newCount; i++)
-                    {
-                        Add(newItems[i]);
-                    }
+                    if (Count != 0) ClearItems();
+                    AddRange(newItems);
+                    editTime++;
+                    return;
                 }
                 else
                 {
-                    for (int i = oldCount - 1; i >= newCount; i--)
-                    {
-                        RemoveAt(i);
-                    }
+                    Clear();
+                    BulkAddRange(newItems);
+                    editTime++;
                 }
             }
         }
