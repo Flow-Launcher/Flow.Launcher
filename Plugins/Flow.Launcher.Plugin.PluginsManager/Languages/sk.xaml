@@ -27,7 +27,7 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Správa inštalácie, odinštalácie alebo aktualizácie pluginov programu Flow Launcher</system:String>
 
     <!--Context menu items-->
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Prejsť na webovú stránku</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Prejsť na webovú stránku</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Prejsť na webovú stránku pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Zobraziť zdrojový kód</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Zobraziť zdrojový kód pluginu</system:String>
