@@ -336,7 +336,7 @@ namespace Flow.Launcher.ViewModel
                 if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
                     return;
 
-                if (editTime < 5 || newItems.Count < 30)
+                if (editTime < 10 || newItems.Count < 30)
                 {
                     if (Count != 0) ClearItems();
                     AddRange(newItems);
