@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:Flow.Launcher"
         Loaded="PriorityChangeWindow_Loaded"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="PriorityChangeWindow" Height="250" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="75"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>

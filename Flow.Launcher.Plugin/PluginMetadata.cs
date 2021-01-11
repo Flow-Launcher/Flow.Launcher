@@ -45,7 +45,6 @@ namespace Flow.Launcher.Plugin
         [JsonIgnore]
         public int Priority { get; set; }
 
-
         /// <summary>
         /// Init time include both plugin load time and init time
         /// </summary>
