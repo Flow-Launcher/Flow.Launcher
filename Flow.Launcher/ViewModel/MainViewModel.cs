@@ -687,7 +687,8 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + metadata.Priority * 50;
+                    var priorityScore = metadata.Priority * 50
+                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
                 }
             }
 
