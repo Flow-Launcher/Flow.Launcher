@@ -91,7 +91,7 @@ namespace Flow.Launcher.Plugin.Caculator
                     };
                 }
             }
-            catch
+            catch (Exception)
             {
                 // ignored
             }
