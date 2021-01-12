@@ -122,14 +122,14 @@ namespace Flow.Launcher.ViewModel
         {
             foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
             {
-                var plugin = (IResultUpdated) pair.Plugin;
+                var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    Task.Run(() =>
+                    if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        UpdateResultView(e.Results, pair.Metadata, e.Query);
-                    }, _updateToken);
+                        _resultsUpdateQueue.Post(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
+                    }
                 };
             }
         }
@@ -379,7 +379,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query {RawQuery = h.Query},
+                    OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
                         SelectedResults = Results;
