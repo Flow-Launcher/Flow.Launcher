@@ -755,15 +755,19 @@ namespace Flow.Launcher.ViewModel
 #endif
 
 
-            foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
+            foreach (var metaResults in resultsForUpdates)
             {
-                if (_topMostRecord.IsTopMost(result))
+                foreach (var result in metaResults.Results)
                 {
-                    result.Score = int.MaxValue;
-                }
-                else
-                {
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5;
+                    if (_topMostRecord.IsTopMost(result))
+                    {
+                        result.Score = int.MaxValue;
+                    }
+                    else
+                    {
+                        var priorityScore = metaResults.Metadata.Priority * 50;
+                        result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
+                    }
                 }
             }
 
