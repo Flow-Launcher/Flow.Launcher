@@ -100,7 +100,8 @@ function Publish-Self-Contained ($p) {
 function Pack-Self-Contained-Portable ($path, $version, $output) {
     Write-Host "Begin portable zip release"
 
-    New-Item -Path "$path\Output\Release\" -Name "UserData" -ItemType "directory"
+    # Compress-Archive requires the directory to have an item or will not be included in zip
+    Mkdir "$path\Output\Release\UserData\Cache"
 
     $content = "$path\Output\Release\*"
     $zipFile = "$output\Flow-Launcher-v$version-Portable.zip"
