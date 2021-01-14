@@ -32,6 +32,8 @@ after_build:
 artifacts:
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
+- path: 'Output\Packages\Flow-Launcher-*-Portable.zip'
+  name: Zip Portable
 - path: 'Output\Packages\Flow-Launcher-*.exe'
   name: Squirrel Installer
 - path: 'Output\Packages\FlowLauncher-*-full.nupkg'

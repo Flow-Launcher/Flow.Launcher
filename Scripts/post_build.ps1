@@ -103,7 +103,7 @@ function Pack-Self-Contained-Portable ($path, $version, $output) {
     Mkdir "$path\Output\Release\UserData"
 
     $content = "$path\Output\Release\*"
-    $zipFile = "$output\Flow-Launcher-v$version.zip"
+    $zipFile = "$output\Flow-Launcher-v$version-Portable.zip"
 
     Compress-Archive -Force -Path $content -DestinationPath $zipFile
 
