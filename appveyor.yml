@@ -53,7 +53,7 @@ deploy:
     release: v$(flowVersion)
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
+    artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES, Zip Portable
     draft: true
     force_update: true
     on:
@@ -63,7 +63,7 @@ deploy:
     release: v$(flowVersion)
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
+    artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES, Zip Portable
     force_update: true
     on:
       APPVEYOR_REPO_TAG: true
