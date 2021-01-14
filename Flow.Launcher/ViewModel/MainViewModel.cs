@@ -94,7 +94,7 @@ namespace Flow.Launcher.ViewModel
         {
             foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
             {
-                var plugin = (IResultUpdated)pair.Plugin;
+                var plugin = (IResultUpdated) pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
                     PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
@@ -113,11 +113,18 @@ namespace Flow.Launcher.ViewModel
 
             async Task updateAction()
             {
+                var queue = new Dictionary<string, ResultsForUpdate>();
                 while (await _resultsUpdateQueue.OutputAvailableAsync())
                 {
+                    queue.Clear();
                     await Task.Delay(20);
-                    _resultsUpdateQueue.TryReceiveAll(out var queue);
-                    UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
+                    while (_resultsUpdateQueue.TryReceive(out var item))
+                    {
+                        if (!item.Token.IsCancellationRequested)
+                            queue[item.ID] = item;
+                    }
+
+                    UpdateResultView(queue.Values);
                 }
             }
 
@@ -381,7 +388,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query { RawQuery = h.Query },
+                    OriginQuery = new Query {RawQuery = h.Query},
                     Action = _ =>
                     {
                         SelectedResults = Results;
@@ -438,70 +445,70 @@ namespace Flow.Launcher.ViewModel
             var plugins = PluginManager.ValidPluginsForQuery(query);
 
             Task.Run(async () =>
-            {
-                if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
                 {
-                    // Wait 45 millisecond for query change in global query
-                    // if query changes, return so that it won't be calculated
-                    await Task.Delay(45, currentCancellationToken);
+                    if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
+                    {
+                        // Wait 45 millisecond for query change in global query
+                        // if query changes, return so that it won't be calculated
+                        await Task.Delay(45, currentCancellationToken);
+                        if (currentCancellationToken.IsCancellationRequested)
+                            return;
+                    }
+
+                    _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                        if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                        {
+                            ProgressBarVisibility = Visibility.Visible;
+                        }
+                    }, currentCancellationToken);
+
+                    // so looping will stop once it was cancelled
+                    var parallelOptions = new ParallelOptions {CancellationToken = currentCancellationToken};
+                    try
+                    {
+                        Parallel.ForEach(plugins, parallelOptions, plugin =>
+                        {
+                            if (!plugin.Metadata.Disabled)
+                            {
+                                try
+                                {
+                                    var results = PluginManager.QueryForPlugin(plugin, query);
+                                    _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata,
+                                        query,
+                                        currentCancellationToken));
+                                }
+                                catch (Exception e)
+                                {
+                                    Log.Exception("MainViewModel",
+                                        $"Exception when querying the plugin {plugin.Metadata.Name}", e,
+                                        "QueryResults");
+                                }
+                            }
+                        });
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                        // nothing to do here
+                    }
+
                     if (currentCancellationToken.IsCancellationRequested)
                         return;
-                }
 
-                _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                {
-                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                    // this should happen once after all queries are done so progress bar should continue
+                    // until the end of all querying
+                    _isQueryRunning = false;
+                    if (!currentCancellationToken.IsCancellationRequested)
                     {
-                        ProgressBarVisibility = Visibility.Visible;
+                        // update to hidden if this is still the current query
+                        ProgressBarVisibility = Visibility.Hidden;
                     }
-                }, currentCancellationToken);
-
-                // so looping will stop once it was cancelled
-                var parallelOptions = new ParallelOptions { CancellationToken = currentCancellationToken };
-                try
-                {
-                    Parallel.ForEach(plugins, parallelOptions, plugin =>
-                    {
-                        if (!plugin.Metadata.Disabled)
-                        {
-                            try
-                            {
-                                var results = PluginManager.QueryForPlugin(plugin, query);
-                                _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata,
-                                    query,
-                                    currentCancellationToken));
-                            }
-                            catch (Exception e)
-                            {
-                                Log.Exception("MainViewModel",
-                                    $"Exception when querying the plugin {plugin.Metadata.Name}", e,
-                                    "QueryResults");
-                            }
-                        }
-                    });
-                }
-                catch (OperationCanceledException)
-                {
-                    return;
-                    // nothing to do here
-                }
-
-                if (currentCancellationToken.IsCancellationRequested)
-                    return;
-
-                // this should happen once after all queries are done so progress bar should continue
-                // until the end of all querying
-                _isQueryRunning = false;
-                if (!currentCancellationToken.IsCancellationRequested)
-                {
-                    // update to hidden if this is still the current query
-                    ProgressBarVisibility = Visibility.Hidden;
-                }
-            }, currentCancellationToken)
-            .ContinueWith(t => Log.Exception("MainViewModel", "Error when querying plugins", t.Exception?.InnerException, "QueryResults")
-            , TaskContinuationOptions.OnlyOnFaulted);
-
+                }, currentCancellationToken)
+                .ContinueWith(t => Log.Exception("MainViewModel", "Error when querying plugins",
+                        t.Exception?.InnerException, "QueryResults")
+                    , TaskContinuationOptions.OnlyOnFaulted);
         }
 
 
