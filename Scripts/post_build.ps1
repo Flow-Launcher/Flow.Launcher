@@ -97,6 +97,19 @@ function Publish-Self-Contained ($p) {
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
+function Pack-Self-Contained-Portable ($path, $version, $output) {
+    Write-Host "Begin portable zip release"
+
+    Mkdir "$path\Output\Release\UserData"
+
+    $content = "$path\Output\Release\*"
+    $zipFile = "$output\Flow-Launcher-v$version.zip"
+
+    Compress-Archive -Force -Path $content -DestinationPath $zipFile
+
+    Write-Host "End portable zip release"
+}
+
 function Main {
     $p = Build-Path
     $v = Build-Version
@@ -111,6 +124,7 @@ function Main {
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
+        Pack-Self-Contained-Portable $p $v $o
     }
 }
 
