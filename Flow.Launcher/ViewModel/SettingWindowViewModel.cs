@@ -88,6 +88,7 @@ namespace Flow.Launcher.ViewModel
                 var id = vm.PluginPair.Metadata.ID;
 
                 Settings.PluginSettings.Plugins[id].Disabled = vm.PluginPair.Metadata.Disabled;
+                Settings.PluginSettings.Plugins[id].Priority = vm.Priority;
             }
 
             PluginManager.Save();
