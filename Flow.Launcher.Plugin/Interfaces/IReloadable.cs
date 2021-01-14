@@ -1,7 +1,7 @@
 ﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// This interface is to indicate and allow plugins to reload their
+    /// This interface is to indicate and allow plugins to synchronously reload their
     /// in memory data cache or other mediums when user makes a new change
     /// that is not immediately captured. For example, for BrowserBookmark and Program
     /// plugin does not automatically detect when a user added a new bookmark or program,
@@ -10,6 +10,10 @@
     /// 
     /// The command that allows user to manual reload is exposed via Plugin.Sys, and
     /// it will call the plugins that have implemented this interface.
+    /// 
+    /// <para>
+    /// If requiring reloading data asynchrouly, please try IAsyncReloadable
+    /// </para>
     /// </summary>
     public interface IReloadable
     {
