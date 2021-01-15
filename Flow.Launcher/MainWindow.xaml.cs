@@ -84,8 +84,15 @@ namespace Flow.Launcher
                             QueryTextBox.SelectAll();
                             _viewModel.LastQuerySelected = true;
                         }
+
+                        ProgressBar.BeginStoryboard(_progressBarStoryboard);
+                    }
+                    else
+                    {
+                        _progressBarStoryboard.Stop();
                     }
                 }
+                
             };
             _settings.PropertyChanged += (o, e) =>
             {
