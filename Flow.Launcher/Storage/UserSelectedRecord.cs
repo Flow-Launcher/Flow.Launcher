@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 
@@ -6,7 +7,20 @@ namespace Flow.Launcher.Storage
 {
     public class UserSelectedRecord
     {
-        private Dictionary<string, int> records = new Dictionary<string, int>();
+        /// <summary>
+        /// You should not directly access this field
+        /// <para>
+        /// It is public due to System.Text.Json limitation in version 3.1
+        /// </para>
+        /// </summary>
+        /// TODO: Set it to private
+        [JsonPropertyName("records")]
+        public Dictionary<string, int> records { get; set; }
+
+        public UserSelectedRecord()
+        {
+            records = new Dictionary<string, int>();
+        }
 
         public void Add(Result result)
         {
