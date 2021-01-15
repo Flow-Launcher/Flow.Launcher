@@ -25,9 +25,9 @@ namespace Flow.Launcher.Storage
         public void Add(Result result)
         {
             var key = result.ToString();
-            if (records.TryGetValue(key, out int value))
+            if (records.ContainsKey(key))
             {
-                records[key] = value + 1;
+                records[key]++;
             }
             else
             {
