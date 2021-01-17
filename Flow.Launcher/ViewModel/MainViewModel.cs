@@ -354,9 +354,20 @@ namespace Flow.Launcher.ViewModel
                 {
                     var filtered = results.Where
                     (
-                        r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet()
-                             || StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
-                    ).ToList();
+                        r =>
+                        {
+                            var match = StringMatcher.FuzzySearch(query, r.Title);
+                            if (!match.IsSearchPrecisionScoreMet())
+                            {
+                                match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                            }
+
+                            if (!match.IsSearchPrecisionScoreMet()) return false;
+                            
+                            r.Score = match.Score;
+                            return true;
+
+                        }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
                 else
