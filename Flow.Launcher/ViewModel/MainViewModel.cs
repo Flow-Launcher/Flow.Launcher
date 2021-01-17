@@ -408,8 +408,13 @@ namespace Flow.Launcher.ViewModel
                             for (var i = 0; i < plugins.Count; i++)
                             {
                                 if (!plugins[i].Metadata.Disabled)
+                                {
                                     tasks[i] = QueryTask(plugins[i], query, currentCancellationToken);
-                                else tasks[i] = Task.CompletedTask; // Avoid Null
+                                }
+                                else
+                                {
+                                    tasks[i] = Task.CompletedTask; // Avoid Null
+                                }
                             }
 
                             // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
@@ -429,7 +434,7 @@ namespace Flow.Launcher.ViewModel
                             ProgressBarVisibility = Visibility.Hidden;
                         }
 
-                        // Local Function
+                        // Local function
                         async Task QueryTask(PluginPair plugin, Query query, CancellationToken token)
                         {
                             // Since it is wrapped within a Task.Run, the synchronous context is null

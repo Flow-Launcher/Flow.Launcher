@@ -12,7 +12,7 @@
     /// it will call the plugins that have implemented this interface.
     /// 
     /// <para>
-    /// If requiring reloading data asynchrouly, please try IAsyncReloadable
+    /// If requiring reloading data asynchronously, please use the IAsyncReloadable interface
     /// </para>
     /// </summary>
     public interface IReloadable

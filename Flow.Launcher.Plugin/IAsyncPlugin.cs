@@ -12,6 +12,10 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Asynchronous Querying
         /// </summary>
+        /// <para>
+        /// If the Querying or Init method requires high IO transmission
+        /// or performing CPU intense jobs (performing better with cancellation), please use this IAsyncPlugin interface
+        /// </para>
         /// <param name="query">Query to search</param>
         /// <param name="token">Cancel when querying job is obsolete</param>
         /// <returns></returns>

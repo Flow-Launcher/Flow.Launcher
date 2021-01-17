@@ -5,8 +5,8 @@ namespace Flow.Launcher.Plugin
     /// <summary>
     /// Synchronous Plugin Model for Flow Launcher
     /// <para>
-    /// If you assume that Querying or Init method require IO transmission
-    /// or CPU Intense Job (performing better with cancellation), please try IAsyncPlugin interface
+    /// If the Querying or Init method requires high IO transmission
+    /// or performaing CPU intense jobs (performing better with cancellation), please try the IAsyncPlugin interface
     /// </para>
     /// </summary>
     public interface IPlugin

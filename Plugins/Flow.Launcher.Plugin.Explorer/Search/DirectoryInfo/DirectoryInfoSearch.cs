@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
