@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             return search switch
             {
-                var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s),
+                var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s, token),
                 var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
                 var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>

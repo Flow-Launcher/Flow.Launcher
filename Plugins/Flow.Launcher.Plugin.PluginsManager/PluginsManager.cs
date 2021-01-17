@@ -276,13 +276,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private Task _downloadManifestTask = Task.CompletedTask;
 
-        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName)
+        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any() && _downloadManifestTask.IsCompleted)
+            if (!pluginsManifest.UserPlugins.Any() &&
+                _downloadManifestTask.IsCompleted ||
+                _downloadManifestTask.IsFaulted)
                 _downloadManifestTask = pluginsManifest.DownloadManifest();
 
             await _downloadManifestTask;
 
+            if (token.IsCancellationRequested)
+                return null;
+            
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
 
             var results =
