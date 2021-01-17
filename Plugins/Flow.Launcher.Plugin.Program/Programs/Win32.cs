@@ -16,7 +16,6 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
-
     [Serializable]
     public class Win32 : IProgram
     {
@@ -127,19 +126,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Action = _ =>
                     {
                         var args = !string.IsNullOrWhiteSpace(Main._settings.CustomizedArgs)
-                                    ? Main._settings.CustomizedArgs
-                                        .Replace("%s",$"\"{ParentDirectory}\"")
-                                        .Replace("%f",$"\"{FullPath}\"")
-                                    : Main._settings.CustomizedExplorer==Settings.Explorer
-                                        ? $"/select,\"{FullPath}\""
-                                        : Settings.ExplorerArgs;
+                            ? Main._settings.CustomizedArgs
+                                .Replace("%s", $"\"{ParentDirectory}\"")
+                                .Replace("%f", $"\"{FullPath}\"")
+                            : Main._settings.CustomizedExplorer == Settings.Explorer
+                                ? $"/select,\"{FullPath}\""
+                                : Settings.ExplorerArgs;
 
                         Main.StartProcess(Process.Start,
-                                            new ProcessStartInfo(
-                                                !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer)
-                                                ? Main._settings.CustomizedExplorer
-                                                : Settings.Explorer,
-                                                args));
+                            new ProcessStartInfo(
+                                !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer)
+                                    ? Main._settings.CustomizedExplorer
+                                    : Settings.Explorer,
+                                args));
 
                         return true;
                     },
@@ -148,7 +147,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             };
             return contextMenus;
         }
-
 
 
         public override string ToString()
@@ -176,9 +174,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
                 ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
-                                            $"|Permission denied when trying to load the program from {path}", e);
+                                           $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() { Valid = false, Enabled = false };
+                return new Win32() {Valid = false, Enabled = false};
             }
         }
 
@@ -216,13 +214,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         }
                     }
                 }
+
                 return program;
             }
             catch (COMException e)
             {
                 // C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MiracastView.lnk always cause exception
                 ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
-                                                "|Error caused likely due to trying to get the description of the program", e);
+                                           "|Error caused likely due to trying to get the description of the program",
+                    e);
 
                 program.Valid = false;
                 return program;
@@ -252,37 +252,22 @@ namespace Flow.Launcher.Plugin.Program.Programs
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
-                                            $"|Permission denied when trying to load the program from {path}", e);
+                                           $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() { Valid = false, Enabled = false };
+                return new Win32() {Valid = false, Enabled = false};
             }
         }
 
         private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes)
         {
             if (!Directory.Exists(directory))
-                return new string[] { };
-            try
-            {
-                var paths = Directory.EnumerateFiles(directory, "*", new EnumerationOptions
-                {
-                    IgnoreInaccessible = true,
-                    RecurseSubdirectories = true
-                })
-                                     .Where(x => suffixes.Contains(Extension(x)));
+                return Enumerable.Empty<string>();
 
-                return paths;
-            }
-            catch (DirectoryNotFoundException e)
+            return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
-                ProgramLogger.LogException($"Directory not found {directory}", e);
-                return new string[] { };
-            }
-            catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
-            {
-                ProgramLogger.LogException($"Permission denied {directory}", e);
-                return new string[] { };
-            }
+                IgnoreInaccessible = true,
+                RecurseSubdirectories = true
+            }).Where(x => suffixes.Contains(Extension(x)));
         }
 
         private static string Extension(string path)
@@ -328,13 +313,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var toFilter = paths1.Concat(paths2);
 
             var programs = toFilter
-                        .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
-                        .Distinct()
-                        .Select(x => Extension(x) switch
-                            {
-                                ShortcutExtension => LnkProgram(x),
-                                _ => Win32Program(x)
-                            }).Where(x => x.Valid);
+                .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
+                .Distinct()
+                .Select(x => Extension(x) switch
+                {
+                    ShortcutExtension => LnkProgram(x),
+                    _ => Win32Program(x)
+                }).Where(x => x.Valid);
             return programs;
         }
 
@@ -351,6 +336,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 programs = programs.Concat(GetProgramsFromRegistry(rootMachine));
             }
+
             if (rootUser != null)
             {
                 programs = programs.Concat(GetProgramsFromRegistry(rootUser));
@@ -360,7 +346,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var disabledProgramsList = Main._settings.DisabledProgramSources;
             var toFilter = programs.Where(p => suffixes.Contains(Extension(p.ExecutableName)));
 
-            var filtered = toFilter.Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier)).Select(t1 => t1);
+            var filtered = toFilter
+                .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
+                .Select(t1 => t1);
 
             return filtered.ToList();
         }
@@ -368,10 +356,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> GetProgramsFromRegistry(RegistryKey root)
         {
             return root
-                    .GetSubKeyNames()
-                    .Select(x => GetProgramPathFromRegistrySubKeys(root, x))
-                    .Distinct()
-                    .Select(x => GetProgramFromPath(x));
+                .GetSubKeyNames()
+                .Select(x => GetProgramPathFromRegistrySubKeys(root, x))
+                .Distinct()
+                .Select(GetProgramFromPath);
         }
 
         private static string GetProgramPathFromRegistrySubKeys(RegistryKey root, string subkey)
@@ -397,7 +385,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
                 ProgramLogger.LogException($"|Win32|GetProgramPathFromRegistrySubKeys|{path}" +
-                                            $"|Permission denied when trying to load the program from {path}", e);
+                                           $"|Permission denied when trying to load the program from {path}", e);
 
                 return string.Empty;
             }
@@ -419,13 +407,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return entry;
         }
 
-        private class Win32ComparatorBasedonDescription : IEqualityComparer<Win32>
+        private class Win32ComparatorWithDescription : IEqualityComparer<Win32>
         {
-            public readonly static Win32ComparatorBasedonDescription Default = new Win32ComparatorBasedonDescription();
+            public static readonly Win32ComparatorWithDescription Default = new Win32ComparatorWithDescription();
 
             public bool Equals(Win32 x, Win32 y)
             {
-                return x.Description == y.Description;
+                return x?.Description == y?.Description;
             }
 
             public int GetHashCode(Win32 obj)
@@ -435,16 +423,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         private static Win32[] ProgramsHasher(IEnumerable<Win32> programs)
-            => programs.GroupBy(p => p.FullPath.ToLower())
-                       .SelectMany(g =>
-                        {
-                            var tempList = g.ToList();
-                            if (tempList.Count() > 1)
-                                return g.Where(p => !string.IsNullOrEmpty(p.Description))
-                                        .Distinct(Win32ComparatorBasedonDescription.Default);
-                            else
-                                return g.Take(1);
-                        }).ToArray();
+        {
+            return programs.GroupBy(p => p.FullPath.ToLower())
+                .SelectMany(g =>
+                {
+                    if (g.Count() > 1)
+                        return g.Where(p => !string.IsNullOrEmpty(p.Description))
+                            .Distinct(Win32ComparatorWithDescription.Default);
+                    return g;
+                }).ToArray();
+        }
 
 
         public static Win32[] All(Settings settings)
@@ -467,6 +455,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
                     programs = programs.Concat(startMenu);
                 }
+
                 return ProgramsHasher(programs);
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
