@@ -244,7 +244,7 @@ namespace Flow.Launcher.ViewModel
 
         public string QueryText
         {
-            get { return _queryText; }
+            get => _queryText;
             set
             {
                 _queryText = value;
@@ -444,28 +444,26 @@ namespace Flow.Launcher.ViewModel
             var plugins = PluginManager.ValidPluginsForQuery(query);
 
             Task.Run(async () =>
-            {
-                if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
                 {
-                    // Wait 45 millisecond for query change in global query
-                    // if query changes, return so that it won't be calculated
-                    await Task.Delay(45, currentCancellationToken);
-                    if (currentCancellationToken.IsCancellationRequested)
-                        return;
-                }
-
-                _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                {
-                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                    if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
                     {
-                        ProgressBarVisibility = Visibility.Visible;
+                        // Wait 45 millisecond for query change in global query
+                        // if query changes, return so that it won't be calculated
+                        await Task.Delay(45, currentCancellationToken);
+                        if (currentCancellationToken.IsCancellationRequested)
+                            return;
                     }
-                }, currentCancellationToken);
 
-                var plugins = PluginManager.ValidPluginsForQuery(query);
-                Task.Run(async () =>
-                {
+                    _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                        if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                        {
+                            ProgressBarVisibility = Visibility.Visible;
+                        }
+                    }, currentCancellationToken);
+
+                    var plugins = PluginManager.ValidPluginsForQuery(query);
                     // so looping will stop once it was cancelled
 
                     Task[] tasks = new Task[plugins.Count];
@@ -475,7 +473,7 @@ namespace Flow.Launcher.ViewModel
                         {
                             if (!plugins[i].Metadata.Disabled)
                             {
-                                tasks[i] = QueryTask(plugins[i], query, currentCancellationToken);
+                                tasks[i] = QueryTask(plugins[i]);
                             }
                             else
                             {
@@ -491,6 +489,9 @@ namespace Flow.Launcher.ViewModel
                         // nothing to do here
                     }
 
+                    if (currentCancellationToken.IsCancellationRequested)
+                        return;
+
                     // this should happen once after all queries are done so progress bar should continue
                     // until the end of all querying
                     _isQueryRunning = false;
@@ -501,28 +502,20 @@ namespace Flow.Launcher.ViewModel
                     }
 
                     // Local function
-                    async Task QueryTask(PluginPair plugin, Query query, CancellationToken token)
+                    async Task QueryTask(PluginPair plugin)
                     {
                         // Since it is wrapped within a Task.Run, the synchronous context is null
                         // Task.Yield will force it to run in ThreadPool
                         await Task.Yield();
 
-                        var results = await PluginManager.QueryForPlugin(plugin, query, token);
+                        var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
                         if (!currentCancellationToken.IsCancellationRequested)
-                            UpdateResultView(results, plugin.Metadata, query);
+                            _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query,
+                                currentCancellationToken));
                     }
-                }, currentCancellationToken).ContinueWith(
-                    t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
+                }, currentCancellationToken)
+                .ContinueWith(t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
                     TaskContinuationOptions.OnlyOnFaulted);
-
-
-                else
-
-                {
-                    Results.Clear();
-                    Results.Visbility = Visibility.Collapsed;
-                }
-            }
         }
 
 
@@ -786,37 +779,13 @@ namespace Flow.Launcher.ViewModel
                     }
                     else
                     {
-                        var priorityScore = metaResults.Metadata.Priority * 50;
+                        var priorityScore = metaResults.Metadata.Priority * 150;
                         result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
                     }
                 }
             }
 
             Results.AddResults(resultsForUpdates, token);
-        }
-
-        /// <summary>U
-        /// To avoid deadlock, this method should not called from main thread
-        /// </summary>
-        public void UpdateResultView(List<Result> list, PluginMetadata metadata, Query originQuery)
-        {
-            foreach (var result in list)
-            {
-                if (_topMostRecord.IsTopMost(result))
-                {
-                    result.Score = int.MaxValue;
-                }
-                else
-                {
-                    var priorityScore = metadata.Priority * 150;
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
-                }
-            }
-
-            if (originQuery.RawQuery == _lastQuery.RawQuery)
-            {
-                Results.AddResults(list, metadata.ID);
-            }
         }
 
         #endregion
