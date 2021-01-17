@@ -469,9 +469,6 @@ namespace Flow.Launcher.ViewModel
                         }
                     }, currentCancellationToken);
 
-                    var plugins = PluginManager.ValidPluginsForQuery(query);
-                    // so looping will stop once it was cancelled
-
                     Task[] tasks = new Task[plugins.Count];
                     try
                     {
