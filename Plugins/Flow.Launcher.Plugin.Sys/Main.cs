@@ -170,8 +170,7 @@ namespace Flow.Launcher.Plugin.Sys
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
                         // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
                         // 0 for nothing
-                        var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle,
-                            0);
+                        var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
                         if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
                         {
                             MessageBox.Show($"Error emptying recycle bin, error code: {result}\n" +
