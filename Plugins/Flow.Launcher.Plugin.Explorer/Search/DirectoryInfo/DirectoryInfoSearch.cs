@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
             if (search.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > search.LastIndexOf(Constants.DirectorySeperator))
                 return DirectorySearch(SearchOption.AllDirectories, query, search, criteria);
-            
+
             return DirectorySearch(SearchOption.TopDirectoryOnly, query, search, criteria);
         }
 
@@ -57,9 +57,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             try
             {
                 var directoryInfo = new System.IO.DirectoryInfo(path);
-                var fileSystemInfos = directoryInfo.GetFileSystemInfos(searchCriteria, searchOption);
 
-                foreach (var fileSystemInfo in fileSystemInfos)
+                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, searchOption))
                 {
                     if ((fileSystemInfo.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden) continue;
 

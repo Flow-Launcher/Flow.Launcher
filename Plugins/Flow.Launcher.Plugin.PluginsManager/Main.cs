@@ -7,10 +7,11 @@ using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu, IPluginI18n, IReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, ISavable, IContextMenu, IPluginI18n, IAsyncReloadable
     {
         internal PluginInitContext Context { get; set; }
 
@@ -29,13 +30,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new PluginsManagerSettings(viewModel);
         }
 
-        public void Init(PluginInitContext context)
+        public async Task InitAsync(PluginInitContext context)
         {
             Context = context;
             viewModel = new SettingsViewModel(context);
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
+            await pluginManager.UpdateManifest();
             lastUpdateTime = DateTime.Now;
         }
 
@@ -44,7 +46,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return contextMenu.LoadContextMenus(selectedResult);
         }
 
-        public List<Result> Query(Query query)
+        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
             var search = query.Search.ToLower();
 
@@ -53,11 +55,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if ((DateTime.Now - lastUpdateTime).TotalHours > 12) // 12 hours
             {
-                Task.Run(async () =>
-                {
-                    await pluginManager.UpdateManifest();
-                    lastUpdateTime = DateTime.Now;
-                });
+                await pluginManager.UpdateManifest();
+                lastUpdateTime = DateTime.Now;
             }
 
             return search switch
@@ -88,9 +87,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Context.API.GetTranslation("plugin_pluginsmanager_plugin_description");
         }
 
-        public void ReloadData()
+        public async Task ReloadDataAsync()
         {
-            Task.Run(() => pluginManager.UpdateManifest()).Wait();
+            await pluginManager.UpdateManifest();
             lastUpdateTime = DateTime.Now;
         }
     }
