@@ -6,6 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:Flow.Launcher.Converters"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="Flow Launcher"
         Topmost="True"
@@ -92,7 +93,8 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <Image Source="{Binding Image, IsAsync=True}" Width="48"  HorizontalAlignment="Right" />
+                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="48" Height="48"
+                                     Background="Transparent"/>
                 </Grid>
                 <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay}" 

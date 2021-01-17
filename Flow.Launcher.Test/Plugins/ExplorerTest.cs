@@ -7,6 +7,8 @@ using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Test.Plugins
 {
@@ -17,15 +19,15 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
-        private List<Result> MethodWindowsIndexSearchReturnsZeroResults(Query dummyQuery, string dummyString)
+        private async Task<List<Result>> MethodWindowsIndexSearchReturnsZeroResultsAsync(Query dummyQuery, string dummyString, CancellationToken dummyToken)
         {
             return new List<Result>();
         }
 
         private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString)
         {
-            return new List<Result> 
-            { 
+            return new List<Result>
+            {
                 new Result
                 {
                     Title="Result 1"
@@ -64,10 +66,10 @@ namespace Flow.Launcher.Test.Plugins
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
-            
+
             //When            
             var queryString = queryConstructor.QueryForTopLevelDirectorySearch(folderPath);
-            
+
             // Then
             Assert.IsTrue(queryString == expectedString,
                 $"Expected string: {expectedString}{Environment.NewLine} " +
@@ -112,7 +114,7 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [TestCase("scope='file:'")]
-        public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString) 
+        public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -130,7 +132,7 @@ namespace Flow.Launcher.Test.Plugins
             "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
                                         "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:'")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
-            string userSearchString, string expectedString) 
+            string userSearchString, string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -145,18 +147,19 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [TestCase]
-        public void GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldContinueDirectoryInfoClassSearch() 
+        public async Task GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldContinueDirectoryInfoClassSearch()
         {
             // Given
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
-            
+
             // When
-            var results = searchManager.TopLevelDirectorySearchBehaviour(
-                                            MethodWindowsIndexSearchReturnsZeroResults, 
-                                            MethodDirectoryInfoClassSearchReturnsTwoResults, 
-                                            false, 
+            var results = await searchManager.TopLevelDirectorySearchBehaviourAsync(
+                                            MethodWindowsIndexSearchReturnsZeroResultsAsync,
+                                            MethodDirectoryInfoClassSearchReturnsTwoResults,
+                                            false,
                                             new Query(),
-                                            "string not used");
+                                            "string not used",
+                                            default);
 
             // Then
             Assert.IsTrue(results.Count == 2,
@@ -165,18 +168,19 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [TestCase]
-        public void GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
+        public async Task GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
         {
             // Given
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var results = searchManager.TopLevelDirectorySearchBehaviour(
-                                            MethodWindowsIndexSearchReturnsZeroResults,
+            var results = await searchManager.TopLevelDirectorySearchBehaviourAsync(
+                                            MethodWindowsIndexSearchReturnsZeroResultsAsync,
                                             MethodDirectoryInfoClassSearchReturnsTwoResults,
                                             true,
                                             new Query(),
-                                            "string not used");
+                                            "string not used",
+                                            default);
 
             // Then
             Assert.IsTrue(results.Count == 0,
@@ -223,7 +227,7 @@ namespace Flow.Launcher.Test.Plugins
             var query = new Query { ActionKeyword = "doc:", Search = "search term" };
 
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
-            
+
             // When
             var result = searchManager.IsFileContentSearch(query.ActionKeyword);
 
@@ -250,7 +254,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual check result is {result} {Environment.NewLine}");
 
         }
-        
+
         [TestCase(@"C:\SomeFolder\SomeApp", true, @"C:\SomeFolder\")]
         [TestCase(@"C:\SomeFolder\SomeApp\SomeFile", true, @"C:\SomeFolder\SomeApp\")]
         [TestCase(@"C:\NonExistentFolder\SomeApp", false, "")]
@@ -294,7 +298,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("c:\\SomeFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' " +
                                                         "OR CONTAINS(System.FileName,'\"SomeName*\"',1033)) AND " +
                                                         "scope='file:c:\\SomeFolder'")]
-        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString(string path, string expectedString) 
+        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString(string path, string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -308,7 +312,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
-        [TestCase("c:\\somefolder\\>somefile","*somefile*")]
+        [TestCase("c:\\somefolder\\>somefile", "*somefile*")]
         [TestCase("c:\\somefolder\\somefile", "somefile*")]
         [TestCase("c:\\somefolder\\", "*")]
         public void GivenDirectoryInfoSearch_WhenSearchPatternHotKeyIsSearchAll_ThenSearchCriteriaShouldUseCriteriaString(string path, string expectedString)

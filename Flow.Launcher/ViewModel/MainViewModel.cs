@@ -21,6 +21,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -85,7 +86,7 @@ namespace Flow.Launcher.ViewModel
         {
             foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
             {
-                var plugin = (IResultUpdated)pair.Plugin;
+                var plugin = (IResultUpdated) pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
                     Task.Run(() =>
@@ -112,25 +113,13 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
-            SelectNextItemCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectNextResult();
-            });
+            SelectNextItemCommand = new RelayCommand(_ => { SelectedResults.SelectNextResult(); });
 
-            SelectPrevItemCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectPrevResult();
-            });
+            SelectPrevItemCommand = new RelayCommand(_ => { SelectedResults.SelectPrevResult(); });
 
-            SelectNextPageCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectNextPage();
-            });
+            SelectNextPageCommand = new RelayCommand(_ => { SelectedResults.SelectNextPage(); });
 
-            SelectPrevPageCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectPrevPage();
-            });
+            SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
@@ -208,6 +197,7 @@ namespace Flow.Launcher.ViewModel
         public ResultsViewModel History { get; private set; }
 
         private string _queryText;
+
         public string QueryText
         {
             get { return _queryText; }
@@ -228,10 +218,12 @@ namespace Flow.Launcher.ViewModel
             QueryTextCursorMovedToEnd = true;
             QueryText = queryText;
         }
+
         public bool LastQuerySelected { get; set; }
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
+
         private ResultsViewModel SelectedResults
         {
             get { return _selectedResults; }
@@ -263,6 +255,7 @@ namespace Flow.Launcher.ViewModel
                         QueryText = string.Empty;
                     }
                 }
+
                 _selectedResults.Visbility = Visibility.Visible;
             }
         }
@@ -284,7 +277,7 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers { get; private set; }
 
-        public ImageSource Image => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
+        public string Image => Constant.QueryTextBoxIconImagePath;
 
         #endregion
 
@@ -323,7 +316,7 @@ namespace Flow.Launcher.ViewModel
                     var filtered = results.Where
                     (
                         r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet()
-                            || StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
+                             || StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
                     ).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
@@ -350,7 +343,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query { RawQuery = h.Query },
+                    OriginQuery = new Query {RawQuery = h.Query},
                     Action = _ =>
                     {
                         SelectedResults = Results;
@@ -396,7 +389,8 @@ namespace Flow.Launcher.ViewModel
 
                     _lastQuery = query;
                     Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                    { // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                         if (currentUpdateSource == _updateSource && _isQueryRunning)
                         {
                             ProgressBarVisibility = Visibility.Visible;
@@ -404,35 +398,56 @@ namespace Flow.Launcher.ViewModel
                     }, currentCancellationToken);
 
                     var plugins = PluginManager.ValidPluginsForQuery(query);
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
                         // so looping will stop once it was cancelled
-                        var parallelOptions = new ParallelOptions { CancellationToken = currentCancellationToken };
+
+                        Task[] tasks = new Task[plugins.Count];
                         try
                         {
-                            Parallel.ForEach(plugins, parallelOptions, plugin =>
+                            for (var i = 0; i < plugins.Count; i++)
                             {
-                                if (!plugin.Metadata.Disabled)
+                                if (!plugins[i].Metadata.Disabled)
                                 {
-                                    var results = PluginManager.QueryForPlugin(plugin, query);
-                                    UpdateResultView(results, plugin.Metadata, query);
+                                    tasks[i] = QueryTask(plugins[i], query, currentCancellationToken);
                                 }
-                            });
+                                else
+                                {
+                                    tasks[i] = Task.CompletedTask; // Avoid Null
+                                }
+                            }
+
+                            // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                            await Task.WhenAll(tasks);
                         }
                         catch (OperationCanceledException)
                         {
                             // nothing to do here
                         }
-                        
 
                         // this should happen once after all queries are done so progress bar should continue
                         // until the end of all querying
                         _isQueryRunning = false;
-                        if (currentUpdateSource == _updateSource)
-                        { // update to hidden if this is still the current query
+                        if (!currentCancellationToken.IsCancellationRequested)
+                        {
+                            // update to hidden if this is still the current query
                             ProgressBarVisibility = Visibility.Hidden;
                         }
-                    }, currentCancellationToken);
+
+                        // Local function
+                        async Task QueryTask(PluginPair plugin, Query query, CancellationToken token)
+                        {
+                            // Since it is wrapped within a Task.Run, the synchronous context is null
+                            // Task.Yield will force it to run in ThreadPool
+                            await Task.Yield();
+
+                            var results = await PluginManager.QueryForPlugin(plugin, query, token);
+                            if (!currentCancellationToken.IsCancellationRequested)
+                                UpdateResultView(results, plugin.Metadata, query);
+                        }
+                    }, currentCancellationToken).ContinueWith(
+                        t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
+                        TaskContinuationOptions.OnlyOnFaulted);
                 }
             }
             else
@@ -499,6 +514,7 @@ namespace Flow.Launcher.ViewModel
                     }
                 };
             }
+
             return menu;
         }
 
@@ -544,6 +560,7 @@ namespace Flow.Launcher.ViewModel
             var selected = SelectedResults == History;
             return selected;
         }
+
         #region Hotkey
 
         private void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
@@ -562,7 +579,8 @@ namespace Flow.Launcher.ViewModel
             catch (Exception)
             {
                 string errorMsg =
-                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"),
+                        hotkeyStr);
                 MessageBox.Show(errorMsg);
             }
         }
@@ -612,7 +630,6 @@ namespace Flow.Launcher.ViewModel
         {
             if (!ShouldIgnoreHotkeys())
             {
-
                 if (_settings.LastQueryMode == LastQueryMode.Empty)
                 {
                     ChangeQueryText(string.Empty);
@@ -676,7 +693,8 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5;
+                    var priorityScore = metadata.Priority * 150;
+                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
                 }
             }
 
