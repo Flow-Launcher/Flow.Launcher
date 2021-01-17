@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -75,11 +76,11 @@ namespace Flow.Launcher.Infrastructure.Http
             };
         }
 
-        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
         {
             try
             {
-                using var response = await client.GetAsync(url);
+                using var response = await client.GetAsync(url, token);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
@@ -102,40 +103,32 @@ namespace Flow.Launcher.Infrastructure.Http
         /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
         /// </summary>
         /// <param name="url"></param>
-        /// <returns></returns>
-        public static Task<string> GetAsync([NotNull] string url)
+        /// <returns>The Http result as string. Null if cancellation requested</returns>
+        public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            return GetAsync(new Uri(url.Replace("#", "%23")));
+            return GetAsync(new Uri(url.Replace("#", "%23")), token);
         }
 
         /// <summary>
-        /// Asynchrously get the result as string from url.
-        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
+        /// 
         /// </summary>
         /// <param name="url"></param>
-        /// <returns></returns>
-        public static async Task<string> GetAsync([NotNull] Uri url)
+        /// <param name="token"></param>
+        /// <returns>The Http result as string. Null if cancellation requested</returns>
+        public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            try
+            using var response = await client.GetAsync(url, token);
+            var content = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                using var response = await client.GetAsync(url);
-                var content = await response.Content.ReadAsStringAsync();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    return content;
-                }
-                else
-                {
-                    throw new HttpRequestException(
-                        $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
-                }
+                return content;
             }
-            catch (HttpRequestException e)
+            else
             {
-                Log.Exception("Infrastructure.Http", "Http Request Error", e, "GetAsync");
-                throw;
+                throw new HttpRequestException(
+                    $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
             }
         }
 
@@ -144,19 +137,11 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static async Task<Stream> GetStreamAsync([NotNull] string url)
+        public static async Task<Stream> GetStreamAsync([NotNull] string url, CancellationToken token = default)
         {
-            try
-            {
-                Log.Debug($"|Http.Get|Url <{url}>");
-                var response = await client.GetAsync(url);
-                return await response.Content.ReadAsStreamAsync();
-            }
-            catch (HttpRequestException e)
-            {
-                Log.Exception("Infrastructure.Http", "Http Request Error", e, "GetStreamAsync");
-                throw;
-            }
+            Log.Debug($"|Http.Get|Url <{url}>");
+            var response = await client.GetAsync(url, token);
+            return await response.Content.ReadAsStreamAsync();
         }
     }
 }
