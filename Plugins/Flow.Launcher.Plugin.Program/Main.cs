@@ -97,22 +97,31 @@ namespace Flow.Launcher.Plugin.Program
                 Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
             });
 
+            bool indexedWinApps = false;
+            bool indexedUWPApps = false;
 
             var a = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_win32s.Any())
+                {
                     Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+                    indexedWinApps = true;
+                }
             });
 
             var b = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_uwps.Any())
+                {
                     Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
+                    indexedUWPApps = true;
+                }
             });
 
             await Task.WhenAll(a, b);
 
-            _settings.LastIndexTime = DateTime.Today;
+            if (indexedWinApps && indexedUWPApps)
+                _settings.LastIndexTime = DateTime.Today;
         }
 
         public static void IndexWin32Programs()
