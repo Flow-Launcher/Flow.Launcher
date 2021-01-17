@@ -37,8 +37,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            await pluginManager.UpdateManifest();
-            lastUpdateTime = DateTime.Now;
+            var updateManifestTask = pluginManager.UpdateManifest();
+            if (await Task.WhenAny(updateManifestTask, Task.Delay(500)) == updateManifestTask)
+            {
+                lastUpdateTime = DateTime.Now;
+            }
+            else
+            {
+                context.API.ShowMsg("Plugin Manifest Download Fail.",
+                    @"Please check internet transmission with Github.com.
+                             You may not be able to Install and Update Plugin.", pluginManager.icoPath);
+            }
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -61,7 +70,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             return search switch
             {
-                var s when s.StartsWith(Settings.HotKeyInstall) => pluginManager.RequestInstallOrUpdate(s),
+                var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s),
                 var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
                 var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
