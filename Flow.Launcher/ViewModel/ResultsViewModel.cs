@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -137,13 +134,11 @@ namespace Flow.Launcher.ViewModel
                 Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
         }
 
-
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
         public void AddResults(List<Result> newRawResults, string resultId)
         {
-
             lock (_collectionLock)
             {
                 var newResults = NewResults(newRawResults, resultId);
@@ -193,8 +188,6 @@ namespace Flow.Launcher.ViewModel
                 Results.Update(newResults, token);
                 if (Results.Any())
                     SelectedItem = Results[0];
-
-
             }
 
             switch (Visbility)
@@ -212,7 +205,6 @@ namespace Flow.Launcher.ViewModel
 
         }
 
-
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
             if (newRawResults.Count == 0)
@@ -221,8 +213,6 @@ namespace Flow.Launcher.ViewModel
             var results = Results as IEnumerable<ResultViewModel>;
 
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
-
-
 
             return results.Where(r => r.Result.PluginID != resultId)
                 .Concat(results.Intersect(newResults).Union(newResults))
@@ -244,7 +234,6 @@ namespace Flow.Launcher.ViewModel
                           .ToList();
         }
         #endregion
-
 
         #region FormattedText Dependency Property
         public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
@@ -279,7 +268,6 @@ namespace Flow.Launcher.ViewModel
 
         public class ResultCollection : ObservableCollection<ResultViewModel>
         {
-
             private long editTime = 0;
 
             private bool _suppressNotifying = false;
@@ -322,9 +310,6 @@ namespace Flow.Launcher.ViewModel
             {
                 ClearItems();
             }
-
-
-
 
             /// <summary>
             /// Update the results collection with new results, try to keep identical results

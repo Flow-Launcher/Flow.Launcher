@@ -39,7 +39,6 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var usage = LoadStorageToConcurrentDictionary();
 
-
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));

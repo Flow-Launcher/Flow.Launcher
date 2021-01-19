@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Microsoft.FSharp.Core;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -127,7 +124,6 @@ namespace Flow.Launcher.ViewModel
                 return false;
             }
         }
-
 
         public override int GetHashCode()
         {
