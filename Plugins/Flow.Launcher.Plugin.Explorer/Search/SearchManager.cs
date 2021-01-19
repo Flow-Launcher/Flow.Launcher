@@ -81,12 +81,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return null;
 
             results.AddRange(await TopLevelDirectorySearchBehaviourAsync(WindowsIndexTopLevelFolderSearchAsync,
-                                                                DirectoryInfoClassSearch,
-                                                                useIndexSearch,
-                                                                query,
-                                                                locationPath,
-                                                                token).ConfigureAwait(false));
-
+                DirectoryInfoClassSearch,
+                useIndexSearch,
+                query,
+                locationPath,
+                token).ConfigureAwait(false));
+            
             return results;
         }
 
@@ -109,23 +109,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return actionKeyword == settings.FileContentSearchActionKeyword;
         }
 
-        private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
+        private List<Result> DirectoryInfoClassSearch(Query query, string querySearch, CancellationToken token)
         {
             var directoryInfoSearch = new DirectoryInfoSearch(context);
 
-            return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch);
+            return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch, token);
         }
 
         public async Task<List<Result>> TopLevelDirectorySearchBehaviourAsync(
             Func<Query, string, CancellationToken, Task<List<Result>>> windowsIndexSearch,
-            Func<Query, string, List<Result>> directoryInfoClassSearch,
+            Func<Query, string, CancellationToken, List<Result>> directoryInfoClassSearch,
             bool useIndexSearch,
             Query query,
             string querySearchString,
             CancellationToken token)
         {
             if (!useIndexSearch)
-                return directoryInfoClassSearch(query, querySearchString);
+                return directoryInfoClassSearch(query, querySearchString, token);
 
             return await windowsIndexSearch(query, querySearchString, token);
         }
