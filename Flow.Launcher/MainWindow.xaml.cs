@@ -52,7 +52,7 @@ namespace Flow.Launcher
 
         private void OnInitialized(object sender, EventArgs e)
         {
-            
+
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
@@ -85,14 +85,27 @@ namespace Flow.Launcher
                             _viewModel.LastQuerySelected = true;
                         }
 
-                        ProgressBar.BeginStoryboard(_progressBarStoryboard);
                     }
                     else
                     {
-                        _progressBarStoryboard.Stop();
                     }
                 }
-                
+                else if (e.PropertyName == nameof(MainViewModel.ProgressBarVisibility))
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (ProgressBar.Visibility == Visibility.Hidden)
+                        {
+                            _progressBarStoryboard.Pause();
+                        }
+                        else
+                        {
+                            _progressBarStoryboard.Resume();
+                        }
+                    }, System.Windows.Threading.DispatcherPriority.Render);
+
+                }
+
             };
             _settings.PropertyChanged += (o, e) =>
             {
