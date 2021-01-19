@@ -24,7 +24,7 @@ namespace Flow.Launcher.Test.Plugins
             return new List<Result>();
         }
 
-        private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString)
+        private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString, CancellationToken token)
         {
             return new List<Result>
             {
