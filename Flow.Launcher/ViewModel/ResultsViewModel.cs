@@ -139,39 +139,9 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(List<Result> newRawResults, string resultId)
         {
-            lock (_collectionLock)
-            {
-                var newResults = NewResults(newRawResults, resultId);
+            var newResults = NewResults(newRawResults, resultId);
 
-                // https://social.msdn.microsoft.com/Forums/vstudio/en-US/5ff71969-f183-4744-909d-50f7cd414954/binding-a-tabcontrols-selectedindex-not-working?forum=wpf
-                // fix selected index flow
-                var updateTask = Task.Run(() =>
-                {
-                    // update UI in one run, so it can avoid UI flickering
-
-                    Results.Update(newResults);
-                    if (Results.Any())
-                        SelectedItem = Results[0];
-                });
-                if (!updateTask.Wait(300))
-                {
-                    updateTask.Dispose();
-                    throw new TimeoutException("Update result use too much time.");
-                }
-
-            }
-
-            if (Visbility != Visibility.Visible && Results.Count > 0)
-            {
-                Margin = new Thickness { Top = 8 };
-                SelectedIndex = 0;
-                Visbility = Visibility.Visible;
-            }
-            else
-            {
-                Margin = new Thickness { Top = 0 };
-                Visbility = Visibility.Collapsed;
-            }
+            UpdateResults(newResults);
         }
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
@@ -181,10 +151,15 @@ namespace Flow.Launcher.ViewModel
             var newResults = NewResults(resultsForUpdates);
             if (token.IsCancellationRequested)
                 return;
+            UpdateResults(newResults, token);
+
+        }
+
+        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default)
+        {
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
-
                 Results.Update(newResults, token);
                 if (Results.Any())
                     SelectedItem = Results[0];
@@ -202,7 +177,6 @@ namespace Flow.Launcher.ViewModel
                     Visbility = Visibility.Collapsed;
                     break;
             }
-
         }
 
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
@@ -212,10 +186,10 @@ namespace Flow.Launcher.ViewModel
 
             var results = Results as IEnumerable<ResultViewModel>;
 
-            var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings)).ToList();
+            var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings));
 
             return results.Where(r => r.Result.PluginID != resultId)
-                .Concat(results.Intersect(newResults).Union(newResults))
+                .Concat(newResults)
                 .OrderByDescending(r => r.Result.Score)
                 .ToList();
         }
@@ -228,8 +202,7 @@ namespace Flow.Launcher.ViewModel
             var results = Results as IEnumerable<ResultViewModel>;
 
             return results.Where(r => r != null && !resultsForUpdates.Any(u => u.Metadata.ID == r.Result.PluginID))
-                          .Concat(
-                               resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
+                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
                           .ToList();
         }
