@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                     RecurseSubdirectories = true
                 }, query, search, criteria, token);
 
-            return DirectorySearch(null, query, search, criteria, token); // null will be passed as default
+            return DirectorySearch(new EnumerationOptions(), query, search, criteria, token); // null will be passed as default
         }
 
         public string ConstructSearchCriteria(string search)

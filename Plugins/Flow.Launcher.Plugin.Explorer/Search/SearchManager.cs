@@ -80,12 +80,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (token.IsCancellationRequested)
                 return null;
 
-            results.AddRange(await TopLevelDirectorySearchBehaviourAsync(WindowsIndexTopLevelFolderSearchAsync,
+            var directoryResult = await TopLevelDirectorySearchBehaviourAsync(WindowsIndexTopLevelFolderSearchAsync,
                 DirectoryInfoClassSearch,
                 useIndexSearch,
                 query,
                 locationPath,
-                token).ConfigureAwait(false));
+                token).ConfigureAwait(false);
+
+            if (token.IsCancellationRequested)
+                return null;
+
+            results.AddRange(directoryResult);
             
             return results;
         }
