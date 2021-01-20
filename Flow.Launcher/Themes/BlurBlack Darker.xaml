@@ -8,16 +8,18 @@
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
 
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
-        <Setter Property="Foreground" Value="#FF000000" />
+        <Setter Property="Foreground" Value="#FFFFFFFF" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
 
-    <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}" />
+    <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="LightGray" />
+    </Style>
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.5"/>
+                <SolidColorBrush Color="Black" Opacity="0.6"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -26,7 +28,7 @@
         <Setter Property="Width" Value="750" /> <!-- This is used to set the blur width only -->
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.5"/>
+                <SolidColorBrush Color="Black" Opacity="0.6"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -37,10 +39,10 @@
     <!-- Item Style -->
     <Style x:Key="ItemTitleStyle"  BasedOn="{StaticResource BaseItemTitleStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="0, -10"/>
-        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="Foreground" Value="#FFFFFFFF"/>
     </Style>
     <Style x:Key="ItemSubTitleStyle" BasedOn="{StaticResource BaseItemSubTitleStyle}" TargetType="{x:Type TextBlock}" >
-        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="Foreground" Value="#FFFFFFFF"/>
     </Style>
     <Style x:Key="ItemTitleSelectedStyle" BasedOn="{StaticResource BaseItemTitleSelectedStyle}"  TargetType="{x:Type TextBlock}" >
         <Setter Property="Margin" Value="0, -10"/>
