@@ -239,49 +239,50 @@ namespace Flow.Launcher.ViewModel
         }
         #endregion
 
-        public class ResultCollection : ObservableCollection<ResultViewModel>
+        public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
         {
             private long editTime = 0;
 
-            private bool _suppressNotifying = false;
-
             private CancellationToken _token;
 
-            protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+            public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+            protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
-                if (!_suppressNotifying)
-                {
-                    base.OnCollectionChanged(e);
-                }
+                CollectionChanged(this, e);
             }
 
-            public void BulkAddRange(IEnumerable<ResultViewModel> resultViews)
+            public void BulkAddAll(List<ResultViewModel> resultViews)
             {
-                // suppress notifying before adding all element
-                _suppressNotifying = true;
-                foreach (var item in resultViews)
-                {
-                    Add(item);
-                }
-                _suppressNotifying = false;
-                // manually update event
-                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
+                AddRange(resultViews);
+
+                // can return because the list will be cleared next time updated, which include a reset event
                 if (_token.IsCancellationRequested)
                     return;
+
+                // manually update event
+                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
-            public void AddRange(IEnumerable<ResultViewModel> Items)
+            private void AddAll(List<ResultViewModel> Items)
             {
                 foreach (var item in Items)
                 {
                     if (_token.IsCancellationRequested)
                         return;
                     Add(item);
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
                 }
             }
-            public void RemoveAll()
+            public void RemoveAll(int Capacity = 512)
             {
-                ClearItems();
+                Clear();
+                if (this.Capacity > 8000)
+                {
+                    this.Capacity = Capacity;
+
+                }
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
 
             /// <summary>
@@ -296,15 +297,19 @@ namespace Flow.Launcher.ViewModel
 
                 if (editTime < 10 || newItems.Count < 30)
                 {
-                    if (Count != 0) ClearItems();
-                    AddRange(newItems);
+                    if (Count != 0) RemoveAll(newItems.Count);
+                    AddAll(newItems);
                     editTime++;
                     return;
                 }
                 else
                 {
                     Clear();
-                    BulkAddRange(newItems);
+                    BulkAddAll(newItems);
+                    if (Capacity > 8000 && newItems.Count < 3000)
+                    {
+                        Capacity = newItems.Count;
+                    }
                     editTime++;
                 }
             }
