@@ -41,7 +41,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             _ = updateManifestTask.ContinueWith(t =>
             {
                 if (t.IsCompletedSuccessfully)
+                {
                     lastUpdateTime = DateTime.Now;
+                }
                 else
                 {
                     context.API.ShowMsg("Plugin Manifest Download Fail.",
