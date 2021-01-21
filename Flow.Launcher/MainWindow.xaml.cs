@@ -94,7 +94,7 @@ namespace Flow.Launcher
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        if (ProgressBar.Visibility == Visibility.Hidden)
+                        if (_viewModel.ProgressBarVisibility == Visibility.Hidden)
                         {
                             _progressBarStoryboard.Pause();
                         }
