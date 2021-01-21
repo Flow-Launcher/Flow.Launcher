@@ -30,7 +30,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new PluginsManagerSettings(viewModel);
         }
 
-        public async Task InitAsync(PluginInitContext context)
+        public Task InitAsync(PluginInitContext context)
         {
             Context = context;
             viewModel = new SettingsViewModel(context);
@@ -38,16 +38,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
             var updateManifestTask = pluginManager.UpdateManifest();
-            if (await Task.WhenAny(updateManifestTask, Task.Delay(500)) == updateManifestTask)
+            _ = updateManifestTask.ContinueWith(t =>
             {
-                lastUpdateTime = DateTime.Now;
-            }
-            else
-            {
-                context.API.ShowMsg("Plugin Manifest Download Fail.",
-                    @"Please check internet transmission with Github.com.
-                             You may not be able to Install and Update Plugin.", pluginManager.icoPath);
-            }
+                if (t.IsCompletedSuccessfully)
+                {
+                    lastUpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    context.API.ShowMsg("Plugin Manifest Download Fail.",
+                    "Please check if you can connect to github.com. " +
+                    "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
+                }
+            });
+
+            return Task.CompletedTask;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
