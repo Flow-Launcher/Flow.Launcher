@@ -247,6 +247,7 @@ namespace Flow.Launcher.ViewModel
 
             public event NotifyCollectionChangedEventHandler CollectionChanged;
 
+
             protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
                 CollectionChanged?.Invoke(this, e);
@@ -277,7 +278,7 @@ namespace Flow.Launcher.ViewModel
             public void RemoveAll(int Capacity = 512)
             {
                 Clear();
-                if (this.Capacity > 8000)
+                if (this.Capacity > 8000 && Capacity < this.Capacity)
                 {
                     this.Capacity = Capacity;
 
