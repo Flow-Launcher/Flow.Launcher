@@ -249,7 +249,7 @@ namespace Flow.Launcher.ViewModel
 
             protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
-                CollectionChanged(this, e);
+                CollectionChanged?.Invoke(this, e);
             }
 
             public void BulkAddAll(List<ResultViewModel> resultViews)
