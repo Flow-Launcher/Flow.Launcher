@@ -77,8 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             results.Add(resultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
 
-            if (token.IsCancellationRequested)
-                return null;
+            token.ThrowIfCancellationRequested();
 
             var directoryResult = await TopLevelDirectorySearchBehaviourAsync(WindowsIndexTopLevelFolderSearchAsync,
                 DirectoryInfoClassSearch,
@@ -87,11 +86,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 locationPath,
                 token).ConfigureAwait(false);
 
-            if (token.IsCancellationRequested)
-                return null;
+            token.ThrowIfCancellationRequested();
 
             results.AddRange(directoryResult);
-            
+
             return results;
         }
 

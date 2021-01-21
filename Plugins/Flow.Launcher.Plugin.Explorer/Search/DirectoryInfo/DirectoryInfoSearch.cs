@@ -76,8 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                         fileList.Add(resultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
                     }
 
-                    if (token.IsCancellationRequested)
-                        return null;
+                    token.ThrowIfCancellationRequested();
                 }
             }
             catch (Exception e)
