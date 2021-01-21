@@ -267,12 +267,13 @@ namespace Flow.Launcher.ViewModel
             }
             private void AddAll(List<ResultViewModel> Items)
             {
-                foreach (var item in Items)
+                for (int i = 0; i < Items.Count; i++)
                 {
+                    var item = Items[i];
                     if (_token.IsCancellationRequested)
                         return;
                     Add(item);
-                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
                 }
             }
             public void RemoveAll(int Capacity = 512)
