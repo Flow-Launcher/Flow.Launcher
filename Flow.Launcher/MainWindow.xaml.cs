@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
@@ -85,9 +86,14 @@ namespace Flow.Launcher
                             _viewModel.LastQuerySelected = true;
                         }
 
+                        if (_viewModel.ProgressBarVisibility == Visibility.Visible)
+                        {
+                            _progressBarStoryboard.Resume();
+                        }
                     }
                     else
                     {
+                        _progressBarStoryboard.Pause();
                     }
                 }
                 else if (e.PropertyName == nameof(MainViewModel.ProgressBarVisibility))
@@ -98,7 +104,7 @@ namespace Flow.Launcher
                         {
                             _progressBarStoryboard.Pause();
                         }
-                        else
+                        else if (Visibility == Visibility.Visible)
                         {
                             _progressBarStoryboard.Resume();
                         }
