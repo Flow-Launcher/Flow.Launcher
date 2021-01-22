@@ -148,7 +148,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// This checks whether a given string is a directory path or network location string. 
         /// It does not check if location actually exists.
         ///</summary>
-        public static bool IsLocationPathString(string querySearchString)
+        public static bool IsLocationPathString(this string querySearchString)
         {
             if (string.IsNullOrEmpty(querySearchString) || querySearchString.Length < 3)
                 return false;
