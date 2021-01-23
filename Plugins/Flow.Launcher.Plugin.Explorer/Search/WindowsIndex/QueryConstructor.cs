@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             // Get the ISearchQueryHelper which will help us to translate AQS --> SQL necessary to query the indexer
             var queryHelper = catalogManager.GetQueryHelper();
-
+            
             return queryHelper;
         }
 
@@ -81,11 +81,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var previousLevelDirectory = path.Substring(0, indexOfSeparator);
 
             if (string.IsNullOrEmpty(itemName))
-                return searchDepth + $"{previousLevelDirectory}'";
+                return $"{searchDepth}{previousLevelDirectory}'{QueryOrderByFileNameRestriction}";
 
-            return $"(System.FileName LIKE '{itemName}%' " +
-                    $"OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND " +
-                    searchDepth + $"{previousLevelDirectory}'";
+            return $"(System.FileName LIKE '{itemName}%' OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND {searchDepth}{previousLevelDirectory}' {QueryOrderByFileNameRestriction}";
         }
 
         ///<summary>
@@ -98,7 +96,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             if (path.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > path.LastIndexOf(Constants.DirectorySeperator))
                 return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
 
-            return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path);
+            return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path) + QueryOrderByFileNameRestriction;
         }
 
         ///<summary>
@@ -107,16 +105,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string QueryForAllFilesAndFolders(string userSearchString)
         {
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+            return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch
+                + QueryOrderByFileNameRestriction;
         }
 
         ///<summary>
         /// Set the required WHERE clause restriction to search for all files and folders.
         ///</summary>
-        public string QueryWhereRestrictionsForAllFilesAndFoldersSearch()
-        {
-            return $"scope='file:'";
-        }
+        public const string QueryWhereRestrictionsForAllFilesAndFoldersSearch = "scope='file:'";
+
+        public const string QueryOrderByFileNameRestriction = " ORDER BY System.FileName";
+
 
         ///<summary>
         /// Search will be performed on all indexed file contents for the specified search keywords.
@@ -125,7 +124,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
-            return query + QueryWhereRestrictionsForFileContentSearch(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+            return query + QueryWhereRestrictionsForFileContentSearch(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch
+                + QueryOrderByFileNameRestriction;
         }
 
         ///<summary>
