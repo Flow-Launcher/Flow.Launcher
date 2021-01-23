@@ -116,11 +116,8 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("scope='file:'")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString)
         {
-            // Given
-            var queryConstructor = new QueryConstructor(new Settings());
-
             //When
-            var resultString = queryConstructor.QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+            var resultString = QueryConstructor.QueryWhereRestrictionsForAllFilesAndFoldersSearch;
 
             // Then
             Assert.IsTrue(resultString == expectedString,
