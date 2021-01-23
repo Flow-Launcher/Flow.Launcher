@@ -5,7 +5,7 @@
         Icon="Images\app.png"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="Custom Plugin Hotkey" Height="200" Width="674.766">
+        Title="{DynamicResource customeQueryHotkeyTitle}" Height="200" Width="674.766">
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close"/>
     </Window.InputBindings>
@@ -19,22 +19,23 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="102.124" />
+            <ColumnDefinition Width="47.876"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource hotkey}" />
-        <flowlauncher:HotkeyControl x:Name="ctlHotkey" Margin="10,0,10,0" Grid.Column="1" VerticalAlignment="Center" Height="32" />
+        <TextBlock Margin="92,0,0,0" FontSize="14" Grid.Column="0" VerticalAlignment="Center"
+                   HorizontalAlignment="Left" Text="{DynamicResource hotkey}" Grid.ColumnSpan="2" />
+        <flowlauncher:HotkeyControl x:Name="ctlHotkey" Margin="10,0,10,0" Grid.Column="2" VerticalAlignment="Center" Height="32" />
 
-        <TextBlock Margin="10" FontSize="14" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource actionKeyword}" />
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.Column="1">
+        <TextBlock Margin="38,0,0,0" FontSize="14" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                   HorizontalAlignment="Left" Text="{DynamicResource actionKeyword}" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.Column="2">
             <TextBox x:Name="tbAction" Margin="10" Width="400" VerticalAlignment="Center" HorizontalAlignment="Left" />
             <Button x:Name="btnTestActionKeyword" Padding="10 5 10 5" Height="30" Click="BtnTestActionKeyword_OnClick"
                     Content="{DynamicResource preview}" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" Margin="325,61,0,0" Grid.RowSpan="2">
             <Button x:Name="btnCancel" Click="BtnCancel_OnClick" Margin="10 0 10 0" Width="80" Height="32"
                     Content="{DynamicResource cancel}" />
             <Button x:Name="btnAdd" Margin="10 0 10 0" Width="80" Height="32" Click="btnAdd_OnClick">

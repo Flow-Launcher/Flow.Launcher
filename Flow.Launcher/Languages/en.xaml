@@ -17,6 +17,7 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Settings</system:String>
     <system:String x:Key="general">General</system:String>
+    <system:String x:Key="portableMode">Portable Mode</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher on system startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
@@ -39,6 +40,7 @@
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
+    <system:String x:Key="enable">Enable</system:String>
     <system:String x:Key="disable">Disable</system:String>
     <system:String x:Key="actionKeywords">Action keyword:</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
@@ -122,6 +124,7 @@
     <system:String x:Key="actionkeyword_tips">Use * if you don't want to specify an action keyword</system:String>
 
     <!--Custom Query Hotkey Dialog-->
+    <system:String x:Key="customeQueryHotkeyTitle">Custom Plugin Hotkey</system:String>
     <system:String x:Key="preview">Preview</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
