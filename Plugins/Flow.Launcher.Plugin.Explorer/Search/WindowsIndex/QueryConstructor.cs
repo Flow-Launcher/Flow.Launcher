@@ -81,9 +81,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var previousLevelDirectory = path.Substring(0, indexOfSeparator);
 
             if (string.IsNullOrEmpty(itemName))
-                return $"{searchDepth}{previousLevelDirectory}'{QueryOrderByFileNameRestriction}";
+                return $"{searchDepth}{previousLevelDirectory}'";
 
-            return $"(System.FileName LIKE '{itemName}%' OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND {searchDepth}{previousLevelDirectory}' {QueryOrderByFileNameRestriction}";
+            return $"(System.FileName LIKE '{itemName}%' OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND {searchDepth}{previousLevelDirectory}'";
         }
 
         ///<summary>
@@ -94,7 +94,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
             if (path.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > path.LastIndexOf(Constants.DirectorySeperator))
-                return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
+                return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path) + QueryOrderByFileNameRestriction;
 
             return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path) + QueryOrderByFileNameRestriction;
         }
