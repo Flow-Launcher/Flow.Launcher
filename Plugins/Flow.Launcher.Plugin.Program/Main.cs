@@ -41,6 +41,9 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+            if (IsStartupIndexProgramsRequired)
+                _ = IndexPrograms();
+
             Win32[] win32;
             UWP.Application[] uwps;
 
