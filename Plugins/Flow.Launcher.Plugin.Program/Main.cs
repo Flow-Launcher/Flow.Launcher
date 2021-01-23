@@ -150,7 +150,7 @@ namespace Flow.Launcher.Plugin.Program
 
             var t2 = Task.Run(IndexUwpPrograms);
 
-            await Task.WhenAll(t1, t2);
+            await Task.WhenAll(t1, t2).ConfigureAwait(false);
 
             _settings.LastIndexTime = DateTime.Today;
         }
