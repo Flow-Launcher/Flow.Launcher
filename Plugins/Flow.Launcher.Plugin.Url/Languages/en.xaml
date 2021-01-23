@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <system:String x:Key="flowlauncher_plugin_url_open_search_in">Open search in:</system:String>
+    <system:String x:Key="flowlauncher_plugin_new_window">New Window</system:String>
+    <system:String x:Key="flowlauncher_plugin_new_tab">New Tab</system:String>
+    
     <system:String x:Key="flowlauncher_plugin_url_open_url">Open url:{0}</system:String>
     <system:String x:Key="flowlauncher_plugin_url_canot_open_url">Can't open url:{0}</system:String>
 
