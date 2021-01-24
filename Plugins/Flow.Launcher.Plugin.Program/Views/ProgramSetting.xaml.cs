@@ -51,7 +51,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void ViewRefresh()
         {
-            if(programSourceView.Items.Count == 0 
+            if (programSourceView.Items.Count == 0
                 && btnProgramSourceStatus.Visibility == Visibility.Visible
                 && btnEditProgramSource.Visibility == Visibility.Visible)
             {
@@ -70,21 +70,19 @@ namespace Flow.Launcher.Plugin.Program.Views
             programSourceView.Items.Refresh();
         }
 
-        private void ReIndexing()
+        private async void ReIndexing()
         {
             ViewRefresh();
-            Task.Run(() =>
-            {
-                Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Visible; });
-                Main.IndexPrograms();
-                Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Hidden; });
-            });
+
+            indexingPanel.Visibility = Visibility.Visible;
+            await Main.IndexPrograms();
+            indexingPanel.Visibility = Visibility.Hidden;
         }
 
         private void btnAddProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
             var add = new AddProgramSource(context, _settings);
-            if(add.ShowDialog() ?? false)
+            if (add.ShowDialog() ?? false)
             {
                 ReIndexing();
             }
@@ -165,14 +163,14 @@ namespace Flow.Launcher.Plugin.Program.Views
                             UniqueIdentifier = directory
                         };
 
-                        directoriesToAdd.Add(source);                        
+                        directoriesToAdd.Add(source);
                     }
                 }
 
                 if (directoriesToAdd.Count() > 0)
                 {
                     directoriesToAdd.ForEach(x => _settings.ProgramSources.Add(x));
-                    directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));                   
+                    directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));
 
                     ViewRefresh();
                     ReIndexing();
@@ -238,8 +236,8 @@ namespace Flow.Launcher.Plugin.Program.Views
                 ProgramSettingDisplayList.SetProgramSourcesStatus(selectedItems, true);
 
                 ProgramSettingDisplayList.RemoveDisabledFromSettings();
-            }            
-            
+            }
+
             if (selectedItems.IsReindexRequired())
                 ReIndexing();
 
@@ -282,7 +280,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                     var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
 
                     Sort(sortBy, direction);
-                    
+
                     _lastHeaderClicked = headerClicked;
                     _lastDirection = direction;
                 }
