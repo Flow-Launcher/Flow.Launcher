@@ -9,12 +9,7 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
 {
     internal class PluginsManifest
     {
-        internal List<UserPlugin> UserPlugins { get; private set; }
-
-        internal PluginsManifest()
-        {
-            Task.Run(async () => await DownloadManifest()).Wait();
-        }
+        internal List<UserPlugin> UserPlugins { get; private set; } = new List<UserPlugin>();
 
         internal async Task DownloadManifest()
         {
