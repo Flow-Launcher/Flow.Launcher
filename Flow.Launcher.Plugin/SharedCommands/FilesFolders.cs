@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
@@ -142,7 +140,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
         {
             Process.Start(FileExplorerProgramEXE, $" /select,\"{path}\"");
         }
-
 
         ///<summary>
         /// This checks whether a given string is a directory path or network location string. 
