@@ -41,6 +41,9 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+            if (IsStartupIndexProgramsRequired)
+                _ = IndexPrograms();
+
             Win32[] win32;
             UWP.Application[] uwps;
 
@@ -147,7 +150,7 @@ namespace Flow.Launcher.Plugin.Program
 
             var t2 = Task.Run(IndexUwpPrograms);
 
-            await Task.WhenAll(t1, t2);
+            await Task.WhenAll(t1, t2).ConfigureAwait(false);
 
             _settings.LastIndexTime = DateTime.Today;
         }
