@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (isEnvironmentVariablePath)
                 locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
 
-            if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).IsLocationPathString())
+            if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
                 return results;
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
