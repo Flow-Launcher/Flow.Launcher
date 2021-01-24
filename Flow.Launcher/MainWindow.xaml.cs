@@ -74,7 +74,7 @@ namespace Flow.Launcher
             {
                 if (e.PropertyName == nameof(MainViewModel.MainWindowVisibility))
                 {
-                    if (Visibility == Visibility.Visible)
+                    if (_viewModel.MainWindowVisibility == Visibility.Visible)
                     {
                         Activate();
                         QueryTextBox.Focus();
@@ -107,7 +107,7 @@ namespace Flow.Launcher
                             _progressBarStoryboard.Pause();
                             isProgressBarStoryboardPaused = true;
                         }
-                        else if (Visibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                        else if (_viewModel.MainWindowVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
                         {
                             _progressBarStoryboard.Resume();
                             isProgressBarStoryboardPaused = false;
