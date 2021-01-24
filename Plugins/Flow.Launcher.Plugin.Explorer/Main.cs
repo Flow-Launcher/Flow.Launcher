@@ -3,11 +3,13 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IPlugin, ISavable, IContextMenu, IPluginI18n
+    public class Main : ISettingProvider, IAsyncPlugin, ISavable, IContextMenu, IPluginI18n
     {
         internal PluginInitContext Context { get; set; }
 
@@ -17,17 +19,21 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private IContextMenu contextMenu;
 
+        private SearchManager searchManager;
+
         public Control CreateSettingPanel()
         {
             return new ExplorerSettings(viewModel);
         }
 
-        public void Init(PluginInitContext context)
+        public async Task InitAsync(PluginInitContext context)
         {
             Context = context;
             viewModel = new SettingsViewModel(context);
+            await viewModel.LoadStorage();
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context, Settings);
+            searchManager = new SearchManager(Settings, Context);
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -35,9 +41,9 @@ namespace Flow.Launcher.Plugin.Explorer
             return contextMenu.LoadContextMenus(selectedResult);
         }
 
-        public List<Result> Query(Query query)
+        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            return new SearchManager(Settings, Context).Search(query);
+            return await searchManager.SearchAsync(query, token);
         }
 
         public void Save()

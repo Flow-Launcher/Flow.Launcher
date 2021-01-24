@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,9 +17,8 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
-using System.Windows.Media;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Threading.Tasks.Dataflow;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -48,6 +45,8 @@ namespace Flow.Launcher.ViewModel
         private bool _saved;
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
+        private BufferBlock<ResultsForUpdate> _resultsUpdateQueue;
+        private Task _resultsViewUpdateTask;
 
         #endregion
 
@@ -75,7 +74,10 @@ namespace Flow.Launcher.ViewModel
             _selectedResults = Results;
 
             InitializeKeyCommands();
+
+            RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
+
 
             SetHotkey(_settings.Hotkey, OnHotkey);
             SetCustomPluginHotkey();
@@ -86,15 +88,51 @@ namespace Flow.Launcher.ViewModel
         {
             foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
             {
-                var plugin = (IResultUpdated)pair.Plugin;
+                var plugin = (IResultUpdated) pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    Task.Run(() =>
-                    {
-                        PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        UpdateResultView(e.Results, pair.Metadata, e.Query);
-                    }, _updateToken);
+                    PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
+                    if (e.Query.Search == _lastQuery.Search)
+                        _resultsUpdateQueue.Post(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
                 };
+            }
+        }
+
+        private void RegisterViewUpdate()
+        {
+            _resultsUpdateQueue = new BufferBlock<ResultsForUpdate>();
+            _resultsViewUpdateTask =
+                Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+
+
+            async Task updateAction()
+            {
+                var queue = new Dictionary<string, ResultsForUpdate>();
+                while (await _resultsUpdateQueue.OutputAvailableAsync())
+                {
+                    queue.Clear();
+                    await Task.Delay(20);
+                    while (_resultsUpdateQueue.TryReceive(out var item))
+                    {
+                        if (!item.Token.IsCancellationRequested)
+                            queue[item.ID] = item;
+                    }
+
+                    UpdateResultView(queue.Values);
+                }
+            }
+
+            ;
+
+            void continueAction(Task t)
+            {
+#if DEBUG
+                throw t.Exception;
+#else
+                Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
+                _resultsViewUpdateTask =
+ Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+#endif
             }
         }
 
@@ -113,25 +151,13 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
-            SelectNextItemCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectNextResult();
-            });
+            SelectNextItemCommand = new RelayCommand(_ => { SelectedResults.SelectNextResult(); });
 
-            SelectPrevItemCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectPrevResult();
-            });
+            SelectPrevItemCommand = new RelayCommand(_ => { SelectedResults.SelectPrevResult(); });
 
-            SelectNextPageCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectNextPage();
-            });
+            SelectNextPageCommand = new RelayCommand(_ => { SelectedResults.SelectNextPage(); });
 
-            SelectPrevPageCommand = new RelayCommand(_ =>
-            {
-                SelectedResults.SelectPrevPage();
-            });
+            SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
@@ -207,11 +233,13 @@ namespace Flow.Launcher.ViewModel
         public ResultsViewModel Results { get; private set; }
         public ResultsViewModel ContextMenu { get; private set; }
         public ResultsViewModel History { get; private set; }
+        private string _lastQueryText;
 
         private string _queryText;
+
         public string QueryText
         {
-            get { return _queryText; }
+            get => _queryText;
             set
             {
                 _queryText = value;
@@ -229,10 +257,12 @@ namespace Flow.Launcher.ViewModel
             QueryTextCursorMovedToEnd = true;
             QueryText = queryText;
         }
+
         public bool LastQuerySelected { get; set; }
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
+
         private ResultsViewModel SelectedResults
         {
             get { return _selectedResults; }
@@ -264,6 +294,7 @@ namespace Flow.Launcher.ViewModel
                         QueryText = string.Empty;
                     }
                 }
+
                 _selectedResults.Visbility = Visibility.Visible;
             }
         }
@@ -323,9 +354,20 @@ namespace Flow.Launcher.ViewModel
                 {
                     var filtered = results.Where
                     (
-                        r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet()
-                            || StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
-                    ).ToList();
+                        r =>
+                        {
+                            var match = StringMatcher.FuzzySearch(query, r.Title);
+                            if (!match.IsSearchPrecisionScoreMet())
+                            {
+                                match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                            }
+
+                            if (!match.IsSearchPrecisionScoreMet()) return false;
+                            
+                            r.Score = match.Score;
+                            return true;
+
+                        }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
                 else
@@ -351,7 +393,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query { RawQuery = h.Query },
+                    OriginQuery = new Query {RawQuery = h.Query},
                     Action = _ =>
                     {
                         SelectedResults = Results;
@@ -379,100 +421,128 @@ namespace Flow.Launcher.ViewModel
 
         private void QueryResults()
         {
-            if (!string.IsNullOrEmpty(QueryText))
+            _updateSource?.Cancel();
+
+            if (string.IsNullOrWhiteSpace(QueryText))
             {
-                _updateSource?.Cancel();
-                var currentUpdateSource = new CancellationTokenSource();
-                _updateSource = currentUpdateSource;
-                var currentCancellationToken = _updateSource.Token;
-                _updateToken = currentCancellationToken;
+                Results.Clear();
+                Results.Visbility = Visibility.Collapsed;
+                return;
+            }
 
-                ProgressBarVisibility = Visibility.Hidden;
-                _isQueryRunning = true;
-                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
-                if (query != null)
+            _updateSource?.Dispose();
+
+            var currentUpdateSource = new CancellationTokenSource();
+            _updateSource = currentUpdateSource;
+            var currentCancellationToken = _updateSource.Token;
+            _updateToken = currentCancellationToken;
+
+            ProgressBarVisibility = Visibility.Hidden;
+            _isQueryRunning = true;
+
+            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+
+            // handle the exclusiveness of plugin using action keyword
+            RemoveOldQueryResults(query);
+
+            _lastQuery = query;
+
+            var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            Task.Run(async () =>
                 {
-                    // handle the exclusiveness of plugin using action keyword
-                    RemoveOldQueryResults(query);
+                    if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
+                    {
+                        // Wait 45 millisecond for query change in global query
+                        // if query changes, return so that it won't be calculated
+                        await Task.Delay(45, currentCancellationToken);
+                        if (currentCancellationToken.IsCancellationRequested)
+                            return;
+                    }
 
-                    _lastQuery = query;
-                    Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                    { // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                        if (currentUpdateSource == _updateSource && _isQueryRunning)
+                    _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                        if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
                         {
                             ProgressBarVisibility = Visibility.Visible;
                         }
                     }, currentCancellationToken);
 
-                    var plugins = PluginManager.ValidPluginsForQuery(query);
-                    Task.Run(() =>
+                    Task[] tasks = new Task[plugins.Count];
+                    try
                     {
-                        // so looping will stop once it was cancelled
-                        var parallelOptions = new ParallelOptions { CancellationToken = currentCancellationToken };
-                        try
+                        for (var i = 0; i < plugins.Count; i++)
                         {
-                            Parallel.ForEach(plugins, parallelOptions, plugin =>
+                            if (!plugins[i].Metadata.Disabled)
                             {
-                                if (!plugin.Metadata.Disabled)
-                                {
-                                    try
-                                    {
-                                        var results = PluginManager.QueryForPlugin(plugin, query);
-                                        UpdateResultView(results, plugin.Metadata, query);
-                                    }
-                                    catch(Exception e)
-                                    {
-                                        Log.Exception("MainViewModel", $"Exception when querying the plugin {plugin.Metadata.Name}", e, "QueryResults");
-                                    }
-                                }
-                            });
+                                tasks[i] = QueryTask(plugins[i]);
+                            }
+                            else
+                            {
+                                tasks[i] = Task.CompletedTask; // Avoid Null
+                            }
                         }
-                        catch (OperationCanceledException)
-                        {
-                            // nothing to do here
-                        }
-                        
 
-                        // this should happen once after all queries are done so progress bar should continue
-                        // until the end of all querying
-                        _isQueryRunning = false;
-                        if (currentUpdateSource == _updateSource)
-                        { // update to hidden if this is still the current query
-                            ProgressBarVisibility = Visibility.Hidden;
-                        }
-                    }, currentCancellationToken).ContinueWith(t =>
+                        // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                        await Task.WhenAll(tasks);
+                    }
+                    catch (OperationCanceledException)
                     {
-                        Log.Exception("MainViewModel", "Error when querying plugins", t.Exception?.InnerException, "QueryResults");
-                    }, TaskContinuationOptions.OnlyOnFaulted);
-                }
-            }
-            else
-            {
-                Results.Clear();
-                Results.Visbility = Visibility.Collapsed;
-            }
+                        // nothing to do here
+                    }
+
+                    if (currentCancellationToken.IsCancellationRequested)
+                        return;
+
+                    // this should happen once after all queries are done so progress bar should continue
+                    // until the end of all querying
+                    _isQueryRunning = false;
+                    if (!currentCancellationToken.IsCancellationRequested)
+                    {
+                        // update to hidden if this is still the current query
+                        ProgressBarVisibility = Visibility.Hidden;
+                    }
+
+                    // Local function
+                    async Task QueryTask(PluginPair plugin)
+                    {
+                        // Since it is wrapped within a Task.Run, the synchronous context is null
+                        // Task.Yield will force it to run in ThreadPool
+                        await Task.Yield();
+
+                        var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
+                        if (!currentCancellationToken.IsCancellationRequested)
+                            _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query,
+                                currentCancellationToken));
+                    }
+                }, currentCancellationToken)
+                .ContinueWith(t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
+                    TaskContinuationOptions.OnlyOnFaulted);
         }
+
 
         private void RemoveOldQueryResults(Query query)
         {
             string lastKeyword = _lastQuery.ActionKeyword;
+
             string keyword = query.ActionKeyword;
             if (string.IsNullOrEmpty(lastKeyword))
             {
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Metadata);
+                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(keyword))
                 {
-                    Results.RemoveResultsFor(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
+                    Results.KeepResultsExcept(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
                 }
                 else if (lastKeyword != keyword)
                 {
-                    Results.RemoveResultsExcept(PluginManager.NonGlobalPlugins[keyword].Metadata);
+                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
                 }
             }
         }
@@ -510,6 +580,7 @@ namespace Flow.Launcher.ViewModel
                     }
                 };
             }
+
             return menu;
         }
 
@@ -549,12 +620,12 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
-
         private bool HistorySelected()
         {
             var selected = SelectedResults == History;
             return selected;
         }
+
         #region Hotkey
 
         private void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
@@ -573,7 +644,8 @@ namespace Flow.Launcher.ViewModel
             catch (Exception)
             {
                 string errorMsg =
-                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"),
+                        hotkeyStr);
                 MessageBox.Show(errorMsg);
             }
         }
@@ -623,7 +695,6 @@ namespace Flow.Launcher.ViewModel
         {
             if (!ShouldIgnoreHotkeys())
             {
-
                 if (_settings.LastQueryMode == LastQueryMode.Empty)
                 {
                     ChangeQueryText(string.Empty);
@@ -677,29 +748,47 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void UpdateResultView(List<Result> list, PluginMetadata metadata, Query originQuery)
+        public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
-            foreach (var result in list)
+            if (!resultsForUpdates.Any())
+                return;
+            CancellationToken token;
+
+            try
             {
-                if (_topMostRecord.IsTopMost(result))
+                // Don't know why sometimes even resultsForUpdates is empty, the method won't return;
+                token = resultsForUpdates.Select(r => r.Token).Distinct().SingleOrDefault();
+            }
+#if DEBUG
+            catch
+            {
+                throw new ArgumentException("Unacceptable token");
+            }
+#else
+            catch
+            {
+                token = default;
+            }
+#endif
+
+
+            foreach (var metaResults in resultsForUpdates)
+            {
+                foreach (var result in metaResults.Results)
                 {
-                    result.Score = int.MaxValue;
-                }
-                else
-                {
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5;
+                    if (_topMostRecord.IsTopMost(result))
+                    {
+                        result.Score = int.MaxValue;
+                    }
+                    else
+                    {
+                        var priorityScore = metaResults.Metadata.Priority * 150;
+                        result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
+                    }
                 }
             }
 
-            if (originQuery.RawQuery == _lastQuery.RawQuery)
-            {
-                Results.AddResults(list, metadata.ID);
-            }
-
-            if (Results.Visbility != Visibility.Visible && list.Count > 0)
-            {
-                Results.Visbility = Visibility.Visible;
-            }
+            Results.AddResults(resultsForUpdates, token);
         }
 
         #endregion

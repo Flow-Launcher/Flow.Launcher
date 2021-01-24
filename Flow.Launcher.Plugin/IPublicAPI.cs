@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin
         /// Plugin's in memory data with new content
         /// added by user.
         /// </summary>
-        void ReloadAllPluginData();
+        Task ReloadAllPluginData();
 
         /// <summary>
         /// Check for new Flow Launcher update

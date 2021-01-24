@@ -83,9 +83,9 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public void ReloadAllPluginData()
+        public Task ReloadAllPluginData()
         {
-            PluginManager.ReloadData();
+            return PluginManager.ReloadData();
         }
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "")

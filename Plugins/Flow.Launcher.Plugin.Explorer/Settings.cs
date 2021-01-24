@@ -1,7 +1,6 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.Explorer
 {

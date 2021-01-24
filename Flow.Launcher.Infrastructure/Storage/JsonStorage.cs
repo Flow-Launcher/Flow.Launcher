@@ -9,7 +9,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStrorage<T>
+    public class JsonStrorage<T> where T : new()
     {
         private readonly JsonSerializerOptions _serializerSettings;
         private T _data;
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                 BackupOriginFile();
             }
 
-            _data = JsonSerializer.Deserialize<T>("{}", _serializerSettings);
+            _data = new T();
             Save();
         }
 
