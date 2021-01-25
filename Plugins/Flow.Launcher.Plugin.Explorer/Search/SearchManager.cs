@@ -40,14 +40,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return await WindowsIndexFileContentSearchAsync(query, querySearch, token).ConfigureAwait(false);
 
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
-            if (settings.QuickFolderAccessLinks.Count > 0
-                && query.ActionKeyword == settings.SearchActionKeyword
-                && string.IsNullOrEmpty(query.Search))
-                return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
-
-            // No records in QuickFolderAccessLinks, user has not typed any query apart from SearchActionKeyword, no need for further search
             if (string.IsNullOrEmpty(query.Search))
-                return results;
+                return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
 
             var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
 
