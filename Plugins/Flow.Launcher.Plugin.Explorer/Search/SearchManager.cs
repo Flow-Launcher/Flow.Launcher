@@ -45,6 +45,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 && string.IsNullOrEmpty(query.Search))
                 return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
 
+            // No records in QuickFolderAccessLinks, user has not typed any query apart from SearchActionKeyword, no need for further search
+            if (string.IsNullOrEmpty(query.Search))
+                return results;
+
             var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
 
             if (quickFolderLinks.Count > 0)
