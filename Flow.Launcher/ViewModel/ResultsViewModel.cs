@@ -280,10 +280,8 @@ namespace Flow.Launcher.ViewModel
             {
                 Clear();
                 if (this.Capacity > 8000 && Capacity < this.Capacity)
-                {
                     this.Capacity = Capacity;
 
-                }
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
 

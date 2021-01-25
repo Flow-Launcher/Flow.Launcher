@@ -81,7 +81,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                if (!(e is ArgumentException)) throw e;
+                if (!(e is ArgumentException))
+                    throw e;
                 
                 results.Add(new Result {Title = e.Message, Score = 501});
 
