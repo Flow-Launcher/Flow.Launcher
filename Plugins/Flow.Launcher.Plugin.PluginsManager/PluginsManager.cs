@@ -46,9 +46,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = settings;
         }
 
-        internal async Task UpdateManifest()
+        internal Task UpdateManifest()
         {
-            await pluginsManifest.DownloadManifest();
+            return _downloadManifestTask = pluginsManifest.DownloadManifest();
         }
 
         internal List<Result> GetDefaultHotKeys()

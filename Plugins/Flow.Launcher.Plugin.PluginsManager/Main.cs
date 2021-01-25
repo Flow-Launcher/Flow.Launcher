@@ -69,8 +69,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if ((DateTime.Now - lastUpdateTime).TotalHours > 12) // 12 hours
             {
-                await pluginManager.UpdateManifest();
-                lastUpdateTime = DateTime.Now;
+                _ = pluginManager.UpdateManifest().ContinueWith(t =>
+                {
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        lastUpdateTime = DateTime.Now;
+                    }
+                    else
+                    {
+                        Context.API.ShowMsg("Plugin Manifest Download Fail.",
+                        "Please check if you can connect to github.com. " +
+                        "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
+                    }
+                });
             }
 
             return search switch
