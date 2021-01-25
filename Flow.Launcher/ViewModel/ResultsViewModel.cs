@@ -149,10 +149,11 @@ namespace Flow.Launcher.ViewModel
         public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
         {
             var newResults = NewResults(resultsForUpdates);
+
             if (token.IsCancellationRequested)
                 return;
-            UpdateResults(newResults, token);
 
+            UpdateResults(newResults, token);
         }
 
         private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default)

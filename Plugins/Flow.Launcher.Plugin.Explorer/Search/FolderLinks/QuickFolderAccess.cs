@@ -6,11 +6,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
 {
     public class QuickFolderAccess
     {
-        private readonly ResultManager _resultManager;
+        private readonly ResultManager resultManager;
 
         public QuickFolderAccess(PluginInitContext context)
         {
-            _resultManager = new ResultManager(context);
+            resultManager = new ResultManager(context);
         }
 
         internal List<Result> FolderListMatched(Query query, List<FolderLink> folderLinks)
@@ -24,13 +24,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
                 folderLinks.Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
 
             return queriedFolderLinks.Select(item =>
-                    _resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
+                    resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
                 .ToList();
         }
 
         internal List<Result> FolderListAll(Query query, List<FolderLink> folderLinks)
             => folderLinks
-                .Select(item => _resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
+                .Select(item => resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
                 .ToList();
     }
 }
