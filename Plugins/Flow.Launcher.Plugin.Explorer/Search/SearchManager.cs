@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private readonly IndexSearch indexSearch;
 
-        private readonly QuickFolderAccess quickFolderAccess = new QuickFolderAccess();
+        private readonly QuickFolderAccess quickFolderAccess;
 
         private readonly ResultManager resultManager;
 
@@ -28,6 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             indexSearch = new IndexSearch(context);
             resultManager = new ResultManager(context);
             this.settings = settings;
+            quickFolderAccess = new QuickFolderAccess(context);
         }
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
@@ -41,9 +42,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
             if (string.IsNullOrEmpty(query.Search))
-                return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
+                return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks);
 
-            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
+            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks);
 
             if (quickFolderLinks.Count > 0)
                 results.AddRange(quickFolderLinks);
