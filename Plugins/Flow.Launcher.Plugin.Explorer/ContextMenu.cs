@@ -13,6 +13,7 @@ using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
 using DialogResult = System.Windows.Forms.DialogResult;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -22,10 +23,13 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private Settings Settings { get; set; }
 
-        public ContextMenu(PluginInitContext context, Settings settings)
+        private SettingsViewModel ViewModel { get; set; }
+
+        public ContextMenu(PluginInitContext context, Settings settings, SettingsViewModel vm)
         {
             Context = context;
             Settings = settings;
+            ViewModel = vm;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -68,6 +72,9 @@ namespace Flow.Launcher.Plugin.Explorer
                                                                                 Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
                                                                                     fileOrFolder),
                                                                                 Constants.ExplorerIconImageFullPath);
+
+                                ViewModel.Save();
+
                                 return true;
                             }
                             catch (Exception e)
