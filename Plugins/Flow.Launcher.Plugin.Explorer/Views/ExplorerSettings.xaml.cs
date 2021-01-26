@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -161,7 +161,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var selectedRow = lbxFolderLinks.SelectedItem as FolderLink?? lbxExcludedPaths.SelectedItem as FolderLink;
+            var selectedRow = lbxFolderLinks.SelectedItem as AccessLink?? lbxExcludedPaths.SelectedItem as AccessLink;
 
             if (selectedRow != null)
             {
@@ -199,7 +199,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
             else
             {
-                var selectedRow = lbxFolderLinks.SelectedItem as FolderLink ?? lbxExcludedPaths.SelectedItem as FolderLink;
+                var selectedRow = lbxFolderLinks.SelectedItem as AccessLink ?? lbxExcludedPaths.SelectedItem as AccessLink;
 
                 if (selectedRow != null)
                 {
@@ -235,7 +235,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             var folderBrowserDialog = new FolderBrowserDialog();
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                var newFolderLink = new FolderLink
+                var newFolderLink = new AccessLink
                 {
                     Path = folderBrowserDialog.SelectedPath
                 };
@@ -253,13 +253,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (files != null && files.Count() > 0)
             {
                 if (expFolderLinks.IsExpanded && viewModel.Settings.QuickFolderAccessLinks == null)
-                    viewModel.Settings.QuickFolderAccessLinks = new List<FolderLink>();
+                    viewModel.Settings.QuickFolderAccessLinks = new List<AccessLink>();
 
                 foreach (string s in files)
                 {
                     if (Directory.Exists(s))
                     {
-                        var newFolderLink = new FolderLink
+                        var newFolderLink = new AccessLink
                         {
                             Path = s
                         };
@@ -272,13 +272,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
         }
 
-        private void AddFolderLink(FolderLink newFolderLink)
+        private void AddFolderLink(AccessLink newFolderLink)
         {
             if (expFolderLinks.IsExpanded
                     && !viewModel.Settings.QuickFolderAccessLinks.Any(x => x.Path == newFolderLink.Path))
             {
                 if (viewModel.Settings.QuickFolderAccessLinks == null)
-                    viewModel.Settings.QuickFolderAccessLinks = new List<FolderLink>();
+                    viewModel.Settings.QuickFolderAccessLinks = new List<AccessLink>();
 
                 viewModel.Settings.QuickFolderAccessLinks.Add(newFolderLink);
             }
@@ -287,7 +287,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 && !viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == newFolderLink.Path))
             {
                 if (viewModel.Settings.IndexSearchExcludedSubdirectoryPaths == null)
-                    viewModel.Settings.IndexSearchExcludedSubdirectoryPaths = new List<FolderLink>();
+                    viewModel.Settings.IndexSearchExcludedSubdirectoryPaths = new List<AccessLink>();
 
                 viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Add(newFolderLink);
             }

@@ -7,7 +7,7 @@ using System.Windows;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
 using System.Linq;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
-                                Settings.QuickFolderAccessLinks.Add(new FolderLink { Path = record.FullPath, Type = record.Type });
+                                Settings.QuickFolderAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
 
                                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
                                                                             string.Format(
@@ -260,7 +260,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 Action = _ =>
                 {
                     if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
-                        Settings.IndexSearchExcludedSubdirectoryPaths.Add(new FolderLink { Path = record.FullPath });
+                        Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink { Path = record.FullPath });
 
                     Task.Run(() =>
                     {

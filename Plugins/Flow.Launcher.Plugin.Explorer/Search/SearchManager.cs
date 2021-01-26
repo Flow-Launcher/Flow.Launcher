@@ -1,5 +1,5 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private readonly IndexSearch indexSearch;
 
-        private readonly QuickFolderAccess quickFolderAccess;
+        private readonly QuickAccess quickFolderAccess;
 
         private readonly ResultManager resultManager;
 
@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             indexSearch = new IndexSearch(context);
             resultManager = new ResultManager(context);
             this.settings = settings;
-            quickFolderAccess = new QuickFolderAccess(context);
+            quickFolderAccess = new QuickAccess(context);
         }
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)

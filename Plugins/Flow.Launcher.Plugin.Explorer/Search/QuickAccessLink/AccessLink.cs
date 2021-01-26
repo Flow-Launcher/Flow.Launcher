@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
+namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink
 {
-    public class FolderLink
+    public class AccessLink
     {
         public string Path { get; set; }
 
