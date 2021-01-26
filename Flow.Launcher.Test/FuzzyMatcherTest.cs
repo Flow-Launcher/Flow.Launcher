@@ -5,6 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Test
 {
@@ -37,8 +38,8 @@ namespace Flow.Launcher.Test
         {
             var listToReturn = new List<int>();
 
-            Enum.GetValues(typeof(StringMatcher.SearchPrecisionScore))
-                .Cast<StringMatcher.SearchPrecisionScore>()
+            Enum.GetValues(typeof(SearchPrecisionScore))
+                .Cast<SearchPrecisionScore>()
                 .ToList()
                 .ForEach(x => listToReturn.Add((int) x));
 
@@ -160,7 +161,7 @@ namespace Flow.Launcher.Test
         public void WhenGivenDesiredPrecision_ThenShouldReturn_AllResultsGreaterOrEqual(
             string queryString,
             string compareString,
-            StringMatcher.SearchPrecisionScore expectedPrecisionScore,
+            SearchPrecisionScore expectedPrecisionScore,
             bool expectedPrecisionResult)
         {
             // When            
@@ -218,7 +219,7 @@ namespace Flow.Launcher.Test
         public void WhenGivenQuery_ShouldReturnResults_ContainingAllQuerySubstrings(
             string queryString,
             string compareString,
-            StringMatcher.SearchPrecisionScore expectedPrecisionScore,
+            SearchPrecisionScore expectedPrecisionScore,
             bool expectedPrecisionResult)
         {
             // When

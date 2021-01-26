@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using Squirrel;
-using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -14,6 +13,11 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Plugin.SharedModels;
+using System.Threading;
+using System.IO;
+using Flow.Launcher.Infrastructure.Http;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher
 {
@@ -127,6 +131,32 @@ namespace Flow.Launcher
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
+        public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
+
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default)
+        {
+            return Http.GetAsync(url);
+        }
+
+        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default)
+        {
+            return Http.GetStreamAsync(url);
+        }
+
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath)
+        {
+            return Http.DownloadAsync(url, filePath);
+        }
+
+        public void AddActionKeyword(string pluginId, string newActionKeyword)
+        {
+            PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+        }
+
+        public void RemoveActionKeyword(string pluginId, string oldActionKeyword)
+        {
+            PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
+        }
         #endregion
 
         #region Private Methods
@@ -139,6 +169,7 @@ namespace Flow.Launcher
             }
             return true;
         }
+
         #endregion
     }
 }
