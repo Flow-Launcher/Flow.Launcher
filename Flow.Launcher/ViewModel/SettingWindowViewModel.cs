@@ -17,7 +17,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedModel;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.ViewModel
 {

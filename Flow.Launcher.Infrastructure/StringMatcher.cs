@@ -1,9 +1,7 @@
-using Flow.Launcher.Plugin.SharedModel;
+using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using static Flow.Launcher.Infrastructure.StringMatcher;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -241,8 +239,6 @@ namespace Flow.Launcher.Infrastructure
             return score;
         }
     }
-
-    
 
     public class MatchOption
     {

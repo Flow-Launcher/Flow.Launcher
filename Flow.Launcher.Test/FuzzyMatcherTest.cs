@@ -5,7 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedModel;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Test
 {

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedModel;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {

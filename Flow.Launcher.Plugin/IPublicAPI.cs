@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModel;
+using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;

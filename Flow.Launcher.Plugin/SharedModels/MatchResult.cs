@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Flow.Launcher.Plugin.SharedModel
+namespace Flow.Launcher.Plugin.SharedModels
 {
     public class MatchResult
     {
