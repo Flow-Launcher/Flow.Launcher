@@ -9,6 +9,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
     {
         public string Path { get; set; }
 
+        public ResultType Type { get; set; } = ResultType.Folder;
+
         [JsonIgnore]
         public string Nickname
         {

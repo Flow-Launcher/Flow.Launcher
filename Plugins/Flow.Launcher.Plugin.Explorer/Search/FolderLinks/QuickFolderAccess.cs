@@ -23,14 +23,32 @@ namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
             var queriedFolderLinks =
                 folderLinks.Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
 
-            return queriedFolderLinks.Select(item =>
+            return queriedFolderLinks
+                .Where(x => x.Type == ResultType.Folder)
+                .Select(item => 
                     resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
+                    .OrderBy(x => x.Title)
+                .Concat(
+                queriedFolderLinks
+                .Where(x => x.Type == ResultType.File)
+                .Select(item =>
+                    resultManager.CreateFileResult(item.Path, query))
+                    .OrderBy(x => x.Title))
                 .ToList();
         }
 
         internal List<Result> FolderListAll(Query query, List<FolderLink> folderLinks)
             => folderLinks
-                .Select(item => resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
+                .Where(x => x.Type == ResultType.Folder)
+                .Select(item => 
+                    resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
+                    .OrderBy(x => x.Title)
+                .Concat(
+                folderLinks
+                .Where(x => x.Type == ResultType.File)
+                .Select(item =>
+                    resultManager.CreateFileResult(item.Path, query))
+                    .OrderBy(x => x.Title))
                 .ToList();
     }
 }
