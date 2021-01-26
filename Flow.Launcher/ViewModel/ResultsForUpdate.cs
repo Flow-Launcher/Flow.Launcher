@@ -23,7 +23,6 @@ namespace Flow.Launcher.ViewModel
             Token = token;
         }
 
-
         public ResultsForUpdate(List<Result> results, PluginMetadata metadata, Query query, CancellationToken token)
         {
             Results = results;

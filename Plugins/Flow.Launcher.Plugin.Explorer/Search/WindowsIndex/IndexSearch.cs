@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private readonly ResultManager resultManager;
 
         // Reserved keywords in oleDB
-        private readonly string reservedStringPattern = @"^[\/\\\$\%_]+$";
+        private readonly string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
 
         internal IndexSearch(PluginInitContext context)
         {
@@ -24,9 +24,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         internal async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
-            var folderResults = new List<Result>();
-            var fileResults = new List<Result>();
             var results = new List<Result>();
+            var fileResults = new List<Result>();
 
             try
             {
@@ -55,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
                             if (dataReaderResults.GetString(2) == "Directory")
                             {
-                                folderResults.Add(resultManager.CreateFolderResult(
+                                results.Add(resultManager.CreateFolderResult(
                                                                     dataReaderResults.GetString(0),
                                                                     path,
                                                                     path,
@@ -83,8 +82,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 LogException("General error from performing index search", e);
             }
 
+            results.AddRange(fileResults);
+
             // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-            return results.Concat(folderResults.OrderBy(x => x.Title)).Concat(fileResults.OrderBy(x => x.Title)).ToList(); ;
+             return results;
         }
 
         internal async Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,

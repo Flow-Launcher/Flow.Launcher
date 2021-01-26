@@ -30,15 +30,29 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new PluginsManagerSettings(viewModel);
         }
 
-        public async Task InitAsync(PluginInitContext context)
+        public Task InitAsync(PluginInitContext context)
         {
             Context = context;
             viewModel = new SettingsViewModel(context);
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            await pluginManager.UpdateManifest();
-            lastUpdateTime = DateTime.Now;
+            var updateManifestTask = pluginManager.UpdateManifest();
+            _ = updateManifestTask.ContinueWith(t =>
+            {
+                if (t.IsCompletedSuccessfully)
+                {
+                    lastUpdateTime = DateTime.Now;
+                }
+                else
+                {
+                    context.API.ShowMsg("Plugin Manifest Download Fail.",
+                    "Please check if you can connect to github.com. " +
+                    "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
+                }
+            });
+
+            return Task.CompletedTask;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -61,7 +75,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             return search switch
             {
-                var s when s.StartsWith(Settings.HotKeyInstall) => pluginManager.RequestInstallOrUpdate(s),
+                var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s, token),
                 var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
                 var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>

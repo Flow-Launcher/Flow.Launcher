@@ -41,6 +41,9 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+            if (IsStartupIndexProgramsRequired)
+                _ = IndexPrograms();
+
             Win32[] win32;
             UWP.Application[] uwps;
 
@@ -97,22 +100,31 @@ namespace Flow.Launcher.Plugin.Program
                 Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
             });
 
+            bool indexedWinApps = false;
+            bool indexedUWPApps = false;
 
             var a = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_win32s.Any())
+                {
                     Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+                    indexedWinApps = true;
+                }
             });
 
             var b = Task.Run(() =>
             {
                 if (IsStartupIndexProgramsRequired || !_uwps.Any())
+                {
                     Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
+                    indexedUWPApps = true;
+                }
             });
 
             await Task.WhenAll(a, b);
 
-            _settings.LastIndexTime = DateTime.Today;
+            if (indexedWinApps && indexedUWPApps)
+                _settings.LastIndexTime = DateTime.Today;
         }
 
         public static void IndexWin32Programs()
@@ -138,7 +150,7 @@ namespace Flow.Launcher.Plugin.Program
 
             var t2 = Task.Run(IndexUwpPrograms);
 
-            await Task.WhenAll(t1, t2);
+            await Task.WhenAll(t1, t2).ConfigureAwait(false);
 
             _settings.LastIndexTime = DateTime.Today;
         }
@@ -193,12 +205,14 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _uwps.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier).FirstOrDefault().Enabled =
-                    false;
+                _uwps.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
+                    .FirstOrDefault()
+                    .Enabled = false;
 
             if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _win32s.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier).FirstOrDefault().Enabled =
-                    false;
+                _win32s.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
+                    .FirstOrDefault()
+                    .Enabled = false;
 
             _settings.DisabledProgramSources
                 .Add(

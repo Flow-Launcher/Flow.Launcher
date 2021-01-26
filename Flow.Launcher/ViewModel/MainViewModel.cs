@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +18,8 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
-using System.Windows.Media;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Threading.Tasks.Dataflow;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -96,11 +93,18 @@ namespace Flow.Launcher.ViewModel
 
             async Task updateAction()
             {
+                var queue = new Dictionary<string, ResultsForUpdate>();
                 while (await _resultsUpdateQueue.OutputAvailableAsync())
                 {
+                    queue.Clear();
                     await Task.Delay(20);
-                    _resultsUpdateQueue.TryReceiveAll(out var queue);
-                    UpdateResultView(queue.Where(r => !r.Token.IsCancellationRequested));
+                    while (_resultsUpdateQueue.TryReceive(out var item))
+                    {
+                        if (!item.Token.IsCancellationRequested)
+                            queue[item.ID] = item;
+                    }
+
+                    UpdateResultView(queue.Values);
                 }
             }
 
@@ -236,7 +240,7 @@ namespace Flow.Launcher.ViewModel
 
         public string QueryText
         {
-            get { return _queryText; }
+            get => _queryText;
             set
             {
                 _queryText = value;
@@ -351,9 +355,20 @@ namespace Flow.Launcher.ViewModel
                 {
                     var filtered = results.Where
                     (
-                        r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet()
-                             || StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
-                    ).ToList();
+                        r =>
+                        {
+                            var match = StringMatcher.FuzzySearch(query, r.Title);
+                            if (!match.IsSearchPrecisionScoreMet())
+                            {
+                                match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                            }
+
+                            if (!match.IsSearchPrecisionScoreMet()) return false;
+                            
+                            r.Score = match.Score;
+                            return true;
+
+                        }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
                 else
@@ -407,105 +422,111 @@ namespace Flow.Launcher.ViewModel
 
         private void QueryResults()
         {
-            if (!string.IsNullOrEmpty(QueryText))
+            _updateSource?.Cancel();
+
+            if (string.IsNullOrWhiteSpace(QueryText))
             {
-                _updateSource?.Cancel();
-                var currentUpdateSource = new CancellationTokenSource();
-                _updateSource = currentUpdateSource;
-                var currentCancellationToken = _updateSource.Token;
-                _updateToken = currentCancellationToken;
-
-                ProgressBarVisibility = Visibility.Hidden;
-                _isQueryRunning = true;
-                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
-                if (query != null)
-                {
-                    // handle the exclusiveness of plugin using action keyword
-                    RemoveOldQueryResults(query);
-
-                    _lastQuery = query;
-
-                    var plugins = PluginManager.ValidPluginsForQuery(query);
-                    Task.Run(async () =>
-                    {
-                        if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
-                        {
-                            // Wait 45 millisecond for query change in global query
-                            // if query changes, return so that it won't be calculated
-                            await Task.Delay(45, currentCancellationToken);
-                            if (currentCancellationToken.IsCancellationRequested)
-                                return;
-                        }
-
-                        _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                        {
-                            // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                            if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
-                            {
-                                ProgressBarVisibility = Visibility.Visible;
-                            }
-                        }, currentCancellationToken);
-
-                        // so looping will stop once it was cancelled
-
-                        Task[] tasks = new Task[plugins.Count];
-
-                        try
-                        {
-                            for (var i = 0; i < plugins.Count; i++)
-                            {
-                                if (!plugins[i].Metadata.Disabled)
-                                    tasks[i] = QueryTask(plugins[i], query, currentCancellationToken);
-                                else tasks[i] = Task.CompletedTask; // Avoid Null
-                            }
-
-                            // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                            await Task.WhenAll(tasks);
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            // nothing to do here
-                        }
-
-                        if (currentCancellationToken.IsCancellationRequested)
-                            return;
-
-                        // this should happen once after all queries are done so progress bar should continue
-                        // until the end of all querying
-                        _isQueryRunning = false;
-                        if (!currentCancellationToken.IsCancellationRequested)
-                        {
-                            // update to hidden if this is still the current query
-                            ProgressBarVisibility = Visibility.Hidden;
-                        }
-
-                        // Local Function
-                        async Task QueryTask(PluginPair plugin, Query query, CancellationToken token)
-                        {
-                            // Since it is wrapped within a Task.Run, the synchronous context is null
-                            // Task.Yield will force it to run in ThreadPool
-                            await Task.Yield();
-
-                            var results = await PluginManager.QueryForPlugin(plugin, query, token);
-                            if (!currentCancellationToken.IsCancellationRequested)
-                                _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query, token));
-                        }
-                    }, currentCancellationToken).ContinueWith(
-                        t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
-                        TaskContinuationOptions.OnlyOnFaulted);
-                }
-            }
-            else
-            {
-                _updateSource?.Cancel();
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
+                return;
             }
+
+            _updateSource?.Dispose();
+
+            var currentUpdateSource = new CancellationTokenSource();
+            _updateSource = currentUpdateSource;
+            var currentCancellationToken = _updateSource.Token;
+            _updateToken = currentCancellationToken;
+
+            ProgressBarVisibility = Visibility.Hidden;
+            _isQueryRunning = true;
+
+            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+
+            // handle the exclusiveness of plugin using action keyword
+            RemoveOldQueryResults(query);
+
+            _lastQuery = query;
+
+            var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            Task.Run(async () =>
+                {
+                    if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
+                    {
+                        // Wait 45 millisecond for query change in global query
+                        // if query changes, return so that it won't be calculated
+                        await Task.Delay(45, currentCancellationToken);
+                        if (currentCancellationToken.IsCancellationRequested)
+                            return;
+                    }
+
+                    _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                        if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                        {
+                            ProgressBarVisibility = Visibility.Visible;
+                        }
+                    }, currentCancellationToken);
+
+                    Task[] tasks = new Task[plugins.Count];
+                    try
+                    {
+                        for (var i = 0; i < plugins.Count; i++)
+                        {
+                            if (!plugins[i].Metadata.Disabled)
+                            {
+                                tasks[i] = QueryTask(plugins[i]);
+                            }
+                            else
+                            {
+                                tasks[i] = Task.CompletedTask; // Avoid Null
+                            }
+                        }
+
+                        // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                        await Task.WhenAll(tasks);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // nothing to do here
+                    }
+
+                    if (currentCancellationToken.IsCancellationRequested)
+                        return;
+
+                    // this should happen once after all queries are done so progress bar should continue
+                    // until the end of all querying
+                    _isQueryRunning = false;
+                    if (!currentCancellationToken.IsCancellationRequested)
+                    {
+                        // update to hidden if this is still the current query
+                        ProgressBarVisibility = Visibility.Hidden;
+                    }
+
+                    // Local function
+                    async Task QueryTask(PluginPair plugin)
+                    {
+                        // Since it is wrapped within a Task.Run, the synchronous context is null
+                        // Task.Yield will force it to run in ThreadPool
+                        await Task.Yield();
+
+                        var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
+                        if (!currentCancellationToken.IsCancellationRequested)
+                            _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query,
+                                currentCancellationToken));
+                    }
+                }, currentCancellationToken)
+                .ContinueWith(t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
+                    TaskContinuationOptions.OnlyOnFaulted);
         }
+
 
         private void RemoveOldQueryResults(Query query)
         {
             string lastKeyword = _lastQuery.ActionKeyword;
+
             string keyword = query.ActionKeyword;
             if (string.IsNullOrEmpty(lastKeyword))
             {
@@ -599,7 +620,6 @@ namespace Flow.Launcher.ViewModel
             var selected = SelectedResults == ContextMenu;
             return selected;
         }
-
 
         private bool HistorySelected()
         {
@@ -753,43 +773,23 @@ namespace Flow.Launcher.ViewModel
 #endif
 
 
-            foreach (var result in resultsForUpdates.SelectMany(u => u.Results))
+            foreach (var metaResults in resultsForUpdates)
             {
-                if (_topMostRecord.IsTopMost(result))
+                foreach (var result in metaResults.Results)
                 {
-                    result.Score = int.MaxValue;
-                }
-                else
-                {
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5;
+                    if (_topMostRecord.IsTopMost(result))
+                    {
+                        result.Score = int.MaxValue;
+                    }
+                    else
+                    {
+                        var priorityScore = metaResults.Metadata.Priority * 150;
+                        result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
+                    }
                 }
             }
 
             Results.AddResults(resultsForUpdates, token);
-        }
-
-        /// <summary>U
-        /// To avoid deadlock, this method should not called from main thread
-        /// </summary>
-        public void UpdateResultView(List<Result> list, PluginMetadata metadata, Query originQuery)
-        {
-            foreach (var result in list)
-            {
-                if (_topMostRecord.IsTopMost(result))
-                {
-                    result.Score = int.MaxValue;
-                }
-                else
-                {
-                    var priorityScore = metadata.Priority * 150;
-                    result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
-                }
-            }
-
-            if (originQuery.RawQuery == _lastQuery.RawQuery)
-            {
-                Results.AddResults(list, metadata.ID);
-            }
         }
 
         #endregion
