@@ -76,8 +76,8 @@ namespace Flow.Launcher.ViewModel
             _selectedResults = Results;
 
             InitializeKeyCommands();
-            RegisterResultsUpdatedEvent();
             RegisterViewUpdate();
+            RegisterResultsUpdatedEvent();
 
             SetHotkey(_settings.Hotkey, OnHotkey);
             SetCustomPluginHotkey();
