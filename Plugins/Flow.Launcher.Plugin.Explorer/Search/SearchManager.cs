@@ -42,9 +42,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
             if (string.IsNullOrEmpty(query.Search))
-                return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks);
+                return quickFolderAccess.FolderListAll(query, settings.QuickAccessLinks);
 
-            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks);
+            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickAccessLinks);
 
             if (quickFolderLinks.Count > 0)
                 results.AddRange(quickFolderLinks);

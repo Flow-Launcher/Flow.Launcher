@@ -51,7 +51,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
 
-                if (!Settings.QuickFolderAccessLinks.Any(x => x.Path == record.FullPath))
+                if (!Settings.QuickAccessLinks.Any(x => x.Path == record.FullPath))
                 {
                     contextMenus.Add(new Result
                     {
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
-                                Settings.QuickFolderAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
+                                Settings.QuickAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
 
                                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
                                                                             string.Format(

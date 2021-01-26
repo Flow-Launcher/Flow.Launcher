@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             this.viewModel = viewModel;
 
-            lbxFolderLinks.ItemsSource = this.viewModel.Settings.QuickFolderAccessLinks;
+            lbxFolderLinks.ItemsSource = this.viewModel.Settings.QuickAccessLinks;
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
 
@@ -209,7 +209,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     {
                         if (expFolderLinks.IsExpanded)
                         {
-                            var link = viewModel.Settings.QuickFolderAccessLinks.First(x => x.Path == selectedRow.Path);
+                            var link = viewModel.Settings.QuickAccessLinks.First(x => x.Path == selectedRow.Path);
                             link.Path = folderBrowserDialog.SelectedPath;
                         }
 
@@ -252,8 +252,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (files != null && files.Count() > 0)
             {
-                if (expFolderLinks.IsExpanded && viewModel.Settings.QuickFolderAccessLinks == null)
-                    viewModel.Settings.QuickFolderAccessLinks = new List<AccessLink>();
+                if (expFolderLinks.IsExpanded && viewModel.Settings.QuickAccessLinks == null)
+                    viewModel.Settings.QuickAccessLinks = new List<AccessLink>();
 
                 foreach (string s in files)
                 {
@@ -275,12 +275,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void AddFolderLink(AccessLink newFolderLink)
         {
             if (expFolderLinks.IsExpanded
-                    && !viewModel.Settings.QuickFolderAccessLinks.Any(x => x.Path == newFolderLink.Path))
+                    && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newFolderLink.Path))
             {
-                if (viewModel.Settings.QuickFolderAccessLinks == null)
-                    viewModel.Settings.QuickFolderAccessLinks = new List<AccessLink>();
+                if (viewModel.Settings.QuickAccessLinks == null)
+                    viewModel.Settings.QuickAccessLinks = new List<AccessLink>();
 
-                viewModel.Settings.QuickFolderAccessLinks.Add(newFolderLink);
+                viewModel.Settings.QuickAccessLinks.Add(newFolderLink);
             }
 
             if (expExcludedPaths.IsExpanded

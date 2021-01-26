@@ -8,7 +8,7 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         public int MaxResult { get; set; } = 100;
 
-        public List<AccessLink> QuickFolderAccessLinks { get; set; } = new List<AccessLink>();
+        public List<AccessLink> QuickAccessLinks { get; set; } = new List<AccessLink>();
 
         public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
 

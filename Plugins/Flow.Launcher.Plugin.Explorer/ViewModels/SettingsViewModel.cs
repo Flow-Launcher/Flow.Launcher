@@ -32,7 +32,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             storage.Save();
         }
 
-        internal void RemoveFolderLinkFromQuickFolders(AccessLink selectedRow) => Settings.QuickFolderAccessLinks.Remove(selectedRow);
+        internal void RemoveFolderLinkFromQuickFolders(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);
 
         internal void RemoveFolderLinkFromExcludedIndexPaths(AccessLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
 
