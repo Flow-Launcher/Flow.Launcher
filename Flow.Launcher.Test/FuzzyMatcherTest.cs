@@ -5,6 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Test
 {
@@ -37,8 +38,8 @@ namespace Flow.Launcher.Test
         {
             var listToReturn = new List<int>();
 
-            Enum.GetValues(typeof(StringMatcher.SearchPrecisionScore))
-                .Cast<StringMatcher.SearchPrecisionScore>()
+            Enum.GetValues(typeof(SearchPrecisionScore))
+                .Cast<SearchPrecisionScore>()
                 .ToList()
                 .ForEach(x => listToReturn.Add((int)x));
 
@@ -145,20 +146,20 @@ namespace Flow.Launcher.Test
                 $"Expected score for compare string '{compareString}': {expectedScore}, Actual: {rawScore}");
         }
 
-        [TestCase("goo", "Google Chrome", StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("chr", "Google Chrome", StringMatcher.SearchPrecisionScore.Low, true)]
-        [TestCase("chr", "Chrome", StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("chr", "Help cure hope raise on mind entity Chrome", StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("chr", "Help cure hope raise on mind entity Chrome", StringMatcher.SearchPrecisionScore.Low, true)]
-        [TestCase("chr", "Candy Crush Saga from King", StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("chr", "Candy Crush Saga from King", StringMatcher.SearchPrecisionScore.None, true)]
-        [TestCase("ccs", "Candy Crush Saga from King", StringMatcher.SearchPrecisionScore.Low, true)]
-        [TestCase("cand", "Candy Crush Saga from King",StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("cand", "Help cure hope raise on mind entity Chrome", StringMatcher.SearchPrecisionScore.Regular, false)]
+        [TestCase("goo", "Google Chrome", SearchPrecisionScore.Regular, true)]
+        [TestCase("chr", "Google Chrome", SearchPrecisionScore.Low, true)]
+        [TestCase("chr", "Chrome", SearchPrecisionScore.Regular, true)]
+        [TestCase("chr", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Regular, false)]
+        [TestCase("chr", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Low, true)]
+        [TestCase("chr", "Candy Crush Saga from King", SearchPrecisionScore.Regular, false)]
+        [TestCase("chr", "Candy Crush Saga from King", SearchPrecisionScore.None, true)]
+        [TestCase("ccs", "Candy Crush Saga from King", SearchPrecisionScore.Low, true)]
+        [TestCase("cand", "Candy Crush Saga from King",SearchPrecisionScore.Regular, true)]
+        [TestCase("cand", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Regular, false)]
         public void WhenGivenDesiredPrecision_ThenShouldReturn_AllResultsGreaterOrEqual(
             string queryString,
             string compareString,
-            StringMatcher.SearchPrecisionScore expectedPrecisionScore,
+            SearchPrecisionScore expectedPrecisionScore,
             bool expectedPrecisionResult)
         {
             // When            
@@ -182,32 +183,32 @@ namespace Flow.Launcher.Test
                 $"Precision Score: {(int)expectedPrecisionScore}");
         }
 
-        [TestCase("exce", "OverLeaf-Latex: An online LaTeX editor", StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("term", "Windows Terminal (Preview)", StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("sql s managa", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("sql' s manag", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("sql s manag", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("sql manag", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("sql", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("sql serv", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("servez", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("sql servz", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("sql serv man", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("sql studio", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("mic", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("chr", "Shutdown", StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("mssms", MicrosoftSqlServerManagementStudio, StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("chr", "Change settings for text-to-speech and for speech recognition (if installed).", StringMatcher.SearchPrecisionScore.Regular, false)]
-        [TestCase("ch r", "Change settings for text-to-speech and for speech recognition (if installed).", StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("a test", "This is a test", StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("test", "This is a test", StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("cod", VisualStudioCode, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("code", VisualStudioCode, StringMatcher.SearchPrecisionScore.Regular, true)]
-        [TestCase("codes", "Visual Studio Codes", StringMatcher.SearchPrecisionScore.Regular, true)]
+        [TestCase("exce", "OverLeaf-Latex: An online LaTeX editor", SearchPrecisionScore.Regular, false)]
+        [TestCase("term", "Windows Terminal (Preview)", SearchPrecisionScore.Regular, true)]
+        [TestCase("sql s managa", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
+        [TestCase("sql' s manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
+        [TestCase("sql s manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("sql manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("sql", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("sql serv", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("servez", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
+        [TestCase("sql servz", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
+        [TestCase("sql serv man", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("sql studio", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("mic", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
+        [TestCase("chr", "Shutdown", SearchPrecisionScore.Regular, false)]
+        [TestCase("mssms", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
+        [TestCase("chr", "Change settings for text-to-speech and for speech recognition (if installed).", SearchPrecisionScore.Regular, false)]
+        [TestCase("ch r", "Change settings for text-to-speech and for speech recognition (if installed).", SearchPrecisionScore.Regular, true)]
+        [TestCase("a test", "This is a test", SearchPrecisionScore.Regular, true)]
+        [TestCase("test", "This is a test", SearchPrecisionScore.Regular, true)]
+        [TestCase("cod", VisualStudioCode, SearchPrecisionScore.Regular, true)]
+        [TestCase("code", VisualStudioCode, SearchPrecisionScore.Regular, true)]
+        [TestCase("codes", "Visual Studio Codes", SearchPrecisionScore.Regular, true)]
         public void WhenGivenQuery_ShouldReturnResults_ContainingAllQuerySubstrings(
             string queryString,
             string compareString,
-            StringMatcher.SearchPrecisionScore expectedPrecisionScore,
+            SearchPrecisionScore expectedPrecisionScore,
             bool expectedPrecisionResult)
         {
             // When
@@ -238,7 +239,7 @@ namespace Flow.Launcher.Test
             string queryString, string compareString1, string compareString2)
         {
             // When
-            var matcher = new StringMatcher { UserSettingSearchPrecision = StringMatcher.SearchPrecisionScore.Regular };
+            var matcher = new StringMatcher { UserSettingSearchPrecision = SearchPrecisionScore.Regular };
 
             // Given
             var compareString1Result = matcher.FuzzyMatch(queryString, compareString1);
