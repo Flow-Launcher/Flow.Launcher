@@ -42,5 +42,8 @@
     <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Failed to open Windows Indexing Options</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess">Add to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
 
 </ResourceDictionary>
