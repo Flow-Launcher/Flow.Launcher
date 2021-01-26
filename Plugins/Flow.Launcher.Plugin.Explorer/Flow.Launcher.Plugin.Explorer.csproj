@@ -1,12 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
@@ -26,73 +27,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="Images\explorer.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-
-    <None Include="Images\index.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-
-    <None Include="Images\excludeindexpath.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    
-    <None Include="Images\copy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  
-    <None Include="Images\deletefilefolder.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  
-    <Content Include="Images\file.png">
+    <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-
-    <None Include="Images\folder.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-
-    <None Include="Images\user.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-
-    <None Include="Images\windowsindexingoptions.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-
-    <Content Include="Languages\en.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Languages\zh-cn.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Languages\zh-tw.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Languages\de.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Languages\pl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
-    <Content Include="Languages\tr.xaml">
+    <Content Include="Languages\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

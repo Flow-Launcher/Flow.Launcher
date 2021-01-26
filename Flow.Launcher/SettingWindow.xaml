@@ -8,6 +8,7 @@
         xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         x:Class="Flow.Launcher.SettingWindow"
         mc:Ignorable="d"
         Icon="Images\app.png"
@@ -172,10 +173,14 @@
                                 <TextBlock Text="{Binding PluginPair.Metadata.Description}"
                                            Grid.Row="1" Opacity="0.5" />
                                 <DockPanel Grid.Row="2" Margin="0 10 0 8" HorizontalAlignment="Right">
-
+                                    <TextBlock Text="Priority" Margin="20,0,0,0"/>
+                                    <TextBlock Text="{Binding Priority}"
+                                               ToolTip="Change Plugin Results Priority"
+                                               Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
+                                               MouseUp="OnPluginPriorityClick"/>
                                     <TextBlock Text="{DynamicResource actionKeywords}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
-                                               Margin="20 0 0 0"/>
+                                               Margin="5 0 0 0"/>
                                     <TextBlock Text="{Binding ActionKeywordsText}"
                                                Visibility="{Binding ActionKeywordsVisibility}"
                                                ToolTip="Change Action Keywords"
@@ -252,7 +257,8 @@
                                              Text="{DynamicResource hiThere}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}"
                                              Margin="18 0 56 0" />
-                                    <Image Source="{Binding ThemeImage}" HorizontalAlignment="Right" />
+                                    <svgc:SvgControl Source="{Binding ThemeImage}" Height="48" Width="48" HorizontalAlignment="Right" 
+                                                     Background="Transparent" />
                                     <ContentControl Grid.Row="1">
                                         <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
                                     </ContentControl>
@@ -429,8 +435,8 @@
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ActivatedTimes, Mode=OneWay}" FontSize="12" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource website}"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
-                    <Hyperlink NavigateUri="{Binding Github, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                        <Run Text="{Binding Github, Mode=OneWay}" />
+                    <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                        <Run Text="{Binding Website, Mode=OneWay}" />
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Version" />

@@ -50,14 +50,18 @@ namespace Flow.Launcher.Infrastructure.Logger
             return valid;
         }
 
-        
+
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void Exception(string className, string message, System.Exception exception, [CallerMemberName] string methodName = "")
         {
+#if DEBUG
+            throw exception;
+#else
             var classNameWithMethod = CheckClassAndMessageAndReturnFullClassWithMethod(className, message, methodName);
 
             ExceptionInternal(classNameWithMethod, message, exception);
+#endif
         }
 
         private static string CheckClassAndMessageAndReturnFullClassWithMethod(string className, string message,
@@ -128,7 +132,7 @@ namespace Flow.Launcher.Infrastructure.Logger
         public static void Exception(string message, System.Exception e)
         {
 #if DEBUG
-            throw e;
+           throw e;
 #else
             if (FormatValid(message))
             {

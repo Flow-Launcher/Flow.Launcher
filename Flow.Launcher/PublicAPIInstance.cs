@@ -78,9 +78,9 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public void ReloadAllPluginData()
+        public Task ReloadAllPluginData()
         {
-            PluginManager.ReloadData();
+            return PluginManager.ReloadData();
         }
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "")
@@ -92,7 +92,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
+                var msg = useMainWindowAsOwner ? new Msg { Owner = Application.Current.MainWindow } : new Msg();
                 msg.Show(title, subTitle, iconPath);
             });
         }
@@ -113,11 +113,6 @@ namespace Flow.Launcher
         public void StopLoadingBar()
         {
             _mainVM.ProgressBarVisibility = Visibility.Collapsed;
-        }
-
-        public void InstallPlugin(string path)
-        {
-            Application.Current.Dispatcher.Invoke(() => PluginManager.InstallPlugin(path));
         }
 
         public string GetTranslation(string key)

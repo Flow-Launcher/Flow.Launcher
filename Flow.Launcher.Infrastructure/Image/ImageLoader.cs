@@ -18,6 +18,8 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
         private static IImageHashGenerator _hashGenerator;
         private static bool EnableImageHash = true;
+        public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
+
 
         private static readonly string[] ImageExtensions =
         {
@@ -36,6 +38,7 @@ namespace Flow.Launcher.Infrastructure.Image
             _hashGenerator = new ImageHashGenerator();
 
             var usage = LoadStorageToConcurrentDictionary();
+
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
@@ -61,7 +64,7 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                _storage.Save(ImageCache.Data.Select(x => (x.Key, x.Value.usage)).ToDictionary(x => x.Key, y => y.usage));
+                _storage.Save(ImageCache.Data.Select(x => (x.Key, x.Value.usage)).ToDictionary(x => x.Key, x => x.usage));
             }
         }
 
@@ -211,6 +214,11 @@ namespace Flow.Launcher.Infrastructure.Image
                 option);
         }
 
+        public static bool CacheContainImage(string path)
+        {
+            return ImageCache.ContainsKey(path) && ImageCache[path] != null;
+        }
+
         public static ImageSource Load(string path, bool loadFullImage = false)
         {
             var imageResult = LoadInternal(path, loadFullImage);
@@ -221,7 +229,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-                    
+
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
                         img = ImageCache[key] ?? img;

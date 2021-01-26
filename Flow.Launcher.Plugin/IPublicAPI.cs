@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin
 {
@@ -34,7 +35,7 @@ namespace Flow.Launcher.Plugin
         /// Plugin's in memory data with new content
         /// added by user.
         /// </summary>
-        void ReloadAllPluginData();
+        Task ReloadAllPluginData();
 
         /// <summary>
         /// Check for new Flow Launcher update
@@ -62,12 +63,6 @@ namespace Flow.Launcher.Plugin
         /// Open setting dialog
         /// </summary>
         void OpenSettingDialog();
-
-        /// <summary>
-        /// Install Flow Launcher plugin
-        /// </summary>
-        /// <param name="path">Plugin path (ends with .flowlauncher)</param>
-        void InstallPlugin(string path);
 
         /// <summary>
         /// Get translation of current language

@@ -5,8 +5,8 @@
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launchera</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Pri tomto dopyte umiestniť navrchu</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto dopyte</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Pri tomto zadaní umiestniť navrchu</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto zadaní</system:String>
     <system:String x:Key="executeQuery">Spustiť dopyt: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Posledný čas realizácie: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Otvoriť</system:String>
@@ -22,7 +22,7 @@
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
     <system:String x:Key="language">Jazyk</system:String>
-    <system:String x:Key="lastQueryMode">Posledný dopyt</system:String>
+    <system:String x:Key="lastQueryMode">Posledné vyhľadávanie</system:String>
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
@@ -34,7 +34,7 @@
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
-    <system:String x:Key="ShouldUsePinyin">Dá sa použiť Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyin">Použiť Pinyin</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -45,8 +45,8 @@
     <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">Autor</system:String>
-    <system:String x:Key="plugin_init_time">Príprava: {0}ms</system:String>
-    <system:String x:Key="plugin_query_time">Čas dopytu: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Príprava:</system:String>
+    <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
@@ -96,11 +96,11 @@
     <system:String x:Key="version">Verzia</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
     <system:String x:Key="checkUpdates">Skontrolovať aktualizácie</system:String>
-    <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, prosím, reštartujte Flow Launcher.</system:String>
+    <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
     <system:String x:Key="checkUpdatesFailed">Kontrola aktualizácií zlyhala, prosím, skontrolujte pripojenie na internet a nastavenie proxy k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
         Sťahovanie aktualizácií zlyhalo, skontrolujte pripojenie na internet a nastavenie proxy k github-cloud.s3.amazonaws.com, 
-        alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácií.
+        alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
 

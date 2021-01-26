@@ -43,6 +43,8 @@
     <system:String x:Key="actionKeywords">Action keyword:</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
     <system:String x:Key="newActionKeyword">New action keyword:</system:String>
+    <system:String x:Key="currentPriority">Current Priority: </system:String>
+    <system:String x:Key="newPriority">New Priority: </system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
     <system:String x:Key="author">Author</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
@@ -72,7 +74,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU.</system:String>
-    <system:String x:Key="shadowEffectPerformance">Not recommended if you computer performance is limited.</system:String>
+    <system:String x:Key="shadowEffectPerformance">Not recommended if your computer performance is limited.</system:String>
 
     <!--Setting Proxy-->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
@@ -104,6 +106,10 @@
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
 
+    <!--Priority Setting Dialog-->
+    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
+    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
     <system:String x:Key="newActionKeywords">New Action Keyword</system:String>

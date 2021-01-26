@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <ProjectGuid>{FDED22C8-B637-42E8-824A-63B5B6E05A3A}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.PluginIndicator</RootNamespace>
@@ -10,6 +10,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -46,55 +47,12 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="Images\work.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Languages\en.xaml">
+    <Content Include="Languages\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Languages\zh-cn.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Languages\zh-tw.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Languages\de.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Languages\pl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Languages\tr.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
+    <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

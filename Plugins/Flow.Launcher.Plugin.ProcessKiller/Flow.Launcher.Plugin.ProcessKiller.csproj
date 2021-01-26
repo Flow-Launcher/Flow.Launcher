@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <AssemblyName>Flow.Launcher.Plugin.ProcessKiller</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.ProcessKiller</PackageId>
     <Authors>Flow-Launcher</Authors>
@@ -36,12 +36,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Images\app.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Languages\en.xaml">
+    <Content Include="Languages\*.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="plugin.json">

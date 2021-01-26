@@ -1,13 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <ProjectGuid>{0B9DE348-9361-4940-ADB6-F5953BFFCCEC}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.Sys</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.Sys</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
@@ -40,52 +41,14 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="Images\checkupdate.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="Images\recyclebin.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="Images\shutdown.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="Images\sleep.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Languages\en.xaml">
+    <Content Include="Languages\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Languages\zh-cn.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
+    <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Languages\zh-tw.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Languages\de.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Languages\pl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Languages\tr.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Page Include="SysSettings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   
   <ItemGroup>
@@ -93,39 +56,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Images\lock.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Images\logoff.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Images\close.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Images\app.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Images\restart.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Images\Images\" />
-  </ItemGroup>
-  
 </Project>
