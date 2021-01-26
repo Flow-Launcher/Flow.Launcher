@@ -1,5 +1,6 @@
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Flow.Launcher.Plugin.Explorer
             if (Settings.QuickFolderAccessLinks.Any())
             {
                 Settings.QuickAccessLinks = Settings.QuickFolderAccessLinks;
-                Settings.QuickFolderAccessLinks = null;
+                Settings.QuickFolderAccessLinks = new List<AccessLink>();
             }
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
