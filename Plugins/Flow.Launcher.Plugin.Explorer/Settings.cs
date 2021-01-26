@@ -1,5 +1,5 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin.Explorer

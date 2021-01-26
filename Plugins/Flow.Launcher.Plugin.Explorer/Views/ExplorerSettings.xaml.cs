@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using System;
 using System.Collections.Generic;

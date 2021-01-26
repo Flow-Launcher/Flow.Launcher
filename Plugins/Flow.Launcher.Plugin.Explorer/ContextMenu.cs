@@ -7,7 +7,7 @@ using System.Windows;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;

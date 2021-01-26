@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink
+namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 {
     public class QuickAccess
     {

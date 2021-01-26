@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink
+namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 {
     public class AccessLink
     {

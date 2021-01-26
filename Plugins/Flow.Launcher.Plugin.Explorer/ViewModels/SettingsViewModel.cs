@@ -1,7 +1,7 @@
 ﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLink;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
