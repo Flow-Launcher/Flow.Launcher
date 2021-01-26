@@ -13,7 +13,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
             resultManager = new ResultManager(context);
         }
 
-        internal List<Result> FolderListMatched(Query query, List<AccessLink> folderLinks)
+        internal List<Result> AccessLinkListMatched(Query query, List<AccessLink> folderLinks)
         {
             if (string.IsNullOrEmpty(query.Search))
                 return new List<Result>();
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                 .ToList();
         }
 
-        internal List<Result> FolderListAll(Query query, List<AccessLink> folderLinks)
+        internal List<Result> AccessLinkListAll(Query query, List<AccessLink> folderLinks)
             => folderLinks
                 .Where(x => x.Type == ResultType.Folder)
                 .Select(item => 

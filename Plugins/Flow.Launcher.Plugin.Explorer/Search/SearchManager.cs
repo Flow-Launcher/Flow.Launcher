@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private readonly IndexSearch indexSearch;
 
-        private readonly QuickAccess quickFolderAccess;
+        private readonly QuickAccess quickAccess;
 
         private readonly ResultManager resultManager;
 
@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             indexSearch = new IndexSearch(context);
             resultManager = new ResultManager(context);
             this.settings = settings;
-            quickFolderAccess = new QuickAccess(context);
+            quickAccess = new QuickAccess(context);
         }
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
@@ -42,12 +42,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
             if (string.IsNullOrEmpty(query.Search))
-                return quickFolderAccess.FolderListAll(query, settings.QuickAccessLinks);
+                return quickAccess.AccessLinkListAll(query, settings.QuickAccessLinks);
 
-            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickAccessLinks);
+            var quickaccessLinks = quickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
 
-            if (quickFolderLinks.Count > 0)
-                results.AddRange(quickFolderLinks);
+            if (quickaccessLinks.Count > 0)
+                results.AddRange(quickaccessLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
