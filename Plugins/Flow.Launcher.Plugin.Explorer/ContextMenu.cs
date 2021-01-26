@@ -75,6 +75,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                             return true;
                         },
+                        SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
+                        TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
                         IcoPath = Constants.QuickAccessImagePath
                     });
                 }

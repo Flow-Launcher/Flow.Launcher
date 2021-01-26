@@ -45,5 +45,6 @@
     <system:String x:Key="plugin_explorer_add_to_quickaccess">Add to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
 
 </ResourceDictionary>
