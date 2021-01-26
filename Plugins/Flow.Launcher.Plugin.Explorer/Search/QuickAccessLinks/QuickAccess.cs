@@ -13,23 +13,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
             resultManager = new ResultManager(context);
         }
 
-        internal List<Result> AccessLinkListMatched(Query query, List<AccessLink> folderLinks)
+        internal List<Result> AccessLinkListMatched(Query query, List<AccessLink> accessLinks)
         {
             if (string.IsNullOrEmpty(query.Search))
                 return new List<Result>();
 
             string search = query.Search.ToLower();
 
-            var queriedFolderLinks =
-                folderLinks.Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
+            var queriedAccessLinks =
+                accessLinks.Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
 
-            return queriedFolderLinks
+            return queriedAccessLinks
                 .Where(x => x.Type == ResultType.Folder)
                 .Select(item => 
                     resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
                     .OrderBy(x => x.Title)
                 .Concat(
-                queriedFolderLinks
+                queriedAccessLinks
                 .Where(x => x.Type == ResultType.File)
                 .Select(item =>
                     resultManager.CreateFileResult(item.Path, query))
@@ -37,14 +37,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                 .ToList();
         }
 
-        internal List<Result> AccessLinkListAll(Query query, List<AccessLink> folderLinks)
-            => folderLinks
+        internal List<Result> AccessLinkListAll(Query query, List<AccessLink> accessLinks)
+            => accessLinks
                 .Where(x => x.Type == ResultType.Folder)
                 .Select(item => 
                     resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
                     .OrderBy(x => x.Title)
                 .Concat(
-                folderLinks
+                accessLinks
                 .Where(x => x.Type == ResultType.File)
                 .Select(item =>
                     resultManager.CreateFileResult(item.Path, query))

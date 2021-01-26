@@ -170,10 +170,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     if (expAccessLinks.IsExpanded)
-                        viewModel.RemoveFolderLinkFromQuickFolders(selectedRow);
+                        viewModel.RemoveLinkFromQuickAccess(selectedRow);
 
                     if (expExcludedPaths.IsExpanded)
-                        viewModel.RemoveFolderLinkFromExcludedIndexPaths(selectedRow);
+                        viewModel.RemoveAccessLinkFromExcludedIndexPaths(selectedRow);
 
                     RefreshView();
                 }
@@ -235,12 +235,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             var folderBrowserDialog = new FolderBrowserDialog();
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                var newFolderLink = new AccessLink
+                var newAccessLink = new AccessLink
                 {
                     Path = folderBrowserDialog.SelectedPath
                 };
 
-                AddFolderLink(newFolderLink);
+                AddAccessLink(newAccessLink);
             }
 
             RefreshView();
@@ -264,7 +264,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                             Path = s
                         };
 
-                        AddFolderLink(newFolderLink);
+                        AddAccessLink(newFolderLink);
                     }
 
                     RefreshView();
@@ -272,24 +272,24 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
         }
 
-        private void AddFolderLink(AccessLink newFolderLink)
+        private void AddAccessLink(AccessLink newAccessLink)
         {
             if (expAccessLinks.IsExpanded
-                    && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newFolderLink.Path))
+                    && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newAccessLink.Path))
             {
                 if (viewModel.Settings.QuickAccessLinks == null)
                     viewModel.Settings.QuickAccessLinks = new List<AccessLink>();
 
-                viewModel.Settings.QuickAccessLinks.Add(newFolderLink);
+                viewModel.Settings.QuickAccessLinks.Add(newAccessLink);
             }
 
             if (expExcludedPaths.IsExpanded
-                && !viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == newFolderLink.Path))
+                && !viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == newAccessLink.Path))
             {
                 if (viewModel.Settings.IndexSearchExcludedSubdirectoryPaths == null)
                     viewModel.Settings.IndexSearchExcludedSubdirectoryPaths = new List<AccessLink>();
 
-                viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Add(newFolderLink);
+                viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Add(newAccessLink);
             }
         }
 
