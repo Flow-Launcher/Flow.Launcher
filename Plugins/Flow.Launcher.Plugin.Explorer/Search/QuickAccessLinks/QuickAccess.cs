@@ -21,34 +21,37 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
             string search = query.Search.ToLower();
 
             var queriedAccessLinks =
-                accessLinks.Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase));
+                accessLinks
+                .Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(x => x.Type)
+                .ThenBy(x => x.Nickname);
 
             return queriedAccessLinks
                 .Where(x => x.Type == ResultType.Folder)
                 .Select(item => 
                     resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
-                    .OrderBy(x => x.Title)
                 .Concat(
                 queriedAccessLinks
                 .Where(x => x.Type == ResultType.File)
                 .Select(item =>
-                    resultManager.CreateFileResult(item.Path, query))
-                    .OrderBy(x => x.Title))
+                    resultManager.CreateFileResult(item.Path, query)))
                 .ToList();
         }
 
         internal List<Result> AccessLinkListAll(Query query, List<AccessLink> accessLinks)
             => accessLinks
+                .OrderBy(x => x.Type)
+                .ThenBy(x => x.Nickname)
                 .Where(x => x.Type == ResultType.Folder)
                 .Select(item => 
                     resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
-                    .OrderBy(x => x.Title)
                 .Concat(
                 accessLinks
+                .OrderBy(x => x.Type)
+                .ThenBy(x => x.Nickname)
                 .Where(x => x.Type == ResultType.File)
                 .Select(item =>
-                    resultManager.CreateFileResult(item.Path, query))
-                    .OrderBy(x => x.Title))
+                    resultManager.CreateFileResult(item.Path, query)))
                 .ToList();
     }
 }

@@ -63,27 +63,17 @@ namespace Flow.Launcher.Plugin.Explorer
                         SubTitle = $"Add the current {fileOrFolder} to Quick Access",
                         Action = (context) =>
                         {
-                            try
-                            {
-                                Settings.QuickAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
+                            Settings.QuickAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
 
-                                Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
-                                                                            string.Format(
-                                                                                Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
-                                                                                    fileOrFolder),
-                                                                                Constants.ExplorerIconImageFullPath);
+                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
+                                                                        string.Format(
+                                                                            Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
+                                                                                fileOrFolder),
+                                                                            Constants.ExplorerIconImageFullPath);
 
-                                ViewModel.Save();
+                            ViewModel.Save();
 
-                                return true;
-                            }
-                            catch (Exception e)
-                            {
-                                var message = "Fail to add to Quick Access";
-                                LogException(message, e);
-                                Context.API.ShowMsg(message);
-                                return false;
-                            }
+                            return true;
                         },
                         IcoPath = Constants.QuickAccessImagePath
                     });

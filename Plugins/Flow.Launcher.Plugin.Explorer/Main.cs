@@ -36,7 +36,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
             // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
             if (Settings.QuickFolderAccessLinks.Any())
+            {
                 Settings.QuickAccessLinks = Settings.QuickFolderAccessLinks;
+                Settings.QuickFolderAccessLinks = null;
+            }
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
