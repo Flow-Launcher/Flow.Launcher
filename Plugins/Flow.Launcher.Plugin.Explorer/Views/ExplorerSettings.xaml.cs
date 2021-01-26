@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             this.viewModel = viewModel;
 
-            lbxFolderLinks.ItemsSource = this.viewModel.Settings.QuickAccessLinks;
+            lbxAccessLinks.ItemsSource = this.viewModel.Settings.QuickAccessLinks;
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
 
@@ -54,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public void RefreshView()
         {
-            lbxFolderLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+            lbxAccessLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
 
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
 
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             btnEdit.Visibility = Visibility.Hidden;
             btnAdd.Visibility = Visibility.Hidden;
 
-            if (expFolderLinks.IsExpanded || expExcludedPaths.IsExpanded || expActionKeywords.IsExpanded)
+            if (expAccessLinks.IsExpanded || expExcludedPaths.IsExpanded || expActionKeywords.IsExpanded)
             {
                 if (!expActionKeywords.IsExpanded)
                     btnAdd.Visibility = Visibility.Visible;
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     && btnEdit.Visibility == Visibility.Hidden)
                     btnEdit.Visibility = Visibility.Visible;
 
-                if ((lbxFolderLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0)
+                if ((lbxAccessLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0)
                     && btnDelete.Visibility == Visibility.Visible
                     && btnEdit.Visibility == Visibility.Visible)
                 {
@@ -79,8 +79,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     btnEdit.Visibility = Visibility.Hidden;
                 }
 
-                if (expFolderLinks.IsExpanded
-                    && lbxFolderLinks.Items.Count > 0
+                if (expAccessLinks.IsExpanded
+                    && lbxAccessLinks.Items.Count > 0
                     && btnDelete.Visibility == Visibility.Hidden
                     && btnEdit.Visibility == Visibility.Hidden)
                 {
@@ -98,7 +98,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 }
             }
 
-            lbxFolderLinks.Items.Refresh();
+            lbxAccessLinks.Items.Refresh();
 
             lbxExcludedPaths.Items.Refresh();
 
@@ -113,8 +113,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (expExcludedPaths.IsExpanded)
                 expExcludedPaths.IsExpanded = false;
 
-            if (expFolderLinks.IsExpanded)
-                expFolderLinks.IsExpanded = false;
+            if (expAccessLinks.IsExpanded)
+                expAccessLinks.IsExpanded = false;
 
             RefreshView();
         }
@@ -125,10 +125,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 expActionKeywords.Height = Double.NaN;
         }
 
-        private void expFolderLinks_Click(object sender, RoutedEventArgs e)
+        private void expAccessLinks_Click(object sender, RoutedEventArgs e)
         {
-            if (expFolderLinks.IsExpanded)
-                expFolderLinks.Height = 215;
+            if (expAccessLinks.IsExpanded)
+                expAccessLinks.Height = 215;
 
             if (expExcludedPaths.IsExpanded)
                 expExcludedPaths.IsExpanded = false;
@@ -139,19 +139,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             RefreshView();
         }
 
-        private void expFolderLinks_Collapsed(object sender, RoutedEventArgs e)
+        private void expAccessLinks_Collapsed(object sender, RoutedEventArgs e)
         {
-            if (!expFolderLinks.IsExpanded)
-                expFolderLinks.Height = Double.NaN;
+            if (!expAccessLinks.IsExpanded)
+                expAccessLinks.Height = Double.NaN;
         }
 
         private void expExcludedPaths_Click(object sender, RoutedEventArgs e)
         {
             if (expExcludedPaths.IsExpanded)
-                expFolderLinks.Height = Double.NaN;
+                expAccessLinks.Height = Double.NaN;
 
-            if (expFolderLinks.IsExpanded)
-                expFolderLinks.IsExpanded = false;
+            if (expAccessLinks.IsExpanded)
+                expAccessLinks.IsExpanded = false;
 
             if (expActionKeywords.IsExpanded)
                 expActionKeywords.IsExpanded = false;
@@ -161,7 +161,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var selectedRow = lbxFolderLinks.SelectedItem as AccessLink?? lbxExcludedPaths.SelectedItem as AccessLink;
+            var selectedRow = lbxAccessLinks.SelectedItem as AccessLink?? lbxExcludedPaths.SelectedItem as AccessLink;
 
             if (selectedRow != null)
             {
@@ -169,7 +169,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (expFolderLinks.IsExpanded)
+                    if (expAccessLinks.IsExpanded)
                         viewModel.RemoveFolderLinkFromQuickFolders(selectedRow);
 
                     if (expExcludedPaths.IsExpanded)
@@ -199,7 +199,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
             else
             {
-                var selectedRow = lbxFolderLinks.SelectedItem as AccessLink ?? lbxExcludedPaths.SelectedItem as AccessLink;
+                var selectedRow = lbxAccessLinks.SelectedItem as AccessLink ?? lbxExcludedPaths.SelectedItem as AccessLink;
 
                 if (selectedRow != null)
                 {
@@ -207,7 +207,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     folderBrowserDialog.SelectedPath = selectedRow.Path;
                     if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                     {
-                        if (expFolderLinks.IsExpanded)
+                        if (expAccessLinks.IsExpanded)
                         {
                             var link = viewModel.Settings.QuickAccessLinks.First(x => x.Path == selectedRow.Path);
                             link.Path = folderBrowserDialog.SelectedPath;
@@ -246,13 +246,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             RefreshView();
         }
 
-        private void lbxFolders_Drop(object sender, DragEventArgs e)
+        private void lbxAccessLinks_Drop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             if (files != null && files.Count() > 0)
             {
-                if (expFolderLinks.IsExpanded && viewModel.Settings.QuickAccessLinks == null)
+                if (expAccessLinks.IsExpanded && viewModel.Settings.QuickAccessLinks == null)
                     viewModel.Settings.QuickAccessLinks = new List<AccessLink>();
 
                 foreach (string s in files)
@@ -274,7 +274,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void AddFolderLink(AccessLink newFolderLink)
         {
-            if (expFolderLinks.IsExpanded
+            if (expAccessLinks.IsExpanded
                     && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newFolderLink.Path))
             {
                 if (viewModel.Settings.QuickAccessLinks == null)
@@ -293,7 +293,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
         }
 
-        private void lbxFolders_DragEnter(object sender, DragEventArgs e)
+        private void lbxAccessLinks_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {

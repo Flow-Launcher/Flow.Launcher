@@ -16,7 +16,7 @@
     <system:String x:Key="plugin_explorer_edit">Edit</system:String>
     <system:String x:Key="plugin_explorer_add">Add</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
-    <system:String x:Key="plugin_explorer_quickfolderaccess_header">Quick Folder Access Paths</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Link Paths</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Search Activation:</system:String>
