@@ -5,7 +5,7 @@
         Icon="Images\app.png"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="Custom Plugin Hotkey" Height="200" Width="674.766">
+        Title="{DynamicResource customeQueryHotkeyTitle}" Height="200" Width="674.766">
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close"/>
     </Window.InputBindings>

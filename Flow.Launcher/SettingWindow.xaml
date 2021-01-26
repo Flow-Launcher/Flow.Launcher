@@ -37,7 +37,7 @@
             <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="True" Margin="60,30,0,30">
                 <StackPanel Orientation="Vertical">
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding PortableMode}">
-                        <TextBlock Text="Portable Mode" />
+                        <TextBlock Text="{DynamicResource portableMode}" />
                     </ui:ToggleSwitch>
                     <CheckBox Margin="10" IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
                           Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck">
@@ -166,7 +166,7 @@
                                                 </TextBlock>
                                             </ToolTipService.ToolTip>
                                      </TextBlock>
-                                    <ui:ToggleSwitch Grid.Column="1" OffContent="Disabled" OnContent="Enabled" 
+                                    <ui:ToggleSwitch Grid.Column="1" OffContent="{DynamicResource disable}" OnContent="{DynamicResource enable}" 
                                                      MaxWidth="110" HorizontalAlignment="Right"
                                                      IsOn="{Binding PluginState}"/>
                                 </Grid>
