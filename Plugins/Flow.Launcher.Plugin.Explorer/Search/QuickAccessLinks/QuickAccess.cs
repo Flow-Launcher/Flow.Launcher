@@ -26,32 +26,25 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                 .OrderBy(x => x.Type)
                 .ThenBy(x => x.Nickname);
 
-            return queriedAccessLinks
-                .Where(x => x.Type == ResultType.Folder)
-                .Select(item => 
-                    resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
-                .Concat(
-                queriedAccessLinks
-                .Where(x => x.Type == ResultType.File)
-                .Select(item =>
-                    resultManager.CreateFileResult(item.Path, query)))
-                .ToList();
+            return queriedAccessLinks.Select(l => l.Type switch
+            {
+                ResultType.Folder => resultManager.CreateFolderResult(l.Nickname, l.Path, l.Path, query),
+                ResultType.File => resultManager.CreateFileResult(l.Path, query),
+                _ => throw new ArgumentOutOfRangeException()
+
+            }).ToList();
         }
 
         internal List<Result> AccessLinkListAll(Query query, List<AccessLink> accessLinks)
             => accessLinks
                 .OrderBy(x => x.Type)
                 .ThenBy(x => x.Nickname)
-                .Where(x => x.Type == ResultType.Folder)
-                .Select(item => 
-                    resultManager.CreateFolderResult(item.Nickname, item.Path, item.Path, query))
-                .Concat(
-                accessLinks
-                .OrderBy(x => x.Type)
-                .ThenBy(x => x.Nickname)
-                .Where(x => x.Type == ResultType.File)
-                .Select(item =>
-                    resultManager.CreateFileResult(item.Path, query)))
-                .ToList();
+                .Select(l => l.Type switch
+                {
+                    ResultType.Folder => resultManager.CreateFolderResult(l.Nickname, l.Path, l.Path, query),
+                    ResultType.File => resultManager.CreateFileResult(l.Path, query),
+                    _ => throw new ArgumentOutOfRangeException()
+
+                }).ToList();
     }
 }
