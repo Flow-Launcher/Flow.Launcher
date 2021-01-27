@@ -59,8 +59,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     contextMenus.Add(new Result
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess"),
-                        SubTitle = $"Add the current {fileOrFolder} to Quick Access",
+                        Title = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_title"),
+                        SubTitle = string.Format(Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_subtitle"), fileOrFolder),
                         Action = (context) =>
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
@@ -78,6 +78,31 @@ namespace Flow.Launcher.Plugin.Explorer
                         SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
                         TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
                         IcoPath = Constants.QuickAccessImagePath
+                    });
+                }
+                else
+                {
+                    contextMenus.Add(new Result
+                    {
+                        Title = Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_title"),
+                        SubTitle = string.Format(Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_subtitle"), fileOrFolder),
+                        Action = (context) =>
+                        {
+                            Settings.QuickAccessLinks.Remove(Settings.QuickAccessLinks.FirstOrDefault(x => x.Path == record.FullPath));
+
+                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess"),
+                                                                        string.Format(
+                                                                            Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
+                                                                                fileOrFolder),
+                                                                            Constants.ExplorerIconImageFullPath);
+
+                            ViewModel.Save();
+
+                            return true;
+                        },
+                        SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_remove_titletooltip"),
+                        TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_remove_titletooltip"),
+                        IcoPath = Constants.RemoveQuickAccessImagePath
                     });
                 }
                 
