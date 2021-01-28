@@ -41,7 +41,7 @@ namespace Flow.Launcher.Test
             Enum.GetValues(typeof(SearchPrecisionScore))
                 .Cast<SearchPrecisionScore>()
                 .ToList()
-                .ForEach(x => listToReturn.Add((int) x));
+                .ForEach(x => listToReturn.Add((int)x));
 
             return listToReturn;
         }
@@ -183,7 +183,7 @@ namespace Flow.Launcher.Test
                 $"Query:{queryString}{Environment.NewLine} " +
                 $"Compare:{compareString}{Environment.NewLine}" +
                 $"Raw Score: {matchResult.RawScore}{Environment.NewLine}" +
-                $"Precision Score: {(int) expectedPrecisionScore}");
+                $"Precision Score: {(int)expectedPrecisionScore}");
         }
 
         [TestCase("exce", "OverLeaf-Latex: An online LaTeX editor", SearchPrecisionScore.Regular, false)]
