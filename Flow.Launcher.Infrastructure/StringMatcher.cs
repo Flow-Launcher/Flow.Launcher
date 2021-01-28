@@ -85,9 +85,7 @@ namespace Flow.Launcher.Infrastructure
                 // To maintain a list of indices which correspond to spaces in the string to compare
                 // To populate the list only for the first query substring
                 if (fullStringToCompareWithoutCase[compareStringIndex] == ' ' && currentQuerySubstringIndex == 0)
-                {
                     spaceIndices.Add(compareStringIndex);
-                }
 
                 // Acronym check
                 if (char.IsUpper(stringToCompare[compareStringIndex]) ||
