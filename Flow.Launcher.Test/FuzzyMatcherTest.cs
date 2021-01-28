@@ -241,7 +241,7 @@ namespace Flow.Launcher.Test
                 $"Query:{queryString}{Environment.NewLine} " +
                 $"Compare:{compareString}{Environment.NewLine}" +
                 $"Raw Score: {matchResult.RawScore}{Environment.NewLine}" +
-                $"Precision Score: {(int) expectedPrecisionScore}");
+                $"Precision Score: {(int)expectedPrecisionScore}");
         }
 
         [TestCase("man", "Task Manager", "eManual")]
@@ -309,7 +309,6 @@ namespace Flow.Launcher.Test
         [TestCase("vsp","Visual Studio Preview",100)]
         [TestCase("vsp","Visual Studio",0)]
         [TestCase("pc","Postman Canary",100)]
-
         public void WhenGivenAnAcronymQuery_ShouldReturnAcronymScore(string queryString, string compareString,
             int desiredScore)
         {
