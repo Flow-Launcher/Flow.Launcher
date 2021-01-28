@@ -1,8 +1,10 @@
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -32,7 +34,15 @@ namespace Flow.Launcher.Plugin.Explorer
             viewModel = new SettingsViewModel(context);
             await viewModel.LoadStorage();
             Settings = viewModel.Settings;
-            contextMenu = new ContextMenu(Context, Settings);
+
+            // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
+            if (Settings.QuickFolderAccessLinks.Any())
+            {
+                Settings.QuickAccessLinks = Settings.QuickFolderAccessLinks;
+                Settings.QuickFolderAccessLinks = new List<AccessLink>();
+            }
+
+            contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
         }
 
