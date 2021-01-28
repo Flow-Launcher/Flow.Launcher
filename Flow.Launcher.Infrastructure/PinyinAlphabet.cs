@@ -45,7 +45,6 @@ namespace Flow.Launcher.Infrastructure
 
             int count = 0;
 
-
             // Corner case handle
             if (translatedIndex < translatedIndexs[0])
                 return translatedIndex;
@@ -112,7 +111,6 @@ namespace Flow.Launcher.Infrastructure
     {
         private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
             new ConcurrentDictionary<string, (string translation, TranslationMapping map)>();
-
 
         private Settings _settings;
 
