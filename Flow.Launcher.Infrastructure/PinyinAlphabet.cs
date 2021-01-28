@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Microsoft.AspNetCore.Localization;
 using ToolGood.Words.Pinyin;
 
 namespace Flow.Launcher.Infrastructure

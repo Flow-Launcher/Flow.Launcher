@@ -59,7 +59,6 @@ namespace Flow.Launcher.Infrastructure
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
 
-
             var querySubstrings = queryWithoutCase.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
@@ -77,14 +76,11 @@ namespace Flow.Launcher.Infrastructure
 
             bool spaceMet = false;
 
-            for (var compareStringIndex = 0;
-                compareStringIndex < fullStringToCompareWithoutCase.Length;
-                compareStringIndex++)
+            for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
                 if (currentAcronymQueryIndex >= queryWithoutCase.Length
                     || allQuerySubstringsMatched && acronymScore < (int) UserSettingSearchPrecision)
                     break;
-
 
                 // To maintain a list of indices which correspond to spaces in the string to compare
                 // To populate the list only for the first query substring
