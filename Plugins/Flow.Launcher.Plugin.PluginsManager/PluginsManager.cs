@@ -48,7 +48,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal Task UpdateManifest()
         {
-            return _downloadManifestTask = pluginsManifest.DownloadManifest();
+            return _downloadManifestTask = pluginsManifest.DownloadManifest().ContinueWith(t =>
+                    Context.API.ShowMsg("Plugin Manifest Download Fail.",
+                    "Please check if you can connect to github.com. " +
+                    "This error means you may not be able to Install and Update Plugin.", icoPath, false),
+                    TaskContinuationOptions.OnlyOnFaulted);
         }
 
         internal List<Result> GetDefaultHotKeys()

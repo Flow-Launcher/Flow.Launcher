@@ -71,17 +71,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 _ = pluginManager.UpdateManifest().ContinueWith(t =>
                 {
-                    if (t.IsCompletedSuccessfully)
-                    {
-                        lastUpdateTime = DateTime.Now;
-                    }
-                    else
-                    {
-                        Context.API.ShowMsg("Plugin Manifest Download Fail.",
-                        "Please check if you can connect to github.com. " +
-                        "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
-                    }
-                });
+                    lastUpdateTime = DateTime.Now;
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             return search switch
