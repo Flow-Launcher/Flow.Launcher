@@ -31,7 +31,20 @@ namespace Flow.Launcher.Infrastructure
         }
 
         /// <summary>
-        /// Current method:
+        /// Current method includes two part, Acronym Match and Fuzzy Search:
+        /// 
+        /// Acronym Match:
+        /// Charater lists below will be considered as Acronym
+        /// 1. Character on index 0
+        /// 2. Character appears after a space
+        /// 3. Character that is UpperCase
+        /// 4. Character that is number
+        /// 
+        /// Acronym Search will match all query when meeting with Acronyms in the stringToCompare
+        /// If any of the character in Query isn't matched with the string, Acronym Search fail.
+        /// Score will be calculated based on the number of mismatched acronym before all query has been matched
+        /// 
+        /// Fuzzy Search:
         /// Character matching + substring matching;
         /// 1. Query search string is split into substrings, separator is whitespace.
         /// 2. Check each query substring's characters against full compare string,
