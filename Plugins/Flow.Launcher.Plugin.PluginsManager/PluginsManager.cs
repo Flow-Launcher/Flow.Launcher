@@ -149,8 +149,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context.API.RestartApp();
         }
 
-        internal List<Result> RequestUpdate(string search)
+        internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
+            if (!pluginsManifest.UserPlugins.Any() &&
+                _downloadManifestTask.Status != TaskStatus.Running)
+            {
+                _downloadManifestTask = pluginsManifest.DownloadManifest();
+            }
+
+            await _downloadManifestTask;
+
+            token.ThrowIfCancellationRequested();
+
+
             var autocompletedResults = AutoCompleteReturnAllResults(search,
                 Settings.HotkeyUpdate,
                 "Update",
@@ -286,8 +297,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             await _downloadManifestTask;
 
-            if (token.IsCancellationRequested)
-                return null;
+            token.ThrowIfCancellationRequested();
 
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
 
