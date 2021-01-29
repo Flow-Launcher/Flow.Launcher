@@ -140,7 +140,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public bool ShowIndexState { get; set; }
     }
 
-    internal enum ResultType
+    public enum ResultType
     {
         Volume,
         Folder,

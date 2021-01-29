@@ -60,18 +60,17 @@ namespace Flow.Launcher.Infrastructure
                 return new MatchResult(false, UserSettingSearchPrecision);
 
             query = query.Trim();
-            TranslationMapping map;
-            (stringToCompare, map) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
+            TranslationMapping translationMapping;
+            (stringToCompare, translationMapping) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
 
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
-            var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
 
             // preset acronymScore
             int acronymScore = 100;
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
-
+            var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
 
             var querySubstrings = queryWithoutCase.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
@@ -90,21 +89,16 @@ namespace Flow.Launcher.Infrastructure
 
             bool spaceMet = false;
 
-            for (var compareStringIndex = 0;
-                compareStringIndex < fullStringToCompareWithoutCase.Length;
-                compareStringIndex++)
+            for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
                 if (currentAcronymQueryIndex >= queryWithoutCase.Length
                     || allQuerySubstringsMatched && acronymScore < (int) UserSettingSearchPrecision)
                     break;
 
-
                 // To maintain a list of indices which correspond to spaces in the string to compare
                 // To populate the list only for the first query substring
                 if (fullStringToCompareWithoutCase[compareStringIndex] == ' ' && currentQuerySubstringIndex == 0)
-                {
                     spaceIndices.Add(compareStringIndex);
-                }
 
                 // Acronym check
                 if (char.IsUpper(stringToCompare[compareStringIndex]) ||
@@ -152,7 +146,6 @@ namespace Flow.Launcher.Infrastructure
 
                     continue;
                 }
-
 
                 if (firstMatchIndex < 0)
                 {
@@ -214,7 +207,7 @@ namespace Flow.Launcher.Infrastructure
             // return acronym Match if possible
             if (acronymMatchData.Count == query.Length && acronymScore >= (int) UserSettingSearchPrecision)
             {
-                acronymMatchData = acronymMatchData.Select(x => map?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                acronymMatchData = acronymMatchData.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
                 return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
             }
 
@@ -225,7 +218,7 @@ namespace Flow.Launcher.Infrastructure
                 var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1,
                     lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
 
-                var resultList = indexList.Select(x => map?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                var resultList = indexList.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
                 return new MatchResult(true, UserSettingSearchPrecision, resultList, score);
             }
 

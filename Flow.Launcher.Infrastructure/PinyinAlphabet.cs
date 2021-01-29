@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Microsoft.AspNetCore.Localization;
 using ToolGood.Words.Pinyin;
 
 namespace Flow.Launcher.Infrastructure
@@ -45,7 +44,6 @@ namespace Flow.Launcher.Infrastructure
             int upperBound = originalIndexs.Count - 1;
 
             int count = 0;
-
 
             // Corner case handle
             if (translatedIndex < translatedIndexs[0])
@@ -113,7 +111,6 @@ namespace Flow.Launcher.Infrastructure
     {
         private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
             new ConcurrentDictionary<string, (string translation, TranslationMapping map)>();
-
 
         private Settings _settings;
 

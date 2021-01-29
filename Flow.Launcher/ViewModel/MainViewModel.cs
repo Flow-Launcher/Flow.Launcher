@@ -19,7 +19,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
-using System.Threading.Tasks.Dataflow;
 
 namespace Flow.Launcher.ViewModel
 {
