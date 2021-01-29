@@ -317,11 +317,9 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("c:\\somefolder\\", "*")]
         public void GivenDirectoryInfoSearch_WhenSearchPatternHotKeyIsSearchAll_ThenSearchCriteriaShouldUseCriteriaString(string path, string expectedString)
         {
-            // Given
-            var criteriaConstructor = new DirectoryInfoSearch(new PluginInitContext());
 
             //When
-            var resultString = criteriaConstructor.ConstructSearchCriteria(path);
+            var resultString = DirectoryInfoSearch.ConstructSearchCriteria(path);
 
             // Then
             Assert.IsTrue(resultString == expectedString,

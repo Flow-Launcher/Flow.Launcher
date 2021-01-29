@@ -14,21 +14,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         private readonly PluginInitContext context;
 
-        private readonly IndexSearch indexSearch;
-
-        private readonly QuickAccess quickAccess;
-
-        private readonly ResultManager resultManager;
-
         private readonly Settings settings;
 
         public SearchManager(Settings settings, PluginInitContext context)
         {
             this.context = context;
-            indexSearch = new IndexSearch(context);
-            resultManager = new ResultManager(context);
             this.settings = settings;
-            quickAccess = new QuickAccess(context);
         }
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
@@ -42,9 +33,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
             if (string.IsNullOrEmpty(query.Search))
-                return quickAccess.AccessLinkListAll(query, settings.QuickAccessLinks);
+                return QuickAccess.AccessLinkListAll(query, settings.QuickAccessLinks);
 
-            var quickaccessLinks = quickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
+            var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
 
             if (quickaccessLinks.Count > 0)
                 results.AddRange(quickaccessLinks);
@@ -75,7 +66,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
 
-            results.Add(resultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
 
             token.ThrowIfCancellationRequested();
 
@@ -100,7 +91,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (string.IsNullOrEmpty(querySearchString))
                 return new List<Result>();
 
-            return await indexSearch.WindowsIndexSearchAsync(querySearchString,
+            return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
                                                     queryConstructor.CreateQueryHelper().ConnectionString,
                                                     queryConstructor.QueryForFileContentSearch,
                                                     query,
@@ -114,9 +105,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private List<Result> DirectoryInfoClassSearch(Query query, string querySearch, CancellationToken token)
         {
-            var directoryInfoSearch = new DirectoryInfoSearch(context);
-
-            return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch, token);
+            return DirectoryInfoSearch.TopLevelDirectorySearch(query, querySearch, token);
         }
 
         public async Task<List<Result>> TopLevelDirectorySearchBehaviourAsync(
@@ -137,7 +126,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var queryConstructor = new QueryConstructor(settings);
 
-            return await indexSearch.WindowsIndexSearchAsync(querySearchString,
+            return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForAllFilesAndFolders,
                                                    query,
@@ -148,7 +137,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var queryConstructor = new QueryConstructor(settings);
 
-            return await indexSearch.WindowsIndexSearchAsync(path,
+            return await IndexSearch.WindowsIndexSearchAsync(path,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForTopLevelDirectorySearch,
                                                    query,
@@ -167,7 +156,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                         .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
                 return false;
 
-            return indexSearch.PathIsIndexed(pathToDirectory);
+            return IndexSearch.PathIsIndexed(pathToDirectory);
         }
     }
 }

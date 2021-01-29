@@ -4,19 +4,21 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
-    public class ResultManager
+    public static class ResultManager
     {
-        private readonly PluginInitContext context;
+        private static PluginInitContext Context;
 
-        public ResultManager(PluginInitContext context)
+        public static void Init(PluginInitContext context)
         {
-            this.context = context;
+            Context = context;
         }
-        internal Result CreateFolderResult(string title, string subtitle, string path, Query query, bool showIndexState = false, bool windowsIndexed = false)
+
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, bool showIndexState = false, bool windowsIndexed = false)
         {
             return new Result
             {
@@ -41,7 +43,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
 
                     string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
-                    context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
+                    Context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
                         changeTo :
                         query.ActionKeyword + " " + changeTo);
                     return false;
@@ -52,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
+        internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
@@ -94,7 +96,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal Result CreateFileResult(string filePath, Query query, bool showIndexState = false, bool windowsIndexed = false)
+        internal static Result CreateFileResult(string filePath, Query query, bool showIndexState = false, bool windowsIndexed = false)
         {
             var result = new Result
             {
