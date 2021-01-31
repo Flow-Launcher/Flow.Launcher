@@ -68,6 +68,8 @@ namespace Flow.Launcher.Infrastructure
 
             // preset acronymScore
             int acronymScore = 100;
+            int acronymsRemainingNotMatched = 0;
+            int acronymsMatched = 0;
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
@@ -91,6 +93,15 @@ namespace Flow.Launcher.Infrastructure
 
             for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
+                if (currentAcronymQueryIndex >= queryWithoutCase.Length && acronymsMatched > 0)
+                {
+                    if (char.IsUpper(stringToCompare[compareStringIndex]) ||
+                    char.IsNumber(stringToCompare[compareStringIndex]) ||
+                    char.IsWhiteSpace(stringToCompare[compareStringIndex]))
+                        acronymsRemainingNotMatched++;
+                    continue;
+                }
+
                 if (currentAcronymQueryIndex >= queryWithoutCase.Length
                     || allQuerySubstringsMatched && acronymScore < (int) UserSettingSearchPrecision)
                     break;
@@ -118,11 +129,13 @@ namespace Flow.Launcher.Infrastructure
                                 char.IsDigit(currentCompareChar))
                             {
                                 acronymMatchData.Add(compareStringIndex);
+                                acronymsMatched++;
                             }
                         }
                         else if (!(spaceMet = char.IsWhiteSpace(stringToCompare[compareStringIndex])))
                         {
                             acronymMatchData.Add(compareStringIndex);
+                            acronymsMatched++;
                         }
 
                         currentAcronymQueryIndex++;
