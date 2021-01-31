@@ -109,8 +109,6 @@ namespace Flow.Launcher.Infrastructure
                     if (fullStringToCompareWithoutCase[compareStringIndex] ==
                         queryWithoutCase[currentAcronymQueryIndex])
                     {
-                        currentAcronymQueryIndex++;
-
                         if (!spaceMet)
                         {
                             char currentCompareChar = stringToCompare[compareStringIndex];
@@ -126,6 +124,8 @@ namespace Flow.Launcher.Infrastructure
                         {
                             acronymMatchData.Add(compareStringIndex);
                         }
+
+                        currentAcronymQueryIndex++;
                     }
                     else
                     {
