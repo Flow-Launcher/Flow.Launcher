@@ -131,16 +131,17 @@ namespace Flow.Launcher.Test
 
         [TestCase(Chrome, Chrome, 157)]
         [TestCase(Chrome, LastIsChrome, 147)]
-        [TestCase(Chrome, HelpCureHopeRaiseOnMindEntityChrome, 90)]
+        [TestCase("chro", HelpCureHopeRaiseOnMindEntityChrome, 50)]
+        [TestCase("chr", HelpCureHopeRaiseOnMindEntityChrome, 30)]
         [TestCase(Chrome, UninstallOrChangeProgramsOnYourComputer, 21)]
         [TestCase(Chrome, CandyCrushSagaFromKing, 0)]
-        [TestCase("sql", MicrosoftSqlServerManagementStudio, 90)]
+        [TestCase("sql", MicrosoftSqlServerManagementStudio, 110)]
         [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 121)] //double spacing intended
         public void WhenGivenQueryString_ThenShouldReturn_TheDesiredScoring(
             string queryString, string compareString, int expectedScore)
         {
             // When, Given
-            var matcher = new StringMatcher();
+            var matcher = new StringMatcher {UserSettingSearchPrecision = SearchPrecisionScore.Regular};
             var rawScore = matcher.FuzzyMatch(queryString, compareString).RawScore;
 
             // Should
@@ -162,6 +163,7 @@ namespace Flow.Launcher.Test
         [TestCase("vs", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         [TestCase("vc", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         [TestCase("vts", VisualStudioCode, SearchPrecisionScore.Regular, false)]
+        [TestCase("wt", "Windows Terminal From Microsoft Store", SearchPrecisionScore.Regular, false)]
         public void WhenGivenDesiredPrecision_ThenShouldReturn_AllResultsGreaterOrEqual(
             string queryString,
             string compareString,
@@ -184,8 +186,8 @@ namespace Flow.Launcher.Test
 
             // Should
             Assert.AreEqual(expectedPrecisionResult, matchResult.IsSearchPrecisionScoreMet(),
-                $"Query:{queryString}{Environment.NewLine} " +
-                $"Compare:{compareString}{Environment.NewLine}" +
+                $"Query: {queryString}{Environment.NewLine} " +
+                $"Compare: {compareString}{Environment.NewLine}" +
                 $"Raw Score: {matchResult.RawScore}{Environment.NewLine}" +
                 $"Precision Score: {(int)expectedPrecisionScore}");
         }
@@ -309,6 +311,7 @@ namespace Flow.Launcher.Test
         [TestCase("psc", "Postman super Canary", 100)]
         [TestCase("vsp", "Visual Studio", 0)]
         [TestCase("vps", "Visual Studio", 0)]
+        [TestCase(Chrome, HelpCureHopeRaiseOnMindEntityChrome, 75)]
         public void WhenGivenAnAcronymQuery_ShouldReturnAcronymScore(string queryString, string compareString,
             int desiredScore)
         {
