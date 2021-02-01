@@ -217,10 +217,8 @@ namespace Flow.Launcher.Infrastructure
         {
             if (char.IsUpper(stringToCompare[compareStringIndex]) ||
                     char.IsNumber(stringToCompare[compareStringIndex]) ||
-                    char.IsDigit(stringToCompare[compareStringIndex]))
-                return true;
-
-            if (compareStringIndex == 0)
+                    char.IsDigit(stringToCompare[compareStringIndex]) ||
+                    compareStringIndex == 0) //0 index means char is the start of the compare string, which is an acronym
                 return true;
 
             if (compareStringIndex != 0 && char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]))
