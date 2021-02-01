@@ -61,6 +61,8 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
+                Http.Proxy = _settings.Proxy;
+
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
@@ -84,8 +86,6 @@ namespace Flow.Launcher
                 // main windows needs initialized before theme change because of blur settigns
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
-
-                Http.Proxy = _settings.Proxy;
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

@@ -34,6 +34,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
             client = new HttpClient(socketsHttpHandler, false);
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+            HttpClient.DefaultProxy = WebProxy;
         }
 
         private static HttpProxy proxy;
@@ -45,6 +46,7 @@ namespace Flow.Launcher.Infrastructure.Http
             {
                 proxy = value;
                 proxy.PropertyChanged += UpdateProxy;
+                UpdateProxy(ProxyProperty.Enabled);
             }
         }
 
