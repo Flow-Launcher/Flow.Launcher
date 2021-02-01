@@ -121,7 +121,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
+            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
