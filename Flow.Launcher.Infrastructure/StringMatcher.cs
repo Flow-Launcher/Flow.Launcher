@@ -72,7 +72,7 @@ namespace Flow.Launcher.Infrastructure
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
 
-            var querySubstrings = queryWithoutCase.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
             var currentQuerySubstringCharacterIndex = 0;
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Infrastructure
                 // If acronyms matching successfully finished, this gets the remaining not matched acronyms for score calculation
                 if (currentAcronymQueryIndex >= query.Length && acronymsMatched == query.Length)
                 {
-                    if (IsAcronym(stringToCompare, compareStringIndex))
+                    if (IsAcronymCount(stringToCompare, compareStringIndex))
                         acronymsTotalCount++;
                     continue;
                 }
@@ -117,9 +117,11 @@ namespace Flow.Launcher.Infrastructure
 
                         currentAcronymQueryIndex++;
                     }
-
-                    acronymsTotalCount++;
                 }
+
+                if (IsAcronymCount(stringToCompare, compareStringIndex))
+                    acronymsTotalCount++;
+
                 // Acronym end
 
                 if (allQuerySubstringsMatched || fullStringToCompareWithoutCase[compareStringIndex] !=
@@ -215,13 +217,45 @@ namespace Flow.Launcher.Infrastructure
 
         private bool IsAcronym(string stringToCompare, int compareStringIndex)
         {
-            if (char.IsUpper(stringToCompare[compareStringIndex]) ||
-                    char.IsNumber(stringToCompare[compareStringIndex]) ||
-                    char.IsDigit(stringToCompare[compareStringIndex]) ||
-                    compareStringIndex == 0) //0 index means char is the start of the compare string, which is an acronym
+            if (IsAcronymChar(stringToCompare, compareStringIndex) || IsAcronymNumber(stringToCompare, compareStringIndex))
                 return true;
 
-            if (compareStringIndex != 0 && char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]))
+            return false;
+        }
+
+        // When counting acronyms, treat a set of numbers as one acronym ie. Visual 2019 as 2 acronyms instead of 5
+        private bool IsAcronymCount(string stringToCompare, int compareStringIndex)
+        {
+            if (IsAcronymChar(stringToCompare, compareStringIndex))
+                return true;
+
+            if (char.IsNumber(stringToCompare[compareStringIndex]) || char.IsDigit(stringToCompare[compareStringIndex]))
+            {
+                return compareStringIndex switch
+                {
+                    int i when i == 0 => true,
+                    int i when char.IsWhiteSpace(stringToCompare[i - 1]) => true,
+                    _ => false,
+                };
+            }
+
+            return false;
+        }
+
+        private bool IsAcronymChar(string stringToCompare, int compareStringIndex)
+        {
+            if (char.IsUpper(stringToCompare[compareStringIndex]) ||
+                    compareStringIndex == 0 || //0 index means char is the start of the compare string, which is an acronym
+                    compareStringIndex != 0 && char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]))
+                return true;
+
+            return false;
+        }
+
+        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
+        {
+            if (char.IsNumber(stringToCompare[compareStringIndex]) ||
+                char.IsDigit(stringToCompare[compareStringIndex]))
                 return true;
 
             return false;

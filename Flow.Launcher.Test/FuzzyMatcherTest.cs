@@ -163,7 +163,11 @@ namespace Flow.Launcher.Test
         [TestCase("vs", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         [TestCase("vc", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         [TestCase("vts", VisualStudioCode, SearchPrecisionScore.Regular, false)]
+        [TestCase("vcs", VisualStudioCode, SearchPrecisionScore.Regular, false)]
         [TestCase("wt", "Windows Terminal From Microsoft Store", SearchPrecisionScore.Regular, false)]
+        [TestCase("vsp", "Visual Studio 2019 Preview", SearchPrecisionScore.Regular, true)]
+        [TestCase("vsp", "2019 Visual Studio Preview", SearchPrecisionScore.Regular, true)]
+        [TestCase("2019p", "Visual Studio 2019 Preview", SearchPrecisionScore.Regular, true)]
         public void WhenGivenDesiredPrecision_ThenShouldReturn_AllResultsGreaterOrEqual(
             string queryString,
             string compareString,
