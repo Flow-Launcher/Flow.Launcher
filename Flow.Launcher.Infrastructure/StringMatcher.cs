@@ -66,10 +66,8 @@ namespace Flow.Launcher.Infrastructure
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
 
-            // preset acronymScore
-            int acronymScore = 100;
-            int acronymsRemainingNotMatched = 0;
-            int acronymsMatched = 0;
+            decimal acronymsTotalCount = 0;
+            decimal acronymsMatched = 0;
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
@@ -89,21 +87,18 @@ namespace Flow.Launcher.Infrastructure
             var indexList = new List<int>();
             List<int> spaceIndices = new List<int>();
 
-            bool spaceMet = false;
-
             for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
-                if (currentAcronymQueryIndex >= queryWithoutCase.Length && acronymsMatched > 0)
+                // If acronyms matching successfully finished, this gets the remaining not matched acronyms for score calculation
+                if (currentAcronymQueryIndex >= query.Length && acronymsMatched == query.Length)
                 {
-                    if (char.IsUpper(stringToCompare[compareStringIndex]) ||
-                    char.IsNumber(stringToCompare[compareStringIndex]) ||
-                    char.IsWhiteSpace(stringToCompare[compareStringIndex]))
-                        acronymsRemainingNotMatched++;
+                    if (IsAcronym(stringToCompare, compareStringIndex))
+                        acronymsTotalCount++;
                     continue;
                 }
 
-                if (currentAcronymQueryIndex >= queryWithoutCase.Length
-                    || allQuerySubstringsMatched && acronymScore < (int) UserSettingSearchPrecision)
+                if (currentAcronymQueryIndex >= query.Length ||
+                    currentAcronymQueryIndex >= query.Length && allQuerySubstringsMatched)
                     break;
 
                 // To maintain a list of indices which correspond to spaces in the string to compare
@@ -112,43 +107,18 @@ namespace Flow.Launcher.Infrastructure
                     spaceIndices.Add(compareStringIndex);
 
                 // Acronym check
-                if (char.IsUpper(stringToCompare[compareStringIndex]) ||
-                    char.IsNumber(stringToCompare[compareStringIndex]) ||
-                    char.IsWhiteSpace(stringToCompare[compareStringIndex]) ||
-                    spaceMet)
+                if (IsAcronym(stringToCompare, compareStringIndex))
                 {
                     if (fullStringToCompareWithoutCase[compareStringIndex] ==
                         queryWithoutCase[currentAcronymQueryIndex])
                     {
-                        if (!spaceMet)
-                        {
-                            char currentCompareChar = stringToCompare[compareStringIndex];
-                            spaceMet = char.IsWhiteSpace(currentCompareChar);
-                            // if is space, no need to check whether upper or digit, though insignificant
-                            if (!spaceMet && compareStringIndex == 0 || char.IsUpper(currentCompareChar) ||
-                                char.IsDigit(currentCompareChar))
-                            {
-                                acronymMatchData.Add(compareStringIndex);
-                                acronymsMatched++;
-                            }
-                        }
-                        else if (!(spaceMet = char.IsWhiteSpace(stringToCompare[compareStringIndex])))
-                        {
-                            acronymMatchData.Add(compareStringIndex);
-                            acronymsMatched++;
-                        }
+                        acronymMatchData.Add(compareStringIndex);
+                        acronymsMatched++;
 
                         currentAcronymQueryIndex++;
                     }
-                    else
-                    {
-                        spaceMet = char.IsWhiteSpace(stringToCompare[compareStringIndex]);
-                        // Acronym Penalty
-                        if (!spaceMet)
-                        {
-                            acronymScore -= 10;
-                        }
-                    }
+
+                    acronymsTotalCount++;
                 }
                 // Acronym end
 
@@ -217,11 +187,16 @@ namespace Flow.Launcher.Infrastructure
                 }
             }
 
-            // return acronym Match if possible
-            if (acronymMatchData.Count == query.Length && acronymScore >= (int) UserSettingSearchPrecision)
+            // return acronym match if all query char matched
+            if (acronymsMatched > 0 && acronymsMatched == query.Length)
             {
-                acronymMatchData = acronymMatchData.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
-                return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+                int acronymScore = (int)(acronymsMatched / acronymsTotalCount * 100);
+
+                if (acronymScore >= (int)UserSettingSearchPrecision)
+                {
+                    acronymMatchData = acronymMatchData.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                    return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+                }
             }
 
             // proceed to calculate score if every char or substring without whitespaces matched
@@ -236,6 +211,22 @@ namespace Flow.Launcher.Infrastructure
             }
 
             return new MatchResult(false, UserSettingSearchPrecision);
+        }
+
+        private bool IsAcronym(string stringToCompare, int compareStringIndex)
+        {
+            if (char.IsUpper(stringToCompare[compareStringIndex]) ||
+                    char.IsNumber(stringToCompare[compareStringIndex]) ||
+                    char.IsDigit(stringToCompare[compareStringIndex]))
+                return true;
+
+            if (compareStringIndex == 0)
+                return true;
+
+            if (compareStringIndex != 0 && char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]))
+                return true;
+
+            return false;
         }
 
         // To get the index of the closest space which preceeds the first matching index

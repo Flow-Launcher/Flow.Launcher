@@ -151,13 +151,17 @@ namespace Flow.Launcher.Test
         [TestCase("goo", "Google Chrome", SearchPrecisionScore.Regular, true)]
         [TestCase("chr", "Google Chrome", SearchPrecisionScore.Low, true)]
         [TestCase("chr", "Chrome", SearchPrecisionScore.Regular, true)]
+        [TestCase("chr", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Regular, false)]
         [TestCase("chr", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Low, true)]
         [TestCase("chr", "Candy Crush Saga from King", SearchPrecisionScore.Regular, false)]
         [TestCase("chr", "Candy Crush Saga from King", SearchPrecisionScore.None, true)]
-        [TestCase("ccs", "Candy Crush Saga from King", SearchPrecisionScore.Regular, true)]
+        [TestCase("ccs", "Candy Crush Saga from King", SearchPrecisionScore.Low, true)]
         [TestCase("cand", "Candy Crush Saga from King", SearchPrecisionScore.Regular, true)]
-        [TestCase("cand", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Regular,
-            false)]
+        [TestCase("cand", "Help cure hope raise on mind entity Chrome", SearchPrecisionScore.Regular, false)]
+        [TestCase("vsc", VisualStudioCode, SearchPrecisionScore.Regular, true)]
+        [TestCase("vs", VisualStudioCode, SearchPrecisionScore.Regular, true)]
+        [TestCase("vc", VisualStudioCode, SearchPrecisionScore.Regular, true)]
+        [TestCase("vts", VisualStudioCode, SearchPrecisionScore.Regular, false)]
         public void WhenGivenDesiredPrecision_ThenShouldReturn_AllResultsGreaterOrEqual(
             string queryString,
             string compareString,
@@ -188,10 +192,8 @@ namespace Flow.Launcher.Test
 
         [TestCase("exce", "OverLeaf-Latex: An online LaTeX editor", SearchPrecisionScore.Regular, false)]
         [TestCase("term", "Windows Terminal (Preview)", SearchPrecisionScore.Regular, true)]
-        [TestCase("sql s managa", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular,
-            false)]
-        [TestCase("sql' s manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular,
-            false)]
+        [TestCase("sql s managa", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
+        [TestCase("sql' s manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, false)]
         [TestCase("sql s manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
         [TestCase("sql manag", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
         [TestCase("sql", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
@@ -204,18 +206,13 @@ namespace Flow.Launcher.Test
         [TestCase("mssms", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
         [TestCase("msms", MicrosoftSqlServerManagementStudio, SearchPrecisionScore.Regular, true)]
         [TestCase("chr", "Shutdown", SearchPrecisionScore.Regular, false)]
-        [TestCase("chr", "Change settings for text-to-speech and for speech recognition (if installed).",
-            SearchPrecisionScore.Regular, false)]
-        [TestCase("ch r", "Change settings for text-to-speech and for speech recognition (if installed).",
-            SearchPrecisionScore.Regular, true)]
+        [TestCase("chr", "Change settings for text-to-speech and for speech recognition (if installed).", SearchPrecisionScore.Regular, false)]
+        [TestCase("ch r", "Change settings for text-to-speech and for speech recognition (if installed).", SearchPrecisionScore.Regular, true)]
         [TestCase("a test", "This is a test", SearchPrecisionScore.Regular, true)]
         [TestCase("test", "This is a test", SearchPrecisionScore.Regular, true)]
         [TestCase("cod", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         [TestCase("code", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         [TestCase("codes", "Visual Studio Codes", SearchPrecisionScore.Regular, true)]
-        [TestCase("vsc", VisualStudioCode, SearchPrecisionScore.Regular, true)]
-        [TestCase("vs", VisualStudioCode, SearchPrecisionScore.Regular, true)]
-        [TestCase("vc", VisualStudioCode, SearchPrecisionScore.Regular, true)]
         public void WhenGivenQuery_ShouldReturnResults_ContainingAllQuerySubstrings(
             string queryString,
             string compareString,
@@ -300,15 +297,18 @@ namespace Flow.Launcher.Test
                 $"Should be greater than{Environment.NewLine}" +
                 $"Name of second: \"{secondName}\", Final Score: {secondScore}{Environment.NewLine}");
         }
-        
-        [TestCase("vsc","Visual Studio Code", 100)]
-        [TestCase("jbr","JetBrain Rider",100)]
-        [TestCase("jr","JetBrain Rider",90)]
-        [TestCase("vs","Visual Studio",100)]
-        [TestCase("vs","Visual Studio Preview",100)]
-        [TestCase("vsp","Visual Studio Preview",100)]
-        [TestCase("vsp","Visual Studio",0)]
-        [TestCase("pc","Postman Canary",100)]
+
+        [TestCase("vsc", "Visual Studio Code", 100)]
+        [TestCase("jbr", "JetBrain Rider", 100)]
+        [TestCase("jr", "JetBrain Rider", 66)]
+        [TestCase("vs", "Visual Studio", 100)]
+        [TestCase("vs", "Visual Studio Preview", 66)]
+        [TestCase("vsp", "Visual Studio Preview", 100)]
+        [TestCase("pc", "postman canary", 100)]
+        [TestCase("psc", "Postman super canary", 100)]
+        [TestCase("psc", "Postman super Canary", 100)]
+        [TestCase("vsp", "Visual Studio", 0)]
+        [TestCase("vps", "Visual Studio", 0)]
         public void WhenGivenAnAcronymQuery_ShouldReturnAcronymScore(string queryString, string compareString,
             int desiredScore)
         {
