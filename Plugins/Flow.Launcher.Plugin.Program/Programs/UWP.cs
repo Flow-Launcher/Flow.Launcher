@@ -212,7 +212,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         return false;
                     }
 
-
                     return valid;
                 });
                 return ps;
