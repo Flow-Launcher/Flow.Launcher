@@ -16,13 +16,7 @@ namespace Flow.Launcher.Infrastructure.Http
     {
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
-        private static HttpClient client;
-
-        private static SocketsHttpHandler socketsHttpHandler = new SocketsHttpHandler()
-        {
-            UseProxy = true,
-            Proxy = WebProxy
-        };
+        private static HttpClient client = new HttpClient();
 
         static Http()
         {
@@ -32,7 +26,6 @@ namespace Flow.Launcher.Infrastructure.Http
                                                     | SecurityProtocolType.Tls11
                                                     | SecurityProtocolType.Tls12;
 
-            client = new HttpClient(socketsHttpHandler, false);
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
             HttpClient.DefaultProxy = WebProxy;
         }
