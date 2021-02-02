@@ -10,19 +10,13 @@ using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
-    internal class IndexSearch
+    internal static class IndexSearch
     {
-        private readonly ResultManager resultManager;
 
         // Reserved keywords in oleDB
-        private readonly string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
+        private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
 
-        internal IndexSearch(PluginInitContext context)
-        {
-            resultManager = new ResultManager(context);
-        }
-
-        internal async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
+        internal async static Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             var fileResults = new List<Result>();
@@ -54,7 +48,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
                             if (dataReaderResults.GetString(2) == "Directory")
                             {
-                                results.Add(resultManager.CreateFolderResult(
+                                results.Add(ResultManager.CreateFolderResult(
                                                                     dataReaderResults.GetString(0),
                                                                     path,
                                                                     path,
@@ -62,7 +56,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                             }
                             else
                             {
-                                fileResults.Add(resultManager.CreateFileResult(path, query, true, true));
+                                fileResults.Add(ResultManager.CreateFileResult(path, query, true, true));
                             }
                         }
                     }
@@ -88,7 +82,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
              return results;
         }
 
-        internal async Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
+        internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
                                                                   Func<string, string> constructQuery, Query query,
                                                                   CancellationToken token)
         {
@@ -102,14 +96,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         }
 
-        internal bool PathIsIndexed(string path)
+        internal static bool PathIsIndexed(string path)
         {
             var csm = new CSearchManager();
             var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
             return indexManager.IncludedInCrawlScope(path) > 0;
         }
 
-        private void LogException(string message, Exception e)
+        private static void LogException(string message, Exception e)
         {
 #if DEBUG // Please investigate and handle error from index search
             throw e;

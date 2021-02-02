@@ -8,16 +8,9 @@ using System.Threading;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
-    public class DirectoryInfoSearch
+    public static class DirectoryInfoSearch
     {
-        private readonly ResultManager resultManager;
-
-        public DirectoryInfoSearch(PluginInitContext context)
-        {
-            resultManager = new ResultManager(context);
-        }
-
-        internal List<Result> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
+        internal static List<Result> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
         {
             var criteria = ConstructSearchCriteria(search);
 
@@ -31,7 +24,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             return DirectorySearch(new EnumerationOptions(), query, search, criteria, token); // null will be passed as default
         }
 
-        public string ConstructSearchCriteria(string search)
+        public static string ConstructSearchCriteria(string search)
         {
             string incompleteName = "";
 
@@ -50,7 +43,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             return incompleteName;
         }
 
-        private List<Result> DirectorySearch(EnumerationOptions enumerationOption, Query query, string search,
+        private static List<Result> DirectorySearch(EnumerationOptions enumerationOption, Query query, string search,
             string searchCriteria, CancellationToken token)
         {
             var results = new List<Result>();
@@ -68,12 +61,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                 {
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        folderList.Add(resultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
+                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
                             fileSystemInfo.FullName, query, true, false));
                     }
                     else
                     {
-                        fileList.Add(resultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
+                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
                     }
 
                     token.ThrowIfCancellationRequested();

@@ -44,6 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
+            ResultManager.Init(Context);
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
