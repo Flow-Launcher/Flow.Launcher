@@ -18,6 +18,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using IStream = AppxPackaing.IStream;
 using Rect = System.Windows.Rect;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -206,12 +207,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP" ,"CurrentUserPackages", $"id","An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"id", "An unexpected error occured and "
                                                    + $"unable to verify if package is valid", e);
                         return false;
                     }
-                    
-                    
+
                     return valid;
                 });
                 return ps;
@@ -263,24 +263,42 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string LogoPath { get; set; }
             public UWP Package { get; set; }
 
-            public Application(){}
+            public Application() { }
 
 
             public Result Result(string query, IPublicAPI api)
             {
-                var title = (Name, Description) switch
+                string title;
+                MatchResult matchResult;
+
+                // We suppose Name won't be null
+                if (Description == null || Name.StartsWith(Description))
                 {
-                    (var n, null) => n,
-                    (var n, var d) when d.StartsWith(n) => d,
-                    (var n, var d) when n.StartsWith(d) => n,
-                    (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
-                    _ => Name
-                };
+                    title = Name;
+                    matchResult = StringMatcher.FuzzySearch(query, title);
+                }
+                else if (Description.StartsWith(Name))
+                {
+                    title = Description;
+                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                }
+                else
+                {
+                    title = $"{Name}: {Description}";
+                    var nameMatch = StringMatcher.FuzzySearch(query, Name);
+                    var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                    if (desciptionMatch.Score > nameMatch.Score)
+                    {
+                        for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                        {
+                            desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                        }
+                        matchResult = desciptionMatch;
+                    }
+                    else matchResult = nameMatch;
+                }
 
-                var matchResult = StringMatcher.FuzzySearch(query, title);
-
-                if (!matchResult.Success)
-                    return null;
+                if (!matchResult.Success) return null;
 
                 var result = new Result
                 {
@@ -311,7 +329,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         Action = _ =>
                         {
-                            Main.StartProcess(Process.Start, 
+                            Main.StartProcess(Process.Start,
                                                 new ProcessStartInfo(
                                                     !string.IsNullOrEmpty(Main._settings.CustomizedExplorer)
                                                     ? Main._settings.CustomizedExplorer
@@ -403,14 +421,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
             {
                 const string prefix = "ms-resource:";
-                
+
                 if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
                     return rawPriReferenceValue;
 
                 string key = rawPriReferenceValue.Substring(prefix.Length);
                 if (key.StartsWith("//"))
                     return $"{prefix}{key}";
-                
+
                 if (!key.StartsWith("/"))
                 {
                     key = $"/{key}";

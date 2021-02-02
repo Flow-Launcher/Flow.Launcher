@@ -66,13 +66,13 @@ namespace Flow.Launcher.Infrastructure
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
 
-            // preset acronymScore
-            int acronymScore = 100;
+            int acronymsTotalCount = 0;
+            int acronymsMatched = 0;
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
 
-            var querySubstrings = queryWithoutCase.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
             var currentQuerySubstringCharacterIndex = 0;
@@ -87,12 +87,18 @@ namespace Flow.Launcher.Infrastructure
             var indexList = new List<int>();
             List<int> spaceIndices = new List<int>();
 
-            bool spaceMet = false;
-
             for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
-                if (currentAcronymQueryIndex >= queryWithoutCase.Length
-                    || allQuerySubstringsMatched && acronymScore < (int) UserSettingSearchPrecision)
+                // If acronyms matching successfully finished, this gets the remaining not matched acronyms for score calculation
+                if (currentAcronymQueryIndex >= query.Length && acronymsMatched == query.Length)
+                {
+                    if (IsAcronymCount(stringToCompare, compareStringIndex))
+                        acronymsTotalCount++;
+                    continue;
+                }
+
+                if (currentAcronymQueryIndex >= query.Length ||
+                    currentAcronymQueryIndex >= query.Length && allQuerySubstringsMatched)
                     break;
 
                 // To maintain a list of indices which correspond to spaces in the string to compare
@@ -101,42 +107,21 @@ namespace Flow.Launcher.Infrastructure
                     spaceIndices.Add(compareStringIndex);
 
                 // Acronym check
-                if (char.IsUpper(stringToCompare[compareStringIndex]) ||
-                    char.IsNumber(stringToCompare[compareStringIndex]) ||
-                    char.IsWhiteSpace(stringToCompare[compareStringIndex]) ||
-                    spaceMet)
+                if (IsAcronym(stringToCompare, compareStringIndex))
                 {
                     if (fullStringToCompareWithoutCase[compareStringIndex] ==
                         queryWithoutCase[currentAcronymQueryIndex])
                     {
-                        if (!spaceMet)
-                        {
-                            char currentCompareChar = stringToCompare[compareStringIndex];
-                            spaceMet = char.IsWhiteSpace(currentCompareChar);
-                            // if is space, no need to check whether upper or digit, though insignificant
-                            if (!spaceMet && compareStringIndex == 0 || char.IsUpper(currentCompareChar) ||
-                                char.IsDigit(currentCompareChar))
-                            {
-                                acronymMatchData.Add(compareStringIndex);
-                            }
-                        }
-                        else if (!(spaceMet = char.IsWhiteSpace(stringToCompare[compareStringIndex])))
-                        {
-                            acronymMatchData.Add(compareStringIndex);
-                        }
+                        acronymMatchData.Add(compareStringIndex);
+                        acronymsMatched++;
 
                         currentAcronymQueryIndex++;
                     }
-                    else
-                    {
-                        spaceMet = char.IsWhiteSpace(stringToCompare[compareStringIndex]);
-                        // Acronym Penalty
-                        if (!spaceMet)
-                        {
-                            acronymScore -= 10;
-                        }
-                    }
                 }
+
+                if (IsAcronymCount(stringToCompare, compareStringIndex))
+                    acronymsTotalCount++;
+
                 // Acronym end
 
                 if (allQuerySubstringsMatched || fullStringToCompareWithoutCase[compareStringIndex] !=
@@ -204,11 +189,16 @@ namespace Flow.Launcher.Infrastructure
                 }
             }
 
-            // return acronym Match if possible
-            if (acronymMatchData.Count == query.Length && acronymScore >= (int) UserSettingSearchPrecision)
+            // return acronym match if all query char matched
+            if (acronymsMatched > 0 && acronymsMatched == query.Length)
             {
-                acronymMatchData = acronymMatchData.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
-                return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+                int acronymScore = acronymsMatched * 100 / acronymsTotalCount;
+
+                if (acronymScore >= (int)UserSettingSearchPrecision)
+                {
+                    acronymMatchData = acronymMatchData.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                    return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+                }
             }
 
             // proceed to calculate score if every char or substring without whitespaces matched
@@ -225,20 +215,49 @@ namespace Flow.Launcher.Infrastructure
             return new MatchResult(false, UserSettingSearchPrecision);
         }
 
+        private bool IsAcronym(string stringToCompare, int compareStringIndex)
+        {
+            if (IsAcronymChar(stringToCompare, compareStringIndex) || IsAcronymNumber(stringToCompare, compareStringIndex))
+                return true;
+
+            return false;
+        }
+
+        // When counting acronyms, treat a set of numbers as one acronym ie. Visual 2019 as 2 acronyms instead of 5
+        private bool IsAcronymCount(string stringToCompare, int compareStringIndex)
+        {
+            if (IsAcronymChar(stringToCompare, compareStringIndex))
+                return true;
+
+            if (IsAcronymNumber(stringToCompare, compareStringIndex))
+                return compareStringIndex == 0 || char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
+
+
+            return false;
+        }
+
+        private bool IsAcronymChar(string stringToCompare, int compareStringIndex)
+            => char.IsUpper(stringToCompare[compareStringIndex]) ||
+               compareStringIndex == 0 || // 0 index means char is the start of the compare string, which is an acronym
+               char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
+
+        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex) => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
+
         // To get the index of the closest space which preceeds the first matching index
         private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
         {
-            if (spaceIndices.Count == 0)
+            var closestSpaceIndex = -1;
+
+            // spaceIndices should be ordered asc
+            foreach (var index in spaceIndices)
             {
-                return -1;
+                if (index < firstMatchIndex)
+                    closestSpaceIndex = index;
+                else
+                    break;
             }
-            else
-            {
-                int? ind = spaceIndices.OrderBy(item => (firstMatchIndex - item))
-                    .FirstOrDefault(item => firstMatchIndex > item);
-                int closestSpaceIndex = ind ?? -1;
-                return closestSpaceIndex;
-            }
+
+            return closestSpaceIndex;
         }
 
         private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
