@@ -298,7 +298,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     else matchResult = nameMatch;
                 }
 
-                if (!matchResult.Success) return null;
+                if (!matchResult.Success)
+                    return null;
 
                 var result = new Result
                 {

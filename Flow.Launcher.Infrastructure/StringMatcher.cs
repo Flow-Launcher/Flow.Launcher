@@ -31,18 +31,18 @@ namespace Flow.Launcher.Infrastructure
         }
 
         /// <summary>
-        /// Current method includes two part, Acronym Match and Fuzzy Search:
+        /// Current method has two parts, Acronym Match and Fuzzy Search:
         /// 
         /// Acronym Match:
-        /// Charater lists below will be considered as Acronym
+        /// Charater listed below will be considered as acronym
         /// 1. Character on index 0
         /// 2. Character appears after a space
         /// 3. Character that is UpperCase
         /// 4. Character that is number
         /// 
-        /// Acronym Search will match all query when meeting with Acronyms in the stringToCompare
-        /// If any of the character in Query isn't matched with the string, Acronym Search fail.
-        /// Score will be calculated based on the number of mismatched acronym before all query has been matched
+        /// Acronym Match will succeed when all query characters match with acronyms in stringToCompare.
+        /// If any of the characters in the query isn't matched with stringToCompare, Acronym Match will fail.
+        /// Score will be calculated based the percentage of all query characters matched with total acronyms in stringToCompare.
         /// 
         /// Fuzzy Search:
         /// Character matching + substring matching;
@@ -65,7 +65,6 @@ namespace Flow.Launcher.Infrastructure
 
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
-
             int acronymsTotalCount = 0;
             int acronymsMatched = 0;
 
@@ -106,7 +105,7 @@ namespace Flow.Launcher.Infrastructure
                 if (fullStringToCompareWithoutCase[compareStringIndex] == ' ' && currentQuerySubstringIndex == 0)
                     spaceIndices.Add(compareStringIndex);
 
-                // Acronym check
+                // Acronym Match
                 if (IsAcronym(stringToCompare, compareStringIndex))
                 {
                     if (fullStringToCompareWithoutCase[compareStringIndex] ==
@@ -121,8 +120,6 @@ namespace Flow.Launcher.Infrastructure
 
                 if (IsAcronymCount(stringToCompare, compareStringIndex))
                     acronymsTotalCount++;
-
-                // Acronym end
 
                 if (allQuerySubstringsMatched || fullStringToCompareWithoutCase[compareStringIndex] !=
                     currentQuerySubstring[currentQuerySubstringCharacterIndex])
@@ -232,7 +229,6 @@ namespace Flow.Launcher.Infrastructure
             if (IsAcronymNumber(stringToCompare, compareStringIndex))
                 return compareStringIndex == 0 || char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
 
-
             return false;
         }
 
@@ -241,7 +237,8 @@ namespace Flow.Launcher.Infrastructure
                compareStringIndex == 0 || // 0 index means char is the start of the compare string, which is an acronym
                char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
 
-        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex) => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
+        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
+            => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
 
         // To get the index of the closest space which preceeds the first matching index
         private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
