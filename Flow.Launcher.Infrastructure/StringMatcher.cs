@@ -66,8 +66,8 @@ namespace Flow.Launcher.Infrastructure
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
 
-            decimal acronymsTotalCount = 0;
-            decimal acronymsMatched = 0;
+            int acronymsTotalCount = 0;
+            int acronymsMatched = 0;
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
@@ -192,7 +192,7 @@ namespace Flow.Launcher.Infrastructure
             // return acronym match if all query char matched
             if (acronymsMatched > 0 && acronymsMatched == query.Length)
             {
-                int acronymScore = (int)(acronymsMatched / acronymsTotalCount * 100);
+                int acronymScore = acronymsMatched * 100 / acronymsTotalCount;
 
                 if (acronymScore >= (int)UserSettingSearchPrecision)
                 {
