@@ -229,52 +229,35 @@ namespace Flow.Launcher.Infrastructure
             if (IsAcronymChar(stringToCompare, compareStringIndex))
                 return true;
 
-            if (char.IsNumber(stringToCompare[compareStringIndex]) || char.IsDigit(stringToCompare[compareStringIndex]))
-            {
-                return compareStringIndex switch
-                {
-                    int i when i == 0 => true,
-                    int i when char.IsWhiteSpace(stringToCompare[i - 1]) => true,
-                    _ => false,
-                };
-            }
+            if (IsAcronymNumber(stringToCompare, compareStringIndex))
+                return compareStringIndex == 0 || char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
+
 
             return false;
         }
 
         private bool IsAcronymChar(string stringToCompare, int compareStringIndex)
-        {
-            if (char.IsUpper(stringToCompare[compareStringIndex]) ||
-                    compareStringIndex == 0 || //0 index means char is the start of the compare string, which is an acronym
-                    compareStringIndex != 0 && char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]))
-                return true;
+            => char.IsUpper(stringToCompare[compareStringIndex]) ||
+               compareStringIndex == 0 || // 0 index means char is the start of the compare string, which is an acronym
+               char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
 
-            return false;
-        }
-
-        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
-        {
-            if (char.IsNumber(stringToCompare[compareStringIndex]) ||
-                char.IsDigit(stringToCompare[compareStringIndex]))
-                return true;
-
-            return false;
-        }
+        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex) => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
 
         // To get the index of the closest space which preceeds the first matching index
         private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
         {
-            if (spaceIndices.Count == 0)
+            var closestSpaceIndex = -1;
+
+            // spaceIndices should be ordered asc
+            foreach (var index in spaceIndices)
             {
-                return -1;
+                if (index < firstMatchIndex)
+                    closestSpaceIndex = index;
+                else
+                    break;
             }
-            else
-            {
-                int? ind = spaceIndices.OrderBy(item => (firstMatchIndex - item))
-                    .FirstOrDefault(item => firstMatchIndex > item);
-                int closestSpaceIndex = ind ?? -1;
-                return closestSpaceIndex;
-            }
+
+            return closestSpaceIndex;
         }
 
         private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
