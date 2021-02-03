@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -38,7 +39,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
-        internal StringMatcher.SearchPrecisionScore QuerySearchPrecision { get; private set; } = StringMatcher.SearchPrecisionScore.Regular;
+        internal SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
 
         [JsonIgnore]
         public string QuerySearchPrecisionString
@@ -48,8 +49,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 try
                 {
-                    var precisionScore = (StringMatcher.SearchPrecisionScore)Enum
-                                            .Parse(typeof(StringMatcher.SearchPrecisionScore), value);
+                    var precisionScore = (SearchPrecisionScore)Enum
+                                            .Parse(typeof(SearchPrecisionScore), value);
 
                     QuerySearchPrecision = precisionScore;
                     StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;
@@ -58,8 +59,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     Logger.Log.Exception(nameof(Settings), "Failed to load QuerySearchPrecisionString value from Settings file", e);
 
-                    QuerySearchPrecision = StringMatcher.SearchPrecisionScore.Regular;
-                    StringMatcher.Instance.UserSettingSearchPrecision = StringMatcher.SearchPrecisionScore.Regular;
+                    QuerySearchPrecision = SearchPrecisionScore.Regular;
+                    StringMatcher.Instance.UserSettingSearchPrecision = SearchPrecisionScore.Regular;
 
                     throw;
                 }

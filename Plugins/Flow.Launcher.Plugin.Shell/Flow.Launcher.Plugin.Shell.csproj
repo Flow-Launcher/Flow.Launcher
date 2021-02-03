@@ -54,10 +54,10 @@
     <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Page Include="ShellSetting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+	  <Page Include="ShellSetting.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		  <SubType>Designer</SubType>
+	  </Page>
   </ItemGroup>
   
   <ItemGroup>
