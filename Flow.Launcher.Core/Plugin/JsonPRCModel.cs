@@ -15,6 +15,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
@@ -42,6 +43,7 @@ namespace Flow.Launcher.Core.Plugin
 
     public class JsonRPCQueryResponseModel : JsonRPCResponseModel
     {
+        [JsonPropertyName("result")]
         public new List<JsonRPCResult> Result { get; set; }
     }
 
