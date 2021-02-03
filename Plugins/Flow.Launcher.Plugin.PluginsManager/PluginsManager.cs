@@ -165,7 +165,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             token.ThrowIfCancellationRequested();
 
-
             var autocompletedResults = AutoCompleteReturnAllResults(search,
                 Settings.HotkeyUpdate,
                 "Update",

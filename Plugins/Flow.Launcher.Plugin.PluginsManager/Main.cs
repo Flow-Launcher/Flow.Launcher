@@ -48,7 +48,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     context.API.ShowMsg("Plugin Manifest Download Fail.",
                     "Please check if you can connect to github.com. " +
-                    "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
+                    "This error means you may not be able to install or update plugins.", pluginManager.icoPath, false);
                 }
             });
 
