@@ -1,10 +1,8 @@
 ﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
