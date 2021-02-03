@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -15,13 +16,7 @@ namespace Flow.Launcher.Infrastructure.Http
     {
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
-        private static HttpClient client;
-
-        private static SocketsHttpHandler socketsHttpHandler = new SocketsHttpHandler()
-        {
-            UseProxy = true,
-            Proxy = WebProxy
-        };
+        private static HttpClient client = new HttpClient();
 
         static Http()
         {
@@ -31,8 +26,8 @@ namespace Flow.Launcher.Infrastructure.Http
                                                     | SecurityProtocolType.Tls11
                                                     | SecurityProtocolType.Tls12;
 
-            client = new HttpClient(socketsHttpHandler, false);
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+            HttpClient.DefaultProxy = WebProxy;
         }
 
         private static HttpProxy proxy;
@@ -44,6 +39,7 @@ namespace Flow.Launcher.Infrastructure.Http
             {
                 proxy = value;
                 proxy.PropertyChanged += UpdateProxy;
+                UpdateProxy(ProxyProperty.Enabled);
             }
         }
 
@@ -75,36 +71,50 @@ namespace Flow.Launcher.Infrastructure.Http
             };
         }
 
-        public static async Task Download([NotNull] string url, [NotNull] string filePath)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
         {
-            using var response = await client.GetAsync(url);
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-                await response.Content.CopyToAsync(fileStream);
+                using var response = await client.GetAsync(url, token);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                    await response.Content.CopyToAsync(fileStream);
+                }
+                else
+                {
+                    throw new HttpRequestException($"Error code <{response.StatusCode}> returned from <{url}>");
+                }
             }
-            else
+            catch (HttpRequestException e)
             {
-                throw new HttpRequestException($"Error code <{response.StatusCode}> returned from <{url}>");
+                Log.Exception("Infrastructure.Http", "Http Request Error", e, "DownloadAsync");
+                throw;
             }
         }
 
         /// <summary>
         /// Asynchrously get the result as string from url.
-        /// When supposing the result is long and large, try using GetStreamAsync to avoid reading as string
+        /// When supposing the result larger than 83kb, try using GetStreamAsync to avoid reading as string
         /// </summary>
         /// <param name="url"></param>
-        /// <returns></returns>
-        public static Task<string> GetAsync([NotNull] string url)
+        /// <returns>The Http result as string. Null if cancellation requested</returns>
+        public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            return GetAsync(new Uri(url.Replace("#", "%23")));
+            return GetAsync(new Uri(url.Replace("#", "%23")), token);
         }
 
-        public static async Task<string> GetAsync([NotNull] Uri url)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="token"></param>
+        /// <returns>The Http result as string. Null if cancellation requested</returns>
+        public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            using var response = await client.GetAsync(url);
+            using var response = await client.GetAsync(url, token);
             var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -122,10 +132,10 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static async Task<Stream> GetStreamAsync([NotNull] string url)
+        public static async Task<Stream> GetStreamAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            var response = await client.GetAsync(url);
+            var response = await client.GetAsync(url, token);
             return await response.Content.ReadAsStreamAsync();
         }
     }

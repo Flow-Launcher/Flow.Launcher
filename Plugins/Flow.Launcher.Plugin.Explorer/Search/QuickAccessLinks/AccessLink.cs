@@ -1,15 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 
-namespace Flow.Launcher.Plugin.Explorer.Search.FolderLinks
+namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public class FolderLink
+    public class AccessLink
     {
-        [JsonProperty]
         public string Path { get; set; }
 
+        public ResultType Type { get; set; } = ResultType.Folder;
+
+        [JsonIgnore]
         public string Nickname
         {
             get

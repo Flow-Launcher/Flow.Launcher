@@ -9,32 +9,36 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Linq;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     class Bing : SuggestionSource
     {
-        public override async Task<List<string>> Suggestions(string query)
+        public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
-            Stream resultStream;
+            JsonElement json;
 
             try
             {
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
-                resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                
+                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+                
+                if (resultStream.Length == 0) 
+                    return new List<string>(); // this handles the cancellation
+                
+                json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token)).RootElement.GetProperty("AS");
+
+            }
+            catch (TaskCanceledException)
+            {
+                return null;
             }
             catch (HttpRequestException e)
             {
                 Log.Exception("|Bing.Suggestions|Can't get suggestion from Bing", e);
                 return new List<string>();
-            }
-
-            if (resultStream.Length == 0) return new List<string>();
-
-            JsonElement json;
-            try
-            {
-                json = (await JsonDocument.ParseAsync(resultStream)).RootElement.GetProperty("AS");
             }
             catch (JsonException e)
             {

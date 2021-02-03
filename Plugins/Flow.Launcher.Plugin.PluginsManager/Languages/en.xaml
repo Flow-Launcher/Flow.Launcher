@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
@@ -11,6 +11,8 @@
     <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plugin Uninstall</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Install failed: unable to find the plugin.json metadata file from the new plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occured while trying to install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No update available</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">All plugins are up to date</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>

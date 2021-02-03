@@ -3,49 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
+using System.Threading;
+using System.Text.Json;
+using System.IO;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Google : SuggestionSource
     {
-        public override async Task<List<string>> Suggestions(string query)
+        public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
-            string result;
+            JsonDocument json;
+
             try
             {
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+
+                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                
+                if (resultStream.Length == 0) 
+                    return new List<string>();
+                
+                json = await JsonDocument.ParseAsync(resultStream);
+
+            }
+            catch (TaskCanceledException)
+            {
+                return null;
             }
             catch (HttpRequestException e)
             {
                 Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
             }
-            if (string.IsNullOrEmpty(result)) return new List<string>();
-            JContainer json;
-            try
-            {
-                json = JsonConvert.DeserializeObject(result) as JContainer;
-            }
-            catch (JsonSerializationException e)
+            catch (JsonException e)
             {
                 Log.Exception("|Google.Suggestions|can't parse suggestions", e);
                 return new List<string>();
             }
-            if (json != null)
-            {
-                var results = json[1] as JContainer;
-                if (results != null)
-                {
-                    return results.OfType<JValue>().Select(o => o.Value).OfType<string>().ToList();
-                }
-            }
-            return new List<string>();
+
+            var results = json?.RootElement.EnumerateArray().ElementAt(1);
+
+            return results?.EnumerateArray().Select(o => o.GetString()).ToList() ?? new List<string>();
+
         }
 
         public override string ToString()
