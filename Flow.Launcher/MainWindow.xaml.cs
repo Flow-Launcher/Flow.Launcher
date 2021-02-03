@@ -26,6 +26,7 @@ namespace Flow.Launcher
         #region Private Fields
 
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
+        private bool isProgressBarStoryboardPaused;
         private Settings _settings;
         private NotifyIcon _notifyIcon;
         private MainViewModel _viewModel;
@@ -52,7 +53,7 @@ namespace Flow.Launcher
 
         private void OnInitialized(object sender, EventArgs e)
         {
-            
+
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
@@ -73,7 +74,7 @@ namespace Flow.Launcher
             {
                 if (e.PropertyName == nameof(MainViewModel.MainWindowVisibility))
                 {
-                    if (Visibility == Visibility.Visible)
+                    if (_viewModel.MainWindowVisibility == Visibility.Visible)
                     {
                         Activate();
                         QueryTextBox.Focus();
@@ -84,7 +85,34 @@ namespace Flow.Launcher
                             QueryTextBox.SelectAll();
                             _viewModel.LastQuerySelected = true;
                         }
+
+                        if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                        {
+                            _progressBarStoryboard.Resume();
+                            isProgressBarStoryboardPaused = false;
+                        }
                     }
+                    else if (!isProgressBarStoryboardPaused)
+                    {
+                        _progressBarStoryboard.Pause();
+                        isProgressBarStoryboardPaused = true;
+                    }
+                }
+                else if (e.PropertyName == nameof(MainViewModel.ProgressBarVisibility))
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
+                        {
+                            _progressBarStoryboard.Pause();
+                            isProgressBarStoryboardPaused = true;
+                        }
+                        else if (_viewModel.MainWindowVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                        {
+                            _progressBarStoryboard.Resume();
+                            isProgressBarStoryboardPaused = false;
+                        }
+                    }, System.Windows.Threading.DispatcherPriority.Render);
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -170,6 +198,7 @@ namespace Flow.Launcher
             _progressBarStoryboard.RepeatBehavior = RepeatBehavior.Forever;
             ProgressBar.BeginStoryboard(_progressBarStoryboard);
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
+            isProgressBarStoryboardPaused = true;
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)

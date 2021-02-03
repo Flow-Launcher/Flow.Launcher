@@ -1,5 +1,9 @@
-﻿using System;
+using Flow.Launcher.Plugin.SharedModels;
+using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin
@@ -83,5 +87,18 @@ namespace Flow.Launcher.Plugin
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+
+        MatchResult FuzzySearch(string query, string stringToCompare);
+
+        Task<string> HttpGetStringAsync(string url, CancellationToken token = default);
+
+        Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default);
+
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath);
+
+        void AddActionKeyword(string pluginId, string newActionKeyword);
+
+        void RemoveActionKeyword(string pluginId, string oldActionKeyword);
+
     }
 }

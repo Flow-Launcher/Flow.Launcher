@@ -121,7 +121,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
+            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
@@ -146,31 +146,23 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// This checks whether a given string is a directory path or network location string. 
         /// It does not check if location actually exists.
         ///</summary>
-        public static bool IsLocationPathString(string querySearchString)
+        public static bool IsLocationPathString(this string querySearchString)
         {
-            if (string.IsNullOrEmpty(querySearchString))
+            if (string.IsNullOrEmpty(querySearchString) || querySearchString.Length < 3)
                 return false;
 
             // // shared folder location, and not \\\location\
-            if (querySearchString.Length >= 3
-                && querySearchString.StartsWith(@"\\")
-                && char.IsLetter(querySearchString[2]))
+            if (querySearchString.StartsWith(@"\\")
+                && querySearchString[2] != '\\')
                 return true;
 
             // c:\
-            if (querySearchString.Length == 3
-                && char.IsLetter(querySearchString[0])
+            if (char.IsLetter(querySearchString[0])
                 && querySearchString[1] == ':'
                 && querySearchString[2] == '\\')
-                return true;
-
-            // c:\\
-            if (querySearchString.Length >= 4
-                && char.IsLetter(querySearchString[0])
-                && querySearchString[1] == ':'
-                && querySearchString[2] == '\\'
-                && char.IsLetter(querySearchString[3]))
-                return true;
+            {
+                return querySearchString.Length == 3 || querySearchString[3] != '\\';
+            }
 
             return false;
         }

@@ -12,6 +12,7 @@ using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -36,19 +37,38 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public Result Result(string query, IPublicAPI api)
         {
-            var title = (Name, Description) switch
+            string title;
+            MatchResult matchResult;
+
+            // We suppose Name won't be null
+            if (Description == null || Name.StartsWith(Description))
             {
-                (var n, null) => n,
-                (var n, var d) when d.StartsWith(n) => d,
-                (var n, var d) when n.StartsWith(d) => n,
-                (var n, var d) when !string.IsNullOrEmpty(d) => $"{n}: {d}",
-                _ => Name
-            };
+                title = Name;
+                matchResult = StringMatcher.FuzzySearch(query, title);
+            }
+            else if (Description.StartsWith(Name))
+            {
+                title = Description;
+                matchResult = StringMatcher.FuzzySearch(query, Description);
+            }
+            else
+            {
+                title = $"{Name}: {Description}";
+                var nameMatch = StringMatcher.FuzzySearch(query, Name);
+                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                if (desciptionMatch.Score > nameMatch.Score)
+                {
+                    for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                    {
+                        desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                    }
+                    matchResult = desciptionMatch;
+                }
+                else matchResult = nameMatch;
+            }
 
-            var matchResult = StringMatcher.FuzzySearch(query, title);
+            if (!matchResult.Success) return null;
 
-            if (!matchResult.Success)
-                return null;
 
             var result = new Result
             {
@@ -58,7 +78,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
-                Action = e =>
+                Action = _ =>
                 {
                     var info = new ProcessStartInfo
                     {
@@ -268,10 +288,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             try
             {
                 var paths = Directory.EnumerateFiles(directory, "*", new EnumerationOptions
-                                                        {
-                                                            IgnoreInaccessible = true,
-                                                            RecurseSubdirectories = true
-                                                        })
+                {
+                    IgnoreInaccessible = true,
+                    RecurseSubdirectories = true
+                })
                                      .Where(x => suffixes.Contains(Extension(x)));
 
                 return paths;

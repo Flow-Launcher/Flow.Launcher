@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using System.Windows;
 using System.Windows.Input;
 using NHotkey;
@@ -18,7 +19,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
-using System.Threading.Tasks.Dataflow;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -45,6 +45,7 @@ namespace Flow.Launcher.ViewModel
         private bool _saved;
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
+
         private BufferBlock<ResultsForUpdate> _resultsUpdateQueue;
         private Task _resultsViewUpdateTask;
 
@@ -74,28 +75,12 @@ namespace Flow.Launcher.ViewModel
             _selectedResults = Results;
 
             InitializeKeyCommands();
-
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
-
 
             SetHotkey(_settings.Hotkey, OnHotkey);
             SetCustomPluginHotkey();
             SetOpenResultModifiers();
-        }
-
-        private void RegisterResultsUpdatedEvent()
-        {
-            foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
-            {
-                var plugin = (IResultUpdated) pair.Plugin;
-                plugin.ResultsUpdated += (s, e) =>
-                {
-                    PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                    if (e.Query.Search == _lastQuery.Search)
-                        _resultsUpdateQueue.Post(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
-                };
-            }
         }
 
         private void RegisterViewUpdate()
@@ -133,6 +118,22 @@ namespace Flow.Launcher.ViewModel
                 _resultsViewUpdateTask =
  Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 #endif
+            }
+        }
+
+        private void RegisterResultsUpdatedEvent()
+        {
+            foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
+            {
+                var plugin = (IResultUpdated)pair.Plugin;
+                plugin.ResultsUpdated += (s, e) =>
+                {
+                    if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
+                    {
+                        PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
+                        _resultsUpdateQueue.Post(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
+                    }
+                };
             }
         }
 
@@ -233,7 +234,6 @@ namespace Flow.Launcher.ViewModel
         public ResultsViewModel Results { get; private set; }
         public ResultsViewModel ContextMenu { get; private set; }
         public ResultsViewModel History { get; private set; }
-        private string _lastQueryText;
 
         private string _queryText;
 
@@ -393,7 +393,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query {RawQuery = h.Query},
+                    OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
                         SelectedResults = Results;
