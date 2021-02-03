@@ -46,6 +46,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = settings;
         }
 
+        private Task _downloadManifestTask = Task.CompletedTask;
+
+
         internal Task UpdateManifest()
         {
             if (_downloadManifestTask.Status == TaskStatus.Running)
@@ -291,8 +294,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 })
                 .ToList();
         }
-
-        private Task _downloadManifestTask = Task.CompletedTask;
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
