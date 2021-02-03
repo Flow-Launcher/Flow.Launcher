@@ -37,20 +37,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            var updateManifestTask = pluginManager.UpdateManifest();
-            _ = updateManifestTask.ContinueWith(t =>
-            {
-                if (t.IsCompletedSuccessfully)
-                {
-                    lastUpdateTime = DateTime.Now;
-                }
-                else
-                {
-                    context.API.ShowMsg("Plugin Manifest Download Fail.",
-                    "Please check if you can connect to github.com. " +
-                    "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
-                }
-            });
+            _ = pluginManager.UpdateManifest().ContinueWith(_ =>
+             {
+                 lastUpdateTime = DateTime.Now;
+             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return Task.CompletedTask;
         }

@@ -48,11 +48,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal Task UpdateManifest()
         {
-            return _downloadManifestTask = pluginsManifest.DownloadManifest().ContinueWith(t =>
+            if (_downloadManifestTask.Status == TaskStatus.Running)
+            {
+                return _downloadManifestTask;
+            }
+            else
+            {
+                return _downloadManifestTask = pluginsManifest.DownloadManifest().ContinueWith(t =>
                     Context.API.ShowMsg("Plugin Manifest Download Fail.",
                     "Please check if you can connect to github.com. " +
                     "This error means you may not be able to Install and Update Plugin.", icoPath, false),
                     TaskContinuationOptions.OnlyOnFaulted);
+            }
         }
 
         internal List<Result> GetDefaultHotKeys()
@@ -155,13 +162,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any() &&
-                _downloadManifestTask.Status != TaskStatus.Running)
+            if (!pluginsManifest.UserPlugins.Any())
             {
-                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                await UpdateManifest();
             }
-
-            await _downloadManifestTask;
 
             token.ThrowIfCancellationRequested();
 
@@ -293,13 +297,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any() &&
-                _downloadManifestTask.Status != TaskStatus.Running)
+            if (!pluginsManifest.UserPlugins.Any())
             {
-                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                await UpdateManifest();
             }
-
-            await _downloadManifestTask;
 
             token.ThrowIfCancellationRequested();
 
