@@ -363,7 +363,7 @@ namespace Flow.Launcher.ViewModel
                             }
 
                             if (!match.IsSearchPrecisionScoreMet()) return false;
-                            
+
                             r.Score = match.Score;
                             return true;
 
@@ -512,7 +512,7 @@ namespace Flow.Launcher.ViewModel
                         await Task.Yield();
 
                         var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
-                        if (!currentCancellationToken.IsCancellationRequested)
+                        if (!currentCancellationToken.IsCancellationRequested && results != null)
                             _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query,
                                 currentCancellationToken));
                     }

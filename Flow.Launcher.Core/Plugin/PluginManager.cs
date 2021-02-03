@@ -183,6 +183,8 @@ namespace Flow.Launcher.Core.Plugin
                         throw new ArgumentOutOfRangeException();
                 }
                 token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return results;
                 UpdatePluginMetadata(results, metadata, query);
 
                 metadata.QueryCount += 1;
