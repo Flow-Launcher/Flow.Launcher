@@ -3,6 +3,7 @@ using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.PluginsManager.Models;
+using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -327,7 +328,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
 
-            File.Move(downloadedFilePath, zipFilePath);
+            File.Copy(downloadedFilePath, zipFilePath);
+
+            File.Delete(downloadedFilePath);
 
             Utilities.UnZip(zipFilePath, tempFolderPluginPath, true);
 
@@ -345,7 +348,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}-{plugin.Version}");
 
-            Directory.Move(pluginFolderPath, newPluginPath);
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
+
+            Directory.Delete(pluginFolderPath, true);
         }
 
         internal List<Result> RequestUninstall(string search)
