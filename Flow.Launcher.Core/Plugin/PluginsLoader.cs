@@ -193,8 +193,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 else
                 {
-                    var installation = Task.Run(async () => { await DroplexPackage.Drop(App.python3_9_1).ConfigureAwait(false); });
-                    installation.Wait();
+                    DroplexPackage.Drop(App.python3_9_1).Wait();
 
                     var installedPythonDirectory =
                         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python\Python39");
