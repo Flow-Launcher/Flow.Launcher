@@ -20,12 +20,12 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
 - Search for file contents.
-- Support search using environment variable paths
+- Support search using environment variable paths.
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
 - Support wide range of plugins.
-- Prioritise the order of each plugin's results
-- Save file or folder locations for quick access
+- Prioritise the order of each plugin's results.
+- Save file or folder locations for quick access.
 - Fully portable.
 
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
@@ -47,6 +47,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 **Usage**
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
+- Search programs, bookmarks and control panel items with acronyms eg. `gk` or `gp` for GitKraken Preview; fuzzy search eg.`code` or `vis` for Visual Studio Code
 - Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
 - Cancel/Return to previous screen: <kbd>Esc</kbd>.
 - Install/Uninstall/Update plugins: in the search window, type `pm install`/`pm uninstall`/`pm update` + the plugin name.
