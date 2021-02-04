@@ -47,14 +47,14 @@ Windows may complain about security due to code not being signed, this will be c
 
 **Usage**
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
-- Search programs, bookmarks and control panel items with acronyms eg. `gk` or `gp` for GitKraken Preview; fuzzy search eg. `code` or `vis` for Visual Studio Code
+- Search programs, bookmarks and control panel items with acronyms eg. `gk` or `gp` for GitKraken Preview; fuzzy search eg. `code` or `vis` for Visual Studio Code.
 - Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
 - Cancel/Return to previous screen: <kbd>Esc</kbd>.
 - Install/Uninstall/Update plugins: in the search window, type `pm install`/`pm uninstall`/`pm update` + the plugin name.
 - Saved user settings are located:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
-- Logs are saved along with your user settings folder
+- Logs are saved along with your user settings folder.
 
 ## Status
 
