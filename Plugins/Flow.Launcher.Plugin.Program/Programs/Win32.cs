@@ -401,7 +401,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return entry;
         }
 
-        public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> sources) => ExceptDisabledSource(sources, x => x);
+        public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> sources)
+        {
+            return ExceptDisabledSource(sources, x => x);
+        }
 
         public static IEnumerable<TSource> ExceptDisabledSource<TSource>(IEnumerable<TSource> sources,
             Func<TSource, string> keySelector)
@@ -427,9 +430,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             public static readonly Win32ComparatorWithDescription Default = new Win32ComparatorWithDescription();
 
-            public bool Equals(Win32 x, Win32 y) => x?.Description == y?.Description;
+            public bool Equals(Win32 x, Win32 y)
+            {
+                return x?.Description == y?.Description;
+            }
 
-            public int GetHashCode(Win32 obj) => obj.Description.GetHashCode();
+            public int GetHashCode(Win32 obj)
+            {
+                return obj.Description.GetHashCode();
+            }
         }
 
         private static Win32[] ProgramsHasher(IEnumerable<Win32> programs)
