@@ -39,7 +39,7 @@ namespace Flow.Launcher.Core.Plugin
         protected override string ExecuteCallback(JsonRPCRequestModel rpcRequest)
         {
             _startInfo.Arguments = $"\"{rpcRequest}\"";
-            return ExecuteAsync(_startInfo).GetAwaiter().GetResult();
+            return Execute(_startInfo);
         }
 
         protected override string ExecuteContextMenu(Result selectedResult)
@@ -52,7 +52,7 @@ namespace Flow.Launcher.Core.Plugin
 
             _startInfo.Arguments = $"\"{request}\"";
 
-            return ExecuteAsync(_startInfo).GetAwaiter().GetResult();
+            return Execute(_startInfo);
         }
     }
 }

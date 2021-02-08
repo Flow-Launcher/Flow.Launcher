@@ -131,26 +131,20 @@ namespace Flow.Launcher.Core.Plugin
             return await ExecuteAsync(start, token);
         }
 
-        protected async Task<string> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
+        protected string Execute(ProcessStartInfo startInfo)
         {
             try
             {
                 using var process = Process.Start(startInfo);
-                if (process == null)
-                {
-                    Log.Error("|JsonRPCPlugin.Execute|Can't start new process");
-                    return string.Empty;
-                }
-
+                if (process == null) return string.Empty;
+                
                 using var standardOutput = process.StandardOutput;
-                var result = await standardOutput.ReadToEndAsync();
-                if (token.IsCancellationRequested)
-                    return string.Empty;
+                var result = standardOutput.ReadToEnd();
 
                 if (string.IsNullOrEmpty(result))
                 {
                     using var standardError = process.StandardError;
-                    var error = await standardError.ReadToEndAsync();
+                    var error = standardError.ReadToEnd();
                     if (!string.IsNullOrEmpty(error))
                     {
                         Log.Error($"|JsonRPCPlugin.Execute|{error}");
@@ -168,11 +162,59 @@ namespace Flow.Launcher.Core.Plugin
                 }
 
                 return result;
+                
             }
             catch (Exception e)
             {
                 Log.Exception(
                     $"|JsonRPCPlugin.Execute|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
+                    e);
+                return string.Empty;
+            }
+        }
+
+        protected async Task<string> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
+        {
+            try
+            {
+                using var process = Process.Start(startInfo);
+                if (process == null)
+                {
+                    Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
+                    return string.Empty;
+                }
+
+                using var standardOutput = process.StandardOutput;
+                var result = await standardOutput.ReadToEndAsync();
+                if (token.IsCancellationRequested)
+                    return string.Empty;
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    using var standardError = process.StandardError;
+                    var error = await standardError.ReadToEndAsync();
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        Log.Error($"|JsonRPCPlugin.ExecuteAsync|{error}");
+                        return string.Empty;
+                    }
+
+                    Log.Error("|JsonRPCPlugin.ExecuteAsync|Empty standard output and standard error.");
+                    return string.Empty;
+                }
+
+                if (result.StartsWith("DEBUG:"))
+                {
+                    MessageBox.Show(new Form {TopMost = true}, result.Substring(6));
+                    return string.Empty;
+                }
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                Log.Exception(
+                    $"|JsonRPCPlugin.ExecuteAsync|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
                     e);
                 return string.Empty;
             }

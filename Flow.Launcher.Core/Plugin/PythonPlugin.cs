@@ -50,7 +50,7 @@ namespace Flow.Launcher.Core.Plugin
             _startInfo.Arguments = $"-B \"{context.CurrentPluginMetadata.ExecuteFilePath}\" \"{rpcRequest}\"";
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
             // TODO: Async Action
-            return ExecuteAsync(_startInfo).GetAwaiter().GetResult();
+            return Execute(_startInfo);
         }
 
         protected override string ExecuteContextMenu(Result selectedResult) {
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Core.Plugin
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
             // TODO: Async Action
-            return ExecuteAsync(_startInfo).GetAwaiter().GetResult();
+            return Execute(_startInfo);
         }
     }
 }
