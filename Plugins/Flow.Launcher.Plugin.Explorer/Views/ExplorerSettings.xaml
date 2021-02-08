@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <DataTemplate x:Key="ListViewTemplateFolderLinks">
+        <DataTemplate x:Key="ListViewTemplateAccessLinks">
             <TextBlock
                 Text="{Binding Nickname, Mode=OneTime}"
                 Margin="0,5,0,5" />
@@ -40,22 +40,22 @@
                     <ListView x:Name="lbxActionKeywords"
                         ItemTemplate="{StaticResource ListViewActionKeywords}"/>
                 </Expander>
-                <Expander Name="expFolderLinks" Header="{DynamicResource plugin_explorer_quickfolderaccess_header}"
-                          Expanded="expFolderLinks_Click" Collapsed="expFolderLinks_Collapsed"
+                <Expander Name="expAccessLinks" Header="{DynamicResource plugin_explorer_quickaccesslinks_header}"
+                          Expanded="expAccessLinks_Click" Collapsed="expAccessLinks_Collapsed"
                           Margin="0 10 0 0">
                     <ListView
-                        x:Name="lbxFolderLinks" AllowDrop="True"
-                        Drop="lbxFolders_Drop"
-                        DragEnter="lbxFolders_DragEnter"
-                        ItemTemplate="{StaticResource ListViewTemplateFolderLinks}"/>
+                        x:Name="lbxAccessLinks" AllowDrop="True"
+                        Drop="lbxAccessLinks_Drop"
+                        DragEnter="lbxAccessLinks_DragEnter"
+                        ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"/>
                 </Expander>
                 <Expander x:Name="expExcludedPaths" Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}" 
                           Expanded="expExcludedPaths_Click"
                           Margin="0 10 0 0">
                     <ListView
                         x:Name="lbxExcludedPaths" AllowDrop="True"
-                        Drop="lbxFolders_Drop"
-                        DragEnter="lbxFolders_DragEnter"
+                        Drop="lbxAccessLinks_Drop"
+                        DragEnter="lbxAccessLinks_DragEnter"
                         ItemTemplate="{StaticResource ListViewTemplateExcludedPaths}"/>
                 </Expander>
             </StackPanel>
