@@ -285,9 +285,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> UnregisteredPrograms(List<Settings.ProgramSource> sources, string[] suffixes)
         {
-            var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
-                .SelectMany(s => ProgramPaths(s.Location, suffixes))
-                .Where(t1 => !Main._settings.DisabledProgramSources.Any(x => t1 == x.UniqueIdentifier))
+            var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
+                    .SelectMany(s => ProgramPaths(s.Location, suffixes)), x => x)
                 .Distinct();
 
             var programs = paths.Select(x => Extension(x) switch
@@ -312,9 +311,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var toFilter = paths1.Concat(paths2);
 
-            var programs = toFilter
-                .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1))
-                .Distinct()
+            var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => Extension(x) switch
                 {
                     ShortcutExtension => LnkProgram(x),
@@ -327,39 +324,36 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
-            IEnumerable<Win32> programs = Enumerable.Empty<Win32>();
+
+            IEnumerable<string> toFilter = Enumerable.Empty<string>();
 
             using var rootMachine = Registry.LocalMachine.OpenSubKey(appPaths);
             using var rootUser = Registry.CurrentUser.OpenSubKey(appPaths);
 
             if (rootMachine != null)
             {
-                programs = programs.Concat(GetProgramsFromRegistry(rootMachine));
+                toFilter = toFilter.Concat(GetPathFromRegistry(rootMachine));
             }
 
             if (rootUser != null)
             {
-                programs = programs.Concat(GetProgramsFromRegistry(rootUser));
+                toFilter = toFilter.Concat(GetPathFromRegistry(rootUser));
             }
 
 
-            var disabledProgramsList = Main._settings.DisabledProgramSources;
-            var toFilter = programs.Where(p => suffixes.Contains(Extension(p.ExecutableName)));
+            toFilter = toFilter.Distinct().Where(p => suffixes.Contains(Extension(p)));
 
-            var filtered = toFilter
-                .Where(t1 => !disabledProgramsList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
-                .Select(t1 => t1);
+            var filtered = ExceptDisabledSource(toFilter);
 
-            return filtered.ToList();
+            return filtered.Select(GetProgramFromPath).ToList(); // ToList due to disposing issue
         }
 
-        private static IEnumerable<Win32> GetProgramsFromRegistry(RegistryKey root)
+        private static IEnumerable<string> GetPathFromRegistry(RegistryKey root)
         {
             return root
                 .GetSubKeyNames()
                 .Select(x => GetProgramPathFromRegistrySubKeys(root, x))
-                .Distinct()
-                .Select(GetProgramFromPath);
+                .Distinct();
         }
 
         private static string GetProgramPathFromRegistrySubKeys(RegistryKey root, string subkey)
@@ -394,12 +388,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static Win32 GetProgramFromPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-                return new Win32();
+                return null;
 
             path = Environment.ExpandEnvironmentVariables(path);
 
             if (!File.Exists(path))
-                return new Win32();
+                return null;
 
             var entry = Win32Program(path);
             entry.ExecutableName = Path.GetFileName(path);
@@ -407,19 +401,35 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return entry;
         }
 
+        public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> sources) => ExceptDisabledSource(sources, x => x);
+
+        public static IEnumerable<TSource> ExceptDisabledSource<TSource>(IEnumerable<TSource> sources,
+            Func<TSource, string> keySelector)
+        {
+            return Main._settings.DisabledProgramSources.Count == 0
+                ? sources
+                : ExceptDisabledSourceEnumerable(sources, keySelector);
+
+            static IEnumerable<TSource> ExceptDisabledSourceEnumerable(IEnumerable<TSource> elements,
+                Func<TSource, string> selector)
+            {
+                var set = Main._settings.DisabledProgramSources.Select(x => x.UniqueIdentifier).ToHashSet();
+
+                foreach (var element in elements)
+                {
+                    if (!set.Contains(selector(element)))
+                        yield return element;
+                }
+            }
+        }
+
         private class Win32ComparatorWithDescription : IEqualityComparer<Win32>
         {
             public static readonly Win32ComparatorWithDescription Default = new Win32ComparatorWithDescription();
 
-            public bool Equals(Win32 x, Win32 y)
-            {
-                return x?.Description == y?.Description;
-            }
+            public bool Equals(Win32 x, Win32 y) => x?.Description == y?.Description;
 
-            public int GetHashCode(Win32 obj)
-            {
-                return obj.Description.GetHashCode();
-            }
+            public int GetHashCode(Win32 obj) => obj.Description.GetHashCode();
         }
 
         private static Win32[] ProgramsHasher(IEnumerable<Win32> programs)
@@ -456,7 +466,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     programs = programs.Concat(startMenu);
                 }
 
-                return ProgramsHasher(programs);
+
+                return ProgramsHasher(programs.Where(p => p != null));
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception e)
