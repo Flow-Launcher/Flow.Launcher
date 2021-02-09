@@ -446,18 +446,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private class Win32ComparatorWithDescription : IEqualityComparer<Win32>
+        public static IEnumerable<T> DistinctBy<T, R>(IEnumerable<T> source, Func<T,R> selector)
         {
-            public static readonly Win32ComparatorWithDescription Default = new Win32ComparatorWithDescription();
-
-            public bool Equals(Win32 x, Win32 y)
+            var set = new HashSet<R>();
+            foreach (var item in source)
             {
-                return x?.Description == y?.Description;
-            }
-
-            public int GetHashCode(Win32 obj)
-            {
-                return obj.Description.GetHashCode();
+                if (set.Add(selector(item)))
+                    yield return item;
             }
         }
 
@@ -467,8 +462,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .SelectMany(g =>
                 {
                     if (g.Count() > 1)
-                        return g.Where(p => !string.IsNullOrEmpty(p.Description))
-                            .Distinct(Win32ComparatorWithDescription.Default);
+                        return DistinctBy(g.Where(p => !string.IsNullOrEmpty(p.Description)), x => x.Description);
                     return g;
                 }).ToArray();
         }
