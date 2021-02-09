@@ -185,14 +185,18 @@ namespace Flow.Launcher.Core.Plugin
                 }
 
                 using var standardOutput = process.StandardOutput;
+
+                token.ThrowIfCancellationRequested();
+
                 var result = await standardOutput.ReadToEndAsync();
-                if (token.IsCancellationRequested)
-                    return string.Empty;
+                token.ThrowIfCancellationRequested();
 
                 if (string.IsNullOrEmpty(result))
                 {
                     using var standardError = process.StandardError;
                     var error = await standardError.ReadToEndAsync();
+                    token.ThrowIfCancellationRequested();
+
                     if (!string.IsNullOrEmpty(error))
                     {
                         Log.Error($"|JsonRPCPlugin.ExecuteAsync|{error}");
