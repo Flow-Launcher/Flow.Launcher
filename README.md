@@ -38,10 +38,11 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
 **Integrations**
-  - If you use Python plugins:
-    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
+  - Python plugins:
+    - Once a Python plugin has been detected at start up, you will be prompted to either select the location or allow Python 3.9.1 to automatic download and install. 
     - Add Python to `%PATH%` or set it in flow's settings.
-    - Use `pip` to install `flowlauncher`, cmd in `pip install flowlauncher`.
+    - Use `pip` to install `flowlauncher`, open cmd and type `pip install flowlauncher`.
+    - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
     - Start to launch your Python plugins.
   - Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest).
 
