@@ -17,7 +17,7 @@
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.1"/>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -26,7 +26,7 @@
         <Setter Property="Width" Value="750" /> <!-- This is used to set the blur width only -->
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.1"/>
+                <SolidColorBrush Color="White" Opacity="0.5"/>
             </Setter.Value>
         </Setter>
     </Style>

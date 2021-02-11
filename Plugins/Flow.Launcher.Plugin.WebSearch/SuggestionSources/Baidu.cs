@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
@@ -15,14 +16,18 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
     {
         private readonly Regex _reg = new Regex("window.baidu.sug\\((.*)\\)");
 
-        public override async Task<List<string>> Suggestions(string query)
+        public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
             string result;
 
             try
             {
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+            }
+            catch (TaskCanceledException)
+            {
+                return null;
             }
             catch (HttpRequestException e)
             {

@@ -67,13 +67,15 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         c.TitleHighlightData = titleMatch.MatchData;
                     }
-                    else 
+                    else
                     {
                         c.SubTitleHighlightData = subTitleMatch.MatchData;
                     }
+
                     results.Add(c);
                 }
             }
+
             return results;
         }
 
@@ -94,13 +96,15 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var reuslt = MessageBox.Show(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
-                                                     context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
-                                                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        var reuslt = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (reuslt == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/s /t 0");
                         }
+
                         return true;
                     }
                 },
@@ -111,13 +115,15 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
-                                                     context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
-                                                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        var result = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/r /t 0");
                         }
+
                         return true;
                     }
                 },
@@ -164,13 +170,14 @@ namespace Flow.Launcher.Plugin.Sys
                         // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
                         // 0 for nothing
                         var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
-                        if (result != (uint) HRESULT.S_OK && result != (uint)0x8000FFFF)
+                        if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
                         {
                             MessageBox.Show($"Error emptying recycle bin, error code: {result}\n" +
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
-                                            "Error",
-                                            MessageBoxButton.OK, MessageBoxImage.Error);
+                                "Error",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+
                         return true;
                     }
                 },
@@ -229,9 +236,13 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Application.Current.MainWindow.Hide();
-                        context.API.ReloadAllPluginData();
-                        context.API.ShowMsg(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded"));
+
+                        context.API.ReloadAllPluginData().ContinueWith(_ =>
+                            context.API.ShowMsg(
+                                context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
+                                context.API.GetTranslation(
+                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")));
+                        
                         return true;
                     }
                 },

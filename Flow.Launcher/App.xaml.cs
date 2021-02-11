@@ -45,9 +45,9 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnStartup(object sender, StartupEventArgs e)
+        private async void OnStartupAsync(object sender, StartupEventArgs e)
         {
-            Stopwatch.Normal("|App.OnStartup|Startup cost", () =>
+            await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
@@ -61,6 +61,8 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
+                Http.Proxy = _settings.Proxy;
+
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
@@ -68,9 +70,10 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
-                var window = new MainWindow(_settings, _mainVM);
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
-                PluginManager.InitializePlugins(API);
+                await PluginManager.InitializePlugins(API);
+                var window = new MainWindow(_settings, _mainVM);
+
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
@@ -83,8 +86,6 @@ namespace Flow.Launcher
                 // main windows needs initialized before theme change because of blur settigns
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
-
-                Http.Proxy = _settings.Proxy;
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

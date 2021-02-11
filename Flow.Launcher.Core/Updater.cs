@@ -35,7 +35,8 @@ namespace Flow.Launcher.Core
                 UpdateInfo newUpdateInfo;
 
                 if (!silentUpdate)
-                    api.ShowMsg("Please wait...", "Checking for new update");
+                    api.ShowMsg(api.GetTranslation("pleaseWait"),
+                                api.GetTranslation("update_flowlauncher_update_check"));
 
                 using var updateManager = await GitHubUpdateManager(GitHubRepository).ConfigureAwait(false);
 
@@ -51,12 +52,13 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        MessageBox.Show("You already have the latest Flow Launcher version");
+                        MessageBox.Show(api.GetTranslation("update_flowlauncher_already_on_latest"));
                     return;
                 }
 
                 if (!silentUpdate)
-                    api.ShowMsg("Update found", "Updating...");
+                    api.ShowMsg(api.GetTranslation("update_flowlauncher_update_found"),
+                                api.GetTranslation("update_flowlauncher_updating"));
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -67,8 +69,9 @@ namespace Flow.Launcher.Core
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
                     if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
-                        MessageBox.Show("Flow Launcher was not able to move your user profile data to the new update version. Please manually " +
-                            $"move your profile data folder from {DataLocation.PortableDataPath} to {targetDestination}");
+                        MessageBox.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
+                                                      DataLocation.PortableDataPath,
+                                                      targetDestination));
                 }
                 else
                 {
@@ -79,7 +82,7 @@ namespace Flow.Launcher.Core
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (MessageBox.Show(newVersionTips, "New Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
@@ -87,7 +90,8 @@ namespace Flow.Launcher.Core
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
-                api.ShowMsg("Update Failed", "Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.");
+                api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
+                            api.GetTranslation("update_flowlauncher_check_connection"));
                 return;
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
@@ -52,13 +53,14 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static void ReloadData()
+        public static async Task ReloadData()
         {
-            foreach(var plugin in AllPlugins)
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
             {
-                var reloadablePlugin = plugin.Plugin as IReloadable;
-                reloadablePlugin?.ReloadData();
-            }
+                IReloadable p => Task.Run(p.ReloadData),
+                IAsyncReloadable p => p.ReloadDataAsync(),
+                _ => Task.CompletedTask,
+            }).ToArray());
         }
 
         static PluginManager()
@@ -86,50 +88,62 @@ namespace Flow.Launcher.Core.Plugin
         /// Call initialize for all plugins
         /// </summary>
         /// <returns>return the list of failed to init plugins or null for none</returns>
-        public static void InitializePlugins(IPublicAPI api)
+        public static async Task InitializePlugins(IPublicAPI api)
         {
             API = api;
             var failedPlugins = new ConcurrentQueue<PluginPair>();
-            Parallel.ForEach(AllPlugins, pair =>
+
+            var InitTasks = AllPlugins.Select(pair => Task.Run(async delegate
             {
                 try
                 {
-                    var milliseconds = Stopwatch.Debug($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>", () =>
+                    var milliseconds = pair.Plugin switch
                     {
-                        pair.Plugin.Init(new PluginInitContext
-                        {
-                            CurrentPluginMetadata = pair.Metadata,
-                            API = API
-                        });
-                    });
+                        IAsyncPlugin plugin
+                            => await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                                                        () => plugin.InitAsync(new PluginInitContext(pair.Metadata, API))),
+                        IPlugin plugin
+                            => Stopwatch.Debug($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                                        () => plugin.Init(new PluginInitContext(pair.Metadata, API))),
+                        _ => throw new ArgumentException(),
+                    };
                     pair.Metadata.InitTime += milliseconds;
-                    Log.Info($"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
+                    Log.Info(
+                        $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
                 }
                 catch (Exception e)
                 {
                     Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    pair.Metadata.Disabled = true; 
+                    pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
-            });
+            }));
+
+            await Task.WhenAll(InitTasks);
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             foreach (var plugin in AllPlugins)
             {
-                if (IsGlobalPlugin(plugin.Metadata))
-                    GlobalPlugins.Add(plugin);
-
-                // Plugins may have multiple ActionKeywords, eg. WebSearch
-                plugin.Metadata.ActionKeywords
-                    .Where(x => x != Query.GlobalPluginWildcardSign)
-                    .ToList()
-                    .ForEach(x => NonGlobalPlugins[x] = plugin);
+                foreach (var actionKeyword in plugin.Metadata.ActionKeywords)
+                {
+                    switch (actionKeyword)
+                    {
+                        case Query.GlobalPluginWildcardSign:
+                            GlobalPlugins.Add(plugin);
+                            break;
+                        default:
+                            NonGlobalPlugins[actionKeyword] = plugin;
+                            break;
+                    }
+                }
             }
 
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                API.ShowMsg($"Fail to Init Plugins", $"Plugins: {failed} - fail to load and would be disabled, please contact plugin creator for help", "", false);
+                API.ShowMsg($"Fail to Init Plugins",
+                    $"Plugins: {failed} - fail to load and would be disabled, please contact plugin creator for help",
+                    "", false);
             }
         }
 
@@ -146,24 +160,48 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static List<Result> QueryForPlugin(PluginPair pair, Query query)
+        public static async Task<List<Result>> QueryForPlugin(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             try
             {
                 var metadata = pair.Metadata;
-                var milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}", () =>
+
+                long milliseconds = -1L;
+
+                switch (pair.Plugin)
                 {
-                    results = pair.Plugin.Query(query) ?? new List<Result>();
-                    UpdatePluginMetadata(results, metadata, query);
-                });
+                    case IAsyncPlugin plugin:
+                        milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                            async () => results = await plugin.QueryAsync(query, token).ConfigureAwait(false));
+                        break;
+                    case IPlugin plugin:
+                        await Task.Run(() => milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                            () => results = plugin.Query(query)), token).ConfigureAwait(false);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return results;
+                UpdatePluginMetadata(results, metadata, query);
+
                 metadata.QueryCount += 1;
-                metadata.AvgQueryTime = metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
+                metadata.AvgQueryTime =
+                    metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return results = null;
             }
             catch (Exception e)
             {
                 Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
+
             return results;
         }
 
@@ -180,11 +218,6 @@ namespace Flow.Launcher.Core.Plugin
                 if (metadata.ActionKeywords.Count == 1)
                     r.ActionKeywordAssigned = query.ActionKeyword;
             }
-        }
-
-        private static bool IsGlobalPlugin(PluginMetadata metadata)
-        {
-            return metadata.ActionKeywords.Contains(Query.GlobalPluginWildcardSign);
         }
 
         /// <summary>
@@ -222,16 +255,19 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{pluginPair.Metadata.Name}>", e);
+                    Log.Exception(
+                        $"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
+                        e);
                 }
             }
+
             return results;
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
             return actionKeyword != Query.GlobalPluginWildcardSign
-                && NonGlobalPlugins.ContainsKey(actionKeyword);
+                   && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
 
         /// <summary>
@@ -249,6 +285,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 NonGlobalPlugins[newActionKeyword] = plugin;
             }
+
             plugin.Metadata.ActionKeywords.Add(newActionKeyword);
         }
 
@@ -262,16 +299,16 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword == Query.GlobalPluginWildcardSign
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
-                                    .Where(x => x == Query.GlobalPluginWildcardSign)
-                                    .ToList()
-                                    .Count == 1)
+                    .Where(x => x == Query.GlobalPluginWildcardSign)
+                    .ToList()
+                    .Count == 1)
             {
                 GlobalPlugins.Remove(plugin);
             }
-            
+
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
-            
+
 
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
         }
