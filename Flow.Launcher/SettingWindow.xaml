@@ -11,13 +11,14 @@
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         x:Class="Flow.Launcher.SettingWindow"
         mc:Ignorable="d"
-        Icon="Images\app.png"
+        Icon="Images\app.ico"
         Title="{DynamicResource flowlauncher_settings}"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Height="600" Width="800" 
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
+    
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close"/>
     </Window.InputBindings>
