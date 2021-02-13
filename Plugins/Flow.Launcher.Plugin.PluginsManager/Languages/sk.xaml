@@ -7,7 +7,7 @@
     <system:String x:Key="plugin_pluginsmanager_please_wait">Čakajte, prosím…</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Úspešne stiahnuté</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} od {1} {2}{3}Chcete odinštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Chcete nainštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Inštalovať plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinštalovať plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Inštalácia zlyhala: nepodarilo sa nájsť metadáta súboru plugin.json nového pluginu</system:String>
