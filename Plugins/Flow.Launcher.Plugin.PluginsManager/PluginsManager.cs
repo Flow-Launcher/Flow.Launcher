@@ -402,8 +402,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private void Uninstall(PluginMetadata plugin)
         {
-            
-
             Core.Plugin.PluginManager.Settings.Plugins.Remove(plugin.ID);
             Core.Plugin.PluginManager.AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
             
