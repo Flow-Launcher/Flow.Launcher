@@ -18,7 +18,6 @@
         Height="600" Width="800" 
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
-    
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close"/>
     </Window.InputBindings>
