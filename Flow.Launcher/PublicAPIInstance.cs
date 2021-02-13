@@ -61,6 +61,9 @@ namespace Flow.Launcher
             // which will cause ungraceful exit
             SaveAppAllSettings();
 
+            // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+            // it is only published from the project's release pipeline. When debugging without it,
+            // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
