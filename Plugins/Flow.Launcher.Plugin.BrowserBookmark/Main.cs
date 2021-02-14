@@ -132,7 +132,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     {
                         try
                         {
-                            Clipboard.SetText(((BookmarkAttributes)selectedResult.ContextData).Url);
+                            Clipboard.SetDataObject(((BookmarkAttributes)selectedResult.ContextData).Url);
 
                             return true;
                         }
