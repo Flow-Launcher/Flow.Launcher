@@ -33,7 +33,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string Location => ParentDirectory;
 
         private const string ShortcutExtension = "lnk";
-        private const string ApplicationReferenceExtension = "appref-ms";
         private const string ExeExtension = "exe";
 
 
