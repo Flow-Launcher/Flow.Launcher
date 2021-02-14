@@ -90,15 +90,15 @@ namespace Flow.Launcher.Plugin
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
         /// <summary>
-        /// Fuzzy Search the string with query
+        /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
         /// </summary>
-        /// <param name="query">Query String</param>
-        /// <param name="stringToCompare">The string to Search for Query</param>
+        /// <param name="query">Query string</param>
+        /// <param name="stringToCompare">The string that will be compared against the query</param>
         /// <returns>Match results</returns>
         MatchResult FuzzySearch(string query, string stringToCompare);
 
         /// <summary>
-        /// Http Get to the spefic URL
+        /// Http download the spefic url and return as string
         /// </summary>
         /// <param name="url">URL to call Http Get</param>
         /// <param name="token">Cancellation Token</param>
@@ -106,7 +106,7 @@ namespace Flow.Launcher.Plugin
         Task<string> HttpGetStringAsync(string url, CancellationToken token = default);
 
         /// <summary>
-        /// Http Get to the spefic URL
+        /// Http download the spefic url and return as stream
         /// </summary>
         /// <param name="url">URL to call Http Get</param>
         /// <param name="token">Cancellation Token</param>
@@ -136,35 +136,36 @@ namespace Flow.Launcher.Plugin
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
         /// <summary>
-        /// Log Debug message
+        /// Log debug message
         /// Message will only be logged in Debug mode
         /// </summary>
         void LogDebug(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Log Message
+        /// Log info message
         /// </summary>
         void LogInfo(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Log Warning
+        /// Log warning message
         /// </summary>
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Log an Exception
+        /// Log an Exception. Will throw if in debug mode so developer will be aware, 
+        /// otherwise logs the eror message. This is the primary logging method used for Flow 
         /// </summary>
         void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Load JsonStorage for current plugin
+        /// Load JsonStorage for current plugin. This is the method used to load settings from json in Flow
         /// </summary>
         /// <typeparam name="T">Type for deserialization</typeparam>
         /// <returns></returns>
         T LoadJsonStorage<T>() where T : new();
 
         /// <summary>
-        /// Save JsonStorage for current plugin
+        /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>

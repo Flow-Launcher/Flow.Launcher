@@ -150,7 +150,6 @@ namespace Flow.Launcher
             return true;
         }
 
-
         #endregion
     }
 }
