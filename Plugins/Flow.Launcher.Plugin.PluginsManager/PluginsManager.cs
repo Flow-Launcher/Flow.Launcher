@@ -1,3 +1,4 @@
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
@@ -400,6 +401,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private void Uninstall(PluginMetadata plugin)
         {
+            PluginManager.Settings.Plugins.Remove(plugin.ID);
+            PluginManager.AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+
             // Marked for deletion. Will be deleted on next start up
             using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
         }

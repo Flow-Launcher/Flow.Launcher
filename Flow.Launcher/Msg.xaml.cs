@@ -66,7 +66,7 @@ namespace Flow.Launcher
             }
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = ImageLoader.Load(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\app.png"));
+                imgIco.Source = ImageLoader.Load(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
             else {
                 imgIco.Source = ImageLoader.Load(iconPath);
