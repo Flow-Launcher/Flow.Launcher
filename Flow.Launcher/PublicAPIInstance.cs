@@ -111,8 +111,6 @@ namespace Flow.Launcher
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
-        public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
-
         public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
 
         public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
@@ -124,7 +122,6 @@ namespace Flow.Launcher
         public void AddActionKeyword(string pluginId, string newActionKeyword) => PluginManager.AddActionKeyword(pluginId, newActionKeyword);
 
         public void RemoveActionKeyword(string pluginId, string oldActionKeyword) => PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
-
 
         public void LogDebug(string className, string message, [CallerMemberName] string methodName = "") => Log.Debug(className, message, methodName);
 
@@ -138,6 +135,7 @@ namespace Flow.Launcher
 
         public void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new() => new PluginJsonStorage<T>(setting).Save();
 
+        public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
         #endregion
 
