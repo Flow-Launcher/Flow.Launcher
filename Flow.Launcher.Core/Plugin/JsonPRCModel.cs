@@ -45,6 +45,8 @@ namespace Flow.Launcher.Core.Plugin
     {
         [JsonPropertyName("result")]
         public new List<JsonRPCResult> Result { get; set; }
+
+        public string DebugMessage { get; set; }
     }
 
     public class JsonRPCRequestModel : JsonRPCModelBase

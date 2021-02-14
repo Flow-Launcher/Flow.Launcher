@@ -48,10 +48,34 @@ namespace Flow.Launcher.Core.Plugin
 
 
 
+        private async Task<List<Result>> DeserializedResultAsync(Stream output)
+        {
+            if (output == Stream.Null) return null;
+
+            JsonRPCQueryResponseModel queryResponseModel = await
+                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output);
+
+            return ParseResults(queryResponseModel);
+        }
+
+        private List<Result> DeserializedResult(string output)
+        {
+            if (string.IsNullOrEmpty(output)) return null;
+
+            JsonRPCQueryResponseModel queryResponseModel =
+                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output);
+            return ParseResults(queryResponseModel);
+        }
+
         private List<Result> ParseResults(JsonRPCQueryResponseModel queryResponseModel)
         {
             var results = new List<Result>();
             if (queryResponseModel.Result == null) return null;
+
+            if(!string.IsNullOrEmpty(queryResponseModel.DebugMessage))
+            {
+                context.API.ShowMsg(queryResponseModel.DebugMessage);
+            }
 
             foreach (JsonRPCResult result in queryResponseModel.Result)
             {
@@ -87,25 +111,6 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return results;
-        }
-
-        private async Task<List<Result>> DeserializedResultAsync(Stream output)
-        {
-            if (output == Stream.Null) return null;
-
-            JsonRPCQueryResponseModel queryResponseModel = await
-                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output);
-
-            return ParseResults(queryResponseModel);
-        }
-
-        private List<Result> DeserializedResult(string output)
-        {
-            if (string.IsNullOrEmpty(output)) return null;
-
-            JsonRPCQueryResponseModel queryResponseModel =
-                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output);
-            return ParseResults(queryResponseModel);
         }
 
         private void ExecuteFlowLauncherAPI(string method, object[] parameters)
