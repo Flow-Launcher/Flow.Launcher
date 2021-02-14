@@ -70,15 +70,9 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
-        public void RestarApp()
-        {
-            RestartApp();
-        }
+        public void RestarApp() => RestartApp();
 
-        public void CheckForNewUpdate()
-        {
-            _settingsVM.UpdateApp();
-        }
+        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
         public void SaveAppAllSettings()
         {
@@ -88,15 +82,9 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData()
-        {
-            return PluginManager.ReloadData();
-        }
+        public Task ReloadAllPluginData() => PluginManager.ReloadData();
 
-        public void ShowMsg(string title, string subTitle = "", string iconPath = "")
-        {
-            ShowMsg(title, subTitle, iconPath, true);
-        }
+        public void ShowMsg(string title, string subTitle = "", string iconPath = "") => ShowMsg(title, subTitle, iconPath, true);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
@@ -115,87 +103,40 @@ namespace Flow.Launcher
             });
         }
 
-        public void StartLoadingBar()
-        {
-            _mainVM.ProgressBarVisibility = Visibility.Visible;
-        }
+        public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
 
-        public void StopLoadingBar()
-        {
-            _mainVM.ProgressBarVisibility = Visibility.Collapsed;
-        }
+        public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key)
-        {
-            return InternationalizationManager.Instance.GetTranslation(key);
-        }
+        public string GetTranslation(string key) => InternationalizationManager.Instance.GetTranslation(key);
 
-        public List<PluginPair> GetAllPlugins()
-        {
-            return PluginManager.AllPlugins.ToList();
-        }
+        public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
         public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
 
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default)
-        {
-            return Http.GetAsync(url);
-        }
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
 
-        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default)
-        {
-            return Http.GetStreamAsync(url);
-        }
+        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) => Http.GetStreamAsync(url);
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath)
-        {
-            return Http.DownloadAsync(url, filePath);
-        }
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath) => Http.DownloadAsync(url, filePath);
 
-        public void AddActionKeyword(string pluginId, string newActionKeyword)
-        {
-            PluginManager.AddActionKeyword(pluginId, newActionKeyword);
-        }
+        public void AddActionKeyword(string pluginId, string newActionKeyword) => PluginManager.AddActionKeyword(pluginId, newActionKeyword);
 
-        public void RemoveActionKeyword(string pluginId, string oldActionKeyword)
-        {
-            PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
-        }
+        public void RemoveActionKeyword(string pluginId, string oldActionKeyword) => PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
 
 
-        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "")
-        {
-            Log.Debug(className, message, methodName);
-        }
+        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "") => Log.Debug(className, message, methodName);
 
-        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "")
-        {
-            Log.Info(className, message, methodName);
-        }
+        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "") => Log.Info(className, message, methodName);
 
-        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "")
-        {
-            Log.Warn(className, message, methodName);
-        }
+        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") => Log.Warn(className, message, methodName);
 
-        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "")
-        {
-            Log.Exception(className, message, e, methodName);
-        }
+        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
-        public T LoadJsonStorage<T>(PluginMetadata metadata) where T : new()
-        {
-            var storage = new PluginJsonStorage<T>();
-            return storage.Load();
-        }
+        public T LoadJsonStorage<T>(PluginMetadata metadata) where T : new() => new PluginJsonStorage<T>().Load();
 
-        public void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new()
-        {
-            var storage = new PluginJsonStorage<T>(setting);
-            storage.Save();
-        }
+        public void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new() => new PluginJsonStorage<T>(setting).Save();
 
 
         #endregion
