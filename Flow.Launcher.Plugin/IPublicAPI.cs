@@ -89,28 +89,85 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
+        /// <summary>
+        /// Fuzzy Search the string with query
+        /// </summary>
+        /// <param name="query">Query String</param>
+        /// <param name="stringToCompare">The string to Search for Query</param>
+        /// <returns>Match results</returns>
         MatchResult FuzzySearch(string query, string stringToCompare);
 
+        /// <summary>
+        /// Http Get to the spefic URL
+        /// </summary>
+        /// <param name="url">URL to call Http Get</param>
+        /// <param name="token">Cancellation Token</param>
+        /// <returns>Task to get string result</returns>
         Task<string> HttpGetStringAsync(string url, CancellationToken token = default);
 
+        /// <summary>
+        /// Http Get to the spefic URL
+        /// </summary>
+        /// <param name="url">URL to call Http Get</param>
+        /// <param name="token">Cancellation Token</param>
+        /// <returns>Task to get stream result</returns>
         Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default);
 
+        /// <summary>
+        /// Download the specific url to a cretain file path
+        /// </summary>
+        /// <param name="url">URL to download file</param>
+        /// <param name="token">place to store file</param>
+        /// <returns>Task showing the progress</returns>
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath);
 
+        /// <summary>
+        /// Add ActionKeyword for specific plugin
+        /// </summary>
+        /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
+        /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
+        /// <summary>
+        /// Remove ActionKeyword for specific plugin
+        /// </summary>
+        /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
+        /// <param name="newActionKeyword">The actionkeyword that is supposed to be removed</param>
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
+        /// <summary>
+        /// Log Debug message
+        /// Message will only be logged in Debug mode
+        /// </summary>
         void LogDebug(string className, string message, [CallerMemberName] string methodName = "");
 
+        /// <summary>
+        /// Log Message
+        /// </summary>
         void LogInfo(string className, string message, [CallerMemberName] string methodName = "");
 
+        /// <summary>
+        /// Log Warning
+        /// </summary>
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
+        /// <summary>
+        /// Log an Exception
+        /// </summary>
         void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "");
 
-        T LoadJsonStorage<T>(PluginMetadata metadata) where T : new();
+        /// <summary>
+        /// Load JsonStorage for current plugin
+        /// </summary>
+        /// <typeparam name="T">Type for deserialization</typeparam>
+        /// <returns></returns>
+        T LoadJsonStorage<T>() where T : new();
 
-        void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new();
+        /// <summary>
+        /// Save JsonStorage for current plugin
+        /// </summary>
+        /// <typeparam name="T">Type for Serialization</typeparam>
+        /// <returns></returns>
+        void SaveJsonStorage<T>(T setting) where T : new();
     }
 }

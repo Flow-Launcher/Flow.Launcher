@@ -131,9 +131,9 @@ namespace Flow.Launcher
 
         public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
-        public T LoadJsonStorage<T>(PluginMetadata metadata) where T : new() => new PluginJsonStorage<T>().Load();
+        public T LoadJsonStorage<T>() where T : new() => new PluginJsonStorage<T>().Load();
 
-        public void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new() => new PluginJsonStorage<T>(setting).Save();
+        public void SaveJsonStorage<T>(T setting) where T : new() => new PluginJsonStorage<T>(setting).Save();
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
