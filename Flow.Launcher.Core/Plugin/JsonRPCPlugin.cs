@@ -119,7 +119,7 @@ namespace Flow.Launcher.Core.Plugin
         /// <param name="arguments"></param>
         /// <param name="token">Cancellation Token</param>
         /// <returns></returns>
-        protected async Task<string> ExecuteAsync(string fileName, string arguments, CancellationToken token = default)
+        protected Task<string> ExecuteAsync(string fileName, string arguments, CancellationToken token = default)
         {
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = fileName;
@@ -128,7 +128,7 @@ namespace Flow.Launcher.Core.Plugin
             start.CreateNoWindow = true;
             start.RedirectStandardOutput = true;
             start.RedirectStandardError = true;
-            return await ExecuteAsync(start, token);
+            return ExecuteAsync(start, token);
         }
 
         protected string Execute(ProcessStartInfo startInfo)
