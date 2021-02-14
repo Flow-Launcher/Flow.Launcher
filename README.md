@@ -51,6 +51,7 @@ Windows may complain about security due to code not being signed, this will be c
 - Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
 - Cancel/Return to previous screen: <kbd>Esc</kbd>.
 - Install/Uninstall/Update plugins: in the search window, type `pm install`/`pm uninstall`/`pm update` + the plugin name.
+- Press `F5` while in the query window to reload all plugin data.
 - Saved user settings are located:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
