@@ -119,7 +119,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="url">URL to download file</param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
-        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath);
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
 
         /// <summary>
         /// Add ActionKeyword for specific plugin
