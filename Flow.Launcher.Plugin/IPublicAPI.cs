@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -100,5 +101,16 @@ namespace Flow.Launcher.Plugin
 
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
+        void LogDebug(string className, string message, [CallerMemberName] string methodName = "");
+
+        void LogInfo(string className, string message, [CallerMemberName] string methodName = "");
+
+        void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
+
+        void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "");
+
+        T LoadJsonStorage<T>(PluginMetadata metadata) where T : new();
+
+        void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new();
     }
 }

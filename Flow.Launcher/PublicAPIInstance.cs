@@ -18,6 +18,9 @@ using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
 using JetBrains.Annotations;
+using System.Runtime.CompilerServices;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 
 namespace Flow.Launcher
 {
@@ -160,6 +163,41 @@ namespace Flow.Launcher
         {
             PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
         }
+
+
+        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "")
+        {
+            Log.Debug(className, message, methodName);
+        }
+
+        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "")
+        {
+            Log.Info(className, message, methodName);
+        }
+
+        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "")
+        {
+            Log.Warn(className, message, methodName);
+        }
+
+        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "")
+        {
+            Log.Exception(className, message, e, methodName);
+        }
+
+        public T LoadJsonStorage<T>(PluginMetadata metadata) where T : new()
+        {
+            var storage = new PluginJsonStorage<T>();
+            return storage.Load();
+        }
+
+        public void SaveJsonStorage<T>(PluginMetadata metadata, T setting) where T : new()
+        {
+            var storage = new PluginJsonStorage<T>(setting);
+            storage.Save();
+        }
+
+
         #endregion
 
         #region Private Methods
@@ -172,6 +210,7 @@ namespace Flow.Launcher
             }
             return true;
         }
+
 
         #endregion
     }
