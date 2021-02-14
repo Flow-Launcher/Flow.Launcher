@@ -30,7 +30,7 @@ namespace Flow.Launcher.Core.Plugin
 
         }
 
-        protected override Task<string> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
         {
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {

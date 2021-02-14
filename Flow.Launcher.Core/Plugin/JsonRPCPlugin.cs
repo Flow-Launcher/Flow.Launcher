@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -26,7 +27,7 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
 
-        protected abstract Task<string> ExecuteQueryAsync(Query query, CancellationToken token);
+        protected abstract Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token);
         protected abstract string ExecuteCallback(JsonRPCRequestModel rpcRequest);
         protected abstract string ExecuteContextMenu(Result selectedResult);
 
@@ -45,53 +46,66 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        private List<Result> DeserializedResult(string output)
+
+
+        private List<Result> ParseResults(JsonRPCQueryResponseModel queryResponseModel)
         {
-            if (!String.IsNullOrEmpty(output))
+            var results = new List<Result>();
+            if (queryResponseModel.Result == null) return null;
+
+            foreach (JsonRPCResult result in queryResponseModel.Result)
             {
-                List<Result> results = new List<Result>();
-
-                JsonRPCQueryResponseModel queryResponseModel =
-                    JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output);
-                if (queryResponseModel.Result == null) return null;
-
-                foreach (JsonRPCResult result in queryResponseModel.Result)
+                result.Action = c =>
                 {
-                    result.Action = c =>
-                    {
-                        if (result.JsonRPCAction == null) return false;
+                    if (result.JsonRPCAction == null) return false;
 
-                        if (!String.IsNullOrEmpty(result.JsonRPCAction.Method))
+                    if (!string.IsNullOrEmpty(result.JsonRPCAction.Method))
+                    {
+                        if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
                         {
-                            if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
+                            ExecuteFlowLauncherAPI(result.JsonRPCAction.Method.Substring(4),
+                                result.JsonRPCAction.Parameters);
+                        }
+                        else
+                        {
+                            string actionReponse = ExecuteCallback(result.JsonRPCAction);
+                            JsonRPCRequestModel jsonRpcRequestModel =
+                                JsonSerializer.Deserialize<JsonRPCRequestModel>(actionReponse);
+                            if (jsonRpcRequestModel != null
+                                && !string.IsNullOrEmpty(jsonRpcRequestModel.Method)
+                                && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
                             {
-                                ExecuteFlowLauncherAPI(result.JsonRPCAction.Method.Substring(4),
-                                    result.JsonRPCAction.Parameters);
-                            }
-                            else
-                            {
-                                string actionReponse = ExecuteCallback(result.JsonRPCAction);
-                                JsonRPCRequestModel jsonRpcRequestModel =
-                                    JsonSerializer.Deserialize<JsonRPCRequestModel>(actionReponse);
-                                if (jsonRpcRequestModel != null
-                                    && !String.IsNullOrEmpty(jsonRpcRequestModel.Method)
-                                    && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
-                                {
-                                    ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4),
-                                        jsonRpcRequestModel.Parameters);
-                                }
+                                ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4),
+                                    jsonRpcRequestModel.Parameters);
                             }
                         }
+                    }
 
-                        return !result.JsonRPCAction.DontHideAfterAction;
-                    };
-                    results.Add(result);
-                }
-
-                return results;
+                    return !result.JsonRPCAction.DontHideAfterAction;
+                };
+                results.Add(result);
             }
 
-            return null;
+            return results;
+        }
+
+        private async Task<List<Result>> DeserializedResultAsync(Stream output)
+        {
+            if (output == Stream.Null) return null;
+
+            JsonRPCQueryResponseModel queryResponseModel = await
+                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output);
+
+            return ParseResults(queryResponseModel);
+        }
+
+        private List<Result> DeserializedResult(string output)
+        {
+            if (string.IsNullOrEmpty(output)) return null;
+
+            JsonRPCQueryResponseModel queryResponseModel =
+                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output);
+            return ParseResults(queryResponseModel);
         }
 
         private void ExecuteFlowLauncherAPI(string method, object[] parameters)
@@ -119,15 +133,17 @@ namespace Flow.Launcher.Core.Plugin
         /// <param name="arguments"></param>
         /// <param name="token">Cancellation Token</param>
         /// <returns></returns>
-        protected Task<string> ExecuteAsync(string fileName, string arguments, CancellationToken token = default)
+        protected Task<Stream> ExecuteAsync(string fileName, string arguments, CancellationToken token = default)
         {
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = fileName;
-            start.Arguments = arguments;
-            start.UseShellExecute = false;
-            start.CreateNoWindow = true;
-            start.RedirectStandardOutput = true;
-            start.RedirectStandardError = true;
+            ProcessStartInfo start = new ProcessStartInfo
+            {
+                FileName = fileName,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
             return ExecuteAsync(start, token);
         }
 
@@ -137,7 +153,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 using var process = Process.Start(startInfo);
                 if (process == null) return string.Empty;
-                
+
                 using var standardOutput = process.StandardOutput;
                 var result = standardOutput.ReadToEnd();
 
@@ -157,12 +173,12 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (result.StartsWith("DEBUG:"))
                 {
-                    MessageBox.Show(new Form {TopMost = true}, result.Substring(6));
+                    MessageBox.Show(new Form { TopMost = true }, result.Substring(6));
                     return string.Empty;
                 }
 
                 return result;
-                
+
             }
             catch (Exception e)
             {
@@ -173,7 +189,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        protected async Task<string> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
+        protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
             try
             {
@@ -181,17 +197,14 @@ namespace Flow.Launcher.Core.Plugin
                 if (process == null)
                 {
                     Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
-                    return string.Empty;
+                    return Stream.Null;
                 }
 
-                using var standardOutput = process.StandardOutput;
+                var result = process.StandardOutput.BaseStream;
 
                 token.ThrowIfCancellationRequested();
 
-                var result = await standardOutput.ReadToEndAsync();
-                token.ThrowIfCancellationRequested();
-
-                if (string.IsNullOrEmpty(result))
+                if (!process.StandardError.EndOfStream)
                 {
                     using var standardError = process.StandardError;
                     var error = await standardError.ReadToEndAsync();
@@ -200,17 +213,11 @@ namespace Flow.Launcher.Core.Plugin
                     if (!string.IsNullOrEmpty(error))
                     {
                         Log.Error($"|JsonRPCPlugin.ExecuteAsync|{error}");
-                        return string.Empty;
+                        return Stream.Null;
                     }
 
                     Log.Error("|JsonRPCPlugin.ExecuteAsync|Empty standard output and standard error.");
-                    return string.Empty;
-                }
-
-                if (result.StartsWith("DEBUG:"))
-                {
-                    MessageBox.Show(new Form {TopMost = true}, result.Substring(6));
-                    return string.Empty;
+                    return Stream.Null;
                 }
 
                 return result;
@@ -220,16 +227,18 @@ namespace Flow.Launcher.Core.Plugin
                 Log.Exception(
                     $"|JsonRPCPlugin.ExecuteAsync|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
                     e);
-                return string.Empty;
+                return Stream.Null;
             }
         }
 
+
+
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            string output = await ExecuteQueryAsync(query, token);
+            var output = await ExecuteQueryAsync(query, token);
             try
             {
-                return DeserializedResult(output);
+                return await DeserializedResultAsync(output);
             }
             catch (Exception e)
             {

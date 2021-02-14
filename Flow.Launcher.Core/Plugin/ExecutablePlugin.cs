@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
@@ -23,7 +24,7 @@ namespace Flow.Launcher.Core.Plugin
             };
         }
 
-        protected override Task<string> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
         {
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {
