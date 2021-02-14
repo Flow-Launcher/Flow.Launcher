@@ -41,35 +41,37 @@ namespace Flow.Launcher.Plugin.Program.Programs
             string title;
             MatchResult matchResult;
 
+            var nameMatchResult = StringMatcher.FuzzySearch(query, Name);
+            var descriptionMatchResult = StringMatcher.FuzzySearch(query, Description);
+            var pathMatchResult = StringMatcher.FuzzySearch(query, Path.GetFileNameWithoutExtension(FullPath));
+
+            var score = new[] { nameMatchResult.Score, descriptionMatchResult.Score, pathMatchResult.Score }.Max();
+
+            if (score < (int)StringMatcher.Instance.UserSettingSearchPrecision)
+                return null;
+
             // We suppose Name won't be null
-            if (Description == null || Name.StartsWith(Description))
+            if (score == nameMatchResult.Score && (Description == null || Name.StartsWith(Description)))
             {
                 title = Name;
-                matchResult = StringMatcher.FuzzySearch(query, title);
+                matchResult = nameMatchResult;
             }
-            else if (Description.StartsWith(Name))
+            else if (score == descriptionMatchResult.Score && Description.StartsWith(Name))
             {
                 title = Description;
-                matchResult = StringMatcher.FuzzySearch(query, Description);
+
+                for (int i = 0; i < descriptionMatchResult.MatchData.Count; i++)
+                {
+                    descriptionMatchResult.MatchData[i] += Name.Length + 2; // 2 is ": "
+                }
+
+                matchResult = descriptionMatchResult;
             }
             else
             {
                 title = $"{Name}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
-                if (desciptionMatch.Score > nameMatch.Score)
-                {
-                    for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
-                    {
-                        desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
-                    }
-                    matchResult = desciptionMatch;
-                }
-                else matchResult = nameMatch;
+                matchResult = pathMatchResult;
             }
-
-            if (!matchResult.Success) return null;
-
 
             var result = new Result
             {
