@@ -31,7 +31,6 @@ namespace Flow.Launcher.Core.Plugin
         protected abstract string ExecuteCallback(JsonRPCRequestModel rpcRequest);
         protected abstract string ExecuteContextMenu(Result selectedResult);
 
-
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             string output = ExecuteContextMenu(selectedResult);
@@ -234,8 +233,6 @@ namespace Flow.Launcher.Core.Plugin
                 return Stream.Null;
             }
         }
-
-
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
