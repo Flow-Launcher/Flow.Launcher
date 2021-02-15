@@ -213,7 +213,6 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     using var standardError = process.StandardError;
                     var error = await standardError.ReadToEndAsync();
-                    token.ThrowIfCancellationRequested();
 
                     if (!string.IsNullOrEmpty(error))
                     {
