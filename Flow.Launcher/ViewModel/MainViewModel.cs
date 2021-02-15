@@ -19,6 +19,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Threading.Channels;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -46,7 +47,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
 
-        private BufferBlock<ResultsForUpdate> _resultsUpdateQueue;
+        private Channel<ResultsForUpdate> _resultsUpdateQueue;
         private Task _resultsViewUpdateTask;
 
         #endregion
@@ -85,18 +86,21 @@ namespace Flow.Launcher.ViewModel
 
         private void RegisterViewUpdate()
         {
-            _resultsUpdateQueue = new BufferBlock<ResultsForUpdate>();
+            _resultsUpdateQueue = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsViewUpdateTask =
                 Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 
             async Task updateAction()
             {
                 var queue = new Dictionary<string, ResultsForUpdate>();
-                while (await _resultsUpdateQueue.OutputAvailableAsync())
+                var queueReader = _resultsUpdateQueue.Reader;
+
+                // it is not supposed to be false because it won't be complete
+                while (await queueReader.WaitToReadAsync())
                 {
                     queue.Clear();
                     await Task.Delay(20);
-                    while (_resultsUpdateQueue.TryReceive(out var item))
+                    await foreach (var item in queueReader.ReadAllAsync())
                     {
                         if (!item.Token.IsCancellationRequested)
                             queue[item.ID] = item;
@@ -104,6 +108,8 @@ namespace Flow.Launcher.ViewModel
 
                     UpdateResultView(queue.Values);
                 }
+
+                Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
             };
 
             void continueAction(Task t)
@@ -128,7 +134,10 @@ namespace Flow.Launcher.ViewModel
                     if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        _resultsUpdateQueue.Post(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken));
+                        if (!_resultsUpdateQueue.Writer.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
+                        {
+                            Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
+                        };
                     }
                 };
             }
@@ -529,9 +538,15 @@ namespace Flow.Launcher.ViewModel
                         await Task.Yield();
 
                         var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
-                        if (!currentCancellationToken.IsCancellationRequested && results != null)
-                            _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query,
-                                currentCancellationToken));
+                        if (currentCancellationToken.IsCancellationRequested || results == null)
+                        {
+                            return;
+                        }
+
+                        if (!_resultsUpdateQueue.Writer.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
+                        {
+                            Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
+                        };
                     }
                 }, currentCancellationToken)
                 .ContinueWith(t => Log.Exception("|MainViewModel|Plugins Query Exceptions", t.Exception),
