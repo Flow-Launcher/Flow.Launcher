@@ -98,15 +98,15 @@ namespace Flow.Launcher.ViewModel
                 // it is not supposed to be false because it won't be complete
                 while (await queueReader.WaitToReadAsync())
                 {
-                    queue.Clear();
                     await Task.Delay(20);
-                    await foreach (var item in queueReader.ReadAllAsync())
+                    while (queueReader.TryRead(out var item))
                     {
                         if (!item.Token.IsCancellationRequested)
                             queue[item.ID] = item;
                     }
 
                     UpdateResultView(queue.Values);
+                    queue.Clear();
                 }
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
