@@ -39,41 +39,52 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public Result Result(string query, IPublicAPI api)
         {
             string title;
-            MatchResult matchResult;
 
             var nameMatchResult = StringMatcher.FuzzySearch(query, Name);
             var descriptionMatchResult = StringMatcher.FuzzySearch(query, Description);
 
             var pathMatchResult = new MatchResult(false, 0, new List<int>(), 0);
-            if ((LnkResolvedPath ?? FullPath) != FullPath)
+            if (ExecutableName != null) // only lnk program will need this one
                 pathMatchResult = StringMatcher.FuzzySearch(query, Path.GetFileNameWithoutExtension(FullPath));
 
-            var score = new[] { nameMatchResult.Score, descriptionMatchResult.Score, pathMatchResult.Score }.Max();
+            MatchResult matchResult = nameMatchResult;
 
-            if (score < (int)StringMatcher.Instance.UserSettingSearchPrecision)
-                return null;
+            if (nameMatchResult.Score < descriptionMatchResult.Score)
+                matchResult = descriptionMatchResult;
+
+            if (!matchResult.IsSearchPrecisionScoreMet())
+            {
+                if (pathMatchResult.IsSearchPrecisionScoreMet())
+                    matchResult = pathMatchResult;
+                else return null;
+            }
 
             // We suppose Name won't be null
-            if (score == nameMatchResult.Score && (Description == null || Name.StartsWith(Description)))
+            if (Description == null || Name.StartsWith(Description))
             {
                 title = Name;
-                matchResult = nameMatchResult;
             }
-            else if (score == descriptionMatchResult.Score && Description.StartsWith(Name))
+            else if (Description.StartsWith(Name))
             {
                 title = Description;
-
-                for (int i = 0; i < descriptionMatchResult.MatchData.Count; i++)
-                {
-                    descriptionMatchResult.MatchData[i] += Name.Length + 2; // 2 is ": "
-                }
-
-                matchResult = descriptionMatchResult;
             }
             else
             {
                 title = $"{Name}: {Description}";
-                matchResult = pathMatchResult;
+
+                if (matchResult == descriptionMatchResult)
+                {
+                    for (int i = 0; i < descriptionMatchResult.MatchData.Count; i++)
+                    {
+                        matchResult.MatchData[i] += Name.Length + 2; // 2 is ": "
+                    }
+                }
+            }
+
+            if (matchResult == pathMatchResult)
+            {
+                // path Match won't have valid highlight data
+                matchResult.MatchData = new List<int>();
             }
 
             var result = new Result
@@ -175,7 +186,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public override string ToString()
         {
-            return ExecutableName;
+            return Name;
         }
 
         private static Win32 Win32Program(string path)
@@ -200,7 +211,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() {Valid = false, Enabled = false};
+                return new Win32() { Valid = false, Enabled = false };
             }
         }
 
@@ -278,7 +289,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() {Valid = false, Enabled = false};
+                return new Win32() { Valid = false, Enabled = false };
             }
         }
 
@@ -420,7 +431,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return null;
 
             var entry = Win32Program(path);
-            entry.ExecutableName = Path.GetFileName(path);
 
             return entry;
         }
@@ -450,7 +460,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        public static IEnumerable<T> DistinctBy<T, R>(IEnumerable<T> source, Func<T,R> selector)
+        public static IEnumerable<T> DistinctBy<T, R>(IEnumerable<T> source, Func<T, R> selector)
         {
             var set = new HashSet<R>();
             foreach (var item in source)
