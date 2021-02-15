@@ -475,9 +475,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs.GroupBy(p => p.FullPath.ToLower())
                 .SelectMany(g =>
                 {
-                    if (g.Count() > 1)
-                        return DistinctBy(g.Where(p => !string.IsNullOrEmpty(p.Description)), x => x.Description);
-                    return g;
+                    var temp = g.Where(g => !string.IsNullOrEmpty(g.Description)).ToList();
+                    if (temp.Any())
+                        return DistinctBy(temp, x => x.Description);
+                    return g.Take(1);
                 }).ToArray();
         }
 
