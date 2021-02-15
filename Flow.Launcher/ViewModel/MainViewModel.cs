@@ -538,10 +538,7 @@ namespace Flow.Launcher.ViewModel
                         await Task.Yield();
 
                         var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
-                        if (currentCancellationToken.IsCancellationRequested || results == null)
-                        {
-                            return;
-                        }
+                        if (currentCancellationToken.IsCancellationRequested || results == null) return;
 
                         if (!_resultsUpdateQueue.Writer.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
                         {
