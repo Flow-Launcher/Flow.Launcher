@@ -1,81 +1,70 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
-    internal class IndexSearch
+    internal static class IndexSearch
     {
-        private readonly object _lock = new object();
-
-        private OleDbConnection conn;
-
-        private OleDbCommand command;
-        
-        private OleDbDataReader dataReaderResults;
-
-        private readonly ResultManager resultManager;
 
         // Reserved keywords in oleDB
-        private readonly string reservedStringPattern = @"^[\/\\\$\%_]+$";
+        private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
 
-        internal IndexSearch(PluginInitContext context)
+        internal async static Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
-            resultManager = new ResultManager(context);
-        }
-
-        internal List<Result> ExecuteWindowsIndexSearch(string indexQueryString, string connectionString, Query query)
-        {
-            var folderResults = new List<Result>();
-            var fileResults = new List<Result>();
             var results = new List<Result>();
+            var fileResults = new List<Result>();
 
             try
             {
-                using (conn = new OleDbConnection(connectionString))
+                using var conn = new OleDbConnection(connectionString);
+                await conn.OpenAsync(token);
+                token.ThrowIfCancellationRequested();
+
+                using var command = new OleDbCommand(indexQueryString, conn);
+                // Results return as an OleDbDataReader.
+                using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+                token.ThrowIfCancellationRequested();
+
+                if (dataReaderResults.HasRows)
                 {
-                    conn.Open();
-
-                    using (command = new OleDbCommand(indexQueryString, conn))
+                    while (await dataReaderResults.ReadAsync(token))
                     {
-                        // Results return as an OleDbDataReader.
-                        using (dataReaderResults = command.ExecuteReader())
+                        token.ThrowIfCancellationRequested();
+                        if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
                         {
-                            if (dataReaderResults.HasRows)
-                            {
-                                while (dataReaderResults.Read())
-                                {
-                                    if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
-                                    {
-                                        // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
-                                        var encodedFragmentPath = dataReaderResults
-                                                                    .GetString(1)
-                                                                    .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
-                                        
-                                        var path = new Uri(encodedFragmentPath).LocalPath;
+                            // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
+                            var encodedFragmentPath = dataReaderResults
+                                                        .GetString(1)
+                                                        .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
 
-                                        if (dataReaderResults.GetString(2) == "Directory")
-                                        {
-                                            folderResults.Add(resultManager.CreateFolderResult(
-                                                                                dataReaderResults.GetString(0),
-                                                                                path,
-                                                                                path, 
-                                                                                query, true, true));
-                                        }
-                                        else
-                                        {
-                                            fileResults.Add(resultManager.CreateFileResult(path, query, true, true));
-                                        }
-                                    }
-                                }
+                            var path = new Uri(encodedFragmentPath).LocalPath;
+
+                            if (dataReaderResults.GetString(2) == "Directory")
+                            {
+                                results.Add(ResultManager.CreateFolderResult(
+                                                                    dataReaderResults.GetString(0),
+                                                                    path,
+                                                                    path,
+                                                                    query, true, true));
+                            }
+                            else
+                            {
+                                fileResults.Add(ResultManager.CreateFileResult(path, query, true, true));
                             }
                         }
                     }
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                return new List<Result>(); // The source code indicates that without adding members, it won't allocate an array
             }
             catch (InvalidOperationException e)
             {
@@ -87,32 +76,34 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 LogException("General error from performing index search", e);
             }
 
+            results.AddRange(fileResults);
+
             // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-            return results.Concat(folderResults.OrderBy(x => x.Title)).Concat(fileResults.OrderBy(x => x.Title)).ToList(); ;
+             return results;
         }
 
-        internal List<Result> WindowsIndexSearch(string searchString, string connectionString, Func<string, string> constructQuery, Query query)
+        internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
+                                                                  Func<string, string> constructQuery, Query query,
+                                                                  CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, reservedStringPattern);
 
             if (regexMatch.Success)
                 return new List<Result>();
 
-            lock (_lock)
-            {
-                var constructedQuery = constructQuery(searchString);
-                return ExecuteWindowsIndexSearch(constructedQuery, connectionString, query);
-            }
+            var constructedQuery = constructQuery(searchString);
+            return await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token);
+
         }
 
-        internal bool PathIsIndexed(string path)
+        internal static bool PathIsIndexed(string path)
         {
             var csm = new CSearchManager();
             var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
             return indexManager.IncludedInCrawlScope(path) > 0;
         }
 
-        private void LogException(string message, Exception e)
+        private static void LogException(string message, Exception e)
         {
 #if DEBUG // Please investigate and handle error from index search
             throw e;

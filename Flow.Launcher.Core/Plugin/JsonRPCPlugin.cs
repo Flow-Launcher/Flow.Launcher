@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using Flow.Launcher.Infrastructure.Exception;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
@@ -65,7 +65,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 List<Result> results = new List<Result>();
 
-                JsonRPCQueryResponseModel queryResponseModel = JsonConvert.DeserializeObject<JsonRPCQueryResponseModel>(output);
+                JsonRPCQueryResponseModel queryResponseModel = JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output);
                 if (queryResponseModel.Result == null) return null;
 
                 foreach (JsonRPCResult result in queryResponseModel.Result)
@@ -84,7 +84,7 @@ namespace Flow.Launcher.Core.Plugin
                             else
                             {
                                 string actionReponse = ExecuteCallback(result1.JsonRPCAction);
-                                JsonRPCRequestModel jsonRpcRequestModel = JsonConvert.DeserializeObject<JsonRPCRequestModel>(actionReponse);
+                                JsonRPCRequestModel jsonRpcRequestModel = JsonSerializer.Deserialize<JsonRPCRequestModel>(actionReponse);
                                 if (jsonRpcRequestModel != null
                                     && !String.IsNullOrEmpty(jsonRpcRequestModel.Method)
                                     && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
@@ -147,47 +147,42 @@ namespace Flow.Launcher.Core.Plugin
         {
             try
             {
-                using (var process = Process.Start(startInfo))
+                using var process = Process.Start(startInfo);
+                if (process == null)
                 {
-                    if (process != null)
+                    Log.Error("|JsonRPCPlugin.Execute|Can't start new process");
+                    return string.Empty;
+                }
+
+                using var standardOutput = process.StandardOutput;
+                var result = standardOutput.ReadToEnd();
+                if (string.IsNullOrEmpty(result))
+                {
+                    using (var standardError = process.StandardError)
                     {
-                        using (var standardOutput = process.StandardOutput)
+                        var error = standardError.ReadToEnd();
+                        if (!string.IsNullOrEmpty(error))
                         {
-                            var result = standardOutput.ReadToEnd();
-                            if (string.IsNullOrEmpty(result))
-                            {
-                                using (var standardError = process.StandardError)
-                                {
-                                    var error = standardError.ReadToEnd();
-                                    if (!string.IsNullOrEmpty(error))
-                                    {
-                                        Log.Error($"|JsonRPCPlugin.Execute|{error}");
-                                        return string.Empty;
-                                    }
-                                    else
-                                    {
-                                        Log.Error("|JsonRPCPlugin.Execute|Empty standard output and standard error.");
-                                        return string.Empty;
-                                    }
-                                }
-                            }
-                            else if (result.StartsWith("DEBUG:"))
-                            {
-                                MessageBox.Show(new Form { TopMost = true }, result.Substring(6));
-                                return string.Empty;
-                            }
-                            else
-                            {
-                                return result;
-                            }
+                            Log.Error($"|JsonRPCPlugin.Execute|{error}");
+                            return string.Empty;
+                        }
+                        else
+                        {
+                            Log.Error("|JsonRPCPlugin.Execute|Empty standard output and standard error.");
+                            return string.Empty;
                         }
                     }
-                    else
-                    {
-                        Log.Error("|JsonRPCPlugin.Execute|Can't start new process");
-                        return string.Empty;
-                    }
                 }
+                else if (result.StartsWith("DEBUG:"))
+                {
+                    MessageBox.Show(new Form { TopMost = true }, result.Substring(6));
+                    return string.Empty;
+                }
+                else
+                {
+                    return result;
+                }
+
             }
             catch (Exception e)
             {

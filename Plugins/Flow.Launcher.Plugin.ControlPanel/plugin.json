@@ -4,7 +4,7 @@
   "Name": "Control Panel",
   "Description": "Search within the Control Panel.",
   "Author": "CoenraadS",
-  "Version": "1.1.1",
+  "Version": "1.1.2",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.ControlPanel.dll",

@@ -1,10 +1,12 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -12,41 +14,31 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         private readonly PluginInitContext context;
 
-        private readonly IndexSearch indexSearch;
-
-        private readonly QuickFolderAccess quickFolderAccess = new QuickFolderAccess();
-
-        private readonly ResultManager resultManager;
-
         private readonly Settings settings;
 
         public SearchManager(Settings settings, PluginInitContext context)
         {
             this.context = context;
-            indexSearch = new IndexSearch(context);
-            resultManager = new ResultManager(context);
             this.settings = settings;
         }
 
-        internal List<Result> Search(Query query)
+        internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new List<Result>();
 
             var querySearch = query.Search;
 
             if (IsFileContentSearch(query.ActionKeyword))
-                return WindowsIndexFileContentSearch(query, querySearch);
+                return await WindowsIndexFileContentSearchAsync(query, querySearch, token).ConfigureAwait(false);
 
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
-            if (settings.QuickFolderAccessLinks.Count > 0
-                && query.ActionKeyword == settings.SearchActionKeyword
-                && string.IsNullOrEmpty(query.Search))
-                    return quickFolderAccess.FolderListAll(query, settings.QuickFolderAccessLinks, context);
+            if (string.IsNullOrEmpty(query.Search))
+                return QuickAccess.AccessLinkListAll(query, settings.QuickAccessLinks);
 
-            var quickFolderLinks = quickFolderAccess.FolderListMatched(query, settings.QuickFolderAccessLinks, context);
+            var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
 
-            if (quickFolderLinks.Count > 0)
-                results.AddRange(quickFolderLinks);
+            if (quickaccessLinks.Count > 0)
+                results.AddRange(quickaccessLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
@@ -54,11 +46,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, context);
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
-            var isEnvironmentVariablePath = querySearch.Substring(1).Contains("%\\");
+            var isEnvironmentVariablePath = querySearch[1..].Contains("%\\");
 
-            if (!FilesFolders.IsLocationPathString(querySearch) && !isEnvironmentVariablePath)
+            if (!querySearch.IsLocationPathString() && !isEnvironmentVariablePath)
             {
-                results.AddRange(WindowsIndexFilesAndFoldersSearch(query, querySearch));
+                results.AddRange(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
 
                 return results;
             }
@@ -68,33 +60,42 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (isEnvironmentVariablePath)
                 locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
 
+            // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
                 return results;
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
-            
-            results.Add(resultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
 
-            results.AddRange(TopLevelDirectorySearchBehaviour(WindowsIndexTopLevelFolderSearch,
-                                                                DirectoryInfoClassSearch,
-                                                                useIndexSearch,
-                                                                query,
-                                                                locationPath));
+            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+
+            token.ThrowIfCancellationRequested();
+
+            var directoryResult = await TopLevelDirectorySearchBehaviourAsync(WindowsIndexTopLevelFolderSearchAsync,
+                DirectoryInfoClassSearch,
+                useIndexSearch,
+                query,
+                locationPath,
+                token).ConfigureAwait(false);
+
+            token.ThrowIfCancellationRequested();
+
+            results.AddRange(directoryResult);
 
             return results;
         }
 
-        private List<Result> WindowsIndexFileContentSearch(Query query, string querySearchString)
+        private async Task<List<Result>> WindowsIndexFileContentSearchAsync(Query query, string querySearchString, CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(settings);
 
             if (string.IsNullOrEmpty(querySearchString))
                 return new List<Result>();
 
-            return indexSearch.WindowsIndexSearch(querySearchString,
+            return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
                                                     queryConstructor.CreateQueryHelper().ConnectionString,
                                                     queryConstructor.QueryForFileContentSearch,
-                                                    query);
+                                                    query,
+                                                    token).ConfigureAwait(false);
         }
 
         public bool IsFileContentSearch(string actionKeyword)
@@ -102,44 +103,45 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return actionKeyword == settings.FileContentSearchActionKeyword;
         }
 
-        private List<Result> DirectoryInfoClassSearch(Query query, string querySearch)
+        private List<Result> DirectoryInfoClassSearch(Query query, string querySearch, CancellationToken token)
         {
-            var directoryInfoSearch = new DirectoryInfoSearch(context);
-
-            return directoryInfoSearch.TopLevelDirectorySearch(query, querySearch);
+            return DirectoryInfoSearch.TopLevelDirectorySearch(query, querySearch, token);
         }
 
-        public List<Result> TopLevelDirectorySearchBehaviour(
-            Func<Query, string, List<Result>> windowsIndexSearch,
-            Func<Query, string, List<Result>> directoryInfoClassSearch,
+        public async Task<List<Result>> TopLevelDirectorySearchBehaviourAsync(
+            Func<Query, string, CancellationToken, Task<List<Result>>> windowsIndexSearch,
+            Func<Query, string, CancellationToken, List<Result>> directoryInfoClassSearch,
             bool useIndexSearch,
             Query query,
-            string querySearchString)
+            string querySearchString,
+            CancellationToken token)
         {
             if (!useIndexSearch)
-                return directoryInfoClassSearch(query, querySearchString);
+                return directoryInfoClassSearch(query, querySearchString, token);
 
-            return windowsIndexSearch(query, querySearchString);
+            return await windowsIndexSearch(query, querySearchString, token);
         }
 
-        private List<Result> WindowsIndexFilesAndFoldersSearch(Query query, string querySearchString)
+        private async Task<List<Result>> WindowsIndexFilesAndFoldersSearchAsync(Query query, string querySearchString, CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(settings);
 
-            return indexSearch.WindowsIndexSearch(querySearchString,
+            return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForAllFilesAndFolders,
-                                                   query);
+                                                   query,
+                                                   token).ConfigureAwait(false);
         }
-        
-        private List<Result> WindowsIndexTopLevelFolderSearch(Query query, string path)
+
+        private async Task<List<Result>> WindowsIndexTopLevelFolderSearchAsync(Query query, string path, CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(settings);
 
-            return indexSearch.WindowsIndexSearch(path,
+            return await IndexSearch.WindowsIndexSearchAsync(path,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForTopLevelDirectorySearch,
-                                                   query);
+                                                   query,
+                                                   token).ConfigureAwait(false);
         }
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
@@ -154,7 +156,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                         .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
                 return false;
 
-            return indexSearch.PathIsIndexed(pathToDirectory);
+            return IndexSearch.PathIsIndexed(pathToDirectory);
         }
     }
 }

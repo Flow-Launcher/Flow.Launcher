@@ -1,28 +1,24 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
-using Newtonsoft.Json;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
     public class Settings
     {
-        [JsonProperty]
         public int MaxResult { get; set; } = 100;
 
-        [JsonProperty]
-        public List<FolderLink> QuickFolderAccessLinks { get; set; } = new List<FolderLink>();
+        public List<AccessLink> QuickAccessLinks { get; set; } = new List<AccessLink>();
 
-        [JsonProperty]
+        // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
+        public List<AccessLink> QuickFolderAccessLinks { get; set; } = new List<AccessLink>();
+
         public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
 
-        [JsonProperty]
-        public List<FolderLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<FolderLink>();
+        public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
 
-        [JsonProperty]
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        [JsonProperty]
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
     }
 }

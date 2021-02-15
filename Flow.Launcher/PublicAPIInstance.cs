@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using Squirrel;
-using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -14,6 +13,14 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Plugin.SharedModels;
+using System.Threading;
+using System.IO;
+using Flow.Launcher.Infrastructure.Http;
+using JetBrains.Annotations;
+using System.Runtime.CompilerServices;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 
 namespace Flow.Launcher
 {
@@ -57,18 +64,15 @@ namespace Flow.Launcher
             // which will cause ungraceful exit
             SaveAppAllSettings();
 
+            // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+            // it is only published from the project's release pipeline. When debugging without it,
+            // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
-        public void RestarApp()
-        {
-            RestartApp();
-        }
+        public void RestarApp() => RestartApp();
 
-        public void CheckForNewUpdate()
-        {
-            _settingsVM.UpdateApp();
-        }
+        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
         public void SaveAppAllSettings()
         {
@@ -78,21 +82,15 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public void ReloadAllPluginData()
-        {
-            PluginManager.ReloadData();
-        }
+        public Task ReloadAllPluginData() => PluginManager.ReloadData();
 
-        public void ShowMsg(string title, string subTitle = "", string iconPath = "")
-        {
-            ShowMsg(title, subTitle, iconPath, true);
-        }
+        public void ShowMsg(string title, string subTitle = "", string iconPath = "") => ShowMsg(title, subTitle, iconPath, true);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
+                var msg = useMainWindowAsOwner ? new Msg { Owner = Application.Current.MainWindow } : new Msg();
                 msg.Show(title, subTitle, iconPath);
             });
         }
@@ -105,25 +103,37 @@ namespace Flow.Launcher
             });
         }
 
-        public void StartLoadingBar()
-        {
-            _mainVM.ProgressBarVisibility = Visibility.Visible;
-        }
+        public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
 
-        public void StopLoadingBar()
-        {
-            _mainVM.ProgressBarVisibility = Visibility.Collapsed;
-        }
+        public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key)
-        {
-            return InternationalizationManager.Instance.GetTranslation(key);
-        }
+        public string GetTranslation(string key) => InternationalizationManager.Instance.GetTranslation(key);
 
-        public List<PluginPair> GetAllPlugins()
-        {
-            return PluginManager.AllPlugins.ToList();
-        }
+        public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
+
+        public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
+
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
+
+        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) => Http.GetStreamAsync(url);
+
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
+
+        public void AddActionKeyword(string pluginId, string newActionKeyword) => PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+
+        public void RemoveActionKeyword(string pluginId, string oldActionKeyword) => PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
+
+        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "") => Log.Debug(className, message, methodName);
+
+        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "") => Log.Info(className, message, methodName);
+
+        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") => Log.Warn(className, message, methodName);
+
+        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
+
+        public T LoadJsonStorage<T>() where T : new() => new PluginJsonStorage<T>().Load();
+
+        public void SaveJsonStorage<T>(T setting) where T : new() => new PluginJsonStorage<T>(setting).Save();
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
@@ -139,6 +149,7 @@ namespace Flow.Launcher
             }
             return true;
         }
+
         #endregion
     }
 }

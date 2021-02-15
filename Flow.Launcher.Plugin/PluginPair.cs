@@ -2,7 +2,7 @@
 {
     public class PluginPair
     {
-        public IPlugin Plugin { get; internal set; }
+        public object Plugin { get; internal set; }
         public PluginMetadata Metadata { get; internal set; }
 
         

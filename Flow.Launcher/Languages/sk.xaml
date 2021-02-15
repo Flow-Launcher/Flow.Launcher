@@ -17,6 +17,7 @@
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
+    <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
@@ -39,14 +40,17 @@
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
-    <system:String x:Key="disable">Zakázať</system:String>
+    <system:String x:Key="enable">Povolené</system:String>
+    <system:String x:Key="disable">Zakázané</system:String>
     <system:String x:Key="actionKeywords">Skratka akcie</system:String>
     <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky:</system:String>
     <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
+    <system:String x:Key="currentPriority">Aktuálna priorita:</system:String>
+    <system:String x:Key="newPriority">Nová priorita:</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">Autor</system:String>
-    <system:String x:Key="plugin_init_time">Príprava: {0}ms</system:String>
-    <system:String x:Key="plugin_query_time">Čas dopytu: {0}ms</system:String>
+    <system:String x:Key="plugin_init_time">Príprava:</system:String>
+    <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
@@ -104,6 +108,10 @@
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
 
+    <!--Priority Setting Dialog-->
+    <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné doplnky, zadajte záporné číslo</system:String>
+    <system:String x:Key="invalidPriority">Prosím, zadajte platné číslo pre prioritu!</system:String>
+
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">Stará skratka akcie</system:String>
     <system:String x:Key="newActionKeywords">Nová skratka akcie</system:String>
@@ -116,6 +124,7 @@
     <system:String x:Key="actionkeyword_tips">Použite * ak nechcete určiť skratku pre akciu</system:String>
 
     <!--Custom Query Hotkey Dialog-->
+    <system:String x:Key="customeQueryHotkeyTitle">Vlastná klávesová skratka pre plugin</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
@@ -140,11 +149,23 @@
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
+    <!--General Notice-->
+    <system:String x:Key="pleaseWait">Čakajte, prosím…</system:String>
+
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Je dostupná nová verzia Flow Launcher {0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Kontrolujú sa akutalizácie</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Už máte najnovšiu verizu Flow Launchera</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">Bola nájdená aktualizácia</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa…</system:String>
+    <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">Flow Launcher nedokázal presunúť používateľské údaje do aktualizovanej verzie.
+        Prosím, presuňte profilový priečinok „data“ z {0} do {1}</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Nová aktualizácia</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Je dostupná nová verzia Flow Launchera {0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Počas inštalácie aktualizácií došlo k chybe</system:String>
     <system:String x:Key="update_flowlauncher_update">Aktualizovať</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Zrušiť</system:String>
+    <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy na github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
