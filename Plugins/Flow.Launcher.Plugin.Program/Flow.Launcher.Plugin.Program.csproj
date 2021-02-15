@@ -40,17 +40,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="AppxPackagingTlb">
-      <HintPath>.\AppxPackagingTlb.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="ShObjIdlTlb">
-      <HintPath>.\ShObjIdlTlb.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-  </ItemGroup>
   
   <ItemGroup>
     <Content Include="Languages\*.xaml">

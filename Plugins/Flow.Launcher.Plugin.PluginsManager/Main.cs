@@ -37,20 +37,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = viewModel.Settings;
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            var updateManifestTask = pluginManager.UpdateManifest();
-            _ = updateManifestTask.ContinueWith(t =>
-            {
-                if (t.IsCompletedSuccessfully)
-                {
-                    lastUpdateTime = DateTime.Now;
-                }
-                else
-                {
-                    context.API.ShowMsg("Plugin Manifest Download Fail.",
-                    "Please check if you can connect to github.com. " +
-                    "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
-                }
-            });
+            _ = pluginManager.UpdateManifest().ContinueWith(_ =>
+             {
+                 lastUpdateTime = DateTime.Now;
+             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return Task.CompletedTask;
         }
@@ -69,15 +59,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if ((DateTime.Now - lastUpdateTime).TotalHours > 12) // 12 hours
             {
-                await pluginManager.UpdateManifest();
-                lastUpdateTime = DateTime.Now;
+                _ = pluginManager.UpdateManifest().ContinueWith(t =>
+                {
+                    lastUpdateTime = DateTime.Now;
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             return search switch
             {
                 var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s, token),
                 var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
-                var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
+                var s when s.StartsWith(Settings.HotkeyUpdate) => await pluginManager.RequestUpdate(s, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
