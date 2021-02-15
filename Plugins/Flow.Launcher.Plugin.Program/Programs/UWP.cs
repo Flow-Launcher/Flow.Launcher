@@ -56,10 +56,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var namespaces = XmlNamespaces(path);
             InitPackageVersion(namespaces);
 
-            IStream stream;
             const uint noAttribute = 0x80;
             const Stgm exclusiveRead = Stgm.Read | Stgm.ShareExclusive;
-            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out stream);
+            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out IStream stream);
 
             if (hResult == Hresult.Ok)
             {
@@ -345,14 +344,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             private async void Launch(IPublicAPI api)
             {
                 var appManager = new ApplicationActivationHelper.ApplicationActivationManager();
-                uint unusedPid;
                 const string noArgs = "";
                 const ApplicationActivationHelper.ActivateOptions noFlags = ApplicationActivationHelper.ActivateOptions.None;
                 await Task.Run(() =>
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out unusedPid);
+                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -366,19 +364,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
             {
                 // This is done because we cannot use the keyword 'out' along with a property
-                string tmpUserModelId;
-                string tmpUniqueIdentifier;
-                string tmpDisplayName;
-                string tmpDescription;
-                string tmpBackgroundColor;
-                string tmpEntryPoint;
 
-                manifestApp.GetAppUserModelId(out tmpUserModelId);
-                manifestApp.GetAppUserModelId(out tmpUniqueIdentifier);
-                manifestApp.GetStringValue("DisplayName", out tmpDisplayName);
-                manifestApp.GetStringValue("Description", out tmpDescription);
-                manifestApp.GetStringValue("BackgroundColor", out tmpBackgroundColor);
-                manifestApp.GetStringValue("EntryPoint", out tmpEntryPoint);
+                manifestApp.GetAppUserModelId(out string tmpUserModelId);
+                manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
+                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+                manifestApp.GetStringValue("Description", out string tmpDescription);
+                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
 
                 UserModelId = tmpUserModelId;
                 UniqueIdentifier = tmpUniqueIdentifier;
@@ -464,9 +456,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 };
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
-                    string logoUri;
                     var key = logoKeyFromVersion[Package.Version];
-                    app.GetStringValue(key, out logoUri);
+                    app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else
