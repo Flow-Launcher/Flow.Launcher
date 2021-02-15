@@ -47,7 +47,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
 
-        private Channel<ResultsForUpdate> _resultsUpdateQueue;
+        private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
         #endregion
@@ -86,20 +86,21 @@ namespace Flow.Launcher.ViewModel
 
         private void RegisterViewUpdate()
         {
-            _resultsUpdateQueue = Channel.CreateUnbounded<ResultsForUpdate>();
+            var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
+            _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
                 Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 
             async Task updateAction()
             {
                 var queue = new Dictionary<string, ResultsForUpdate>();
-                var queueReader = _resultsUpdateQueue.Reader;
+                var channelReader = resultUpdateChannel.Reader;
 
                 // it is not supposed to be false because it won't be complete
-                while (await queueReader.WaitToReadAsync())
+                while (await channelReader.WaitToReadAsync())
                 {
                     await Task.Delay(20);
-                    while (queueReader.TryRead(out var item))
+                    while (channelReader.TryRead(out var item))
                     {
                         if (!item.Token.IsCancellationRequested)
                             queue[item.ID] = item;
@@ -134,7 +135,7 @@ namespace Flow.Launcher.ViewModel
                     if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        if (!_resultsUpdateQueue.Writer.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
+                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
                         {
                             Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                         };
@@ -539,8 +540,8 @@ namespace Flow.Launcher.ViewModel
 
                         var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
                         if (currentCancellationToken.IsCancellationRequested || results == null) return;
-
-                        if (!_resultsUpdateQueue.Writer.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
+                        
+                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
                         {
                             Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                         };
