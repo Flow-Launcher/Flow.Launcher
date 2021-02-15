@@ -43,7 +43,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var nameMatchResult = StringMatcher.FuzzySearch(query, Name);
             var descriptionMatchResult = StringMatcher.FuzzySearch(query, Description);
-            var pathMatchResult = StringMatcher.FuzzySearch(query, Path.GetFileNameWithoutExtension(FullPath));
+
+            var pathMatchResult = new MatchResult(false, 0, new List<int>(), 0);
+            if ((LnkResolvedPath ?? FullPath) != FullPath)
+                pathMatchResult = StringMatcher.FuzzySearch(query, Path.GetFileNameWithoutExtension(FullPath));
 
             var score = new[] { nameMatchResult.Score, descriptionMatchResult.Score, pathMatchResult.Score }.Max();
 
