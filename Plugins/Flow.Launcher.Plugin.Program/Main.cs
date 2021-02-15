@@ -228,7 +228,6 @@ namespace Flow.Launcher.Plugin.Program
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)
         {
-            bool hide;
             try
             {
                 runProcess(info);
