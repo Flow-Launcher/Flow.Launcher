@@ -45,7 +45,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var pathMatchResult = new MatchResult(false, 0, new List<int>(), 0);
             if (ExecutableName != null) // only lnk program will need this one
-                pathMatchResult = StringMatcher.FuzzySearch(query, Path.GetFileNameWithoutExtension(FullPath));
+                pathMatchResult = StringMatcher.FuzzySearch(query, ExecutableName);
 
             MatchResult matchResult = nameMatchResult;
 
