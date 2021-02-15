@@ -15,5 +15,10 @@ namespace Flow.Launcher.Infrastructure.Storage
 
             FilePath = Path.Combine(DirectoryPath, $"{dataType.Name}{FileSuffix}");
         }
+
+        public PluginJsonStorage(T data) : this()
+        {
+            _data = data;
+        }
     }
 }

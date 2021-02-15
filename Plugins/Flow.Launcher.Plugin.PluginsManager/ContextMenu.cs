@@ -25,7 +25,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_title"),
                     SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle"),
-                    IcoPath = "Images\\website.png",
+                    IcoPath = selectedResult.IcoPath,
                     Action = _ => 
                     {
                         SharedCommands.SearchWeb.NewTabInBrowser(pluginManifestInfo.Website);
@@ -63,7 +63,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title"),
                     SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle"),
-                    IcoPath = selectedResult.IcoPath,
+                    IcoPath = "Images\\manifestsite.png",
                     Action = _ =>
                     {
                         SharedCommands.SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");

@@ -12,7 +12,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     public class JsonStrorage<T> where T : new()
     {
         private readonly JsonSerializerOptions _serializerSettings;
-        private T _data;
+        protected T _data;
         // need a new directory name
         public const string DirectoryName = "Settings";
         public const string FileSuffix = ".json";

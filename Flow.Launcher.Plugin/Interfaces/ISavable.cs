@@ -1,4 +1,4 @@
-﻿namespace Flow.Launcher.Infrastructure.Storage
+﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Save plugin settings/cache, 

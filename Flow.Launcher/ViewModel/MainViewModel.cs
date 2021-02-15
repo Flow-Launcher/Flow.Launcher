@@ -89,7 +89,6 @@ namespace Flow.Launcher.ViewModel
             _resultsViewUpdateTask =
                 Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 
-
             async Task updateAction()
             {
                 var queue = new Dictionary<string, ResultsForUpdate>();
@@ -105,9 +104,7 @@ namespace Flow.Launcher.ViewModel
 
                     UpdateResultView(queue.Values);
                 }
-            }
-
-            ;
+            };
 
             void continueAction(Task t)
             {
@@ -115,8 +112,8 @@ namespace Flow.Launcher.ViewModel
                 throw t.Exception;
 #else
                 Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
-                _resultsViewUpdateTask =
- Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                _resultsViewUpdateTask = 
+                    Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
 #endif
             }
         }
@@ -225,6 +222,25 @@ namespace Flow.Launcher.ViewModel
                     SelectedResults = Results;
                 }
             });
+
+            ReloadPluginDataCommand = new RelayCommand(_ =>
+            {
+                var msg = new Msg { Owner = Application.Current.MainWindow };
+
+                MainWindowVisibility = Visibility.Collapsed;
+
+                PluginManager
+                .ReloadData()
+                .ContinueWith(_ =>
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        msg.Show(
+                            InternationalizationManager.Instance.GetTranslation("success"),
+                            InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
+                            "");
+                    }))
+                .ConfigureAwait(false);
+            });
         }
 
         #endregion
@@ -313,6 +329,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadContextMenuCommand { get; set; }
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
+        public ICommand ReloadPluginDataCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -363,7 +380,7 @@ namespace Flow.Launcher.ViewModel
                             }
 
                             if (!match.IsSearchPrecisionScoreMet()) return false;
-                            
+
                             r.Score = match.Score;
                             return true;
 
@@ -512,7 +529,7 @@ namespace Flow.Launcher.ViewModel
                         await Task.Yield();
 
                         var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
-                        if (!currentCancellationToken.IsCancellationRequested)
+                        if (!currentCancellationToken.IsCancellationRequested && results != null)
                             _resultsUpdateQueue.Post(new ResultsForUpdate(results, plugin.Metadata, query,
                                 currentCancellationToken));
                     }
