@@ -24,19 +24,16 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
                 
-                if (resultStream.Length == 0) 
-                    return new List<string>();
-                
                 json = await JsonDocument.ParseAsync(resultStream);
 
             }
             catch (TaskCanceledException)
             {
-                return null;
+                return new List<string>();
             }
             catch (HttpRequestException e)
             {
-                Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
+                // Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
             }
             catch (JsonException e)
