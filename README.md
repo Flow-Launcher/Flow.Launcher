@@ -76,11 +76,11 @@ Yes please, submit an issue to let us know.
 
 ## Developing/Debugging
 
-Flow Launcher's target framework is .Net Core 3.1
+Flow Launcher's target framework is .Net Core 5
 
 Install Visual Studio 2019
 
-Install .Net Core 3.1 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet-core/thank-you/sdk-3.1.201-windows-x64-installer)
+Install .Net Core 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/5.0)
 
 ## Documentation
 
