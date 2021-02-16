@@ -35,6 +35,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ShortcutExtension = "lnk";
         private const string ExeExtension = "exe";
 
+        private static readonly Win32 Default = new Win32()
+        {
+            Name = string.Empty,
+            Description = string.Empty,
+            IcoPath = string.Empty,
+            FullPath = string.Empty,
+            LnkResolvedPath = null,
+            ParentDirectory = string.Empty,
+            ExecutableName = null,
+            UniqueIdentifier = string.Empty,
+            Valid = false,
+            Enabled = false
+        };
+
 
         public Result Result(string query, IPublicAPI api)
         {
@@ -423,12 +437,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static Win32 GetProgramFromPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-                return null;
+                return Default;
 
             path = Environment.ExpandEnvironmentVariables(path);
 
             if (!File.Exists(path))
-                return null;
+                return Default;
 
             var entry = Win32Program(path);
 
@@ -503,7 +517,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
                     programs = programs.Concat(startMenu);
                 }
-
 
                 return ProgramsHasher(programs.Where(p => p != null));
             }
