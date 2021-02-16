@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (HttpRequestException e)
             {
-                // Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
+                Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
             }
             catch (JsonException e)
