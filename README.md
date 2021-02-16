@@ -82,7 +82,7 @@ Flow Launcher's target framework is .Net Core 5
 
 Install Visual Studio 2019
 
-Install .Net Core 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/5.0)
+Install .Net Core 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
 
 ## Documentation
 
