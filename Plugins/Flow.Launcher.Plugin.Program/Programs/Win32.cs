@@ -484,7 +484,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static Win32[] ProgramsHasher(IEnumerable<Win32> programs)
+        private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
             return programs.GroupBy(p => p.FullPath.ToLower())
                 .SelectMany(g =>
@@ -503,8 +503,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var programs = Enumerable.Empty<Win32>();
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
-                programs = programs.Concat(unregistered);
 
                 if (settings.EnableRegistrySource)
                 {
@@ -518,7 +516,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     programs = programs.Concat(startMenu);
                 }
 
-                return ProgramsHasher(programs.Where(p => p != null));
+                programs = ProgramsHasher(programs.Where(p => p != null));
+
+                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
+
+                programs = programs.Concat(unregistered);
+
+                return programs.ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception e)
