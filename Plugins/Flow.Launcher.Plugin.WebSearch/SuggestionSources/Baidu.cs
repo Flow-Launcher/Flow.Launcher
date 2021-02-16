@@ -32,7 +32,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             catch (HttpRequestException e)
             {
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
-                return new List<string>();
+                return null;
             }
 
             if (string.IsNullOrEmpty(result)) return new List<string>();
