@@ -14,11 +14,12 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
     [Serializable]
-    public class Win32 : IProgram
+    public class Win32 : IProgram, IEquatable<Win32>
     {
         public string Name { get; set; }
         public string UniqueIdentifier { get; set; }
@@ -503,26 +504,27 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var programs = Enumerable.Empty<Win32>();
 
+                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
+
+                programs = programs.Concat(unregistered);
+
+                var autoIndexPrograms = Enumerable.Empty<Win32>();
 
                 if (settings.EnableRegistrySource)
                 {
                     var appPaths = AppPathsPrograms(settings.ProgramSuffixes);
-                    programs = programs.Concat(appPaths);
+                    autoIndexPrograms = autoIndexPrograms.Concat(appPaths);
                 }
 
                 if (settings.EnableStartMenuSource)
                 {
                     var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
-                    programs = programs.Concat(startMenu);
+                    autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 
-                programs = ProgramsHasher(programs.Where(p => p != null));
+                autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
-
-                programs = programs.Concat(unregistered);
-
-                return programs.ToArray();
+                return programs.Concat(autoIndexPrograms).Distinct().ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception e)
@@ -539,6 +541,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return Array.Empty<Win32>();
             }
 #endif
+        }
+
+        public override int GetHashCode()
+        {
+            return UniqueIdentifier.GetHashCode();
+        }
+
+        public bool Equals([AllowNull] Win32 other)
+        {
+            if (other == null)
+                return false;
+
+            return UniqueIdentifier == other.UniqueIdentifier;
         }
     }
 }
