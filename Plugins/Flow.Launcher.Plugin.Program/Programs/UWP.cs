@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using AppxPackaing;
-using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
-using IStream = AppxPackaing.IStream;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -52,33 +50,27 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void InitializeAppInfo()
         {
+            AppxPackageHelper _helper = new AppxPackageHelper();
             var path = Path.Combine(Location, "AppxManifest.xml");
 
             var namespaces = XmlNamespaces(path);
             InitPackageVersion(namespaces);
 
-            var appxFactory = new AppxFactory();
-            IStream stream;
             const uint noAttribute = 0x80;
             const Stgm exclusiveRead = Stgm.Read | Stgm.ShareExclusive;
-            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out stream);
+            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out IStream stream);
 
             if (hResult == Hresult.Ok)
             {
-                var reader = appxFactory.CreateManifestReader(stream);
-                var manifestApps = reader.GetApplications();
                 var apps = new List<Application>();
-                while (manifestApps.GetHasCurrent() != 0)
+             
+                List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
+                foreach(var _app in _apps)
                 {
-                    var manifestApp = manifestApps.GetCurrent();
-                    var appListEntry = manifestApp.GetStringValue("AppListEntry");
-                    if (appListEntry != "none")
-                    {
-                        var app = new Application(manifestApp, this);
-                        apps.Add(app);
-                    }
-                    manifestApps.MoveNext();
+                    var app = new Application(_app, this);
+                    apps.Add(app);
                 }
+                
                 Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
             }
             else
@@ -262,6 +254,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string UserModelId { get; set; }
             public string BackgroundColor { get; set; }
 
+            public string EntryPoint { get; set; }
             public string Name => DisplayName;
             public string Location => Package.Location;
 
@@ -358,15 +351,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             private async void Launch(IPublicAPI api)
             {
-                var appManager = new ApplicationActivationManager();
-                uint unusedPid;
+                var appManager = new ApplicationActivationHelper.ApplicationActivationManager();
                 const string noArgs = "";
-                const ACTIVATEOPTIONS noFlags = ACTIVATEOPTIONS.AO_NONE;
+                const ApplicationActivationHelper.ActivateOptions noFlags = ApplicationActivationHelper.ActivateOptions.None;
                 await Task.Run(() =>
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out unusedPid);
+                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -377,13 +369,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            public Application(IAppxManifestApplication manifestApp, UWP package)
+            public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
             {
-                UserModelId = manifestApp.GetAppUserModelId();
-                UniqueIdentifier = manifestApp.GetAppUserModelId();
-                DisplayName = manifestApp.GetStringValue("DisplayName");
-                Description = manifestApp.GetStringValue("Description");
-                BackgroundColor = manifestApp.GetStringValue("BackgroundColor");
+                // This is done because we cannot use the keyword 'out' along with a property
+
+                manifestApp.GetAppUserModelId(out string tmpUserModelId);
+                manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
+                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+                manifestApp.GetStringValue("Description", out string tmpDescription);
+                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
+
+                UserModelId = tmpUserModelId;
+                UniqueIdentifier = tmpUniqueIdentifier;
+                DisplayName = tmpDisplayName;
+                Description = tmpDescription;
+                BackgroundColor = tmpBackgroundColor;
+                EntryPoint = tmpEntryPoint;
+
                 Package = package;
 
                 DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
@@ -451,7 +454,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return $"{prefix}//{packageName}{key}";
             }
 
-            internal string LogoUriFromManifest(IAppxManifestApplication app)
+            internal string LogoUriFromManifest(AppxPackageHelper.IAppxManifestApplication app)
             {
                 var logoKeyFromVersion = new Dictionary<PackageVersion, string>
                 {
@@ -462,7 +465,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
                     var key = logoKeyFromVersion[Package.Version];
-                    var logoUri = app.GetStringValue(key);
+                    app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else
