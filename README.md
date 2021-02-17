@@ -4,7 +4,7 @@
   </a>
 </p>
 
-![Maintenance](https://img.shields.io/maintenance/yes/2020)
+![Maintenance](https://img.shields.io/maintenance/yes/2021)
 [![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
@@ -21,10 +21,12 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
 - Search for file contents.
-- Support search using environment variable paths
+- Support search using environment variable paths.
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
-- Support of wide range of plugins.
+- Support wide range of plugins.
+- Prioritise the order of each plugin's results.
+- Save file or folder locations for quick access.
 - Fully portable.
 
 ## Status

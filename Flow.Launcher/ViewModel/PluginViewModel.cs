@@ -26,12 +26,19 @@ namespace Flow.Launcher.ViewModel
         public string InitilizaTime => PluginPair.Metadata.InitTime.ToString() + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeperater, PluginPair.Metadata.ActionKeywords);
+        public int Priority => PluginPair.Metadata.Priority;
 
         public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
         {
             PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeyword, newActionKeyword);
             
             OnPropertyChanged(nameof(ActionKeywordsText));
+        }
+
+        public void ChangePriority(int newPriority)
+        {
+            PluginPair.Metadata.Priority = newPriority;
+            OnPropertyChanged(nameof(Priority));
         }
 
         public bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);

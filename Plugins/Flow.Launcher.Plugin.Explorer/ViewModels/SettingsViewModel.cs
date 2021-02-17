@@ -1,8 +1,9 @@
 ﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
@@ -21,14 +22,19 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Settings = storage.Load();
         }
 
+        public Task LoadStorage()
+        {
+            return Task.Run(() => Settings = storage.Load());
+        }
+
         public void Save()
         {
             storage.Save();
         }
 
-        internal void RemoveFolderLinkFromQuickFolders(FolderLink selectedRow) => Settings.QuickFolderAccessLinks.Remove(selectedRow);
+        internal void RemoveLinkFromQuickAccess(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);
 
-        internal void RemoveFolderLinkFromExcludedIndexPaths(FolderLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
+        internal void RemoveAccessLinkFromExcludedIndexPaths(AccessLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
 
         internal void OpenWindowsIndexingOptions()
         {

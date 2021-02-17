@@ -15,6 +15,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
@@ -42,7 +43,10 @@ namespace Flow.Launcher.Core.Plugin
 
     public class JsonRPCQueryResponseModel : JsonRPCResponseModel
     {
+        [JsonPropertyName("result")]
         public new List<JsonRPCResult> Result { get; set; }
+
+        public string DebugMessage { get; set; }
     }
 
     public class JsonRPCRequestModel : JsonRPCModelBase
@@ -56,13 +60,12 @@ namespace Flow.Launcher.Core.Plugin
             string rpc = string.Empty;
             if (Parameters != null && Parameters.Length > 0)
             {
-                string parameters = Parameters.Aggregate("[", (current, o) => current + (GetParameterByType(o) + ","));
-                parameters = parameters.Substring(0, parameters.Length - 1) + "]";
-                rpc = string.Format(@"{{\""method\"":\""{0}\"",\""parameters\"":{1}", Method, parameters);
+                string parameters = $"[{string.Join(',', Parameters.Select(GetParameterByType))}]";
+                rpc = $@"{{\""method\"":\""{Method}\"",\""parameters\"":{parameters}";
             }
             else
             {
-                rpc = string.Format(@"{{\""method\"":\""{0}\"",\""parameters\"":[]", Method);
+                rpc = $@"{{\""method\"":\""{Method}\"",\""parameters\"":[]";
             }
 
             return rpc;
@@ -70,26 +73,16 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         private string GetParameterByType(object parameter)
+        => parameter switch
         {
-            if (parameter == null) {
-                return "null";
-            }
-            if (parameter is string)
-            {
-                return string.Format(@"\""{0}\""", ReplaceEscapes(parameter.ToString()));
-            }
-            if (parameter is int || parameter is float || parameter is double)
-            {
-                return string.Format(@"{0}", parameter);
-            }
-            if (parameter is bool)
-            {
-                return string.Format(@"{0}", parameter.ToString().ToLower());
-            }
-            return parameter.ToString();
-        }
+            null => "null",
+            string _ => $@"\""{ReplaceEscapes(parameter.ToString())}\""",
+            bool _ => $@"{parameter.ToString().ToLower()}",
+            _ => parameter.ToString()
+        };
 
-        private string ReplaceEscapes(string str)
+
+    private string ReplaceEscapes(string str)
         {
             return str.Replace(@"\", @"\\") //Escapes in ProcessStartInfo
                 .Replace(@"\", @"\\") //Escapes itself when passed to client

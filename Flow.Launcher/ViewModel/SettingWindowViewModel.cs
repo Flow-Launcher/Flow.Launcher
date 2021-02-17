@@ -17,6 +17,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -88,6 +89,7 @@ namespace Flow.Launcher.ViewModel
                 var id = vm.PluginPair.Metadata.ID;
 
                 Settings.PluginSettings.Plugins[id].Disabled = vm.PluginPair.Metadata.Disabled;
+                Settings.PluginSettings.Plugins[id].Priority = vm.Priority;
             }
 
             PluginManager.Save();
@@ -152,7 +154,7 @@ namespace Flow.Launcher.ViewModel
             {
                 var precisionStrings = new List<string>();
 
-                var enumList = Enum.GetValues(typeof(StringMatcher.SearchPrecisionScore)).Cast<StringMatcher.SearchPrecisionScore>().ToList();
+                var enumList = Enum.GetValues(typeof(SearchPrecisionScore)).Cast<SearchPrecisionScore>().ToList();
 
                 enumList.ForEach(x => precisionStrings.Add(x.ToString()));
 
@@ -213,7 +215,7 @@ namespace Flow.Launcher.ViewModel
 
         #region plugin
 
-        public static string Plugin => "http://www.wox.one/plugin";
+        public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
         public PluginViewModel SelectedPlugin { get; set; }
 
         public IList<PluginViewModel> PluginViewModels
@@ -438,7 +440,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public ImageSource ThemeImage => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
+        public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
         #endregion
 
@@ -450,7 +452,7 @@ namespace Flow.Launcher.ViewModel
 
         #region about
 
-        public string Github => _updater.GitHubRepository;
+        public string Website => Constant.Website;
         public string ReleaseNotes => _updater.GitHubRepository +  @"/releases/latest";
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Infrastructure.Storage
@@ -9,10 +9,10 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStrorage<T>
+    public class JsonStrorage<T> where T : new()
     {
-        private readonly JsonSerializerSettings _serializerSettings;
-        private T _data;
+        private readonly JsonSerializerOptions _serializerSettings;
+        protected T _data;
         // need a new directory name
         public const string DirectoryName = "Settings";
         public const string FileSuffix = ".json";
@@ -24,10 +24,9 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
             // use property initialization instead of DefaultValueAttribute
             // easier and flexible for default value of object
-            _serializerSettings = new JsonSerializerSettings
+            _serializerSettings = new JsonSerializerOptions
             {
-                ObjectCreationHandling = ObjectCreationHandling.Replace,
-                NullValueHandling = NullValueHandling.Ignore
+                IgnoreNullValues = false
             };
         }
 
@@ -56,7 +55,7 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
             try
             {
-                _data = JsonConvert.DeserializeObject<T>(searlized, _serializerSettings);
+                _data = JsonSerializer.Deserialize<T>(searlized, _serializerSettings);
             }
             catch (JsonException e)
             {
@@ -77,7 +76,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                 BackupOriginFile();
             }
 
-            _data = JsonConvert.DeserializeObject<T>("{}", _serializerSettings);
+            _data = new T();
             Save();
         }
 
@@ -94,7 +93,8 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonConvert.SerializeObject(_data, Formatting.Indented);
+            string serialized = JsonSerializer.Serialize(_data, new JsonSerializerOptions() { WriteIndented = true });
+
             File.WriteAllText(FilePath, serialized);
         }
     }

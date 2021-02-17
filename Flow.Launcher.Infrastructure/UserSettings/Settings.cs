@@ -1,9 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -16,7 +16,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool ShowOpenResultHotkey { get; set; } = true;
         public string Language
         {
-            get => language; set {
+            get => language; set
+            {
                 language = value;
                 OnPropertyChanged();
             }
@@ -38,7 +39,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
-        internal StringMatcher.SearchPrecisionScore QuerySearchPrecision { get; private set; } = StringMatcher.SearchPrecisionScore.Regular;
+        internal SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
 
         [JsonIgnore]
         public string QuerySearchPrecisionString
@@ -48,8 +49,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 try
                 {
-                    var precisionScore = (StringMatcher.SearchPrecisionScore)Enum
-                                            .Parse(typeof(StringMatcher.SearchPrecisionScore), value);
+                    var precisionScore = (SearchPrecisionScore)Enum
+                                            .Parse(typeof(SearchPrecisionScore), value);
 
                     QuerySearchPrecision = precisionScore;
                     StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;
@@ -58,8 +59,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     Logger.Log.Exception(nameof(Settings), "Failed to load QuerySearchPrecisionString value from Settings file", e);
 
-                    QuerySearchPrecision = StringMatcher.SearchPrecisionScore.Regular;
-                    StringMatcher.Instance.UserSettingSearchPrecision = StringMatcher.SearchPrecisionScore.Regular;
+                    QuerySearchPrecision = SearchPrecisionScore.Regular;
+                    StringMatcher.Instance.UserSettingSearchPrecision = SearchPrecisionScore.Regular;
 
                     throw;
                 }
@@ -73,9 +74,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
-        // Order defaults to 0 or -1, so 1 will let this property appear last
-        [JsonProperty(Order = 1)]
-        public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
+
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
         public bool DontPromptUpdateMsg { get; set; }
@@ -100,8 +99,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
 
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
+
+
+        // This needs to be loaded last by staying at the bottom
+        public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
     }
 
     public enum LastQueryMode
