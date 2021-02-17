@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
 
             if (quickaccessLinks.Count > 0)
-                results.Union(quickaccessLinks);
+                results.AddRange(quickaccessLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
