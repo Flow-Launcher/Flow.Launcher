@@ -1,3 +1,4 @@
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
@@ -47,9 +48,23 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = settings;
         }
 
-        internal async Task UpdateManifest()
+        private Task _downloadManifestTask = Task.CompletedTask;
+
+
+        internal Task UpdateManifest()
         {
-            await pluginsManifest.DownloadManifest();
+            if (_downloadManifestTask.Status == TaskStatus.Running)
+            {
+                return _downloadManifestTask;
+            }
+            else
+            {
+                return _downloadManifestTask = pluginsManifest.DownloadManifest().ContinueWith(t =>
+                    Context.API.ShowMsg("Plugin Manifest Download Fail.",
+                    "Please check if you can connect to github.com. " +
+                    "This error means you may not be able to Install and Update Plugin.", icoPath, false),
+                    TaskContinuationOptions.OnlyOnFaulted);
+            }
         }
 
         internal List<Result> GetDefaultHotKeys()
@@ -150,8 +165,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context.API.RestartApp();
         }
 
-        internal List<Result> RequestUpdate(string search)
+        internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
+            if (!pluginsManifest.UserPlugins.Any())
+            {
+                await UpdateManifest();
+            }
+
+            token.ThrowIfCancellationRequested();
+
             var autocompletedResults = AutoCompleteReturnAllResults(search,
                 Settings.HotkeyUpdate,
                 "Update",
@@ -275,20 +297,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 .ToList();
         }
 
-        private Task _downloadManifestTask = Task.CompletedTask;
-
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any() &&
-                _downloadManifestTask.Status != TaskStatus.Running)
+            if (!pluginsManifest.UserPlugins.Any())
             {
-                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                await UpdateManifest();
             }
 
-            await _downloadManifestTask;
-
-            if (token.IsCancellationRequested)
-                return null;
+            token.ThrowIfCancellationRequested();
 
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
 
@@ -400,6 +416,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private void Uninstall(PluginMetadata plugin)
         {
+            PluginManager.Settings.Plugins.Remove(plugin.ID);
+            PluginManager.AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+
             // Marked for deletion. Will be deleted on next start up
             using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
         }
