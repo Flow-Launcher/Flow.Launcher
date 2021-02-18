@@ -29,6 +29,33 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 - Save file or folder locations for quick access.
 - Fully portable.
 
+## Running Flow Launcher
+
+| [Windows 7 and up](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) |
+| ---------------------------------------------------------------------------------- |
+
+Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
+
+### Integrations
+
+- If you use Python plugins:
+  - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
+  - Add Python to `%PATH%` or set it in flow's settings.
+  - Use `pip` to install `flowlauncher`, cmd in `pip install flowlauncher`.
+  - Start to launch your Python plugins.
+- Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest).
+
+### Usage
+
+- Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
+- Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
+- Cancel/Return to previous screen: <kbd>Esc</kbd>.
+- Install/Uninstall plugins: in the search window, type `wpm install/uninstall` + the plugin name.
+- Saved user settings are located:
+  - If using roaming: `%APPDATA%\FlowLauncher`
+  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
+- Logs are saved along with your user settings folder
+
 ## Status
 
 Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
