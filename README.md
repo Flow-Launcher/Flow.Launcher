@@ -29,6 +29,8 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 - Save file or folder locations for quick access.
 - Fully portable.
 
+[<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
+
 ## Running Flow Launcher
 
 | [Windows 7 and up](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) |
