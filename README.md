@@ -39,24 +39,24 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
 ### Integrations
-
-- If you use Python plugins:
-  - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
-  - Add Python to `%PATH%` or set it in flow's settings.
-  - Use `pip` to install `flowlauncher`, cmd in `pip install flowlauncher`.
-  - Start to launch your Python plugins.
-- Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest).
+  - If you use Python plugins:
+    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
+    - Add Python to `%PATH%` or set it in flow's settings.
+    - Use `pip` to install `flowlauncher`, cmd in `pip install flowlauncher`.
+    - Start to launch your Python plugins.
+  - Flow searches files and contents via Windows Index Search, to use Everything, download the plugin [here](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Everything/releases/latest).
 
 ### Usage
-
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
-- Open context menu: <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
+- Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
 - Cancel/Return to previous screen: <kbd>Esc</kbd>.
-- Install/Uninstall plugins: in the search window, type `pm install/uninstall` + the plugin name.
+- Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
 - Saved user settings are located:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
 - Logs are saved along with your user settings folder
+
+[More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
 ## Status
 
