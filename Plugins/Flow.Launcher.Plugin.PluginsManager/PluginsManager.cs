@@ -233,7 +233,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
-                                Uninstall(x.PluginExistingMetadata);
+                                Uninstall(x.PluginExistingMetadata, false);
 
                                 var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory,
                                     $"{x.Name}-{x.NewVersion}.zip");
@@ -414,10 +414,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Search(results, uninstallSearch);
         }
 
-        private void Uninstall(PluginMetadata plugin)
+        private void Uninstall(PluginMetadata plugin, bool removedSetting = true)
         {
-            PluginManager.Settings.Plugins.Remove(plugin.ID);
-            PluginManager.AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+            if (removedSetting)
+            {
+                PluginManager.Settings.Plugins.Remove(plugin.ID);
+                PluginManager.AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+            }
 
             // Marked for deletion. Will be deleted on next start up
             using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
