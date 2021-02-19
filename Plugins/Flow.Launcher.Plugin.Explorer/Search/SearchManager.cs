@@ -22,9 +22,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             this.settings = settings;
         }
 
+        private class PathEqualityComparator : IEqualityComparer<Result>
+        {
+            private static PathEqualityComparator instance;
+            public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
+            public bool Equals(Result x, Result y)
+            {
+                return x.SubTitle == y.SubTitle;
+            }
+
+            public int GetHashCode(Result obj)
+            {
+                return obj.SubTitle.GetHashCode();
+            }
+        }
+
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
-            var results = new List<Result>();
+            var results = new HashSet<Result>(PathEqualityComparator.Instance);
 
             var querySearch = query.Search;
 
@@ -38,7 +53,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
 
             if (quickaccessLinks.Count > 0)
-                results.AddRange(quickaccessLinks);
+                results.UnionWith(quickaccessLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
@@ -50,9 +65,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (!querySearch.IsLocationPathString() && !isEnvironmentVariablePath)
             {
-                results.AddRange(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
+                results.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
 
-                return results;
+                return results.ToList();
             }
 
             var locationPath = querySearch;
@@ -62,7 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
-                return results;
+                return results.ToList();
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
 
@@ -79,9 +94,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             token.ThrowIfCancellationRequested();
 
-            results.AddRange(directoryResult);
+            results.UnionWith(directoryResult);
 
-            return results;
+            return results.ToList();
         }
 
         private async Task<List<Result>> WindowsIndexFileContentSearchAsync(Query query, string querySearchString, CancellationToken token)
