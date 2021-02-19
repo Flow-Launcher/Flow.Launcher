@@ -778,7 +778,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void UpdateResultView(IReadOnlyCollection<ResultsForUpdate> resultsForUpdates)
+        public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
                 return;
