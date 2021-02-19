@@ -88,4 +88,4 @@ Install .Net Core 3.1 SDK via Visual Studio installer or manually from [here](ht
 
 ## Documentation
 
-https://flow-launcher.github.io/docs
+Visit [here](https://flow-launcher.github.io/docs) for more information on usage, development and design documentations
