@@ -9,7 +9,6 @@
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 ![GitHub Release Date](https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
-![Contributors](https://badgen.net/github/contributors/Flow-Launcher/Flow.Launcher)
 [![Documentation](https://img.shields.io/badge/Documentation-7389D8)](https://flow-launcher.github.io/docs)
 [![Discord](https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white)](https://discord.gg/AvgAQgh)
 
@@ -57,7 +56,7 @@ Windows may complain about security due to code not being signed, this will be c
 - Saved user settings are located:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
-- Logs are saved along with your user settings folder
+- Logs are saved along with your user settings folder.
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
