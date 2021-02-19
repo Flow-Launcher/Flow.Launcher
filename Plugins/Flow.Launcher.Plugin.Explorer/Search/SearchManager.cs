@@ -35,7 +35,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 return obj.SubTitle.GetHashCode();
             }
-
         }
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
