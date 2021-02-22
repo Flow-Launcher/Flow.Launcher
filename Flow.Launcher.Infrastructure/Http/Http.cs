@@ -20,7 +20,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         private static HttpClient client = new HttpClient();
 
-        public static IPublicAPI _api { get; set; }
+        public static IPublicAPI API { get; set; }
 
         static Http()
         {
@@ -81,7 +81,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch(UriFormatException e)
             {
-                _api.ShowMsg("Please try again", "Unable to parse Http Proxy");
+                API.ShowMsg("Please try again", "Unable to parse Http Proxy");
                 Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
             }
         }
