@@ -9,6 +9,8 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows.Interop;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -17,6 +19,8 @@ namespace Flow.Launcher.Infrastructure.Http
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
         private static HttpClient client = new HttpClient();
+
+        public static IPublicAPI API { get; set; }
 
         static Http()
         {
@@ -50,25 +54,36 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         public static void UpdateProxy(ProxyProperty property)
         {
-            (WebProxy.Address, WebProxy.Credentials) = property switch
+            if (string.IsNullOrEmpty(Proxy.Server))
+                return;
+
+            try
             {
-                ProxyProperty.Enabled => Proxy.Enabled switch
+                (WebProxy.Address, WebProxy.Credentials) = property switch
                 {
-                    true => Proxy.UserName switch
+                    ProxyProperty.Enabled => Proxy.Enabled switch
                     {
-                        var userName when !string.IsNullOrEmpty(userName) =>
-                            (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), null),
-                        _ => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"),
-                            new NetworkCredential(Proxy.UserName, Proxy.Password))
+                        true when !string.IsNullOrEmpty(Proxy.Server) => Proxy.UserName switch
+                        {
+                            var userName when string.IsNullOrEmpty(userName) =>
+                                (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), null),
+                            _ => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"),
+                                    new NetworkCredential(Proxy.UserName, Proxy.Password))
+                        },
+                        _ => (null, null)
                     },
-                    false => (null, null)
-                },
-                ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
-                ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
-                ProxyProperty.UserName => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
-                ProxyProperty.Password => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                    ProxyProperty.Server => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
+                    ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
+                    ProxyProperty.UserName => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                    ProxyProperty.Password => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+            catch(UriFormatException e)
+            {
+                API.ShowMsg("Please try again", "Unable to parse Http Proxy");
+                Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
+            }
         }
 
         public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
