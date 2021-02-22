@@ -61,7 +61,6 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
-                Http.Proxy = _settings.Proxy;
 
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
@@ -73,6 +72,10 @@ namespace Flow.Launcher
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
+
+                Http._api = API;
+                Http.Proxy = _settings.Proxy;
+
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
