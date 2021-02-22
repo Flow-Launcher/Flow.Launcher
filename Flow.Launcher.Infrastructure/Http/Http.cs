@@ -83,7 +83,6 @@ namespace Flow.Launcher.Infrastructure.Http
             {
                 _api.ShowMsg("Please try again", "Unable to parse Http Proxy");
                 Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
-
             }
         }
 
