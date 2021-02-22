@@ -77,9 +77,6 @@ namespace Flow.Launcher
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
 
-                
-
-
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;

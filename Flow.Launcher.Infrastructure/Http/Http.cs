@@ -68,7 +68,7 @@ namespace Flow.Launcher.Infrastructure.Http
                             var userName when string.IsNullOrEmpty(userName) =>
                                 (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), null),
                             _ => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"),
-                                new NetworkCredential(Proxy.UserName, Proxy.Password))
+                                    new NetworkCredential(Proxy.UserName, Proxy.Password))
                         },
                         _ => (null, null)
                     },
