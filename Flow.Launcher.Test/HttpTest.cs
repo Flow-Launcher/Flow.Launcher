@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ namespace Flow.Launcher.Test
     class HttpTest
     {
         [Test]
-        public void TestSettingUpdate()
+        public void GivenHttpProxy_WhenUpdated_ThenWebProxyShouldAlsoBeUpdatedToTheSame()
         {
             HttpProxy proxy = new HttpProxy();
             Http.Proxy = proxy;
