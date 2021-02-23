@@ -25,7 +25,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
                 result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return null;
             }

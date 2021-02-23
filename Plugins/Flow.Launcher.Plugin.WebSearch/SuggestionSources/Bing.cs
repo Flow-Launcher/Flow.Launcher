@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token)).RootElement.GetProperty("AS");
 
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return new List<string>();
             }

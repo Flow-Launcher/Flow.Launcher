@@ -23,11 +23,11 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
-                
-                json = await JsonDocument.ParseAsync(resultStream);
+
+                json = await JsonDocument.ParseAsync(resultStream, cancellationToken: token);
 
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 return new List<string>();
             }
