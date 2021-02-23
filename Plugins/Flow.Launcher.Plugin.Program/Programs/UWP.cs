@@ -185,7 +185,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (u != null)
             {
                 var id = u.Value;
-                var m = new PackageManager();
+                PackageManager m;
+                try
+                {
+                    m = new PackageManager();
+                }
+                catch
+                {
+                    // Bug from https://github.com/microsoft/CsWinRT, using Microsoft.Windows.SDK.NET.Ref 10.0.19041.0.
+                    // Only happens on the first time, so a try catch can fix it.
+                    m = new PackageManager();
+                }
                 var ps = m.FindPackagesForUser(id);
                 ps = ps.Where(p =>
                 {
