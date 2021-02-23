@@ -42,18 +42,18 @@
     <Content Include="Languages\*.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    </ItemGroup>
+  </ItemGroup>
 
-    <ItemGroup>
-      <None Include="plugin.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
-      <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
-      <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
+    <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
 
-  </Project>
+</Project>
