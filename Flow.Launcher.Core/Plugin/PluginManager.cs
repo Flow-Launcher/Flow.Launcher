@@ -195,11 +195,11 @@ namespace Flow.Launcher.Core.Plugin
             catch (OperationCanceledException)
             {
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
-                return results = null;
+                return null;
             }
             catch (Exception e)
             {
-                Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
+               Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
             return results;

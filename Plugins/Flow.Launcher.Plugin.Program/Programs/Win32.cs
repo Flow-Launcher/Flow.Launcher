@@ -14,11 +14,12 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
     [Serializable]
-    public class Win32 : IProgram
+    public class Win32 : IProgram, IEquatable<Win32>
     {
         public string Name { get; set; }
         public string UniqueIdentifier { get; set; }
@@ -34,6 +35,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private const string ShortcutExtension = "lnk";
         private const string ExeExtension = "exe";
+
+        private static readonly Win32 Default = new Win32()
+        {
+            Name = string.Empty,
+            Description = string.Empty,
+            IcoPath = string.Empty,
+            FullPath = string.Empty,
+            LnkResolvedPath = null,
+            ParentDirectory = string.Empty,
+            ExecutableName = null,
+            UniqueIdentifier = string.Empty,
+            Valid = false,
+            Enabled = false
+        };
 
 
         public Result Result(string query, IPublicAPI api)
@@ -423,12 +438,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static Win32 GetProgramFromPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-                return null;
+                return Default;
 
             path = Environment.ExpandEnvironmentVariables(path);
 
             if (!File.Exists(path))
-                return null;
+                return Default;
 
             var entry = Win32Program(path);
 
@@ -470,14 +485,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static Win32[] ProgramsHasher(IEnumerable<Win32> programs)
+        private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
             return programs.GroupBy(p => p.FullPath.ToLower())
                 .SelectMany(g =>
                 {
-                    if (g.Count() > 1)
-                        return DistinctBy(g.Where(p => !string.IsNullOrEmpty(p.Description)), x => x.Description);
-                    return g;
+                    var temp = g.Where(g => !string.IsNullOrEmpty(g.Description)).ToList();
+                    if (temp.Any())
+                        return DistinctBy(temp, x => x.Description);
+                    return g.Take(1);
                 }).ToArray();
         }
 
@@ -489,22 +505,26 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var programs = Enumerable.Empty<Win32>();
 
                 var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
+
                 programs = programs.Concat(unregistered);
+
+                var autoIndexPrograms = Enumerable.Empty<Win32>();
 
                 if (settings.EnableRegistrySource)
                 {
                     var appPaths = AppPathsPrograms(settings.ProgramSuffixes);
-                    programs = programs.Concat(appPaths);
+                    autoIndexPrograms = autoIndexPrograms.Concat(appPaths);
                 }
 
                 if (settings.EnableStartMenuSource)
                 {
                     var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
-                    programs = programs.Concat(startMenu);
+                    autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 
+                autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
 
-                return ProgramsHasher(programs.Where(p => p != null));
+                return programs.Concat(autoIndexPrograms).Distinct().ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception e)
@@ -521,6 +541,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return Array.Empty<Win32>();
             }
 #endif
+        }
+
+        public override int GetHashCode()
+        {
+            return UniqueIdentifier.GetHashCode();
+        }
+
+        public bool Equals([AllowNull] Win32 other)
+        {
+            if (other == null)
+                return false;
+
+            return UniqueIdentifier == other.UniqueIdentifier;
         }
     }
 }

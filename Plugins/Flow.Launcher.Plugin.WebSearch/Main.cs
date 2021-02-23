@@ -123,12 +123,12 @@ namespace Flow.Launcher.Plugin.WebSearch
             var source = _settings.SelectedSuggestion;
             if (source != null)
             {
-                var suggestions = await source.Suggestions(keyword, token);
+                var suggestions = await source.Suggestions(keyword, token).ConfigureAwait(false);
 
                 if (token.IsCancellationRequested)
                     return null;
 
-                var resultsFromSuggestion = suggestions.Select(o => new Result
+                var resultsFromSuggestion = suggestions?.Select(o => new Result
                 {
                     Title = o,
                     SubTitle = subtitle,

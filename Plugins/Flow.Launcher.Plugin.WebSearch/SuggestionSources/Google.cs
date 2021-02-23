@@ -24,15 +24,12 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
                 
-                if (resultStream.Length == 0) 
-                    return new List<string>();
-                
                 json = await JsonDocument.ParseAsync(resultStream);
 
             }
             catch (TaskCanceledException)
             {
-                return null;
+                return new List<string>();
             }
             catch (HttpRequestException e)
             {

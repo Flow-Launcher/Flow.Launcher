@@ -24,16 +24,13 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
                 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
-                
-                if (resultStream.Length == 0) 
-                    return new List<string>(); // this handles the cancellation
-                
+
                 json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token)).RootElement.GetProperty("AS");
 
             }
             catch (TaskCanceledException)
             {
-                return null;
+                return new List<string>();
             }
             catch (HttpRequestException e)
             {
