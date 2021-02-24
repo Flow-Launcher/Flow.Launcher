@@ -17,7 +17,6 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
     {
         public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
-            JsonElement json;
 
             try
             {
@@ -25,7 +24,20 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
 
-                json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token)).RootElement.GetProperty("AS");
+                using var json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token));
+                var root = json.RootElement.GetProperty("AS");
+
+                if (root.GetProperty("FullResults").GetInt32() == 0)
+                    return new List<string>();
+
+                return root.GetProperty("Results")
+                           .EnumerateArray()
+                           .SelectMany(r => r.GetProperty("Suggests")
+                                             .EnumerateArray()
+                                             .Select(s => s.GetProperty("Txt").GetString()))
+                           .ToList();
+
+
 
             }
             catch (TaskCanceledException)
@@ -41,18 +53,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             {
                 Log.Exception("|Bing.Suggestions|can't parse suggestions", e);
                 return new List<string>();
-            }
-
-            if (json.GetProperty("FullResults").GetInt32() == 0)
-                return new List<string>();
-
-            return json.GetProperty("Results")
-                       .EnumerateArray()
-                       .SelectMany(r => r.GetProperty("Suggests")
-                                         .EnumerateArray()
-                                         .Select(s => s.GetProperty("Txt").GetString()))
-                       .ToList();
-
+            } 
         }
 
         public override string ToString()
