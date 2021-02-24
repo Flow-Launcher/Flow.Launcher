@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
@@ -9,14 +7,8 @@ namespace Flow.Launcher.Storage
     // todo this class is not thread safe.... but used from multiple threads.
     public class TopMostRecord
     {
-        /// <summary>
-        /// You should not directly access this field
-        /// <para>
-        /// It is public due to System.Text.Json limitation in version 3.1
-        /// </para>
-        /// </summary>
-        /// TODO: Set it to private
-        public Dictionary<string, Record> records { get; set; } = new Dictionary<string, Record>();
+        [JsonInclude]
+        public Dictionary<string, Record> records { get; private set; } = new Dictionary<string, Record>();
 
         internal bool IsTopMost(Result result)
         {

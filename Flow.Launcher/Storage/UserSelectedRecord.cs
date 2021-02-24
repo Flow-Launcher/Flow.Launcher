@@ -7,15 +7,8 @@ namespace Flow.Launcher.Storage
 {
     public class UserSelectedRecord
     {
-        /// <summary>
-        /// You should not directly access this field
-        /// <para>
-        /// It is public due to System.Text.Json limitation in version 3.1
-        /// </para>
-        /// </summary>
-        /// TODO: Set it to private
-        [JsonPropertyName("records")]
-        public Dictionary<string, int> records { get; set; }
+        [JsonInclude]
+        public Dictionary<string, int> records { get; private set; }
 
         public UserSelectedRecord()
         {
