@@ -36,10 +36,9 @@ namespace Flow.Launcher.Core.Plugin
         {
             string assemblyPath = dependencyResolver.ResolveAssemblyToPath(assemblyName);
 
-            // When resolving dependencies, ignore assembly depenedencies that already exits with Flow.Launcher.
+            // When resolving dependencies, ignore assembly depenedencies that already exits with Flow.Launcher
             // Otherwise duplicate assembly will be loaded and some weird behavior will occur, such as WinRT.Runtime.dll
-            // will fail due to loading multiple versions in process, each with their own static instance of registration state 
-
+            // will fail due to loading multiple versions in process, each with their own static instance of registration state
             if (assemblyPath == null || ExistsInReferencedPackage(assemblyName))
                 return null;
 
