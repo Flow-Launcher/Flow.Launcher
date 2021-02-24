@@ -33,9 +33,6 @@ namespace Flow.Launcher.Core.Plugin
         {
             string assemblyPath = dependencyResolver.ResolveAssemblyToPath(assemblyName);
 
-            // When resolving dependencies, ignore assembly depenedencies that already exits with Flow.Launcher.Plugin
-            // Otherwise will get unexpected behaviour with plugins, e.g. JsonIgnore attribute not honored in WebSearch or other plugins
-            // that use Newtonsoft.Json
             if (assemblyPath == null || ExistsInReferencedPluginPackage(assemblyName))
                 return null;
 
