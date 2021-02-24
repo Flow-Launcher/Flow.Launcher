@@ -11,17 +11,22 @@ namespace Flow.Launcher.Core.Plugin
     {
         private readonly AssemblyDependencyResolver dependencyResolver;
 
-        private readonly AssemblyDependencyResolver referencedPluginPackageDependencyResolver;
+        private static readonly AssemblyDependencyResolver referencedPluginPackageDependencyResolver;
 
         private readonly AssemblyName assemblyName;
+
+        static PluginAssemblyLoader()
+        {
+            referencedPluginPackageDependencyResolver =
+                new AssemblyDependencyResolver(Path.Combine(Constant.ProgramDirectory, "Flow.Launcher.dll"));
+        }
 
         internal PluginAssemblyLoader(string assemblyFilePath)
         {
             dependencyResolver = new AssemblyDependencyResolver(assemblyFilePath);
             assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
 
-            referencedPluginPackageDependencyResolver =
-                new AssemblyDependencyResolver(Path.Combine(Constant.ProgramDirectory, "Flow.Launcher.dll"));
+
         }
 
         internal Assembly LoadAssemblyAndDependencies()
