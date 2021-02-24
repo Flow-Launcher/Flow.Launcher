@@ -28,13 +28,13 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token)).RootElement.GetProperty("AS");
 
             }
+            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
+            {
+                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                return null;
+            }
             catch (OperationCanceledException)
             {
-                return new List<string>();
-            }
-            catch (HttpRequestException e)
-            {
-                Log.Exception("|Bing.Suggestions|Can't get suggestion from Bing", e);
                 return new List<string>();
             }
             catch (JsonException e)
