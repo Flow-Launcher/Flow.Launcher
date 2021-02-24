@@ -21,7 +21,7 @@ namespace Flow.Launcher.Core.Plugin
             assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
 
             referencedPluginPackageDependencyResolver =
-                new AssemblyDependencyResolver(Path.Combine(Constant.ProgramDirectory, "Flow.Launcher.Plugin.dll"));
+                new AssemblyDependencyResolver(Path.Combine(Constant.ProgramDirectory, "Flow.Launcher.dll"));
         }
 
         internal Assembly LoadAssemblyAndDependencies()
