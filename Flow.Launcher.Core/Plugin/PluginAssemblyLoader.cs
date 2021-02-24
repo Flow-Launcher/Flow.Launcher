@@ -1,5 +1,6 @@
 ﻿using Flow.Launcher.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,14 +12,17 @@ namespace Flow.Launcher.Core.Plugin
     {
         private readonly AssemblyDependencyResolver dependencyResolver;
 
-        private static readonly AssemblyDependencyResolver referencedPluginPackageDependencyResolver;
-
         private readonly AssemblyName assemblyName;
+
+        private static readonly List<Assembly> loadedAssembly;
 
         static PluginAssemblyLoader()
         {
-            referencedPluginPackageDependencyResolver =
-                new AssemblyDependencyResolver(Path.Combine(Constant.ProgramDirectory, "Flow.Launcher.dll"));
+            loadedAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+            AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>
+            {
+                loadedAssembly.Add(args.LoadedAssembly);
+            };
         }
 
         internal PluginAssemblyLoader(string assemblyFilePath)
@@ -39,7 +43,7 @@ namespace Flow.Launcher.Core.Plugin
             // When resolving dependencies, ignore assembly depenedencies that already exits with Flow.Launcher
             // Otherwise duplicate assembly will be loaded, and some weird behavior will occur such as WinRT.dll
             // will fail to create 
-            
+
             if (assemblyPath == null || ExistsInReferencedPackage(assemblyName))
                 return null;
 
@@ -49,13 +53,14 @@ namespace Flow.Launcher.Core.Plugin
         internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, params Type[] types)
         {
             var allTypes = assembly.ExportedTypes;
-
             return allTypes.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Intersect(types).Any());
         }
 
         internal bool ExistsInReferencedPackage(AssemblyName assemblyName)
         {
-            return referencedPluginPackageDependencyResolver.ResolveAssemblyToPath(assemblyName) != null;
+            if (loadedAssembly.Any(a => a.FullName == assemblyName.FullName))
+                return true;
+            return false;
         }
     }
 }
