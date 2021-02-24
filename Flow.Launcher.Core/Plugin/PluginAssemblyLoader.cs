@@ -38,7 +38,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             string assemblyPath = dependencyResolver.ResolveAssemblyToPath(assemblyName);
 
-            if (assemblyPath == null || ExistsInReferencedPluginPackage(assemblyName))
+            if (assemblyPath == null || ExistsInReferencedPackage(assemblyName))
                 return null;
 
             return LoadFromAssemblyPath(assemblyPath);
@@ -51,7 +51,7 @@ namespace Flow.Launcher.Core.Plugin
             return allTypes.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Intersect(types).Any());
         }
 
-        internal bool ExistsInReferencedPluginPackage(AssemblyName assemblyName)
+        internal bool ExistsInReferencedPackage(AssemblyName assemblyName)
         {
             return referencedPluginPackageDependencyResolver.ResolveAssemblyToPath(assemblyName) != null;
         }
