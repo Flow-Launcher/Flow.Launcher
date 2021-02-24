@@ -25,8 +25,6 @@ namespace Flow.Launcher.Core.Plugin
         {
             dependencyResolver = new AssemblyDependencyResolver(assemblyFilePath);
             assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
-
-
         }
 
         internal Assembly LoadAssemblyAndDependencies()
