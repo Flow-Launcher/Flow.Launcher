@@ -23,17 +23,17 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
-                
-                json = await JsonDocument.ParseAsync(resultStream);
+
+                json = await JsonDocument.ParseAsync(resultStream, cancellationToken: token);
 
             }
-            catch (TaskCanceledException)
+            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
-                return new List<string>();
+                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                return null;
             }
-            catch (HttpRequestException e)
+            catch (OperationCanceledException)
             {
-                Log.Exception("|Google.Suggestions|Can't get suggestion from google", e);
                 return new List<string>();
             }
             catch (JsonException e)

@@ -87,7 +87,7 @@ namespace Flow.Launcher.Core
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
             }
-            catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException || e is TaskCanceledException)
+            catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException || e.InnerException is TimeoutException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
