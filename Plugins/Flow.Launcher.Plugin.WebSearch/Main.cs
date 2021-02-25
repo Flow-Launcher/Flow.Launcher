@@ -125,8 +125,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             {
                 var suggestions = await source.Suggestions(keyword, token).ConfigureAwait(false);
 
-                if (token.IsCancellationRequested)
-                    return null;
+                token.ThrowIfCancellationRequested();
 
                 var resultsFromSuggestion = suggestions?.Select(o => new Result
                 {

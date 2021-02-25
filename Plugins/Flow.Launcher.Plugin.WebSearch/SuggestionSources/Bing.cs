@@ -40,13 +40,13 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 
 
             }
-            catch (TaskCanceledException)
+            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
-                return new List<string>();
+                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                return null;
             }
-            catch (HttpRequestException e)
+            catch (OperationCanceledException)
             {
-                Log.Exception("|Bing.Suggestions|Can't get suggestion from Bing", e);
                 return new List<string>();
             }
             catch (JsonException e)
