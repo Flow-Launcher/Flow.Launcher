@@ -22,6 +22,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
 - Search for file contents.
+- Do mathematical calculations and copy the result to clipboard. 
 - Support search using environment variable paths.
 - Run batch and PowerShell commands as Administrator or a different user.
 - Support languages from Chinese to Italian and more.
