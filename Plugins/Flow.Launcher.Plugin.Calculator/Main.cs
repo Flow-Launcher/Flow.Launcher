@@ -32,7 +32,13 @@ namespace Flow.Launcher.Plugin.Caculator
 
         static Main()
         {
-            MagesEngine = new Engine();
+            MagesEngine = new Engine(new Configuration
+            {
+                Scope = new Dictionary<string, object>
+                {
+                    { "e", Math.E }, // e is not contained in the default mages engine
+                }
+            });
         }
 
         public void Init(PluginInitContext context)
@@ -55,7 +61,7 @@ namespace Flow.Launcher.Plugin.Caculator
                 var expression = query.Search.Replace(",", ".");
                 var result = MagesEngine.Interpret(expression);
 
-                if (result.ToString() == "NaN")
+                if (result?.ToString() == "NaN")
                     result = Context.API.GetTranslation("flowlauncher_plugin_calculator_not_a_number");
 
                 if (result is Function)
