@@ -2,7 +2,7 @@
   "WebSearches": [
     {
       "Title": "Google",
-      "ActionKeyword": "g",
+      "ActionKeyword": "*",
       "IconPath": "Images\\google.png",
       "Url": "https://www.google.com/search?q={q}",
       "Enabled": true
