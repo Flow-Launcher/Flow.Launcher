@@ -25,6 +25,10 @@ namespace Flow.Launcher.Plugin.WebSearch
         internal static string DefaultImagesDirectory;
         internal static string CustomImagesDirectory;
 
+        private readonly int scoreStandard = 50;
+
+        private readonly int scoreSuggestions = 48;
+
         private readonly string SearchSourceGlobalPluginWildCardSign = "*";
 
         public void Save()
@@ -49,13 +53,17 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var title = keyword;
                 string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
 
+                //Action Keyword match apear on top
+                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + 1;
+
                 if (string.IsNullOrEmpty(keyword))
                 {
                     var result = new Result
                     {
                         Title = subtitle,
                         SubTitle = string.Empty,
-                        IcoPath = searchSource.IconPath
+                        IcoPath = searchSource.IconPath,
+                        Score = score
                     };
                     results.Add(result);
                 }
@@ -65,9 +73,9 @@ namespace Flow.Launcher.Plugin.WebSearch
                     {
                         Title = title,
                         SubTitle = subtitle,
-                        Score = 6,
                         IcoPath = searchSource.IconPath,
                         ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
+                        Score = score,
                         Action = c =>
                         {
                             if (_settings.OpenInNewBrowser)
@@ -123,6 +131,9 @@ namespace Flow.Launcher.Plugin.WebSearch
             var source = _settings.SelectedSuggestion;
             if (source != null)
             {
+                //Suggestions appear below actual result, and appear above global action keyword match if non-global;
+                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
+
                 var suggestions = await source.Suggestions(keyword, token).ConfigureAwait(false);
 
                 token.ThrowIfCancellationRequested();
@@ -131,7 +142,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 {
                     Title = o,
                     SubTitle = subtitle,
-                    Score = 5,
+                    Score = score,
                     IcoPath = searchSource.IconPath,
                     ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                     Action = c =>
