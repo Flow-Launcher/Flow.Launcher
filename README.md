@@ -61,6 +61,28 @@ Windows may complain about security due to code not being signed, this will be c
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
+## Plugins
+Here are some actively maintained plugins you can install.
+
+| Name | Repo | Function | Woxy Port? |
+| --- | --- | --- | --- |
+| WoxDictionary | https://github.com/jjw24/WoxDictionary/releases/latest | Dictionary | y | 
+| Google Search Plus | https://github.com/jjw24/Wox.Plugin.GoogleSearch/releases/latest | Google Search | y |
+| SpotifyPremium | https://github.com/jjw24/Wox.Plugin.SpotifyPremium/releases/latest | Spotify Search | y |
+| Runner | https://github.com/jjw24/Wox.Plugin.Runner/releases/latest | Create command line aliases | y |
+| Clipboard Manager | https://github.com/Xenolphthalein/Flow.Launcher.Plugin.ClipboardHistory | Manage your clipboard 
+| WindowWalker | https://github.com/taooceros/Microsoft.Plugin.WindowWalker | Alt+Tab Enhancer | Y |
+| ipadr | https://github.com/taooceros/Flow.Plugin.IPAddress | Tells you your IP address | Y |
+| UrlEncode | https://github.com/taooceros/Flow.Plugin.UrlEncode | Encode/Decode strings for URLs | Y |
+| Putty | https://github.com/jjw24/Flow.Launcher.Plugin.Putty | Launch a PuTTy client | Y |
+| FancyEmoji | https://github.com/821C3/Wox.Plugin.FancyEmoji | Emoji Search | n |
+| IsPrime | https://github.com/lvonkacsoh/wox-plugin-isPrime | Tells you if an entered number is prime or not | n |
+| DiskSpace | https://github.com/roose/Wox.Plugin.DiskSpace | Shows available disk space | n |
+| wox-dash-velocity | https://github.com/etiago/wox-dash-velocity | Integrate with [Velocity](https://velocity.silverlakesoftware.com/) | n |
+| LibreTranslate | https://github.com/taooceros/Flow.LibreTranslate | Multi-language translation tool with [LibreTranslate](https://github.com/uav4geo/LibreTranslate) back-end | y |
+
+There is an [open issue](https://github.com/Flow-Launcher/Flow.Launcher/issues/170) where you can request existing Wox or PowerToys Run plugins be ported.  You can also do this yourself using the instructions in [our documentation](https://flow-launcher.github.io/docs/#/port-plugins).
+
 ## Status
 
 Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
