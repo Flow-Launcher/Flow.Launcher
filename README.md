@@ -40,15 +40,6 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
-### Integrations
-  - If you use Python plugins:
-    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
-    - Add Python to `%PATH%` or set it in flow's settings.
-    - Use `pip` to install `flowlauncher`, open cmd and type `pip install flowlauncher`.
-    - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
-    - Start to launch your Python plugins.
-  - Flow searches files and contents via Windows Index Search, to use Everything: `pm install everything`.
-
 ### Usage
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
 - Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
@@ -61,27 +52,18 @@ Windows may complain about security due to code not being signed, this will be c
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
+### Integrations
+  - If you use Python plugins:
+    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
+    - Add Python to `%PATH%` or set it in flow's settings.
+    - Use `pip` to install `flowlauncher`, open cmd and type `pip install flowlauncher`.
+    - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
+    - Start to launch your Python plugins.
+  - Flow searches files and contents via Windows Index Search, to use Everything: `pm install everything`.
+
 ## Plugins
-Here are some actively maintained plugins you can install.
 
-| Name | Repo | Function | Woxy Port? |
-| --- | --- | --- | --- |
-| WoxDictionary | https://github.com/jjw24/WoxDictionary/releases/latest | Dictionary | y | 
-| Google Search Plus | https://github.com/jjw24/Wox.Plugin.GoogleSearch/releases/latest | Google Search | y |
-| SpotifyPremium | https://github.com/jjw24/Wox.Plugin.SpotifyPremium/releases/latest | Spotify Search | y |
-| Runner | https://github.com/jjw24/Wox.Plugin.Runner/releases/latest | Create command line aliases | y |
-| Clipboard Manager | https://github.com/Xenolphthalein/Flow.Launcher.Plugin.ClipboardHistory | Manage your clipboard 
-| WindowWalker | https://github.com/taooceros/Microsoft.Plugin.WindowWalker | Alt+Tab Enhancer | Y |
-| ipadr | https://github.com/taooceros/Flow.Plugin.IPAddress | Tells you your IP address | Y |
-| UrlEncode | https://github.com/taooceros/Flow.Plugin.UrlEncode | Encode/Decode strings for URLs | Y |
-| Putty | https://github.com/jjw24/Flow.Launcher.Plugin.Putty | Launch a PuTTy client | Y |
-| FancyEmoji | https://github.com/821C3/Wox.Plugin.FancyEmoji | Emoji Search | n |
-| IsPrime | https://github.com/lvonkacsoh/wox-plugin-isPrime | Tells you if an entered number is prime or not | n |
-| DiskSpace | https://github.com/roose/Wox.Plugin.DiskSpace | Shows available disk space | n |
-| wox-dash-velocity | https://github.com/etiago/wox-dash-velocity | Integrate with [Velocity](https://velocity.silverlakesoftware.com/) | n |
-| LibreTranslate | https://github.com/taooceros/Flow.LibreTranslate | Multi-language translation tool with [LibreTranslate](https://github.com/uav4geo/LibreTranslate) back-end | y |
-
-There is an [open issue](https://github.com/Flow-Launcher/Flow.Launcher/issues/170) where you can request existing Wox or PowerToys Run plugins be ported.  You can also do this yourself using the instructions in [our documentation](https://flow-launcher.github.io/docs/#/port-plugins).
+There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/Plugins.md) in the documentation section, some of which are integrated from other launchers.
 
 ## Status
 
