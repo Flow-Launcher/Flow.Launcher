@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
@@ -156,8 +157,17 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Hibernate",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
-                    IcoPath = "Images\\sleep.png", // Icon change needed
-                    Action = c => FormsApplication.SetSuspendState(PowerState.Hibernate, false, false)
+                    IcoPath = "Images\\hibernate.png",
+                    Action= c =>
+                    {
+                        var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.UseShellExecute = true;
+                        
+                        Process.Start(info);
+                        
+                        return true;
+                    }
                 },
                 new Result
                 {
