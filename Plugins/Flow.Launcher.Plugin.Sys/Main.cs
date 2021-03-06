@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
@@ -265,6 +267,18 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         Application.Current.MainWindow.Hide();
                         context.API.CheckForNewUpdate();
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Open Log Location",
+                    SubTitle = "Open Log Position",
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
+                        Process.Start("explorer".SetProcessStartInfo(arguments: logPath));
                         return true;
                     }
                 }
