@@ -40,15 +40,6 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
-### Integrations
-  - If you use Python plugins:
-    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
-    - Add Python to `%PATH%` or set it in flow's settings.
-    - Use `pip` to install `flowlauncher`, open cmd and type `pip install flowlauncher`.
-    - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
-    - Start to launch your Python plugins.
-  - Flow searches files and contents via Windows Index Search, to use Everything: `pm install everything`.
-
 ### Usage
 - Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
 - Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
@@ -60,6 +51,19 @@ Windows may complain about security due to code not being signed, this will be c
 - Logs are saved along with your user settings folder.
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
+
+### Integrations
+  - If you use Python plugins:
+    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
+    - Add Python to `%PATH%` or set it in flow's settings.
+    - Use `pip` to install `flowlauncher`, open cmd and type `pip install flowlauncher`.
+    - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
+    - Start to launch your Python plugins.
+  - Flow searches files and contents via Windows Index Search, to use Everything: `pm install everything`.
+
+## Plugins
+
+There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/Plugins.md) in the documentation section, some of which are integrated from other launchers.
 
 ## Status
 
