@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Shell
     public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, ISavable
     {
         private const string Image = "Images/shell.png";
-        private PluginInitContext _context;
+        private PluginInitContext context;
         private bool _winRStroked;
         private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
 
@@ -108,14 +108,14 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     if (m.Key == cmd)
                     {
-                        result.SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                        result.SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
                         return null;
                     }
 
                     var ret = new Result
                     {
                         Title = m.Key,
-                        SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
@@ -134,7 +134,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 Title = cmd,
                 Score = 5000,
-                SubTitle = _context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
+                SubTitle = context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
                 IcoPath = Image,
                 Action = c =>
                 {
@@ -152,7 +152,7 @@ namespace Flow.Launcher.Plugin.Shell
                 .Select(m => new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
@@ -234,13 +234,13 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 var name = "Plugin: Shell";
                 var message = $"Command not found: {e.Message}";
-                _context.API.ShowMsg(name, message);
+                context.API.ShowMsg(name, message);
             }
             catch(Win32Exception e)
             {
                 var name = "Plugin: Shell";
                 var message = $"Error running the command: {e.Message}";
-                _context.API.ShowMsg(name, message);
+                context.API.ShowMsg(name, message);
             }
         }
 
@@ -275,7 +275,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         public void Init(PluginInitContext context)
         {
-            this._context = context;
+            this.context = context;
             context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
         }
 
@@ -301,7 +301,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
-            _context.API.ChangeQuery($"{_context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeperater}");
+            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeperater}");
             Application.Current.MainWindow.Visibility = Visibility.Visible;
         }
 
@@ -312,12 +312,12 @@ namespace Flow.Launcher.Plugin.Shell
 
         public string GetTranslatedPluginTitle()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
+            return context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
+            return context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 new Result
                 {
-                    Title = _context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
+                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
                     Action = c =>
                     {
                         Task.Run(() =>Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
@@ -336,7 +336,7 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new Result
                 {
-                    Title = _context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
+                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
                     Action = c =>
                     {
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
