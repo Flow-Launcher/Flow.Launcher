@@ -342,7 +342,7 @@ namespace Flow.Launcher.Plugin.Shell
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
                         return true;
                     },
-                    IcoPath = Image
+                    IcoPath = "Images/admin.png"
                 },
                 new Result
                 {
