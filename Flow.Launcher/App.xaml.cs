@@ -66,14 +66,16 @@ namespace Flow.Launcher
                 StringMatcher.Instance = _stringMatcher;
                 _stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
 
-                PluginManager.LoadPlugins(_settings.PluginSettings);
+                Stopwatch.Normal("|App.OnStartup|", () => PluginManager.LoadPlugins(_settings.PluginSettings));
+
                 _mainVM = new MainViewModel(_settings);
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
-                
-                await PluginManager.InitializePlugins(API);
+
+                await Stopwatch.NormalAsync("|App.OnStartup|Plugin Initialization Time", () => PluginManager.InitializePlugins(API));
+
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -83,11 +85,19 @@ namespace Flow.Launcher
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
-                InternationalizationManager.Instance.Settings = _settings;
-                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
-                // main windows needs initialized before theme change because of blur settigns
-                ThemeManager.Instance.Settings = _settings;
-                ThemeManager.Instance.ChangeTheme(_settings.Theme);
+
+                Stopwatch.Normal("|App.OnStartup|Internationalization Initialization time", () =>
+                {
+                    InternationalizationManager.Instance.Settings = _settings;
+                    InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+                });
+
+                Stopwatch.Normal("|App.OnStartup|ThemeManager Initialization time", () =>
+                {
+                    // main windows needs initialized before theme change because of blur settigns
+                    ThemeManager.Instance.Settings = _settings;
+                    ThemeManager.Instance.ChangeTheme(_settings.Theme);
+                });
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
