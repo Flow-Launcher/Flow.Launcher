@@ -343,6 +343,16 @@ namespace Flow.Launcher.Plugin.Shell
                         return true;
                     },
                     IcoPath = Image
+                },
+                new Result
+                {
+                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
+                    Action = c =>
+                    {
+                        Clipboard.SetDataObject(selectedResult.Title);
+                        return true;
+                    },
+                    IcoPath = "Images/copy.png"
                 }
             };
 
