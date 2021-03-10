@@ -38,7 +38,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var metadata in metadatas)
             {
-                var milliseconds = Stopwatch.Debug(
+                var milliseconds = Stopwatch.Normal(
                     $"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
                     {
 #if DEBUG
@@ -54,13 +54,22 @@ namespace Flow.Launcher.Core.Plugin
 
                         try
                         {
-                            var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
-                            assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                            PluginAssemblyLoader assemblyLoader = null;
+                            Stopwatch.Normal($"|PluginsLoader.DotNetPlugins|Assembly Constructor cost for {metadata.Name}",
+                                delegate
+                                {
+                                    assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                                    assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                                });
 
-                            var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly, typeof(IPlugin), 
-                                typeof(IAsyncPlugin));
-
-                            plugin = Activator.CreateInstance(type);
+                            Stopwatch.Normal($"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}",
+                                delegate
+                                {
+                                    var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly, typeof(IPlugin),
+                                                                                                       typeof(IAsyncPlugin));
+                                        
+                                    plugin = Activator.CreateInstance(type);
+                                });
                         }
                         catch (Exception e) when (assembly == null)
                         {
@@ -139,7 +148,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        Log.Error("PluginsLoader","Failed to set Python path despite the environment variable PATH is found", "PythonPlugins");
+                        Log.Error("PluginsLoader", "Failed to set Python path despite the environment variable PATH is found", "PythonPlugins");
                     }
                 }
             }
@@ -152,7 +161,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 else
                 {
-                    Log.Error("PluginsLoader",$"Tried to automatically set from Settings.PythonDirectory " +
+                    Log.Error("PluginsLoader", $"Tried to automatically set from Settings.PythonDirectory " +
                         $"but can't find python executable in {path}", "PythonPlugins");
                 }
             }
@@ -205,7 +214,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        Log.Error("PluginsLoader", 
+                        Log.Error("PluginsLoader",
                             $"Failed to set Python path after Droplex install, {pythonPath} does not exist",
                             "PythonPlugins");
                     }
@@ -215,8 +224,8 @@ namespace Flow.Launcher.Core.Plugin
             if (string.IsNullOrEmpty(settings.PythonDirectory))
             {
                 MessageBox.Show("Unable to set Python executable path, please try from Flow's settings (scroll down to the bottom).");
-                Log.Error("PluginsLoader", 
-                    $"Not able to successfully set Python path, the PythonDirectory variable is still an empty string.", 
+                Log.Error("PluginsLoader",
+                    $"Not able to successfully set Python path, the PythonDirectory variable is still an empty string.",
                     "PythonPlugins");
 
                 return new List<PluginPair>();

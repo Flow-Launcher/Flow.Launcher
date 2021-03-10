@@ -100,10 +100,10 @@ namespace Flow.Launcher.Core.Plugin
                     var milliseconds = pair.Plugin switch
                     {
                         IAsyncPlugin plugin
-                            => await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                            => await Stopwatch.NormalAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
                                                         () => plugin.InitAsync(new PluginInitContext(pair.Metadata, API))),
                         IPlugin plugin
-                            => Stopwatch.Debug($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                            => Stopwatch.Normal($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
                                         () => plugin.Init(new PluginInitContext(pair.Metadata, API))),
                         _ => throw new ArgumentException(),
                     };
