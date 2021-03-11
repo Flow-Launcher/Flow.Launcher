@@ -78,9 +78,16 @@ namespace Flow.Launcher.Core.Plugin
         /// <param name="settings"></param>
         public static void LoadPlugins(PluginsSettings settings)
         {
+            Log.Info("Loading plugins manifest start");
             _metadatas = PluginConfig.Parse(Directories);
+            Log.Info("Loading plugins manifest end");
+
             Settings = settings;
+            Log.Info("Update plugins setting start");
+
             Settings.UpdatePluginSettings(_metadatas);
+            Log.Info("Update plugins setting end");
+
             AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
         }
 

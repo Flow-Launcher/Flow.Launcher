@@ -58,13 +58,19 @@ namespace Flow.Launcher
 
                 ImageLoader.Initialize();
 
+                Log.Info("Initialization of setting view model start");
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
+                Log.Info("Initialization of setting view model end");
 
+
+                Log.Info("Alphabet initialization Start");
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
                 _stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
+
+                Log.Info("Alphabet initialization End");
 
                 Stopwatch.Normal("|App.OnStartup|", () => PluginManager.LoadPlugins(_settings.PluginSettings));
 
