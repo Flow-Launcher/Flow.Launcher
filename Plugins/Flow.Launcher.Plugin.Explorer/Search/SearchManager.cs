@@ -172,11 +172,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             foreach (var r in results)
             {
+                var excludeResult = false;
+
                 for (var i = 0; i < indexExclusionListCount; i++)
                 {
-                    if (!r.SubTitle.StartsWith(indexExclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
-                        filteredResults.Add(r);
+                    if (r.SubTitle.StartsWith(indexExclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
+                    {
+                        excludeResult = true;
+                        break;
+                    }
                 }
+
+                if (!excludeResult)
+                    filteredResults.Add(r);
             }
 
             return filteredResults;
