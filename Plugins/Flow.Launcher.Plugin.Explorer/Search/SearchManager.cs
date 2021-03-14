@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 results.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
 
-                return results.ToList();
+                return FilterOutResultsFromWindowsIndexExclusionList(results).ToList();
             }
 
             var locationPath = querySearch;
@@ -157,6 +157,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                    queryConstructor.QueryForTopLevelDirectorySearch,
                                                    query,
                                                    token).ConfigureAwait(false);
+        }
+
+        private HashSet<Result> FilterOutResultsFromWindowsIndexExclusionList(HashSet<Result> results)
+        {
+            var indexExclusionList = settings.IndexSearchExcludedSubdirectoryPaths;
+
+            var indexExclusionListCount = indexExclusionList.Count;
+
+            if (indexExclusionListCount == 0)
+                return results;
+
+            var filteredResults = new HashSet<Result>(PathEqualityComparator.Instance);
+
+            foreach (var r in results)
+            {
+                for (var i = 0; i < indexExclusionListCount; i++)
+                {
+                    if (!r.SubTitle.StartsWith(indexExclusionList[0].Path, StringComparison.OrdinalIgnoreCase))
+                        filteredResults.Add(r);
+                }
+            }
+
+            return filteredResults;
         }
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
