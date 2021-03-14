@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 for (var i = 0; i < indexExclusionListCount; i++)
                 {
-                    if (!r.SubTitle.StartsWith(indexExclusionList[0].Path, StringComparison.OrdinalIgnoreCase))
+                    if (!r.SubTitle.StartsWith(indexExclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
                         filteredResults.Add(r);
                 }
             }
