@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -65,9 +65,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (!querySearch.IsLocationPathString() && !isEnvironmentVariablePath)
             {
-                results.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
+                var filteredResults = FilterOutResultsFromWindowsIndexExclusionList(
+                        await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
 
-                return FilterOutResultsFromWindowsIndexExclusionList(results).ToList();
+                results.UnionWith(filteredResults);
+
+                return results.ToList();
             }
 
             var locationPath = querySearch;
