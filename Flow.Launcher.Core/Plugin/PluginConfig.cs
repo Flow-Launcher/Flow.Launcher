@@ -45,7 +45,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
- 
+
             return allPluginMetadata;
         }
 
@@ -58,10 +58,12 @@ namespace Flow.Launcher.Core.Plugin
                 return null;
             }
 
-            PluginMetadata metadata;
+            PluginMetadata metadata = null;
             try
             {
-                metadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(configPath));
+                Stopwatch.Normal("|PluginConfig|GetPluginMetadata",
+                    () => metadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(configPath)));
+
                 metadata.PluginDirectory = pluginDirectory;
                 // for plugins which doesn't has ActionKeywords key
                 metadata.ActionKeywords = metadata.ActionKeywords ?? new List<string> { metadata.ActionKeyword };
