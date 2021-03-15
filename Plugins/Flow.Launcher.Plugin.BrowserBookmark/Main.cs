@@ -25,12 +25,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             _storage = new PluginJsonStorage<Settings>();
             _settings = _storage.Load();
-
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
         }
 
         public void Init(PluginInitContext context)
         {
+            cachedBookmarks = Bookmarks.LoadAllBookmarks();
+
             this.context = context;
         }
 
