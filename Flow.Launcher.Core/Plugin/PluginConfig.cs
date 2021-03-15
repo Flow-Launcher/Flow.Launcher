@@ -61,7 +61,7 @@ namespace Flow.Launcher.Core.Plugin
             PluginMetadata metadata = null;
             try
             {
-                Stopwatch.Normal("|PluginConfig|GetPluginMetadata",
+                Stopwatch.Normal($"|PluginConfig|GetPluginMetadata in {pluginDirectory}",
                     () => metadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(configPath)));
 
                 metadata.PluginDirectory = pluginDirectory;
