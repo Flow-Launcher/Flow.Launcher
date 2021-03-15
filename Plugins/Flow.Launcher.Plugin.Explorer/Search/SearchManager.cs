@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -162,24 +162,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                    token).ConfigureAwait(false);
         }
 
-        private HashSet<Result> FilterOutResultsFromWindowsIndexExclusionList(HashSet<Result> results)
+        private HashSet<Result> FilterOutResultsFromWindowsIndexExclusionList(List<Result> results)
         {
             var indexExclusionList = settings.IndexSearchExcludedSubdirectoryPaths;
 
             var indexExclusionListCount = indexExclusionList.Count;
 
             if (indexExclusionListCount == 0)
-                return results;
+                return results.ToHashSet();
 
             var filteredResults = new HashSet<Result>(PathEqualityComparator.Instance);
 
-            foreach (var r in results)
+            for (var index = 0; index < results.Count; index++)
             {
                 var excludeResult = false;
 
                 for (var i = 0; i < indexExclusionListCount; i++)
                 {
-                    if (r.SubTitle.StartsWith(indexExclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
+                    if (results[index].SubTitle.StartsWith(indexExclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
                     {
                         excludeResult = true;
                         break;
@@ -187,7 +187,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 }
 
                 if (!excludeResult)
-                    filteredResults.Add(r);
+                    filteredResults.Add(results[index]);
             }
 
             return filteredResults;
