@@ -96,11 +96,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             var constructedQuery = constructQuery(searchString);
             return await RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token),
-                        exclusionList);
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
+                        exclusionList,
+                        token).ConfigureAwait(false);
         }
 
-        private async static Task<List<Result>> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList)
+        private async static Task<List<Result>> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
         {
             var indexExclusionListCount = exclusionList.Count;
 
@@ -109,27 +110,38 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             var filteredResults = new List<Result>();
 
-            await Task.Run(() =>
+            try
             {
-                for (var index = 0; index < results.Count; index++)
+                await Task.Run(() =>
                 {
-                    var excludeResult = false;
-
-                    for (var i = 0; i < indexExclusionListCount; i++)
+                    for (var index = 0; index < results.Count; index++)
                     {
-                        if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
+                        token.ThrowIfCancellationRequested();
+
+                        var excludeResult = false;
+
+                        for (var i = 0; i < indexExclusionListCount; i++)
                         {
-                            excludeResult = true;
-                            break;
+                            token.ThrowIfCancellationRequested();
+
+                            if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
+                            {
+                                excludeResult = true;
+                                break;
+                            }
                         }
+
+                        if (!excludeResult)
+                            filteredResults.Add(results[index]);
                     }
+                }, token);
 
-                    if (!excludeResult)
-                        filteredResults.Add(results[index]);
-                }
-            });
-
-            return filteredResults;
+                return filteredResults;
+            }
+            catch (OperationCanceledException)
+            {
+                return new List<Result>();
+            }
         }
 
         internal static bool PathIsIndexed(string path)
