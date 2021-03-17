@@ -63,10 +63,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     }
                 }
             }
-            catch (OperationCanceledException)
-            {
-                return new List<Result>(); // The source code indicates that without adding members, it won't allocate an array
-            }
             catch (InvalidOperationException e)
             {
                 // Internal error from ExecuteReader(): Connection closed.

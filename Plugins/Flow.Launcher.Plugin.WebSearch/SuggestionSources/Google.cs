@@ -37,10 +37,6 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
                 return null;
             }
-            catch (OperationCanceledException)
-            {
-                return new List<string>();
-            }
             catch (JsonException e)
             {
                 Log.Exception("|Google.Suggestions|can't parse suggestions", e);

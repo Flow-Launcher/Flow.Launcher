@@ -50,35 +50,21 @@ namespace Flow.Launcher.Plugin.Program
             win32 = _win32s;
             uwps = _uwps;
 
-            try
+            var result = await Task.Run(delegate
             {
-                var result = await Task.Run(delegate
-                {
-                    try
-                    {
-                        return win32.Cast<IProgram>()
-                            .Concat(uwps)
-                            .AsParallel()
-                            .WithCancellation(token)
-                            .Where(p => p.Enabled)
-                            .Select(p => p.Result(query.Search, _context.API))
-                            .Where(r => r?.Score > 0)
-                            .ToList();
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        return null;
-                    }
-                }, token).ConfigureAwait(false);
+                return win32.Cast<IProgram>()
+                    .Concat(uwps)
+                    .AsParallel()
+                    .WithCancellation(token)
+                    .Where(p => p.Enabled)
+                    .Select(p => p.Result(query.Search, _context.API))
+                    .Where(r => r?.Score > 0)
+                    .ToList();
+            }, token).ConfigureAwait(false);
 
-                token.ThrowIfCancellationRequested();
+            token.ThrowIfCancellationRequested();
 
-                return result;
-            }
-            catch (OperationCanceledException)
-            {
-                return null;
-            }
+            return result;
         }
 
         public async Task InitAsync(PluginInitContext context)
