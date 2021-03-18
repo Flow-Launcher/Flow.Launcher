@@ -63,10 +63,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     }
                 }
             }
-            catch (OperationCanceledException)
-            {
-                return new List<Result>(); // The source code indicates that without adding members, it won't allocate an array
-            }
             catch (InvalidOperationException e)
             {
                 // Internal error from ExecuteReader(): Connection closed.
@@ -95,12 +91,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return new List<Result>();
 
             var constructedQuery = constructQuery(searchString);
-            return await RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token),
-                        exclusionList);
+            return RemoveResultsInExclusionList(
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
+                        exclusionList,
+                        token);
         }
 
-        private async static Task<List<Result>> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList)
+        private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
         {
             var indexExclusionListCount = exclusionList.Count;
 
@@ -109,25 +106,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             var filteredResults = new List<Result>();
 
-            await Task.Run(() =>
+            for (var index = 0; index < results.Count; index++)
             {
-                for (var index = 0; index < results.Count; index++)
+                token.ThrowIfCancellationRequested();
+
+                var excludeResult = false;
+
+                for (var i = 0; i < indexExclusionListCount; i++)
                 {
-                    var excludeResult = false;
+                    token.ThrowIfCancellationRequested();
 
-                    for (var i = 0; i < indexExclusionListCount; i++)
+                    if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
-                        {
-                            excludeResult = true;
-                            break;
-                        }
+                        excludeResult = true;
+                        break;
                     }
-
-                    if (!excludeResult)
-                        filteredResults.Add(results[index]);
                 }
-            });
+
+                if (!excludeResult)
+                    filteredResults.Add(results[index]);
+            }
 
             return filteredResults;
         }
