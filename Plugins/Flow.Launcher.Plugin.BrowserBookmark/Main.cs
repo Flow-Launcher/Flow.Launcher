@@ -18,13 +18,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
-        private readonly Settings _settings;
-        private readonly PluginJsonStorage<Settings> _storage;
-
-        public Main()
-        {
-        
-        }
+        private Settings _settings { get; set;}
+        private PluginJsonStorage<Settings> _storage { get; set;}
 
         public void Init(PluginInitContext context)
         {
