@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Caculator
                         @"[ei]|[0-9]|[\+\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
-        private static readonly Engine MagesEngine;
+        private static Engine MagesEngine;
         private PluginInitContext Context { get; set; }
 
         private static Settings _settings;
