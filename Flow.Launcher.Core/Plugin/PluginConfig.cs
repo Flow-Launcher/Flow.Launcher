@@ -20,7 +20,7 @@ namespace Flow.Launcher.Core.Plugin
         public static List<PluginMetadata> Parse(string[] pluginDirectories)
         {
             var allPluginMetadata = new List<PluginMetadata>();
-            var directories = pluginDirectories.SelectMany(Directory.GetDirectories);
+            var directories = pluginDirectories.SelectMany(Directory.EnumerateDirectories);
 
             // todo use linq when diable plugin is implmented since parallel.foreach + list is not thread saft
             foreach (var directory in directories)

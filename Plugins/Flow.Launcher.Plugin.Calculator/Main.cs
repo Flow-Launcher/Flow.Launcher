@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Caculator
                         @"[ei]|[0-9]|[\+\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
-        private static readonly Engine MagesEngine;
+        private static Engine MagesEngine;
         private PluginInitContext Context { get; set; }
 
         private static Settings _settings;
@@ -32,13 +32,7 @@ namespace Flow.Launcher.Plugin.Caculator
 
         static Main()
         {
-            MagesEngine = new Engine(new Configuration
-            {
-                Scope = new Dictionary<string, object>
-                {
-                    { "e", Math.E }, // e is not contained in the default mages engine
-                }
-            });
+            
         }
 
         public void Init(PluginInitContext context)
@@ -47,6 +41,14 @@ namespace Flow.Launcher.Plugin.Caculator
 
             _viewModel = new SettingsViewModel();
             _settings = _viewModel.Settings;
+            
+            MagesEngine = new Engine(new Configuration
+            {
+                Scope = new Dictionary<string, object>
+                {
+                    { "e", Math.E }, // e is not contained in the default mages engine
+                }
+            });
         }
 
         public List<Result> Query(Query query)
