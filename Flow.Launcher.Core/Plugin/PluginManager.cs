@@ -97,16 +97,9 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = pair.Plugin switch
-                    {
-                        IAsyncPlugin plugin
-                            => await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                                        () => plugin.InitAsync(new PluginInitContext(pair.Metadata, API))),
-                        IPlugin plugin
-                            => Stopwatch.Debug($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                        () => plugin.Init(new PluginInitContext(pair.Metadata, API))),
-                        _ => throw new ArgumentException(),
-                    };
+                    var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                                                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
+
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
                         $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
@@ -169,19 +162,9 @@ namespace Flow.Launcher.Core.Plugin
 
                 long milliseconds = -1L;
 
-                switch (pair.Plugin)
-                {
-                    case IAsyncPlugin plugin:
-                        milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
-                            async () => results = await plugin.QueryAsync(query, token).ConfigureAwait(false));
-                        break;
-                    case IPlugin plugin:
-                        await Task.Run(() => milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
-                            () => results = plugin.Query(query)), token).ConfigureAwait(false);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                    async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
+
                 token.ThrowIfCancellationRequested();
                 if (results == null)
                     return results;
@@ -199,7 +182,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-               Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
+                Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
             return results;

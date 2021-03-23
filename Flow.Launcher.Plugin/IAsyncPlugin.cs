@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="query">Query to search</param>
         /// <param name="token">Cancel when querying job is obsolete</param>
         /// <returns></returns>
-        Task<List<Result>> QueryAsync(Query query, CancellationToken token);
+        abstract Task<List<Result>> QueryAsync(Query query, CancellationToken token);
 
         /// <summary>
         /// Initialize plugin asynchrously (will still wait finish to continue)

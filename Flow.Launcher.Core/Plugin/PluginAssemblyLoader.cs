@@ -49,10 +49,10 @@ namespace Flow.Launcher.Core.Plugin
             return LoadFromAssemblyPath(assemblyPath);
         }
 
-        internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, params Type[] types)
+        internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, Type type)
         {
             var allTypes = assembly.ExportedTypes;
-            return allTypes.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Intersect(types).Any());
+            return allTypes.First(o => o.IsClass && !o.IsAbstract && o.GetInterfaces().Any(t => t == type));
         }
 
         internal bool ExistsInReferencedPackage(AssemblyName assemblyName)
