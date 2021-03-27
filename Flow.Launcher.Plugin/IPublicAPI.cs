@@ -165,10 +165,26 @@ namespace Flow.Launcher.Plugin
         T LoadJsonStorage<T>() where T : new();
 
         /// <summary>
-        /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow
+        /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow.Launcher
+        /// This method will save the original instance loaded with LoadJsonStorage.
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
-        void SaveJsonStorage<T>(T setting) where T : new();
+        void SaveJsonStorage<T>() where T : new();
+
+        /// <summary>
+        /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow.Launcher
+        /// This method will override the original class instance loaded from LoadJsonStorage
+        /// </summary>
+        /// <typeparam name="T">Type for Serialization</typeparam>
+        /// <returns></returns>
+        void SaveJsonStorage<T>(T settings) where T : new();
+
+        /// <summary>
+        /// Backup the JsonStorage you loaded from LoadJsonStorage
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="settings"></param>
+        void BackupJsonStorage<T>() where T : new();
     }
 }
