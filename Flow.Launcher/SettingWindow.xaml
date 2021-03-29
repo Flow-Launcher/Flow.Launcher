@@ -13,9 +13,9 @@
         mc:Ignorable="d"
         Icon="Images\app.ico"
         Title="{DynamicResource flowlauncher_settings}"
-        ResizeMode="NoResize"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
-        Height="600" Width="800" 
+        Height="600" Width="850"
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
     <Window.InputBindings>
@@ -191,7 +191,7 @@
                                     <TextBlock Text="{DynamicResource plugin_query_time}" Margin="10 0 0 0" MaxWidth="100"/>
                                     <TextBlock Text="{Binding QueryTime}" Margin="5 0 0 0" MaxWidth="100"/>
                                     <TextBlock Text="{DynamicResource pluginDirectory}"
-                                               MaxWidth="100" Cursor="Hand" Margin="40 0 0 0"
+                                               MaxWidth="120" Cursor="Hand" Margin="20 0 0 0"
                                                MouseUp="OnPluginDirecotyClick" Foreground="Blue" />
                                 </DockPanel>
                             </Grid>
