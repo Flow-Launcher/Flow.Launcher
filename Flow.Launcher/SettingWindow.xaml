@@ -431,6 +431,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ActivatedTimes, Mode=OneWay}" FontSize="12" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource website}"/>
@@ -448,7 +449,14 @@
                         <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
                     </Hyperlink>
                 </TextBlock>
-                <Button Grid.Row="4" Grid.Column="0"
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource documentation}" />
+                <TextBlock Grid.Row="4" Grid.Column="1">
+                    <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}"
+                               RequestNavigate="OnRequestNavigate">
+                        <Run Text="{Binding Documentation, Mode=OneWay}" />
+                    </Hyperlink>
+                </TextBlock>
+                <Button Grid.Row="5" Grid.Column="0"
                         Content="{DynamicResource checkUpdates}" Click="OnCheckUpdates"
                         HorizontalAlignment="Left" Margin="10 30 10 10" />
             </Grid>

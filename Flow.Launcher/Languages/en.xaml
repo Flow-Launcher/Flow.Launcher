@@ -107,6 +107,7 @@
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
+    <system:String x:Key="documentation">Usage Tips:</system:String>
 
     <!--Priority Setting Dialog-->
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
