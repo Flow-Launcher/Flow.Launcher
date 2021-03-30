@@ -261,7 +261,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = "Check for new Flow Launcher update",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update"),
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
@@ -273,7 +273,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Open Log Location",
-                    SubTitle = "Open Log Position",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
