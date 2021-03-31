@@ -2,7 +2,7 @@
 {
     public class PluginPair
     {
-        public object Plugin { get; internal set; }
+        public IAsyncPlugin Plugin { get; internal set; }
         public PluginMetadata Metadata { get; internal set; }
 
         
