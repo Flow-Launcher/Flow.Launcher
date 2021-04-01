@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Infrastructure;
@@ -24,18 +25,30 @@ namespace Flow.Launcher.Storage
             unchecked
             {
                 // skip the empty space
-                foreach (var item in query.ActionKeyword.Concat(query.Search))
+                // https://stackoverflow.com/a/5155015 31 prime and is 2^5 - 1 which allows fast
+                //    optimization without information lost when int overflow
+                
+                for (int i = 0; i < query.ActionKeyword.Length; i++)
                 {
+                    char item = query.ActionKeyword[i];
+                    hashcode = hashcode * 31 + item;
+                }
+                
+                for (int i = 0; i < query.Search.Length; i++)
+                {
+                    char item = query.Search[i];
                     hashcode = hashcode * 31 + item;
                 }
 
-                foreach (var item in result.Title)
+                for (int i = 0; i < result.Title.Length; i++)
                 {
+                    char item = result.Title[i];
                     hashcode = hashcode * 31 + item;
                 }
 
-                foreach (var item in result.SubTitle)
+                for (int i = 0; i < result.SubTitle.Length; i++)
                 {
+                    char item = result.SubTitle[i];
                     hashcode = hashcode * 31 + item;
                 }
                 return hashcode;
