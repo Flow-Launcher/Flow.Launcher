@@ -10,6 +10,9 @@ namespace Flow.Launcher.Storage
 {
     public class UserSelectedRecord
     {
+        private const int HASH_MULTIPLIER = 31;
+        private const int HASH_INITIAL = 23;
+
         [JsonInclude]
         public Dictionary<int, int> records { get; private set; }
 
@@ -20,7 +23,7 @@ namespace Flow.Launcher.Storage
 
         private static int GenerateCustomHashCode(Query query, Result result)
         {
-            int hashcode = 23;
+            int hashcode = HASH_INITIAL;
 
             unchecked
             {
@@ -31,25 +34,25 @@ namespace Flow.Launcher.Storage
                 for (int i = 0; i < query.ActionKeyword.Length; i++)
                 {
                     char item = query.ActionKeyword[i];
-                    hashcode = hashcode * 31 + item;
+                    hashcode = hashcode * HASH_MULTIPLIER + item;
                 }
                 
                 for (int i = 0; i < query.Search.Length; i++)
                 {
                     char item = query.Search[i];
-                    hashcode = hashcode * 31 + item;
+                    hashcode = hashcode * HASH_MULTIPLIER + item;
                 }
 
                 for (int i = 0; i < result.Title.Length; i++)
                 {
                     char item = result.Title[i];
-                    hashcode = hashcode * 31 + item;
+                    hashcode = hashcode * HASH_MULTIPLIER + item;
                 }
 
                 for (int i = 0; i < result.SubTitle.Length; i++)
                 {
                     char item = result.SubTitle[i];
-                    hashcode = hashcode * 31 + item;
+                    hashcode = hashcode * HASH_MULTIPLIER + item;
                 }
                 return hashcode;
 
