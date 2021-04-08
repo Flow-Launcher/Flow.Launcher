@@ -107,6 +107,7 @@
         alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
+	<system:String x:Key="documentation">Tipy na používanie:</system:String>
 
     <!--Priority Setting Dialog-->
     <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné doplnky, zadajte záporné číslo</system:String>
@@ -121,6 +122,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
     <system:String x:Key="success">Úspešné</system:String>
+	<system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
     <system:String x:Key="actionkeyword_tips">Použite * ak nechcete určiť skratku pre akciu</system:String>
 
     <!--Custom Query Hotkey Dialog-->
