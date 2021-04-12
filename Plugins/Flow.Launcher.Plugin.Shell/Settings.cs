@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.Shell
         public bool LeaveShellOpen { get; set; }
         public bool RunAsAdministrator { get; set; } = true;
 
-        public Dictionary<string, int> Count = new Dictionary<string, int>();
+        public Dictionary<string, int> Count { get; set; } = new Dictionary<string, int>();
 
         public void AddCmdHistory(string cmdName)
         {
