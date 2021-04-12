@@ -124,7 +124,11 @@ namespace Flow.Launcher.Plugin.Shell
                         }
                     };
                     return ret;
-                }).Where(o => o != null).Take(4);
+                }).Where(o => o != null);
+
+            if (_settings.ShowOnlyMostUsedCMDs)
+                return history.Take(_settings.ShowOnlyMostUsedCMDsNumber).ToList();
+
             return history.ToList();
         }
 
@@ -159,7 +163,11 @@ namespace Flow.Launcher.Plugin.Shell
                         Execute(Process.Start, PrepareProcessStartInfo(m.Key));
                         return true;
                     }
-                }).Take(5);
+                });
+
+            if (_settings.ShowOnlyMostUsedCMDs)
+                return history.Take(_settings.ShowOnlyMostUsedCMDsNumber).ToList();
+
             return history.ToList();
         }
 
