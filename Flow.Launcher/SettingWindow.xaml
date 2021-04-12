@@ -63,7 +63,7 @@
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding AutoUpdates}">
                         <TextBlock Text="{DynamicResource autoUpdates}" />
                     </ui:ToggleSwitch>
-                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}">
+                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}">
                         <TextBlock Text="{DynamicResource ShouldUsePinyin}" />
                     </CheckBox>
                     <StackPanel Margin="10" Orientation="Horizontal">

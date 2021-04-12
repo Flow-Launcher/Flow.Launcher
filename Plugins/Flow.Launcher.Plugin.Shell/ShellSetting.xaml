@@ -12,6 +12,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <CheckBox Grid.Row="0" x:Name="ReplaceWinR" Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}" Margin="10" HorizontalAlignment="Left"/>
         <CheckBox Grid.Row="1" x:Name="LeaveShellOpen" Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}" Margin="10" HorizontalAlignment="Left"/>
@@ -21,5 +22,7 @@
             <ComboBoxItem>PowerShell</ComboBoxItem>
             <ComboBoxItem>RunCommand</ComboBoxItem>
         </ComboBox>
+        <CheckBox Grid.Row ="4" x:Name="ShowOnlyMostUsedCMDs" Content="{DynamicResource flowlauncher_plugin_cmd_history}" Margin="10 10 0 0"/>
+        <ComboBox Grid.Row="4" x:Name="ShowOnlyMostUsedCMDsNumber" Margin="330 20 10 10" HorizontalAlignment="Left" />
     </Grid>
 </UserControl>
