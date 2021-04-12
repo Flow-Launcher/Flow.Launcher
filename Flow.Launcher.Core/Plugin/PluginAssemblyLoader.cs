@@ -15,17 +15,17 @@ namespace Flow.Launcher.Core.Plugin
 
         private readonly AssemblyName assemblyName;
 
-        private static readonly ConcurrentDictionary<string, object> loadedAssembly;
+        private static readonly ConcurrentDictionary<string, byte> loadedAssembly;
 
         static PluginAssemblyLoader()
         {
             var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            loadedAssembly = new ConcurrentDictionary<string, object>(
-                currentAssemblies.Select(x => new KeyValuePair<string, object>(x.FullName, null)));
+            loadedAssembly = new ConcurrentDictionary<string, byte>(
+                currentAssemblies.Select(x => new KeyValuePair<string, byte>(x.FullName, default)));
 
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>
             {
-                loadedAssembly[args.LoadedAssembly.FullName] = null;
+                loadedAssembly[args.LoadedAssembly.FullName] = default;
             };
         }
 
