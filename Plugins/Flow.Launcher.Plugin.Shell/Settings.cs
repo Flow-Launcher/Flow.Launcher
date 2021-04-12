@@ -5,9 +5,16 @@ namespace Flow.Launcher.Plugin.Shell
     public class Settings
     {
         public Shell Shell { get; set; } = Shell.Cmd;
+        
         public bool ReplaceWinR { get; set; } = true;
+        
         public bool LeaveShellOpen { get; set; }
+
         public bool RunAsAdministrator { get; set; } = true;
+
+        public bool ShowOnlyMostUsedCMDs { get; set; }
+
+        public int ShowOnlyMostUsedCMDsNumber { get; set; }
 
         public Dictionary<string, int> CommandHistory { get; set; } = new Dictionary<string, int>();
 
