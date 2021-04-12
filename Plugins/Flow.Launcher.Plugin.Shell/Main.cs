@@ -102,7 +102,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         private List<Result> GetHistoryCmds(string cmd, Result result)
         {
-            IEnumerable<Result> history = _settings.Count.Where(o => o.Key.Contains(cmd))
+            IEnumerable<Result> history = _settings.CommandHistory.Where(o => o.Key.Contains(cmd))
                 .OrderByDescending(o => o.Value)
                 .Select(m =>
                 {
@@ -148,7 +148,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         private List<Result> ResultsFromlHistory()
         {
-            IEnumerable<Result> history = _settings.Count.OrderByDescending(o => o.Value)
+            IEnumerable<Result> history = _settings.CommandHistory.OrderByDescending(o => o.Value)
                 .Select(m => new Result
                 {
                     Title = m.Key,

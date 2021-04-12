@@ -9,17 +9,17 @@ namespace Flow.Launcher.Plugin.Shell
         public bool LeaveShellOpen { get; set; }
         public bool RunAsAdministrator { get; set; } = true;
 
-        public Dictionary<string, int> Count { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> CommandHistory { get; set; } = new Dictionary<string, int>();
 
         public void AddCmdHistory(string cmdName)
         {
-            if (Count.ContainsKey(cmdName))
+            if (CommandHistory.ContainsKey(cmdName))
             {
-                Count[cmdName] += 1;
+                CommandHistory[cmdName] += 1;
             }
             else
             {
-                Count.Add(cmdName, 1);
+                CommandHistory.Add(cmdName, 1);
             }
         }
     }
