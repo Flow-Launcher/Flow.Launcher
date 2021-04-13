@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Context = context;
         }
 
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, bool showIndexState = false, bool windowsIndexed = false)
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
         {
             return new Result
             {
@@ -46,6 +46,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         query.ActionKeyword + " " + changeTo);
                     return false;
                 },
+                Score = score,
                 TitleToolTip = Constants.ToolTipOpenDirectory,
                 SubTitleToolTip = Constants.ToolTipOpenDirectory,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
@@ -69,9 +70,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (retrievedDirectoryPath != path)
                 title = "Open " + folderName;
 
-            
+
             var subtitleFolderName = folderName;
-            
+
             // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
             if (folderName.Length > 19)
                 subtitleFolderName = "the directory";
@@ -94,7 +95,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, bool showIndexState = false, bool windowsIndexed = false)
+        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
         {
             var result = new Result
             {
@@ -102,6 +103,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitle = filePath,
                 IcoPath = filePath,
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
+                Score = score,
                 Action = c =>
                 {
                     try

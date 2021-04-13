@@ -53,11 +53,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                                                     dataReaderResults.GetString(0),
                                                                     path,
                                                                     path,
-                                                                    query, true, true));
+                                                                    query, 0, true, true));
                             }
                             else
                             {
-                                fileResults.Add(ResultManager.CreateFileResult(path, query, true, true));
+                                fileResults.Add(ResultManager.CreateFileResult(path, query, 0, true, true));
                             }
                         }
                     }
