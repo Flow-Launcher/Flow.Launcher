@@ -15,17 +15,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 
             var queriedAccessLinks =
                 accessLinks
-                .Where(x => x.Nickname.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                .Where(x => x.Nickname.Contains(search, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(x => x.Type)
                 .ThenBy(x => x.Nickname);
 
-            return queriedAccessLinks.Select(l => l.Type switch
+            var matched = queriedAccessLinks.Select(l => l.Type switch
             {
                 ResultType.Folder => ResultManager.CreateFolderResult(l.Nickname, l.Path, l.Path, query),
                 ResultType.File => ResultManager.CreateFileResult(l.Path, query),
                 _ => throw new ArgumentOutOfRangeException()
 
             }).ToList();
+
+            foreach (var r in matched)
+            {
+                r.Score = 100;
+            }
+
+            return matched;
         }
 
         internal static List<Result> AccessLinkListAll(Query query, List<AccessLink> accessLinks)
