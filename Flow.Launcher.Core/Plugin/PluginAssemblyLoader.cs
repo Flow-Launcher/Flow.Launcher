@@ -1,5 +1,6 @@
 ﻿using Flow.Launcher.Infrastructure;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,14 +15,17 @@ namespace Flow.Launcher.Core.Plugin
 
         private readonly AssemblyName assemblyName;
 
-        private static readonly List<Assembly> loadedAssembly;
+        private static readonly ConcurrentDictionary<string, byte> loadedAssembly;
 
         static PluginAssemblyLoader()
         {
-            loadedAssembly = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+            var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            loadedAssembly = new ConcurrentDictionary<string, byte>(
+                currentAssemblies.Select(x => new KeyValuePair<string, byte>(x.FullName, default)));
+
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>
             {
-                loadedAssembly.Add(args.LoadedAssembly);
+                loadedAssembly[args.LoadedAssembly.FullName] = default;
             };
         }
 
@@ -57,9 +61,7 @@ namespace Flow.Launcher.Core.Plugin
 
         internal bool ExistsInReferencedPackage(AssemblyName assemblyName)
         {
-            if (loadedAssembly.Any(a => a.FullName == assemblyName.FullName))
-                return true;
-            return false;
+            return loadedAssembly.ContainsKey(assemblyName.FullName);
         }
     }
 }
