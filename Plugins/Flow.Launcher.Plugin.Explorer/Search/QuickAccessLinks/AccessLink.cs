@@ -11,7 +11,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
         public ResultType Type { get; set; } = ResultType.Folder;
 
         [JsonIgnore]
-        public string Nickname
+        public string Name
         {
             get
             {
@@ -21,8 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                     return path[0..^1] + " Drive";
 
                 return path.Split(new[] { System.IO.Path.DirectorySeparatorChar }, StringSplitOptions.None)
-                            .Last()
-                            + " (" + System.IO.Path.GetDirectoryName(Path) + ")";
+                           .Last();
             }
         }
     }
