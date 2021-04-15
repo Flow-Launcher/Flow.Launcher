@@ -10,9 +10,12 @@ namespace Flow.Launcher.Plugin
     {
 
         private string _pluginDirectory;
+        
         private string _icoPath;
+
         public string Title { get; set; }
-        public string SubTitle { get; set; }
+
+        public string SubTitle { get; set; } = string.Empty;
 
         /// <summary>
         /// This holds the action keyword that triggered the result. 
