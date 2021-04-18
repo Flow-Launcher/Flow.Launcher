@@ -304,7 +304,8 @@ namespace Flow.Launcher.Plugin.Sys
                         return true;
                     }
                 }
-        });
+            });
+
             return results;
         }
 
