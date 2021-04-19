@@ -278,11 +278,34 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-                        Process.Start("explorer".SetProcessStartInfo(arguments: logPath));
+                        FilesFolders.OpenPath(logPath);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher Tips",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        SearchWeb.NewTabInBrowser(Constant.Documentation);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher UserData Folder",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        FilesFolders.OpenPath(DataLocation.DataDirectory());
                         return true;
                     }
                 }
             });
+
             return results;
         }
 
