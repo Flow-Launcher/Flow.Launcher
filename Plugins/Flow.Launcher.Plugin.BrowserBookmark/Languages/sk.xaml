@@ -12,4 +12,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nová karta</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Nastaviť cestu k prehliadaču:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Prehliadať</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Kopírovať URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Kopírovať URL záložky do schránky</system:String>
 </ResourceDictionary>
