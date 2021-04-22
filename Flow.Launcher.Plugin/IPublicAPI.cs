@@ -48,6 +48,13 @@ namespace Flow.Launcher.Plugin
         void CheckForNewUpdate();
 
         /// <summary>
+        /// Show the error message using Flow's standard error icon.
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="subTitle">Optional message subtitle</param>
+        void ShowMsgError(string title, string subTitle = "");
+
+        /// <summary>
         /// Show message box
         /// </summary>
         /// <param name="title">Message title</param>
