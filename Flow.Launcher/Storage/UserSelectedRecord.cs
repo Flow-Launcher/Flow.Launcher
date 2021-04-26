@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Storage
 {
@@ -14,72 +15,90 @@ namespace Flow.Launcher.Storage
         private const int HASH_INITIAL = 23;
 
         [JsonInclude]
-        public Dictionary<int, int> records { get; private set; }
+        public Dictionary<int, int> recordsWithQuery { get; private set; }
+
+        [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Dictionary<string, int> records { get; private set; }
+
 
         public UserSelectedRecord()
         {
-            records = new Dictionary<int, int>();
+            recordsWithQuery = new Dictionary<int, int>();
         }
 
-        private static int GenerateCustomHashCode(Query query, Result result)
+        private static int GenerateStaticHashCode(string s, int start = HASH_INITIAL)
         {
-            int hashcode = HASH_INITIAL;
-
             unchecked
             {
                 // skip the empty space
                 // https://stackoverflow.com/a/5155015 31 prime and is 2^5 - 1 which allows fast
                 //    optimization without information lost when int overflow
-                
-                for (int i = 0; i < query.ActionKeyword.Length; i++)
+
+                for (int i = 0; i < s.Length; i++)
                 {
-                    char item = query.ActionKeyword[i];
-                    hashcode = hashcode * HASH_MULTIPLIER + item;
-                }
-                
-                for (int i = 0; i < query.Search.Length; i++)
-                {
-                    char item = query.Search[i];
-                    hashcode = hashcode * HASH_MULTIPLIER + item;
+                    start = start * HASH_MULTIPLIER + s[i];
                 }
 
-                for (int i = 0; i < result.Title.Length; i++)
-                {
-                    char item = result.Title[i];
-                    hashcode = hashcode * HASH_MULTIPLIER + item;
-                }
+                return start;
+            }
+        }
 
-                for (int i = 0; i < result.SubTitle.Length; i++)
-                {
-                    char item = result.SubTitle[i];
-                    hashcode = hashcode * HASH_MULTIPLIER + item;
-                }
-                return hashcode;
+        private static int GenerateResultHashCode(Result result)
+        {
+            int hashcode = GenerateStaticHashCode(result.Title);
+            return GenerateStaticHashCode(result.SubTitle, hashcode);
+        }
 
+        private static int GenerateQueryAndResultHashCode(Query query, Result result)
+        {
+            int hashcode = GenerateStaticHashCode(query.ActionKeyword);
+            hashcode = GenerateStaticHashCode(query.Search, hashcode);
+            hashcode = GenerateStaticHashCode(result.Title, hashcode);
+            hashcode = GenerateStaticHashCode(result.SubTitle, hashcode);
+
+            return hashcode;
+        }
+
+        private void TransformOldRecords()
+        {
+            if (records != null)
+            {
+                var localRecords = records;
+                records = null;
+
+                foreach (var pair in localRecords)
+                {
+                    recordsWithQuery.TryAdd(GenerateStaticHashCode(pair.Key), pair.Value);
+                }
             }
         }
 
         public void Add(Result result)
         {
-            var key = GenerateCustomHashCode(result.OriginQuery, result);
-            if (records.ContainsKey(key))
-            {
-                records[key]++;
-            }
-            else
-            {
-                records.Add(key, 1);
+            TransformOldRecords();
 
-            }
+            var keyWithQuery = GenerateQueryAndResultHashCode(result.OriginQuery, result);
+
+            if (!recordsWithQuery.TryAdd(keyWithQuery, 1))
+                recordsWithQuery[keyWithQuery]++;
+
+            var keyWithoutQuery = GenerateResultHashCode(result);
+
+            if (!recordsWithQuery.TryAdd(keyWithoutQuery, 1))
+                recordsWithQuery[keyWithoutQuery]++;
         }
 
         public int GetSelectedCount(Result result)
         {
-            if (records.TryGetValue(GenerateCustomHashCode(result.OriginQuery, result), out int value))
-            {
-                return value;
-            }
-            return 0;
+            var selectedCount = 0;
+
+            recordsWithQuery.TryGetValue(GenerateQueryAndResultHashCode(result.OriginQuery, result), out int value);
+            selectedCount += value * 5;
+
+            recordsWithQuery.TryGetValue(GenerateResultHashCode(result), out value);
+            selectedCount += value;
+
+            return selectedCount;
         }
     }
 }
