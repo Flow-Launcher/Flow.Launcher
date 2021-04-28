@@ -4,7 +4,7 @@
     <!--主窗体-->
     <system:String x:Key="registerHotkeyFailed">注册热键：{0} 失败</system:String>
     <system:String x:Key="couldnotStartCmd">启动命令 {0} 失败</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">不是合法的Flow Launcher插件格式</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher插件格式错误</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">在当前查询中置顶</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">取消置顶</system:String>
     <system:String x:Key="executeQuery">执行查询：{0}</system:String>
@@ -17,28 +17,37 @@
     <!--设置，通用-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher设置</system:String>
     <system:String x:Key="general">通用</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">开机启动</system:String>
+    <system:String x:Key="portableMode">便携模式</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">开机自动启动</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
     <system:String x:Key="language">语言</system:String>
     <system:String x:Key="lastQueryMode">上次搜索关键字模式</system:String>
     <system:String x:Key="LastQueryPreserved">保留上次搜索关键字</system:String>
-    <system:String x:Key="LastQuerySelected">全选上次搜索关键字</system:String>
+    <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
     <system:String x:Key="pythonDirectory">Python 路径</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
-    <system:String x:Key="selectPythonDirectory">Select</system:String>
+    <system:String x:Key="selectPythonDirectory">选择</system:String>
     <system:String x:Key="hideOnStartup">启动时不显示主窗口</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
+    <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
+    <system:String x:Key="ShouldUsePinyin">启动拼音搜索</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
 
     <!--设置，插件-->
     <system:String x:Key="plugin">插件</system:String>
     <system:String x:Key="browserMorePlugins">浏览更多插件</system:String>
+    <system:String x:Key="enable">启用</system:String>
     <system:String x:Key="disable">禁用</system:String>
     <system:String x:Key="actionKeywords">触发关键字</system:String>
+    <system:String x:Key="currentActionKeywords">当前操作关键字：</system:String>
+    <system:String x:Key="newActionKeyword">新动作关键字：</system:String>
+    <system:String x:Key="currentPriority">当前优先级：</system:String>
+    <system:String x:Key="newPriority">新优先级：</system:String>
     <system:String x:Key="pluginDirectory">插件目录</system:String>
     <system:String x:Key="author">作者</system:String>
     <system:String x:Key="plugin_init_time">加载耗时</system:String>
@@ -47,6 +56,7 @@
     <!--设置，主题-->
     <system:String x:Key="theme">主题</system:String>
     <system:String x:Key="browserMoreThemes">浏览更多主题</system:String>
+    <system:String x:Key="hiThere">在这里输入</system:String>
     <system:String x:Key="queryBoxFont">查询框字体</system:String>
     <system:String x:Key="resultItemFont">结果项字体</system:String>
     <system:String x:Key="windowMode">窗口模式</system:String>
@@ -65,6 +75,9 @@
     <system:String x:Key="add">增加</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗？</system:String>
+    <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。</system:String>
+    <system:String x:Key="shadowEffectPerformance">如果您的计算机性能有限，则不建议使用。</system:String>
 
     <!--设置，代理-->
     <system:String x:Key="proxy">HTTP 代理</system:String>
@@ -88,8 +101,18 @@
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="about_activate_times">你已经激活了Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">检查更新</system:String>
-    <system:String x:Key="newVersionTips">发现新版本 {0} , 请重启 flowlauncher。</system:String>
+    <system:String x:Key="newVersionTips">发现新版本 {0} , 请重启 Flow Launcher。</system:String>
+        <system:String x:Key="checkUpdatesFailed">下载更新失败，请检查您与 api.github.com 的连接状态或检查代理设置。</system:String>
+    <system:String x:Key="downloadUpdatesFailed">
+        下载更新失败，请检查您与 github-cloud.s3.amazonaws.com 的连接状态或检查代理设置， 
+        或访问 https://github.com/Flow-Launcher/Flow.Launcher/releases 手动下载更新。
+    </system:String>
     <system:String x:Key="releaseNotes">更新说明:</system:String>
+    <system:String x:Key="documentation">使用技巧:</system:String>
+
+    <!--优先级设置对话框-->
+    <system:String x:Key="priority_tips">数字越大，结果排名越高。如果你想要结果比任何其他插件的低，请使用负数</system:String>
+    <system:String x:Key="invalidPriority">请提供有效的整数作为优先级设置值！</system:String>
 
     <!--Action Keyword 设置对话框-->
     <system:String x:Key="oldActionKeywords">旧触发关键字</system:String>
@@ -98,11 +121,13 @@
     <system:String x:Key="done">确定</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的插件</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新触发关键字不能为空</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">新触发关键字已经被指派给其他插件了，请重新选择一个关键字</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">新触发关键字已经被指派给其他插件了，请换一个关键字</system:String>
     <system:String x:Key="success">成功</system:String>
+    <system:String x:Key="completedSuccessfully">成功完成</system:String>
     <system:String x:Key="actionkeyword_tips">如果你不想设置触发关键字，可以使用*代替</system:String>
     
     <!--Custom Query Hotkey 对话框-->
+    <system:String x:Key="customeQueryHotkeyTitle">自定义插件热键</system:String>
     <system:String x:Key="preview">预览</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
     <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
@@ -127,12 +152,24 @@
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher出错啦</system:String>
 
+    <!--General Notice-->
+    <system:String x:Key="pleaseWait">请稍等...</system:String>
+
     <!--更新-->
+    <system:String x:Key="update_flowlauncher_update_check">检查新的更新</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">您已经拥有最新的Flow Launcher版本</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">检查到更新</system:String>
+    <system:String x:Key="update_flowlauncher_updating">更新中...</system:String>
+    <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">Flow Launcher无法将您的用户配置文件数据移动到新的更新版本中。
+        请手动将您的用户配置文件数据文件夹从 {0} 到 {1}</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">新的更新</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">发现Flow Launcher新版本 V{0}</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">更新Flow Launcher出错</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">尝试安装软件更新时发生错误</system:String>
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重启Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_fail">更新错误</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">检查网络是否可以连接至github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此次更新需要重启Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">下列文件会被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新文件</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">更新日志</system:String>
