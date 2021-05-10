@@ -9,12 +9,12 @@
     <UserControl.Resources>
         <DataTemplate x:Key="ListViewTemplateAccessLinks">
             <TextBlock
-                Text="{Binding Nickname, Mode=OneTime}"
+                Text="{Binding Path, Mode=OneTime}"
                 Margin="0,5,0,5" />
         </DataTemplate>
         <DataTemplate x:Key="ListViewTemplateExcludedPaths">
             <TextBlock
-                Text="{Binding Nickname, Mode=OneTime}"
+                Text="{Binding Path, Mode=OneTime}"
                 Margin="0,5,0,5" />
         </DataTemplate>
         <DataTemplate x:Key="ListViewActionKeywords">
