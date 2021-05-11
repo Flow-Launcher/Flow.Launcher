@@ -9,7 +9,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStrorage<T> where T : new()
+    public class JsonStorage<T> where T : new()
     {
         protected T _data;
         // need a new directory name
@@ -23,10 +23,10 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
             if (File.Exists(FilePath))
             {
-                var searlized = File.ReadAllText(FilePath);
-                if (!string.IsNullOrWhiteSpace(searlized))
+                var serialized = File.ReadAllText(FilePath);
+                if (!string.IsNullOrWhiteSpace(serialized))
                 {
-                    Deserialize(searlized);
+                    Deserialize(serialized);
                 }
                 else
                 {
@@ -40,16 +40,16 @@ namespace Flow.Launcher.Infrastructure.Storage
             return _data.NonNull();
         }
 
-        private void Deserialize(string searlized)
+        private void Deserialize(string serialized)
         {
             try
             {
-                _data = JsonSerializer.Deserialize<T>(searlized);
+                _data = JsonSerializer.Deserialize<T>(serialized);
             }
             catch (JsonException e)
             {
                 LoadDefault();
-                Log.Exception($"|JsonStrorage.Deserialize|Deserialize error for json <{FilePath}>", e);
+                Log.Exception($"|JsonStorage.Deserialize|Deserialize error for json <{FilePath}>", e);
             }
 
             if (_data == null)
