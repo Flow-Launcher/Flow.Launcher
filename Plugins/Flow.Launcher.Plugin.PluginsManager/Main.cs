@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, ISavable, IContextMenu, IPluginI18n, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncReloadable
     {
         internal PluginInitContext Context { get; set; }
 
@@ -77,11 +77,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     return hotkey.Score > 0;
                 }).ToList()
             };
-        }
-
-        public void Save()
-        {
-            viewModel.Save();
         }
 
         public string GetTranslatedPluginTitle()

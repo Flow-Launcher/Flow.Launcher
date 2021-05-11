@@ -8,7 +8,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Plugin.Caculator.ViewModels
 {
-    public class SettingsViewModel : BaseModel, ISavable
+    public class SettingsViewModel : BaseModel
     {
         private readonly PluginJsonStorage<Settings> _storage;
 
@@ -21,10 +21,5 @@ namespace Flow.Launcher.Plugin.Caculator.ViewModels
         public Settings Settings { get; set; }
 
         public IEnumerable<int> MaxDecimalPlacesRange => Enumerable.Range(1, 20);
-
-        public void Save()
-        {
-            _storage.Save();
-        }
     }
 }

@@ -7,7 +7,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : ISettingProvider,IPlugin, IPluginI18n, ISavable
+    public class Main : ISettingProvider,IPlugin, IPluginI18n
     {
         //based on https://gist.github.com/dperini/729294
         private const string urlPattern = "^" +
@@ -46,12 +46,7 @@ namespace Flow.Launcher.Plugin.Url
         private PluginInitContext context;
         private Settings _settings;
 
-
-        public void Save()
-        {
-            context.API.SaveJsonStorage<Settings>();
-        }
-
+        
         public List<Result> Query(Query query)
         {
             var raw = query.Search;

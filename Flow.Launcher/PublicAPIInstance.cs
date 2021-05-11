@@ -76,6 +76,7 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
+            SaveAllJsonStorage();
             _mainVM.Save();
             _settingsVM.Save();
             PluginManager.Save();
@@ -133,32 +134,41 @@ namespace Flow.Launcher
 
         public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
-        private readonly Dictionary<Type, object> PluginJsonStorages = new Dictionary<Type, object>();
+        private readonly Dictionary<Type, object> _pluginJsonStorages = new();
 
+        private void SaveAllJsonStorage()
+        {
+            foreach (var value in _pluginJsonStorages.Values)
+            {
+                var method = value.GetType().GetMethod("Save");
+                method?.Invoke(value, null);
+            }
+        }
+        
         public T LoadJsonStorage<T>() where T : new()
         {
             var type = typeof(T);
-            if (!PluginJsonStorages.ContainsKey(type))
-                PluginJsonStorages[type] = new PluginJsonStorage<T>();
+            if (!_pluginJsonStorages.ContainsKey(type))
+                _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            return ((PluginJsonStorage<T>) PluginJsonStorages[type]).Load();
+            return ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Load();
         }
 
         public void SaveJsonStorage<T>() where T : new()
         {
             var type = typeof(T);
-            if (!PluginJsonStorages.ContainsKey(type))
-                PluginJsonStorages[type] = new PluginJsonStorage<T>();
+            if (!_pluginJsonStorages.ContainsKey(type))
+                _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            ((PluginJsonStorage<T>) PluginJsonStorages[type]).Save();
+            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
 
         public void SaveJsonStorage<T>(T settings) where T : new()
         {
             var type = typeof(T);
-            PluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
+            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
-            ((PluginJsonStorage<T>) PluginJsonStorages[type]).Save();
+            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

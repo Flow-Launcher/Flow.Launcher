@@ -12,7 +12,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, ISavable
+    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu
     {
         private PluginInitContext context;
 
@@ -27,11 +27,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             _settings = context.API.LoadJsonStorage<Settings>();
 
             cachedBookmarks = Bookmarks.LoadAllBookmarks();
-        }
-
-        public void Save()
-        {
-            context.API.SaveJsonStorage<Settings>();
         }
 
         public List<Result> Query(Query query)

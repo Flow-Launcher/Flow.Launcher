@@ -14,7 +14,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, ISavable, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
     {
         private PluginInitContext _context;
 
@@ -31,10 +31,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         private readonly string SearchSourceGlobalPluginWildCardSign = "*";
 
-        public void Save()
-        {
-            _viewModel.Save();
-        }
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {

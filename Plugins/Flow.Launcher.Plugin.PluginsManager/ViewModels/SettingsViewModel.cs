@@ -17,10 +17,5 @@ namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
             storage = new PluginJsonStorage<Settings>();
             Settings = settings;
         }
-
-        public void Save()
-        {
-            storage.Save();
-        }
     }
 }

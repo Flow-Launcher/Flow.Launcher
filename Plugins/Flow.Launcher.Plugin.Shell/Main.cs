@@ -18,7 +18,7 @@ using Keys = System.Windows.Forms.Keys;
 
 namespace Flow.Launcher.Plugin.Shell
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, ISavable
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu
     {
         private const string Image = "Images/shell.png";
         private PluginInitContext context;
@@ -26,12 +26,6 @@ namespace Flow.Launcher.Plugin.Shell
         private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
 
         private Settings _settings;
-
-        public void Save()
-        {
-            context.API.SaveJsonStorage<Settings>();
-        }
-
 
         public List<Result> Query(Query query)
         {

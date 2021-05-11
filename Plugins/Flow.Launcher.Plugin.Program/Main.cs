@@ -33,7 +33,6 @@ namespace Flow.Launcher.Plugin.Program
 
         public void Save()
         {
-            _context.API.SaveJsonStorage<Settings>();
             _win32Storage.Save(_win32s);
             _uwpStorage.Save(_uwps);
         }
