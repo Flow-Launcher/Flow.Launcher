@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -33,8 +34,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public Task InitAsync(PluginInitContext context)
         {
             Context = context;
-            viewModel = new SettingsViewModel(context);
-            Settings = viewModel.Settings;
+            Settings = context.API.LoadJsonStorage<Settings>();
+            viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
             _ = pluginManager.UpdateManifest().ContinueWith(_ =>

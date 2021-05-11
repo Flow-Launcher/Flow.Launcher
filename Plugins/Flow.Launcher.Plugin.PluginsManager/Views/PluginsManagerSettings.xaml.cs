@@ -10,7 +10,7 @@ namespace Flow.Launcher.Plugin.PluginsManager.Views
     {
         private readonly SettingsViewModel viewModel;
 
-        public PluginsManagerSettings(SettingsViewModel viewModel)
+        internal PluginsManagerSettings(SettingsViewModel viewModel)
         {
             InitializeComponent();
 

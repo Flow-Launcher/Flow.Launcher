@@ -25,18 +25,11 @@ namespace Flow.Launcher.Plugin.Shell
         private bool _winRStroked;
         private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
 
-        private readonly Settings _settings;
-        private readonly PluginJsonStorage<Settings> _storage;
-
-        public Main()
-        {
-            _storage = new PluginJsonStorage<Settings>();
-            _settings = _storage.Load();
-        }
+        private Settings _settings;
 
         public void Save()
         {
-            _storage.Save();
+            context.API.SaveJsonStorage<Settings>();
         }
 
 
@@ -285,6 +278,7 @@ namespace Flow.Launcher.Plugin.Shell
         {
             this.context = context;
             context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
+            _settings = context.API.LoadJsonStorage<Settings>();
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)

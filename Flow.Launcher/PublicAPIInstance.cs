@@ -133,7 +133,7 @@ namespace Flow.Launcher
 
         public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
-        private readonly Dictionary<Type, dynamic> PluginJsonStorages = new Dictionary<Type, dynamic>();
+        private readonly Dictionary<Type, object> PluginJsonStorages = new Dictionary<Type, object>();
 
         public T LoadJsonStorage<T>() where T : new()
         {
@@ -141,7 +141,7 @@ namespace Flow.Launcher
             if (!PluginJsonStorages.ContainsKey(type))
                 PluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            return PluginJsonStorages[type].Load();
+            return ((PluginJsonStorage<T>) PluginJsonStorages[type]).Load();
         }
 
         public void SaveJsonStorage<T>() where T : new()
@@ -150,7 +150,7 @@ namespace Flow.Launcher
             if (!PluginJsonStorages.ContainsKey(type))
                 PluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            PluginJsonStorages[type].Save();
+            ((PluginJsonStorage<T>) PluginJsonStorages[type]).Save();
         }
 
         public void SaveJsonStorage<T>(T settings) where T : new()
@@ -158,16 +158,7 @@ namespace Flow.Launcher
             var type = typeof(T);
             PluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
-            PluginJsonStorages[type].Save();
-        }
-
-        public void BackupJsonStorage<T>() where T : new()
-        {
-            var type = typeof(T);
-            if (!PluginJsonStorages.ContainsKey(type))
-                throw new InvalidOperationException("You haven't registered the JsonStorage for specific Type");
-
-            PluginJsonStorages[type].BackupOriginFile();
+            ((PluginJsonStorage<T>) PluginJsonStorages[type]).Save();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

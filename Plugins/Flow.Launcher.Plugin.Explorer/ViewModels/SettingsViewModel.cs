@@ -9,27 +9,20 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public class SettingsViewModel
     {
-        private readonly PluginJsonStorage<Settings> storage;
-
         internal Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
 
-        public SettingsViewModel(PluginInitContext context)
+        public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
-            storage = new PluginJsonStorage<Settings>();
-            Settings = storage.Load();
+            Settings = settings;
         }
 
-        public Task LoadStorage()
-        {
-            return Task.Run(() => Settings = storage.Load());
-        }
 
         public void Save()
         {
-            storage.Save();
+            Context.API.SaveJsonStorage<Settings>();
         }
 
         internal void RemoveLinkFromQuickAccess(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);

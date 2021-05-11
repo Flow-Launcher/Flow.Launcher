@@ -44,18 +44,12 @@ namespace Flow.Launcher.Plugin.Url
             "$";
         Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private PluginInitContext context;
-        private readonly Settings _settings;
-        private readonly PluginJsonStorage<Settings> _storage;
+        private Settings _settings;
 
-        public Main()
-        {
-            _storage = new PluginJsonStorage<Settings>();
-            _settings = _storage.Load();
-        }
 
         public void Save()
         {
-            _storage.Save();
+            context.API.SaveJsonStorage<Settings>();
         }
 
         public List<Result> Query(Query query)
@@ -128,6 +122,8 @@ namespace Flow.Launcher.Plugin.Url
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            
+            _settings = context.API.LoadJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()

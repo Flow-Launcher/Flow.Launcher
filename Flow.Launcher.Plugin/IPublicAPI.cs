@@ -186,12 +186,5 @@ namespace Flow.Launcher.Plugin
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
         void SaveJsonStorage<T>(T settings) where T : new();
-
-        /// <summary>
-        /// Backup the JsonStorage you loaded from LoadJsonStorage
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="settings"></param>
-        void BackupJsonStorage<T>() where T : new();
     }
 }
