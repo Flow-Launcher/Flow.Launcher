@@ -9,7 +9,7 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
             // C# related, add python related below
             var dataType = typeof(T);
-            var assemblyName = typeof(T).Assembly.GetName().Name;
+            var assemblyName = dataType.Assembly.GetName().Name;
             DirectoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Plugins, assemblyName);
             Helper.ValidateDirectory(DirectoryPath);
 

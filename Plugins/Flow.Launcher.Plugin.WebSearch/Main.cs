@@ -18,8 +18,8 @@ namespace Flow.Launcher.Plugin.WebSearch
     {
         private PluginInitContext _context;
 
-        private readonly Settings _settings;
-        private readonly SettingsViewModel _viewModel;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         internal const string Images = "Images";
         internal static string DefaultImagesDirectory;
@@ -160,12 +160,6 @@ namespace Flow.Launcher.Plugin.WebSearch
             return new List<Result>();
         }
 
-        public Main()
-        {
-            _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
-        }
-
         public Task InitAsync(PluginInitContext context)
         {
             return Task.Run(Init);
@@ -173,6 +167,10 @@ namespace Flow.Launcher.Plugin.WebSearch
             void Init()
             {
                 _context = context;
+
+                _settings = _context.API.LoadJsonStorage<Settings>();
+                _viewModel = new SettingsViewModel(_settings);
+                
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
                 var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
 

@@ -33,9 +33,8 @@ namespace Flow.Launcher.Plugin.Caculator
         public void Init(PluginInitContext context)
         {
             Context = context;
-
-            _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
+            _settings = context.API.LoadJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(_settings);
             
             MagesEngine = new Engine(new Configuration
             {

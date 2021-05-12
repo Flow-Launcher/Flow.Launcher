@@ -5,8 +5,6 @@ namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
 {
     internal class SettingsViewModel
     {
-        private readonly PluginJsonStorage<Settings> storage;
-
         internal Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
@@ -14,7 +12,6 @@ namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
         public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
-            storage = new PluginJsonStorage<Settings>();
             Settings = settings;
         }
     }
