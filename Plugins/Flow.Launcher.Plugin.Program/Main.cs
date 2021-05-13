@@ -69,7 +69,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             _context = context;
 
-            _settings = context.API.LoadJsonStorage<Settings>();
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             await Task.Yield();
 

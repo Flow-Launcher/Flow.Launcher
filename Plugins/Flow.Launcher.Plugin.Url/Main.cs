@@ -118,7 +118,7 @@ namespace Flow.Launcher.Plugin.Url
         {
             this.context = context;
             
-            _settings = context.API.LoadJsonStorage<Settings>();
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()

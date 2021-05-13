@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         public void Save()
         {
-            Context.API.SaveJsonStorage<Settings>();
+            Context.API.SaveSettingJsonStorage<Settings>();
         }
 
         internal void RemoveLinkFromQuickAccess(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);

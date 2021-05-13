@@ -32,7 +32,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             Context = context;
             
-            Settings = context.API.LoadJsonStorage<Settings>();
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
 
             viewModel = new SettingsViewModel(context, Settings);
             

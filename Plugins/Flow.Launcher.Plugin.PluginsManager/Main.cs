@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public Task InitAsync(PluginInitContext context)
         {
             Context = context;
-            Settings = context.API.LoadJsonStorage<Settings>();
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);

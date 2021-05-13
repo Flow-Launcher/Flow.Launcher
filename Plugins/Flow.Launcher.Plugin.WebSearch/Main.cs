@@ -168,7 +168,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             {
                 _context = context;
 
-                _settings = _context.API.LoadJsonStorage<Settings>();
+                _settings = _context.API.LoadSettingJsonStorage<Settings>();
                 _viewModel = new SettingsViewModel(_settings);
                 
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;

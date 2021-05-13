@@ -145,7 +145,7 @@ namespace Flow.Launcher
             }
         }
         
-        public T LoadJsonStorage<T>() where T : new()
+        public T LoadSettingJsonStorage<T>() where T : new()
         {
             var type = typeof(T);
             if (!_pluginJsonStorages.ContainsKey(type))
@@ -154,7 +154,7 @@ namespace Flow.Launcher
             return ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Load();
         }
 
-        public void SaveJsonStorage<T>() where T : new()
+        public void SaveSettingJsonStorage<T>() where T : new()
         {
             var type = typeof(T);
             if (!_pluginJsonStorages.ContainsKey(type))

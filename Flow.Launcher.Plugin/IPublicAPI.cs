@@ -165,30 +165,20 @@ namespace Flow.Launcher.Plugin
         void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Load JsonStorage for current plugin. This is the method used to load settings from json in Flow.
+        /// Load JsonStorage for current plugin's setting. This is the method used to load settings from json in Flow.
         /// When the file is not exist, it will create a new instance for the specific type.
         /// </summary>
         /// <typeparam name="T">Type for deserialization</typeparam>
         /// <returns></returns>
-        T LoadJsonStorage<T>() where T : new();
+        T LoadSettingJsonStorage<T>() where T : new();
 
         /// <summary>
-        /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow.Launcher
+        /// Save JsonStorage for current plugin's setting. This is the method used to save settings to json in Flow.Launcher
         /// This method will save the original instance loaded with LoadJsonStorage.
+        /// This API call is for manually Save. Flow will automatically save all setting that has registered. 
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
-        void SaveJsonStorage<T>() where T : new();
-
-        /// <summary>
-        /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow.Launcher
-        /// This method will override the original class instance loaded from LoadJsonStorage
-        /// This method allows registering a type with provided instance so that it won't create a new one.
-        /// Only use it when you would like to create a new instance of the type instance and overwrite the original one
-        ///     stored before.
-        /// </summary>
-        /// <typeparam name="T">Type for Serialization</typeparam>
-        /// <returns></returns>
-        void SaveJsonStorage<T>(T settings) where T : new();
+        void SaveSettingJsonStorage<T>() where T : new();
     }
 }
