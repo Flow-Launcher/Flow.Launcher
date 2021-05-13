@@ -182,6 +182,9 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Save JsonStorage for current plugin. This is the method used to save settings to json in Flow.Launcher
         /// This method will override the original class instance loaded from LoadJsonStorage
+        /// This method allows registering a type with provided instance so that it won't create a new one.
+        /// Only use it when you would like to create a new instance of the type instance and overwrite the original one
+        ///     stored before.
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
