@@ -51,6 +51,7 @@ namespace Flow.Launcher.Core.Plugin
                 var savable = plugin.Plugin as ISavable;
                 savable?.Save();
             }
+            API.SavePluginSettings();
         }
 
         public static async Task ReloadData()

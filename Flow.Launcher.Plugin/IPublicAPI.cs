@@ -35,6 +35,11 @@ namespace Flow.Launcher.Plugin
         void SaveAppAllSettings();
 
         /// <summary>
+        /// Save Flow's plugins settings
+        /// </summary>
+        void SavePluginSettings();
+
+        /// <summary>
         /// Reloads any Plugins that have the 
         /// IReloadable implemented. It refeshes
         /// Plugin's in memory data with new content
