@@ -165,7 +165,8 @@ namespace Flow.Launcher.Plugin
         void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Load JsonStorage for current plugin. This is the method used to load settings from json in Flow
+        /// Load JsonStorage for current plugin. This is the method used to load settings from json in Flow.
+        /// When the file is not exist, it will create a new instance for the specific type.
         /// </summary>
         /// <typeparam name="T">Type for deserialization</typeparam>
         /// <returns></returns>
