@@ -26,11 +26,11 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Restart Flow Launcher
-        /// </summary>
+        /// </summar
         void RestartApp();
 
         /// <summary>
-        /// Save all Flow Launcher settings
+        /// Saves everything, all of Flow Launcher and plugins' data and settings
         /// </summary>
         void SaveAppAllSettings();
 
