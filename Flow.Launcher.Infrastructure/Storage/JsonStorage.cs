@@ -11,7 +11,6 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </summary>
     public class JsonStrorage<T> where T : new()
     {
-        private readonly JsonSerializerOptions _serializerSettings;
         protected T _data;
         // need a new directory name
         public const string DirectoryName = "Settings";
@@ -19,16 +18,6 @@ namespace Flow.Launcher.Infrastructure.Storage
         public string FilePath { get; set; }
         public string DirectoryPath { get; set; }
 
-
-        internal JsonStrorage()
-        {
-            // use property initialization instead of DefaultValueAttribute
-            // easier and flexible for default value of object
-            _serializerSettings = new JsonSerializerOptions
-            {
-                IgnoreNullValues = false
-            };
-        }
 
         public T Load()
         {
@@ -55,7 +44,7 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
             try
             {
-                _data = JsonSerializer.Deserialize<T>(searlized, _serializerSettings);
+                _data = JsonSerializer.Deserialize<T>(searlized);
             }
             catch (JsonException e)
             {

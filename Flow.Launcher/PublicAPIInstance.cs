@@ -84,6 +84,8 @@ namespace Flow.Launcher
 
         public Task ReloadAllPluginData() => PluginManager.ReloadData();
 
+        public void ShowMsgError(string title, string subTitle = "") => ShowMsg(title, subTitle, Constant.ErrorIcon, true);
+
         public void ShowMsg(string title, string subTitle = "", string iconPath = "") => ShowMsg(title, subTitle, iconPath, true);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)

@@ -43,7 +43,6 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
-        private bool _saved;
 
         private readonly Internationalization _translator = InternationalizationManager.Instance;
 
@@ -56,7 +55,6 @@ namespace Flow.Launcher.ViewModel
 
         public MainViewModel(Settings settings)
         {
-            _saved = false;
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
@@ -540,7 +538,7 @@ namespace Flow.Launcher.ViewModel
 
                         var results = await PluginManager.QueryForPlugin(plugin, query, currentCancellationToken);
                         if (currentCancellationToken.IsCancellationRequested || results == null) return;
-                        
+
                         if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
                         {
                             Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
@@ -765,14 +763,9 @@ namespace Flow.Launcher.ViewModel
 
         public void Save()
         {
-            if (!_saved)
-            {
-                _historyItemsStorage.Save();
-                _userSelectedRecordStorage.Save();
-                _topMostRecordStorage.Save();
-
-                _saved = true;
-            }
+            _historyItemsStorage.Save();
+            _userSelectedRecordStorage.Save();
+            _topMostRecordStorage.Save();
         }
 
         /// <summary>
@@ -813,7 +806,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += _userSelectedRecord.GetSelectedCount(result) * 5 + priorityScore;
+                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
                     }
                 }
             }

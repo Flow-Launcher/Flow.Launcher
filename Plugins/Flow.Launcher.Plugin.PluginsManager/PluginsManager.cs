@@ -214,7 +214,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     }
                 };
 
-
             var results = resultsForUpdate
                 .Select(x =>
                     new Result
