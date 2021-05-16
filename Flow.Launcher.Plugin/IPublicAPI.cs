@@ -180,7 +180,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Save JsonStorage for current plugin's setting. This is the method used to save settings to json in Flow.Launcher
         /// This method will save the original instance loaded with LoadJsonStorage.
-        /// This API call is for manually Save. Flow will automatically save all setting that has registered. 
+        /// This API call is for manually Save. Flow will automatically save all setting type that has called LoadSettingJsonStorage or SaveSettingJsonStorage previously.
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
