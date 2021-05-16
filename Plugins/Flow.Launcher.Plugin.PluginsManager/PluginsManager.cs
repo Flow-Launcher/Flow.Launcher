@@ -318,6 +318,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             IcoPath = icoPath,
                             Action = e =>
                             {
+                                if (e.SpecialKeyState.CtrlPressed)
+                                {
+                                    SearchWeb.NewTabInBrowser(x.Website);
+                                    return ShouldHideWindow;
+                                }
+
                                 Application.Current.MainWindow.Hide();
                                 _ = InstallOrUpdate(x); // No need to wait
                                 return ShouldHideWindow;
