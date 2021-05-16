@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin.Shell
                             IcoPath = Image,
                             Action = c =>
                             {
-                                Execute(Process.Start, PrepareProcessStartInfo(m));
+                                Execute(Process.Start, PrepareProcessStartInfo(m, c.SpecialKeyState.CtrlPressed));
                                 return true;
                             }
                         }));
@@ -169,7 +169,7 @@ namespace Flow.Launcher.Plugin.Shell
             if (_settings.Shell == Shell.Cmd)
             {
                 var arguments = _settings.LeaveShellOpen ? $"/k \"{command}\"" : $"/c \"{command}\" & pause";
-                
+
                 info = ShellCommand.SetProcessStartInfo("cmd.exe", workingDirectory, arguments, runAsAdministratorArg);
             }
             else if (_settings.Shell == Shell.Powershell)
@@ -219,11 +219,11 @@ namespace Flow.Launcher.Plugin.Shell
             return info;
         }
 
-        private void Execute(Func<ProcessStartInfo, Process> startProcess,ProcessStartInfo info)
+        private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
             try
             {
-                startProcess(info);                
+                startProcess(info);
             }
             catch (FileNotFoundException e)
             {
@@ -231,7 +231,7 @@ namespace Flow.Launcher.Plugin.Shell
                 var message = $"Command not found: {e.Message}";
                 context.API.ShowMsg(name, message);
             }
-            catch(Win32Exception e)
+            catch (Win32Exception e)
             {
                 var name = "Plugin: Shell";
                 var message = $"Error running the command: {e.Message}";
