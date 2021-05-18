@@ -12,7 +12,7 @@ using Flow.Launcher.Plugin.Caculator.Views;
 
 namespace Flow.Launcher.Plugin.Caculator
 {
-    public class Main : IPlugin, IPluginI18n, ISavable, ISettingProvider
+    public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         private static readonly Regex RegValidExpressChar = new Regex(
                         @"^(" +
@@ -30,17 +30,11 @@ namespace Flow.Launcher.Plugin.Caculator
         private static Settings _settings;
         private static SettingsViewModel _viewModel;
 
-        static Main()
-        {
-            
-        }
-
         public void Init(PluginInitContext context)
         {
             Context = context;
-
-            _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(_settings);
             
             MagesEngine = new Engine(new Configuration
             {
@@ -186,11 +180,6 @@ namespace Flow.Launcher.Plugin.Caculator
         public Control CreateSettingPanel()
         {
             return new CalculatorSettings(_viewModel);
-        }
-
-        public void Save()
-        {
-            _viewModel.Save();
         }
     }
 }

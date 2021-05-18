@@ -76,23 +76,25 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
+            SavePluginSettings();
             _mainVM.Save();
             _settingsVM.Save();
-            PluginManager.Save();
             ImageLoader.Save();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadData();
 
-        public void ShowMsgError(string title, string subTitle = "") => ShowMsg(title, subTitle, Constant.ErrorIcon, true);
+        public void ShowMsgError(string title, string subTitle = "") =>
+            ShowMsg(title, subTitle, Constant.ErrorIcon, true);
 
-        public void ShowMsg(string title, string subTitle = "", string iconPath = "") => ShowMsg(title, subTitle, iconPath, true);
+        public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
+            ShowMsg(title, subTitle, iconPath, true);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg { Owner = Application.Current.MainWindow } : new Msg();
+                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
                 msg.Show(title, subTitle, iconPath);
             });
         }
@@ -113,61 +115,70 @@ namespace Flow.Launcher
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
-        public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
+        public MatchResult FuzzySearch(string query, string stringToCompare) =>
+            StringMatcher.FuzzySearch(query, stringToCompare);
 
         public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
 
-        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) => Http.GetStreamAsync(url);
+        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
+            Http.GetStreamAsync(url);
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
 
-        public void AddActionKeyword(string pluginId, string newActionKeyword) => PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+        public void AddActionKeyword(string pluginId, string newActionKeyword) =>
+            PluginManager.AddActionKeyword(pluginId, newActionKeyword);
 
-        public void RemoveActionKeyword(string pluginId, string oldActionKeyword) => PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
+        public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
+            PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
 
-        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "") => Log.Debug(className, message, methodName);
+        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Debug(className, message, methodName);
 
-        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "") => Log.Info(className, message, methodName);
+        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Info(className, message, methodName);
 
-        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") => Log.Warn(className, message, methodName);
+        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Warn(className, message, methodName);
 
-        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
+        public void LogException(string className, string message, Exception e,
+            [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
-        private readonly Dictionary<Type, dynamic> PluginJsonStorages = new Dictionary<Type, dynamic>();
+        private readonly Dictionary<Type, object> _pluginJsonStorages = new();
 
-        public T LoadJsonStorage<T>() where T : new()
+        public void SavePluginSettings()
         {
-            var type = typeof(T);
-            if (!PluginJsonStorages.ContainsKey(type))
-                PluginJsonStorages[type] = new PluginJsonStorage<T>();
-
-            return PluginJsonStorages[type].Load();
+            foreach (var value in _pluginJsonStorages.Values)
+            {
+                var method = value.GetType().GetMethod("Save");
+                method?.Invoke(value, null);
+            }
         }
 
-        public void SaveJsonStorage<T>() where T : new()
+        public T LoadSettingJsonStorage<T>() where T : new()
         {
             var type = typeof(T);
-            if (!PluginJsonStorages.ContainsKey(type))
-                PluginJsonStorages[type] = new PluginJsonStorage<T>();
+            if (!_pluginJsonStorages.ContainsKey(type))
+                _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            PluginJsonStorages[type].Save();
+            return ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Load();
+        }
+
+        public void SaveSettingJsonStorage<T>() where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginJsonStorages.ContainsKey(type))
+                _pluginJsonStorages[type] = new PluginJsonStorage<T>();
+
+            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
 
         public void SaveJsonStorage<T>(T settings) where T : new()
         {
             var type = typeof(T);
-            PluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
+            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
-            PluginJsonStorages[type].Save();
-        }
-
-        public void BackupJsonStorage<T>() where T : new()
-        {
-            var type = typeof(T);
-            if (!PluginJsonStorages.ContainsKey(type))
-                throw new InvalidOperationException("You haven't registered the JsonStorage for specific Type");
-
-            PluginJsonStorages[type].BackupOriginFile();
+            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
@@ -180,8 +191,9 @@ namespace Flow.Launcher
         {
             if (GlobalKeyboardEvent != null)
             {
-                return GlobalKeyboardEvent((int)keyevent, vkcode, state);
+                return GlobalKeyboardEvent((int) keyevent, vkcode, state);
             }
+
             return true;
         }
 

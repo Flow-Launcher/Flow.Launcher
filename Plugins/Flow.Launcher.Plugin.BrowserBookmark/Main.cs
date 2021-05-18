@@ -12,21 +12,19 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, ISavable, IContextMenu
+    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu
     {
         private PluginInitContext context;
 
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
         private Settings _settings { get; set;}
-        private PluginJsonStorage<Settings> _storage { get; set;}
 
         public void Init(PluginInitContext context)
         {
             this.context = context;
             
-            _storage = new PluginJsonStorage<Settings>();
-            _settings = _storage.Load();
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             cachedBookmarks = Bookmarks.LoadAllBookmarks();
         }
@@ -111,11 +109,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         public Control CreateSettingPanel()
         {
             return new SettingsControl(_settings);
-        }
-
-        public void Save()
-        {
-            _storage.Save();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)

@@ -8,10 +8,11 @@ using Flow.Launcher.Infrastructure;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, ISavable, IContextMenu, IPluginI18n, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncReloadable
     {
         internal PluginInitContext Context { get; set; }
 
@@ -33,8 +34,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public Task InitAsync(PluginInitContext context)
         {
             Context = context;
-            viewModel = new SettingsViewModel(context);
-            Settings = viewModel.Settings;
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
+            viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
             _ = pluginManager.UpdateManifest().ContinueWith(_ =>
@@ -76,11 +77,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     return hotkey.Score > 0;
                 }).ToList()
             };
-        }
-
-        public void Save()
-        {
-            viewModel.Save();
         }
 
         public string GetTranslatedPluginTitle()

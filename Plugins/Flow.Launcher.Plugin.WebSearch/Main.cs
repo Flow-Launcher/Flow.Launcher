@@ -14,12 +14,12 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, ISavable, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
     {
         private PluginInitContext _context;
 
-        private readonly Settings _settings;
-        private readonly SettingsViewModel _viewModel;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         internal const string Images = "Images";
         internal static string DefaultImagesDirectory;
@@ -31,10 +31,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         private readonly string SearchSourceGlobalPluginWildCardSign = "*";
 
-        public void Save()
-        {
-            _viewModel.Save();
-        }
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -164,12 +160,6 @@ namespace Flow.Launcher.Plugin.WebSearch
             return new List<Result>();
         }
 
-        public Main()
-        {
-            _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
-        }
-
         public Task InitAsync(PluginInitContext context)
         {
             return Task.Run(Init);
@@ -177,6 +167,10 @@ namespace Flow.Launcher.Plugin.WebSearch
             void Init()
             {
                 _context = context;
+
+                _settings = _context.API.LoadSettingJsonStorage<Settings>();
+                _viewModel = new SettingsViewModel(_settings);
+                
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
                 var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
 

@@ -25,16 +25,14 @@ namespace Flow.Launcher.Plugin.Program
 
         private static BinaryStorage<Win32[]> _win32Storage;
         private static BinaryStorage<UWP.Application[]> _uwpStorage;
-        private readonly PluginJsonStorage<Settings> _settingsStorage;
 
         public Main()
         {
-            _settingsStorage = new PluginJsonStorage<Settings>();
+            
         }
 
         public void Save()
         {
-            _settingsStorage.Save();
             _win32Storage.Save(_win32s);
             _uwpStorage.Save(_uwps);
         }
@@ -71,7 +69,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             _context = context;
 
-            _settings = _settingsStorage.Load();
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             await Task.Yield();
 

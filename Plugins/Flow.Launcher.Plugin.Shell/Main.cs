@@ -18,27 +18,14 @@ using Keys = System.Windows.Forms.Keys;
 
 namespace Flow.Launcher.Plugin.Shell
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, ISavable
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu
     {
         private const string Image = "Images/shell.png";
         private PluginInitContext context;
         private bool _winRStroked;
         private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
 
-        private readonly Settings _settings;
-        private readonly PluginJsonStorage<Settings> _storage;
-
-        public Main()
-        {
-            _storage = new PluginJsonStorage<Settings>();
-            _settings = _storage.Load();
-        }
-
-        public void Save()
-        {
-            _storage.Save();
-        }
-
+        private Settings _settings;
 
         public List<Result> Query(Query query)
         {
@@ -285,6 +272,7 @@ namespace Flow.Launcher.Plugin.Shell
         {
             this.context = context;
             context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
