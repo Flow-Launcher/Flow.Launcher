@@ -21,6 +21,7 @@ using JetBrains.Annotations;
 using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using System.Collections.Concurrent;
 
 namespace Flow.Launcher
 {
@@ -144,7 +145,7 @@ namespace Flow.Launcher
         public void LogException(string className, string message, Exception e,
             [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
-        private readonly Dictionary<Type, object> _pluginJsonStorages = new();
+        private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
         public void SavePluginSettings()
         {
