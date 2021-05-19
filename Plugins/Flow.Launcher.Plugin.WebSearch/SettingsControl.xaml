@@ -76,7 +76,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_title}"
-                                    DisplayMemberBinding="{Binding Title}">
+                                    DisplayMemberBinding="{Binding Title}"
+                                    Width="130">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Title}"/>
@@ -93,7 +94,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}"
                                     DisplayMemberBinding="{Binding Url}"
-                                    Width="418">
+                                    Width="388">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Url}"/>
