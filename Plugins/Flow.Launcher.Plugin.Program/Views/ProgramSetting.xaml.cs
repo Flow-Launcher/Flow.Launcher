@@ -27,24 +27,56 @@ namespace Flow.Launcher.Plugin.Program.Views
         // this as temporary holder for displaying all loaded programs sources. 
         internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
 
+        public bool EnableDescription
+        {
+            get => _settings.EnableDescription;
+            set => _settings.EnableDescription = value;
+        }
+
+        public bool EnableRegistrySource
+        {
+            get => _settings.EnableRegistrySource;
+            set
+            {
+                _settings.EnableRegistrySource = value;
+                ReIndexing();
+            }
+        }
+
+        public bool EnableStartMenuSource
+        {
+            get => _settings.EnableStartMenuSource;
+            set
+            {
+                _settings.EnableStartMenuSource = value;
+                ReIndexing();
+            }
+        }
+
+        public string CustomizedExplorerPath
+        {
+            get => _settings.CustomizedExplorer;
+            set => _settings.CustomizedExplorer = value;
+        }
+
+        public string CustomizedExplorerArg
+        {
+            get => _settings.CustomizedArgs;
+            set => _settings.CustomizedArgs = value;
+        }
+
         public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)
         {
             this.context = context;
-            InitializeComponent();
-            Loaded += Setting_Loaded;
             _settings = settings;
+            Loaded += Setting_Loaded;
+            InitializeComponent();
         }
 
         private void Setting_Loaded(object sender, RoutedEventArgs e)
         {
             ProgramSettingDisplayList = _settings.ProgramSources.LoadProgramSources();
             programSourceView.ItemsSource = ProgramSettingDisplayList;
-
-            StartMenuEnabled.IsChecked = _settings.EnableStartMenuSource;
-            RegistryEnabled.IsChecked = _settings.EnableRegistrySource;
-
-            CustomizeExplorerBox.Text = _settings.CustomizedExplorer;
-            CustomizeArgsBox.Text = _settings.CustomizedArgs;
 
             ViewRefresh();
         }
@@ -176,18 +208,6 @@ namespace Flow.Launcher.Plugin.Program.Views
                     ReIndexing();
                 }
             }
-        }
-
-        private void StartMenuEnabled_Click(object sender, RoutedEventArgs e)
-        {
-            _settings.EnableStartMenuSource = StartMenuEnabled.IsChecked ?? false;
-            ReIndexing();
-        }
-
-        private void RegistryEnabled_Click(object sender, RoutedEventArgs e)
-        {
-            _settings.EnableRegistrySource = RegistryEnabled.IsChecked ?? false;
-            ReIndexing();
         }
 
         private void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
