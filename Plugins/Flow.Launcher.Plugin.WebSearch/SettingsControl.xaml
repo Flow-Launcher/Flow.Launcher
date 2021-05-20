@@ -85,7 +85,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}"
-                                    DisplayMemberBinding="{Binding ActionKeyword}">
+                                    DisplayMemberBinding="{Binding ActionKeyword}"
+                                    Width="137">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ActionKeyword}"/>
@@ -94,7 +95,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}"
                                     DisplayMemberBinding="{Binding Url}"
-                                    Width="388">
+                                    Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Url}"/>
