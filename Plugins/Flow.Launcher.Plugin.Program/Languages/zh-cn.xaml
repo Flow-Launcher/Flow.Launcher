@@ -14,6 +14,7 @@
     <system:String x:Key="flowlauncher_plugin_program_indexing">索引中</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">索引开始菜单</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">索引注册表</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">启用程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">最大深度</system:String>
 

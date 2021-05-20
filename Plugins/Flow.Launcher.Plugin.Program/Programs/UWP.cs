@@ -63,14 +63,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (hResult == Hresult.Ok)
             {
                 var apps = new List<Application>();
-             
+
                 List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
-                foreach(var _app in _apps)
+                foreach (var _app in _apps)
                 {
                     var app = new Application(_app, this);
                     apps.Add(app);
                 }
-                
+
                 Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
             }
             else
@@ -275,7 +275,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 MatchResult matchResult;
 
                 // We suppose Name won't be null
-                if (Description == null || Name.StartsWith(Description))
+                if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
                 {
                     title = Name;
                     matchResult = StringMatcher.FuzzySearch(query, title);
