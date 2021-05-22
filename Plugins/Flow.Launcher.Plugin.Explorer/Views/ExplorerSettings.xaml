@@ -24,7 +24,7 @@
                     Margin="0,5,0,0" />
                 <TextBlock 
                     Text="{Binding Keyword, Mode=OneTime}"
-                    Margin="150,5,0,0" />
+                    Margin="250,5,0,0" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

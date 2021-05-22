@@ -39,21 +39,47 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
-            var results = new HashSet<Result>(PathEqualityComparator.Instance);
-
             var querySearch = query.Search;
 
             if (IsFileContentSearch(query.ActionKeyword))
                 return await WindowsIndexFileContentSearchAsync(query, querySearch, token).ConfigureAwait(false);
 
+            var result = new HashSet<Result>(PathEqualityComparator.Instance);
+
+            if (ActionKeywordMatch(query, settings.PathSearchActionKeyword))
+            {
+                result.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+            }
+
+            if (ActionKeywordMatch(query, settings.SearchActionKeyword) &&
+                 querySearch.Length > 0 &&
+                 !querySearch.IsLocationPathString())
+            {
+                result.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
+            }
+
+            return result.ToList();
+        }
+
+        private bool ActionKeywordMatch(Query query, string actionKeyword)
+        {
+            return query.ActionKeyword == actionKeyword ||
+                   query.ActionKeyword.Length == 0 && actionKeyword == Query.GlobalPluginWildcardSign;
+        }
+
+        public async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
+        {
+            var querySearch = query.Search;
+
             // This allows the user to type the assigned action keyword and only see the list of quick folder links
             if (string.IsNullOrEmpty(query.Search))
                 return QuickAccess.AccessLinkListAll(query, settings.QuickAccessLinks);
 
+            var results = new HashSet<Result>(PathEqualityComparator.Instance);
+
             var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, settings.QuickAccessLinks);
 
-            if (quickaccessLinks.Count > 0)
-                results.UnionWith(quickaccessLinks);
+            results.UnionWith(quickaccessLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
@@ -62,13 +88,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
             var isEnvironmentVariablePath = querySearch[1..].Contains("%\\");
-
-            if (!querySearch.IsLocationPathString() && !isEnvironmentVariablePath)
-            {
-                results.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
-
-                return results.ToList();
-            }
 
             var locationPath = querySearch;
 

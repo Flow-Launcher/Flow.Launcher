@@ -35,16 +35,24 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             actionKeywordsListView = new List<ActionKeywordView>
             {
-                new ActionKeywordView() 
-                        { 
-                            Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search"), 
-                            Keyword = this.viewModel.Settings.SearchActionKeyword 
-                        },
-                new ActionKeywordView() 
-                        { 
-                            Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"), 
-                            Keyword = this.viewModel.Settings.FileContentSearchActionKeyword 
-                        }
+                new ()
+                {
+                     Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search"),
+                     Keyword = this.viewModel.Settings.SearchActionKeyword, 
+                     KeywordProperty = ActionKeywordProperty.SearchActionKeyword
+                },
+                new ()
+                {
+                     Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"),
+                     Keyword = this.viewModel.Settings.FileContentSearchActionKeyword,
+                     KeywordProperty = ActionKeywordProperty.FileContentSearchActionKeyword
+                },
+                new ()
+                {
+                    Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path"),
+                    Keyword = this.viewModel.Settings.PathSearchActionKeyword,
+                    KeywordProperty = ActionKeywordProperty.PathSearchActionKeyword
+                }
             };
 
             lbxActionKeywords.ItemsSource = actionKeywordsListView;
@@ -71,7 +79,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     && btnEdit.Visibility == Visibility.Hidden)
                     btnEdit.Visibility = Visibility.Visible;
 
-                if ((lbxAccessLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0)
+                if (lbxAccessLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0
                     && btnDelete.Visibility == Visibility.Visible
                     && btnEdit.Visibility == Visibility.Visible)
                 {
@@ -122,7 +130,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void expActionKeywords_Collapsed(object sender, RoutedEventArgs e)
         {
             if (!expActionKeywords.IsExpanded)
-                expActionKeywords.Height = Double.NaN;
+                expActionKeywords.Height = double.NaN;
         }
 
         private void expAccessLinks_Click(object sender, RoutedEventArgs e)
@@ -135,20 +143,20 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (expActionKeywords.IsExpanded)
                 expActionKeywords.IsExpanded = false;
-            
+
             RefreshView();
         }
 
         private void expAccessLinks_Collapsed(object sender, RoutedEventArgs e)
         {
             if (!expAccessLinks.IsExpanded)
-                expAccessLinks.Height = Double.NaN;
+                expAccessLinks.Height = double.NaN;
         }
 
         private void expExcludedPaths_Click(object sender, RoutedEventArgs e)
         {
             if (expExcludedPaths.IsExpanded)
-                expAccessLinks.Height = Double.NaN;
+                expAccessLinks.Height = double.NaN;
 
             if (expAccessLinks.IsExpanded)
                 expAccessLinks.IsExpanded = false;
@@ -161,7 +169,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var selectedRow = lbxAccessLinks.SelectedItem as AccessLink?? lbxExcludedPaths.SelectedItem as AccessLink;
+            var selectedRow = lbxAccessLinks.SelectedItem as AccessLink ?? lbxExcludedPaths.SelectedItem as AccessLink;
 
             if (selectedRow != null)
             {
@@ -315,6 +323,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     {
         public string Description { get; set; }
 
+        public ActionKeywordProperty KeywordProperty { get; init; }
         public string Keyword { get; set; }
     }
 }

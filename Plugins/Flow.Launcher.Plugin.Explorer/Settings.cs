@@ -20,5 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
+
+        public string PathSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
     }
 }

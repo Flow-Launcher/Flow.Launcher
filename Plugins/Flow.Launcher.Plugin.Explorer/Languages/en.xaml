@@ -19,7 +19,8 @@
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_search">Search Activation:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">Index Search Activation:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_path">Path Explore Activation:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
 
     <!--Plugin Infos-->

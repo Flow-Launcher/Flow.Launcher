@@ -23,6 +23,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private ActionKeywordView currentActionKeyword;
 
+
         private List<ActionKeywordView> actionKeywordListView;
 
         public ActionKeywordSetting(SettingsViewModel settingsViewModel, List<ActionKeywordView> actionKeywordListView, ActionKeywordView selectedActionKeyword)
@@ -35,7 +36,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             txtCurrentActionKeyword.Text = selectedActionKeyword.Keyword;
 
-            this.actionKeywordListView = actionKeywordListView; 
+            this.actionKeywordListView = actionKeywordListView;
         }
 
         private void OnConfirmButtonClick(object sender, RoutedEventArgs e)
@@ -52,20 +53,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 return;
             }
 
-            if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword) 
-                && currentActionKeyword.Description 
-                    == settingsViewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"))
+            if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword)
+                && currentActionKeyword.KeywordProperty == ActionKeywordProperty.FileContentSearchActionKeyword)
             {
                 MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
 
                 return;
             }
-            
+
             if (!settingsViewModel.IsActionKeywordAlreadyAssigned(newActionKeyword))
             {
-                settingsViewModel.UpdateActionKeyword(newActionKeyword, currentActionKeyword.Keyword);
+                settingsViewModel.UpdateActionKeyword(currentActionKeyword.KeywordProperty, newActionKeyword, currentActionKeyword.Keyword);
 
-                actionKeywordListView.Where(x => x.Description == currentActionKeyword.Description).FirstOrDefault().Keyword = newActionKeyword;
+                actionKeywordListView.FirstOrDefault(x => x.Description == currentActionKeyword.Description).Keyword = newActionKeyword;
 
                 Close();
 

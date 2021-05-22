@@ -41,19 +41,36 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        internal void UpdateActionKeyword(string newActionKeyword, string oldActionKeyword)
+        internal void UpdateActionKeyword(ActionKeywordProperty modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
-            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+            if (Settings.SearchActionKeyword == Settings.PathSearchActionKeyword)
+                PluginManager.AddActionKeyword(Context.CurrentPluginMetadata.ID, newActionKeyword);
+            else
+                PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
 
-            if (Settings.FileContentSearchActionKeyword == oldActionKeyword)
-                Settings.FileContentSearchActionKeyword = newActionKeyword;
-
-            if (Settings.SearchActionKeyword == oldActionKeyword)
-                Settings.SearchActionKeyword = newActionKeyword;
+            switch (modifiedActionKeyword)
+            {
+                case ActionKeywordProperty.SearchActionKeyword:
+                    Settings.SearchActionKeyword = newActionKeyword;
+                    break;
+                case ActionKeywordProperty.PathSearchActionKeyword:
+                    Settings.PathSearchActionKeyword = newActionKeyword;
+                    break;
+                case ActionKeywordProperty.FileContentSearchActionKeyword:
+                    Settings.FileContentSearchActionKeyword = newActionKeyword;
+                    break;
+            }
         }
 
         internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
+    }
+
+    public enum ActionKeywordProperty
+    {
+        SearchActionKeyword,
+        PathSearchActionKeyword,
+        FileContentSearchActionKeyword
     }
 }

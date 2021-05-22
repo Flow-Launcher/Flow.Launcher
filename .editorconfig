@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0011: 添加大括号
+csharp_prefer_braces = when_multiline
