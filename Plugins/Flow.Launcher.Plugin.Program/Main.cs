@@ -31,8 +31,6 @@ namespace Flow.Launcher.Plugin.Program
 
         private static readonly List<Result> emptyResults = new();
 
-        private int reg_count;
-        private int query_count;
 
         public void Save()
         {
@@ -45,7 +43,6 @@ namespace Flow.Launcher.Plugin.Program
             if (IsStartupIndexProgramsRequired)
                 _ = IndexPrograms();
 
-            query_count++;
 
             if (!cache.TryGetValue(query.Search, out var result))
             {
