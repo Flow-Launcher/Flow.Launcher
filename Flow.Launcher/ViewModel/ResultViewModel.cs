@@ -59,7 +59,7 @@ namespace Flow.Launcher.ViewModel
             {
                 try
                 {
-                    Image = Result.Icon();
+                    image = Result.Icon();
                     return;
                 }
                 catch (Exception e)
@@ -71,7 +71,7 @@ namespace Flow.Launcher.ViewModel
             if (ImageLoader.CacheContainImage(imagePath))
             {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                Image = ImageLoader.Load(imagePath);
+                image = ImageLoader.Load(imagePath);
                 return;
             }
             
