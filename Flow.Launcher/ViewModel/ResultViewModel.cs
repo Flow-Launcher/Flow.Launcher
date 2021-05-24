@@ -75,6 +75,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
             
+            // We need to modify the property not field here to trigger the OnPropertyChanged event
             Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
         }
 
