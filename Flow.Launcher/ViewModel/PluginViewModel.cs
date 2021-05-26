@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
 
@@ -10,8 +9,6 @@ namespace Flow.Launcher.ViewModel
     public class PluginViewModel : BaseModel
     {
         public PluginPair PluginPair { get; set; }
-
-        private readonly Internationalization _translator = InternationalizationManager.Instance;
 
         public ImageSource Image => ImageLoader.Load(PluginPair.Metadata.IcoPath);
         public bool PluginState
