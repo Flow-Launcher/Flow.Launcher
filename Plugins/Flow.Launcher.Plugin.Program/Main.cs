@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -10,6 +11,9 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
@@ -27,10 +31,17 @@ namespace Flow.Launcher.Plugin.Program
         private static BinaryStorage<Win32[]> _win32Storage;
         private static BinaryStorage<UWP.Application[]> _uwpStorage;
 
-        private static readonly ConcurrentDictionary<string, List<Result>> cache = new();
-
         private static readonly List<Result> emptyResults = new();
 
+        private static readonly MemoryCacheOptions cacheOptions = new()
+        {
+            SizeLimit = 1560
+        };
+        private static MemoryCache cache = new(cacheOptions);
+
+        static Main()
+        {
+        }
 
         public void Save()
         {
@@ -40,31 +51,29 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+
             if (IsStartupIndexProgramsRequired)
                 _ = IndexPrograms();
 
+            var result = await cache.GetOrCreateAsync(query.Search, async entry =>
+             {
+                 var resultList = await Task.Run(() =>
+                          _win32s.Cast<IProgram>()
+                          .Concat(_uwps)
+                          .AsParallel()
+                          .WithCancellation(token)
+                          .Where(p => p.Enabled)
+                          .Select(p => p.Result(query.Search, _context.API))
+                          .Where(r => r?.Score > 0)
+                          .ToList());
 
-            if (!cache.TryGetValue(query.Search, out var result))
-            {
-                result = await Task.Run(delegate
-                {
-                    return _win32s.Cast<IProgram>()
-                        .Concat(_uwps)
-                        .AsParallel()
-                        .WithCancellation(token)
-                        .Where(p => p.Enabled)
-                        .Select(p => p.Result(query.Search, _context.API))
-                        .Where(r => r?.Score > 0)
-                        .ToList();
-                }, token).ConfigureAwait(false);
+                 resultList = resultList.Any() ? resultList : emptyResults;
 
-                if (result.Count == 0)
-                    result = emptyResults;
+                 entry.SetSize(resultList.Count);
+                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
 
-                cache[query.Search] = result;
-            }
-
-            token.ThrowIfCancellationRequested();
+                 return resultList;
+             });
 
             return result;
         }
@@ -138,7 +147,9 @@ namespace Flow.Launcher.Plugin.Program
             var t1 = Task.Run(IndexWin32Programs);
             var t2 = Task.Run(IndexUwpPrograms);
             await Task.WhenAll(t1, t2).ConfigureAwait(false);
-            cache.Clear();
+            var oldCache = cache;
+            cache = new MemoryCache(cacheOptions);
+            oldCache.Dispose();
             _settings.LastIndexTime = DateTime.Today;
         }
 
