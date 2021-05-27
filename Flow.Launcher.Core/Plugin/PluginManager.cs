@@ -118,7 +118,9 @@ namespace Flow.Launcher.Core.Plugin
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             foreach (var plugin in AllPlugins)
             {
-                foreach (var actionKeyword in plugin.Metadata.ActionKeywords)
+                // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
+                // has multiple global and action keywords because we will only add them here once.
+                foreach (var actionKeyword in plugin.Metadata.ActionKeywords.Distinct())
                 {
                     switch (actionKeyword)
                     {
