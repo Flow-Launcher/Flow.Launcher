@@ -21,8 +21,8 @@ namespace Flow.Launcher.Core.Plugin
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
-        public static readonly List<PluginPair> GlobalPlugins = new List<PluginPair>();
-        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new Dictionary<string, PluginPair>();
+        public static readonly HashSet<PluginPair> GlobalPlugins = new();
+        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new ();
 
         public static IPublicAPI API { private set; get; }
 
@@ -143,7 +143,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static List<PluginPair> ValidPluginsForQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
         {
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
             {
@@ -285,9 +285,7 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword == Query.GlobalPluginWildcardSign
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
-                    .Where(x => x == Query.GlobalPluginWildcardSign)
-                    .ToList()
-                    .Count == 1)
+                    .Count(x => x == Query.GlobalPluginWildcardSign) == 1)
             {
                 GlobalPlugins.Remove(plugin);
             }
