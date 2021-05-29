@@ -43,10 +43,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         internal void UpdateActionKeyword(ActionKeywordProperty modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
-            if (Settings.SearchActionKeyword == Settings.PathSearchActionKeyword)
-                PluginManager.AddActionKeyword(Context.CurrentPluginMetadata.ID, newActionKeyword);
-            else
-                PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
 
             switch (modifiedActionKeyword)
             {

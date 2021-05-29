@@ -274,7 +274,7 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// used to add action keyword for multiple action keyword plugin
+        /// used to remove action keyword for multiple action keyword plugin
         /// e.g. web search
         /// </summary>
         public static void RemoveActionKeyword(string id, string oldActionkeyword)

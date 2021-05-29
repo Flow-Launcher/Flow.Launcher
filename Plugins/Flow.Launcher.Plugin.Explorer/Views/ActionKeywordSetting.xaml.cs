@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             this.actionKeywordListView = actionKeywordListView;
 
-            // Search and File Content action keyword are not allowed to be disabled, they are the default search keyword.
+            // Search and File Content action keyword are not allowed to be disabled, they are the default search keywords.
             if (currentActionKeyword.KeywordProperty == ActionKeywordProperty.SearchActionKeyword
                 || currentActionKeyword.KeywordProperty == ActionKeywordProperty.FileContentSearchActionKeyword)
                 chkActionKeywordEnabled.Visibility = Visibility.Collapsed;
