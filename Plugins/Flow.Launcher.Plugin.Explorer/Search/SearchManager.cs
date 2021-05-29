@@ -46,12 +46,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var result = new HashSet<Result>(PathEqualityComparator.Instance);
 
-            if (ActionKeywordMatch(query, settings.PathSearchActionKeyword))
+            if (ActionKeywordMatch(query, settings.PathSearchActionKeyword) || ActionKeywordMatch(query, settings.SearchActionKeyword))
             {
                 result.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
             }
 
-            if (ActionKeywordMatch(query, settings.SearchActionKeyword) &&
+            if ((ActionKeywordMatch(query, settings.IndexOnlySearchActionKeyword) || ActionKeywordMatch(query, settings.SearchActionKeyword)) &&
                  querySearch.Length > 0 &&
                  !querySearch.IsLocationPathString())
             {
@@ -61,10 +61,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result.ToList();
         }
 
-        private bool ActionKeywordMatch(Query query, string actionKeyword)
+        private bool ActionKeywordMatch(Query query, string allowedActionKeyword)
         {
-            return query.ActionKeyword == actionKeyword ||
-                   query.ActionKeyword.Length == 0 && actionKeyword == Query.GlobalPluginWildcardSign;
+            if (settings.EnabledIndexOnlySearchKeyword && (settings.IndexOnlySearchActionKeyword == Query.GlobalPluginWildcardSign || query.ActionKeyword == allowedActionKeyword))
+                return true;
+
+            if (settings.EnabledPathSearchKeyword && (settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign || query.ActionKeyword == allowedActionKeyword))
+                return true;
+
+            return settings.SearchActionKeyword == Query.GlobalPluginWildcardSign || query.ActionKeyword == allowedActionKeyword;
         }
 
         public async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)

@@ -49,9 +49,21 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 },
                 new ()
                 {
-                    Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path"),
+                    Description = viewModel.Settings.EnabledPathSearchKeyword
+                                    ? viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")
+                                    : viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")
+                                        + " " + viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_brackets_disabled"),
                     Keyword = this.viewModel.Settings.PathSearchActionKeyword,
                     KeywordProperty = ActionKeywordProperty.PathSearchActionKeyword
+                },
+                new ()
+                {
+                     Description = viewModel.Settings.EnabledIndexOnlySearchKeyword
+                                    ? viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch")
+                                    :  viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch")
+                                        + " " + viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_brackets_disabled"),
+                     Keyword = this.viewModel.Settings.IndexOnlySearchActionKeyword,
+                     KeywordProperty = ActionKeywordProperty.IndexOnlySearchActionKeyword
                 }
             };
 
@@ -199,7 +211,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 var selectedActionKeyword = lbxActionKeywords.SelectedItem as ActionKeywordView;
 
-                var actionKeywordWindow = new ActionKeywordSetting(viewModel, actionKeywordsListView, selectedActionKeyword);
+                var actionKeywordWindow = new ActionKeywordSetting(viewModel, actionKeywordsListView, selectedActionKeyword, viewModel.Settings);
 
                 actionKeywordWindow.ShowDialog();
 

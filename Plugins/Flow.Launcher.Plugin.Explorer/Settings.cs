@@ -22,5 +22,11 @@ namespace Flow.Launcher.Plugin.Explorer
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
 
         public string PathSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool EnabledPathSearchKeyword { get; set; }
+
+        public string IndexOnlySearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool EnabledIndexOnlySearchKeyword { get; set; }
     }
 }

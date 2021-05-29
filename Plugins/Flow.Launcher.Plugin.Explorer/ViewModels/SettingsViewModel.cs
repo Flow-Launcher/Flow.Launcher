@@ -59,6 +59,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 case ActionKeywordProperty.FileContentSearchActionKeyword:
                     Settings.FileContentSearchActionKeyword = newActionKeyword;
                     break;
+                case ActionKeywordProperty.IndexOnlySearchActionKeyword:
+                    Settings.IndexOnlySearchActionKeyword = newActionKeyword;
+                    break;
             }
         }
 
@@ -71,6 +74,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
     {
         SearchActionKeyword,
         PathSearchActionKeyword,
-        FileContentSearchActionKeyword
+        FileContentSearchActionKeyword,
+        IndexOnlySearchActionKeyword
     }
 }
