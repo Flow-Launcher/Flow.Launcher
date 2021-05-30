@@ -63,13 +63,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool ActionKeywordMatch(Query query, string allowedActionKeyword)
         {
-            if (settings.EnabledIndexOnlySearchKeyword && (settings.IndexOnlySearchActionKeyword == Query.GlobalPluginWildcardSign || query.ActionKeyword == allowedActionKeyword))
-                return true;
+            if (query.ActionKeyword == settings.IndexOnlySearchActionKeyword)
+                return settings.IndexOnlySearchActionKeyword == allowedActionKeyword;
 
-            if (settings.EnabledPathSearchKeyword && (settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign || query.ActionKeyword == allowedActionKeyword))
-                return true;
+            if (query.ActionKeyword == settings.PathSearchActionKeyword)
+                return settings.PathSearchActionKeyword == allowedActionKeyword;
 
-            return settings.SearchActionKeyword == Query.GlobalPluginWildcardSign || query.ActionKeyword == allowedActionKeyword;
+            if (query.ActionKeyword == settings.SearchActionKeyword)
+                return settings.SearchActionKeyword == allowedActionKeyword;
+
+            return Query.GlobalPluginWildcardSign == allowedActionKeyword;
         }
 
         public async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)

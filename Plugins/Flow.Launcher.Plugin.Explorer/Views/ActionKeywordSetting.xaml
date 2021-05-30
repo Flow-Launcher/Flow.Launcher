@@ -16,7 +16,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180" />
             <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock Margin="20 10 10 10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                    HorizontalAlignment="Left" Text="Current Action Keyword:" />
@@ -24,9 +23,8 @@
                  Margin="10" Grid.Row="0" Width="105" Grid.Column="1"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Left" />
-        <CheckBox Name="chkActionKeywordEnabled" Margin="10" Grid.Row="0" Grid.Column="2" Content="Enabled" Width="auto" 
-                  VerticalAlignment="Center" Checked="OnActionKeywordEnabledChecked" Unchecked="OnActionKeywordEnabledUnChecked"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2" Margin="100 92 0 0" Grid.RowSpan="2">
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1">
             <Button Click="OnConfirmButtonClick"
                     Margin="10 0 10 0" Width="80" Height="35"
                     Content="OK" />

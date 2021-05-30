@@ -33,17 +33,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             txtCurrentActionKeyword.Text = selectedActionKeyword.Keyword;
 
             this.actionKeywordListView = actionKeywordListView;
-
-            // Search and File Content action keyword are not allowed to be disabled, they are the default search keywords.
-            if (currentActionKeyword.KeywordProperty == ActionKeywordProperty.SearchActionKeyword
-                || currentActionKeyword.KeywordProperty == ActionKeywordProperty.FileContentSearchActionKeyword)
-                chkActionKeywordEnabled.Visibility = Visibility.Collapsed;
-
-            if (currentActionKeyword.KeywordProperty == ActionKeywordProperty.IndexOnlySearchActionKeyword)
-                chkActionKeywordEnabled.IsChecked = this.settings.EnabledIndexOnlySearchKeyword;
-
-            if (currentActionKeyword.KeywordProperty == ActionKeywordProperty.PathSearchActionKeyword)
-                chkActionKeywordEnabled.IsChecked = this.settings.EnabledPathSearchKeyword;
         }
 
         private void OnConfirmButtonClick(object sender, RoutedEventArgs e)
@@ -87,31 +76,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             Close();
 
             return;
-        }
-        private void OnActionKeywordEnabledChecked(object sender, RoutedEventArgs e)
-        {
-            if (currentActionKeyword.KeywordProperty == ActionKeywordProperty.IndexOnlySearchActionKeyword)
-                settings.EnabledIndexOnlySearchKeyword = true;
-
-            if (currentActionKeyword.KeywordProperty == ActionKeywordProperty.PathSearchActionKeyword)
-                settings.EnabledPathSearchKeyword = true;
-        }
-
-        private void OnActionKeywordEnabledUnChecked(object sender, RoutedEventArgs e)
-        {
-            if (currentActionKeyword.Keyword == settings.IndexOnlySearchActionKeyword)
-            {
-                settings.EnabledIndexOnlySearchKeyword = false;
-                // reset to global so it does not take up an action keyword when disabled
-                settings.IndexOnlySearchActionKeyword = Query.GlobalPluginWildcardSign;
-            }
-
-            if (currentActionKeyword.Keyword == settings.PathSearchActionKeyword)
-            {
-                settings.EnabledPathSearchKeyword = false;
-                // reset to global so it does not take up an action keyword when disabled
-                settings.PathSearchActionKeyword = Query.GlobalPluginWildcardSign;
-            }
         }
     }
 }
