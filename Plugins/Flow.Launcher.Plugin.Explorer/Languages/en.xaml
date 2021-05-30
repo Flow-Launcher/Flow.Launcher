@@ -23,7 +23,6 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_path">Path Explore Activation:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexonlysearch">Index Only Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_brackets_disabled">(Disabled)</system:String>
 
     <!--Plugin Infos-->
     <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
