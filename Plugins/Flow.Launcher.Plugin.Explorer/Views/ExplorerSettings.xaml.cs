@@ -38,26 +38,36 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 new ()
                 {
                      Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search"),
-                     Keyword = this.viewModel.Settings.SearchActionKeyword, 
-                     KeywordProperty = ActionKeywordProperty.SearchActionKeyword
+                     Keyword = viewModel.Settings.SearchActionKeyword,
+                     KeywordProperty = ActionKeywordProperty.SearchActionKeyword,
+                     Enabled = true
                 },
                 new ()
                 {
                      Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"),
-                     Keyword = this.viewModel.Settings.FileContentSearchActionKeyword,
-                     KeywordProperty = ActionKeywordProperty.FileContentSearchActionKeyword
+                     Keyword = viewModel.Settings.FileContentSearchActionKeyword,
+                     KeywordProperty = ActionKeywordProperty.FileContentSearchActionKeyword,
+                     Enabled = true
                 },
                 new ()
                 {
-                    Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path"),
-                    Keyword = this.viewModel.Settings.PathSearchActionKeyword,
-                    KeywordProperty = ActionKeywordProperty.PathSearchActionKeyword
+                    Description = viewModel.Settings.EnabledPathSearchKeyword
+                                    ? viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")
+                                    : viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")
+                                        + " " + viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_brackets_disabled"),
+                    Keyword = viewModel.Settings.PathSearchActionKeyword,
+                    KeywordProperty = ActionKeywordProperty.PathSearchActionKeyword,
+                    Enabled = viewModel.Settings.EnabledPathSearchKeyword
                 },
                 new ()
                 {
-                     Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch"),
-                     Keyword = this.viewModel.Settings.IndexOnlySearchActionKeyword,
-                     KeywordProperty = ActionKeywordProperty.IndexOnlySearchActionKeyword
+                     Description = viewModel.Settings.EnabledIndexOnlySearchKeyword
+                                    ? viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch")
+                                    :  viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch")
+                                        + " " + viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_brackets_disabled"),
+                     Keyword = viewModel.Settings.IndexOnlySearchActionKeyword,
+                     KeywordProperty = ActionKeywordProperty.IndexOnlySearchActionKeyword,
+                     Enabled = viewModel.Settings.EnabledIndexOnlySearchKeyword
                 }
             };
 
@@ -330,6 +340,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         public string Description { get; set; }
 
         public ActionKeywordProperty KeywordProperty { get; init; }
+
         public string Keyword { get; set; }
+
+        public bool Enabled { get; set; }
     }
 }

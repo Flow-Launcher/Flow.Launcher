@@ -46,12 +46,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var result = new HashSet<Result>(PathEqualityComparator.Instance);
 
-            if (ActionKeywordMatch(query, settings.PathSearchActionKeyword) || ActionKeywordMatch(query, settings.SearchActionKeyword))
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword) || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword))
             {
                 result.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
             }
 
-            if ((ActionKeywordMatch(query, settings.IndexOnlySearchActionKeyword) || ActionKeywordMatch(query, settings.SearchActionKeyword)) &&
+            if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexOnlySearchActionKeyword) || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)) &&
                  querySearch.Length > 0 &&
                  !querySearch.IsLocationPathString())
             {
@@ -61,18 +61,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result.ToList();
         }
 
-        private bool ActionKeywordMatch(Query query, string allowedActionKeyword)
+        private bool ActionKeywordMatch(Query query, Settings.ActionKeyword allowedActionKeyword)
         {
             if (query.ActionKeyword == settings.IndexOnlySearchActionKeyword)
-                return settings.IndexOnlySearchActionKeyword == allowedActionKeyword;
+                return Settings.ActionKeyword.IndexOnlySearchActionKeyword == allowedActionKeyword && settings.EnabledIndexOnlySearchKeyword;
 
             if (query.ActionKeyword == settings.PathSearchActionKeyword)
-                return settings.PathSearchActionKeyword == allowedActionKeyword;
+                return Settings.ActionKeyword.PathSearchActionKeyword == allowedActionKeyword && settings.EnabledPathSearchKeyword;
 
             if (query.ActionKeyword == settings.SearchActionKeyword)
-                return settings.SearchActionKeyword == allowedActionKeyword;
+                return Settings.ActionKeyword.SearchActionKeyword == allowedActionKeyword;
 
-            return Query.GlobalPluginWildcardSign == allowedActionKeyword;
+            
+            return (Settings.ActionKeyword.IndexOnlySearchActionKeyword == allowedActionKeyword && settings.EnabledIndexOnlySearchKeyword)
+                || (Settings.ActionKeyword.PathSearchActionKeyword == allowedActionKeyword && settings.EnabledPathSearchKeyword)
+                || settings.SearchActionKeyword == Query.GlobalPluginWildcardSign;
         }
 
         public async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
