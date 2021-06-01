@@ -12,8 +12,12 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes">Prípony súborov</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindexovať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexovanie</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">Indexovať Ponuku Štart</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexovať Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Indexovať ponuku Štart</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Ak je povolené, Flow načíta programy z ponuky Štart</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexovať databázu Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Ak je povolené, Flow načíta programy z databázy Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">Povoliť popis programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Zakázaním tejto funkcie sa tiež zastaví vyhľadávanie popisu programu cez Flow</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Prípony</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max. hĺbka</system:String>
 
