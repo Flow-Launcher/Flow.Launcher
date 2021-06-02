@@ -26,6 +26,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             private static PathEqualityComparator instance;
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
+
             public bool Equals(Result x, Result y)
             {
                 return x.SubTitle == y.SubTitle;
@@ -46,16 +47,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var result = new HashSet<Result>(PathEqualityComparator.Instance);
 
-            if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword) || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword))
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword) ||
+                ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword))
             {
                 result.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
             }
 
-            if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexOnlySearchActionKeyword) || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)) &&
-                 querySearch.Length > 0 &&
-                 !querySearch.IsLocationPathString())
+            if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexOnlySearchActionKeyword) ||
+                 ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)) &&
+                querySearch.Length > 0 &&
+                !querySearch.IsLocationPathString())
             {
-                result.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token).ConfigureAwait(false));
+                result.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token)
+                    .ConfigureAwait(false));
             }
 
             return result.ToList();
@@ -63,19 +67,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool ActionKeywordMatch(Query query, Settings.ActionKeyword allowedActionKeyword)
         {
-            if (query.ActionKeyword == settings.IndexOnlySearchActionKeyword)
-                return Settings.ActionKeyword.IndexOnlySearchActionKeyword == allowedActionKeyword && settings.EnabledIndexOnlySearchKeyword;
+            var keyword = query.ActionKeyword.Length == 0 ? "*" : query.ActionKeyword;
 
-            if (query.ActionKeyword == settings.PathSearchActionKeyword)
-                return Settings.ActionKeyword.PathSearchActionKeyword == allowedActionKeyword && settings.EnabledPathSearchKeyword;
-
-            if (query.ActionKeyword == settings.SearchActionKeyword)
-                return Settings.ActionKeyword.SearchActionKeyword == allowedActionKeyword;
-
-            
-            return (Settings.ActionKeyword.IndexOnlySearchActionKeyword == allowedActionKeyword && settings.EnabledIndexOnlySearchKeyword)
-                || (Settings.ActionKeyword.PathSearchActionKeyword == allowedActionKeyword && settings.EnabledPathSearchKeyword)
-                || settings.SearchActionKeyword == Query.GlobalPluginWildcardSign;
+            return allowedActionKeyword switch
+            {
+                Settings.ActionKeyword.SearchActionKeyword => settings.EnableSearchActionKeyword &&
+                                                              keyword == settings.SearchActionKeyword,
+                Settings.ActionKeyword.PathSearchActionKeyword => settings.EnabledPathSearchKeyword &&
+                                                                  keyword == settings.PathSearchActionKeyword,
+                Settings.ActionKeyword.FileContentSearchActionKeyword => keyword ==
+                                                                         settings.FileContentSearchActionKeyword,
+                Settings.ActionKeyword.IndexOnlySearchActionKeyword => settings.EnabledIndexOnlySearchKeyword &&
+                                                                       keyword == settings.IndexOnlySearchActionKeyword
+            };
         }
 
         public async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
@@ -129,7 +133,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return results.ToList();
         }
 
-        private async Task<List<Result>> WindowsIndexFileContentSearchAsync(Query query, string querySearchString, CancellationToken token)
+        private async Task<List<Result>> WindowsIndexFileContentSearchAsync(Query query, string querySearchString,
+            CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(settings);
 
@@ -137,11 +142,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return new List<Result>();
 
             return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
-                                                    queryConstructor.CreateQueryHelper().ConnectionString,
-                                                    queryConstructor.QueryForFileContentSearch,
-                                                    settings.IndexSearchExcludedSubdirectoryPaths,
-                                                    query,
-                                                    token).ConfigureAwait(false);
+                queryConstructor.CreateQueryHelper().ConnectionString,
+                queryConstructor.QueryForFileContentSearch,
+                settings.IndexSearchExcludedSubdirectoryPaths,
+                query,
+                token).ConfigureAwait(false);
         }
 
         public bool IsFileContentSearch(string actionKeyword)
@@ -168,28 +173,30 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return await windowsIndexSearch(query, querySearchString, token);
         }
 
-        private async Task<List<Result>> WindowsIndexFilesAndFoldersSearchAsync(Query query, string querySearchString, CancellationToken token)
+        private async Task<List<Result>> WindowsIndexFilesAndFoldersSearchAsync(Query query, string querySearchString,
+            CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(settings);
 
             return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
-                                                   queryConstructor.CreateQueryHelper().ConnectionString,
-                                                   queryConstructor.QueryForAllFilesAndFolders,
-                                                   settings.IndexSearchExcludedSubdirectoryPaths,
-                                                   query,
-                                                   token).ConfigureAwait(false);
+                queryConstructor.CreateQueryHelper().ConnectionString,
+                queryConstructor.QueryForAllFilesAndFolders,
+                settings.IndexSearchExcludedSubdirectoryPaths,
+                query,
+                token).ConfigureAwait(false);
         }
 
-        private async Task<List<Result>> WindowsIndexTopLevelFolderSearchAsync(Query query, string path, CancellationToken token)
+        private async Task<List<Result>> WindowsIndexTopLevelFolderSearchAsync(Query query, string path,
+            CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(settings);
 
             return await IndexSearch.WindowsIndexSearchAsync(path,
-                                                   queryConstructor.CreateQueryHelper().ConnectionString,
-                                                   queryConstructor.QueryForTopLevelDirectorySearch,
-                                                   settings.IndexSearchExcludedSubdirectoryPaths,
-                                                   query,
-                                                   token).ConfigureAwait(false);
+                queryConstructor.CreateQueryHelper().ConnectionString,
+                queryConstructor.QueryForTopLevelDirectorySearch,
+                settings.IndexSearchExcludedSubdirectoryPaths,
+                query,
+                token).ConfigureAwait(false);
         }
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
@@ -200,8 +207,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return false;
 
             if (settings.IndexSearchExcludedSubdirectoryPaths
-                            .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory)
-                                        .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
+                .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory)
+                    .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
                 return false;
 
             return IndexSearch.PathIsIndexed(pathToDirectory);
