@@ -51,8 +51,10 @@ namespace Flow.Launcher.Core.Plugin
 
     public class JsonRPCRequestModel : JsonRPCModelBase
     {
+        [JsonPropertyName("method")]
         public string Method { get; set; }
 
+        [JsonPropertyName("parameters")]
         public object[] Parameters { get; set; }
 
         public override string ToString()
