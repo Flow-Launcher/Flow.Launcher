@@ -41,23 +41,23 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        internal void UpdateActionKeyword(ActionKeywordProperty modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
+        internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
-            if (Settings.SearchActionKeyword == Settings.PathSearchActionKeyword)
-                PluginManager.AddActionKeyword(Context.CurrentPluginMetadata.ID, newActionKeyword);
-            else
-                PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
 
             switch (modifiedActionKeyword)
             {
-                case ActionKeywordProperty.SearchActionKeyword:
+                case Settings.ActionKeyword.SearchActionKeyword:
                     Settings.SearchActionKeyword = newActionKeyword;
                     break;
-                case ActionKeywordProperty.PathSearchActionKeyword:
+                case Settings.ActionKeyword.PathSearchActionKeyword:
                     Settings.PathSearchActionKeyword = newActionKeyword;
                     break;
-                case ActionKeywordProperty.FileContentSearchActionKeyword:
+                case Settings.ActionKeyword.FileContentSearchActionKeyword:
                     Settings.FileContentSearchActionKeyword = newActionKeyword;
+                    break;
+                case Settings.ActionKeyword.IndexOnlySearchActionKeyword:
+                    Settings.IndexOnlySearchActionKeyword = newActionKeyword;
                     break;
             }
         }
@@ -65,12 +65,5 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
-    }
-
-    public enum ActionKeywordProperty
-    {
-        SearchActionKeyword,
-        PathSearchActionKeyword,
-        FileContentSearchActionKeyword
     }
 }

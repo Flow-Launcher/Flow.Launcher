@@ -35,27 +35,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             actionKeywordsListView = new List<ActionKeywordView>
             {
-                new ()
-                {
-                     Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search"),
-                     Keyword = this.viewModel.Settings.SearchActionKeyword, 
-                     KeywordProperty = ActionKeywordProperty.SearchActionKeyword
-                },
-                new ()
-                {
-                     Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch"),
-                     Keyword = this.viewModel.Settings.FileContentSearchActionKeyword,
-                     KeywordProperty = ActionKeywordProperty.FileContentSearchActionKeyword
-                },
-                new ()
-                {
-                    Description = viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path"),
-                    Keyword = this.viewModel.Settings.PathSearchActionKeyword,
-                    KeywordProperty = ActionKeywordProperty.PathSearchActionKeyword
-                }
+                new(Settings.ActionKeyword.SearchActionKeyword,
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search")),
+                new(Settings.ActionKeyword.FileContentSearchActionKeyword,
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch")),
+                new(Settings.ActionKeyword.PathSearchActionKeyword,
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")),
+                new(Settings.ActionKeyword.IndexOnlySearchActionKeyword,
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch"))
             };
 
             lbxActionKeywords.ItemsSource = actionKeywordsListView;
+
+            ActionKeywordView.Init(viewModel.Settings, viewModel.Context.API);
 
             RefreshView();
         }
@@ -80,8 +72,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     btnEdit.Visibility = Visibility.Visible;
 
                 if (lbxAccessLinks.Items.Count == 0 && lbxExcludedPaths.Items.Count == 0
-                    && btnDelete.Visibility == Visibility.Visible
-                    && btnEdit.Visibility == Visibility.Visible)
+                                                    && btnDelete.Visibility == Visibility.Visible
+                                                    && btnEdit.Visibility == Visibility.Visible)
                 {
                     btnDelete.Visibility = Visibility.Hidden;
                     btnEdit.Visibility = Visibility.Hidden;
@@ -173,7 +165,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (selectedRow != null)
             {
-                string msg = string.Format(viewModel.Context.API.GetTranslation("plugin_explorer_delete_folder_link"), selectedRow.Path);
+                string msg = string.Format(viewModel.Context.API.GetTranslation("plugin_explorer_delete_folder_link"),
+                    selectedRow.Path);
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -199,7 +192,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 var selectedActionKeyword = lbxActionKeywords.SelectedItem as ActionKeywordView;
 
-                var actionKeywordWindow = new ActionKeywordSetting(viewModel, actionKeywordsListView, selectedActionKeyword);
+                var actionKeywordWindow = new ActionKeywordSetting(viewModel, actionKeywordsListView,
+                    selectedActionKeyword, viewModel.Settings);
 
                 actionKeywordWindow.ShowDialog();
 
@@ -207,7 +201,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
             else
             {
-                var selectedRow = lbxAccessLinks.SelectedItem as AccessLink ?? lbxExcludedPaths.SelectedItem as AccessLink;
+                var selectedRow = lbxAccessLinks.SelectedItem as AccessLink ??
+                                  lbxExcludedPaths.SelectedItem as AccessLink;
 
                 if (selectedRow != null)
                 {
@@ -223,7 +218,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
                         if (expExcludedPaths.IsExpanded)
                         {
-                            var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x => x.Path == selectedRow.Path);
+                            var link = viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.First(x =>
+                                x.Path == selectedRow.Path);
                             link.Path = folderBrowserDialog.SelectedPath;
                         }
                     }
@@ -243,10 +239,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             var folderBrowserDialog = new FolderBrowserDialog();
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                var newAccessLink = new AccessLink
-                {
-                    Path = folderBrowserDialog.SelectedPath
-                };
+                var newAccessLink = new AccessLink {Path = folderBrowserDialog.SelectedPath};
 
                 AddAccessLink(newAccessLink);
             }
@@ -267,10 +260,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 {
                     if (Directory.Exists(s))
                     {
-                        var newFolderLink = new AccessLink
-                        {
-                            Path = s
-                        };
+                        var newFolderLink = new AccessLink {Path = s};
 
                         AddAccessLink(newFolderLink);
                     }
@@ -283,7 +273,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void AddAccessLink(AccessLink newAccessLink)
         {
             if (expAccessLinks.IsExpanded
-                    && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newAccessLink.Path))
+                && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newAccessLink.Path))
             {
                 if (viewModel.Settings.QuickAccessLinks == null)
                     viewModel.Settings.QuickAccessLinks = new List<AccessLink>();
@@ -321,9 +311,37 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
     public class ActionKeywordView
     {
-        public string Description { get; set; }
+        private static Settings _settings;
+        private static IPublicAPI _api;
 
-        public ActionKeywordProperty KeywordProperty { get; init; }
-        public string Keyword { get; set; }
+        public static void Init(Settings settings, IPublicAPI api)
+        {
+            _settings = settings;
+            _api = api;
+        }
+
+        internal ActionKeywordView(Settings.ActionKeyword actionKeyword, string description)
+        {
+            KeywordProperty = actionKeyword;
+            Description = description;
+        }
+
+        public string Description { get; private init; }
+        public string Color => Enabled ?? true ? "Black" : "Gray";
+
+        internal Settings.ActionKeyword KeywordProperty { get; }
+
+        public string Keyword
+        {
+            get => _settings.GetActionKeyword(KeywordProperty);
+            set => _settings.SetActionKeyword(KeywordProperty, value);
+        }
+
+        public bool? Enabled
+        {
+            get => _settings.GetActionKeywordEnable(KeywordProperty);
+            set => _settings.SetActionKeywordEnable(KeywordProperty,
+                value ?? throw new ArgumentException("Unexpected null value"));
+        }
     }
 }

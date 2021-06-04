@@ -1,16 +1,7 @@
 ﻿using Flow.Launcher.Plugin.Explorer.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
@@ -21,32 +12,43 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     {
         private SettingsViewModel settingsViewModel;
 
-        private ActionKeywordView currentActionKeyword;
-
+        public ActionKeywordView CurrentActionKeyword { get; set; }
 
         private List<ActionKeywordView> actionKeywordListView;
 
-        public ActionKeywordSetting(SettingsViewModel settingsViewModel, List<ActionKeywordView> actionKeywordListView, ActionKeywordView selectedActionKeyword)
-        {
-            InitializeComponent();
+        private Settings settings;
 
+        public Visibility Visible => CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
+
+        public ActionKeywordSetting(SettingsViewModel settingsViewModel,
+            List<ActionKeywordView> actionKeywordListView,
+            ActionKeywordView selectedActionKeyword, Settings settings)
+        {
             this.settingsViewModel = settingsViewModel;
 
-            currentActionKeyword = selectedActionKeyword;
+            this.settings = settings;
 
-            txtCurrentActionKeyword.Text = selectedActionKeyword.Keyword;
+            CurrentActionKeyword = selectedActionKeyword;
 
             this.actionKeywordListView = actionKeywordListView;
+            
+            InitializeComponent();
+
         }
 
         private void OnConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            var newActionKeyword = txtCurrentActionKeyword.Text;
+            var newActionKeyword = TxtCurrentActionKeyword.Text;
 
             if (string.IsNullOrEmpty(newActionKeyword))
                 return;
 
-            if (newActionKeyword == currentActionKeyword.Keyword)
+            // reset to global so it does not take up an action keyword when disabled
+            if (!CurrentActionKeyword.Enabled is not null && newActionKeyword != Query.GlobalPluginWildcardSign)
+                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
+                    Query.GlobalPluginWildcardSign, CurrentActionKeyword.Keyword);
+
+            if (newActionKeyword == CurrentActionKeyword.Keyword)
             {
                 Close();
 
@@ -54,18 +56,30 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
             if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword)
-                && currentActionKeyword.KeywordProperty == ActionKeywordProperty.FileContentSearchActionKeyword)
+                && CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword)
             {
-                MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                MessageBox.Show(
+                    settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
 
                 return;
             }
 
             if (!settingsViewModel.IsActionKeywordAlreadyAssigned(newActionKeyword))
             {
-                settingsViewModel.UpdateActionKeyword(currentActionKeyword.KeywordProperty, newActionKeyword, currentActionKeyword.Keyword);
+                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty, newActionKeyword,
+                    CurrentActionKeyword.Keyword);
 
-                actionKeywordListView.FirstOrDefault(x => x.Description == currentActionKeyword.Description).Keyword = newActionKeyword;
+                actionKeywordListView.FirstOrDefault(x => x.Description == CurrentActionKeyword.Description).Keyword =
+                    newActionKeyword;
+
+                // automatically help users set this to enabled if an action keyword is set and currently disabled
+                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.IndexOnlySearchActionKeyword
+                    && !settings.EnabledIndexOnlySearchKeyword)
+                    settings.EnabledIndexOnlySearchKeyword = true;
+
+                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.PathSearchActionKeyword
+                    && !settings.EnabledPathSearchKeyword)
+                    settings.EnabledPathSearchKeyword = true;
 
                 Close();
 
