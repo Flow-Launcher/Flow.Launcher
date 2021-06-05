@@ -271,8 +271,8 @@ namespace Flow.Launcher.Plugin.Shell
         public void Init(PluginInitContext context)
         {
             this.context = context;
-            context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
+            context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)

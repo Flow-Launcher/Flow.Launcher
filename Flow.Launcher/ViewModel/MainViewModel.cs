@@ -494,21 +494,16 @@ namespace Flow.Launcher.ViewModel
                         }
                     }, currentCancellationToken);
 
-                    Task[] tasks = new Task[plugins.Count];
+                    // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
+
+                    Task[] tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                    {
+                        false => QueryTask(plugin),
+                        true => Task.CompletedTask
+                    }).ToArray();
+
                     try
                     {
-                        for (var i = 0; i < plugins.Count; i++)
-                        {
-                            if (!plugins[i].Metadata.Disabled)
-                            {
-                                tasks[i] = QueryTask(plugins[i]);
-                            }
-                            else
-                            {
-                                tasks[i] = Task.CompletedTask; // Avoid Null
-                            }
-                        }
-
                         // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
                         await Task.WhenAll(tasks);
                     }

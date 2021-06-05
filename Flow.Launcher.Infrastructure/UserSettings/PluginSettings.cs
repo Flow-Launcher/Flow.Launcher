@@ -30,6 +30,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                         metadata.ActionKeywords = settings.ActionKeywords;
                         metadata.ActionKeyword = settings.ActionKeywords[0];
                     }
+                    else
+                    {
+                        metadata.ActionKeywords = new List<string>();
+                        metadata.ActionKeyword = string.Empty;
+                    }
                     metadata.Disabled = settings.Disabled;
                     metadata.Priority = settings.Priority;
                 }
