@@ -41,13 +41,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch")),
                 new(Settings.ActionKeyword.PathSearchActionKeyword,
                     viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")),
-                new(Settings.ActionKeyword.IndexOnlySearchActionKeyword,
+                new(Settings.ActionKeyword.IndexSearchActionKeyword,
                     viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch"))
             };
 
             lbxActionKeywords.ItemsSource = actionKeywordsListView;
 
-            ActionKeywordView.Init(viewModel.Settings, viewModel.Context.API);
+            ActionKeywordView.Init(viewModel.Settings);
 
             RefreshView();
         }
@@ -312,12 +312,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     public class ActionKeywordView
     {
         private static Settings _settings;
-        private static IPublicAPI _api;
 
-        public static void Init(Settings settings, IPublicAPI api)
+        public static void Init(Settings settings)
         {
             _settings = settings;
-            _api = api;
         }
 
         internal ActionKeywordView(Settings.ActionKeyword actionKeyword, string description)

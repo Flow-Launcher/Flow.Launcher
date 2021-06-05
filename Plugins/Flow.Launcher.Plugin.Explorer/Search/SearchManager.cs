@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 result.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
             }
 
-            if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexOnlySearchActionKeyword) ||
+            if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword) ||
                  ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)) &&
                 querySearch.Length > 0 &&
                 !querySearch.IsLocationPathString())
@@ -77,8 +77,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                                   keyword == settings.PathSearchActionKeyword,
                 Settings.ActionKeyword.FileContentSearchActionKeyword => keyword ==
                                                                          settings.FileContentSearchActionKeyword,
-                Settings.ActionKeyword.IndexOnlySearchActionKeyword => settings.EnabledIndexOnlySearchKeyword &&
-                                                                       keyword == settings.IndexOnlySearchActionKeyword
+                Settings.ActionKeyword.IndexSearchActionKeyword => settings.EnabledIndexOnlySearchKeyword &&
+                                                                       keyword == settings.IndexSearchActionKeyword
             };
         }
 

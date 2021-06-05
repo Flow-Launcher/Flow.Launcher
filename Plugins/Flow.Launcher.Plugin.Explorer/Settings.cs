@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool EnabledPathSearchKeyword { get; set; }
 
-        public string IndexOnlySearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+        public string IndexSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool EnabledIndexOnlySearchKeyword { get; set; }
 
@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Explorer
             SearchActionKeyword,
             PathSearchActionKeyword,
             FileContentSearchActionKeyword,
-            IndexOnlySearchActionKeyword
+            IndexSearchActionKeyword
         }
 
         internal string GetActionKeyword(ActionKeyword actionKeyword) => actionKeyword switch
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.SearchActionKeyword => SearchActionKeyword,
             ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
-            ActionKeyword.IndexOnlySearchActionKeyword => IndexOnlySearchActionKeyword
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword
         };
 
         internal void SetActionKeyword(ActionKeyword actionKeyword, string keyword) => _ = actionKeyword switch
@@ -54,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.SearchActionKeyword => SearchActionKeyword = keyword,
             ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword = keyword,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword = keyword,
-            ActionKeyword.IndexOnlySearchActionKeyword => IndexOnlySearchActionKeyword = keyword,
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
 
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             ActionKeyword.SearchActionKeyword => EnableSearchActionKeyword,
             ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword,
-            ActionKeyword.IndexOnlySearchActionKeyword => EnabledIndexOnlySearchKeyword,
+            ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword,
             _ => null
         };
 
@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             ActionKeyword.SearchActionKeyword => EnableSearchActionKeyword = enable,
             ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword = enable,
-            ActionKeyword.IndexOnlySearchActionKeyword => EnabledIndexOnlySearchKeyword = enable,
+            ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
     }

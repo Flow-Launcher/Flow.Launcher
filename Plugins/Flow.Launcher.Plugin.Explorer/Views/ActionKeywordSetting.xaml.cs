@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     newActionKeyword;
 
                 // automatically help users set this to enabled if an action keyword is set and currently disabled
-                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.IndexOnlySearchActionKeyword
+                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.IndexSearchActionKeyword
                     && !settings.EnabledIndexOnlySearchKeyword)
                     settings.EnabledIndexOnlySearchKeyword = true;
 
