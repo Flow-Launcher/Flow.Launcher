@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.ViewModels;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -13,6 +13,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private SettingsViewModel settingsViewModel;
 
         public ActionKeywordView CurrentActionKeyword { get; set; }
+
+        private string oldActionKeyword;
 
         private List<ActionKeywordView> actionKeywordListView;
 
@@ -30,32 +32,20 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             CurrentActionKeyword = selectedActionKeyword;
 
+            oldActionKeyword = selectedActionKeyword.Keyword;
+
             this.actionKeywordListView = actionKeywordListView;
             
             InitializeComponent();
 
         }
 
-        private void OnConfirmButtonClick(object sender, RoutedEventArgs e)
+        private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
-            var newActionKeyword = TxtCurrentActionKeyword.Text;
-
-            if (string.IsNullOrEmpty(newActionKeyword))
+            if (string.IsNullOrEmpty(CurrentActionKeyword.Keyword))
                 return;
 
-            // reset to global so it does not take up an action keyword when disabled
-            if (!CurrentActionKeyword.Enabled is not null && newActionKeyword != Query.GlobalPluginWildcardSign)
-                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
-                    Query.GlobalPluginWildcardSign, CurrentActionKeyword.Keyword);
-
-            if (newActionKeyword == CurrentActionKeyword.Keyword)
-            {
-                Close();
-
-                return;
-            }
-
-            if (settingsViewModel.IsNewActionKeywordGlobal(newActionKeyword)
+            if (settingsViewModel.IsNewActionKeywordGlobal(CurrentActionKeyword.Keyword)
                 && CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword)
             {
                 MessageBox.Show(
@@ -64,13 +54,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 return;
             }
 
-            if (!settingsViewModel.IsActionKeywordAlreadyAssigned(newActionKeyword))
+            if (!settingsViewModel.IsActionKeywordAlreadyAssigned(CurrentActionKeyword.Keyword, oldActionKeyword))
             {
-                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty, newActionKeyword,
-                    CurrentActionKeyword.Keyword);
+                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty, CurrentActionKeyword.Keyword, oldActionKeyword);
 
                 actionKeywordListView.FirstOrDefault(x => x.Description == CurrentActionKeyword.Description).Keyword =
-                    newActionKeyword;
+                    CurrentActionKeyword.Keyword;
 
                 // automatically help users set this to enabled if an action keyword is set and currently disabled
                 if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.IndexSearchActionKeyword
@@ -81,16 +70,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     && !settings.EnabledPathSearchKeyword)
                     settings.EnabledPathSearchKeyword = true;
 
+                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.SearchActionKeyword
+                    && !settings.EnableSearchActionKeyword)
+                    settings.EnableSearchActionKeyword = true;
+
                 Close();
 
                 return;
             }
 
-            MessageBox.Show(settingsViewModel.Context.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
-        }
+            // reset to global so it does not take up an action keyword when disabled
+            if (CurrentActionKeyword.Enabled is not null && CurrentActionKeyword.Enabled == false && CurrentActionKeyword.Keyword != Query.GlobalPluginWildcardSign)
+                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty, Query.GlobalPluginWildcardSign, oldActionKeyword);
 
-        private void OnCancelButtonClick(object sender, RoutedEventArgs e)
-        {
             Close();
 
             return;

@@ -62,7 +62,14 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword, string oldActionKeyword)
+        {
+            // PluginManager.ActionKeywordRegistered does not check global action keyword ('*'), so use this logic instead
+            if (newActionKeyword == Query.GlobalPluginWildcardSign)
+                return newActionKeyword == oldActionKeyword;
+
+            return PluginManager.ActionKeywordRegistered(newActionKeyword);
+        }
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
     }

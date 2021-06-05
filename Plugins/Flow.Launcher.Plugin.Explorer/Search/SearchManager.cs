@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool ActionKeywordMatch(Query query, Settings.ActionKeyword allowedActionKeyword)
         {
-            var keyword = query.ActionKeyword.Length == 0 ? "*" : query.ActionKeyword;
+            var keyword = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
 
             return allowedActionKeyword switch
             {

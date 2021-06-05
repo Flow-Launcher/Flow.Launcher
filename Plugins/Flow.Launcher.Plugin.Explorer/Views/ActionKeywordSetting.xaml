@@ -20,23 +20,19 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock Margin="20 10 10 10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Left" Text="Current Action Keyword:" />
+                   HorizontalAlignment="Left" Text="{DynamicResource plugin_explorer_actionkeyword_current}" />
         <TextBox Name="TxtCurrentActionKeyword"
                  Margin="10" Grid.Row="0" Width="105" Grid.Column="1"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Left"
                  Text="{Binding CurrentActionKeyword.Keyword}" />
-        <CheckBox Name="ChkActionKeywordEnabled" Margin="10" Grid.Row="0" Grid.Column="2" Content="Enabled"
+        <CheckBox Name="ChkActionKeywordEnabled" ToolTip="{DynamicResource plugin_explorer_actionkeyword_enabled_tooltip}"
+                  Margin="10" Grid.Row="0" Grid.Column="2" Content="{DynamicResource plugin_explorer_actionkeyword_enabled}"
                   Width="auto"
                   VerticalAlignment="Center" IsChecked="{Binding CurrentActionKeyword.Enabled}"
                   Visibility="{Binding Visible}"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="2" Margin="100 92 0 0" Grid.RowSpan="2">
-            <Button Click="OnConfirmButtonClick"
-                    Margin="10 0 10 0" Width="80" Height="35"
-                    Content="OK" />
-            <Button Click="OnCancelButtonClick"
-                    Margin="10 0 10 0" Width="80" Height="35"
-                    Content="Cancel" />
-        </StackPanel>
+        <Button Click="OnDoneButtonClick" Grid.Row="1" Grid.Column="2"
+                Margin="10 0 10 0" Width="80" Height="35"
+                Content="{DynamicResource plugin_explorer_actionkeyword_done}" />
     </Grid>
 </Window>

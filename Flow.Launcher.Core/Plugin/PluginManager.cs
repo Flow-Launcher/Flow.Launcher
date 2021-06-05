@@ -252,6 +252,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
+            // this method is only checking for action keywords (defined as not '*') registration
+            // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
             return actionKeyword != Query.GlobalPluginWildcardSign
                    && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
