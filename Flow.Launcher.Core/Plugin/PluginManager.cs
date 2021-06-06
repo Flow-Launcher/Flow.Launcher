@@ -21,8 +21,8 @@ namespace Flow.Launcher.Core.Plugin
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
-        public static readonly List<PluginPair> GlobalPlugins = new List<PluginPair>();
-        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new Dictionary<string, PluginPair>();
+        public static readonly HashSet<PluginPair> GlobalPlugins = new();
+        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new ();
 
         public static IPublicAPI API { private set; get; }
 
@@ -51,6 +51,7 @@ namespace Flow.Launcher.Core.Plugin
                 var savable = plugin.Plugin as ISavable;
                 savable?.Save();
             }
+            API.SavePluginSettings();
         }
 
         public static async Task ReloadData()
@@ -97,16 +98,9 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = pair.Plugin switch
-                    {
-                        IAsyncPlugin plugin
-                            => await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                                        () => plugin.InitAsync(new PluginInitContext(pair.Metadata, API))),
-                        IPlugin plugin
-                            => Stopwatch.Debug($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                        () => plugin.Init(new PluginInitContext(pair.Metadata, API))),
-                        _ => throw new ArgumentException(),
-                    };
+                    var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                                                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
+
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
                         $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
@@ -124,7 +118,9 @@ namespace Flow.Launcher.Core.Plugin
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             foreach (var plugin in AllPlugins)
             {
-                foreach (var actionKeyword in plugin.Metadata.ActionKeywords)
+                // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
+                // has multiple global and action keywords because we will only add them here once.
+                foreach (var actionKeyword in plugin.Metadata.ActionKeywords.Distinct())
                 {
                     switch (actionKeyword)
                     {
@@ -147,7 +143,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static List<PluginPair> ValidPluginsForQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
         {
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
             {
@@ -169,19 +165,9 @@ namespace Flow.Launcher.Core.Plugin
 
                 long milliseconds = -1L;
 
-                switch (pair.Plugin)
-                {
-                    case IAsyncPlugin plugin:
-                        milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
-                            async () => results = await plugin.QueryAsync(query, token).ConfigureAwait(false));
-                        break;
-                    case IPlugin plugin:
-                        await Task.Run(() => milliseconds = Stopwatch.Debug($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
-                            () => results = plugin.Query(query)), token).ConfigureAwait(false);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                    async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
+
                 token.ThrowIfCancellationRequested();
                 if (results == null)
                     return results;
@@ -199,7 +185,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-               Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
+                Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
             return results;
@@ -299,9 +285,7 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword == Query.GlobalPluginWildcardSign
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
-                    .Where(x => x == Query.GlobalPluginWildcardSign)
-                    .ToList()
-                    .Count == 1)
+                    .Count(x => x == Query.GlobalPluginWildcardSign) == 1)
             {
                 GlobalPlugins.Remove(plugin);
             }

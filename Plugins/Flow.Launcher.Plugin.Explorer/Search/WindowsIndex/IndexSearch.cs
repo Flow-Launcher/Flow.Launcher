@@ -1,4 +1,5 @@
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
@@ -52,19 +53,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                                                     dataReaderResults.GetString(0),
                                                                     path,
                                                                     path,
-                                                                    query, true, true));
+                                                                    query, 0, true, true));
                             }
                             else
                             {
-                                fileResults.Add(ResultManager.CreateFileResult(path, query, true, true));
+                                fileResults.Add(ResultManager.CreateFileResult(path, query, 0, true, true));
                             }
                         }
                     }
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                return new List<Result>(); // The source code indicates that without adding members, it won't allocate an array
             }
             catch (InvalidOperationException e)
             {
@@ -83,7 +80,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         }
 
         internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
-                                                                  Func<string, string> constructQuery, Query query,
+                                                                  Func<string, string> constructQuery,
+                                                                  List<AccessLink> exclusionList,
+                                                                  Query query,
                                                                   CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, reservedStringPattern);
@@ -92,8 +91,43 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return new List<Result>();
 
             var constructedQuery = constructQuery(searchString);
-            return await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token);
+            return RemoveResultsInExclusionList(
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
+                        exclusionList,
+                        token);
+        }
 
+        private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
+        {
+            var indexExclusionListCount = exclusionList.Count;
+
+            if (indexExclusionListCount == 0)
+                return results;
+
+            var filteredResults = new List<Result>();
+
+            for (var index = 0; index < results.Count; index++)
+            {
+                token.ThrowIfCancellationRequested();
+
+                var excludeResult = false;
+
+                for (var i = 0; i < indexExclusionListCount; i++)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
+                    {
+                        excludeResult = true;
+                        break;
+                    }
+                }
+
+                if (!excludeResult)
+                    filteredResults.Add(results[index]);
+            }
+
+            return filteredResults;
         }
 
         internal static bool PathIsIndexed(string path)

@@ -54,51 +54,43 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public Result Result(string query, IPublicAPI api)
         {
             string title;
-
-            var nameMatchResult = StringMatcher.FuzzySearch(query, Name);
-            var descriptionMatchResult = StringMatcher.FuzzySearch(query, Description);
-
-            var pathMatchResult = new MatchResult(false, 0, new List<int>(), 0);
-            if (ExecutableName != null) // only lnk program will need this one
-                pathMatchResult = StringMatcher.FuzzySearch(query, ExecutableName);
-
-            MatchResult matchResult = nameMatchResult;
-
-            if (nameMatchResult.Score < descriptionMatchResult.Score)
-                matchResult = descriptionMatchResult;
-
-            if (!matchResult.IsSearchPrecisionScoreMet())
-            {
-                if (pathMatchResult.IsSearchPrecisionScoreMet())
-                    matchResult = pathMatchResult;
-                else return null;
-            }
+            MatchResult matchResult;
 
             // We suppose Name won't be null
-            if (Description == null || Name.StartsWith(Description))
+            if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
             {
                 title = Name;
+                matchResult = StringMatcher.FuzzySearch(query, title);
             }
             else if (Description.StartsWith(Name))
             {
                 title = Description;
+                matchResult = StringMatcher.FuzzySearch(query, Description);
             }
             else
             {
                 title = $"{Name}: {Description}";
-
-                if (matchResult == descriptionMatchResult)
+                var nameMatch = StringMatcher.FuzzySearch(query, Name);
+                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                if (desciptionMatch.Score > nameMatch.Score)
                 {
-                    for (int i = 0; i < descriptionMatchResult.MatchData.Count; i++)
+                    for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
                     {
-                        matchResult.MatchData[i] += Name.Length + 2; // 2 is ": "
+                        desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
                     }
+                    matchResult = desciptionMatch;
                 }
+                else matchResult = nameMatch;
             }
 
-            if (matchResult == pathMatchResult)
+            if (!matchResult.IsSearchPrecisionScoreMet())
             {
-                // path Match won't have valid highlight data
+                if (ExecutableName != null) // only lnk program will need this one
+                    matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+
+                if (!matchResult.IsSearchPrecisionScoreMet())
+                    return null;
+
                 matchResult.MatchData = new List<int>();
             }
 

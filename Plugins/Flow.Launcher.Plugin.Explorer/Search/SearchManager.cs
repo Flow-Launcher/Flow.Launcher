@@ -109,6 +109,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
                                                     queryConstructor.CreateQueryHelper().ConnectionString,
                                                     queryConstructor.QueryForFileContentSearch,
+                                                    settings.IndexSearchExcludedSubdirectoryPaths,
                                                     query,
                                                     token).ConfigureAwait(false);
         }
@@ -144,6 +145,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForAllFilesAndFolders,
+                                                   settings.IndexSearchExcludedSubdirectoryPaths,
                                                    query,
                                                    token).ConfigureAwait(false);
         }
@@ -155,6 +157,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return await IndexSearch.WindowsIndexSearchAsync(path,
                                                    queryConstructor.CreateQueryHelper().ConnectionString,
                                                    queryConstructor.QueryForTopLevelDirectorySearch,
+                                                   settings.IndexSearchExcludedSubdirectoryPaths,
                                                    query,
                                                    token).ConfigureAwait(false);
         }

@@ -21,6 +21,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string PreinstalledDirectory = Path.Combine(ProgramDirectory, Plugins);
         public const string Issue = "https://github.com/Flow-Launcher/Flow.Launcher/issues/new";
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
+        public const string Documentation = "https://flow-launcher.github.io/docs/#/usage-tips";
 
         public static readonly int ThumbnailSize = 64;
         private static readonly string ImagesDirectory = Path.Combine(ProgramDirectory, "Images");

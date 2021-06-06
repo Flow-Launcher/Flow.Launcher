@@ -62,11 +62,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
                         folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
-                            fileSystemInfo.FullName, query, true, false));
+                            fileSystemInfo.FullName, query, 0, true, false));
                     }
                     else
                     {
-                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
+                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, 0, true, false));
                     }
 
                     token.ThrowIfCancellationRequested();

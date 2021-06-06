@@ -36,6 +36,7 @@
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for transliterating Chinese</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -107,6 +108,7 @@
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
+    <system:String x:Key="documentation">Usage Tips:</system:String>
 
     <!--Priority Setting Dialog-->
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>

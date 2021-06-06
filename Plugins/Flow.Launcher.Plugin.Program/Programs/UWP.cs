@@ -17,6 +17,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -63,14 +64,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (hResult == Hresult.Ok)
             {
                 var apps = new List<Application>();
-             
+
                 List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
-                foreach(var _app in _apps)
+                foreach (var _app in _apps)
                 {
                     var app = new Application(_app, this);
                     apps.Add(app);
                 }
-                
+
                 Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
             }
             else
@@ -80,6 +81,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                 "|Error caused while trying to get the details of the UWP program", e);
 
                 Apps = new List<Application>().ToArray();
+            }
+
+            if (Marshal.ReleaseComObject(stream) > 0)
+            {
+                Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
             }
         }
 
@@ -275,7 +281,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 MatchResult matchResult;
 
                 // We suppose Name won't be null
-                if (Description == null || Name.StartsWith(Description))
+                if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
                 {
                     title = Name;
                     matchResult = StringMatcher.FuzzySearch(query, title);

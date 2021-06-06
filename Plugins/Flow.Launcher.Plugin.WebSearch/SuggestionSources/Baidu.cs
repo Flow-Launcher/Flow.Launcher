@@ -30,11 +30,6 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
                 return null;
             }
-            catch (OperationCanceledException)
-            {
-                return null;
-            }
-
 
             if (string.IsNullOrEmpty(result)) return new List<string>();
             Match match = _reg.Match(result);

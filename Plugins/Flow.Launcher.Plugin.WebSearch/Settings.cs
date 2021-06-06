@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             new SearchSource
             {
                 Title = "Google",
-                ActionKeyword = "g",
+                ActionKeyword = "*",
                 Icon = "google.png",
                 Url = "https://www.google.com/search?q={q}",
                 Enabled = true

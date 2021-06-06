@@ -8,7 +8,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-    public class FlowLauncherJsonStorage<T> : JsonStrorage<T> where T : new()
+    public class FlowLauncherJsonStorage<T> : JsonStorage<T> where T : new()
     {
         public FlowLauncherJsonStorage()
         {

@@ -12,7 +12,7 @@ using Flow.Launcher.Plugin.Caculator.Views;
 
 namespace Flow.Launcher.Plugin.Caculator
 {
-    public class Main : IPlugin, IPluginI18n, ISavable, ISettingProvider
+    public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         private static readonly Regex RegValidExpressChar = new Regex(
                         @"^(" +
@@ -24,14 +24,18 @@ namespace Flow.Launcher.Plugin.Caculator
                         @"[ei]|[0-9]|[\+\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
-        private static readonly Engine MagesEngine;
+        private static Engine MagesEngine;
         private PluginInitContext Context { get; set; }
 
         private static Settings _settings;
         private static SettingsViewModel _viewModel;
 
-        static Main()
+        public void Init(PluginInitContext context)
         {
+            Context = context;
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(_settings);
+            
             MagesEngine = new Engine(new Configuration
             {
                 Scope = new Dictionary<string, object>
@@ -39,14 +43,6 @@ namespace Flow.Launcher.Plugin.Caculator
                     { "e", Math.E }, // e is not contained in the default mages engine
                 }
             });
-        }
-
-        public void Init(PluginInitContext context)
-        {
-            Context = context;
-
-            _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
         }
 
         public List<Result> Query(Query query)
@@ -184,11 +180,6 @@ namespace Flow.Launcher.Plugin.Caculator
         public Control CreateSettingPanel()
         {
             return new CalculatorSettings(_viewModel);
-        }
-
-        public void Save()
-        {
-            _viewModel.Save();
         }
     }
 }

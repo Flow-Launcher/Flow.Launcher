@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
@@ -156,8 +159,17 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Hibernate",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
-                    IcoPath = "Images\\sleep.png", // Icon change needed
-                    Action = c => FormsApplication.SetSuspendState(PowerState.Hibernate, false, false)
+                    IcoPath = "Images\\hibernate.png",
+                    Action= c =>
+                    {
+                        var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.UseShellExecute = true;
+                        
+                        Process.Start(info);
+                        
+                        return true;
+                    }
                 },
                 new Result
                 {
@@ -249,7 +261,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = "Check for new Flow Launcher update",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update"),
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
@@ -257,8 +269,43 @@ namespace Flow.Launcher.Plugin.Sys
                         context.API.CheckForNewUpdate();
                         return true;
                     }
+                },
+                new Result
+                {
+                    Title = "Open Log Location",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
+                        FilesFolders.OpenPath(logPath);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher Tips",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        SearchWeb.NewTabInBrowser(Constant.Documentation);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher UserData Folder",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        FilesFolders.OpenPath(DataLocation.DataDirectory());
+                        return true;
+                    }
                 }
             });
+
             return results;
         }
 

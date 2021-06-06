@@ -108,7 +108,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void expActionKeywords_Click(object sender, RoutedEventArgs e)
         {
             if (expActionKeywords.IsExpanded)
-                expActionKeywords.Height = 215;
+                expActionKeywords.Height = 205;
 
             if (expExcludedPaths.IsExpanded)
                 expExcludedPaths.IsExpanded = false;
@@ -128,7 +128,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void expAccessLinks_Click(object sender, RoutedEventArgs e)
         {
             if (expAccessLinks.IsExpanded)
-                expAccessLinks.Height = 215;
+                expAccessLinks.Height = 205;
 
             if (expExcludedPaths.IsExpanded)
                 expExcludedPaths.IsExpanded = false;
