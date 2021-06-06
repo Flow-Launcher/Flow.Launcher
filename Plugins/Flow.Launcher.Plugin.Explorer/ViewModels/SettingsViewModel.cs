@@ -44,30 +44,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
             PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
-
-            switch (modifiedActionKeyword)
-            {
-                case Settings.ActionKeyword.SearchActionKeyword:
-                    Settings.SearchActionKeyword = newActionKeyword;
-                    break;
-                case Settings.ActionKeyword.PathSearchActionKeyword:
-                    Settings.PathSearchActionKeyword = newActionKeyword;
-                    break;
-                case Settings.ActionKeyword.FileContentSearchActionKeyword:
-                    Settings.FileContentSearchActionKeyword = newActionKeyword;
-                    break;
-                case Settings.ActionKeyword.IndexSearchActionKeyword:
-                    Settings.IndexSearchActionKeyword = newActionKeyword;
-                    break;
-            }
         }
 
-        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword, string oldActionKeyword)
+        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword)
         {
-            // PluginManager.ActionKeywordRegistered does not check global action keyword ('*'), so use this logic instead
-            if (newActionKeyword == Query.GlobalPluginWildcardSign)
-                return newActionKeyword == oldActionKeyword;
-
             return PluginManager.ActionKeywordRegistered(newActionKeyword);
         }
 

@@ -25,13 +25,15 @@
                  Margin="10" Grid.Row="0" Width="105" Grid.Column="1"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Left"
-                 Text="{Binding CurrentActionKeyword.Keyword}" />
+                 Text="{Binding ActionKeyword}" 
+                 PreviewKeyDown="TxtCurrentActionKeyword_OnKeyDown"/>
         <CheckBox Name="ChkActionKeywordEnabled" ToolTip="{DynamicResource plugin_explorer_actionkeyword_enabled_tooltip}"
                   Margin="10" Grid.Row="0" Grid.Column="2" Content="{DynamicResource plugin_explorer_actionkeyword_enabled}"
                   Width="auto"
-                  VerticalAlignment="Center" IsChecked="{Binding CurrentActionKeyword.Enabled}"
+                  VerticalAlignment="Center" IsChecked="{Binding Enabled}"
                   Visibility="{Binding Visible}"/>
-        <Button Click="OnDoneButtonClick" Grid.Row="1" Grid.Column="2"
+        <Button Name="DownButton"
+                Click="OnDoneButtonClick" Grid.Row="1" Grid.Column="2"
                 Margin="10 0 10 0" Width="80" Height="35"
                 Content="{DynamicResource plugin_explorer_actionkeyword_done}" />
     </Grid>

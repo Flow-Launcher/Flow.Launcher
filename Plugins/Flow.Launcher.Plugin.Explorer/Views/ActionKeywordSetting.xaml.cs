@@ -1,7 +1,10 @@
 using Flow.Launcher.Plugin.Explorer.ViewModels;
+using ICSharpCode.SharpZipLib.Zip;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
@@ -14,16 +17,28 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public ActionKeywordView CurrentActionKeyword { get; set; }
 
-        private string oldActionKeyword;
+        public string ActionKeyword
+        {
+            get => _actionKeyword;
+            set
+            {
+                // Set Enable to be true if user change ActionKeyword
+                if (Enabled is not null)
+                    Enabled = true;
+                _actionKeyword = value;
+            }
+        }
 
-        private List<ActionKeywordView> actionKeywordListView;
+        public bool? Enabled { get; set; }
+
 
         private Settings settings;
+        private string _actionKeyword;
 
-        public Visibility Visible => CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility Visible =>
+            CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
 
         public ActionKeywordSetting(SettingsViewModel settingsViewModel,
-            List<ActionKeywordView> actionKeywordListView,
             ActionKeywordView selectedActionKeyword, Settings settings)
         {
             this.settingsViewModel = settingsViewModel;
@@ -32,21 +47,31 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             CurrentActionKeyword = selectedActionKeyword;
 
-            oldActionKeyword = selectedActionKeyword.Keyword;
+            ActionKeyword = selectedActionKeyword.Keyword;
+            Enabled = selectedActionKeyword.Enabled;
 
-            this.actionKeywordListView = actionKeywordListView;
-            
             InitializeComponent();
 
+            TxtCurrentActionKeyword.Focus();
         }
 
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(CurrentActionKeyword.Keyword))
-                return;
+            if (string.IsNullOrEmpty(ActionKeyword))
+                ActionKeyword = Query.GlobalPluginWildcardSign;
 
-            if (settingsViewModel.IsNewActionKeywordGlobal(CurrentActionKeyword.Keyword)
-                && CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword)
+            if (CurrentActionKeyword.Keyword == ActionKeyword && CurrentActionKeyword.Enabled == Enabled)
+            {
+                Close();
+                return;
+            }
+
+
+            if (CurrentActionKeyword is
+            {
+                Keyword: Query.GlobalPluginWildcardSign,
+                KeywordProperty: Settings.ActionKeyword.FileContentSearchActionKeyword
+            })
             {
                 MessageBox.Show(
                     settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
@@ -54,38 +79,46 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 return;
             }
 
-            if (!settingsViewModel.IsActionKeywordAlreadyAssigned(CurrentActionKeyword.Keyword, oldActionKeyword))
+            var oldActionKeyword = CurrentActionKeyword.Keyword;
+
+
+            // == because of nullable
+            if (Enabled == false || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
             {
-                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty, CurrentActionKeyword.Keyword, oldActionKeyword);
+                // Update View Data
+                CurrentActionKeyword.Keyword = ActionKeyword;
+                CurrentActionKeyword.Enabled = Enabled;
 
-                actionKeywordListView.FirstOrDefault(x => x.Description == CurrentActionKeyword.Description).Keyword =
-                    CurrentActionKeyword.Keyword;
-
-                // automatically help users set this to enabled if an action keyword is set and currently disabled
-                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.IndexSearchActionKeyword
-                    && !settings.EnabledIndexOnlySearchKeyword)
-                    settings.EnabledIndexOnlySearchKeyword = true;
-
-                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.PathSearchActionKeyword
-                    && !settings.EnabledPathSearchKeyword)
-                    settings.EnabledPathSearchKeyword = true;
-
-                if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.SearchActionKeyword
-                    && !settings.EnableSearchActionKeyword)
-                    settings.EnableSearchActionKeyword = true;
+                switch (Enabled)
+                {
+                    // reset to global so it does not take up an action keyword when disabled
+                    //     not for null Enable plugin
+                    case false when oldActionKeyword != Query.GlobalPluginWildcardSign:
+                        settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
+                            Query.GlobalPluginWildcardSign, oldActionKeyword);
+                        break;
+                    default:
+                        settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
+                            CurrentActionKeyword.Keyword, oldActionKeyword);
+                        break;
+                }
 
                 Close();
-
                 return;
             }
 
-            // reset to global so it does not take up an action keyword when disabled
-            if (CurrentActionKeyword.Enabled is not null && CurrentActionKeyword.Enabled == false && CurrentActionKeyword.Keyword != Query.GlobalPluginWildcardSign)
-                settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty, Query.GlobalPluginWildcardSign, oldActionKeyword);
+            // The keyword is not valid, so show message
+            MessageBox.Show(settingsViewModel.Context.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
+        }
 
-            Close();
-
-            return;
+        private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                DownButton.Focus();
+                OnDoneButtonClick(sender, e);
+                e.Handled = true;
+            }
         }
     }
 }
