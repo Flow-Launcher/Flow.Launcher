@@ -550,23 +550,10 @@ namespace Flow.Launcher.ViewModel
             string lastKeyword = _lastQuery.ActionKeyword;
 
             string keyword = query.ActionKeyword;
-            if (string.IsNullOrEmpty(lastKeyword))
+
+            if (lastKeyword != keyword)
             {
-                if (!string.IsNullOrEmpty(keyword))
-                {
-                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
-                }
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(keyword))
-                {
-                    Results.KeepResultsExcept(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
-                }
-                else if (lastKeyword != keyword)
-                {
-                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
-                }
+                Results.Clear();
             }
         }
 
