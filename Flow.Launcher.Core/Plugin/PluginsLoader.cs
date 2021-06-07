@@ -11,6 +11,8 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Diagnostics;
+using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -85,11 +87,7 @@ namespace Flow.Launcher.Core.Plugin
                             return;
                         }
 
-                        plugins.Add(new PluginPair
-                        {
-                            Plugin = plugin,
-                            Metadata = metadata
-                        });
+                        plugins.Add(new PluginPair {Plugin = plugin, Metadata = metadata});
                     });
                 metadata.InitTime += milliseconds;
             }
@@ -123,24 +121,42 @@ namespace Flow.Launcher.Core.Plugin
             // PATH or from the given pythonDirectory
             if (string.IsNullOrEmpty(settings.PythonDirectory))
             {
-                var paths = Environment.GetEnvironmentVariable(PATH);
-                if (paths != null)
+                var whereProcess = Process.Start(new ProcessStartInfo
                 {
-                    var pythonInPath = paths
-                        .Split(';')
-                        .Where(p => p.ToLower().Contains(Python))
-                        .Any();
+                    FileName = "where.exe",
+                    Arguments = "pythonw",
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    UseShellExecute = false
+                });
 
-                    if (pythonInPath)
-                    {
-                        Constant.PythonPath =
-                            Path.Combine(paths.Split(';').Where(p => p.ToLower().Contains(Python)).FirstOrDefault(), PythonExecutable);
-                        settings.PythonDirectory = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, Constant.PythonPath);
-                    }
-                    else
-                    {
-                        Log.Error("PluginsLoader", "Failed to set Python path despite the environment variable PATH is found", "PythonPlugins");
-                    }
+                var pythonPath = whereProcess?.StandardOutput.ReadToEnd().Trim();
+
+                if (!string.IsNullOrEmpty(pythonPath))
+                {
+                    pythonPath = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, pythonPath);
+                }
+
+                if (string.IsNullOrEmpty(pythonPath))
+                {
+                    var paths = Environment.GetEnvironmentVariable(PATH);
+
+                    pythonPath = paths?
+                        .Split(';')
+                        .FirstOrDefault(p => p.ToLower().Contains(Python));
+                }
+
+                if (!string.IsNullOrEmpty(pythonPath))
+                {
+                    Constant.PythonPath = Path.Combine(pythonPath, PythonExecutable);
+                    settings.PythonDirectory =
+                        FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, Constant.PythonPath);
+                }
+                else
+                {
+                    Log.Error("PluginsLoader",
+                        "Failed to set Python path despite the environment variable PATH is found",
+                        "PythonPlugins");
                 }
             }
             else
@@ -153,17 +169,17 @@ namespace Flow.Launcher.Core.Plugin
                 else
                 {
                     Log.Error("PluginsLoader", $"Tried to automatically set from Settings.PythonDirectory " +
-                        $"but can't find python executable in {path}", "PythonPlugins");
+                                               $"but can't find python executable in {path}", "PythonPlugins");
                 }
             }
 
             if (string.IsNullOrEmpty(settings.PythonDirectory))
             {
                 if (MessageBox.Show("Flow detected you have installed Python plugins, " +
-                        "would you like to install Python to run them? " +
-                        Environment.NewLine + Environment.NewLine +
-                        "Click no if it's already installed, " +
-                        "and you will be prompted to select the folder that contains the Python executable",
+                                    "would you like to install Python to run them? " +
+                                    Environment.NewLine + Environment.NewLine +
+                                    "Click no if it's already installed, " +
+                                    "and you will be prompted to select the folder that contains the Python executable",
                         string.Empty, MessageBoxButtons.YesNo) == DialogResult.No
                     && string.IsNullOrEmpty(settings.PythonDirectory))
                 {
@@ -196,7 +212,8 @@ namespace Flow.Launcher.Core.Plugin
                     DroplexPackage.Drop(App.python3_9_1).Wait();
 
                     var installedPythonDirectory =
-                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python\Python39");
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                            @"Programs\Python\Python39");
                     var pythonPath = Path.Combine(installedPythonDirectory, PythonExecutable);
                     if (FilesFolders.FileExists(pythonPath))
                     {
@@ -214,7 +231,8 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(settings.PythonDirectory))
             {
-                MessageBox.Show("Unable to set Python executable path, please try from Flow's settings (scroll down to the bottom).");
+                MessageBox.Show(
+                    "Unable to set Python executable path, please try from Flow's settings (scroll down to the bottom).");
                 Log.Error("PluginsLoader",
                     $"Not able to successfully set Python path, the PythonDirectory variable is still an empty string.",
                     "PythonPlugins");
@@ -226,8 +244,7 @@ namespace Flow.Launcher.Core.Plugin
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new PythonPlugin(Constant.PythonPath),
-                    Metadata = metadata
+                    Plugin = new PythonPlugin(Constant.PythonPath), Metadata = metadata
                 })
                 .ToList();
         }
@@ -238,8 +255,7 @@ namespace Flow.Launcher.Core.Plugin
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
-                    Metadata = metadata
+                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
                 });
         }
     }
