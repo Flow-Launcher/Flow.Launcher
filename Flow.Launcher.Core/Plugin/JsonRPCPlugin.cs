@@ -91,6 +91,8 @@ namespace Flow.Launcher.Core.Plugin
                         else
                         {
                             string actionReponse = ExecuteCallback(result.JsonRPCAction);
+                            if (string.IsNullOrEmpty(actionReponse))
+                                return false;
                             JsonRPCRequestModel jsonRpcRequestModel =
                                 JsonSerializer.Deserialize<JsonRPCRequestModel>(actionReponse);
                             if (jsonRpcRequestModel != null
