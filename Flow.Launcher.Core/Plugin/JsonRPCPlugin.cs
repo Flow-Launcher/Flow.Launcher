@@ -46,7 +46,6 @@ namespace Flow.Launcher.Core.Plugin
         }
 
 
-
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
             if (output == Stream.Null) return null;
@@ -71,7 +70,7 @@ namespace Flow.Launcher.Core.Plugin
             var results = new List<Result>();
             if (queryResponseModel.Result == null) return null;
 
-            if(!string.IsNullOrEmpty(queryResponseModel.DebugMessage))
+            if (!string.IsNullOrEmpty(queryResponseModel.DebugMessage))
             {
                 context.API.ShowMsg(queryResponseModel.DebugMessage);
             }
@@ -177,12 +176,11 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (result.StartsWith("DEBUG:"))
                 {
-                    MessageBox.Show(new Form { TopMost = true }, result.Substring(6));
+                    MessageBox.Show(new Form {TopMost = true}, result.Substring(6));
                     return string.Empty;
                 }
 
                 return result;
-
             }
             catch (Exception e)
             {
@@ -248,7 +246,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public Task InitAsync(PluginInitContext context)
+        public virtual Task InitAsync(PluginInitContext context)
         {
             this.context = context;
             return Task.CompletedTask;

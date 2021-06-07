@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
+using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -59,6 +60,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public override string ToString()
         {
+            return JsonSerializer.Serialize(this);
+            
             string rpc = string.Empty;
             if (Parameters != null && Parameters.Length > 0)
             {
@@ -78,9 +81,9 @@ namespace Flow.Launcher.Core.Plugin
         => parameter switch
         {
             null => "null",
-            string _ => $@"\""{ReplaceEscapes(parameter.ToString())}\""",
-            bool _ => $@"{parameter.ToString().ToLower()}",
-            _ => parameter.ToString()
+            string p => $@"\""{ReplaceEscapes(p)}\""",
+            bool p => $@"{p.ToString().ToLower()}",
+            _ => $@"\""{ReplaceEscapes(parameter.ToString())}\"""
         };
 
 
@@ -97,11 +100,7 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public class JsonRPCServerRequestModel : JsonRPCRequestModel
     {
-        public override string ToString()
-        {
-            string rpc = base.ToString();
-            return rpc + "}";
-        }
+        
     }
 
     /// <summary>
@@ -110,12 +109,6 @@ namespace Flow.Launcher.Core.Plugin
     public class JsonRPCClientRequestModel : JsonRPCRequestModel
     {
         public bool DontHideAfterAction { get; set; }
-
-        public override string ToString()
-        {
-            string rpc = base.ToString();
-            return rpc + "}";
-        }
     }
 
     /// <summary>
