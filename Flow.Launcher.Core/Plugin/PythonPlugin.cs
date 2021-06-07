@@ -28,17 +28,19 @@ namespace Flow.Launcher.Core.Plugin
             var path = Path.Combine(Constant.ProgramDirectory, JsonRPC);
             _startInfo.EnvironmentVariables["PYTHONPATH"] = path;
 
+            //Add -B flag to tell python don't write .py[co] files. Because .pyc contains location infos which will prevent python portable
+            _startInfo.ArgumentList.Add("-B");
         }
 
         protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
         {
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {
-                Method = "query",
-                Parameters = new object[] { query.Search },
+                Method = "query", Parameters = new object[] {query.Search},
             };
-            //Add -B flag to tell python don't write .py[co] files. Because .pyc contains location infos which will prevent python portable
-            _startInfo.Arguments = $"-B \"{context.CurrentPluginMetadata.ExecuteFilePath}\" \"{request}\"";
+
+            _startInfo.ArgumentList[2] = request.ToString();
+
             // todo happlebao why context can't be used in constructor
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
@@ -47,22 +49,31 @@ namespace Flow.Launcher.Core.Plugin
 
         protected override string ExecuteCallback(JsonRPCRequestModel rpcRequest)
         {
-            _startInfo.Arguments = $"-B \"{context.CurrentPluginMetadata.ExecuteFilePath}\" \"{rpcRequest}\"";
+            _startInfo.ArgumentList[2] = rpcRequest.ToString();
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
             // TODO: Async Action
             return Execute(_startInfo);
         }
 
-        protected override string ExecuteContextMenu(Result selectedResult) {
-            JsonRPCServerRequestModel request = new JsonRPCServerRequestModel {
-                Method = "context_menu",
-                Parameters = new object[] { selectedResult.ContextData },
+        protected override string ExecuteContextMenu(Result selectedResult)
+        {
+            JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
+            {
+                Method = "context_menu", Parameters = new object[] {selectedResult.ContextData},
             };
             _startInfo.Arguments = $"-B \"{context.CurrentPluginMetadata.ExecuteFilePath}\" \"{request}\"";
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
             // TODO: Async Action
             return Execute(_startInfo);
+        }
+
+        public override Task InitAsync(PluginInitContext context)
+        {
+            this.context = context;
+            _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
+            _startInfo.ArgumentList.Add("");
+            return Task.CompletedTask;
         }
     }
 }
