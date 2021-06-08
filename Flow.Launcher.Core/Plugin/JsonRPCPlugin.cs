@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flow.Launcher.Core.Resource;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -45,13 +46,14 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
+        private static readonly JsonSerializerOptions _options = new() {Converters = {new JsonObjectConverter()}};
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
             if (output == Stream.Null) return null;
 
-            JsonRPCQueryResponseModel queryResponseModel = await
-                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output);
+            var queryResponseModel = await
+                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, _options);
 
             return ParseResults(queryResponseModel);
         }
@@ -60,10 +62,11 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (string.IsNullOrEmpty(output)) return null;
 
-            JsonRPCQueryResponseModel queryResponseModel =
-                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output);
+            var queryResponseModel =
+                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, _options);
             return ParseResults(queryResponseModel);
         }
+
 
         private List<Result> ParseResults(JsonRPCQueryResponseModel queryResponseModel)
         {
@@ -85,7 +88,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
                         {
-                            ExecuteFlowLauncherAPI(result.JsonRPCAction.Method.Substring(4),
+                            ExecuteFlowLauncherAPI(result.JsonRPCAction.Method[14..],
                                 result.JsonRPCAction.Parameters);
                         }
                         else

@@ -13,6 +13,7 @@
  * 
  */
 
+using Flow.Launcher.Core.Resource;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -108,6 +109,7 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public class JsonRPCClientRequestModel : JsonRPCRequestModel
     {
+        [JsonPropertyName("dontHideAfterAction")]
         public bool DontHideAfterAction { get; set; }
     }
 
