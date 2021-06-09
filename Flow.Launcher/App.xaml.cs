@@ -13,24 +13,28 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
     public partial class App : IDisposable, ISingleInstanceApp
     {
-        public static PublicAPIInstance API { get; private set; }
+        public static IPublicAPI API { get; private set; }
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
         private Settings _settings;
         private MainViewModel _mainVM;
         private SettingWindowViewModel _settingsVM;
-        private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
-        private readonly Portable _portable = new Portable();
-        private readonly PinyinAlphabet _alphabet = new PinyinAlphabet();
-        private StringMatcher _stringMatcher;
+        private IStringMatcher _stringMatcher;
+        private IUpdater _updater;
+
+        private IServiceProvider _serviceProvider;
+        
 
         [STAThread]
         public static void Main()
@@ -49,7 +53,11 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
-                _portable.PreStartCleanUpAfterPortabilityUpdate();
+                ServiceCollection services = new ServiceCollection();
+                ConfigureService(services);
+                _serviceProvider = services.BuildServiceProvider();
+
+                _updater = _serviceProvider.GetRequiredService<IUpdater>();
 
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
@@ -58,26 +66,23 @@ namespace Flow.Launcher
 
                 ImageLoader.Initialize();
 
-                _settingsVM = new SettingWindowViewModel(_updater, _portable);
-                _settings = _settingsVM.Settings;
-
-                _alphabet.Initialize(_settings);
-                _stringMatcher = new StringMatcher(_alphabet);
-                StringMatcher.Instance = _stringMatcher;
-                _stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
-
+                _settings = _serviceProvider.GetRequiredService<Settings>();
+                
                 PluginManager.LoadPlugins(_settings.PluginSettings);
-                _mainVM = new MainViewModel(_settings);
-                API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
+
+                API = _serviceProvider.GetRequiredService<IPublicAPI>();
+
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
                 
                 await PluginManager.InitializePlugins(API);
-                var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
+                _mainVM = _serviceProvider.GetRequiredService<MainViewModel>();
+                var window = _serviceProvider.GetRequiredService<MainWindow>();
+                
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
@@ -85,6 +90,8 @@ namespace Flow.Launcher
                 // load plugin before change language, because plugin language also needs be changed
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+                
+                
                 // main windows needs initialized before theme change because of blur settigns
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
@@ -96,9 +103,30 @@ namespace Flow.Launcher
                 AutoStartup();
                 AutoUpdates();
 
+
                 _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
+        }
+
+        private static void ConfigureService(ServiceCollection services)
+        {
+            services.AddSingleton<FlowLauncherJsonStorage<Settings>>()
+                .AddSingleton<Settings>(serviceProvider => serviceProvider.GetRequiredService<FlowLauncherJsonStorage<Settings>>().Load())
+                .AddSingleton<IAlphabet, PinyinAlphabet>()
+                .AddSingleton<IStringMatcher,FuzzyStringMatcher>()
+                .AddSingleton<MainViewModel>()
+                .AddSingleton<IUpdater, Updater>(_ => new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo))
+                .AddSingleton<IPortable, Portable>(_ =>
+                {
+                    var portable = new Portable();
+                    portable.PreStartCleanUpAfterPortabilityUpdate();
+                    return portable;
+                }).AddSingleton<SettingWindowViewModel>()
+                .AddSingleton<MainViewModel>()
+                .AddSingleton<MainWindow>()
+                .AddSingleton<IPublicAPI, PublicAPIInstance>();
+
         }
 
 

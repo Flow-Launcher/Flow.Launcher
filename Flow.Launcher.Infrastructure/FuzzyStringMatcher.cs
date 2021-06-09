@@ -1,3 +1,4 @@
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
@@ -5,27 +6,27 @@ using System.Linq;
 
 namespace Flow.Launcher.Infrastructure
 {
-    public class StringMatcher
+    public interface IStringMatcher
     {
-        private readonly MatchOption _defaultMatchOption = new MatchOption();
+        public MatchResult Search(string query, string stringToCompare);
+    }
+    
+    public class FuzzyStringMatcher:IStringMatcher
+    {
+        private readonly MatchOption _defaultMatchOption = new();
 
-        public SearchPrecisionScore UserSettingSearchPrecision { get; set; }
+        private readonly Settings _settings;
+        public SearchPrecisionScore UserSettingSearchPrecision => _settings.QuerySearchPrecision;
 
         private readonly IAlphabet _alphabet;
 
-        public StringMatcher(IAlphabet alphabet = null)
+        public FuzzyStringMatcher(Settings settings, IAlphabet alphabet = null)
         {
             _alphabet = alphabet;
+            _settings = settings;
         }
 
-        public static StringMatcher Instance { get; internal set; }
-
-        public static MatchResult FuzzySearch(string query, string stringToCompare)
-        {
-            return Instance.FuzzyMatch(query, stringToCompare);
-        }
-
-        public MatchResult FuzzyMatch(string query, string stringToCompare)
+        public MatchResult Search(string query, string stringToCompare)
         {
             return FuzzyMatch(query, stringToCompare, _defaultMatchOption);
         }
@@ -54,8 +55,10 @@ namespace Flow.Launcher.Infrastructure
         /// 6. Move onto the next substring's characters until all substrings are checked.
         /// 7. Consider success and move onto scoring if every char or substring without whitespaces matched
         /// </summary>
-        public MatchResult FuzzyMatch(string query, string stringToCompare, MatchOption opt)
+        public MatchResult FuzzyMatch(string query, string stringToCompare, MatchOption opt = null)
         {
+            opt ??= _defaultMatchOption;
+            
             if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query))
                 return new MatchResult(false, UserSettingSearchPrecision);
 

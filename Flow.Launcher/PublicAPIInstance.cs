@@ -29,15 +29,16 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
+        private readonly IStringMatcher _stringMatcher;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, IStringMatcher stringMatcher)
         {
             _settingsVM = settingsVM;
             _mainVM = mainVM;
-            _alphabet = alphabet;
+            _stringMatcher = stringMatcher;
+            
             GlobalHotkey.Instance.hookedKeyboardCallback += KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
@@ -117,7 +118,7 @@ namespace Flow.Launcher
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
-            StringMatcher.FuzzySearch(query, stringToCompare);
+            _stringMatcher.Search(query, stringToCompare);
 
         public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
 

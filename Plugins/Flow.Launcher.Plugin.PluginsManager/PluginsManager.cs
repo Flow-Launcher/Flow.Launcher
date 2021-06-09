@@ -287,7 +287,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return results
                 .Where(x =>
                 {
-                    var matchResult = StringMatcher.FuzzySearch(searchName, x.Title);
+                    var matchResult = Context.API.FuzzySearch(searchName, x.Title);
                     if (matchResult.IsSearchPrecisionScoreMet())
                         x.Score = matchResult.Score;
 

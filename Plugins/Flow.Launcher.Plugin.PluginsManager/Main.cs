@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 var s when s.StartsWith(Settings.HotkeyUpdate) => await pluginManager.RequestUpdate(s, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
-                    hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
+                    hotkey.Score = Context.API.FuzzySearch(search, hotkey.Title).Score;
                     return hotkey.Score > 0;
                 }).ToList()
             };

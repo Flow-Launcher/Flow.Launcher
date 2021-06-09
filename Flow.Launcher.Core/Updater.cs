@@ -19,9 +19,16 @@ using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Core
 {
-    public class Updater
+    public interface IUpdater
     {
         public string GitHubRepository { get; }
+        public Task UpdateApp(IPublicAPI api, bool silentUpdate = true);
+    }
+
+    public class Updater : IUpdater
+    {
+        public string GitHubRepository { get; }
+        private readonly IPublicAPI _api;
 
         public Updater(string gitHubRepository)
         {
@@ -36,7 +43,7 @@ namespace Flow.Launcher.Core
 
                 if (!silentUpdate)
                     api.ShowMsg(api.GetTranslation("pleaseWait"),
-                                api.GetTranslation("update_flowlauncher_update_check"));
+                        api.GetTranslation("update_flowlauncher_update_check"));
 
                 using var updateManager = await GitHubUpdateManager(GitHubRepository).ConfigureAwait(false);
 
@@ -58,7 +65,7 @@ namespace Flow.Launcher.Core
 
                 if (!silentUpdate)
                     api.ShowMsg(api.GetTranslation("update_flowlauncher_update_found"),
-                                api.GetTranslation("update_flowlauncher_updating"));
+                        api.GetTranslation("update_flowlauncher_updating"));
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -70,8 +77,8 @@ namespace Flow.Launcher.Core
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
                     if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
                         MessageBox.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
-                                                      DataLocation.PortableDataPath,
-                                                      targetDestination));
+                            DataLocation.PortableDataPath,
+                            targetDestination));
                 }
                 else
                 {
@@ -91,7 +98,7 @@ namespace Flow.Launcher.Core
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
-                            api.GetTranslation("update_flowlauncher_check_connection"));
+                    api.GetTranslation("update_flowlauncher_check_connection"));
                 return;
             }
         }
@@ -121,7 +128,10 @@ namespace Flow.Launcher.Core
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
-            var client = new WebClient { Proxy = Http.WebProxy };
+            var client = new WebClient
+            {
+                Proxy = Http.WebProxy
+            };
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);

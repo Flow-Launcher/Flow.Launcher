@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu
     {
-        private PluginInitContext context;
+        internal static PluginInitContext context;
 
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
+            Main.context = context;
             
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 

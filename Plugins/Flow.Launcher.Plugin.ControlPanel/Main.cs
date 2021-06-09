@@ -42,8 +42,8 @@ namespace Flow.Launcher.Plugin.ControlPanel
 
             foreach (var item in controlPanelItems)
             {
-                var titleMatch = StringMatcher.FuzzySearch(query.Search, item.LocalizedString);
-                var subTitleMatch = StringMatcher.FuzzySearch(query.Search, item.InfoTip);
+                var titleMatch = context.API.FuzzySearch(query.Search, item.LocalizedString);
+                var subTitleMatch = context.API.FuzzySearch(query.Search, item.InfoTip);
                 
                 item.Score = Math.Max(titleMatch.Score, subTitleMatch.Score);
                 if (item.Score > 0)

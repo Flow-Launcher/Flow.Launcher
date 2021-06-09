@@ -8,7 +8,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-    public class FlowLauncherJsonStorage<T> : JsonStorage<T> where T : new()
+    public class FlowLauncherJsonStorage<T> : JsonStorage<T>, IDisposable where T : new()
     {
         public FlowLauncherJsonStorage()
         {
@@ -17,6 +17,11 @@ namespace Flow.Launcher.Infrastructure.Storage
 
             var filename = typeof(T).Name;
             FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
+        }
+        public void Dispose()
+        {
+            Save();
+            GC.SuppressFinalize(this);
         }
     }
 }

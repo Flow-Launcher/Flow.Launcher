@@ -83,7 +83,7 @@ namespace Flow.Launcher.Infrastructure
                     translatedIndex < translatedIndexs[upperBound * 2])
                 {
                     int indexDef = 0;
-                    
+
                     for (int j = 0; j < upperBound; j++)
                     {
                         indexDef += translatedIndexs[j * 2 + 1] - translatedIndexs[j * 2];
@@ -109,12 +109,11 @@ namespace Flow.Launcher.Infrastructure
 
     public class PinyinAlphabet : IAlphabet
     {
-        private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
-            new ConcurrentDictionary<string, (string translation, TranslationMapping map)>();
+        private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache = new();
 
         private Settings _settings;
 
-        public void Initialize([NotNull] Settings settings)
+        public PinyinAlphabet([NotNull] Settings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }

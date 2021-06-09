@@ -49,17 +49,20 @@ namespace Flow.Launcher.ViewModel
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
+        private IStringMatcher _stringMatcher;
+
         #endregion
 
         #region Constructor
 
-        public MainViewModel(Settings settings)
+        public MainViewModel(Settings settings, IStringMatcher stringMatcher)
         {
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
 
             _settings = settings;
+            _stringMatcher = stringMatcher;
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -289,7 +292,7 @@ namespace Flow.Launcher.ViewModel
 
         private ResultsViewModel SelectedResults
         {
-            get { return _selectedResults; }
+            get => _selectedResults;
             set
             {
                 _selectedResults = value;
@@ -381,10 +384,10 @@ namespace Flow.Launcher.ViewModel
                     (
                         r =>
                         {
-                            var match = StringMatcher.FuzzySearch(query, r.Title);
+                            var match = _stringMatcher.Search(query, r.Title);
                             if (!match.IsSearchPrecisionScoreMet())
                             {
-                                match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                                match = _stringMatcher.Search(query, r.SubTitle);
                             }
 
                             if (!match.IsSearchPrecisionScoreMet()) return false;
@@ -433,8 +436,8 @@ namespace Flow.Launcher.ViewModel
             {
                 var filtered = results.Where
                 (
-                    r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
-                         StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
+                    r => _stringMatcher.Search(query, r.Title).IsSearchPrecisionScoreMet() ||
+                         _stringMatcher.Search(query, r.SubTitle).IsSearchPrecisionScoreMet()
                 ).ToList();
                 History.AddResults(filtered, id);
             }
@@ -631,23 +634,11 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        private bool SelectedIsFromQueryResults()
-        {
-            var selected = SelectedResults == Results;
-            return selected;
-        }
+        private bool SelectedIsFromQueryResults() => SelectedResults == Results;
 
-        private bool ContextMenuSelected()
-        {
-            var selected = SelectedResults == ContextMenu;
-            return selected;
-        }
+        private bool ContextMenuSelected() => SelectedResults == ContextMenu;
 
-        private bool HistorySelected()
-        {
-            var selected = SelectedResults == History;
-            return selected;
-        }
+        private bool HistorySelected() => SelectedResults == History;
 
         #region Hotkey
 

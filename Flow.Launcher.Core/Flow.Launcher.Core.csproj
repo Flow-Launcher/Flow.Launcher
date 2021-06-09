@@ -55,6 +55,7 @@
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.2.0" />
     <PackageReference Include="FSharp.Core" Version="4.7.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" />
   </ItemGroup>
   

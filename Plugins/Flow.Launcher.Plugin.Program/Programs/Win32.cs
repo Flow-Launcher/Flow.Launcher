@@ -60,18 +60,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
             {
                 title = Name;
-                matchResult = StringMatcher.FuzzySearch(query, title);
+                matchResult = Main.Context.API.FuzzySearch(query, title);
             }
             else if (Description.StartsWith(Name))
             {
                 title = Description;
-                matchResult = StringMatcher.FuzzySearch(query, Description);
+                matchResult = Main.Context.API.FuzzySearch(query, Description);
             }
             else
             {
                 title = $"{Name}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                var nameMatch = Main.Context.API.FuzzySearch(query, Name);
+                var desciptionMatch = Main.Context.API.FuzzySearch(query, Description);
                 if (desciptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
@@ -86,7 +86,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!matchResult.IsSearchPrecisionScoreMet())
             {
                 if (ExecutableName != null) // only lnk program will need this one
-                    matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+                    matchResult = Main.Context.API.FuzzySearch(query, ExecutableName);
 
                 if (!matchResult.IsSearchPrecisionScoreMet())
                     return null;
@@ -218,7 +218,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() { Valid = false, Enabled = false };
+                return new Win32()
+                {
+                    Valid = false, Enabled = false
+                };
             }
         }
 
@@ -296,7 +299,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() { Valid = false, Enabled = false };
+                return new Win32()
+                {
+                    Valid = false, Enabled = false
+                };
             }
         }
 
@@ -307,8 +313,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
-                IgnoreInaccessible = true,
-                RecurseSubdirectories = true
+                IgnoreInaccessible = true, RecurseSubdirectories = true
             }).Where(x => suffixes.Contains(Extension(x)));
         }
 

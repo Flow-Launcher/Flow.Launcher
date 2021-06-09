@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search;
+﻿using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Collections.Generic;
 
@@ -6,6 +7,8 @@ namespace Flow.Launcher.Plugin.Explorer
 {
     public class Settings
     {
+        private static FlowLauncherJsonStorage<Settings> _storage = new();
+        
         public int MaxResult { get; set; } = 100;
 
         public List<AccessLink> QuickAccessLinks { get; set; } = new List<AccessLink>();

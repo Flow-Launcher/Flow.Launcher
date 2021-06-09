@@ -16,7 +16,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool ShowOpenResultHotkey { get; set; } = true;
         public string Language
         {
-            get => language; set
+            get => language;
+            set
             {
                 language = value;
                 OnPropertyChanged();
@@ -44,23 +45,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonIgnore]
         public string QuerySearchPrecisionString
         {
-            get { return QuerySearchPrecision.ToString(); }
+            get => QuerySearchPrecision.ToString();
             set
             {
                 try
                 {
                     var precisionScore = (SearchPrecisionScore)Enum
-                                            .Parse(typeof(SearchPrecisionScore), value);
+                        .Parse(typeof(SearchPrecisionScore), value);
 
                     QuerySearchPrecision = precisionScore;
-                    StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;
                 }
                 catch (ArgumentException e)
                 {
                     Logger.Log.Exception(nameof(Settings), "Failed to load QuerySearchPrecisionString value from Settings file", e);
 
                     QuerySearchPrecision = SearchPrecisionScore.Regular;
-                    StringMatcher.Instance.UserSettingSearchPrecision = SearchPrecisionScore.Regular;
 
                     throw;
                 }
@@ -82,16 +81,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = true;
         public bool HideOnStartup { get; set; }
-        bool _hideNotifyIcon { get; set; }
-        public bool HideNotifyIcon
-        {
-            get { return _hideNotifyIcon; }
-            set
-            {
-                _hideNotifyIcon = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool HideNotifyIcon { get; set; }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactive { get; set; } = true;
         public bool RememberLastLaunchLocation { get; set; }

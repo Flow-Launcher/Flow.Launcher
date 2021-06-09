@@ -49,7 +49,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 }
                 else
                 {
-                    var score = StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score;
+                    var score = Main.Context.API.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score;
                     if (score > 0)
                     {
                         processlist.Add(new ProcessResult(p, score));

@@ -23,16 +23,18 @@ namespace Flow.Launcher.ViewModel
 {
     public class SettingWindowViewModel : BaseModel
     {
-        private readonly Updater _updater;
+        private readonly IUpdater _updater;
         private readonly IPortable _portable;
         private readonly FlowLauncherJsonStorage<Settings> _storage;
 
-        public SettingWindowViewModel(Updater updater, IPortable portable)
+        public SettingWindowViewModel(IUpdater updater, IPortable portable, Settings settings, FlowLauncherJsonStorage<Settings> storage)
         {
             _updater = updater;
             _portable = portable;
-            _storage = new FlowLauncherJsonStorage<Settings>();
-            Settings = _storage.Load();
+
+            Settings = settings;
+            _storage = storage;
+            
             Settings.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(Settings.ActivateTimes))
@@ -51,7 +53,7 @@ namespace Flow.Launcher.ViewModel
 
         public bool AutoUpdates
         {
-            get { return Settings.AutoUpdates; }
+            get => Settings.AutoUpdates;
             set
             {
                 Settings.AutoUpdates = value;
@@ -65,7 +67,7 @@ namespace Flow.Launcher.ViewModel
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
         {
-            get { return _portableMode; }
+            get => _portableMode;
             set
             {
                 if (!_portable.CanUpdatePortability())
@@ -123,10 +125,7 @@ namespace Flow.Launcher.ViewModel
 
         public string Language
         {
-            get
-            {
-                return Settings.Language;
-            }
+            get => Settings.Language;
             set
             {
                 InternationalizationManager.Instance.ChangeLanguage(value);
@@ -138,14 +137,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool ShouldUsePinyin
         {
-            get 
-            {
-                return Settings.ShouldUsePinyin;            
-            }
-            set 
-            {
-                Settings.ShouldUsePinyin = value;
-            }
+            get => Settings.ShouldUsePinyin;
+            set => Settings.ShouldUsePinyin = value;
         }
 
         public List<string> QuerySearchPrecisionStrings
@@ -260,7 +253,7 @@ namespace Flow.Launcher.ViewModel
 
         public string SelectedTheme
         {
-            get { return Settings.Theme; }
+            get => Settings.Theme;
             set
             {
                 Settings.Theme = value;
@@ -273,7 +266,7 @@ namespace Flow.Launcher.ViewModel
 
         public bool DropShadowEffect
         {
-            get { return Settings.UseDropShadowEffect; }
+            get => Settings.UseDropShadowEffect;
             set
             {
                 if (value)

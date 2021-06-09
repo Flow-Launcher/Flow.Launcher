@@ -14,11 +14,11 @@ namespace Flow.Launcher.Plugin.ProcessKiller
     {
         private ProcessHelper processHelper = new ProcessHelper();
 
-        private static PluginInitContext _context;
+        internal static PluginInitContext Context { get; private set; }
 
         public void Init(PluginInitContext context)
         {
-            _context = context;
+            Context = context;
         }
 
         public List<Result> Query(Query query)
@@ -36,12 +36,12 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         public string GetTranslatedPluginTitle()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result result)
@@ -56,7 +56,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             {
                 menuOptions.Add(new Result
                 {
-                    Title = _context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
                     SubTitle = processPath,
                     Action = _ =>
                     {
@@ -87,7 +87,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     IcoPath = path,
                     Title = p.ProcessName + " - " + p.Id,
                     SubTitle = path,
-                    TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
+                    TitleHighlightData = Context.API.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
                     ContextData = p.ProcessName,
                     Action = (c) =>
@@ -108,8 +108,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 sortedResults.Insert(1, new Result()
                 {
                     IcoPath = firstResult?.IcoPath,
-                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), firstResult?.ContextData),
-                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processlist.Count),
+                    Title = string.Format(Context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), firstResult?.ContextData),
+                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processlist.Count),
                     Score = 200,
                     Action = (c) =>
                     {

@@ -9,11 +9,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
     {
         internal static MatchResult MatchProgram(Bookmark bookmark, string queryString)
         {
-            var match = StringMatcher.FuzzySearch(queryString, bookmark.Name);
+            var match = Main.context.API.FuzzySearch(queryString, bookmark.Name);
             if (match.IsSearchPrecisionScoreMet())
                 return match;
 
-            return StringMatcher.FuzzySearch(queryString, bookmark.Url);
+            return Main.context.API.FuzzySearch(queryString, bookmark.Url);
         }
 
         internal static List<Bookmark> LoadAllBookmarks()
