@@ -12,21 +12,40 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
 {
-    public class Internationalization
+
+    public interface II18N
     {
-        public Settings Settings { get; set; }
+        void LoadLanguageDirectory();
+        void ChangeLanguage(string languageCode);
+        bool PromptShouldUsePinyin(string languageCodeToSet);
+        List<Language> LoadAvailableLanguages();
+        string GetTranslation(string key);
+    }
+
+    public class Internationalization : II18N
+    {
+        private Settings Settings { get; }
         private const string Folder = "Languages";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
-        private readonly List<string> _languageDirectories = new List<string>();
-        private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
+        private readonly List<string> _languageDirectories = new();
+        private readonly List<ResourceDictionary> _oldResources = new();
+        private readonly List<ResourceDictionary> _defaultPluginResources = new();
 
-        public Internationalization()
+        public Internationalization(Settings settings)
         {
+            Settings = settings;
+        }
+
+        public void LoadLanguageDirectory()
+        {
+            if (_defaultPluginResources is not null)
+            {
+                RemoveDefaultPluginFiles();
+                _defaultPluginResources.Clear();
+            }
             AddPluginLanguageDirectories();
             LoadDefaultLanguage();
-            // we don't want to load /Languages/en.xaml twice
-            // so add flowlauncher language directory after load plugin language files
             AddFlowLauncherLanguageDirectory();
         }
 
@@ -59,6 +78,7 @@ namespace Flow.Launcher.Core.Resource
         private void LoadDefaultLanguage()
         {
             LoadLanguage(AvailableLanguages.English);
+            _defaultPluginResources.AddRange(_oldResources);
             _oldResources.Clear();
         }
 
@@ -88,7 +108,6 @@ namespace Flow.Launcher.Core.Resource
         {
             language = language.NonNull();
 
-
             RemoveOldLanguageFiles();
             if (language != AvailableLanguages.English)
             {
@@ -113,6 +132,19 @@ namespace Flow.Launcher.Core.Resource
                 return false;
 
             return true;
+        }
+
+        private void RemoveDefaultPluginFiles()
+        {
+            if (_defaultPluginResources == null)
+                return;
+
+            var dicts = Application.Current.Resources.MergedDictionaries;
+
+            foreach (var r in _defaultPluginResources)
+            {
+                dicts.Remove(r);
+            }
         }
 
         private void RemoveOldLanguageFiles()

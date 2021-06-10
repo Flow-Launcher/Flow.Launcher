@@ -27,11 +27,13 @@ namespace Flow.Launcher.Core
 
     public class Updater : IUpdater
     {
+        private readonly II18N _translatorI18N;
         public string GitHubRepository { get; }
         private readonly IPublicAPI _api;
 
-        public Updater(string gitHubRepository)
+        public Updater(string gitHubRepository, II18N translatorI18N)
         {
+            this._translatorI18N = translatorI18N;
             GitHubRepository = gitHubRepository;
         }
 
@@ -141,8 +143,7 @@ namespace Flow.Launcher.Core
 
         public string NewVersinoTips(string version)
         {
-            var translater = InternationalizationManager.Instance;
-            var tips = string.Format(translater.GetTranslation("newVersionTips"), version);
+            var tips = string.Format(_translatorI18N.GetTranslation("newVersionTips"), version);
             return tips;
         }
 

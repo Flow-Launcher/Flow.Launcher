@@ -34,7 +34,7 @@ namespace Flow.Launcher
         private IUpdater _updater;
 
         private IServiceProvider _serviceProvider;
-        
+
 
         [STAThread]
         public static void Main()
@@ -67,7 +67,7 @@ namespace Flow.Launcher
                 ImageLoader.Initialize();
 
                 _settings = _serviceProvider.GetRequiredService<Settings>();
-                
+
                 PluginManager.LoadPlugins(_settings.PluginSettings);
 
                 API = _serviceProvider.GetRequiredService<IPublicAPI>();
@@ -75,23 +75,29 @@ namespace Flow.Launcher
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
-                
+
                 await PluginManager.InitializePlugins(API);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 _mainVM = _serviceProvider.GetRequiredService<MainViewModel>();
                 var window = _serviceProvider.GetRequiredService<MainWindow>();
-                
+
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
-                InternationalizationManager.Instance.Settings = _settings;
-                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
-                
-                
+
+                var i18N = _serviceProvider.GetRequiredService<II18N>();
+                // need to be accessed after Plugin Load
+                i18N.LoadLanguageDirectory();
+                i18N.ChangeLanguage(_settings.Language);
+
+                // Assign for Compatible access
+                InternationalizationManager.Instance = i18N;
+
+
                 // main windows needs initialized before theme change because of blur settigns
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
@@ -114,9 +120,11 @@ namespace Flow.Launcher
             services.AddSingleton<FlowLauncherJsonStorage<Settings>>()
                 .AddSingleton<Settings>(serviceProvider => serviceProvider.GetRequiredService<FlowLauncherJsonStorage<Settings>>().Load())
                 .AddSingleton<IAlphabet, PinyinAlphabet>()
-                .AddSingleton<IStringMatcher,FuzzyStringMatcher>()
+                .AddSingleton<IStringMatcher, FuzzyStringMatcher>()
                 .AddSingleton<MainViewModel>()
-                .AddSingleton<IUpdater, Updater>(_ => new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo))
+                .AddSingleton<IUpdater, Updater>(serviceProvider => new Updater(
+                    Flow.Launcher.Properties.Settings.Default.GithubRepo,
+                    serviceProvider.GetRequiredService<II18N>()))
                 .AddSingleton<IPortable, Portable>(_ =>
                 {
                     var portable = new Portable();
@@ -125,6 +133,7 @@ namespace Flow.Launcher
                 }).AddSingleton<SettingWindowViewModel>()
                 .AddSingleton<MainViewModel>()
                 .AddSingleton<MainWindow>()
+                .AddSingleton<II18N, Internationalization>()
                 .AddSingleton<IPublicAPI, PublicAPIInstance>();
 
         }

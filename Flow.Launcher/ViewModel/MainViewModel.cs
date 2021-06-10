@@ -44,7 +44,7 @@ namespace Flow.Launcher.ViewModel
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
 
-        private readonly Internationalization _translator = InternationalizationManager.Instance;
+        private readonly II18N _translator;
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -55,7 +55,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Constructor
 
-        public MainViewModel(Settings settings, IStringMatcher stringMatcher)
+        public MainViewModel(Settings settings, IStringMatcher stringMatcher, II18N translator)
         {
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
@@ -63,6 +63,7 @@ namespace Flow.Launcher.ViewModel
 
             _settings = settings;
             _stringMatcher = stringMatcher;
+            _translator = translator;
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -246,8 +247,8 @@ namespace Flow.Launcher.ViewModel
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         msg.Show(
-                            InternationalizationManager.Instance.GetTranslation("success"),
-                            InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
+                            _translator.GetTranslation("success"),
+                            _translator.GetTranslation("completedSuccessfully"),
                             "");
                     }))
                 .ConfigureAwait(false);
@@ -580,7 +581,7 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("cancelTopMostInThisQuery"),
+                    Title = _translator.GetTranslation("cancelTopMostInThisQuery"),
                     IcoPath = "Images\\down.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
@@ -595,7 +596,7 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
+                    Title = _translator.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
@@ -613,7 +614,7 @@ namespace Flow.Launcher.ViewModel
         private Result ContextMenuPluginInfo(string id)
         {
             var metadata = PluginManager.GetPluginForId(id).Metadata;
-            var translator = InternationalizationManager.Instance;
+            var translator = _translator;
 
             var author = translator.GetTranslation("author");
             var website = translator.GetTranslation("website");
@@ -658,7 +659,7 @@ namespace Flow.Launcher.ViewModel
             catch (Exception)
             {
                 string errorMsg =
-                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"),
+                    string.Format(_translator.GetTranslation("registerHotkeyFailed"),
                         hotkeyStr);
                 MessageBox.Show(errorMsg);
             }

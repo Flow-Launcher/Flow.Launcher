@@ -30,18 +30,16 @@ namespace Flow.Launcher
         private Settings _settings;
         private NotifyIcon _notifyIcon;
         private MainViewModel _viewModel;
+        private readonly II18N _translator;
 
         #endregion
 
-        public MainWindow(Settings settings, MainViewModel mainVM)
+        public MainWindow(Settings settings, MainViewModel mainVM, II18N translator)
         {
             DataContext = mainVM;
             _viewModel = mainVM;
+            _translator = translator;
             _settings = settings;
-            InitializeComponent();
-        }
-        public MainWindow()
-        {
             InitializeComponent();
         }
 
@@ -146,9 +144,9 @@ namespace Flow.Launcher
             var setting = menu.Items[1];
             var exit = menu.Items[2];
 
-            open.Text = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
-            setting.Text = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            exit.Text = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            open.Text = _translator.GetTranslation("iconTrayOpen");
+            setting.Text = _translator.GetTranslation("iconTraySettings");
+            exit.Text = _translator.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -162,11 +160,11 @@ namespace Flow.Launcher
             var menu = new ContextMenuStrip();
             var items = menu.Items;
 
-            var open = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayOpen"));
+            var open = items.Add(_translator.GetTranslation("iconTrayOpen"));
             open.Click += (o, e) => Visibility = Visibility.Visible;
-            var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
+            var setting = items.Add(_translator.GetTranslation("iconTraySettings"));
             setting.Click += (o, e) => App.API.OpenSettingDialog();
-            var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
+            var exit = items.Add(_translator.GetTranslation("iconTrayExit"));
             exit.Click += (o, e) => Close();
 
             _notifyIcon.ContextMenuStrip = menu;

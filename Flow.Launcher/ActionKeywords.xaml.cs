@@ -12,7 +12,7 @@ namespace Flow.Launcher
     {
         private readonly PluginPair plugin;
         private Settings settings;
-        private readonly Internationalization translater = InternationalizationManager.Instance;
+        private readonly II18N translater = InternationalizationManager.Instance;
         private readonly PluginViewModel pluginViewModel;
 
         public ActionKeywords(string pluginId, Settings settings, PluginViewModel pluginViewModel)

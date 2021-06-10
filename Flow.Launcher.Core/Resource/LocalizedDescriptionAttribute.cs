@@ -5,7 +5,7 @@ namespace Flow.Launcher.Core
 {
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {
-        private readonly Internationalization _translator;
+        private readonly II18N _translator;
         private readonly string _resourceKey;
 
         public LocalizedDescriptionAttribute(string resourceKey)
@@ -19,8 +19,8 @@ namespace Flow.Launcher.Core
             get
             {
                 string description = _translator.GetTranslation(_resourceKey);
-                return string.IsNullOrWhiteSpace(description) ? 
-                    string.Format("[[{0}]]", _resourceKey) : description;
+                return string.IsNullOrWhiteSpace(description) ?
+                    $"[[{_resourceKey}]]" : description;
             }
         }
     }

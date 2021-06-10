@@ -24,13 +24,15 @@ namespace Flow.Launcher
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
+        private readonly II18N _translator;
 
-        public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
+        public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel, II18N translator)
         {
             InitializeComponent();
             settings = viewModel.Settings;
             DataContext = viewModel;
             this.viewModel = viewModel;
+            _translator = translator;
             API = api;
         }
 
@@ -144,7 +146,7 @@ namespace Flow.Launcher
             catch (Exception)
             {
                 string errorMsg =
-                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+                    string.Format(_translator.GetTranslation("registerHotkeyFailed"), hotkeyStr);
                 MessageBox.Show(errorMsg);
             }
         }
@@ -162,15 +164,15 @@ namespace Flow.Launcher
             var item = viewModel.SelectedCustomPluginHotkey;
             if (item == null)
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                MessageBox.Show(_translator.GetTranslation("pleaseSelectAnItem"));
                 return;
             }
 
             string deleteWarning =
-                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"),
+                string.Format(_translator.GetTranslation("deleteCustomHotkeyWarning"),
                     item.Hotkey);
             if (
-                MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
+                MessageBox.Show(deleteWarning, _translator.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 settings.CustomPluginHotkeys.Remove(item);
@@ -189,7 +191,7 @@ namespace Flow.Launcher
             }
             else
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                MessageBox.Show(_translator.GetTranslation("pleaseSelectAnItem"));
             }
         }
 

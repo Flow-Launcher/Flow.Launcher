@@ -25,12 +25,15 @@ namespace Flow.Launcher.ViewModel
     {
         private readonly IUpdater _updater;
         private readonly IPortable _portable;
+        private readonly II18N _translator;
         private readonly FlowLauncherJsonStorage<Settings> _storage;
 
-        public SettingWindowViewModel(IUpdater updater, IPortable portable, Settings settings, FlowLauncherJsonStorage<Settings> storage)
+        public SettingWindowViewModel(IUpdater updater, IPortable portable, II18N translator,
+            Settings settings, FlowLauncherJsonStorage<Settings> storage)
         {
             _updater = updater;
             _portable = portable;
+            _translator = translator;
 
             Settings = settings;
             _storage = storage;
@@ -128,9 +131,9 @@ namespace Flow.Launcher.ViewModel
             get => Settings.Language;
             set
             {
-                InternationalizationManager.Instance.ChangeLanguage(value);
+                _translator.ChangeLanguage(value);
 
-                if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+                if (_translator.PromptShouldUsePinyin(value))
                     ShouldUsePinyin = true;
             }
         }
@@ -156,7 +159,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         public List<string> OpenResultModifiersList => new List<string> { KeyConstant.Alt, KeyConstant.Ctrl, $"{KeyConstant.Ctrl}+{KeyConstant.Alt}" };
-        private Internationalization _translater => InternationalizationManager.Instance;
+        private II18N _translater => _translator;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
@@ -166,11 +169,11 @@ namespace Flow.Launcher.ViewModel
             var proxyUserName = Settings.Proxy.UserName;
             if (string.IsNullOrEmpty(proxyServer))
             {
-                return InternationalizationManager.Instance.GetTranslation("serverCantBeEmpty");
+                return _translator.GetTranslation("serverCantBeEmpty");
             }
             if (Settings.Proxy.Port <= 0)
             {
-                return InternationalizationManager.Instance.GetTranslation("portCantBeEmpty");
+                return _translator.GetTranslation("portCantBeEmpty");
             }
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_updater.GitHubRepository);
@@ -191,16 +194,16 @@ namespace Flow.Launcher.ViewModel
                 var response = (HttpWebResponse)request.GetResponse();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    return InternationalizationManager.Instance.GetTranslation("proxyIsCorrect");
+                    return _translator.GetTranslation("proxyIsCorrect");
                 }
                 else
                 {
-                    return InternationalizationManager.Instance.GetTranslation("proxyConnectFailed");
+                    return _translator.GetTranslation("proxyConnectFailed");
                 }
             }
             catch
             {
-                return InternationalizationManager.Instance.GetTranslation("proxyConnectFailed");
+                return _translator.GetTranslation("proxyConnectFailed");
             }
         }
 
