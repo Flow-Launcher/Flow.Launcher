@@ -46,7 +46,13 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        private static readonly JsonSerializerOptions _options = new() {Converters = {new JsonObjectConverter()}};
+        private static readonly JsonSerializerOptions _options = new()
+        {
+            Converters =
+            {
+                new JsonObjectConverter()
+            }
+        };
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -88,10 +94,10 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         return !result.JsonRPCAction.DontHideAfterAction;
                     }
-                    
+
                     if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
                     {
-                        ExecuteFlowLauncherAPI(result.JsonRPCAction.Method[14..],
+                        ExecuteFlowLauncherAPI(result.JsonRPCAction.Method["Flow.Launcher.".Length..],
                             result.JsonRPCAction.Parameters);
                     }
                     else
@@ -102,15 +108,12 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             return !result.JsonRPCAction.DontHideAfterAction;
                         }
-                            
-                        JsonRPCRequestModel jsonRpcRequestModel =
-                            JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse);
-                                
-                        if (jsonRpcRequestModel != null
-                            && !string.IsNullOrEmpty(jsonRpcRequestModel.Method)
-                            && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
+
+                        var jsonRpcRequestModel = JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, _options);
+
+                        if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
                         {
-                            ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4),
+                            ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method["Flow.Launcher.".Length..],
                                 jsonRpcRequestModel.Parameters);
                         }
                     }
@@ -188,7 +191,10 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (result.StartsWith("DEBUG:"))
                 {
-                    MessageBox.Show(new Form {TopMost = true}, result.Substring(6));
+                    MessageBox.Show(new Form
+                    {
+                        TopMost = true
+                    }, result.Substring(6));
                     return string.Empty;
                 }
 
