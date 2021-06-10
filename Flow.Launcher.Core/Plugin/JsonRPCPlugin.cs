@@ -84,27 +84,34 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (result.JsonRPCAction == null) return false;
 
-                    if (!string.IsNullOrEmpty(result.JsonRPCAction.Method))
+                    if (string.IsNullOrEmpty(result.JsonRPCAction.Method))
                     {
-                        if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
+                        return !result.JsonRPCAction.DontHideAfterAction;
+                    }
+                    
+                    if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
+                    {
+                        ExecuteFlowLauncherAPI(result.JsonRPCAction.Method[14..],
+                            result.JsonRPCAction.Parameters);
+                    }
+                    else
+                    {
+                        var actionResponse = ExecuteCallback(result.JsonRPCAction);
+
+                        if (string.IsNullOrEmpty(actionResponse))
                         {
-                            ExecuteFlowLauncherAPI(result.JsonRPCAction.Method[14..],
-                                result.JsonRPCAction.Parameters);
+                            return !result.JsonRPCAction.DontHideAfterAction;
                         }
-                        else
+                            
+                        JsonRPCRequestModel jsonRpcRequestModel =
+                            JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse);
+                                
+                        if (jsonRpcRequestModel != null
+                            && !string.IsNullOrEmpty(jsonRpcRequestModel.Method)
+                            && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
                         {
-                            string actionReponse = ExecuteCallback(result.JsonRPCAction);
-                            if (string.IsNullOrEmpty(actionReponse))
-                                return false;
-                            JsonRPCRequestModel jsonRpcRequestModel =
-                                JsonSerializer.Deserialize<JsonRPCRequestModel>(actionReponse);
-                            if (jsonRpcRequestModel != null
-                                && !string.IsNullOrEmpty(jsonRpcRequestModel.Method)
-                                && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
-                            {
-                                ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4),
-                                    jsonRpcRequestModel.Parameters);
-                            }
+                            ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4),
+                                jsonRpcRequestModel.Parameters);
                         }
                     }
 
