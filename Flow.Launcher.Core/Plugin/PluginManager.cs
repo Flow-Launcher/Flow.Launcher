@@ -156,7 +156,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static async Task<List<Result>> QueryForPlugin(PluginPair pair, Query query, CancellationToken token)
+        public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             try
@@ -170,7 +170,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 token.ThrowIfCancellationRequested();
                 if (results == null)
-                    return results;
+                    return null;
                 UpdatePluginMetadata(results, metadata, query);
 
                 metadata.QueryCount += 1;
@@ -182,10 +182,6 @@ namespace Flow.Launcher.Core.Plugin
             {
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return null;
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
             return results;
