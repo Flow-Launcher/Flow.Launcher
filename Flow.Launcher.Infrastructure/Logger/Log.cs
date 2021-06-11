@@ -32,13 +32,23 @@ namespace Flow.Launcher.Infrastructure.Logger
             };
 
             var fileTargetASyncWrapper = new AsyncTargetWrapper(fileTarget);
+
+            var debugTarget = new DebuggerTarget
+            {
+                Layout = "${level:uppercase=true}|${message}"
+            };
+            
             configuration.AddTarget("file", fileTargetASyncWrapper);
+            configuration.AddTarget("console", debugTarget);
 #if DEBUG
-            var rule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
+            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
+            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget);
 #else
             var rule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
+            var debugRule = new LoggingRule("*", LogLevel.Info, consoleTarget);
 #endif
-            configuration.LoggingRules.Add(rule);
+            configuration.LoggingRules.Add(fileRule);
+            configuration.LoggingRules.Add(debugRule);
             LogManager.Configuration = configuration;
         }
 
@@ -46,7 +56,6 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             var logger = LogManager.GetLogger("FaultyLogger");
             message = $"Wrong logger message format <{message}>";
-            System.Diagnostics.Debug.WriteLine($"FATAL|{message}");
             logger.Fatal(message);
         }
 
@@ -57,9 +66,9 @@ namespace Flow.Launcher.Infrastructure.Logger
             return valid;
         }
 
-        
+
         public static void Exception(string className, string message, System.Exception exception, [CallerMemberName] string methodName = "")
-        { 
+        {
             exception = exception.Demystify();
 #if DEBUG
             ExceptionDispatchInfo.Capture(exception).Throw();
@@ -96,7 +105,6 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             var logger = LogManager.GetLogger(classAndMethod);
 
-            System.Diagnostics.Debug.WriteLine($"ERROR|{message}");
 
             logger.Error("-------------------------- Begin exception --------------------------");
             logger.Error(message);
@@ -123,8 +131,6 @@ namespace Flow.Launcher.Infrastructure.Logger
                 var prefix = parts[1];
                 var unprefixed = parts[2];
                 var logger = LogManager.GetLogger(prefix);
-
-                System.Diagnostics.Debug.WriteLine($"{level.Name}|{message}");
                 logger.Log(level, unprefixed);
             }
             else
@@ -134,6 +140,7 @@ namespace Flow.Launcher.Infrastructure.Logger
         }
 
         /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// <param name="e">Exception</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void Exception(string message, System.Exception e)
         {
@@ -172,7 +179,6 @@ namespace Flow.Launcher.Infrastructure.Logger
 
             var logger = LogManager.GetLogger(classNameWithMethod);
 
-            System.Diagnostics.Debug.WriteLine($"{level.Name}|{message}");
             logger.Log(level, message);
         }
 
