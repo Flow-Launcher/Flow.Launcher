@@ -5,6 +5,9 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 using Flow.Launcher.Infrastructure.UserSettings;
+using JetBrains.Annotations;
+using NLog.Targets.Wrappers;
+using System.Runtime.ExceptionServices;
 
 namespace Flow.Launcher.Infrastructure.Logger
 {
@@ -23,11 +26,13 @@ namespace Flow.Launcher.Infrastructure.Logger
             }
 
             var configuration = new LoggingConfiguration();
-            var target = new FileTarget();
-            configuration.AddTarget("file", target);
-            target.FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt";
+            var fileTarget = new FileTarget();
+            fileTarget.FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt";
+            
+            var fileTargetASyncWrapper = new AsyncTargetWrapper(fileTarget);
+            configuration.AddTarget("file", fileTargetASyncWrapper);
 #if DEBUG
-            var rule = new LoggingRule("*", LogLevel.Debug, target);
+            var rule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
 #else
             var rule = new LoggingRule("*", LogLevel.Info, target);
 #endif
@@ -50,13 +55,12 @@ namespace Flow.Launcher.Infrastructure.Logger
             return valid;
         }
 
-
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
+        
         public static void Exception(string className, string message, System.Exception exception, [CallerMemberName] string methodName = "")
-        {
+        { 
+            exception = exception.Demystify();
 #if DEBUG
-            throw exception;
+            ExceptionDispatchInfo.Capture(exception).Throw();
 #else
             var classNameWithMethod = CheckClassAndMessageAndReturnFullClassWithMethod(className, message, methodName);
 
@@ -131,8 +135,9 @@ namespace Flow.Launcher.Infrastructure.Logger
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void Exception(string message, System.Exception e)
         {
+            e = e.Demystify();
 #if DEBUG
-           throw e;
+            ExceptionDispatchInfo.Capture(e).Throw();
 #else
             if (FormatValid(message))
             {

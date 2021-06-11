@@ -8,7 +8,7 @@ namespace Flow.Launcher.ViewModel
 {
     public struct ResultsForUpdate
     {
-        public List<Result> Results { get; }
+        public IReadOnlyList<Result> Results { get; }
 
         public PluginMetadata Metadata { get; }
         public string ID { get; }
@@ -16,7 +16,7 @@ namespace Flow.Launcher.ViewModel
         public Query Query { get; }
         public CancellationToken Token { get; }
 
-        public ResultsForUpdate(List<Result> results, PluginMetadata metadata, Query query, CancellationToken token)
+        public ResultsForUpdate(IReadOnlyList<Result> results, PluginMetadata metadata, Query query, CancellationToken token)
         {
             Results = results;
             Metadata = metadata;
