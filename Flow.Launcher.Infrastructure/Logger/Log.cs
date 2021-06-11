@@ -26,9 +26,11 @@ namespace Flow.Launcher.Infrastructure.Logger
             }
 
             var configuration = new LoggingConfiguration();
-            var fileTarget = new FileTarget();
-            fileTarget.FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt";
-            
+            var fileTarget = new FileTarget
+            {
+                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt"
+            };
+
             var fileTargetASyncWrapper = new AsyncTargetWrapper(fileTarget);
             configuration.AddTarget("file", fileTargetASyncWrapper);
 #if DEBUG
