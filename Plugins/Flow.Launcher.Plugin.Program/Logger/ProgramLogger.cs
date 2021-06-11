@@ -48,8 +48,6 @@ namespace Flow.Launcher.Plugin.Program.Logger
         internal static void LogException(string classname, string callingMethodName, string loadingProgramPath,
             string interpretationMessage, Exception e)
         {
-            Debug.WriteLine($"ERROR{classname}|{callingMethodName}|{loadingProgramPath}|{interpretationMessage}");
-
             var logger = LogManager.GetLogger("");
 
             var innerExceptionNumber = 1;
