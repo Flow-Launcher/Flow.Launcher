@@ -34,7 +34,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 #if DEBUG
             var rule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
 #else
-            var rule = new LoggingRule("*", LogLevel.Info, target);
+            var rule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
 #endif
             configuration.LoggingRules.Add(rule);
             LogManager.Configuration = configuration;
