@@ -183,6 +183,10 @@ namespace Flow.Launcher.Core.Plugin
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return null;
             }
+            catch (Exception e)
+            {
+                Log.Exception("PluginManager", "Exception", e);
+            }
 
             return results;
         }

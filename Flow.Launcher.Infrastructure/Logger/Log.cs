@@ -6,8 +6,10 @@ using NLog.Config;
 using NLog.Targets;
 using Flow.Launcher.Infrastructure.UserSettings;
 using JetBrains.Annotations;
+using NLog.Fluent;
 using NLog.Targets.Wrappers;
 using System.Runtime.ExceptionServices;
+using System.Text;
 
 namespace Flow.Launcher.Infrastructure.Logger
 {
@@ -26,29 +28,33 @@ namespace Flow.Launcher.Infrastructure.Logger
             }
 
             var configuration = new LoggingConfiguration();
+
+            const string layout = @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${date:format=HH\:mm\:ss}|${level}|${message}|${newline}${exception:format=toString}${newline}";
+            
             var fileTarget = new FileTarget
             {
-                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt"
+                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt",
+                Layout = layout
             };
 
             var fileTargetASyncWrapper = new AsyncTargetWrapper(fileTarget);
 
-            var debugTarget = new DebuggerTarget
+            var debugTarget = new OutputDebugStringTarget
             {
-                Layout = "${level:uppercase=true}|${message}"
+                Layout = layout
             };
-            
+
             configuration.AddTarget("file", fileTargetASyncWrapper);
-            configuration.AddTarget("console", debugTarget);
+            configuration.AddTarget("debug", debugTarget);
+
 #if DEBUG
             var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
             var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget);
+            configuration.LoggingRules.Add(debugRule);
 #else
-            var rule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
-            var debugRule = new LoggingRule("*", LogLevel.Info, consoleTarget);
+            var fileRule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
 #endif
             configuration.LoggingRules.Add(fileRule);
-            configuration.LoggingRules.Add(debugRule);
             LogManager.Configuration = configuration;
         }
 
@@ -105,22 +111,9 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             var logger = LogManager.GetLogger(classAndMethod);
 
+            var messageBuilder = new StringBuilder();
 
-            logger.Error("-------------------------- Begin exception --------------------------");
-            logger.Error(message);
-
-            do
-            {
-                logger.Error($"Exception full name:\n <{e.GetType().FullName}>");
-                logger.Error($"Exception message:\n <{e.Message}>");
-                logger.Error($"Exception stack trace:\n <{e.StackTrace}>");
-                logger.Error($"Exception source:\n <{e.Source}>");
-                logger.Error($"Exception target site:\n <{e.TargetSite}>");
-                logger.Error($"Exception HResult:\n <{e.HResult}>");
-                e = e.InnerException;
-            } while (e != null);
-
-            logger.Error("-------------------------- End exception --------------------------");
+            logger.Error(e, message);
         }
 
         private static void LogInternal(string message, LogLevel level)
@@ -141,7 +134,6 @@ namespace Flow.Launcher.Infrastructure.Logger
 
         /// <param name="message">example: "|prefix|unprefixed" </param>
         /// <param name="e">Exception</param>
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public static void Exception(string message, System.Exception e)
         {
             e = e.Demystify();
