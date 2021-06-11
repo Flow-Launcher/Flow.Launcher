@@ -29,7 +29,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 
             var configuration = new LoggingConfiguration();
 
-            const string layout = @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${date:format=HH\:mm\:ss}|${level}|${message}|${newline}${exception:format=toString}${newline}";
+            const string layout = @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${newline}${date:format=HH\:mm\:ss}|${level}|${message}|${newline}${exception:format=toString}${newline}";
             
             var fileTarget = new FileTarget
             {
