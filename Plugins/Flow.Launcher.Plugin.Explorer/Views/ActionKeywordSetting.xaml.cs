@@ -67,11 +67,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
 
-            if (CurrentActionKeyword is
-            {
-                Keyword: Query.GlobalPluginWildcardSign,
-                KeywordProperty: Settings.ActionKeyword.FileContentSearchActionKeyword
-            })
+            if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword 
+                && ActionKeyword == Query.GlobalPluginWildcardSign)
             {
                 MessageBox.Show(
                     settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
