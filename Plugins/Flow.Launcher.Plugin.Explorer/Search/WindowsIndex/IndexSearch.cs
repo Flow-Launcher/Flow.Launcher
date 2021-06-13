@@ -13,11 +13,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     internal static class IndexSearch
     {
-
         // Reserved keywords in oleDB
         private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
 
-        internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
+        internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString,
+            string connectionString, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             var fileResults = new List<Result>();
@@ -38,7 +38,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     while (await dataReaderResults.ReadAsync(token))
                     {
                         token.ThrowIfCancellationRequested();
-                        if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
+                        if (dataReaderResults.GetValue(0) != DBNull.Value &&
+                            dataReaderResults.GetValue(1) != DBNull.Value)
                         {
                             // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
                             var encodedFragmentPath = dataReaderResults
@@ -81,14 +82,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             results.AddRange(fileResults);
 
             // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-             return results;
+            return results;
         }
 
         internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
-                                                                  Func<string, string> constructQuery,
-                                                                  List<AccessLink> exclusionList,
-                                                                  Query query,
-                                                                  CancellationToken token)
+            Func<string, string> constructQuery,
+            List<AccessLink> exclusionList,
+            Query query,
+            CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, reservedStringPattern);
 
@@ -97,12 +98,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             var constructedQuery = constructQuery(searchString);
             return RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
-                        exclusionList,
-                        token);
+                await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token)
+                    .ConfigureAwait(false),
+                exclusionList,
+                token);
         }
 
-        private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
+        private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList,
+            CancellationToken token)
         {
             var indexExclusionListCount = exclusionList.Count;
 
@@ -147,8 +150,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 #if DEBUG // Please investigate and handle error from index search
             throw e;
 #else
-            Log.Exception($"|Flow.Launcher.Plugin.Explorer.IndexSearch|{message}", e);
-#endif            
+            Log.Exception("Flow.Launcher.Plugin.Explorer." + nameof(IndexSearch), message, e);
+#endif
         }
     }
 }

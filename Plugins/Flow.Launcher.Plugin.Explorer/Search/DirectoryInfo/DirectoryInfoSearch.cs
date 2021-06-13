@@ -75,16 +75,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             catch (Exception e)
             {
                 if (!(e is ArgumentException))
-                    throw e;
-                
+                    throw;
+
                 results.Add(new Result {Title = e.Message, Score = 501});
 
                 return results;
-
-#if DEBUG // Please investigate and handle error from DirectoryInfo search
-#else
-                Log.Exception($"|Flow.Launcher.Plugin.Explorer.DirectoryInfoSearch|Error from performing DirectoryInfoSearch", e);
-#endif
             }
 
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.

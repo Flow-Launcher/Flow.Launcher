@@ -89,7 +89,7 @@ namespace Flow.Launcher.ViewModel
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
-                Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                Task.Run(updateAction).ContinueWith(ContinueAction, TaskContinuationOptions.OnlyOnFaulted);
 
             async Task updateAction()
             {
@@ -115,14 +115,15 @@ namespace Flow.Launcher.ViewModel
 
             ;
 
-            void continueAction(Task t)
+            void ContinueAction(Task t)
             {
 #if DEBUG
                 throw t.Exception;
 #else
-                Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
+                Log.Error(nameof(MainViewModel),
+                    $"Error happen in task dealing with viewupdate for results. {t.Exception}");
                 _resultsViewUpdateTask =
-                    Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                    Task.Run(updateAction).ContinueWith(ContinueAction, TaskContinuationOptions.OnlyOnFaulted);
 #endif
             }
         }
@@ -131,16 +132,18 @@ namespace Flow.Launcher.ViewModel
         {
             foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
             {
-                var plugin = (IResultUpdated)pair.Plugin;
+                var plugin = (IResultUpdated) pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
                     if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
+                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata,
+                            e.Query, _updateToken)))
                         {
                             Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                         }
+
                         ;
                     }
                 };
@@ -399,7 +402,6 @@ namespace Flow.Launcher.ViewModel
 
                             r.Score = match.Score;
                             return true;
-
                         }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
@@ -456,7 +458,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
-        
+
         private async void QueryResults()
         {
             _updateSource?.Cancel();
@@ -543,13 +545,15 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
-                
+                IReadOnlyList<Result> results =
+                    await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
+
                 currentCancellationToken.ThrowIfCancellationRequested();
 
                 results ??= _emptyResult;
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query,
+                    currentCancellationToken)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }

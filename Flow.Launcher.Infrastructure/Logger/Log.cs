@@ -82,35 +82,9 @@ namespace Flow.Launcher.Infrastructure.Logger
 #if DEBUG
             ExceptionDispatchInfo.Capture(exception).Throw();
 #else
-            var classNameWithMethod = CheckClassAndMessageAndReturnFullClassWithMethod(className, message, methodName);
 
-            ExceptionInternal(classNameWithMethod, message, exception);
+            LogInternal(LogLevel.Error, className, message, methodName, exception);
 #endif
-        }
-
-        private static void ExceptionInternal(string classAndMethod, string message, System.Exception e)
-        {
-            var logger = LogManager.GetLogger(classAndMethod);
-
-            var messageBuilder = new StringBuilder();
-
-            logger.Error(e, message);
-        }
-
-        private static void LogInternal(string message, LogLevel level)
-        {
-            if (FormatValid(message))
-            {
-                var parts = message.Split('|');
-                var prefix = parts[1];
-                var unprefixed = parts[2];
-                var logger = LogManager.GetLogger(prefix);
-                logger.Log(level, unprefixed);
-            }
-            else
-            {
-                LogFaultyFormat(message);
-            }
         }
 
 
