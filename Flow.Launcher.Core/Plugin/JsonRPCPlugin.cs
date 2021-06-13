@@ -46,7 +46,13 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        private static readonly JsonSerializerOptions _options = new() {Converters = {new JsonObjectConverter()}};
+        private static readonly JsonSerializerOptions _options = new()
+        {
+            Converters =
+            {
+                new JsonObjectConverter()
+            }
+        };
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -84,27 +90,31 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (result.JsonRPCAction == null) return false;
 
-                    if (!string.IsNullOrEmpty(result.JsonRPCAction.Method))
+                    if (string.IsNullOrEmpty(result.JsonRPCAction.Method))
                     {
-                        if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
+                        return !result.JsonRPCAction.DontHideAfterAction;
+                    }
+
+                    if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
+                    {
+                        ExecuteFlowLauncherAPI(result.JsonRPCAction.Method["Flow.Launcher.".Length..],
+                            result.JsonRPCAction.Parameters);
+                    }
+                    else
+                    {
+                        var actionResponse = ExecuteCallback(result.JsonRPCAction);
+
+                        if (string.IsNullOrEmpty(actionResponse))
                         {
-                            ExecuteFlowLauncherAPI(result.JsonRPCAction.Method[14..],
-                                result.JsonRPCAction.Parameters);
+                            return !result.JsonRPCAction.DontHideAfterAction;
                         }
-                        else
+
+                        var jsonRpcRequestModel = JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, _options);
+
+                        if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
                         {
-                            string actionReponse = ExecuteCallback(result.JsonRPCAction);
-                            if (string.IsNullOrEmpty(actionReponse))
-                                return false;
-                            JsonRPCRequestModel jsonRpcRequestModel =
-                                JsonSerializer.Deserialize<JsonRPCRequestModel>(actionReponse);
-                            if (jsonRpcRequestModel != null
-                                && !string.IsNullOrEmpty(jsonRpcRequestModel.Method)
-                                && jsonRpcRequestModel.Method.StartsWith("Flow.Launcher."))
-                            {
-                                ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method.Substring(4),
-                                    jsonRpcRequestModel.Parameters);
-                            }
+                            ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method["Flow.Launcher.".Length..],
+                                jsonRpcRequestModel.Parameters);
                         }
                     }
 
@@ -181,7 +191,10 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (result.StartsWith("DEBUG:"))
                 {
-                    MessageBox.Show(new Form {TopMost = true}, result.Substring(6));
+                    MessageBox.Show(new Form
+                    {
+                        TopMost = true
+                    }, result.Substring(6));
                     return string.Empty;
                 }
 
