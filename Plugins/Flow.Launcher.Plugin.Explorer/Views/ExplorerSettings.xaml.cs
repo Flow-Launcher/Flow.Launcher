@@ -40,9 +40,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 new(Settings.ActionKeyword.FileContentSearchActionKeyword,
                     viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch")),
                 new(Settings.ActionKeyword.PathSearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_path")),
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_pathsearch")),
                 new(Settings.ActionKeyword.IndexSearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexonlysearch"))
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexsearch"))
             };
 
             lbxActionKeywords.ItemsSource = actionKeywordsListView;
