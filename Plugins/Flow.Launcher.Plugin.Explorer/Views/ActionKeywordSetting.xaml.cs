@@ -78,12 +78,11 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             var oldActionKeyword = CurrentActionKeyword.Keyword;
 
-
             // == because of nullable
             if (Enabled == false || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
             {
                 // Update View Data
-                CurrentActionKeyword.Keyword = ActionKeyword;
+                CurrentActionKeyword.Keyword = Enabled == true ? ActionKeyword : Query.GlobalPluginWildcardSign;
                 CurrentActionKeyword.Enabled = Enabled;
 
                 switch (Enabled)
