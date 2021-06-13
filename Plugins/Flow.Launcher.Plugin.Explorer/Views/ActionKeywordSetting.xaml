@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Action Keyword Setting" Height="200" Width="500">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,21 +17,24 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180" />
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock Margin="20 10 10 10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Left" Text="Current Action Keyword:" />
-        <TextBox Name="txtCurrentActionKeyword"
+                   HorizontalAlignment="Left" Text="{DynamicResource plugin_explorer_actionkeyword_current}" />
+        <TextBox Name="TxtCurrentActionKeyword"
                  Margin="10" Grid.Row="0" Width="105" Grid.Column="1"
                  VerticalAlignment="Center"
-                 HorizontalAlignment="Left" />
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1">
-            <Button Click="OnConfirmButtonClick"
-                    Margin="10 0 10 0" Width="80" Height="35"
-                    Content="OK" />
-            <Button Click="OnCancelButtonClick"
-                    Margin="10 0 10 0" Width="80" Height="35"
-                    Content="Cancel" />
-        </StackPanel>
+                 HorizontalAlignment="Left"
+                 Text="{Binding ActionKeyword}" 
+                 PreviewKeyDown="TxtCurrentActionKeyword_OnKeyDown"/>
+        <CheckBox Name="ChkActionKeywordEnabled" ToolTip="{DynamicResource plugin_explorer_actionkeyword_enabled_tooltip}"
+                  Margin="10" Grid.Row="0" Grid.Column="2" Content="{DynamicResource plugin_explorer_actionkeyword_enabled}"
+                  Width="auto"
+                  VerticalAlignment="Center" IsChecked="{Binding Enabled}"
+                  Visibility="{Binding Visible}"/>
+        <Button Name="DownButton"
+                Click="OnDoneButtonClick" Grid.Row="1" Grid.Column="2"
+                Margin="10 0 10 0" Width="80" Height="35"
+                Content="{DynamicResource plugin_explorer_actionkeyword_done}" />
     </Grid>
 </Window>
