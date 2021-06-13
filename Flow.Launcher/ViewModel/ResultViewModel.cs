@@ -98,7 +98,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>", e);
+                    Log.Exception(nameof(ResultViewModel),$"IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>", e);
                     return ImageLoader.DefaultImage;
                 }
             }

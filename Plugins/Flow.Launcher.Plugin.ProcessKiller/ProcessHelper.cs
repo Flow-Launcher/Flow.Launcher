@@ -79,7 +79,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception e)
             {
-                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
+                Log.Exception("Flow.Launcher.Plugin.ProcessKiller",$"Failed to kill process {p.ProcessName}", e);
             }
         }
 

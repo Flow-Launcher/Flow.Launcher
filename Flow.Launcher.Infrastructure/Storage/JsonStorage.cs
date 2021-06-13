@@ -12,6 +12,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     public class JsonStorage<T> where T : new()
     {
         protected T _data;
+
         // need a new directory name
         public const string DirectoryName = "Settings";
         public const string FileSuffix = ".json";
@@ -37,6 +38,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             {
                 LoadDefault();
             }
+
             return _data.NonNull();
         }
 
@@ -49,7 +51,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             catch (JsonException e)
             {
                 LoadDefault();
-                Log.Exception($"|JsonStorage.Deserialize|Deserialize error for json <{FilePath}>", e);
+                Log.Exception(nameof(JsonStorage<T>), $"Deserialize error for json <{FilePath}>", e);
             }
 
             if (_data == null)
@@ -82,7 +84,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonSerializer.Serialize(_data, new JsonSerializerOptions() { WriteIndented = true });
+            string serialized = JsonSerializer.Serialize(_data, new JsonSerializerOptions() {WriteIndented = true});
 
             File.WriteAllText(FilePath, serialized);
         }

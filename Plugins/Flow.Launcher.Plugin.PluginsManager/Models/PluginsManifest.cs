@@ -15,14 +15,17 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
         {
             try
             {
-                await using var jsonStream = await Http.GetStreamAsync("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json")
-                                 .ConfigureAwait(false);
+                await using var jsonStream = await Http
+                    .GetStreamAsync(
+                        "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json")
+                    .ConfigureAwait(false);
 
                 UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(jsonStream).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                Log.Exception("|PluginManagement.GetManifest|Encountered error trying to download plugins manifest", e);
+                Log.Exception("Flow.Plugin.PluginsManager." + nameof(PluginsManifest),
+                    "Encountered error trying to download plugins manifest", e);
 
                 UserPlugins = new List<UserPlugin>();
             }

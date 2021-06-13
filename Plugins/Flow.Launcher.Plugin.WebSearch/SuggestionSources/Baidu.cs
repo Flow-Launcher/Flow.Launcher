@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
-                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                Log.Exception("Flow.Plugin.WebSearch." + nameof(Baidu).Length,"Can't get suggestion from baidu", e);
                 return null;
             }
 
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 }
                 catch (JsonException e)
                 {
-                    Log.Exception("|Baidu.Suggestions|can't parse suggestions", e);
+                    Log.Exception("Flow.Plugin.WebSearch." + nameof(Baidu),"can't parse suggestions", e);
                     return new List<string>();
                 }
 

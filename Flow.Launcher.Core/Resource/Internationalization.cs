@@ -51,7 +51,8 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else
                 {
-                    Log.Error($"|Internationalization.AddPluginLanguageDirectories|Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
+                    Log.Error("Internationalization",
+                        $"Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
                 }
             }
         }
@@ -72,10 +73,11 @@ namespace Flow.Launcher.Core.Resource
         private Language GetLanguageByLanguageCode(string languageCode)
         {
             var lowercase = languageCode.ToLower();
-            var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
+            var language = AvailableLanguages.GetAvailableLanguages()
+                .FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
             if (language == null)
             {
-                Log.Error($"|Internationalization.GetLanguageByLanguageCode|Language code can't be found <{languageCode}>");
+                Log.Error("Internationalization", $"Language code can't be found <{languageCode}>");
                 return AvailableLanguages.English;
             }
             else
@@ -94,9 +96,9 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
+
             UpdatePluginMetadataTranslations();
             Settings.Language = language.LanguageCode;
-
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
@@ -109,7 +111,8 @@ namespace Flow.Launcher.Core.Resource
             if (languageToSet != AvailableLanguages.Chinese && languageToSet != AvailableLanguages.Chinese_TW)
                 return false;
 
-            if (MessageBox.Show("Do you want to turn on search with Pinyin?", string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("Do you want to turn on search with Pinyin?", string.Empty, MessageBoxButton.YesNo) ==
+                MessageBoxResult.No)
                 return false;
 
             return true;
@@ -161,7 +164,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                Log.Error($"|Internationalization.GetTranslation|No Translation for key {key}");
+                Log.Error("Internationalization", $"No Translation for key {key}");
                 return $"No Translation for key {key}";
             }
         }
@@ -179,7 +182,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Internationalization.UpdatePluginMetadataTranslations|Failed for <{p.Metadata.Name}>", e);
+                    Log.Exception(nameof(Internationalization), $"Failed for <{p.Metadata.Name}>", e);
                 }
             }
         }
@@ -195,7 +198,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else
                 {
-                    Log.Error($"|Internationalization.LanguageFile|Language path can't be found <{path}>");
+                    Log.Error(nameof(Internationalization), $"Language path can't be found <{path}>");
                     string english = Path.Combine(folder, DefaultFile);
                     if (File.Exists(english))
                     {
@@ -203,7 +206,8 @@ namespace Flow.Launcher.Core.Resource
                     }
                     else
                     {
-                        Log.Error($"|Internationalization.LanguageFile|Default English Language path can't be found <{path}>");
+                        Log.Error(nameof(Internationalization),
+                            $"Default English Language path can't be found <{path}>");
                         return string.Empty;
                     }
                 }

@@ -33,7 +33,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             {
                 if (new FileInfo(FilePath).Length == 0)
                 {
-                    Log.Error($"|BinaryStorage.TryLoad|Zero length cache file <{FilePath}>");
+                    Log.Error(nameof(BinaryStorage<T>),$"Zero length cache file <{FilePath}>");
                     Save(defaultData);
                     return defaultData;
                 }
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             else
             {
-                Log.Info("|BinaryStorage.TryLoad|Cache file not exist, load default data");
+                Log.Info(nameof(BinaryStorage<T>),$"Zero length cache file <{FilePath}>");
                 Save(defaultData);
                 return defaultData;
             }
@@ -68,7 +68,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             catch (System.Exception e)
             {
-                Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
+                Log.Exception(nameof(BinaryStorage<T>),$"Deserialize error for file <{FilePath}>", e);
                 return defaultData;
             }
             finally
@@ -108,7 +108,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                 }
                 catch (SerializationException e)
                 {
-                    Log.Exception($"|BinaryStorage.Save|serialize error for file <{FilePath}>", e);
+                    Log.Exception(nameof(BinaryStorage<T>),$"serialize error for file <{FilePath}>", e);
                 }
             }
         }

@@ -47,12 +47,12 @@ namespace Flow.Launcher
 
         private async void OnStartupAsync(object sender, StartupEventArgs e)
         {
-            await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
+            await Stopwatch.NormalAsync(nameof(App),"Startup cost", async () =>
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
-                Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
+                Log.Info(nameof(App), "Begin Flow Launcher startup ----------------------------------------------------");
+                Log.Info(nameof(App), $"Runtime info:{ErrorReporting.RuntimeInfo()}");
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
 
@@ -72,11 +72,11 @@ namespace Flow.Launcher
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
-                
+
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
 
-                Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
+                Log.Info(nameof(App), $"Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
@@ -97,7 +97,7 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
-                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
+                Log.Info(nameof(App), "End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
 
@@ -122,10 +122,7 @@ namespace Flow.Launcher
                 {
                     // check udpate every 5 hours
                     var timer = new Timer(1000 * 60 * 60 * 5);
-                    timer.Elapsed += async (s, e) =>
-                    {
-                        await _updater.UpdateApp(API);
-                    };
+                    timer.Elapsed += async (s, e) => { await _updater.UpdateApp(API); };
                     timer.Start();
 
                     // check updates on startup

@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.DisablePortableMode|Error occured while disabling portable mode", e);
+                Log.Exception(nameof(Portable),"Error occured while disabling portable mode", e);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.EnablePortableMode|Error occured while enabling portable mode", e);
+                Log.Exception(nameof(Portable),"Error occured while enabling portable mode", e);
             }
         }
 

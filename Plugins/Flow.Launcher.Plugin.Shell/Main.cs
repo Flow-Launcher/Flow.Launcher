@@ -61,11 +61,11 @@ namespace Flow.Launcher.Plugin.Shell
 
                     if (basedir != null)
                     {
-                        var autocomplete = Directory.GetFileSystemEntries(basedir).
-                            Select(o => dir + Path.GetFileName(o)).
-                            Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
-                                       !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
-                                       !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+                        var autocomplete = Directory.GetFileSystemEntries(basedir)
+                            .Select(o => dir + Path.GetFileName(o)).Where(o =>
+                                o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
+                                !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
+                                !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
                         autocomplete.Sort();
                         results.AddRange(autocomplete.ConvertAll(m => new Result
                         {
@@ -81,8 +81,9 @@ namespace Flow.Launcher.Plugin.Shell
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Flow.Launcher.Plugin.Shell.Main.Query|Exception when query for <{query}>", e);
+                    Log.Exception("Flow.Launcher.Plugin.Shell.Main", $"Exception when query for <{query}>", e);
                 }
+
                 return results;
             }
         }
@@ -95,14 +96,18 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     if (m.Key == cmd)
                     {
-                        result.SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                        result.SubTitle =
+                            string.Format(
+                                context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"),
+                                m.Value);
                         return null;
                     }
 
                     var ret = new Result
                     {
                         Title = m.Key,
-                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                        SubTitle = string.Format(
+                            context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
@@ -143,7 +148,8 @@ namespace Flow.Launcher.Plugin.Shell
                 .Select(m => new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = string.Format(
+                        context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
@@ -184,18 +190,20 @@ namespace Flow.Launcher.Plugin.Shell
                     arguments = $"\"{command} ; Read-Host -Prompt \\\"Press Enter to continue\\\"\"";
                 }
 
-                info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
+                info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments,
+                    runAsAdministratorArg);
             }
             else if (_settings.Shell == Shell.RunCommand)
             {
-                var parts = command.Split(new[] { ' ' }, 2);
+                var parts = command.Split(new[] {' '}, 2);
                 if (parts.Length == 2)
                 {
                     var filename = parts[0];
                     if (ExistInPath(filename))
                     {
                         var arguments = parts[1];
-                        info = ShellCommand.SetProcessStartInfo(filename, workingDirectory, arguments, runAsAdministratorArg);
+                        info = ShellCommand.SetProcessStartInfo(filename, workingDirectory, arguments,
+                            runAsAdministratorArg);
                     }
                     else
                     {
@@ -259,6 +267,7 @@ namespace Flow.Launcher.Plugin.Shell
                             return true;
                         }
                     }
+
                     return false;
                 }
                 else
@@ -279,19 +288,21 @@ namespace Flow.Launcher.Plugin.Shell
         {
             if (_settings.ReplaceWinR)
             {
-                if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
+                if (keyevent == (int) KeyEvent.WM_KEYDOWN && vkcode == (int) Keys.R && state.WinPressed)
                 {
                     _winRStroked = true;
                     OnWinRPressed();
                     return false;
                 }
-                if (keyevent == (int)KeyEvent.WM_KEYUP && _winRStroked && vkcode == (int)Keys.LWin)
+
+                if (keyevent == (int) KeyEvent.WM_KEYUP && _winRStroked && vkcode == (int) Keys.LWin)
                 {
                     _winRStroked = false;
                     _keyboardSimulator.ModifiedKeyStroke(VirtualKeyCode.LWIN, VirtualKeyCode.CONTROL);
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -325,7 +336,8 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
                     Action = c =>
                     {
-                        Task.Run(() =>Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
+                        Task.Run(() => Execute(ShellCommand.RunAsDifferentUser,
+                            PrepareProcessStartInfo(selectedResult.Title)));
                         return true;
                     },
                     IcoPath = "Images/user.png"

@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core
                 var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
                 var currentVersion = Version.Parse(Constant.Version);
 
-                Log.Info($"|Updater.UpdateApp|Future Release <{newUpdateInfo.FutureReleaseEntry.Formatted()}>");
+                Log.Info(nameof(Updater),$"Future Release <{newUpdateInfo.FutureReleaseEntry.Formatted()}>");
 
                 if (newReleaseVersion <= currentVersion)
                 {
@@ -80,7 +80,7 @@ namespace Flow.Launcher.Core
 
                 var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
 
-                Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
+                Log.Info(nameof(Updater),$"Update success:{newVersionTips}");
 
                 if (MessageBox.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -89,7 +89,7 @@ namespace Flow.Launcher.Core
             }
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException || e.InnerException is TimeoutException)
             {
-                Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                Log.Exception(nameof(Updater),"Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
                             api.GetTranslation("update_flowlauncher_check_connection"));
                 return;

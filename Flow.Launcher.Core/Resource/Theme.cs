@@ -61,7 +61,7 @@ namespace Flow.Launcher.Core.Resource
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
+                        Log.Exception(nameof(Theme),$"Exception when create directory <{dir}>", e);
                     }
                 }
             }
@@ -91,7 +91,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (DirectoryNotFoundException e)
             {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
+                Log.Error(nameof(Theme),$"Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
                 {
                     MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
@@ -101,7 +101,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (XamlParseException e)
             {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
+                Log.Error(nameof(Theme),$"Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
                 {
                     MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));

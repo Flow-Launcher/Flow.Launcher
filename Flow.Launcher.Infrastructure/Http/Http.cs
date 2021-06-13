@@ -116,7 +116,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug("Http",$"Url <{url}>");
             return GetAsync(new Uri(url.Replace("#", "%23")), token);
         }
 
@@ -128,7 +128,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug("Http",$"Url <{url}>");
             using var response = await client.GetAsync(url, token);
             var content = await response.Content.ReadAsStringAsync();
             if (response.StatusCode == HttpStatusCode.OK)
@@ -149,7 +149,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns></returns>
         public static async Task<Stream> GetStreamAsync([NotNull] string url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug("Http",$"Url <{url}>");
             var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
             return await response.Content.ReadAsStreamAsync();
         }

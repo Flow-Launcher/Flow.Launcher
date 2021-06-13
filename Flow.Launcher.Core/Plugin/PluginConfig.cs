@@ -33,7 +33,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"|PluginConfig.ParsePLuginConfigs|Can't delete <{directory}>", e);
+                        Log.Exception(nameof(PluginConfig),$"Can't delete <{directory}>", e);
                     }
                 }
                 else
@@ -54,7 +54,7 @@ namespace Flow.Launcher.Core.Plugin
             string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
             if (!File.Exists(configPath))
             {
-                Log.Error($"|PluginConfig.GetPluginMetadata|Didn't find config file <{configPath}>");
+                Log.Error(nameof(PluginConfig),$"Didn't find config file <{configPath}>");
                 return null;
             }
 
@@ -70,19 +70,19 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Log.Exception($"|PluginConfig.GetPluginMetadata|invalid json for config <{configPath}>", e);
+                Log.Exception(nameof(PluginConfig),$"invalid json for config <{configPath}>", e);
                 return null;
             }
 
             if (!AllowedLanguage.IsAllowed(metadata.Language))
             {
-                Log.Error($"|PluginConfig.GetPluginMetadata|Invalid language <{metadata.Language}> for config <{configPath}>");
+                Log.Error(nameof(PluginConfig),$"Invalid language <{metadata.Language}> for config <{configPath}>");
                 return null;
             }
 
             if (!File.Exists(metadata.ExecuteFilePath))
             {
-                Log.Error($"|PluginConfig.GetPluginMetadata|execute file path didn't exist <{metadata.ExecuteFilePath}> for conifg <{configPath}");
+                Log.Error(nameof(PluginConfig),$"execute file path didn't exist <{metadata.ExecuteFilePath}> for conifg <{configPath}");
                 return null;
             }
 

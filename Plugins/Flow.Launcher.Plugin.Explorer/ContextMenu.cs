@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
@@ -48,9 +49,12 @@ namespace Flow.Launcher.Plugin.Explorer
                 contextMenus.Add(CreateOpenWindowsIndexingOptions());
 
                 if (record.ShowIndexState)
-                    contextMenus.Add(new Result {Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"), 
-                                                    SubTitle = "Location: " + record.FullPath,
-                                                    Score = 501, IcoPath = Constants.IndexImagePath});
+                    contextMenus.Add(new Result
+                    {
+                        Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"),
+                        SubTitle = "Location: " + record.FullPath,
+                        Score = 501, IcoPath = Constants.IndexImagePath
+                    });
 
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
@@ -60,16 +64,17 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(new Result
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_title"),
-                        SubTitle = string.Format(Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_subtitle"), fileOrFolder),
+                        SubTitle = string.Format(
+                            Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_subtitle"), fileOrFolder),
                         Action = (context) =>
                         {
-                            Settings.QuickAccessLinks.Add(new AccessLink { Path = record.FullPath, Type = record.Type });
+                            Settings.QuickAccessLinks.Add(new AccessLink {Path = record.FullPath, Type = record.Type});
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
-                                                                        string.Format(
-                                                                            Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
-                                                                                fileOrFolder),
-                                                                            Constants.ExplorerIconImageFullPath);
+                                string.Format(
+                                    Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
+                                    fileOrFolder),
+                                Constants.ExplorerIconImageFullPath);
 
                             ViewModel.Save();
 
@@ -85,16 +90,19 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(new Result
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_title"),
-                        SubTitle = string.Format(Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_subtitle"), fileOrFolder),
+                        SubTitle = string.Format(
+                            Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_subtitle"),
+                            fileOrFolder),
                         Action = (context) =>
                         {
-                            Settings.QuickAccessLinks.Remove(Settings.QuickAccessLinks.FirstOrDefault(x => x.Path == record.FullPath));
+                            Settings.QuickAccessLinks.Remove(
+                                Settings.QuickAccessLinks.FirstOrDefault(x => x.Path == record.FullPath));
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess"),
-                                                                        string.Format(
-                                                                            Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
-                                                                                fileOrFolder),
-                                                                            Constants.ExplorerIconImageFullPath);
+                                string.Format(
+                                    Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
+                                    fileOrFolder),
+                                Constants.ExplorerIconImageFullPath);
 
                             ViewModel.Save();
 
@@ -105,7 +113,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         IcoPath = Constants.RemoveQuickAccessImagePath
                     });
                 }
-                
+
                 contextMenus.Add(new Result
                 {
                     Title = Context.API.GetTranslation("plugin_explorer_copypath"),
@@ -136,7 +144,8 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         try
                         {
-                            Clipboard.SetFileDropList(new System.Collections.Specialized.StringCollection { record.FullPath });
+                            Clipboard.SetFileDropList(new System.Collections.Specialized.StringCollection
+                                {record.FullPath});
                             return true;
                         }
                         catch (Exception e)
@@ -146,7 +155,6 @@ namespace Flow.Launcher.Plugin.Explorer
                             Context.API.ShowMsg(message);
                             return false;
                         }
-
                     },
                     IcoPath = icoPath
                 });
@@ -155,16 +163,19 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(new Result
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder") + $" {fileOrFolder}",
-                        SubTitle = Context.API.GetTranslation("plugin_explorer_deletefilefolder_subtitle") + $" {fileOrFolder}",
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_deletefilefolder_subtitle") +
+                                   $" {fileOrFolder}",
                         Action = (context) =>
                         {
                             try
                             {
                                 if (MessageBox.Show(
-                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"),fileOrFolder), 
-                                        string.Empty, 
-                                        MessageBoxButton.YesNo, 
-                                        MessageBoxIcon.Warning) 
+                                        string.Format(
+                                            Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"),
+                                            fileOrFolder),
+                                        string.Empty,
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxIcon.Warning)
                                     == DialogResult.No)
                                     return false;
 
@@ -175,9 +186,12 @@ namespace Flow.Launcher.Plugin.Explorer
 
                                 Task.Run(() =>
                                 {
-                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess"),
-                                                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), fileOrFolder), 
-                                                                        Constants.ExplorerIconImageFullPath);
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess"),
+                                        string.Format(
+                                            Context.API.GetTranslation(
+                                                "plugin_explorer_deletefilefoldersuccess_detail"), fileOrFolder),
+                                        Constants.ExplorerIconImageFullPath);
                                 });
                             }
                             catch (Exception e)
@@ -250,8 +264,8 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             string editorPath = "Notepad.exe"; // TODO add the ability to create a custom editor
 
-            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor") 
-                                    + " " + Path.GetFileNameWithoutExtension(editorPath);
+            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor")
+                       + " " + Path.GetFileNameWithoutExtension(editorPath);
 
             return new Result
             {
@@ -283,14 +297,14 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
                 Action = _ =>
                 {
-                    if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
-                        Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink { Path = record.FullPath });
+                    if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
+                        Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink {Path = record.FullPath});
 
                     Task.Run(() =>
                     {
-                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"), 
-                                                            Context.API.GetTranslation("plugin_explorer_path") + 
-                                                            " " + record.FullPath, Constants.ExplorerIconImageFullPath);
+                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"),
+                            Context.API.GetTranslation("plugin_explorer_path") +
+                            " " + record.FullPath, Constants.ExplorerIconImageFullPath);
 
                         // so the new path can be persisted to storage and not wait till next ViewModel save.
                         Context.API.SaveAppAllSettings();
@@ -313,11 +327,11 @@ namespace Flow.Launcher.Plugin.Explorer
                     try
                     {
                         var psi = new ProcessStartInfo
-                                    {
-                                        FileName = "control.exe",
-                                        UseShellExecute = true,
-                                        Arguments = "srchadmin.dll"
-                                    };
+                        {
+                            FileName = "control.exe",
+                            UseShellExecute = true,
+                            Arguments = "srchadmin.dll"
+                        };
 
                         Process.Start(psi);
                         return true;
@@ -334,9 +348,9 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-        public void LogException(string message, Exception e)
+        public void LogException(string message, Exception e, [CallerMemberName] string methodName = "")
         {
-            Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
+            Log.Exception("Flow.Launcher.Plugin.Explorer", message, e, methodName);
         }
 
         private bool CanRunAsDifferentUser(string path)
@@ -350,7 +364,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 default:
                     return false;
-
             }
         }
     }

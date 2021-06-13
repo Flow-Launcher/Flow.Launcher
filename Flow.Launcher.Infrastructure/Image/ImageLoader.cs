@@ -48,14 +48,14 @@ namespace Flow.Launcher.Infrastructure.Image
 
             Task.Run(() =>
             {
-                Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
+                Stopwatch.Normal(nameof(ImageLoader),"Preload images cost", () =>
                 {
                     ImageCache.Data.AsParallel().ForAll(x =>
                     {
                         Load(x.Key);
                     });
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info(nameof(ImageLoader),$"Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
         }
 
@@ -137,8 +137,8 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
                 catch (System.Exception e2)
                 {
-                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
-                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
+                    Log.Exception(nameof(ImageLoader),$"Failed to get thumbnail for {path} on first try", e);
+                    Log.Exception(nameof(ImageLoader),$"Failed to get thumbnail for {path} on second try", e2);
 
                     ImageSource image = ImageCache[Constant.MissingImgIcon];
                     ImageCache[path] = image;

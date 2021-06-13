@@ -40,8 +40,8 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var metadata in metadatas)
             {
-                var milliseconds = Stopwatch.Debug(
-                    $"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
+                var milliseconds = Stopwatch.Debug(nameof(PluginsLoader),
+                    $"Constructor init cost for {metadata.Name}", () =>
                     {
 #if DEBUG
                         var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);

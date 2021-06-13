@@ -73,15 +73,15 @@ namespace Flow.Launcher.Plugin.Program
 
             await Task.Yield();
 
-            Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
+            Stopwatch.Normal("Flow.Plugin.Program.Main","Preload programs cost", () =>
             {
                 _win32Storage = new BinaryStorage<Win32[]>("Win32");
                 _win32s = _win32Storage.TryLoad(new Win32[] { });
                 _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
                 _uwps = _uwpStorage.TryLoad(new UWP.Application[] { });
             });
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
+            Log.Info("Flow.Plugin.Program.Main",$"Number of preload win32 programs <{_win32s.Length}>");
+            Log.Info("Flow.Plugin.Program.Main",$"Number of preload uwps <{_uwps.Length}>");
 
 
             bool indexedWinApps = false;
@@ -91,7 +91,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 if (IsStartupIndexProgramsRequired || !_win32s.Any())
                 {
-                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+                    Stopwatch.Normal("Flow.Plugin.Program","Win32Program index cost", IndexWin32Programs);
                     indexedWinApps = true;
                 }
             });
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 if (IsStartupIndexProgramsRequired || !_uwps.Any())
                 {
-                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
+                    Stopwatch.Normal("Flow.Plugin.Program","Win32Program index cost", IndexUwpPrograms);
                     indexedUWPApps = true;
                 }
             });
