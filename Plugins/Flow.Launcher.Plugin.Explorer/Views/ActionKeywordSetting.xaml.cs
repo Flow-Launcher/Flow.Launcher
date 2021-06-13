@@ -31,19 +31,15 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public bool? Enabled { get; set; }
 
-
-        private Settings settings;
         private string _actionKeyword;
 
         public Visibility Visible =>
             CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
 
         public ActionKeywordSetting(SettingsViewModel settingsViewModel,
-            ActionKeywordView selectedActionKeyword, Settings settings)
+            ActionKeywordView selectedActionKeyword)
         {
             this.settingsViewModel = settingsViewModel;
-
-            this.settings = settings;
 
             CurrentActionKeyword = selectedActionKeyword;
 

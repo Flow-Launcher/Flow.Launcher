@@ -193,7 +193,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 var selectedActionKeyword = lbxActionKeywords.SelectedItem as ActionKeywordView;
 
                 var actionKeywordWindow = new ActionKeywordSetting(viewModel,
-                    selectedActionKeyword, viewModel.Settings);
+                    selectedActionKeyword);
 
                 actionKeywordWindow.ShowDialog();
 
