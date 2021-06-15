@@ -88,13 +88,13 @@ namespace Flow.Launcher
 
                         if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
                         {
-                            _progressBarStoryboard.Resume();
+                            _progressBarStoryboard.Resume(ProgressBar);
                             isProgressBarStoryboardPaused = false;
                         }
                     }
                     else if (!isProgressBarStoryboardPaused)
                     {
-                        _progressBarStoryboard.Pause();
+                        _progressBarStoryboard.Pause(ProgressBar);
                         isProgressBarStoryboardPaused = true;
                     }
                 }
@@ -104,12 +104,13 @@ namespace Flow.Launcher
                     {
                         if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
                         {
-                            _progressBarStoryboard.Pause();
+                            _progressBarStoryboard.Pause(ProgressBar);
                             isProgressBarStoryboardPaused = true;
                         }
                         else if (_viewModel.MainWindowVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
                         {
-                            _progressBarStoryboard.Resume();
+                            
+                            _progressBarStoryboard.Resume(ProgressBar);
                             isProgressBarStoryboardPaused = false;
                         }
                     }, System.Windows.Threading.DispatcherPriority.Render);
@@ -196,7 +197,10 @@ namespace Flow.Launcher
             _progressBarStoryboard.Children.Add(da);
             _progressBarStoryboard.Children.Add(da1);
             _progressBarStoryboard.RepeatBehavior = RepeatBehavior.Forever;
-            ProgressBar.BeginStoryboard(_progressBarStoryboard);
+            
+            _progressBarStoryboard.Begin(ProgressBar, true);
+            _progressBarStoryboard.Pause();
+            
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
