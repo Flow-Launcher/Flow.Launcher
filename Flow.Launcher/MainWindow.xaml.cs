@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -22,7 +23,6 @@ namespace Flow.Launcher
 {
     public partial class MainWindow
     {
-
         #region Private Fields
 
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
@@ -40,6 +40,7 @@ namespace Flow.Launcher
             _settings = settings;
             InitializeComponent();
         }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,7 +54,6 @@ namespace Flow.Launcher
 
         private void OnInitialized(object sender, EventArgs e)
         {
-
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
@@ -72,48 +72,57 @@ namespace Flow.Launcher
 
             _viewModel.PropertyChanged += (o, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.MainWindowVisibility))
+                switch (e.PropertyName)
                 {
-                    if (_viewModel.MainWindowVisibility == Visibility.Visible)
+                    case nameof(MainViewModel.MainWindowVisibility):
                     {
-                        Activate();
-                        QueryTextBox.Focus();
-                        UpdatePosition();
-                        _settings.ActivateTimes++;
-                        if (!_viewModel.LastQuerySelected)
+                        if (_viewModel.MainWindowVisibility == Visibility.Visible)
                         {
-                            QueryTextBox.SelectAll();
-                            _viewModel.LastQuerySelected = true;
+                            Activate();
+                            QueryTextBox.Focus();
+                            UpdatePosition();
+                            _settings.ActivateTimes++;
+                            if (!_viewModel.LastQuerySelected)
+                            {
+                                QueryTextBox.SelectAll();
+                                _viewModel.LastQuerySelected = true;
+                            }
+
+                            if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                            {
+                                _progressBarStoryboard.Begin(ProgressBar);
+                                isProgressBarStoryboardPaused = false;
+                            }
                         }
 
-                        if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                        if (!isProgressBarStoryboardPaused)
                         {
-                            _progressBarStoryboard.Resume(ProgressBar);
-                            isProgressBarStoryboardPaused = false;
-                        }
-                    }
-                    else if (!isProgressBarStoryboardPaused)
-                    {
-                        _progressBarStoryboard.Pause(ProgressBar);
-                        isProgressBarStoryboardPaused = true;
-                    }
-                }
-                else if (e.PropertyName == nameof(MainViewModel.ProgressBarVisibility))
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
-                        {
-                            _progressBarStoryboard.Pause(ProgressBar);
+                            _progressBarStoryboard.Stop(ProgressBar);
                             isProgressBarStoryboardPaused = true;
                         }
-                        else if (_viewModel.MainWindowVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+
+                        break;
+                    }
+                    case nameof(MainViewModel.ProgressBarVisibility):
+                    {
+                        Dispatcher.Invoke(async () =>
                         {
-                            
-                            _progressBarStoryboard.Resume(ProgressBar);
-                            isProgressBarStoryboardPaused = false;
-                        }
-                    }, System.Windows.Threading.DispatcherPriority.Render);
+                            if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
+                            {
+                                await Task.Delay(50);
+                                _progressBarStoryboard.Stop(ProgressBar);
+                                isProgressBarStoryboardPaused = true;
+                            }
+                            else if (_viewModel.MainWindowVisibility == Visibility.Visible &&
+                                     isProgressBarStoryboardPaused)
+                            {
+                                _progressBarStoryboard.Begin(ProgressBar);
+                                isProgressBarStoryboardPaused = false;
+                            }
+                        }, System.Windows.Threading.DispatcherPriority.Render);
+
+                        break;
+                    }
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -190,17 +199,15 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
-            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
+                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
             _progressBarStoryboard.Children.Add(da);
             _progressBarStoryboard.Children.Add(da1);
             _progressBarStoryboard.RepeatBehavior = RepeatBehavior.Forever;
-            
-            _progressBarStoryboard.Begin(ProgressBar, true);
-            _progressBarStoryboard.Pause();
-            
+
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
@@ -214,10 +221,10 @@ namespace Flow.Launcher
         {
             if (sender != null && e.OriginalSource != null)
             {
-                var r = (ResultListBox)sender;
-                var d = (DependencyObject)e.OriginalSource;
+                var r = (ResultListBox) sender;
+                var d = (DependencyObject) e.OriginalSource;
                 var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
-                var result = (ResultViewModel)item?.DataContext;
+                var result = (ResultViewModel) item?.DataContext;
                 if (result != null)
                 {
                     if (e.ChangedButton == MouseButton.Left)
