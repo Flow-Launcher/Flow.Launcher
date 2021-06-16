@@ -63,7 +63,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 ## Plugins
 
-There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/blob/main/Plugins.md) in the documentation section, some of which are integrated from other launchers.
+There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/blob/main/plugins.md) in the documentation section, some of which are integrated from other launchers.
 
 ## Status
 
