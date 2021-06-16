@@ -90,7 +90,7 @@ namespace Flow.Launcher
 
                             if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
                             {
-                                _progressBarStoryboard.Begin(ProgressBar);
+                                _progressBarStoryboard.Begin(ProgressBar, true);
                                 isProgressBarStoryboardPaused = false;
                             }
                         }
@@ -116,7 +116,7 @@ namespace Flow.Launcher
                             else if (_viewModel.MainWindowVisibility == Visibility.Visible &&
                                      isProgressBarStoryboardPaused)
                             {
-                                _progressBarStoryboard.Begin(ProgressBar);
+                                _progressBarStoryboard.Begin(ProgressBar, true);
                                 isProgressBarStoryboardPaused = false;
                             }
                         }, System.Windows.Threading.DispatcherPriority.Render);
