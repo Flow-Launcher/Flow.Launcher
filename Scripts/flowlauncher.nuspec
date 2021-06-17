@@ -3,7 +3,7 @@
   <metadata>
     <id>FlowLauncher</id>
     <title>Flow Launcher</title>
-    <version>$version$</version>
+    <version>1.0.0</version>
     <authors>Flow-Launcher Team</authors>
     <projectUrl>https://github.com/Flow-Launcher/Flow.Launcher</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/master/Flow.Launcher/Images/app.png</iconUrl>
@@ -11,6 +11,6 @@
     <description>Flow Launcher - a launcher for windows</description>
   </metadata>
   <files>
-    <file src="**\*.*" target="lib\net5.0-windows\" exclude="Flow.Launcher.vshost.exe;Flow.Launcher.vshost.exe.config;Flow.Launcher.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
+    <file src="**\*.*" target="lib\net5.0\" exclude="Flow.Launcher.vshost.exe;Flow.Launcher.vshost.exe.config;Flow.Launcher.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
   </files>
 </package>

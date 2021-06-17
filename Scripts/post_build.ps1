@@ -71,8 +71,8 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Input path:  $input"
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
     New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
-    # TODO: can we use dotnet pack here?
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+
+    dotnet pack "$path\Flow.Launcher\Flow.Launcher.csproj" -p:NuspecFile=$spec -p:NuspecBasePath="$path\Output\Release" -p:PackageVersion=$version -c Release --no-build --output $output
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
@@ -103,7 +103,8 @@ function Publish-Self-Contained ($p) {
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+    
+    # dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
 function Main {
