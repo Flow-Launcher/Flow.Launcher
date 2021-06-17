@@ -209,12 +209,11 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 else
                 {
-                    // Python 3.8.9 is used for Windows 7 compatibility
-                    DroplexPackage.Drop(App.python_3_8_9_embeddable, Path.Combine(DataLocation.DataDirectory(), "Python Embeddable")).Wait();
+                    var installedPythonDirectory = Path.Combine(DataLocation.DataDirectory(), "Python Embeddable");
 
-                    var installedPythonDirectory =
-                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                            @"Programs\Python\Python39");
+                    // Python 3.8.9 is used for Windows 7 compatibility
+                    DroplexPackage.Drop(App.python_3_8_9_embeddable, installedPythonDirectory).Wait();
+
                     var pythonPath = Path.Combine(installedPythonDirectory, PythonExecutable);
                     if (FilesFolders.FileExists(pythonPath))
                     {
