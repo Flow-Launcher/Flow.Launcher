@@ -18,8 +18,6 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {
-        public const string PATH = "PATH";
-        public const string Python = "python";
         public const string PythonExecutable = "pythonw.exe";
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
@@ -116,62 +114,6 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (!source.Any(o => o.Language.ToUpper() == AllowedLanguage.Python))
                 return new List<PluginPair>();
-
-            // Try setting Constant.PythonPath first, either from
-            // PATH or from the given pythonDirectory
-            if (string.IsNullOrEmpty(settings.PythonDirectory))
-            {
-                var whereProcess = Process.Start(new ProcessStartInfo
-                {
-                    FileName = "where.exe",
-                    Arguments = "pythonw",
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true,
-                    UseShellExecute = false
-                });
-
-                var pythonPath = whereProcess?.StandardOutput.ReadToEnd().Trim();
-
-                if (!string.IsNullOrEmpty(pythonPath))
-                {
-                    pythonPath = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, pythonPath);
-                }
-
-                if (string.IsNullOrEmpty(pythonPath))
-                {
-                    var paths = Environment.GetEnvironmentVariable(PATH);
-
-                    pythonPath = paths?
-                        .Split(';')
-                        .FirstOrDefault(p => p.ToLower().Contains(Python));
-                }
-
-                if (!string.IsNullOrEmpty(pythonPath))
-                {
-                    Constant.PythonPath = Path.Combine(pythonPath, PythonExecutable);
-                    settings.PythonDirectory =
-                        FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, Constant.PythonPath);
-                }
-                else
-                {
-                    Log.Error("PluginsLoader",
-                        "Failed to set Python path despite the environment variable PATH is found",
-                        "PythonPlugins");
-                }
-            }
-            else
-            {
-                var path = Path.Combine(settings.PythonDirectory, PythonExecutable);
-                if (File.Exists(path))
-                {
-                    Constant.PythonPath = path;
-                }
-                else
-                {
-                    Log.Error("PluginsLoader", $"Tried to automatically set from Settings.PythonDirectory " +
-                                               $"but can't find python executable in {path}", "PythonPlugins");
-                }
-            }
 
             if (string.IsNullOrEmpty(settings.PythonDirectory))
             {
