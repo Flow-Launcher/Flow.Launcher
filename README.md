@@ -35,8 +35,8 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 ## Running Flow Launcher
 
-| [Windows 7 and up](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) |
-| ---------------------------------------------------------------------------------- |
+| [Windows 7 and up installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) | `WinGet install "Flow Launcher"` |
+| -------------------------------------------------------------------------------------------- | -------------------------------- |
 
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
@@ -63,7 +63,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 ## Plugins
 
-There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/blob/main/Plugins.md) in the documentation section, some of which are integrated from other launchers.
+There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/blob/main/plugins.md) in the documentation section, some of which are integrated from other launchers.
 
 ## Status
 

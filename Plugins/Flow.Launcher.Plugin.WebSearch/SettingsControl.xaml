@@ -13,6 +13,24 @@
             <Setter Property="Height" Value="28"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
+        <DataTemplate x:Key="HeaderTemplateArrowUp">
+            <DockPanel>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding}"/>
+                <Path x:Name="arrow"
+           StrokeThickness = "1"            
+           Fill            = "gray"
+           Data            = "M 5,10 L 15,10 L 10,5 L 5,10"/>
+            </DockPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="HeaderTemplateArrowDown">
+            <DockPanel>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding }"/>
+                <Path x:Name="arrow"
+              StrokeThickness = "1"            
+              Fill            = "gray"
+              Data            = "M 5,5 L 10,10 L 15,5 L 5,5"/>
+            </DockPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid Margin="15 0 0 0">
         <Grid.RowDefinitions>
@@ -47,23 +65,40 @@
         </StackPanel>
         <ListView ItemsSource="{Binding Settings.SearchSources}"
                   SelectedItem="{Binding Settings.SelectedSearchSource}"
+                  x:Name="SearchSourcesListView"
+                  
                   Grid.Row="3"
                   Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
                   BorderBrush="DarkGray"
-                  BorderThickness="1">
+                  BorderThickness="1"
+                  GridViewColumnHeader.Click="SortByColumn"
+                  MouseDoubleClick="MouseDoubleClickItem">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_title}"
+                                    DisplayMemberBinding="{Binding Title}"
+                                    Width="130">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ActionKeyword}" />
+                                <TextBlock Text="{Binding Title}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}"  Width="418">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}"
+                                    DisplayMemberBinding="{Binding ActionKeyword}"
+                                    Width="137">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Url}" />
+                                <TextBlock Text="{Binding ActionKeyword}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}"
+                                    DisplayMemberBinding="{Binding Url}"
+                                    Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Url}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

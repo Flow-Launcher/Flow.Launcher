@@ -13,7 +13,11 @@
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindex</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexing</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Index Start Menu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">When enabled, Flow will load programs from the start menu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Index Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">Enable Program Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Disabling this will also stop Flow from searching via the program desciption</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
 

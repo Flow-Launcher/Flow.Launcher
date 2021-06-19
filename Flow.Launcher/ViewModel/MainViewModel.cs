@@ -494,21 +494,16 @@ namespace Flow.Launcher.ViewModel
                         }
                     }, currentCancellationToken);
 
-                    Task[] tasks = new Task[plugins.Count];
+                    // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
+
+                    Task[] tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                    {
+                        false => QueryTask(plugin),
+                        true => Task.CompletedTask
+                    }).ToArray();
+
                     try
                     {
-                        for (var i = 0; i < plugins.Count; i++)
-                        {
-                            if (!plugins[i].Metadata.Disabled)
-                            {
-                                tasks[i] = QueryTask(plugins[i]);
-                            }
-                            else
-                            {
-                                tasks[i] = Task.CompletedTask; // Avoid Null
-                            }
-                        }
-
                         // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
                         await Task.WhenAll(tasks);
                     }
@@ -552,26 +547,9 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query)
         {
-            string lastKeyword = _lastQuery.ActionKeyword;
-
-            string keyword = query.ActionKeyword;
-            if (string.IsNullOrEmpty(lastKeyword))
+            if (_lastQuery.ActionKeyword != query.ActionKeyword)
             {
-                if (!string.IsNullOrEmpty(keyword))
-                {
-                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
-                }
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(keyword))
-                {
-                    Results.KeepResultsExcept(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
-                }
-                else if (lastKeyword != keyword)
-                {
-                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
-                }
+                Results.Clear();
             }
         }
 
