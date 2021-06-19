@@ -221,8 +221,10 @@
                             <Run Text="{DynamicResource browserMoreThemes}" />
                         </Hyperlink>
                     </TextBlock>
-                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" Click="OpenPluginFolder">Open Theme Folder</Button>
-                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}"
+                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" 
+                            Click="OpenPluginFolder">Open Theme Folder</Button>
+                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}" 
+                             ui:ScrollViewerHelper.AutoHideScrollBars="{Binding Settings.AutoHideScrollBar}"
                              Margin="10, 0, 10, 10" Width="180" Height="394" />
 
                 </DockPanel>
