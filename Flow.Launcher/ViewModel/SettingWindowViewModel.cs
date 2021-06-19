@@ -61,6 +61,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool AutoHideScrollBar
+        {
+            get 
+            {
+                return Settings.AutoHideScrollBar;
+            }
+            set
+            {
+                Settings.AutoHideScrollBar = value;
+            }
+        }
+
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
