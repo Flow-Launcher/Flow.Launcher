@@ -32,7 +32,7 @@
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
     <system:String x:Key="autoHideScrollBar">Auto Hide Scroll Bar</system:String>
-    <system:String x:Key="autoHideScrollBarToolTip">Automatically hides the setting window's scroll bar, and show when hover the mouse over it</system:String>
+    <system:String x:Key="autoHideScrollBarToolTip">Automatically hides the setting window's scroll bar, and show when hover the mouse over it. This setting will take effect on next window open</system:String>
     <system:String x:Key="selectPythonDirectory">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
