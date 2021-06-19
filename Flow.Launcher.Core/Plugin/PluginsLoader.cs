@@ -115,7 +115,7 @@ namespace Flow.Launcher.Core.Plugin
             if (!source.Any(o => o.Language.ToUpper() == AllowedLanguage.Python))
                 return new List<PluginPair>();
 
-            if (!string.IsNullOrEmpty(settings.PythonDirectory))
+            if (!string.IsNullOrEmpty(settings.PythonDirectory) && FilesFolders.LocationExists(settings.PythonDirectory))
                 return SetPythonPathForPluginPairs(source, Path.Combine(settings.PythonDirectory, PythonExecutable));
 
             var pythonPath = string.Empty;
