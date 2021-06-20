@@ -79,6 +79,9 @@ namespace Flow.Launcher.Core.Plugin
         /// <param name="settings"></param>
         public static void LoadPlugins(PluginsSettings settings)
         {
+            if (PluginUpgrader.ForceUpgradeRequired(settings))
+                PluginUpgrader.ForceUpgrade(settings);
+
             _metadatas = PluginConfig.Parse(Directories);
             Settings = settings;
             Settings.UpdatePluginSettings(_metadatas);
