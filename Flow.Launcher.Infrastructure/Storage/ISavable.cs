@@ -1,11 +1,10 @@
-﻿namespace Flow.Launcher.Infrastructure.Storage
+﻿using Flow.Launcher.Plugin;
+
+namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Save plugin settings/cache, 
     /// todo should be merged into a abstract class intead of seperate interface
     /// </summary>
-    public interface ISavable
-    {
-        void Save();
-    }
+    public interface ISavable : ISettingsSavable { }
 }
