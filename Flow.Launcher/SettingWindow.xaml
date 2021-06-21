@@ -36,7 +36,7 @@
 
     <TabControl Height="auto" SelectedIndex="0">
         <TabItem Header="{DynamicResource general}">
-            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="60,30,0,30">
+            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="60,30,0,0">
                 <StackPanel Orientation="Vertical">
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding PortableMode}">
                         <TextBlock Text="{DynamicResource portableMode}" />
