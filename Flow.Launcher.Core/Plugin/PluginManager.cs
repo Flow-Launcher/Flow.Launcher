@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -48,7 +48,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             foreach (var plugin in AllPlugins)
             {
-                var savable = plugin.Plugin as ISettingsSavable;
+                var savable = plugin.Plugin as ISavable;
                 savable?.Save();
             }
 

@@ -20,10 +20,11 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Threading.Channels;
+using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class MainViewModel : BaseModel, ISettingsSavable
+    public class MainViewModel : BaseModel, ISavable
     {
         #region Private Fields
 
