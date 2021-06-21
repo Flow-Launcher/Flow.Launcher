@@ -63,14 +63,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool AutoHideScrollBar
         {
-            get 
-            {
-                return Settings.AutoHideScrollBar;
-            }
-            set
-            {
-                Settings.AutoHideScrollBar = value;
-            }
+            get => Settings.AutoHideScrollBar;
+            set => Settings.AutoHideScrollBar = value;
         }
 
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
@@ -150,11 +144,11 @@ namespace Flow.Launcher.ViewModel
 
         public bool ShouldUsePinyin
         {
-            get 
+            get
             {
-                return Settings.ShouldUsePinyin;            
+                return Settings.ShouldUsePinyin;
             }
-            set 
+            set
             {
                 Settings.ShouldUsePinyin = value;
             }
@@ -193,7 +187,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_updater.GitHubRepository);
-            
+
             if (string.IsNullOrEmpty(proxyUserName) || string.IsNullOrEmpty(Settings.Proxy.Password))
             {
                 request.Proxy = new WebProxy(proxyServer, Settings.Proxy.Port);
@@ -237,7 +231,7 @@ namespace Flow.Launcher.ViewModel
                 var metadatas = PluginManager.AllPlugins
                     .OrderBy(x => x.Metadata.Disabled)
                     .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel { PluginPair = p})
+                    .Select(p => new PluginViewModel { PluginPair = p })
                     .ToList();
                 return metadatas;
             }
@@ -465,7 +459,7 @@ namespace Flow.Launcher.ViewModel
         #region about
 
         public string Website => Constant.Website;
-        public string ReleaseNotes => _updater.GitHubRepository +  @"/releases/latest";
+        public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
         public string Documentation => Constant.Documentation;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
