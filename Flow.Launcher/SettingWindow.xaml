@@ -36,7 +36,7 @@
 
     <TabControl Height="auto" SelectedIndex="0">
         <TabItem Header="{DynamicResource general}">
-            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="True" Margin="60,30,0,30">
+            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="60,30,0,30">
                 <StackPanel Orientation="Vertical">
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding PortableMode}">
                         <TextBlock Text="{DynamicResource portableMode}" />
@@ -63,9 +63,14 @@
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding AutoUpdates}">
                         <TextBlock Text="{DynamicResource autoUpdates}" />
                     </ui:ToggleSwitch>
-                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}">
+                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}"
+                              ToolTip="{DynamicResource ShouldUsePinyinToolTip}">
                         <TextBlock Text="{DynamicResource ShouldUsePinyin}" />
                     </CheckBox>
+                    <ui:ToggleSwitch Margin="10" IsOn="{Binding AutoHideScrollBar, Mode=TwoWay}"
+                                     ToolTip="{DynamicResource autoHideScrollBarToolTip}">
+                        <TextBlock Text="{DynamicResource autoHideScrollBar}" />
+                    </ui:ToggleSwitch>
                     <StackPanel Margin="10" Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource querySearchPrecision}" FontSize="14" />
                         <ComboBox Margin="10 0 0 0" MaxWidth="200"
@@ -112,7 +117,7 @@
                     </TextBlock>
                     <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="10, 0, 10, 10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="True">
+                             Margin="10, 0, 10, 10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="3">
@@ -216,8 +221,10 @@
                             <Run Text="{DynamicResource browserMoreThemes}" />
                         </Hyperlink>
                     </TextBlock>
-                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" Click="OpenPluginFolder">Open Theme Folder</Button>
-                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}"
+                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" 
+                            Click="OpenPluginFolder">Open Theme Folder</Button>
+                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}" 
+                             ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
                              Margin="10, 0, 10, 10" Width="180" Height="394" />
 
                 </DockPanel>
