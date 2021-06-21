@@ -20,6 +20,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Threading.Channels;
+using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.ViewModel
 {
