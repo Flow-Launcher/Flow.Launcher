@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -128,7 +129,8 @@ namespace Flow.Launcher.Core.Plugin
 
         private void ExecuteFlowLauncherAPI(string method, object[] parameters)
         {
-            MethodInfo methodInfo = PluginManager.API.GetType().GetMethod(method);
+            var parametersTypeArray = parameters.Select(param => param.GetType()).ToArray();
+            MethodInfo methodInfo = PluginManager.API.GetType().GetMethod(method, parametersTypeArray);
             if (methodInfo != null)
             {
                 try
