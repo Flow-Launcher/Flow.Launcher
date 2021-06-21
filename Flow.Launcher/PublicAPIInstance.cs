@@ -177,7 +177,7 @@ namespace Flow.Launcher
         public void SaveJsonStorage<T>(T settings) where T : new()
         {
             var type = typeof(T);
-            _pluginJsonStorages[type] = new PluginJsonSettingStorage<T>(settings);
+            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
             ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
