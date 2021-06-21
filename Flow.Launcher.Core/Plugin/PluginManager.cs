@@ -48,9 +48,14 @@ namespace Flow.Launcher.Core.Plugin
         {
             foreach (var plugin in AllPlugins)
             {
-                var savable = plugin.Plugin as ISavable;
+                var savable = plugin.Plugin as ISettingsSavable;
                 savable?.Save();
             }
+
+            // Everything plugin
+            var savableEverything = AllPlugins.FirstOrDefault(x => x.Metadata.ID == "D2D2C23B084D411DB66FE0C79D6C2A6E")?.Plugin as ISavable;
+            savableEverything?.Save();
+
             API.SavePluginSettings();
         }
 

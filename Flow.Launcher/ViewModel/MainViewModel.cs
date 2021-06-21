@@ -23,7 +23,7 @@ using System.Threading.Channels;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class MainViewModel : BaseModel, ISavable
+    public class MainViewModel : BaseModel, ISettingsSavable
     {
         #region Private Fields
 

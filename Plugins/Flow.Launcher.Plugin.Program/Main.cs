@@ -13,7 +13,7 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISettingsSavable, IAsyncReloadable
     {
         internal static Win32[] _win32s { get; set; }
         internal static UWP.Application[] _uwps { get; set; }
