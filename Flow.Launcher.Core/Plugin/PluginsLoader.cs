@@ -18,8 +18,6 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {
-        public const string PATH = "PATH";
-        public const string Python = "python";
         public const string PythonExecutable = "pythonw.exe";
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
@@ -117,119 +115,65 @@ namespace Flow.Launcher.Core.Plugin
             if (!source.Any(o => o.Language.ToUpper() == AllowedLanguage.Python))
                 return new List<PluginPair>();
 
-            // Try setting Constant.PythonPath first, either from
-            // PATH or from the given pythonDirectory
-            if (string.IsNullOrEmpty(settings.PythonDirectory))
+            if (!string.IsNullOrEmpty(settings.PythonDirectory) && FilesFolders.LocationExists(settings.PythonDirectory))
+                return SetPythonPathForPluginPairs(source, Path.Combine(settings.PythonDirectory, PythonExecutable));
+
+            var pythonPath = string.Empty;
+            
+            if (MessageBox.Show("Flow detected you have installed Python plugins, " +
+                                "would you like to install Python to run them? " +
+                                Environment.NewLine + Environment.NewLine +
+                                "Click no if it's already installed, " +
+                                "and you will be prompted to select the folder that contains the Python executable",
+                    string.Empty, MessageBoxButtons.YesNo) == DialogResult.No
+                && string.IsNullOrEmpty(settings.PythonDirectory))
             {
-                var whereProcess = Process.Start(new ProcessStartInfo
+                var dlg = new FolderBrowserDialog
                 {
-                    FileName = "where.exe",
-                    Arguments = "pythonw",
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true,
-                    UseShellExecute = false
-                });
+                    SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+                };
 
-                var pythonPath = whereProcess?.StandardOutput.ReadToEnd().Trim();
-
-                if (!string.IsNullOrEmpty(pythonPath))
+                var result = dlg.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    pythonPath = FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, pythonPath);
-                }
-
-                if (string.IsNullOrEmpty(pythonPath))
-                {
-                    var paths = Environment.GetEnvironmentVariable(PATH);
-
-                    pythonPath = paths?
-                        .Split(';')
-                        .FirstOrDefault(p => p.ToLower().Contains(Python));
-                }
-
-                if (!string.IsNullOrEmpty(pythonPath))
-                {
-                    Constant.PythonPath = Path.Combine(pythonPath, PythonExecutable);
-                    settings.PythonDirectory =
-                        FilesFolders.GetPreviousExistingDirectory(FilesFolders.LocationExists, Constant.PythonPath);
-                }
-                else
-                {
-                    Log.Error("PluginsLoader",
-                        "Failed to set Python path despite the environment variable PATH is found",
-                        "PythonPlugins");
+                    string pythonDirectory = dlg.SelectedPath;
+                    if (!string.IsNullOrEmpty(pythonDirectory))
+                    {
+                        pythonPath = Path.Combine(pythonDirectory, PythonExecutable);
+                        if (File.Exists(pythonPath))
+                        {
+                            settings.PythonDirectory = pythonDirectory;
+                            Constant.PythonPath = pythonPath;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Can't find python in given directory");
+                        }
+                    }
                 }
             }
             else
             {
-                var path = Path.Combine(settings.PythonDirectory, PythonExecutable);
-                if (File.Exists(path))
+                var installedPythonDirectory = Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable");
+
+                // Python 3.8.9 is used for Windows 7 compatibility
+                DroplexPackage.Drop(App.python_3_8_9_embeddable, installedPythonDirectory).Wait();
+
+                pythonPath = Path.Combine(installedPythonDirectory, PythonExecutable);
+                if (FilesFolders.FileExists(pythonPath))
                 {
-                    Constant.PythonPath = path;
+                    settings.PythonDirectory = installedPythonDirectory;
+                    Constant.PythonPath = pythonPath;
                 }
                 else
                 {
-                    Log.Error("PluginsLoader", $"Tried to automatically set from Settings.PythonDirectory " +
-                                               $"but can't find python executable in {path}", "PythonPlugins");
+                    Log.Error("PluginsLoader",
+                        $"Failed to set Python path after Droplex install, {pythonPath} does not exist",
+                        "PythonPlugins");
                 }
             }
 
-            if (string.IsNullOrEmpty(settings.PythonDirectory))
-            {
-                if (MessageBox.Show("Flow detected you have installed Python plugins, " +
-                                    "would you like to install Python to run them? " +
-                                    Environment.NewLine + Environment.NewLine +
-                                    "Click no if it's already installed, " +
-                                    "and you will be prompted to select the folder that contains the Python executable",
-                        string.Empty, MessageBoxButtons.YesNo) == DialogResult.No
-                    && string.IsNullOrEmpty(settings.PythonDirectory))
-                {
-                    var dlg = new FolderBrowserDialog
-                    {
-                        SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-                    };
-
-                    var result = dlg.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        string pythonDirectory = dlg.SelectedPath;
-                        if (!string.IsNullOrEmpty(pythonDirectory))
-                        {
-                            var pythonPath = Path.Combine(pythonDirectory, PythonExecutable);
-                            if (File.Exists(pythonPath))
-                            {
-                                settings.PythonDirectory = pythonDirectory;
-                                Constant.PythonPath = pythonPath;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Can't find python in given directory");
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    DroplexPackage.Drop(App.python3_9_1).Wait();
-
-                    var installedPythonDirectory =
-                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                            @"Programs\Python\Python39");
-                    var pythonPath = Path.Combine(installedPythonDirectory, PythonExecutable);
-                    if (FilesFolders.FileExists(pythonPath))
-                    {
-                        settings.PythonDirectory = installedPythonDirectory;
-                        Constant.PythonPath = pythonPath;
-                    }
-                    else
-                    {
-                        Log.Error("PluginsLoader",
-                            $"Failed to set Python path after Droplex install, {pythonPath} does not exist",
-                            "PythonPlugins");
-                    }
-                }
-            }
-
-            if (string.IsNullOrEmpty(settings.PythonDirectory))
+            if (string.IsNullOrEmpty(settings.PythonDirectory) || string.IsNullOrEmpty(pythonPath))
             {
                 MessageBox.Show(
                     "Unable to set Python executable path, please try from Flow's settings (scroll down to the bottom).");
@@ -240,16 +184,20 @@ namespace Flow.Launcher.Core.Plugin
                 return new List<PluginPair>();
             }
 
-            return source
+            return SetPythonPathForPluginPairs(source, pythonPath);
+        }
+
+        private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(List<PluginMetadata> source, string pythonPath)
+            =>  source
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new PythonPlugin(Constant.PythonPath), Metadata = metadata
+                    Plugin = new PythonPlugin(pythonPath), 
+                    Metadata = metadata
                 })
                 .ToList();
-        }
 
-        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+    public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)

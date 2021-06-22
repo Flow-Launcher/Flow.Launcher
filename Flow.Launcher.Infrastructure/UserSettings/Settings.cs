@@ -97,6 +97,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool RememberLastLaunchLocation { get; set; }
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 
+        public bool AutoHideScrollBar { get; set; }
+
         public HttpProxy Proxy { get; set; } = new HttpProxy();
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

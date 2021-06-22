@@ -1,5 +1,4 @@
-﻿
-/* We basically follow the Json-RPC 2.0 spec (http://www.jsonrpc.org/specification) to invoke methods between Flow Launcher and other plugins, 
+﻿/* We basically follow the Json-RPC 2.0 spec (http://www.jsonrpc.org/specification) to invoke methods between Flow Launcher and other plugins, 
  * like python or other self-execute program. But, we added addtional infos (proxy and so on) into rpc request. Also, we didn't use the
  * "id" and "jsonrpc" in the request, since it's not so useful in our request model.
  * 
@@ -62,37 +61,6 @@ namespace Flow.Launcher.Core.Plugin
         public override string ToString()
         {
             return JsonSerializer.Serialize(this);
-            
-            string rpc = string.Empty;
-            if (Parameters != null && Parameters.Length > 0)
-            {
-                string parameters = $"[{string.Join(',', Parameters.Select(GetParameterByType))}]";
-                rpc = $@"{{\""method\"":\""{Method}\"",\""parameters\"":{parameters}";
-            }
-            else
-            {
-                rpc = $@"{{\""method\"":\""{Method}\"",\""parameters\"":[]";
-            }
-
-            return rpc;
-
-        }
-
-        private string GetParameterByType(object parameter)
-        => parameter switch
-        {
-            null => "null",
-            string p => $@"\""{ReplaceEscapes(p)}\""",
-            bool p => $@"{p.ToString().ToLower()}",
-            _ => $@"\""{ReplaceEscapes(parameter.ToString())}\"""
-        };
-
-
-    private string ReplaceEscapes(string str)
-        {
-            return str.Replace(@"\", @"\\") //Escapes in ProcessStartInfo
-                .Replace(@"\", @"\\") //Escapes itself when passed to client
-                .Replace(@"""", @"\\""""");
         }
     }
 
@@ -101,7 +69,7 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public class JsonRPCServerRequestModel : JsonRPCRequestModel
     {
-        
+
     }
 
     /// <summary>

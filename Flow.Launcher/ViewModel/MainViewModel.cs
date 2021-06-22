@@ -21,6 +21,7 @@ using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
+using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
@@ -563,26 +564,9 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query)
         {
-            string lastKeyword = _lastQuery.ActionKeyword;
-
-            string keyword = query.ActionKeyword;
-            if (string.IsNullOrEmpty(lastKeyword))
+            if (_lastQuery.ActionKeyword != query.ActionKeyword)
             {
-                if (!string.IsNullOrEmpty(keyword))
-                {
-                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
-                }
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(keyword))
-                {
-                    Results.KeepResultsExcept(PluginManager.NonGlobalPlugins[lastKeyword].Metadata);
-                }
-                else if (lastKeyword != keyword)
-                {
-                    Results.KeepResultsFor(PluginManager.NonGlobalPlugins[keyword].Metadata);
-                }
+                Results.Clear();
             }
         }
 

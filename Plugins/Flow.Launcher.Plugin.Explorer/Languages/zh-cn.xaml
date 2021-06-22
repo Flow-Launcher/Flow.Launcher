@@ -20,6 +20,7 @@
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索激活：</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路径搜索激活:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">文件内容搜索：</system:String>
 
     <!--Plugin Infos-->
