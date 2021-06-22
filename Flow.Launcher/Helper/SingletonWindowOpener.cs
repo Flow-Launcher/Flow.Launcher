@@ -14,14 +14,13 @@ namespace Flow.Launcher.Helper
             
             
             // Fix UI bug
+            // Add `window.WindowState = WindowState.Normal`
             // If only use `window.Show()`, Settings-window doesn't show when minimized in taskbar 
             // Not sure why this works tho
-            // Probably because, when `.Show()` failed, `window.WindowState == Minimized` (not `Normal`) 
+            // Probably because, when `.Show()` fails, `window.WindowState == Minimized` (not `Normal`) 
             // https://stackoverflow.com/a/59719760/4230390
-            // Not sure why need .Activate() too
             window.WindowState = WindowState.Normal; 
             window.Show();
-            window.Activate();
             
             
             window.Focus();
