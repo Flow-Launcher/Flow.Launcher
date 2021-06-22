@@ -11,7 +11,19 @@ namespace Flow.Launcher.Helper
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.GetType() == typeof(T))
                          ?? (T)Activator.CreateInstance(typeof(T), args);
             Application.Current.MainWindow.Hide();
+            
+            
+            // Fix UI bug
+            // If only use `window.Show()`, Settings-window doesn't show when minimized in taskbar 
+            // Not sure why this works tho
+            // Probably because, when `.Show()` failed, `window.WindowState == Minimized` (not `Normal`) 
+            // https://stackoverflow.com/a/59719760/4230390
+            // Not sure why need .Activate() too
+            window.WindowState = WindowState.Normal; 
             window.Show();
+            window.Activate();
+            
+            
             window.Focus();
 
             return (T)window;
