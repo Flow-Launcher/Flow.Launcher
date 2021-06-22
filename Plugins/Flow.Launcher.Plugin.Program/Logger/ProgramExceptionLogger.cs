@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Program.Logger
         private static bool IsKnownUWPProgramError(Exception e, string callingMethodName) => e.HResult switch
         {
             -2147024774 or -2147009769 => callingMethodName == "ResourceFromPri",
-            -2147024894 => callingMethodName == "LogoPathFromUri" || callingMethodName == "ImageFromPath",
+            -2147024894 => callingMethodName is "LogoPathFromUri" or "ImageFromPath",
             -2147024864 => callingMethodName == "InitializeAppInfo",
             _ => callingMethodName is "XmlNamespaces" or "InitPackageVersion"
         };
