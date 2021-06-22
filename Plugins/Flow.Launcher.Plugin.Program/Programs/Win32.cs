@@ -269,8 +269,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
             {
-                ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
-                                                "|An unexpected error occurred in the calling method LnkProgram", e);
+                ProgramExceptionLogger.LogException(nameof(Win32), path, "An unexpected error occurred in the calling method LnkProgram", e);
 
                 program.Valid = false;
                 return program;
@@ -523,7 +522,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG //Only do a catch all in production.
             catch (Exception e)
             {
-                ProgramLogger.LogException("|Win32|All|Not available|An unexpected error occurred", e);
+                ProgramExceptionLogger.LogException(nameof(Win32), "Not available", "An unexpected error occurred", e);
 
                 return Array.Empty<Win32>();
             }
