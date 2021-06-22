@@ -161,7 +161,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Log warning message
         /// </summary>
-        void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
+        void LogWarn(string className, string message, Exception e = null, [CallerMemberName] string methodName = "");
 
         /// <summary>
         /// Log an Exception. Will throw if in debug mode so developer will be aware, 
