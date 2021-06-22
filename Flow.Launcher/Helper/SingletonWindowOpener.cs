@@ -12,7 +12,6 @@ namespace Flow.Launcher.Helper
                          ?? (T)Activator.CreateInstance(typeof(T), args);
             Application.Current.MainWindow.Hide();
             
-            
             // Fix UI bug
             // Add `window.WindowState = WindowState.Normal`
             // If only use `window.Show()`, Settings-window doesn't show when minimized in taskbar 
@@ -21,7 +20,6 @@ namespace Flow.Launcher.Helper
             // https://stackoverflow.com/a/59719760/4230390
             window.WindowState = WindowState.Normal; 
             window.Show();
-            
             
             window.Focus();
 
