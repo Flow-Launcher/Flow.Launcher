@@ -215,7 +215,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
-                ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
+                ProgramExceptionLogger.LogException($"|Win32|Win32Program|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
                 return new Win32() { Valid = false, Enabled = false };
@@ -262,9 +262,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             catch (COMException e)
             {
                 // C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MiracastView.lnk always cause exception
-                ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
-                                           "|Error caused likely due to trying to get the description of the program",
-                    e);
+                ProgramExceptionLogger.LogException(nameof(Win32), path, "|Error caused likely due to trying to get the description of the program", e);
 
                 program.Valid = false;
                 return program;
@@ -293,8 +291,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
-                ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
-                                           $"|Permission denied when trying to load the program from {path}", e);
+                ProgramExceptionLogger.LogException(nameof(Win32), path, $"|Permission denied when trying to load the program from {path}", e);
 
                 return new Win32() { Valid = false, Enabled = false };
             }
@@ -420,8 +417,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
-                ProgramLogger.LogException($"|Win32|GetProgramPathFromRegistrySubKeys|{path}" +
-                                           $"|Permission denied when trying to load the program from {path}", e);
+                ProgramExceptionLogger.LogException(nameof(Win32), path, $"|Permission denied when trying to load the program from {path}", e);
 
                 return string.Empty;
             }

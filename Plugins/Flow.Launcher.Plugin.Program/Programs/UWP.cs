@@ -77,8 +77,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             else
             {
                 var e = Marshal.GetExceptionForHR((int)hResult);
-                ProgramLogger.LogException($"|UWP|InitializeAppInfo|{path}" +
-                                                "|Error caused while trying to get the details of the UWP program", e);
+                ProgramExceptionLogger.LogException(nameof(UWP), path, "|Error caused while trying to get the details of the UWP program", e);
 
                 Apps = new List<Application>().ToArray();
             }
@@ -109,8 +108,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             else
             {
-                ProgramLogger.LogException($"|UWP|XmlNamespaces|{path}" +
-                                                $"|Error occured while trying to get the XML from {path}", new ArgumentNullException());
+                ProgramExceptionLogger.LogException(nameof(UWP), path, $"|Error occured while trying to get the XML from {path}", new ArgumentNullException());
 
                 return new string[] { };
             }
@@ -134,9 +132,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            ProgramLogger.LogException($"|UWP|XmlNamespaces|{Location}" +
-                                                "|Trying to get the package version of the UWP program, but a unknown UWP appmanifest version  "
-                                                + $"{FullName} from location {Location} is returned.", new FormatException());
+            ProgramExceptionLogger.LogException(nameof(UWP), Location, $"Trying to get the package version of the UWP program, but a unknown UWP appmanifest version {FullName} from location {Location} is returned.", new FormatException());
 
             Version = PackageVersion.Unknown;
         }
@@ -215,8 +211,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"id", "An unexpected error occured and "
-                                                   + $"unable to verify if package is valid", e);
+                        ProgramExceptionLogger.LogException("UWP", id, "An unexpected error occured and unable to verify if package is valid", e);
                         return false;
                     }
 
@@ -425,15 +420,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     else
                     {
-                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
-                                                    + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
+                        ProgramExceptionLogger.LogException(nameof(UWP), Package.Location, $"Can't load null or empty result pri {source} in uwp location {Package.Location}", new NullReferenceException());
                         return string.Empty;
                     }
                 }
                 else
                 {
                     var e = Marshal.GetExceptionForHR((int)hResult);
-                    ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
+                    ProgramExceptionLogger.LogException(nameof(UWP), Package.Location, $"Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
                     return string.Empty;
                 }
             }
@@ -530,15 +524,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     else
                     {
-                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                    $"|{UserModelId} can't find logo uri for {uri} in package location: {Package.Location}", new FileNotFoundException());
+                        ProgramExceptionLogger.LogException(nameof(UWP), Package.Location, $"|{UserModelId} can't find logo uri for {uri} in package location: {Package.Location}", new FileNotFoundException());
                         return string.Empty;
                     }
                 }
                 else
                 {
-                    ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                    $"|Unable to find extension from {uri} for {UserModelId} " +
+                    ProgramExceptionLogger.LogException(nameof(UWP), Package.Location, $"|Unable to find extension from {uri} for {UserModelId} " +
                                                     $"in package location {Package.Location}", new FileNotFoundException());
                     return string.Empty;
                 }
@@ -565,9 +557,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
                 else
                 {
-                    ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
-                                                    $"|Unable to get logo for {UserModelId} from {path} and" +
-                                                    $" located in {Package.Location}", new FileNotFoundException());
+                    ProgramExceptionLogger.LogException(nameof(UWP), path, $"|Unable to get logo for {UserModelId} from {path} and located in {Package.Location}", new FileNotFoundException());
                     return new BitmapImage(new Uri(Constant.MissingImgIcon));
                 }
             }
@@ -614,9 +604,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     else
                     {
-                        ProgramLogger.LogException($"|UWP|PlatedImage|{Package.Location}" +
-                                                    $"|Unable to convert background string {BackgroundColor} " +
-                                                    $"to color for {Package.Location}", new InvalidOperationException());
+                        ProgramExceptionLogger.LogException(nameof(UWP), Package.Location, $"|Unable to convert background string {BackgroundColor} to color for {Package.Location}", new InvalidOperationException());
 
                         return new BitmapImage(new Uri(Constant.MissingImgIcon));
                     }
