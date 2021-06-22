@@ -30,23 +30,29 @@ namespace Flow.Launcher.Infrastructure.Logger
             var configuration = new LoggingConfiguration();
 
             const string layout =
-                @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${newline}${date:format=HH\:mm\:ss}|${level}|${message}|${newline}${exception:format=toString}${newline}";
+                @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${newline}${date:format=HH\:mm\:ss}|${level}|${message}|${newline}${exception}${newline}}";
 
             var fileTarget = new FileTarget
             {
+                Name = "file",
                 FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt",
                 Layout = layout
             };
 
-            var fileTargetASyncWrapper = new AsyncTargetWrapper(fileTarget);
-
-            var debugTarget = new OutputDebugStringTarget
+            var fileTargetASyncWrapper = new AsyncTargetWrapper(fileTarget)
             {
-                Layout = layout
+                Name = "asyncFile"
             };
 
-            configuration.AddTarget("file", fileTargetASyncWrapper);
-            configuration.AddTarget("debug", debugTarget);
+            var debugTarget = new DebuggerTarget
+            {
+                Name = "debug",
+                Layout = layout,
+                OptimizeBufferReuse = false
+            };
+
+            configuration.AddTarget(fileTargetASyncWrapper);
+            configuration.AddTarget(debugTarget);
 
 #if DEBUG
             var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
@@ -56,6 +62,9 @@ namespace Flow.Launcher.Infrastructure.Logger
             var fileRule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
 #endif
             configuration.LoggingRules.Add(fileRule);
+
+            NLog.Common.InternalLogger.LogToTrace = true;
+
             LogManager.Configuration = configuration;
         }
 
@@ -97,7 +106,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             System.Exception e = null)
         {
             var logger = LogManager.GetLogger(className);
-           
+
             logger.Log(level, e, "{MethodName:l}|{Message}", methodName, message);
         }
 
