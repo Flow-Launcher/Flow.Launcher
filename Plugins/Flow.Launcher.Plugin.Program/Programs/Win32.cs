@@ -215,8 +215,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
-                ProgramExceptionLogger.LogException($"|Win32|Win32Program|{path}" +
-                                           $"|Permission denied when trying to load the program from {path}", e);
+                ProgramExceptionLogger.LogException(nameof(Win32), path, $"|Permission denied when trying to load the program from {path}", e);
 
                 return new Win32() { Valid = false, Enabled = false };
             }
