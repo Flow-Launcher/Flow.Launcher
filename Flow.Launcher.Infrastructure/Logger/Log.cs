@@ -30,7 +30,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             var configuration = new LoggingConfiguration();
 
             const string layout =
-                @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${newline}${date:format=HH\:mm\:ss}|${level}|${message}|${newline}${exception}${newline}}";
+                @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${newline}${date:format=HH\:mm\:ss}|${level}${newline}Message:${message}${newline}${exception}${newline}}";
 
             var fileTarget = new FileTarget
             {
@@ -122,9 +122,9 @@ namespace Flow.Launcher.Infrastructure.Logger
         }
 
 
-        public static void Warn(string className, string message, [CallerMemberName] string methodName = "")
+        public static void Warn(string className, string message, [CallerMemberName] string methodName = "", System.Exception e = null)
         {
-            LogInternal(LogLevel.Warn, className, message, methodName);
+            LogInternal(LogLevel.Warn, className, message, methodName, e);
         }
     }
 }
