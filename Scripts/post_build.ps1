@@ -56,9 +56,20 @@ function Delete-Unused ($path, $config) {
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
 
+function Remove-CreateDumpExe ($path, $config) {
+    $target = "$path\Output\$config"
+
+    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw |ConvertFrom-Json -depth 32
+    $depjson.targets.'.NETCoreApp,Version=v5.0/win-x64'.'runtimepack.Microsoft.NETCore.App.Runtime.win-x64/5.0.6'.native.PSObject.Properties.Remove("createdump.exe")
+    $depjson|ConvertTo-Json -Depth 32|Out-File $target\Flow.Launcher.deps.json
+    Remove-Item -Path $target -Include "*createdump.exe" -Recurse
+}
+
+
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
+
 
 function Pack-Squirrel-Installer ($path, $version, $output) {
     # msbuild based installer generation is not working in appveyor, not sure why
@@ -117,6 +128,8 @@ function Main {
         Delete-Unused $p $config
 
         Publish-Self-Contained $p
+
+        Remove-CreateDumpExe $p $config
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
