@@ -126,7 +126,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ((IShellLinkW)link).GetDescription(buffer, MAX_PATH);
                 description = buffer.ToString();
             }
+            
+            // To release unmanaged memory
+            Marshal.ReleaseComObject(link);
+
             return target;
+
         }
     }
 }
