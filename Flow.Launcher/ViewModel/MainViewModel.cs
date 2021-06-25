@@ -481,6 +481,9 @@ namespace Flow.Launcher.ViewModel
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
 
+            // Switch to ThreadPool thread
+            await TaskScheduler.Default;
+
             var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
@@ -542,7 +545,7 @@ namespace Flow.Launcher.ViewModel
             // Local function
             async Task QueryTask(PluginPair plugin)
             {
-                // Since it is wrapped within a Task.Run, the synchronous context is null
+                // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
