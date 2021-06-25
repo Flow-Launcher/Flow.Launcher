@@ -29,9 +29,12 @@ namespace Flow.Launcher.Infrastructure.Logger
 
             var configuration = new LoggingConfiguration();
 
-            const string layout =
-                @"${logger}->${time}|${level}|${message}|${onexception:inner=${logger}->${newline}${date:format=HH\:mm\:ss}|${level}${newline}Message:${message}${newline}${exception}${newline}}";
-
+            const string layout = 
+                @"${date:format=HH\:mm\:ss.ffffK} - " +
+                @"${level:uppercase=true} - ${logger} - ${message:l}" +
+                @"${onexception:${newline}${newline}" +
+                    @"EXCEPTION OCCURS\: ${exception:format=tostring}${newline}}";
+            
             var fileTarget = new FileTarget
             {
                 Name = "file",
@@ -44,7 +47,7 @@ namespace Flow.Launcher.Infrastructure.Logger
                 Name = "asyncFile"
             };
 
-            var debugTarget = new DebuggerTarget
+            var debugTarget = new OutputDebugStringTarget
             {
                 Name = "debug",
                 Layout = layout,
