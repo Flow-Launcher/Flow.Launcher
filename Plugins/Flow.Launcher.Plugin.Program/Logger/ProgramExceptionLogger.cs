@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.Program.Logger
             }
 
             messageBuilder.AppendLine(possibleResolution);
-            messageBuilder.AppendLine($"Program Path: {loadingProgramPath}");
+            messageBuilder.Append($"Program Path: {loadingProgramPath}");
 
             if (known)
                 Api.LogWarn($"Flow.Plugin.Program.{classname}", messageBuilder.ToString(), e, callingMethodName);

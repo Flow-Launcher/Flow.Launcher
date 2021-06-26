@@ -140,7 +140,7 @@ namespace Flow.Launcher
             Log.Info(className, message, methodName);
 
         public void LogWarn(string className, string message, Exception e = null, [CallerMemberName] string methodName = "") =>
-            Log.Warn(className, message, methodName);
+            Log.Warn(className, message, methodName, e);
 
         public void LogException(string className, string message, Exception e,
             [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
