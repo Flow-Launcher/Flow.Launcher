@@ -55,7 +55,7 @@ namespace Flow.Launcher
                 SetHotkey(ctlHotkey.CurrentHotkey, delegate
                 {
                     App.API.ChangeQuery(pluginHotkey.ActionKeyword);
-                    Application.Current.MainWindow.Visibility = Visibility.Visible;
+                    ShowMainWindow();
                 });
             }
             else
@@ -73,11 +73,18 @@ namespace Flow.Launcher
                 SetHotkey(new HotkeyModel(updateCustomHotkey.Hotkey), delegate
                 {
                     App.API.ChangeQuery(updateCustomHotkey.ActionKeyword);
-                    Application.Current.MainWindow.Visibility = Visibility.Visible;
+                    ShowMainWindow();
                 });
             }
 
             Close();
+
+            static void ShowMainWindow()
+            {
+                Window mainWindow = Application.Current.MainWindow;
+                mainWindow.Visibility = Visibility.Visible;
+                mainWindow.Focus();
+            }
         }
 
         public void UpdateItem(CustomPluginHotkey item)

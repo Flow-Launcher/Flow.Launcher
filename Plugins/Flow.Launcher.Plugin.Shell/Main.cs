@@ -302,7 +302,6 @@ namespace Flow.Launcher.Plugin.Shell
             // show the main window and set focus to the query box
             Window mainWindow = Application.Current.MainWindow;
             mainWindow.Visibility = Visibility.Visible;
-            mainWindow.Activate();
             mainWindow.Focus();
         }
 
