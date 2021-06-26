@@ -31,8 +31,8 @@ namespace Flow.Launcher.Infrastructure.Logger
 
             const string layout = 
                 @"${date:format=HH\:mm\:ss.ffffK} - " +
-                @"${level:uppercase=true} - ${logger} - ${message:l}" +
-                @"${onexception:${newline}${newline}" +
+                @"${level:uppercase=true:padding=-5} - ${logger} - ${message:l}" +
+                @"${onexception:${newline}" +
                     @"EXCEPTION OCCURS\: ${exception:format=tostring}${newline}}";
             
             var fileTarget = new FileTarget
