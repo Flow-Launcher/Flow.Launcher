@@ -211,7 +211,10 @@ namespace Flow.Launcher.ViewModel
             {
                 if (SelectedIsFromQueryResults())
                 {
-                    SelectedResults = ContextMenu;
+                    // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
+                    // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
+                    if (SelectedResults.SelectedItem != null)
+                        SelectedResults = ContextMenu;
                 }
                 else
                 {
