@@ -484,6 +484,9 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread
             await TaskScheduler.Default;
 
+            if (currentCancellationToken.IsCancellationRequested)
+                return;
+
             var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
