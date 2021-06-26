@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
@@ -70,6 +71,8 @@ namespace Flow.Launcher.Plugin.Program
             _context = context;
 
             _settings = context.API.LoadSettingJsonStorage<Settings>();
+
+            ProgramExceptionLogger.Api = context.API;
 
             await Task.Yield();
 
