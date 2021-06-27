@@ -271,6 +271,10 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
+                
+                if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
+                    DropShadowEffect = false;
+
             }
         }
 
@@ -282,13 +286,19 @@ namespace Flow.Launcher.ViewModel
             get { return Settings.UseDropShadowEffect; }
             set
             {
+                if (ThemeManager.Instance.BlurEnabled && value)
+                {
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                    return;
+                }
+
                 if (value)
                 {
                     ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
                 }
                 else
                 {
-                    ThemeManager.Instance.RemoveDropShadowEffectToCurrentTheme();
+                    ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
                 }
 
                 Settings.UseDropShadowEffect = value;

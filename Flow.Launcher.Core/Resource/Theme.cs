@@ -28,6 +28,8 @@ namespace Flow.Launcher.Core.Resource
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
 
+        public bool BlurEnabled { get; set; }
+
         public Theme()
         {
             _themeDirectories.Add(DirectoryPath);
@@ -88,7 +90,9 @@ namespace Flow.Launcher.Core.Resource
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                if (Settings.UseDropShadowEffect)
+                BlurEnabled = IsBlurTheme();
+
+                if (Settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
             }
             catch (DirectoryNotFoundException e)
@@ -252,7 +256,7 @@ namespace Flow.Launcher.Core.Resource
             UpdateResourceDictionary(dict);
         }
 
-        public void RemoveDropShadowEffectToCurrentTheme()
+        public void RemoveDropShadowEffectFromCurrentTheme()
         {
             var dict = CurrentThemeResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
@@ -320,30 +324,29 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
+            if (BlurEnabled)
+            {
+                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
+            }
+            else
+            {
+                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
+            }
+        }
 
-            // Exception of FindResource can't be cathed if global exception handle is set
+        private bool IsBlurTheme()
+        {
             if (Environment.OSVersion.Version >= new Version(6, 2))
             {
                 var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-                bool blur;
-                if (resource is bool)
-                {
-                    blur = (bool)resource;
-                }
-                else
-                {
-                    blur = false;
-                }
 
-                if (blur)
-                {
-                    SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
-                }
-                else
-                {
-                    SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
-                }
+                if (resource is bool)
+                    return (bool)resource;
+
+                return false;
             }
+
+            return false;
         }
 
         private void SetWindowAccent(Window w, AccentState state)

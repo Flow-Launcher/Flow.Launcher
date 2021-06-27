@@ -242,7 +242,7 @@
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Text="{DynamicResource queryWindowShadowEffect}" Margin="0 30 0 0" FontSize="14" />
-                            <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect}" Margin="210 23 0 0" Width="80"/>
+                            <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Margin="210 23 0 0" Width="80"/>
                             <TextBlock  Grid.Row="1" Text="{DynamicResource shadowEffectCPUUsage}"
                                         Width="280"
                                         FontSize="10" HorizontalAlignment="Left"/>
