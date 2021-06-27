@@ -30,6 +30,10 @@ namespace Flow.Launcher.Core.Resource
 
         public bool BlurEnabled { get; set; }
 
+        // due to blur only enabled when main window is loaded for the first time, this is used to track the blur status
+        // when the window is first loaded and prompt user that a restart is required for blur to take effect. 
+        public bool BlurEnabledOnloaded { get; set; }
+
         public Theme()
         {
             _themeDirectories.Add(DirectoryPath);
