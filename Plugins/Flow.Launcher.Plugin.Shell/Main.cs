@@ -298,7 +298,11 @@ namespace Flow.Launcher.Plugin.Shell
         private void OnWinRPressed()
         {
             context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeperater}");
-            Application.Current.MainWindow.Visibility = Visibility.Visible;
+
+            // show the main window and set focus to the query box
+            Window mainWindow = Application.Current.MainWindow;
+            mainWindow.Visibility = Visibility.Visible;
+            mainWindow.Focus();
         }
 
         public Control CreateSettingPanel()
