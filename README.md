@@ -16,6 +16,21 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 <sub>Remember to star it, flow will love you more :)</sub>
 
+---
+
+<h4 align="center">
+  <a href="##Features">Features</a> •
+  <a href="##Getting-Started">Getting Started</a> •
+  <a href="##">Plugins</a> •
+  <a href="##Status">Status</a> •
+  <a href="##Contributing">Contributing</a> •
+  <a href="##Question/Suggestion">Question/Suggestion</a> •
+  <a href="##Developing/Debugging">Developing/Debugging</a> •
+  <a href="##Documentation">Documentation</a>
+</h4>
+
+---
+
 ## Features
 
 ![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
@@ -33,7 +48,9 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
 
-## Running Flow Launcher
+## Getting Started
+
+### Installation
 
 | [Windows 7 and up installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) | `WinGet install "Flow Launcher"` |
 | -------------------------------------------------------------------------------------------- | -------------------------------- |
