@@ -30,10 +30,6 @@ namespace Flow.Launcher.Core.Resource
 
         public bool BlurEnabled { get; set; }
 
-        // due to blur only enabled when main window is loaded for the first time, this is used to track the blur status
-        // when the window is first loaded and prompt user that a restart is required for blur to take effect. 
-        public bool BlurEnabledOnloaded { get; set; }
-
         public Theme()
         {
             _themeDirectories.Add(DirectoryPath);
@@ -98,6 +94,8 @@ namespace Flow.Launcher.Core.Resource
 
                 if (Settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
+
+                SetBlurForWindow();
             }
             catch (DirectoryNotFoundException e)
             {
@@ -356,6 +354,8 @@ namespace Flow.Launcher.Core.Resource
         private void SetWindowAccent(Window w, AccentState state)
         {
             var windowHelper = new WindowInteropHelper(w);
+            w.Width = 750;
+            windowHelper.EnsureHandle();
             var accent = new AccentPolicy { AccentState = state };
             var accentStructSize = Marshal.SizeOf(accent);
 

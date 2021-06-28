@@ -61,11 +61,6 @@ namespace Flow.Launcher
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
 
-            // currently blur can only be called when loading main window. 
-            // is there a way to set blur only once?
-            ThemeManager.Instance.SetBlurForWindow();
-            ThemeManager.Instance.BlurEnabledOnloaded = ThemeManager.Instance.BlurEnabled;
-
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             InitializePosition();

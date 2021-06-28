@@ -274,12 +274,6 @@ namespace Flow.Launcher.ViewModel
                 
                 if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                     DropShadowEffect = false;
-
-                if (!ThemeManager.Instance.BlurEnabledOnloaded && ThemeManager.Instance.BlurEnabled)
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("blurEffectRequireRestart"));
-                    ThemeManager.Instance.BlurEnabledOnloaded = true;
-                }
             }
         }
 
