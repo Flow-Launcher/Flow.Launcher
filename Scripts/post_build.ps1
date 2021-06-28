@@ -50,10 +50,8 @@ function Delete-Unused ($path, $config) {
 function Remove-CreateDumpExe ($path, $config) {
     $target = "$path\Output\$config"
 
-    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw |ConvertFrom-Json -depth 32
-    $depjson.targets.'.NETCoreApp,Version=v5.0/win-x64'.'runtimepack.Microsoft.NETCore.App.Runtime.win-x64/5.0.6'.native.PSObject.Properties.Remove("createdump.exe")
-    $depjson|ConvertTo-Json -Depth 32|Out-File $target\Flow.Launcher.deps.json
-    Remove-Item -Path $target -Include "*createdump.exe" -Recurse
+    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json
 }
 
 
