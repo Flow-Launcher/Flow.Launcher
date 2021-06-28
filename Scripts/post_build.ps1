@@ -51,7 +51,7 @@ function Remove-CreateDumpExe ($path, $config) {
     $target = "$path\Output\$config"
 
     $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
-    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
     Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
