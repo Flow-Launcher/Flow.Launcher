@@ -24,8 +24,8 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
   <a href="#Plugins">Plugins</a> •
   <a href="#Status">Status</a> •
   <a href="#Contributing">Contributing</a> •
-  <a href="#Question/Suggestion">Question/Suggestion</a> •
-  <a href="#Developing/Debugging">Developing/Debugging</a> •
+  <a href="#QuestionSuggestion">Question/Suggestion</a> •
+  <a href="#DevelopingDebugging">Developing/Debugging</a> •
   <a href="#Documentation">Documentation</a>
 </h4>
 
