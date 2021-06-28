@@ -30,6 +30,8 @@ namespace Flow.Launcher.Core.Resource
 
         public bool BlurEnabled { get; set; }
 
+        private double mainWindowWidth;
+
         public Theme()
         {
             _themeDirectories.Add(DirectoryPath);
@@ -186,6 +188,21 @@ namespace Flow.Launcher.Core.Resource
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
+
+            var windowStyle = dict["WindowStyle"] as Style;
+
+            var width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
+                .Select(x => x.Value).FirstOrDefault();
+
+            if (width == null)
+            {
+                windowStyle = dict["BaseWindowStyle"] as Style;
+
+                width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
+                .Select(x => x.Value).FirstOrDefault();
+            }
+
+            mainWindowWidth = (double)width;
 
             return dict;
         }
@@ -354,8 +371,11 @@ namespace Flow.Launcher.Core.Resource
         private void SetWindowAccent(Window w, AccentState state)
         {
             var windowHelper = new WindowInteropHelper(w);
-            w.Width = 750;
+            
+            // this determines the width of the main query window
+            w.Width = mainWindowWidth;
             windowHelper.EnsureHandle();
+            
             var accent = new AccentPolicy { AccentState = state };
             var accentStructSize = Marshal.SizeOf(accent);
 
