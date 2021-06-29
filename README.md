@@ -71,9 +71,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 ### Integrations
   - If you use Python plugins:
-    - Install [Python3](https://www.python.org/downloads/), download `.exe` installer.
-    - Add Python to `%PATH%` or set it in flow's settings.
-    - Use `pip` to install `flowlauncher`, open cmd and type `pip install flowlauncher`.
+    - Once a Python plugin has been detected at start up, you will be prompted to either select the location or allow Python (Embeddable) to automatic download for use.
     - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
     - Start to launch your Python plugins.
   - Flow searches files and contents via Windows Index Search, to use Everything: `pm install everything`.
