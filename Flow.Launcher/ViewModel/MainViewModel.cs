@@ -489,7 +489,7 @@ namespace Flow.Launcher.ViewModel
                             return;
                     }
 
-                    _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                    _ = Task.Delay(1, currentCancellationToken).ContinueWith(_ =>
                     {
                         // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                         if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)

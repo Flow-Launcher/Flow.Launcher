@@ -97,9 +97,9 @@
                     <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="48" Height="48"
                                      Background="Transparent"/>
                 </Grid>
-                <Line x:Name="ProgressBar" HorizontalAlignment="Right"
+                <Line x:Name="ProgressBar" HorizontalAlignment="Left"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                  Y1="0" Y2="0" X2="100" Height="2" Width="752" StrokeThickness="1">
+                  Y1="0" Y2="0" X1="0" X2="752" Height="8" Width="752" StrokeThickness="15">
                 </Line>
                 <ContentControl>
                     <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
