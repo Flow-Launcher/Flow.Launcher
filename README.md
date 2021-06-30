@@ -26,7 +26,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
   <a href="#Contributing">Contributing</a> •
   <a href="#QuestionSuggestion">Question/Suggestion</a> •
   <a href="#DevelopingDebugging">Developing/Debugging</a> •
-  <a href="#Documentation">Documentation</a>
+  <a href="https://flow-launcher.github.io/docs">Documentation</a>
 </h4>
 
 ---
@@ -69,16 +69,15 @@ Windows may complain about security due to code not being signed, this will be c
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
-### Integrations
-  - If you use Python plugins:
-    - Once a Python plugin has been detected at start up, you will be prompted to either select the location or allow Python (Embeddable) to automatic download for use.
-    - The Python plugin may require additional modules to be installed, please ensure you check by visiting the plugin's website via `pm install` + plugin name, go to context menu and select `Open website`. 
-    - Start to launch your Python plugins.
-  - Flow searches files and contents via Windows Index Search, to use Everything: `pm install everything`.
-
 ## Plugins
 
-There is a [list of actively maintained plugins](https://github.com/Flow-Launcher/docs/blob/main/plugins.md) in the documentation section, some of which are integrated from other launchers.
+Flow searches files and contents via Windows Index Search, to use **Everything**: `pm install everything`.
+
+If you are using Python plugins, Flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
+
+Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
+
+If you are keen to write your own plugin in flow, please take a look at our plugin development documentation
 
 ## Status
 
@@ -86,15 +85,15 @@ Flow is under heavy development, but the code base is stable, so contributions a
 
 ## Contributing
 
-We welcome all contributions. If you are unsure of a change you want to make, simply put an issue in for discussion, otherwise feel free to put in a pull request.
+We welcome all contributions. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
 
-You will find the main goals of flow placed under Projects board, so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+You will find the main goals of flow placed under [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
 Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
 
 ## Question/Suggestion
 
-Yes please, submit an issue to let us know.
+Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section.
 
 **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
@@ -105,7 +104,3 @@ Flow Launcher's target framework is .Net 5
 Install Visual Studio 2019
 
 Install .Net 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
-
-## Documentation
-
-Visit [here](https://flow-launcher.github.io/docs) for more information on usage, development and design documentations
