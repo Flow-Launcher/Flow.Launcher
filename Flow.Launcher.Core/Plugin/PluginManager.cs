@@ -22,7 +22,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
-        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new ();
+        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
 
         public static IPublicAPI API { private set; get; }
 
@@ -33,7 +33,10 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
-        private static readonly string[] Directories = { Constant.PreinstalledDirectory, DataLocation.PluginsDirectory };
+        private static readonly string[] Directories =
+        {
+            Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
+        };
 
         private static void DeletePythonBinding()
         {
@@ -100,7 +103,7 @@ namespace Flow.Launcher.Core.Plugin
                 try
                 {
                     var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
+                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
@@ -149,7 +152,10 @@ namespace Flow.Launcher.Core.Plugin
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
             {
                 var plugin = NonGlobalPlugins[query.ActionKeyword];
-                return new List<PluginPair> { plugin };
+                return new List<PluginPair>
+                {
+                    plugin
+                };
             }
             else
             {
@@ -220,7 +226,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
-            var results = new List<Result>();
+            List<Result> results;
             var pluginPair = _contextMenuPlugins.FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
@@ -228,7 +234,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 try
                 {
-                    results = plugin.LoadContextMenus(result);
+                    results = plugin.LoadContextMenus(result) ?? new List<Result>();
                     foreach (var r in results)
                     {
                         r.PluginDirectory = pluginPair.Metadata.PluginDirectory;
