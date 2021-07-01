@@ -226,7 +226,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
-            List<Result> results;
+            var results = new List<Result>();
             var pluginPair = _contextMenuPlugins.FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
@@ -234,7 +234,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 try
                 {
-                    results = plugin.LoadContextMenus(result) ?? new List<Result>();
+                    results = plugin.LoadContextMenus(result) ?? results;
                     foreach (var r in results)
                     {
                         r.PluginDirectory = pluginPair.Metadata.PluginDirectory;
