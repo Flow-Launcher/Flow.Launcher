@@ -61,7 +61,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Method = "context_menu", Parameters = new object[] {selectedResult.ContextData},
             };
-            _startInfo.Arguments = $"-B \"{context.CurrentPluginMetadata.ExecuteFilePath}\" \"{request}\"";
+            _startInfo.ArgumentList[2] = request.ToString();
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
             // TODO: Async Action
