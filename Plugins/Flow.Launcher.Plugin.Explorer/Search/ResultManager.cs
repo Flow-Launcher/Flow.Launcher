@@ -10,10 +10,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     public static class ResultManager
     {
         private static PluginInitContext Context;
+        private static Settings Settings { get; set; }
 
-        public static void Init(PluginInitContext context)
+        public static void Init(PluginInitContext context, Settings settings)
         {
             Context = context;
+            Settings = settings;
         }
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
@@ -41,15 +43,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
 
                     string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
-                    Context.API.ChangeQuery(string.IsNullOrEmpty(query.ActionKeyword) ?
+                    Context.API.ChangeQuery(Settings.PathSearchActionKeyword == "*" ?
                         changeTo :
-                        query.ActionKeyword + " " + changeTo);
+                        $"{Settings.PathSearchActionKeyword} {changeTo}");
                     return false;
                 },
                 Score = score,
                 TitleToolTip = Constants.ToolTipOpenDirectory,
                 SubTitleToolTip = Constants.ToolTipOpenDirectory,
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult
+                {
+                    Type = ResultType.Folder,
+                    FullPath = path,
+                    ShowIndexState = showIndexState,
+                    WindowsIndexed = windowsIndexed
+                }
             };
         }
 
@@ -57,7 +65,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
-            var folderName = retrievedDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None).Last();
+            var folderName = retrievedDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
+            {
+                Path.DirectorySeparatorChar
+            }, StringSplitOptions.None).Last();
 
             if (retrievedDirectoryPath.EndsWith(":\\"))
             {
@@ -81,7 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
-                                $"* to search for file extensions or >* to combine both searches.",
+                           $"* to search for file extensions or >* to combine both searches.",
                 IcoPath = retrievedDirectoryPath,
                 Score = 500,
                 Action = c =>
@@ -91,7 +102,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = retrievedDirectoryPath,
                 SubTitleToolTip = retrievedDirectoryPath,
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = retrievedDirectoryPath, ShowIndexState = true, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult
+                {
+                    Type = ResultType.Folder,
+                    FullPath = retrievedDirectoryPath,
+                    ShowIndexState = true,
+                    WindowsIndexed = windowsIndexed
+                }
             };
         }
 
@@ -126,7 +143,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = Constants.ToolTipOpenContainingFolder,
                 SubTitleToolTip = Constants.ToolTipOpenContainingFolder,
-                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, ShowIndexState = showIndexState, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult
+                {
+                    Type = ResultType.File,
+                    FullPath = filePath,
+                    ShowIndexState = showIndexState,
+                    WindowsIndexed = windowsIndexed
+                }
             };
             return result;
         }
