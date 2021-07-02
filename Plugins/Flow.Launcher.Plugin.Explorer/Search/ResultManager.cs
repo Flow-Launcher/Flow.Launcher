@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
-                    if (c.SpecialKeyState.CtrlPressed || !(Settings.EnabledPathSearchKeyword || Settings.EnabledSearchActionKeyword))
+                    if (c.SpecialKeyState.CtrlPressed || (!Settings.EnabledPathSearchKeyword && !Settings.EnabledSearchActionKeyword))
                     {
                         try
                         {
