@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
-                    if (c.SpecialKeyState.CtrlPressed)
+                    if (c.SpecialKeyState.CtrlPressed || !(Settings.EnabledPathSearchKeyword || Settings.EnableSearchActionKeyword))
                     {
                         try
                         {
@@ -41,11 +41,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
+                    // one of it is enabled
+                    var keyword = Settings.EnableSearchActionKeyword ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
+
+                    keyword = keyword == "*" ? "" : $"{keyword} ";
 
                     string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
-                    Context.API.ChangeQuery(Settings.PathSearchActionKeyword == "*" ?
-                        changeTo :
-                        $"{Settings.PathSearchActionKeyword} {changeTo}");
+                    Context.API.ChangeQuery($"{keyword}{changeTo}");
                     return false;
                 },
                 Score = score,
