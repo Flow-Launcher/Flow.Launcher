@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             return allowedActionKeyword switch
             {
-                Settings.ActionKeyword.SearchActionKeyword => settings.EnableSearchActionKeyword &&
+                Settings.ActionKeyword.SearchActionKeyword => settings.EnabledSearchActionKeyword &&
                                                               keyword == settings.SearchActionKeyword,
                 Settings.ActionKeyword.PathSearchActionKeyword => settings.EnabledPathSearchKeyword &&
                                                                   keyword == settings.PathSearchActionKeyword,

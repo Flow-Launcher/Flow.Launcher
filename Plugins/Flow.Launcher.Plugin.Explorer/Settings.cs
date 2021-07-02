@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
-        public bool EnableSearchActionKeyword { get; set; } = true;
+        public bool EnabledSearchActionKeyword { get; set; } = true;
 
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
 
@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         internal bool? GetActionKeywordEnable(ActionKeyword actionKeyword) => actionKeyword switch
         {
-            ActionKeyword.SearchActionKeyword => EnableSearchActionKeyword,
+            ActionKeyword.SearchActionKeyword => EnabledSearchActionKeyword,
             ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword,
             ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword,
             _ => null
@@ -68,7 +68,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         internal void SetActionKeywordEnable(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
         {
-            ActionKeyword.SearchActionKeyword => EnableSearchActionKeyword = enable,
+            ActionKeyword.SearchActionKeyword => EnabledSearchActionKeyword = enable,
             ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword = enable,
             ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
