@@ -337,8 +337,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public bool? Enabled
         {
-            get => _settings.GetActionKeywordEnable(KeywordProperty);
-            set => _settings.SetActionKeywordEnable(KeywordProperty,
+            get => _settings.GetActionKeywordEnabled(KeywordProperty);
+            set => _settings.SetActionKeywordEnabled(KeywordProperty,
                 value ?? throw new ArgumentException("Unexpected null value"));
         }
     }

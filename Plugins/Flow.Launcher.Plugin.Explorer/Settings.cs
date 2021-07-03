@@ -58,7 +58,7 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
 
-        internal bool? GetActionKeywordEnable(ActionKeyword actionKeyword) => actionKeyword switch
+        internal bool? GetActionKeywordEnabled(ActionKeyword actionKeyword) => actionKeyword switch
         {
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => null
         };
 
-        internal void SetActionKeywordEnable(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
+        internal void SetActionKeywordEnabled(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
         {
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
