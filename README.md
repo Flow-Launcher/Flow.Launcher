@@ -21,7 +21,6 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 <h4 align="center">
   <a href="#Features">Features</a> •
   <a href="#Getting-Started">Getting Started</a> •
-  <a href="#Plugins">Plugins</a> •
   <a href="#Status">Status</a> •
   <a href="#Contributing">Contributing</a> •
   <a href="#QuestionSuggestion">Question/Suggestion</a> •
@@ -69,7 +68,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
-## Plugins
+### Plugins
 
 Flow searches files and contents via Windows Index Search, to use **Everything**: `pm install everything`.
 
@@ -77,7 +76,7 @@ If you are using Python plugins, Flow will prompt to either select the location 
 
 Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
 
-If you are keen to write your own plugin in flow, please take a look at our plugin development documentation
+If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-csharp-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
 
 ## Status
 
