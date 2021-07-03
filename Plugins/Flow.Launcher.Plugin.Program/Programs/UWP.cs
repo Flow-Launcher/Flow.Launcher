@@ -565,7 +565,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
                 else
                 {
-                    ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
+                    ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
                                                     $"|Unable to get logo for {UserModelId} from {path} and" +
                                                     $" located in {Package.Location}", new FileNotFoundException());
                     return new BitmapImage(new Uri(Constant.MissingImgIcon));
