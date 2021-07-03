@@ -71,13 +71,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             return allowedActionKeyword switch
             {
-                Settings.ActionKeyword.SearchActionKeyword => settings.EnableSearchActionKeyword &&
+                Settings.ActionKeyword.SearchActionKeyword => settings.SearchActionKeywordEnabled &&
                                                               keyword == settings.SearchActionKeyword,
-                Settings.ActionKeyword.PathSearchActionKeyword => settings.EnabledPathSearchKeyword &&
+                Settings.ActionKeyword.PathSearchActionKeyword => settings.PathSearchKeywordEnabled &&
                                                                   keyword == settings.PathSearchActionKeyword,
                 Settings.ActionKeyword.FileContentSearchActionKeyword => keyword ==
                                                                          settings.FileContentSearchActionKeyword,
-                Settings.ActionKeyword.IndexSearchActionKeyword => settings.EnabledIndexOnlySearchKeyword &&
+                Settings.ActionKeyword.IndexSearchActionKeyword => settings.IndexOnlySearchKeywordEnabled &&
                                                                        keyword == settings.IndexSearchActionKeyword
             };
         }
