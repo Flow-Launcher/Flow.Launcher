@@ -21,7 +21,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 <h4 align="center">
   <a href="#Features">Features</a> •
   <a href="#Getting-Started">Getting Started</a> •
-  <a href="#QuestionSuggestion">Question/Suggestion</a> •
+  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
   <a href="#Development">Development</a> •
   <a href="https://flow-launcher.github.io/docs">Documentation</a>
 </h4>
@@ -76,7 +76,7 @@ Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portf
 
 If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-csharp-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
 
-## Question/Suggestion
+## Questions/Suggestions
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section.
 
