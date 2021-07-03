@@ -21,10 +21,8 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 <h4 align="center">
   <a href="#Features">Features</a> •
   <a href="#Getting-Started">Getting Started</a> •
-  <a href="#Status">Status</a> •
-  <a href="#Contributing">Contributing</a> •
   <a href="#QuestionSuggestion">Question/Suggestion</a> •
-  <a href="#DevelopingDebugging">Developing/Debugging</a> •
+  <a href="#Development">Development</a> •
   <a href="https://flow-launcher.github.io/docs">Documentation</a>
 </h4>
 
@@ -78,25 +76,27 @@ Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portf
 
 If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-csharp-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
 
-## Status
-
-Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
-
-## Contributing
-
-We welcome all contributions. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
-
-You will find the main goals of flow placed under [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
-
-Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
-
 ## Question/Suggestion
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section.
 
 **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
-## Developing/Debugging
+## Development
+
+### Status
+
+Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
+
+### Contributing
+
+We welcome all contributions. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
+
+You will find the main goals of flow placed under the [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+
+Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
+
+### Developing/Debugging
 
 Flow Launcher's target framework is .Net 5
 
