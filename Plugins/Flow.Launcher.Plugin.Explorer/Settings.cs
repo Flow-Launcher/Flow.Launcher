@@ -21,17 +21,17 @@ namespace Flow.Launcher.Plugin.Explorer
         public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
-        public bool EnabledSearchActionKeyword { get; set; } = true;
+        public bool SearchActionKeywordEnabled { get; set; } = true;
 
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
 
         public string PathSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        public bool EnabledPathSearchKeyword { get; set; }
+        public bool PathSearchKeywordEnabled { get; set; }
 
         public string IndexSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        public bool EnabledIndexOnlySearchKeyword { get; set; }
+        public bool IndexOnlySearchKeywordEnabled { get; set; }
 
         internal enum ActionKeyword
         {
@@ -60,17 +60,17 @@ namespace Flow.Launcher.Plugin.Explorer
 
         internal bool? GetActionKeywordEnable(ActionKeyword actionKeyword) => actionKeyword switch
         {
-            ActionKeyword.SearchActionKeyword => EnabledSearchActionKeyword,
-            ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword,
-            ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword,
+            ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
+            ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
+            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled,
             _ => null
         };
 
         internal void SetActionKeywordEnable(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
         {
-            ActionKeyword.SearchActionKeyword => EnabledSearchActionKeyword = enable,
-            ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword = enable,
-            ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword = enable,
+            ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
+            ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
+            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
     }

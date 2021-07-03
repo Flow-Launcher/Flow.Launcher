@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
-                    if (c.SpecialKeyState.CtrlPressed || (!Settings.EnabledPathSearchKeyword && !Settings.EnabledSearchActionKeyword))
+                    if (c.SpecialKeyState.CtrlPressed || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
                     {
                         try
                         {
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
                     // one of it is enabled
-                    var keyword = Settings.EnabledSearchActionKeyword ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
+                    var keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
 
                     keyword = keyword == Query.GlobalPluginWildcardSign ? string.Empty : keyword + " ";
 
