@@ -70,7 +70,7 @@ Windows may complain about security due to code not being signed, this will be c
 
 Flow searches files and contents via Windows Index Search, to use **Everything**: `pm install everything`.
 
-If you are using Python plugins, Flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
+If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
 
 Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
 
