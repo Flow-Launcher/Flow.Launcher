@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Navigation;
 using Microsoft.Win32;
 using NHotkey;
@@ -35,6 +36,14 @@ namespace Flow.Launcher
         }
 
         #region General
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            // Fix (workaround) for the window freezes after lock screen (Win+L)
+            // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
+            HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            HwndTarget hwndTarget = hwndSource.CompositionTarget;
+            hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+        }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
         {
