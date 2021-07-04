@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = "Images\\request.png",
                     Action = _ =>
                     {
-                        // standard UrlSourceCode format in PluginsManifest's plugins.json file: https://github.com/jjw24/WoxDictionary/tree/master
+                        // standard UrlSourceCode format in PluginsManifest's plugins.json file: https://github.com/jjw24/Flow.Launcher.Plugin.Putty/tree/master
                         var link = pluginManifestInfo.UrlSourceCode.StartsWith("https://github.com") 
                                                                 ? pluginManifestInfo.UrlSourceCode.Replace("/tree/master", "/issues/new/choose") 
                                                                 : pluginManifestInfo.UrlSourceCode;
