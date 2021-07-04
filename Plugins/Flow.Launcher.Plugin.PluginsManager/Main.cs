@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            _ = pluginManager.UpdateManifest().ContinueWith(_ =>
+            _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(_ =>
              {
                  lastUpdateTime = DateTime.Now;
              }, TaskContinuationOptions.OnlyOnRanToCompletion);
@@ -50,6 +50,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             return contextMenu.LoadContextMenus(selectedResult);
         }
+        
+        private Task _manifestUpdateTask = Task.CompletedTask;
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -58,9 +60,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (string.IsNullOrWhiteSpace(search))
                 return pluginManager.GetDefaultHotKeys();
 
-            if ((DateTime.Now - lastUpdateTime).TotalHours > 12) // 12 hours
+            if ((DateTime.Now - lastUpdateTime).TotalHours > 12 && _manifestUpdateTask.IsCompleted) // 12 hours
             {
-                _ = pluginManager.UpdateManifest().ContinueWith(t =>
+                _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(t =>
                 {
                     lastUpdateTime = DateTime.Now;
                 }, TaskContinuationOptions.OnlyOnRanToCompletion);
