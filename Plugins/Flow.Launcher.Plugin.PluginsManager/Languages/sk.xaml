@@ -19,6 +19,8 @@
     <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizácia pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Tento plugin má dostupnú aktualizáciu, chcete ju zobraziť?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je už nainštalovaný</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stiahnutie manifestu pluginu zlyhalo</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Skontrolujte, či sa môžete pripojiť na github.com. Táto chyba znamená, že pravdepodobne nemôžete pluginy inštalovať alebo aktualizovať.</system:String>
     
     <!--Controls-->
     
