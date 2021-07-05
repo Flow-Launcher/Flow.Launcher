@@ -18,6 +18,7 @@
         Height="600" Width="900"
         MinWidth="850"
         MinHeight="500"
+        Loaded="OnLoaded" 
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
     <Window.InputBindings>

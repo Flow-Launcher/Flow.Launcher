@@ -59,11 +59,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             else
             {
-                return _downloadManifestTask = pluginsManifest.DownloadManifest().ContinueWith(t =>
-                    Context.API.ShowMsg("Plugin Manifest Download Fail.",
-                    "Please check if you can connect to github.com. " +
-                    "This error means you may not be able to Install and Update Plugin.", icoPath, false),
+                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                _downloadManifestTask.ContinueWith(_ =>
+                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
+                            Context.API.GetTranslation("plugin_pluginsmanager_update_failed_subtitle"), icoPath, false),
                     TaskContinuationOptions.OnlyOnFaulted);
+                return _downloadManifestTask;
             }
         }
 
