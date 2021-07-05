@@ -60,9 +60,9 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async ValueTask DisposePluginsAsync()
         {
-            foreach (var plugin in AllPlugins)
+            foreach (var pluginPair in AllPlugins)
             {
-                switch (plugin)
+                switch (pluginPair.Plugin)
                 {
                     case IDisposable disposable:
                         disposable.Dispose();
