@@ -58,6 +58,22 @@ namespace Flow.Launcher.Core.Plugin
             API.SavePluginSettings();
         }
 
+        public static async ValueTask DisposePluginsAsync()
+        {
+            foreach (var plugin in AllPlugins)
+            {
+                switch (plugin)
+                {
+                    case IDisposable disposable:
+                        disposable.Dispose();
+                        break;
+                    case IAsyncDisposable asyncDisposable:
+                        await asyncDisposable.DisposeAsync();
+                        break;
+                }
+            }
+        }
+
         public static async Task ReloadData()
         {
             await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
