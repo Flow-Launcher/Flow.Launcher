@@ -37,9 +37,10 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [TestCase("{\"result\":[],\"DebugMessage\":null}", Description = "Empty Result")]
-        [TestCase("{\"result\":[{\"JsonRPCAction\":null,\"Title\":null,\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "One Result with Pascal Case")]
-        [TestCase("{\"result\":[{\"jsonRPCAction\":null,\"title\":null,\"subTitle\":\"\",\"actionKeywordAssigned\":null,\"icoPath\":null}],\"debugMessage\":null}", Description = "One Result with camel Case")]
-        [TestCase("{\"result\":[{\"JsonRPCAction\":null,\"Title\":null,\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null},{\"JsonRPCAction\":null,\"Title\":null,\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "Two Result with Pascal Case")]
+        [TestCase("{\"result\":[{\"JsonRPCAction\":null,\"Title\":\"something\",\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "One Result with Pascal Case")]
+        [TestCase("{\"result\":[{\"jsonRPCAction\":null,\"title\":\"something\",\"subTitle\":\"\",\"actionKeywordAssigned\":null,\"icoPath\":null}],\"debugMessage\":null}", Description = "One Result with camel Case")]
+        [TestCase("{\"result\":[{\"JsonRPCAction\":null,\"Title\":\"iii\",\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null},{\"JsonRPCAction\":null,\"Title\":\"iii\",\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "Two Result with Pascal Case")]
+        [TestCase("{\"result\":[{\"jsonrpcAction\":null,\"TItLE\":\"iii\",\"Subtitle\":\"\",\"Actionkeywordassigned\":null,\"icoPath\":null},{\"jsonRPCAction\":null,\"tiTle\":\"iii\",\"subTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "Two Result with Weird Case")]
         public async Task BasicQueryTestAsync(string resultText)
         {
             var results = await QueryAsync(new Query
@@ -53,6 +54,7 @@ namespace Flow.Launcher.Test.Plugins
             {
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Action);
+                Assert.IsNotNull(result.Title);
             }
 
         }
@@ -77,20 +79,25 @@ namespace Flow.Launcher.Test.Plugins
         };
 
         [TestCaseSource(typeof(JsonRPCPluginTest), nameof(ResponseModelsSource))]
-        public async Task QueryTestPropertyMatchAsync(JsonRPCQueryResponseModel model)
+        public async Task QueryTestPropertyMatchAsync(JsonRPCQueryResponseModel reference)
         {
-            var pascalText = JsonSerializer.Serialize(model);
+            var camelText = JsonSerializer.Serialize(reference, new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-            var results = await QueryAsync(new Query { RawQuery = pascalText, }, default);
+            var pascalText = JsonSerializer.Serialize(reference);
 
-            Assert.IsNotNull(results);
+            var results1 = await QueryAsync(new Query { RawQuery = camelText }, default);
+            var results2 = await QueryAsync(new Query { RawQuery = pascalText }, default);
 
-            foreach (var (result1, result2) in results.Zip(model.Result))
+            Assert.IsNotNull(results1);
+            Assert.IsNotNull(results2);
+
+            foreach (var ((result1, result2), referenceResult) in results1.Zip(results2).Zip(reference.Result))
             {
+                Assert.AreEqual(result1, result2);
+                Assert.AreEqual(result1, referenceResult);
+
                 Assert.IsNotNull(result1);
                 Assert.IsNotNull(result1.Action);
-                Assert.AreEqual(result1.Title, result2.Title);
-                Assert.AreEqual(result1.SubTitle, result2.SubTitle);
             }
         }
 
