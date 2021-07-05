@@ -50,6 +50,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
+            IgnoreNullValues = true,
             Converters =
             {
                 new JsonObjectConverter()
@@ -63,6 +64,8 @@ namespace Flow.Launcher.Core.Plugin
             var queryResponseModel = await
                 JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
+            await output.DisposeAsync();
+            
             return ParseResults(queryResponseModel);
         }
 
