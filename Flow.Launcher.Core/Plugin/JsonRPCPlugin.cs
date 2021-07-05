@@ -47,8 +47,10 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        private static readonly JsonSerializerOptions _options = new()
+        private static readonly JsonSerializerOptions options = new()
         {
+            PropertyNameCaseInsensitive = true,
+            IgnoreNullValues = true,
             Converters =
             {
                 new JsonObjectConverter()
@@ -60,8 +62,10 @@ namespace Flow.Launcher.Core.Plugin
             if (output == Stream.Null) return null;
 
             var queryResponseModel = await
-                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, _options);
+                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
+            await output.DisposeAsync();
+            
             return ParseResults(queryResponseModel);
         }
 
@@ -70,7 +74,7 @@ namespace Flow.Launcher.Core.Plugin
             if (string.IsNullOrEmpty(output)) return null;
 
             var queryResponseModel =
-                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, _options);
+                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, options);
             return ParseResults(queryResponseModel);
         }
 
@@ -110,7 +114,7 @@ namespace Flow.Launcher.Core.Plugin
                             return !result.JsonRPCAction.DontHideAfterAction;
                         }
 
-                        var jsonRpcRequestModel = JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, _options);
+                        var jsonRpcRequestModel = JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, options);
 
                         if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
                         {
