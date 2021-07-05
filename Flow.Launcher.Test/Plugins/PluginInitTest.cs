@@ -11,7 +11,7 @@ namespace Flow.Launcher.Test.Plugins
         [Test]
         public void PublicAPIIsNullTest()
         {
-            //Ap[ssert.Throws(typeof(Flow.LauncherFatalException), () => PluginManager.Initialize(null));
+            //Assert.Throws(typeof(Flow.LauncherFatalException), () => PluginManager.Initialize(null));
         }
     }
 }
