@@ -11,6 +11,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DataFormats = System.Windows.DataFormats;
@@ -46,10 +47,13 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        private async void OnClosing(object sender, CancelEventArgs e)
         {
             _notifyIcon.Visible = false;
             _viewModel.Save();
+            e.Cancel = true;
+            await PluginManager.DisposePluginsAsync();
+            Application.Current.Shutdown();
         }
 
         private void OnInitialized(object sender, EventArgs e)
