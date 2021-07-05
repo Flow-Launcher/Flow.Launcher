@@ -30,12 +30,8 @@ namespace Flow.Launcher.Core.Plugin
         public string Data { get; set; }
     }
 
-    public class JsonRPCModelBase
-    {
-        public int Id { get; set; }
-    }
 
-    public class JsonRPCResponseModel : JsonRPCModelBase
+    public class JsonRPCResponseModel
     {
         public string Result { get; set; }
 
@@ -49,18 +45,20 @@ namespace Flow.Launcher.Core.Plugin
 
         public string DebugMessage { get; set; }
     }
-
-    public class JsonRPCRequestModel : JsonRPCModelBase
+    
+    public class JsonRPCRequestModel
     {
-        [JsonPropertyName("method")]
         public string Method { get; set; }
 
-        [JsonPropertyName("parameters")]
         public object[] Parameters { get; set; }
 
+        private static readonly JsonSerializerOptions options = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this);
+            return JsonSerializer.Serialize(this, options);
         }
     }
 
@@ -77,7 +75,6 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public class JsonRPCClientRequestModel : JsonRPCRequestModel
     {
-        [JsonPropertyName("dontHideAfterAction")]
         public bool DontHideAfterAction { get; set; }
     }
 
