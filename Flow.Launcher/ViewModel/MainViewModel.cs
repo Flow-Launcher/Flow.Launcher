@@ -135,14 +135,13 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
+                    if (e.Query.RawQuery == QueryText && !e.Token.IsCancellationRequested)
                     {
                         PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
+                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, e.Token)))
                         {
                             Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                         }
-                        ;
                     }
                 };
             }

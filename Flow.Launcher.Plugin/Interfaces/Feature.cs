@@ -5,7 +5,9 @@ using System.Threading;
 
 namespace Flow.Launcher.Plugin
 {
-    public interface IFeatures { }
+    public interface IFeatures
+    {
+    }
 
     public interface IContextMenu : IFeatures
     {
@@ -33,6 +35,6 @@ namespace Flow.Launcher.Plugin
     {
         public List<Result> Results;
         public Query Query;
-        public CancellationToken Token { get; init; }
+        public CancellationToken Token { get; init; } = default;
     }
 }
