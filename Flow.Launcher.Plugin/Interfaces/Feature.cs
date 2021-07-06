@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin
 {
@@ -32,5 +33,6 @@ namespace Flow.Launcher.Plugin
     {
         public List<Result> Results;
         public Query Query;
+        public CancellationToken Token { get; init; }
     }
 }
