@@ -41,7 +41,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("{\"result\":[{\"jsonRPCAction\":null,\"title\":\"something\",\"subTitle\":\"\",\"actionKeywordAssigned\":null,\"icoPath\":null}],\"debugMessage\":null}", Description = "One Result with camel Case")]
         [TestCase("{\"result\":[{\"JsonRPCAction\":null,\"Title\":\"iii\",\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null},{\"JsonRPCAction\":null,\"Title\":\"iii\",\"SubTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "Two Result with Pascal Case")]
         [TestCase("{\"result\":[{\"jsonrpcAction\":null,\"TItLE\":\"iii\",\"Subtitle\":\"\",\"Actionkeywordassigned\":null,\"icoPath\":null},{\"jsonRPCAction\":null,\"tiTle\":\"iii\",\"subTitle\":\"\",\"ActionKeywordAssigned\":null,\"IcoPath\":null}],\"DebugMessage\":null}", Description = "Two Result with Weird Case")]
-        public async Task BasicQueryTestAsync(string resultText)
+        public async Task GivenVariousJsonText_WhenVariousNamingCase_ThenExpectNotNullResults_Async(string resultText)
         {
             var results = await QueryAsync(new Query
             {
@@ -79,7 +79,7 @@ namespace Flow.Launcher.Test.Plugins
         };
 
         [TestCaseSource(typeof(JsonRPCPluginTest), nameof(ResponseModelsSource))]
-        public async Task QueryTestPropertyMatchAsync(JsonRPCQueryResponseModel reference)
+        public async Task GivenModel_WhenSerializeWithDifferentNamingPolicy_ThenExpectSameResult_Async(JsonRPCQueryResponseModel reference)
         {
             var camelText = JsonSerializer.Serialize(reference, new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
