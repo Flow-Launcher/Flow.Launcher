@@ -135,14 +135,17 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
+                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
                     {
-                        PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
-                        {
-                            Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
-                        }
-                        ;
+                        return;
+                    }
+
+                    var token = e.Token == default ? _updateToken : e.Token;
+
+                    PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, token)))
+                    {
+                        Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                     }
                 };
             }
@@ -460,7 +463,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
-        
+
         private async void QueryResults()
         {
             _updateSource?.Cancel();
@@ -554,7 +557,7 @@ namespace Flow.Launcher.ViewModel
                 await Task.Yield();
 
                 IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
-                
+
                 currentCancellationToken.ThrowIfCancellationRequested();
 
                 results ??= _emptyResult;
