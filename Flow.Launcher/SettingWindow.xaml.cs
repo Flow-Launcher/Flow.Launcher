@@ -5,16 +5,14 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
 using Microsoft.Win32;
-using NHotkey;
-using NHotkey.Wpf;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Helper;
 
 namespace Flow.Launcher
 {
@@ -127,42 +125,10 @@ namespace Flow.Launcher
         {
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
-                SetHotkey(HotkeyControl.CurrentHotkey, (o, args) =>
-                {
-                    if (!Application.Current.MainWindow.IsVisible)
-                    {
-                        Application.Current.MainWindow.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        Application.Current.MainWindow.Visibility = Visibility.Hidden;
-                    }
-                });
-                RemoveHotkey(settings.Hotkey);
+
+                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnHotkey);
+                HotKeyMapper.RemoveHotkey(settings.Hotkey);
                 settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
-            }
-        }
-
-        void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
-        {
-            string hotkeyStr = hotkey.ToString();
-            try
-            {
-                HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
-            }
-            catch (Exception)
-            {
-                string errorMsg =
-                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-                MessageBox.Show(errorMsg);
-            }
-        }
-
-        void RemoveHotkey(string hotkeyStr)
-        {
-            if (!string.IsNullOrEmpty(hotkeyStr))
-            {
-                HotkeyManager.Current.Remove(hotkeyStr);
             }
         }
 
@@ -183,7 +149,7 @@ namespace Flow.Launcher
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 settings.CustomPluginHotkeys.Remove(item);
-                RemoveHotkey(item.Hotkey);
+                HotKeyMapper.RemoveHotkey(item.Hotkey);
             }
         }
 

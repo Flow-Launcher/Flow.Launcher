@@ -68,6 +68,9 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
+
+                HotKeyMapper.Initialize(_mainVM);
+
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;
