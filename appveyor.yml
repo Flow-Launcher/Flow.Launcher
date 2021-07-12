@@ -14,6 +14,8 @@ assembly_info:
   assembly_file_version: $(flowVersion)
   assembly_informational_version: $(flowVersion)
 
+skip_branch_with_pr: true
+
 skip_commits:
   files:
     - '*.md'
