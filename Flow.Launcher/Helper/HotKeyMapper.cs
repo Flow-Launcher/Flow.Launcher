@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using NHotkey;
@@ -82,15 +82,9 @@ namespace Flow.Launcher.Helper
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
-        /// <returns></returns>
         private static bool ShouldIgnoreHotkeys()
         {
-            //double if to omit calling win32 function
-            if (settings.IgnoreHotkeysOnFullscreen)
-                if (WindowsInteropHelper.IsWindowFullscreen())
-                    return true;
-
-            return false;
+            return settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
         }
 
         private static void SetCustomPluginHotkey()
