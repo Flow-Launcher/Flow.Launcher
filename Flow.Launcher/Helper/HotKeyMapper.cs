@@ -20,7 +20,7 @@ namespace Flow.Launcher.Helper
             settings = mainViewModel._settings;
 
             SetHotkey(settings.Hotkey, OnHotkey);
-            SetCustomPluginHotkey();
+            LoadCustomPluginHotkey();
         }
 
         private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
@@ -91,22 +91,29 @@ namespace Flow.Launcher.Helper
             }
         }
 
-        private static void SetCustomPluginHotkey()
+        internal static void LoadCustomPluginHotkey()
         {
-            if (settings.CustomPluginHotkeys == null) return;
+            if (settings.CustomPluginHotkeys == null)
+                return;
+
             foreach (CustomPluginHotkey hotkey in settings.CustomPluginHotkeys)
             {
-                SetHotkey(hotkey.Hotkey, (s, e) =>
-                {
-                    if (ShouldIgnoreHotkeys())
-                        return;
-
-                    UpdateLastQUeryMode();
-
-                    mainViewModel.MainWindowVisibility = Visibility.Visible;
-                    mainViewModel.ChangeQueryText(hotkey.ActionKeyword);
-                });
+                SetCustomQueryHotkey(hotkey);
             }
+        }
+
+        internal static void SetCustomQueryHotkey(CustomPluginHotkey hotkey)
+        {
+            SetHotkey(hotkey.Hotkey, (s, e) =>
+            {
+                if (ShouldIgnoreHotkeys())
+                    return;
+
+                UpdateLastQUeryMode();
+
+                mainViewModel.MainWindowVisibility = Visibility.Visible;
+                mainViewModel.ChangeQueryText(hotkey.ActionKeyword);
+            });
         }
     }
 }

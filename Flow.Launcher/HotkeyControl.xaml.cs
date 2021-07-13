@@ -21,7 +21,9 @@ namespace Flow.Launcher
         protected virtual void OnHotkeyChanged()
         {
             EventHandler handler = HotkeyChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
 
         public HotkeyControl()
