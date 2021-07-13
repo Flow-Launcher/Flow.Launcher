@@ -2,8 +2,6 @@
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
-using NHotkey;
-using NHotkey.Wpf;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

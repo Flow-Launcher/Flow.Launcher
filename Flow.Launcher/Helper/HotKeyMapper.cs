@@ -113,5 +113,24 @@ namespace Flow.Launcher.Helper
                 mainViewModel.ChangeQueryText(hotkey.ActionKeyword);
             });
         }
+
+        internal static bool CheckAvailability(HotkeyModel currentHotkey)
+        {
+            try
+            {
+                HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", currentHotkey.CharKey, currentHotkey.ModifierKeys, (sender, e) => { });
+
+                return true;
+            }
+            catch
+            {
+            }
+            finally
+            {
+                HotkeyManager.Current.Remove("HotkeyAvailabilityTest");
+            }
+
+            return false;
+        }
     }
 }
