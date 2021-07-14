@@ -91,6 +91,8 @@ namespace Flow.Launcher
         {
             App.API.ChangeQuery(tbAction.Text);
             Application.Current.MainWindow.Visibility = Visibility.Visible;
+            Application.Current.MainWindow.Focus();
+
         }
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
