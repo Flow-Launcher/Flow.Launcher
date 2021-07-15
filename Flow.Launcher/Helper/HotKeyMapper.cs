@@ -57,9 +57,11 @@ namespace Flow.Launcher.Helper
         {
             if (!ShouldIgnoreHotkeys())
             {
-                UpdateLastQUeryMode();
+                if (settings.LastQueryMode == LastQueryMode.Empty)
+                    mainViewModel.ChangeQueryText(string.Empty);
 
                 mainViewModel.ToggleFlowLauncher();
+
                 e.Handled = true;
             }
         }
@@ -70,25 +72,6 @@ namespace Flow.Launcher.Helper
         private static bool ShouldIgnoreHotkeys()
         {
             return settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
-        }
-
-        private static void UpdateLastQUeryMode()
-        {
-            switch(settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    mainViewModel.ChangeQueryText(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                    mainViewModel.LastQuerySelected = true;
-                    break;
-                case LastQueryMode.Selected:
-                    mainViewModel.LastQuerySelected = false;
-                    break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{settings.LastQueryMode}>");
-
-            }
         }
 
         internal static void LoadCustomPluginHotkey()

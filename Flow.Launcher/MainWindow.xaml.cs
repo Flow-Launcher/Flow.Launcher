@@ -84,11 +84,9 @@ namespace Flow.Launcher
                             QueryTextBox.Focus();
                             UpdatePosition();
                             _settings.ActivateTimes++;
-                            if (!_viewModel.LastQuerySelected)
-                            {
-                                QueryTextBox.SelectAll();
-                                _viewModel.LastQuerySelected = true;
-                            }
+
+                            if (_settings.LastQueryMode == LastQueryMode.Selected)
+                                    QueryTextBox.SelectAll();
 
                             if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
                             {

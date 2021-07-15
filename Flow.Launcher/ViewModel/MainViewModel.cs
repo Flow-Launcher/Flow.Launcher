@@ -293,7 +293,6 @@ namespace Flow.Launcher.ViewModel
             QueryText = queryText;
         }
 
-        public bool LastQuerySelected { get; set; }
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
