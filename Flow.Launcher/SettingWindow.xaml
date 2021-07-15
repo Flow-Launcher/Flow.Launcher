@@ -365,7 +365,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{DynamicResource actionKeywords}" Width="546">
+                            <GridViewColumn Header="{DynamicResource customQuery}" Width="546">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate DataType="userSettings:CustomPluginHotkey">
                                         <TextBlock Text="{Binding ActionKeyword}" />
