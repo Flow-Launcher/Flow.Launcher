@@ -125,6 +125,13 @@ namespace Flow.Launcher
 
                         break;
                     }
+                    case nameof(MainViewModel.QueryTextCursorMovedToEnd):
+                        if (_viewModel.QueryTextCursorMovedToEnd)
+                        {
+                            MoveQueryTextToEnd();
+                            _viewModel.QueryTextCursorMovedToEnd = false;
+                        }
+                        break;
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -329,13 +336,9 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        private void MoveQueryTextToEnd()
         {
-            if (_viewModel.QueryTextCursorMovedToEnd)
-            {
-                QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
-                _viewModel.QueryTextCursorMovedToEnd = false;
-            }
+            QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
     }
 }
