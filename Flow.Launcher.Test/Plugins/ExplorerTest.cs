@@ -135,7 +135,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
             var baseQuery =  queryConstructor.CreateBaseQuery();
             
-            
+            // system running this test could have different locale than the hard-coded 1033 LCID en-US.
             var queryKeywordLocale = baseQuery.QueryKeywordLocale;
             expectedString = expectedString.Replace("1033", queryKeywordLocale.ToString());
             
