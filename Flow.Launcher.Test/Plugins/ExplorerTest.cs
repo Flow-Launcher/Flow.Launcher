@@ -133,6 +133,13 @@ namespace Flow.Launcher.Test.Plugins
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
+            var baseQuery =  queryConstructor.CreateBaseQuery();
+            
+            
+            var queryKeywordLocale = baseQuery.QueryKeywordLocale;
+            expectedString = expectedString.Replace("1033", queryKeywordLocale.ToString());
+            
+            
 
             //When
             var resultString = queryConstructor.QueryForAllFilesAndFolders(userSearchString);
