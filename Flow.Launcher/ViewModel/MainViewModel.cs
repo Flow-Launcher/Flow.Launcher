@@ -289,8 +289,8 @@ namespace Flow.Launcher.ViewModel
         /// <param name="queryText"></param>
         public void ChangeQueryText(string queryText)
         {
-            QueryTextCursorMovedToEnd = true;
             QueryText = queryText;
+            QueryTextCursorMovedToEnd = true;
         }
 
         public bool LastQuerySelected { get; set; }

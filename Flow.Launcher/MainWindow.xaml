@@ -79,7 +79,6 @@
                     Style="{DynamicResource QueryBoxStyle}"
                      Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      PreviewDragOver="OnPreviewDragOver"
-                     TextChanged="OnTextChanged"
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"
