@@ -26,7 +26,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private const int MaxCached = 50;
         public ConcurrentDictionary<string, ImageUsage> Data { get; private set; } = new ConcurrentDictionary<string, ImageUsage>();
         private const int permissibleFactor = 2;
-        
+
         public void Initialization(Dictionary<string, int> usage)
         {
             foreach (var key in usage.Keys)
@@ -34,6 +34,8 @@ namespace Flow.Launcher.Infrastructure.Image
                 Data[key] = new ImageUsage(usage[key], null);
             }
         }
+
+        private volatile bool removing;
 
         public ImageSource this[string path]
         {
@@ -62,11 +64,13 @@ namespace Flow.Launcher.Infrastructure.Image
 
                 // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
                 // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
-                if (Data.Count > permissibleFactor * MaxCached)
+                if (Data.Count > permissibleFactor * MaxCached && !removing)
                 {
+                    removing = true;
                     // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
                     foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
                         Data.TryRemove(key, out _);
+                    removing = false;
                 }
             }
         }
