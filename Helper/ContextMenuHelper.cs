@@ -5,10 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
+using Flow.Launcher.Plugin;
 using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
-using Wox.Plugin;
-using Wox.Plugin.Logger;
 
 namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
 {
@@ -24,23 +22,18 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
         /// <param name="result">The result for the context menu entires</param>
         /// <param name="assemblyName">The name of the this assembly</param>
         /// <returns>A list with context menu entries</returns>
-        internal static List<ContextMenuResult> GetContextMenu(in Result result, in string assemblyName)
+        internal static List<Result> GetContextMenu(in Result result, in string assemblyName)
         {
-            if (!(result?.ContextData is WindowsSetting entry))
+            if (result?.ContextData is not WindowsSetting entry)
             {
-                return new List<ContextMenuResult>(0);
+                return new List<Result>(0);
             }
 
-            var list = new List<ContextMenuResult>(1)
+            var list = new List<Result>(1)
             {
-                new ContextMenuResult
+                new()
                 {
-                    AcceleratorKey = Key.C,
-                    AcceleratorModifiers = ModifierKeys.Control,
                     Action = _ => TryToCopyToClipBoard(entry.Command),
-                    FontFamily = "Segoe MDL2 Assets",
-                    Glyph = "\xE8C8",                       // E8C8 => Symbol: Copy
-                    PluginName = assemblyName,
                     Title = $"{Resources.CopyCommand} (Ctrl+C)",
                 },
             };

@@ -6,17 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ManagedCommon;
+using Flow.Launcher.Plugin;
 using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper;
 using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
-using Wox.Plugin;
 
 namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
 {
     /// <summary>
     /// Main class of this plugin that implement all used interfaces.
     /// </summary>
-    public class Main : IPlugin, IContextMenu, IPluginI18n, IDisposable
+    public sealed class Main : IPlugin, IContextMenu, IPluginI18n, IDisposable
     {
         /// <summary>
         /// The path to the symbol for a light theme.
@@ -79,8 +78,6 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
         public void Init(PluginInitContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _context.API.ThemeChanged += OnThemeChanged;
-            UpdateIconPath(_context.API.GetCurrentTheme());
 
             _settingsList = JsonSettingsListHelper.ReadAllPossibleSettings();
             _settingsList = UnsupportedSettingsHelper.FilterByBuild(_settingsList);
@@ -126,7 +123,7 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
                     return true;
                 }
 
-                if (!(found.AltNames is null))
+                if (found.AltNames is not null)
                 {
                     foreach (var altName in found.AltNames)
                     {
@@ -146,7 +143,7 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
         /// </summary>
         /// <param name="selectedResult">The <see cref="Result"/> for the list with context menu entries.</param>
         /// <returns>A list context menu entries.</returns>
-        public List<ContextMenuResult> LoadContextMenus(Result selectedResult)
+        public List<Result> LoadContextMenus(Result selectedResult)
         {
             return ContextMenuHelper.GetContextMenu(selectedResult, _assemblyName);
         }
@@ -162,16 +159,11 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
         /// Wrapper method for <see cref="Dispose"/> that dispose additional objects and events form the plugin itself.
         /// </summary>
         /// <param name="disposing">Indicate that the plugin is disposed.</param>
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed || !disposing)
             {
                 return;
-            }
-
-            if (_context != null && _context.API != null)
-            {
-                _context.API.ThemeChanged -= OnThemeChanged;
             }
 
             _disposed = true;
@@ -191,27 +183,6 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
         public string GetTranslatedPluginDescription()
         {
             return Description;
-        }
-
-        /// <summary>
-        /// Change all theme-based elements (typical called when the plugin theme has changed).
-        /// </summary>
-        /// <param name="oldtheme">The old <see cref="Theme"/>.</param>
-        /// <param name="newTheme">The new <see cref="Theme"/>.</param>
-        private void OnThemeChanged(Theme oldtheme, Theme newTheme)
-        {
-            UpdateIconPath(newTheme);
-        }
-
-        /// <summary>
-        /// Update all icons (typical called when the plugin theme has changed).
-        /// </summary>
-        /// <param name="theme">The new <see cref="Theme"/> for the icons.</param>
-        private void UpdateIconPath(Theme theme)
-        {
-            _defaultIconPath = theme == Theme.Light || theme == Theme.HighContrastWhite
-                ? _lightSymbol
-                : _darkSymbol;
         }
     }
 }

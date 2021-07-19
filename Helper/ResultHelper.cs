@@ -7,9 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Flow.Launcher.Plugin;
 using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
-using Wox.Plugin;
-using Wox.Plugin.Logger;
 
 namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
 {
@@ -80,7 +79,7 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
                 toolTipText.Append($"{Resources.Note}: {entry.Note}");
             }
 
-            result.ToolTipData = new ToolTipData(entry.Name, toolTipText.ToString());
+            result.TitleToolTip = toolTipText.ToString();
         }
 
         /// <summary>
