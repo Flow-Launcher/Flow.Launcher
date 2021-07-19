@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
 
 namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
@@ -17,6 +18,10 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
     /// </summary>
     internal static class ResultHelper
     {
+        private static IPublicAPI? _api;
+
+        public static void Init(IPublicAPI api) => _api = api;
+
         /// <summary>
         /// Return a list with <see cref="Result"/>s, based on the given list.
         /// </summary>
@@ -25,31 +30,63 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
         /// <returns>A list with <see cref="Result"/>.</returns>
         internal static List<Result> GetResultList(
             in IEnumerable<WindowsSetting> list,
-            string query,
-            in string iconPath)
+            Query query,
+            string iconPath)
         {
-            var resultList = new List<Result>(list.Count());
-
+            var resultList = new List<Result>();
             foreach (var entry in list)
             {
-                var result = new Result
-                {
-                    Action = (_) => DoOpenSettingsAction(entry),
-                    IcoPath = iconPath,
-                    SubTitle = $"{Resources.Area} \"{entry.Area}\" {Resources.SubtitlePreposition} {entry.Type}",
-                    Title = entry.Name,
-                    ContextData = entry,
-                };
+                var result = Predicate();
+                if (result is null)
+                    continue;
 
                 AddOptionalToolTip(entry, result);
 
                 resultList.Add(result);
-            }
 
-            SetScores(resultList, query);
+                Result NewSettingResult(int score) => new Result()
+                {
+                    Action = _ => DoOpenSettingsAction(entry),
+                    IcoPath = iconPath,
+                    SubTitle = $"{Resources.Area} \"{entry.Area}\" {Resources.SubtitlePreposition} {entry.Type}",
+                    Title = entry.Name,
+                    ContextData = entry,
+                    Score = score
+                };
+
+                Result? Predicate()
+                {
+                    Debug.Assert(_api != null, nameof(_api) + " != null");
+
+                    var nameMatch = _api.FuzzySearch(query.Search, entry.Name);
+
+                    if (nameMatch.IsSearchPrecisionScoreMet())
+                    {
+                        var settingResult = NewSettingResult(nameMatch.Score);
+                        settingResult.TitleHighlightData = nameMatch.MatchData;
+                        return settingResult;
+                    }
+
+                    var areaMatch = _api.FuzzySearch(query.Search, entry.Area);
+                    if (areaMatch.IsSearchPrecisionScoreMet())
+                    {
+                        var settingResult = NewSettingResult(areaMatch.Score);
+                        return settingResult;
+                    }
+
+                    return entry.AltNames?
+                        .Select(altName => _api.FuzzySearch(query.Search, altName))
+                        .Where(match => match.IsSearchPrecisionScoreMet())
+                        .Select(altNameMatch => NewSettingResult(altNameMatch.Score))
+                        .FirstOrDefault();
+
+                }
+            }
 
             return resultList;
         }
+
+
 
         /// <summary>
         /// Add a tool-tip to the given <see cref="Result"/>, based o the given <see cref="IWindowsSetting"/>.
@@ -102,7 +139,7 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
             if (command.Contains(' '))
             {
                 var commandSplit = command.Split(' ');
-                var file = commandSplit.FirstOrDefault();
+                var file = commandSplit.First();
                 var arguments = command[file.Length..].TrimStart();
 
                 processStartInfo = new ProcessStartInfo(file, arguments)

@@ -82,6 +82,9 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
             _settingsList = JsonSettingsListHelper.ReadAllPossibleSettings();
             _settingsList = UnsupportedSettingsHelper.FilterByBuild(_settingsList);
 
+            Log.Init(_context.API);
+            ResultHelper.Init(_context.API);
+
             TranslationHelper.TranslateAllSettings(_settingsList);
         }
 
@@ -97,45 +100,11 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
                 return new List<Result>(0);
             }
 
-            var filteredList = _settingsList
-                .Where(Predicate)
-                .OrderBy(found => found.Name);
 
-            var newList = ResultHelper.GetResultList(filteredList, query.Search, _defaultIconPath);
+            var newList = ResultHelper.GetResultList(_settingsList, query, _defaultIconPath);
             return newList;
 
-            bool Predicate(WindowsSetting found)
-            {
-                if (found.Name.Contains(query.Search, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    return true;
-                }
-
-                // Search for Area only by key char
-                if (found.Area.Contains(query.Search.Replace(":", string.Empty), StringComparison.CurrentCultureIgnoreCase)
-                && query.Search.EndsWith(":"))
-                {
-                    return true;
-                }
-
-                if (found.Area.Contains(query.Search, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    return true;
-                }
-
-                if (found.AltNames is not null)
-                {
-                    foreach (var altName in found.AltNames)
-                    {
-                        if (altName.Contains(query.Search, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
+            
         }
 
         /// <summary>
