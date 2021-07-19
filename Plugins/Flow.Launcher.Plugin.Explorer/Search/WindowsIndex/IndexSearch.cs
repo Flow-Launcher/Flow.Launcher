@@ -1,4 +1,5 @@
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
@@ -16,20 +17,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         // Reserved keywords in oleDB
         private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
 
-        internal async static Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
+        internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             var fileResults = new List<Result>();
 
             try
             {
-                using var conn = new OleDbConnection(connectionString);
+                await using var conn = new OleDbConnection(connectionString);
                 await conn.OpenAsync(token);
                 token.ThrowIfCancellationRequested();
 
-                using var command = new OleDbCommand(indexQueryString, conn);
+                await using var command = new OleDbCommand(indexQueryString, conn);
                 // Results return as an OleDbDataReader.
-                using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+                await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
                 token.ThrowIfCancellationRequested();
 
                 if (dataReaderResults.HasRows)
@@ -41,22 +42,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                         {
                             // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
                             var encodedFragmentPath = dataReaderResults
-                                                        .GetString(1)
-                                                        .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+                                .GetString(1)
+                                .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
 
                             var path = new Uri(encodedFragmentPath).LocalPath;
 
                             if (dataReaderResults.GetString(2) == "Directory")
                             {
                                 results.Add(ResultManager.CreateFolderResult(
-                                                                    dataReaderResults.GetString(0),
-                                                                    path,
-                                                                    path,
-                                                                    query, true, true));
+                                    dataReaderResults.GetString(0),
+                                    path,
+                                    path,
+                                    query, 0, true, true));
                             }
                             else
                             {
-                                fileResults.Add(ResultManager.CreateFileResult(path, query, true, true));
+                                fileResults.Add(ResultManager.CreateFileResult(path, query, 0, true, true));
                             }
                         }
                     }
@@ -64,7 +65,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             }
             catch (OperationCanceledException)
             {
-                return new List<Result>(); // The source code indicates that without adding members, it won't allocate an array
+                // return empty result when cancelled
+                return results;
             }
             catch (InvalidOperationException e)
             {
@@ -83,7 +85,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         }
 
         internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
-                                                                  Func<string, string> constructQuery, Query query,
+                                                                  Func<string, string> constructQuery,
+                                                                  List<AccessLink> exclusionList,
+                                                                  Query query,
                                                                   CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, reservedStringPattern);
@@ -92,8 +96,43 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return new List<Result>();
 
             var constructedQuery = constructQuery(searchString);
-            return await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token);
+            return RemoveResultsInExclusionList(
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
+                        exclusionList,
+                        token);
+        }
 
+        private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
+        {
+            var indexExclusionListCount = exclusionList.Count;
+
+            if (indexExclusionListCount == 0)
+                return results;
+
+            var filteredResults = new List<Result>();
+
+            for (var index = 0; index < results.Count; index++)
+            {
+                token.ThrowIfCancellationRequested();
+
+                var excludeResult = false;
+
+                for (var i = 0; i < indexExclusionListCount; i++)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
+                    {
+                        excludeResult = true;
+                        break;
+                    }
+                }
+
+                if (!excludeResult)
+                    filteredResults.Add(results[index]);
+            }
+
+            return filteredResults;
         }
 
         internal static bool PathIsIndexed(string path)

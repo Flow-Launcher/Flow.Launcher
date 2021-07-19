@@ -18,6 +18,10 @@ using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
 using JetBrains.Annotations;
+using System.Runtime.CompilerServices;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
+using System.Collections.Concurrent;
 
 namespace Flow.Launcher
 {
@@ -67,39 +71,31 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
-        public void RestarApp()
-        {
-            RestartApp();
-        }
+        public void RestarApp() => RestartApp();
 
-        public void CheckForNewUpdate()
-        {
-            _settingsVM.UpdateApp();
-        }
+        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
         public void SaveAppAllSettings()
         {
+            SavePluginSettings();
             _mainVM.Save();
             _settingsVM.Save();
-            PluginManager.Save();
             ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData()
-        {
-            return PluginManager.ReloadData();
-        }
+        public Task ReloadAllPluginData() => PluginManager.ReloadData();
 
-        public void ShowMsg(string title, string subTitle = "", string iconPath = "")
-        {
+        public void ShowMsgError(string title, string subTitle = "") =>
+            ShowMsg(title, subTitle, Constant.ErrorIcon, true);
+
+        public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
             ShowMsg(title, subTitle, iconPath, true);
-        }
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg { Owner = Application.Current.MainWindow } : new Msg();
+                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
                 msg.Show(title, subTitle, iconPath);
             });
         }
@@ -112,54 +108,82 @@ namespace Flow.Launcher
             });
         }
 
-        public void StartLoadingBar()
+        public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
+
+        public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
+
+        public string GetTranslation(string key) => InternationalizationManager.Instance.GetTranslation(key);
+
+        public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
+
+        public MatchResult FuzzySearch(string query, string stringToCompare) =>
+            StringMatcher.FuzzySearch(query, stringToCompare);
+
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
+
+        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
+            Http.GetStreamAsync(url);
+
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
+
+        public void AddActionKeyword(string pluginId, string newActionKeyword) =>
+            PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+
+        public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
+            PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
+
+        public void LogDebug(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Debug(className, message, methodName);
+
+        public void LogInfo(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Info(className, message, methodName);
+
+        public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Warn(className, message, methodName);
+
+        public void LogException(string className, string message, Exception e,
+            [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
+
+        private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
+
+        public void SavePluginSettings()
         {
-            _mainVM.ProgressBarVisibility = Visibility.Visible;
+            foreach (var value in _pluginJsonStorages.Values)
+            {
+                var method = value.GetType().GetMethod("Save");
+                method?.Invoke(value, null);
+            }
         }
 
-        public void StopLoadingBar()
+        public T LoadSettingJsonStorage<T>() where T : new()
         {
-            _mainVM.ProgressBarVisibility = Visibility.Collapsed;
+            var type = typeof(T);
+            if (!_pluginJsonStorages.ContainsKey(type))
+                _pluginJsonStorages[type] = new PluginJsonStorage<T>();
+
+            return ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Load();
         }
 
-        public string GetTranslation(string key)
+        public void SaveSettingJsonStorage<T>() where T : new()
         {
-            return InternationalizationManager.Instance.GetTranslation(key);
+            var type = typeof(T);
+            if (!_pluginJsonStorages.ContainsKey(type))
+                _pluginJsonStorages[type] = new PluginJsonStorage<T>();
+
+            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
 
-        public List<PluginPair> GetAllPlugins()
+        public void SaveJsonStorage<T>(T settings) where T : new()
         {
-            return PluginManager.AllPlugins.ToList();
+            var type = typeof(T);
+            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
+
+            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
 
-        public MatchResult FuzzySearch(string query, string stringToCompare) => StringMatcher.FuzzySearch(query, stringToCompare);
-
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default)
-        {
-            return Http.GetAsync(url);
-        }
-
-        public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default)
-        {
-            return Http.GetStreamAsync(url);
-        }
-
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath)
-        {
-            return Http.DownloadAsync(url, filePath);
-        }
-
-        public void AddActionKeyword(string pluginId, string newActionKeyword)
-        {
-            PluginManager.AddActionKeyword(pluginId, newActionKeyword);
-        }
-
-        public void RemoveActionKeyword(string pluginId, string oldActionKeyword)
-        {
-            PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
-        }
         #endregion
 
         #region Private Methods
@@ -168,8 +192,9 @@ namespace Flow.Launcher
         {
             if (GlobalKeyboardEvent != null)
             {
-                return GlobalKeyboardEvent((int)keyevent, vkcode, state);
+                return GlobalKeyboardEvent((int) keyevent, vkcode, state);
             }
+
             return true;
         }
 

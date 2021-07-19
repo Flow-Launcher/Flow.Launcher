@@ -4,27 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
+             xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <DataTemplate x:Key="ListViewTemplateAccessLinks">
             <TextBlock
-                Text="{Binding Nickname, Mode=OneTime}"
+                Text="{Binding Path, Mode=OneTime}"
                 Margin="0,5,0,5" />
         </DataTemplate>
         <DataTemplate x:Key="ListViewTemplateExcludedPaths">
             <TextBlock
-                Text="{Binding Nickname, Mode=OneTime}"
+                Text="{Binding Path, Mode=OneTime}"
                 Margin="0,5,0,5" />
         </DataTemplate>
-        <DataTemplate x:Key="ListViewActionKeywords">
+        <DataTemplate x:Key="ListViewActionKeywords"
+                      DataType="views:ActionKeywordView">
             <Grid>
                 <TextBlock 
                     Text="{Binding Description, Mode=OneTime}"
+                    Foreground="{Binding Color, Mode=OneWay}"
                     Margin="0,5,0,0" />
                 <TextBlock 
                     Text="{Binding Keyword, Mode=OneTime}"
-                    Margin="150,5,0,0" />
+                    Foreground="{Binding Color, Mode=OneWay}"
+                    Margin="250,5,0,0" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

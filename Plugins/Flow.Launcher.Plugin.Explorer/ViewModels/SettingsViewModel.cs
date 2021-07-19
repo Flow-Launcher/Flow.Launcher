@@ -9,27 +9,20 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public class SettingsViewModel
     {
-        private readonly PluginJsonStorage<Settings> storage;
-
         internal Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
 
-        public SettingsViewModel(PluginInitContext context)
+        public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
-            storage = new PluginJsonStorage<Settings>();
-            Settings = storage.Load();
+            Settings = settings;
         }
 
-        public Task LoadStorage()
-        {
-            return Task.Run(() => Settings = storage.Load());
-        }
 
         public void Save()
         {
-            storage.Save();
+            Context.API.SaveSettingJsonStorage<Settings>();
         }
 
         internal void RemoveLinkFromQuickAccess(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);
@@ -48,18 +41,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        internal void UpdateActionKeyword(string newActionKeyword, string oldActionKeyword)
+        internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
             PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
-
-            if (Settings.FileContentSearchActionKeyword == oldActionKeyword)
-                Settings.FileContentSearchActionKeyword = newActionKeyword;
-
-            if (Settings.SearchActionKeyword == oldActionKeyword)
-                Settings.SearchActionKeyword = newActionKeyword;
         }
 
-        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword)
+        {
+            return PluginManager.ActionKeywordRegistered(newActionKeyword);
+        }
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
     }

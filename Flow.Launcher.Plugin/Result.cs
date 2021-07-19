@@ -10,9 +10,18 @@ namespace Flow.Launcher.Plugin
     {
 
         private string _pluginDirectory;
+        
         private string _icoPath;
+
+        /// <summary>
+        /// Provides the title of the result. This is always required.
+        /// </summary>
         public string Title { get; set; }
-        public string SubTitle { get; set; }
+
+        /// <summary>
+        /// Provides additional details for the result. This is optional
+        /// </summary>
+        public string SubTitle { get; set; } = string.Empty;
 
         /// <summary>
         /// This holds the action keyword that triggered the result. 

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Flow.Launcher.Plugin;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Storage
 {
     public class History
     {
-        public List<HistoryItem> Items { get; set; } = new List<HistoryItem>();
+        [JsonInclude]
+        public List<HistoryItem> Items { get; private set; } = new List<HistoryItem>();
 
         private int _maxHistory = 300;
 

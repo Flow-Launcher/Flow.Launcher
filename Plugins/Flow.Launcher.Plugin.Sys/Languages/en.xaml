@@ -18,6 +18,10 @@
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Save all Flow Launcher settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Refreshes plugin data with new content</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Open Flow Launcher's log location</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Check for new Flow Launcher update</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visit Flow Launcher's documentation for more help and how to use tips</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Open the location where Flow Launcher's settings are stored</system:String>
 
     <!--Dialogs-->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Success</system:String>

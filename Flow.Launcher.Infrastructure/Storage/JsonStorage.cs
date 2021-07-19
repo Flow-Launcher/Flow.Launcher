@@ -9,10 +9,9 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStrorage<T> where T : new()
+    public class JsonStorage<T> where T : new()
     {
-        private readonly JsonSerializerOptions _serializerSettings;
-        private T _data;
+        protected T _data;
         // need a new directory name
         public const string DirectoryName = "Settings";
         public const string FileSuffix = ".json";
@@ -20,24 +19,14 @@ namespace Flow.Launcher.Infrastructure.Storage
         public string DirectoryPath { get; set; }
 
 
-        internal JsonStrorage()
-        {
-            // use property initialization instead of DefaultValueAttribute
-            // easier and flexible for default value of object
-            _serializerSettings = new JsonSerializerOptions
-            {
-                IgnoreNullValues = false
-            };
-        }
-
         public T Load()
         {
             if (File.Exists(FilePath))
             {
-                var searlized = File.ReadAllText(FilePath);
-                if (!string.IsNullOrWhiteSpace(searlized))
+                var serialized = File.ReadAllText(FilePath);
+                if (!string.IsNullOrWhiteSpace(serialized))
                 {
-                    Deserialize(searlized);
+                    Deserialize(serialized);
                 }
                 else
                 {
@@ -51,16 +40,16 @@ namespace Flow.Launcher.Infrastructure.Storage
             return _data.NonNull();
         }
 
-        private void Deserialize(string searlized)
+        private void Deserialize(string serialized)
         {
             try
             {
-                _data = JsonSerializer.Deserialize<T>(searlized, _serializerSettings);
+                _data = JsonSerializer.Deserialize<T>(serialized);
             }
             catch (JsonException e)
             {
                 LoadDefault();
-                Log.Exception($"|JsonStrorage.Deserialize|Deserialize error for json <{FilePath}>", e);
+                Log.Exception($"|JsonStorage.Deserialize|Deserialize error for json <{FilePath}>", e);
             }
 
             if (_data == null)
@@ -98,4 +87,8 @@ namespace Flow.Launcher.Infrastructure.Storage
             File.WriteAllText(FilePath, serialized);
         }
     }
+
+    [Obsolete("Deprecated as of Flow Launcher v1.8.0, on 2021.06.21. " +
+        "This is used only for Everything plugin v1.4.9 or below backwards compatibility")]
+    public class JsonStrorage<T> : JsonStorage<T> where T : new() { }
 }

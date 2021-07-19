@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using AppxPackaing;
-using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
-using IStream = AppxPackaing.IStream;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -52,33 +51,27 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void InitializeAppInfo()
         {
+            AppxPackageHelper _helper = new AppxPackageHelper();
             var path = Path.Combine(Location, "AppxManifest.xml");
 
             var namespaces = XmlNamespaces(path);
             InitPackageVersion(namespaces);
 
-            var appxFactory = new AppxFactory();
-            IStream stream;
             const uint noAttribute = 0x80;
             const Stgm exclusiveRead = Stgm.Read | Stgm.ShareExclusive;
-            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out stream);
+            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out IStream stream);
 
             if (hResult == Hresult.Ok)
             {
-                var reader = appxFactory.CreateManifestReader(stream);
-                var manifestApps = reader.GetApplications();
                 var apps = new List<Application>();
-                while (manifestApps.GetHasCurrent() != 0)
+
+                List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
+                foreach (var _app in _apps)
                 {
-                    var manifestApp = manifestApps.GetCurrent();
-                    var appListEntry = manifestApp.GetStringValue("AppListEntry");
-                    if (appListEntry != "none")
-                    {
-                        var app = new Application(manifestApp, this);
-                        apps.Add(app);
-                    }
-                    manifestApps.MoveNext();
+                    var app = new Application(_app, this);
+                    apps.Add(app);
                 }
+
                 Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
             }
             else
@@ -88,6 +81,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                 "|Error caused while trying to get the details of the UWP program", e);
 
                 Apps = new List<Application>().ToArray();
+            }
+
+            if (Marshal.ReleaseComObject(stream) > 0)
+            {
+                Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
             }
         }
 
@@ -193,7 +191,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (u != null)
             {
                 var id = u.Value;
-                var m = new PackageManager();
+                PackageManager m;
+                try
+                {
+                    m = new PackageManager();
+                }
+                catch
+                {
+                    // Bug from https://github.com/microsoft/CsWinRT, using Microsoft.Windows.SDK.NET.Ref 10.0.19041.0.
+                    // Only happens on the first time, so a try catch can fix it.
+                    m = new PackageManager();
+                }
                 var ps = m.FindPackagesForUser(id);
                 ps = ps.Where(p =>
                 {
@@ -254,6 +262,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string UserModelId { get; set; }
             public string BackgroundColor { get; set; }
 
+            public string EntryPoint { get; set; }
             public string Name => DisplayName;
             public string Location => Package.Location;
 
@@ -272,7 +281,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 MatchResult matchResult;
 
                 // We suppose Name won't be null
-                if (Description == null || Name.StartsWith(Description))
+                if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
                 {
                     title = Name;
                     matchResult = StringMatcher.FuzzySearch(query, title);
@@ -350,15 +359,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             private async void Launch(IPublicAPI api)
             {
-                var appManager = new ApplicationActivationManager();
-                uint unusedPid;
+                var appManager = new ApplicationActivationHelper.ApplicationActivationManager();
                 const string noArgs = "";
-                const ACTIVATEOPTIONS noFlags = ACTIVATEOPTIONS.AO_NONE;
+                const ApplicationActivationHelper.ActivateOptions noFlags = ApplicationActivationHelper.ActivateOptions.None;
                 await Task.Run(() =>
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out unusedPid);
+                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -369,13 +377,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            public Application(IAppxManifestApplication manifestApp, UWP package)
+            public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
             {
-                UserModelId = manifestApp.GetAppUserModelId();
-                UniqueIdentifier = manifestApp.GetAppUserModelId();
-                DisplayName = manifestApp.GetStringValue("DisplayName");
-                Description = manifestApp.GetStringValue("Description");
-                BackgroundColor = manifestApp.GetStringValue("BackgroundColor");
+                // This is done because we cannot use the keyword 'out' along with a property
+
+                manifestApp.GetAppUserModelId(out string tmpUserModelId);
+                manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
+                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+                manifestApp.GetStringValue("Description", out string tmpDescription);
+                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
+
+                UserModelId = tmpUserModelId;
+                UniqueIdentifier = tmpUniqueIdentifier;
+                DisplayName = tmpDisplayName;
+                Description = tmpDescription;
+                BackgroundColor = tmpBackgroundColor;
+                EntryPoint = tmpEntryPoint;
+
                 Package = package;
 
                 DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
@@ -443,7 +462,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return $"{prefix}//{packageName}{key}";
             }
 
-            internal string LogoUriFromManifest(IAppxManifestApplication app)
+            internal string LogoUriFromManifest(AppxPackageHelper.IAppxManifestApplication app)
             {
                 var logoKeyFromVersion = new Dictionary<PackageVersion, string>
                 {
@@ -454,7 +473,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
                     var key = logoKeyFromVersion[Package.Version];
-                    var logoUri = app.GetStringValue(key);
+                    app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else
@@ -546,7 +565,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
                 else
                 {
-                    ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
+                    ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
                                                     $"|Unable to get logo for {UserModelId} from {path} and" +
                                                     $" located in {Package.Location}", new FileNotFoundException());
                     return new BitmapImage(new Uri(Constant.MissingImgIcon));

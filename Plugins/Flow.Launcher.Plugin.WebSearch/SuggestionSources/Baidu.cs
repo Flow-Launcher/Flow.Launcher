@@ -25,14 +25,10 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
                 result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
             }
-            catch (TaskCanceledException)
-            {
-                return null;
-            }
-            catch (HttpRequestException e)
+            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
-                return new List<string>();
+                return null;
             }
 
             if (string.IsNullOrEmpty(result)) return new List<string>();
@@ -44,7 +40,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 {
                     json = JsonDocument.Parse(match.Groups[1].Value);
                 }
-                catch(JsonException e)
+                catch (JsonException e)
                 {
                     Log.Exception("|Baidu.Suggestions|can't parse suggestions", e);
                     return new List<string>();

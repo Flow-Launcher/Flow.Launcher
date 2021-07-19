@@ -61,6 +61,12 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool AutoHideScrollBar
+        {
+            get => Settings.AutoHideScrollBar;
+            set => Settings.AutoHideScrollBar = value;
+        }
+
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
@@ -138,11 +144,11 @@ namespace Flow.Launcher.ViewModel
 
         public bool ShouldUsePinyin
         {
-            get 
+            get
             {
-                return Settings.ShouldUsePinyin;            
+                return Settings.ShouldUsePinyin;
             }
-            set 
+            set
             {
                 Settings.ShouldUsePinyin = value;
             }
@@ -181,7 +187,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_updater.GitHubRepository);
-            
+
             if (string.IsNullOrEmpty(proxyUserName) || string.IsNullOrEmpty(Settings.Proxy.Password))
             {
                 request.Proxy = new WebProxy(proxyServer, Settings.Proxy.Port);
@@ -225,7 +231,7 @@ namespace Flow.Launcher.ViewModel
                 var metadatas = PluginManager.AllPlugins
                     .OrderBy(x => x.Metadata.Disabled)
                     .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel { PluginPair = p})
+                    .Select(p => new PluginViewModel { PluginPair = p })
                     .ToList();
                 return metadatas;
             }
@@ -265,6 +271,9 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
+                
+                if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
+                    DropShadowEffect = false;
             }
         }
 
@@ -276,13 +285,19 @@ namespace Flow.Launcher.ViewModel
             get { return Settings.UseDropShadowEffect; }
             set
             {
+                if (ThemeManager.Instance.BlurEnabled && value)
+                {
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                    return;
+                }
+
                 if (value)
                 {
                     ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
                 }
                 else
                 {
-                    ThemeManager.Instance.RemoveDropShadowEffectToCurrentTheme();
+                    ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
                 }
 
                 Settings.UseDropShadowEffect = value;
@@ -453,7 +468,8 @@ namespace Flow.Launcher.ViewModel
         #region about
 
         public string Website => Constant.Website;
-        public string ReleaseNotes => _updater.GitHubRepository +  @"/releases/latest";
+        public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
+        public string Documentation => Constant.Documentation;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
         #endregion

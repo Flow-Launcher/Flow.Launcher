@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin
 {
@@ -9,7 +11,7 @@ namespace Flow.Launcher.Plugin
     /// or performaing CPU intense jobs (performing better with cancellation), please try the IAsyncPlugin interface
     /// </para>
     /// </summary>
-    public interface IPlugin
+    public interface IPlugin : IAsyncPlugin
     {
         /// <summary>
         /// Querying when user's search changes
@@ -27,5 +29,9 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="context"></param>
         void Init(PluginInitContext context);
+
+        Task IAsyncPlugin.InitAsync(PluginInitContext context) => Task.Run(() => Init(context));
+
+        Task<List<Result>> IAsyncPlugin.QueryAsync(Query query, CancellationToken token) => Task.Run(() => Query(query));
     }
 }

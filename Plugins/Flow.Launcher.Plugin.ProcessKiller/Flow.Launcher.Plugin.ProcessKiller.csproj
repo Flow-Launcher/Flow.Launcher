@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <AssemblyName>Flow.Launcher.Plugin.ProcessKiller</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.ProcessKiller</PackageId>
     <Authors>Flow-Launcher</Authors>
@@ -16,7 +16,7 @@
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\Output\Debug\Plugins\Flow.Launcher.Plugin.ProcessKiller\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>

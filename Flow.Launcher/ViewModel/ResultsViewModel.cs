@@ -180,13 +180,12 @@ namespace Flow.Launcher.ViewModel
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
             if (newRawResults.Count == 0)
-                return Results.ToList();
+                return Results;
 
-            var results = Results as IEnumerable<ResultViewModel>;
 
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings));
 
-            return results.Where(r => r.Result.PluginID != resultId)
+            return Results.Where(r => r.Result.PluginID != resultId)
                 .Concat(newResults)
                 .OrderByDescending(r => r.Result.Score)
                 .ToList();
@@ -195,11 +194,9 @@ namespace Flow.Launcher.ViewModel
         private List<ResultViewModel> NewResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
-                return Results.ToList();
+                return Results;
 
-            var results = Results as IEnumerable<ResultViewModel>;
-
-            return results.Where(r => r != null && !resultsForUpdates.Any(u => u.Metadata.ID == r.Result.PluginID))
+            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
                           .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
                           .ToList();

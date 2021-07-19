@@ -14,23 +14,23 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, ISavable, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
     {
         private PluginInitContext _context;
 
-        private readonly Settings _settings;
-        private readonly SettingsViewModel _viewModel;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         internal const string Images = "Images";
         internal static string DefaultImagesDirectory;
         internal static string CustomImagesDirectory;
 
+        private readonly int scoreStandard = 50;
+
+        private readonly int scoreSuggestions = 48;
+
         private readonly string SearchSourceGlobalPluginWildCardSign = "*";
 
-        public void Save()
-        {
-            _viewModel.Save();
-        }
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -49,13 +49,17 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var title = keyword;
                 string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
 
+                //Action Keyword match apear on top
+                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + 1;
+
                 if (string.IsNullOrEmpty(keyword))
                 {
                     var result = new Result
                     {
                         Title = subtitle,
                         SubTitle = string.Empty,
-                        IcoPath = searchSource.IconPath
+                        IcoPath = searchSource.IconPath,
+                        Score = score
                     };
                     results.Add(result);
                 }
@@ -65,9 +69,9 @@ namespace Flow.Launcher.Plugin.WebSearch
                     {
                         Title = title,
                         SubTitle = subtitle,
-                        Score = 6,
                         IcoPath = searchSource.IconPath,
                         ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
+                        Score = score,
                         Action = c =>
                         {
                             if (_settings.OpenInNewBrowser)
@@ -123,16 +127,18 @@ namespace Flow.Launcher.Plugin.WebSearch
             var source = _settings.SelectedSuggestion;
             if (source != null)
             {
-                var suggestions = await source.Suggestions(keyword, token);
+                //Suggestions appear below actual result, and appear above global action keyword match if non-global;
+                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
 
-                if (token.IsCancellationRequested)
-                    return null;
+                var suggestions = await source.Suggestions(keyword, token).ConfigureAwait(false);
 
-                var resultsFromSuggestion = suggestions.Select(o => new Result
+                token.ThrowIfCancellationRequested();
+
+                var resultsFromSuggestion = suggestions?.Select(o => new Result
                 {
                     Title = o,
                     SubTitle = subtitle,
-                    Score = 5,
+                    Score = score,
                     IcoPath = searchSource.IconPath,
                     ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                     Action = c =>
@@ -154,12 +160,6 @@ namespace Flow.Launcher.Plugin.WebSearch
             return new List<Result>();
         }
 
-        public Main()
-        {
-            _viewModel = new SettingsViewModel();
-            _settings = _viewModel.Settings;
-        }
-
         public Task InitAsync(PluginInitContext context)
         {
             return Task.Run(Init);
@@ -167,6 +167,10 @@ namespace Flow.Launcher.Plugin.WebSearch
             void Init()
             {
                 _context = context;
+
+                _settings = _context.API.LoadSettingJsonStorage<Settings>();
+                _viewModel = new SettingsViewModel(_settings);
+                
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
                 var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
 

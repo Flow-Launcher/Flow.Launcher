@@ -1,5 +1,4 @@
-﻿
-/* We basically follow the Json-RPC 2.0 spec (http://www.jsonrpc.org/specification) to invoke methods between Flow Launcher and other plugins, 
+﻿/* We basically follow the Json-RPC 2.0 spec (http://www.jsonrpc.org/specification) to invoke methods between Flow Launcher and other plugins, 
  * like python or other self-execute program. But, we added addtional infos (proxy and so on) into rpc request. Also, we didn't use the
  * "id" and "jsonrpc" in the request, since it's not so useful in our request model.
  * 
@@ -13,10 +12,12 @@
  * 
  */
 
+using Flow.Launcher.Core.Resource;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
+using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -29,12 +30,8 @@ namespace Flow.Launcher.Core.Plugin
         public string Data { get; set; }
     }
 
-    public class JsonRPCModelBase
-    {
-        public int Id { get; set; }
-    }
 
-    public class JsonRPCResponseModel : JsonRPCModelBase
+    public class JsonRPCResponseModel
     {
         public string Result { get; set; }
 
@@ -45,57 +42,23 @@ namespace Flow.Launcher.Core.Plugin
     {
         [JsonPropertyName("result")]
         public new List<JsonRPCResult> Result { get; set; }
-    }
 
-    public class JsonRPCRequestModel : JsonRPCModelBase
+        public string DebugMessage { get; set; }
+    }
+    
+    public class JsonRPCRequestModel
     {
         public string Method { get; set; }
 
         public object[] Parameters { get; set; }
 
+        private static readonly JsonSerializerOptions options = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
         public override string ToString()
         {
-            string rpc = string.Empty;
-            if (Parameters != null && Parameters.Length > 0)
-            {
-                string parameters = Parameters.Aggregate("[", (current, o) => current + (GetParameterByType(o) + ","));
-                parameters = parameters.Substring(0, parameters.Length - 1) + "]";
-                rpc = string.Format(@"{{\""method\"":\""{0}\"",\""parameters\"":{1}", Method, parameters);
-            }
-            else
-            {
-                rpc = string.Format(@"{{\""method\"":\""{0}\"",\""parameters\"":[]", Method);
-            }
-
-            return rpc;
-
-        }
-
-        private string GetParameterByType(object parameter)
-        {
-            if (parameter == null) {
-                return "null";
-            }
-            if (parameter is string)
-            {
-                return string.Format(@"\""{0}\""", ReplaceEscapes(parameter.ToString()));
-            }
-            if (parameter is int || parameter is float || parameter is double)
-            {
-                return string.Format(@"{0}", parameter);
-            }
-            if (parameter is bool)
-            {
-                return string.Format(@"{0}", parameter.ToString().ToLower());
-            }
-            return parameter.ToString();
-        }
-
-        private string ReplaceEscapes(string str)
-        {
-            return str.Replace(@"\", @"\\") //Escapes in ProcessStartInfo
-                .Replace(@"\", @"\\") //Escapes itself when passed to client
-                .Replace(@"""", @"\\""""");
+            return JsonSerializer.Serialize(this, options);
         }
     }
 
@@ -104,11 +67,7 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public class JsonRPCServerRequestModel : JsonRPCRequestModel
     {
-        public override string ToString()
-        {
-            string rpc = base.ToString();
-            return rpc + "}";
-        }
+
     }
 
     /// <summary>
@@ -117,12 +76,6 @@ namespace Flow.Launcher.Core.Plugin
     public class JsonRPCClientRequestModel : JsonRPCRequestModel
     {
         public bool DontHideAfterAction { get; set; }
-
-        public override string ToString()
-        {
-            string rpc = base.ToString();
-            return rpc + "}";
-        }
     }
 
     /// <summary>

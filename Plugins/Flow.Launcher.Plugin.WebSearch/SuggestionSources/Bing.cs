@@ -17,45 +17,39 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
     {
         public override async Task<List<string>> Suggestions(string query, CancellationToken token)
         {
-            JsonElement json;
 
             try
             {
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
                 
                 using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
-                
-                if (resultStream.Length == 0) 
-                    return new List<string>(); // this handles the cancellation
-                
-                json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token)).RootElement.GetProperty("AS");
+
+                using var json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token));
+                var root = json.RootElement.GetProperty("AS");
+
+                if (root.GetProperty("FullResults").GetInt32() == 0)
+                    return new List<string>();
+
+                return root.GetProperty("Results")
+                           .EnumerateArray()
+                           .SelectMany(r => r.GetProperty("Suggests")
+                                             .EnumerateArray()
+                                             .Select(s => s.GetProperty("Txt").GetString()))
+                           .ToList();
+
+
 
             }
-            catch (TaskCanceledException)
+            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
+                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
                 return null;
-            }
-            catch (HttpRequestException e)
-            {
-                Log.Exception("|Bing.Suggestions|Can't get suggestion from Bing", e);
-                return new List<string>();
             }
             catch (JsonException e)
             {
                 Log.Exception("|Bing.Suggestions|can't parse suggestions", e);
                 return new List<string>();
-            }
-
-            if (json.GetProperty("FullResults").GetInt32() == 0)
-                return new List<string>();
-
-            return json.GetProperty("Results")
-                       .EnumerateArray()
-                       .SelectMany(r => r.GetProperty("Suggests")
-                                         .EnumerateArray()
-                                         .Select(s => s.GetProperty("Txt").GetString()))
-                       .ToList();
-
+            } 
         }
 
         public override string ToString()

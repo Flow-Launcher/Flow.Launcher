@@ -48,9 +48,24 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = settings;
         }
 
-        internal async Task UpdateManifest()
+        private Task _downloadManifestTask = Task.CompletedTask;
+
+
+        internal Task UpdateManifest()
         {
-            await pluginsManifest.DownloadManifest();
+            if (_downloadManifestTask.Status == TaskStatus.Running)
+            {
+                return _downloadManifestTask;
+            }
+            else
+            {
+                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                _downloadManifestTask.ContinueWith(_ =>
+                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
+                            Context.API.GetTranslation("plugin_pluginsmanager_update_failed_subtitle"), icoPath, false),
+                    TaskContinuationOptions.OnlyOnFaulted);
+                return _downloadManifestTask;
+            }
         }
 
         internal List<Result> GetDefaultHotKeys()
@@ -151,8 +166,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context.API.RestartApp();
         }
 
-        internal List<Result> RequestUpdate(string search)
+        internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
+            if (!pluginsManifest.UserPlugins.Any())
+            {
+                await UpdateManifest();
+            }
+
+            token.ThrowIfCancellationRequested();
+
             var autocompletedResults = AutoCompleteReturnAllResults(search,
                 Settings.HotkeyUpdate,
                 "Update",
@@ -192,7 +214,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         IcoPath = icoPath
                     }
                 };
-
 
             var results = resultsForUpdate
                 .Select(x =>
@@ -276,20 +297,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 .ToList();
         }
 
-        private Task _downloadManifestTask = Task.CompletedTask;
-
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any() &&
-                _downloadManifestTask.Status != TaskStatus.Running)
+            if (!pluginsManifest.UserPlugins.Any())
             {
-                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                await UpdateManifest();
             }
 
-            await _downloadManifestTask;
-
-            if (token.IsCancellationRequested)
-                return null;
+            token.ThrowIfCancellationRequested();
 
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
 
@@ -304,6 +319,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             IcoPath = icoPath,
                             Action = e =>
                             {
+                                if (e.SpecialKeyState.CtrlPressed)
+                                {
+                                    SearchWeb.NewTabInBrowser(x.Website);
+                                    return ShouldHideWindow;
+                                }
+
                                 Application.Current.MainWindow.Hide();
                                 _ = InstallOrUpdate(x); // No need to wait
                                 return ShouldHideWindow;

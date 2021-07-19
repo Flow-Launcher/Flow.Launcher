@@ -21,7 +21,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                     RecurseSubdirectories = true
                 }, query, search, criteria, token);
 
-            return DirectorySearch(new EnumerationOptions(), query, search, criteria, token); // null will be passed as default
+            return DirectorySearch(new EnumerationOptions(), query, search, criteria,
+                token); // null will be passed as default
         }
 
         public static string ConstructSearchCriteria(string search)
@@ -57,16 +58,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             {
                 var directoryInfo = new System.IO.DirectoryInfo(path);
 
-                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption))
+                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption)
+                )
                 {
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
                         folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
-                            fileSystemInfo.FullName, query, true, false));
+                            fileSystemInfo.FullName, query, 0, true, false));
                     }
                     else
                     {
-                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
+                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, 0, true, false));
                     }
 
                     token.ThrowIfCancellationRequested();
@@ -74,17 +76,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                if (!(e is ArgumentException))
-                    throw e;
-                
+                Log.Exception("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
                 results.Add(new Result {Title = e.Message, Score = 501});
 
                 return results;
-
-#if DEBUG // Please investigate and handle error from DirectoryInfo search
-#else
-                Log.Exception($"|Flow.Launcher.Plugin.Explorer.DirectoryInfoSearch|Error from performing DirectoryInfoSearch", e);
-#endif
             }
 
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.

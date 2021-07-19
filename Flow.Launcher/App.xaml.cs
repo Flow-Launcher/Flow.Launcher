@@ -61,7 +61,6 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
-
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
@@ -69,6 +68,9 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
+
+                HotKeyMapper.Initialize(_mainVM);
+
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;

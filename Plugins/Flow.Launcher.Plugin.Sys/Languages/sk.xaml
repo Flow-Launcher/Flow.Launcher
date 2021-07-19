@@ -18,6 +18,10 @@
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernovať počítač</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Uložiť všetky nastavenia Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Aktualizovať všetky dáta pluginov od spustenia Flow Launchera. Pluginy musia túto funkciu podporovať.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Otvoriť umiestnenie denníka Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Skontrolovať aktualizácie Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">V dokumentácii k aplikácii Flow Launcher nájdete ďalšiu pomoc a tipy na používanie</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otvoriť umiestnenie, kde sú uložené nastavenia Flow Launchera</system:String>
 
     <!--Dialogs-->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešné</system:String>

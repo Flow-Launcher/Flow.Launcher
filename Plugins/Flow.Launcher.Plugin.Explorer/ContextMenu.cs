@@ -184,7 +184,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 var message = $"Fail to delete {fileOrFolder} at {record.FullPath}";
                                 LogException(message, e);
-                                Context.API.ShowMsg(message);
+                                Context.API.ShowMsgError(message);
                                 return false;
                             }
 
@@ -208,7 +208,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 var name = "Plugin: Folder";
                                 var message = $"File not found: {e.Message}";
-                                Context.API.ShowMsg(name, message);
+                                Context.API.ShowMsgError(name, message);
                             }
 
                             return true;
@@ -236,7 +236,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         var message = $"Fail to open file at {record.FullPath}";
                         LogException(message, e);
-                        Context.API.ShowMsg(message);
+                        Context.API.ShowMsgError(message);
                         return false;
                     }
 
@@ -267,7 +267,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         var message = $"Failed to open editor for file at {record.FullPath}";
                         LogException(message, e);
-                        Context.API.ShowMsg(message);
+                        Context.API.ShowMsgError(message);
                         return false;
                     }
                 },
@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         var message = Context.API.GetTranslation("plugin_explorer_openindexingoptions_errormsg");
                         LogException(message, e);
-                        Context.API.ShowMsg(message);
+                        Context.API.ShowMsgError(message);
                         return false;
                     }
                 },

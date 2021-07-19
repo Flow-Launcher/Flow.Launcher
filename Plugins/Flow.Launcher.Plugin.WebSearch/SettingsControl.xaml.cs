@@ -2,6 +2,8 @@ using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Core.Plugin;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -87,6 +89,86 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
         {
             _settings.BrowserPath = browserPathBox.Text;
+        }
+
+        GridViewColumnHeader _lastHeaderClicked = null;
+        ListSortDirection _lastDirection = ListSortDirection.Ascending;
+
+        private void SortByColumn(object sender, RoutedEventArgs e)
+        {
+            ListSortDirection direction;
+
+            if (e.OriginalSource is not GridViewColumnHeader headerClicked)
+            {
+                return;
+            }
+
+            if (headerClicked.Role == GridViewColumnHeaderRole.Padding)
+            {
+                return;
+            }
+
+            if (headerClicked != _lastHeaderClicked)
+            {
+                direction = ListSortDirection.Ascending;
+            }
+            else
+            {
+                if (_lastDirection == ListSortDirection.Ascending)
+                {
+                    direction = ListSortDirection.Descending;
+                }
+                else
+                {
+                    direction = ListSortDirection.Ascending;
+                }
+            }
+
+            var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
+            var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
+
+            Sort(sortBy, direction);
+
+            if (direction == ListSortDirection.Ascending)
+            {
+                headerClicked.Column.HeaderTemplate =
+                  Resources["HeaderTemplateArrowUp"] as DataTemplate;
+            }
+            else
+            {
+                headerClicked.Column.HeaderTemplate =
+                  Resources["HeaderTemplateArrowDown"] as DataTemplate;
+            }
+
+            // Remove arrow from previously sorted header
+            if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
+            {
+                _lastHeaderClicked.Column.HeaderTemplate = null;
+            }
+
+            _lastHeaderClicked = headerClicked;
+            _lastDirection = direction;
+        }
+        private void Sort(string sortBy, ListSortDirection direction)
+        {
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(SearchSourcesListView.ItemsSource);
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
+        }
+
+        private void MouseDoubleClickItem(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (((FrameworkElement)e.OriginalSource).DataContext is SearchSource && _settings.SelectedSearchSource != null)
+            {
+                var webSearch = new SearchSourceSettingWindow
+                (
+                    _settings.SearchSources, _context, _settings.SelectedSearchSource
+                );
+
+                webSearch.ShowDialog();
+            }
         }
     }
 }

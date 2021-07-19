@@ -90,7 +90,7 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             try
             {
-                using var response = await client.GetAsync(url, token);
+                using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
@@ -150,7 +150,7 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<Stream> GetStreamAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            var response = await client.GetAsync(url, token);
+            var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
             return await response.Content.ReadAsStreamAsync();
         }
     }

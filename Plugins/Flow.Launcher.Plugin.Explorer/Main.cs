@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, ISavable, IContextMenu, IPluginI18n
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
     {
         internal PluginInitContext Context { get; set; }
 
@@ -28,12 +28,14 @@ namespace Flow.Launcher.Plugin.Explorer
             return new ExplorerSettings(viewModel);
         }
 
-        public async Task InitAsync(PluginInitContext context)
+        public Task InitAsync(PluginInitContext context)
         {
             Context = context;
-            viewModel = new SettingsViewModel(context);
-            await viewModel.LoadStorage();
-            Settings = viewModel.Settings;
+            
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
+
+            viewModel = new SettingsViewModel(context, Settings);
+            
 
             // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
             if (Settings.QuickFolderAccessLinks.Any())
@@ -44,7 +46,9 @@ namespace Flow.Launcher.Plugin.Explorer
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
-            ResultManager.Init(Context);
+            ResultManager.Init(Context, Settings);
+
+            return Task.CompletedTask;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -55,11 +59,6 @@ namespace Flow.Launcher.Plugin.Explorer
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
             return await searchManager.SearchAsync(query, token);
-        }
-
-        public void Save()
-        {
-            viewModel.Save();
         }
 
         public string GetTranslatedPluginTitle()

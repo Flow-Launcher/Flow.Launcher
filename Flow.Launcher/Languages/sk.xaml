@@ -36,6 +36,7 @@
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="ShouldUsePinyin">Použiť Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou Pinyin. Pinyin je štandardný systém romanizovaného pravopisu pre transliteráciu čínštiny</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -107,6 +108,7 @@
         alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
+    <system:String x:Key="documentation">Tipy na používanie:</system:String>
 
     <!--Priority Setting Dialog-->
     <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné doplnky, zadajte záporné číslo</system:String>
@@ -121,6 +123,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
     <system:String x:Key="success">Úspešné</system:String>
+    <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
     <system:String x:Key="actionkeyword_tips">Použite * ak nechcete určiť skratku pre akciu</system:String>
 
     <!--Custom Query Hotkey Dialog-->
@@ -158,7 +161,7 @@
     <system:String x:Key="update_flowlauncher_update_found">Bola nájdená aktualizácia</system:String>
     <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa…</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">Flow Launcher nedokázal presunúť používateľské údaje do aktualizovanej verzie.
-        Prosím, presuňte profilový priečinok „data“ z {0} do {1}</system:String>
+        Prosím, presuňte profilový priečinok data z {0} do {1}</system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nová aktualizácia</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Je dostupná nová verzia Flow Launchera {0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Počas inštalácie aktualizácií došlo k chybe</system:String>

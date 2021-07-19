@@ -8,10 +8,11 @@ using Flow.Launcher.Infrastructure;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, ISavable, IContextMenu, IPluginI18n, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncReloadable
     {
         internal PluginInitContext Context { get; set; }
 
@@ -33,24 +34,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public Task InitAsync(PluginInitContext context)
         {
             Context = context;
-            viewModel = new SettingsViewModel(context);
-            Settings = viewModel.Settings;
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
+            viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            var updateManifestTask = pluginManager.UpdateManifest();
-            _ = updateManifestTask.ContinueWith(t =>
-            {
-                if (t.IsCompletedSuccessfully)
-                {
-                    lastUpdateTime = DateTime.Now;
-                }
-                else
-                {
-                    context.API.ShowMsg("Plugin Manifest Download Fail.",
-                    "Please check if you can connect to github.com. " +
-                    "This error means you may not be able to Install and Update Plugin.", pluginManager.icoPath, false);
-                }
-            });
+            _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(_ =>
+             {
+                 lastUpdateTime = DateTime.Now;
+             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return Task.CompletedTask;
         }
@@ -59,6 +50,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             return contextMenu.LoadContextMenus(selectedResult);
         }
+        
+        private Task _manifestUpdateTask = Task.CompletedTask;
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -67,28 +60,25 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (string.IsNullOrWhiteSpace(search))
                 return pluginManager.GetDefaultHotKeys();
 
-            if ((DateTime.Now - lastUpdateTime).TotalHours > 12) // 12 hours
+            if ((DateTime.Now - lastUpdateTime).TotalHours > 12 && _manifestUpdateTask.IsCompleted) // 12 hours
             {
-                await pluginManager.UpdateManifest();
-                lastUpdateTime = DateTime.Now;
+                _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(t =>
+                {
+                    lastUpdateTime = DateTime.Now;
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             return search switch
             {
                 var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s, token),
                 var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
-                var s when s.StartsWith(Settings.HotkeyUpdate) => pluginManager.RequestUpdate(s),
+                var s when s.StartsWith(Settings.HotkeyUpdate) => await pluginManager.RequestUpdate(s, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
                     return hotkey.Score > 0;
                 }).ToList()
             };
-        }
-
-        public void Save()
-        {
-            viewModel.Save();
         }
 
         public string GetTranslatedPluginTitle()

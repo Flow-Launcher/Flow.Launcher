@@ -1,8 +1,7 @@
 ﻿using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
-using NHotkey;
-using NHotkey.Wpf;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -52,11 +51,7 @@ namespace Flow.Launcher
                 };
                 _settings.CustomPluginHotkeys.Add(pluginHotkey);
 
-                SetHotkey(ctlHotkey.CurrentHotkey, delegate
-                {
-                    App.API.ChangeQuery(pluginHotkey.ActionKeyword);
-                    Application.Current.MainWindow.Visibility = Visibility.Visible;
-                });
+                HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
             }
             else
             {
@@ -69,12 +64,8 @@ namespace Flow.Launcher
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
                 updateCustomHotkey.Hotkey = ctlHotkey.CurrentHotkey.ToString();
                 //remove origin hotkey
-                RemoveHotkey(oldHotkey);
-                SetHotkey(new HotkeyModel(updateCustomHotkey.Hotkey), delegate
-                {
-                    App.API.ChangeQuery(updateCustomHotkey.ActionKeyword);
-                    Application.Current.MainWindow.Visibility = Visibility.Visible;
-                });
+                HotKeyMapper.RemoveHotkey(oldHotkey);
+                HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
             }
 
             Close();
@@ -100,28 +91,8 @@ namespace Flow.Launcher
         {
             App.API.ChangeQuery(tbAction.Text);
             Application.Current.MainWindow.Visibility = Visibility.Visible;
-        }
+            Application.Current.MainWindow.Focus();
 
-        private void RemoveHotkey(string hotkeyStr)
-        {
-            if (!string.IsNullOrEmpty(hotkeyStr))
-            {
-                HotkeyManager.Current.Remove(hotkeyStr);
-            }
-        }
-
-        private void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
-        {
-            string hotkeyStr = hotkey.ToString();
-            try
-            {
-                HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
-            }
-            catch (Exception)
-            {
-                string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-                MessageBox.Show(errorMsg);
-            }
         }
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)

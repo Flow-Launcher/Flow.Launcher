@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Flow.Launcher.App</StartupObject>
@@ -17,7 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\Output\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -81,7 +81,7 @@
 
   <ItemGroup>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
-    <PackageReference Include="ModernWpfUI" Version="0.8.3" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.3" />
     <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
     <PackageReference Include="NuGet.CommandLine" Version="5.4.0">
       <PrivateAssets>all</PrivateAssets>

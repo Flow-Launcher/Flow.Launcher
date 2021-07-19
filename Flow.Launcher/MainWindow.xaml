@@ -34,6 +34,7 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>
+        <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Command="{Binding SelectNextItemCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding SelectPrevItemCommand}"></KeyBinding>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding SelectNextItemCommand}"></KeyBinding>
@@ -59,7 +60,7 @@
         <KeyBinding Key="D8" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="7"></KeyBinding>
         <KeyBinding Key="D9" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
-    <Grid Width="750">
+    <Grid>
         <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
             <StackPanel Orientation="Vertical">
                 <Grid>
@@ -78,7 +79,6 @@
                     Style="{DynamicResource QueryBoxStyle}"
                      Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      PreviewDragOver="OnPreviewDragOver"
-                     TextChanged="OnTextChanged"
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"

@@ -4,8 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 
@@ -18,11 +18,7 @@ namespace Flow.Launcher
 
         public event EventHandler HotkeyChanged;
 
-        protected virtual void OnHotkeyChanged()
-        {
-            EventHandler handler = HotkeyChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
+        protected virtual void OnHotkeyChanged() => HotkeyChanged?.Invoke(this, EventArgs.Empty);
 
         public HotkeyControl()
         {
@@ -90,24 +86,7 @@ namespace Flow.Launcher
             SetHotkey(new HotkeyModel(keyStr), triggerValidate);
         }
 
-        private bool CheckHotkeyAvailability()
-        {
-            try
-            {
-                HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", CurrentHotkey.CharKey, CurrentHotkey.ModifierKeys, (sender, e) => { });
-
-                return true;
-            }
-            catch
-            {
-            }
-            finally
-            {
-                HotkeyManager.Current.Remove("HotkeyAvailabilityTest");
-            }
-
-            return false;
-        }
+        private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
 
         public new bool IsFocused
         {

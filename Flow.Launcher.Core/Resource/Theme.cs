@@ -17,6 +17,8 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
+        private const int ShadowExtraMargin = 12;
+
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
         private string _oldTheme;
@@ -25,6 +27,10 @@ namespace Flow.Launcher.Core.Resource
         private const string Extension = ".xaml";
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
+
+        public bool BlurEnabled { get; set; }
+
+        private double mainWindowWidth;
 
         public Theme()
         {
@@ -86,8 +92,12 @@ namespace Flow.Launcher.Core.Resource
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                if (Settings.UseDropShadowEffect)
+                BlurEnabled = IsBlurTheme();
+
+                if (Settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
+
+                SetBlurForWindow();
             }
             catch (DirectoryNotFoundException e)
             {
@@ -179,6 +189,21 @@ namespace Flow.Launcher.Core.Resource
                 Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
 
+            var windowStyle = dict["WindowStyle"] as Style;
+
+            var width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
+                .Select(x => x.Value).FirstOrDefault();
+
+            if (width == null)
+            {
+                windowStyle = dict["BaseWindowStyle"] as Style;
+
+                width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
+                .Select(x => x.Value).FirstOrDefault();
+            }
+
+            mainWindowWidth = (double)width;
+
             return dict;
         }
 
@@ -224,17 +249,54 @@ namespace Flow.Launcher.Core.Resource
                 BlurRadius = 15
             };
 
+            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+            if (marginSetter == null)
+            {
+                marginSetter = new Setter()
+                {
+                    Property = Border.MarginProperty,
+                    Value = new Thickness(ShadowExtraMargin),
+                };
+                windowBorderStyle.Setters.Add(marginSetter);
+            }
+            else
+            {
+                var baseMargin = (Thickness) marginSetter.Value;
+                var newMargin = new Thickness(
+                    baseMargin.Left + ShadowExtraMargin,
+                    baseMargin.Top + ShadowExtraMargin,
+                    baseMargin.Right + ShadowExtraMargin,
+                    baseMargin.Bottom + ShadowExtraMargin);
+                marginSetter.Value = newMargin;
+            }
+
             windowBorderStyle.Setters.Add(effectSetter);
 
             UpdateResourceDictionary(dict);
         }
 
-        public void RemoveDropShadowEffectToCurrentTheme()
+        public void RemoveDropShadowEffectFromCurrentTheme()
         {
             var dict = CurrentThemeResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            dict.Remove(Border.EffectProperty);
+            var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
+            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+            
+            if(effectSetter != null)
+            {
+                windowBorderStyle.Setters.Remove(effectSetter);
+            }
+            if (marginSetter != null)
+            {
+                var currentMargin = (Thickness)marginSetter.Value;
+                var newMargin = new Thickness(
+                    currentMargin.Left - ShadowExtraMargin,
+                    currentMargin.Top - ShadowExtraMargin,
+                    currentMargin.Right - ShadowExtraMargin,
+                    currentMargin.Bottom - ShadowExtraMargin);
+                marginSetter.Value = newMargin;
+            }
 
             UpdateResourceDictionary(dict);
         }
@@ -281,35 +343,39 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
+            if (BlurEnabled)
+            {
+                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
+            }
+            else
+            {
+                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
+            }
+        }
 
-            // Exception of FindResource can't be cathed if global exception handle is set
+        private bool IsBlurTheme()
+        {
             if (Environment.OSVersion.Version >= new Version(6, 2))
             {
                 var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-                bool blur;
-                if (resource is bool)
-                {
-                    blur = (bool)resource;
-                }
-                else
-                {
-                    blur = false;
-                }
 
-                if (blur)
-                {
-                    SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
-                }
-                else
-                {
-                    SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
-                }
+                if (resource is bool)
+                    return (bool)resource;
+
+                return false;
             }
+
+            return false;
         }
 
         private void SetWindowAccent(Window w, AccentState state)
         {
             var windowHelper = new WindowInteropHelper(w);
+            
+            // this determines the width of the main query window
+            w.Width = mainWindowWidth;
+            windowHelper.EnsureHandle();
+            
             var accent = new AccentPolicy { AccentState = state };
             var accentStructSize = Marshal.SizeOf(accent);
 

@@ -23,7 +23,6 @@
     </Style>
 
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="750" /> <!-- This is used to set the blur width only -->
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Color="White" Opacity="0.5"/>

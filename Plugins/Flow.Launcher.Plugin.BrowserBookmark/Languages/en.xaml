@@ -12,4 +12,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy url</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
 </ResourceDictionary>

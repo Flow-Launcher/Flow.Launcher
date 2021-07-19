@@ -47,9 +47,19 @@ function Delete-Unused ($path, $config) {
     Remove-Item -Path $target -Include "*.xml" -Recurse 
 }
 
+function Remove-CreateDumpExe ($path, $config) {
+    $target = "$path\Output\$config"
+
+    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
+    Remove-Item -Path $target -Include "*createdump.exe" -Recurse
+}
+
+
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
+
 
 function Pack-Squirrel-Installer ($path, $version, $output) {
     # msbuild based installer generation is not working in appveyor, not sure why
@@ -90,7 +100,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 function Publish-Self-Contained ($p) {
 
     $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
-    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/NetCore3.1-SelfContained.pubxml" -Resolve
+    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net5.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
@@ -107,6 +117,8 @@ function Main {
         Delete-Unused $p $config
 
         Publish-Self-Contained $p
+
+        Remove-CreateDumpExe $p $config
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
