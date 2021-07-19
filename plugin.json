@@ -8,5 +8,5 @@
   "Language": "csharp",
   "Website": "https://aka.ms/powertoys",
   "ExecuteFileName": "Microsoft.PowerToys.Run.Plugin.WindowsSettings.dll",
-  "IcoPathLight": "Images\\WindowsSettings.light.png"
+  "IcoPath": "Images\\WindowsSettings.light.png"
 }
