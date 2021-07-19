@@ -71,6 +71,7 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
                     if (areaMatch.IsSearchPrecisionScoreMet())
                     {
                         var settingResult = NewSettingResult(areaMatch.Score);
+                        settingResult.SubTitleHighlightData = areaMatch.MatchData.Select(x => x + 6).ToList();
                         return settingResult;
                     }
 
