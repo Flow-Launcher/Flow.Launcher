@@ -26,6 +26,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
         /// Return a list with <see cref="Result"/>s, based on the given list.
         /// </summary>
         /// <param name="list">The original result list to convert.</param>
+        /// <param name="query">Query for specific result List</param>
         /// <param name="iconPath">The path to the icon of each entry.</param>
         /// <returns>A list with <see cref="Result"/>.</returns>
         internal static List<Result> GetResultList(
@@ -36,7 +37,39 @@ namespace Flow.Plugin.WindowsSettings.Helper
             var resultList = new List<Result>();
             foreach (var entry in list)
             {
-                var result = Predicate();
+                const int highScore = 20;
+                const int midScore = 10;
+
+                Result? result;
+                Debug.Assert(_api != null, nameof(_api) + " != null");
+
+                var nameMatch = _api.FuzzySearch(query.Search, entry.Name);
+
+                if (nameMatch.IsSearchPrecisionScoreMet())
+                {
+                    var settingResult = NewSettingResult(nameMatch.Score + highScore);
+                    settingResult.TitleHighlightData = nameMatch.MatchData;
+                    result = settingResult;
+                }
+                else
+                {
+                    var areaMatch = _api.FuzzySearch(query.Search, entry.Area);
+                    if (areaMatch.IsSearchPrecisionScoreMet())
+                    {
+                        var settingResult = NewSettingResult(areaMatch.Score + midScore);
+                        settingResult.SubTitleHighlightData = areaMatch.MatchData.Select(x => x + 6).ToList();
+                        result = settingResult;
+                    }
+                    else
+                    {
+                        result = entry.AltNames?
+                            .Select(altName => _api.FuzzySearch(query.Search, altName))
+                            .Where(match => match.IsSearchPrecisionScoreMet())
+                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score + midScore))
+                            .FirstOrDefault();
+                    }
+
+                }
                 if (result is null)
                     continue;
 
@@ -44,7 +77,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
 
                 resultList.Add(result);
 
-                Result NewSettingResult(int score) => new Result()
+                Result NewSettingResult(int score) => new()
                 {
                     Action = _ => DoOpenSettingsAction(entry),
                     IcoPath = iconPath,
@@ -54,35 +87,8 @@ namespace Flow.Plugin.WindowsSettings.Helper
                     Score = score
                 };
 
-                Result? Predicate()
-                {
-                    Debug.Assert(_api != null, nameof(_api) + " != null");
-
-                    var nameMatch = _api.FuzzySearch(query.Search, entry.Name);
-
-                    if (nameMatch.IsSearchPrecisionScoreMet())
-                    {
-                        var settingResult = NewSettingResult(nameMatch.Score);
-                        settingResult.TitleHighlightData = nameMatch.MatchData;
-                        return settingResult;
-                    }
-
-                    var areaMatch = _api.FuzzySearch(query.Search, entry.Area);
-                    if (areaMatch.IsSearchPrecisionScoreMet())
-                    {
-                        var settingResult = NewSettingResult(areaMatch.Score);
-                        settingResult.SubTitleHighlightData = areaMatch.MatchData.Select(x => x + 6).ToList();
-                        return settingResult;
-                    }
-
-                    return entry.AltNames?
-                        .Select(altName => _api.FuzzySearch(query.Search, altName))
-                        .Where(match => match.IsSearchPrecisionScoreMet())
-                        .Select(altNameMatch => NewSettingResult(altNameMatch.Score))
-                        .FirstOrDefault();
-
-                }
             }
+
 
             return resultList;
         }
@@ -165,60 +171,6 @@ namespace Flow.Plugin.WindowsSettings.Helper
             {
                 Log.Exception("can't open settings", exception, typeof(ResultHelper));
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// Set the score (known as order number or ranking number)
-        /// for all <see cref="Results"/> in the given list, based on the given query.
-        /// </summary>
-        /// <param name="resultList">A list with <see cref="Result"/>s that need scores.</param>
-        /// <param name="query">The query to calculated the score for the <see cref="Result"/>s.</param>
-        private static void SetScores(IEnumerable<Result> resultList, string query)
-        {
-            var lowScore = 1_000;
-            var mediumScore = 5_000;
-            var highScore = 10_000;
-
-            foreach (var result in resultList)
-            {
-                if (!(result.ContextData is WindowsSetting windowsSetting))
-                {
-                    continue;
-                }
-
-                if (windowsSetting.Name.StartsWith(query, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    result.Score = highScore--;
-                    continue;
-                }
-
-                // If query starts with second or next word of name, set score.
-                if (windowsSetting.Name.Contains($" {query}", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    result.Score = mediumScore--;
-                    continue;
-                }
-
-                if (windowsSetting.Area.StartsWith(query, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    result.Score = lowScore--;
-                    continue;
-                }
-
-                if (windowsSetting.AltNames is null)
-                {
-                    result.Score = lowScore--;
-                    continue;
-                }
-
-                if (windowsSetting.AltNames.Any(x => x.StartsWith(query, StringComparison.CurrentCultureIgnoreCase)))
-                {
-                    result.Score = mediumScore--;
-                    continue;
-                }
-
-                result.Score = lowScore--;
             }
         }
     }
