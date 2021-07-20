@@ -124,6 +124,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
             }
 
             result.TitleToolTip = toolTipText.ToString();
+            result.SubTitleToolTip = result.TitleToolTip;
         }
 
         /// <summary>
