@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Flow.Launcher.Plugin;
 
-namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
+namespace Flow.Plugin.WindowsSettings
 {
     public static class Log
     {

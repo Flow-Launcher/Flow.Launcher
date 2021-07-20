@@ -4,13 +4,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Flow.Launcher.Plugin;
-using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper;
-using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
+using Flow.Plugin.WindowsSettings.Classes;
+using Flow.Plugin.WindowsSettings.Helper;
+using Flow.Plugin.WindowsSettings.Properties;
 
-namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings
+namespace Flow.Plugin.WindowsSettings
 {
     /// <summary>
     /// Main class of this plugin that implement all used interfaces.

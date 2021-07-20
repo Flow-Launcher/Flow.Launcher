@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Flow.Plugin.WindowsSettings.Classes;
 
-namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
+namespace Flow.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with the version of the Windows OS
@@ -68,7 +69,7 @@ namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
 
             try
             {
-                registryValueData = Win32.Registry.GetValue(registryKey, valueName, uint.MinValue);
+                registryValueData = Microsoft.Win32.Registry.GetValue(registryKey, valueName, uint.MinValue);
             }
             catch (Exception exception)
             {

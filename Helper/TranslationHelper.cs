@@ -5,9 +5,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
+using Flow.Plugin.WindowsSettings.Classes;
+using Flow.Plugin.WindowsSettings.Properties;
 
-namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
+namespace Flow.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with translations.

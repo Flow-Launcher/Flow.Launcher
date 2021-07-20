@@ -8,10 +8,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedModels;
-using Microsoft.PowerToys.Run.Plugin.WindowsSettings.Properties;
+using Flow.Plugin.WindowsSettings.Classes;
+using Flow.Plugin.WindowsSettings.Properties;
 
-namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
+namespace Flow.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with results

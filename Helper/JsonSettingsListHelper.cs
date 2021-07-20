@@ -9,8 +9,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Flow.Plugin.WindowsSettings.Classes;
 
-namespace Microsoft.PowerToys.Run.Plugin.WindowsSettings.Helper
+namespace Flow.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with the JSON file that contains all Windows settings
