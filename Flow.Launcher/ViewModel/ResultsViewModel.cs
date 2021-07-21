@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using ABI.Windows.Services.Maps;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -26,6 +27,7 @@ namespace Flow.Launcher.ViewModel
             Results = new ResultCollection();
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
+
         public ResultsViewModel(Settings settings) : this()
         {
             _settings = settings;
@@ -65,6 +67,7 @@ namespace Flow.Launcher.ViewModel
                     break;
                 }
             }
+
             return index;
         }
 
@@ -82,7 +85,6 @@ namespace Flow.Launcher.ViewModel
                 return -1;
             }
         }
-
 
         #endregion
 
@@ -140,6 +142,7 @@ namespace Flow.Launcher.ViewModel
 
             UpdateResults(newResults);
         }
+
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
@@ -166,12 +169,12 @@ namespace Flow.Launcher.ViewModel
             switch (Visbility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    Margin = new Thickness { Top = 8 };
+                    Margin = new Thickness {Top = 8};
                     SelectedIndex = 0;
                     Visbility = Visibility.Visible;
                     break;
                 case Visibility.Visible when Results.Count == 0:
-                    Margin = new Thickness { Top = 0 };
+                    Margin = new Thickness {Top = 0};
                     Visbility = Visibility.Collapsed;
                     break;
             }
@@ -197,13 +200,15 @@ namespace Flow.Launcher.ViewModel
                 return Results;
 
             return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
-                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
-                          .OrderByDescending(rv => rv.Result.Score)
-                          .ToList();
+                .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
+                .OrderByDescending(rv => rv.Result.Score)
+                .ToList();
         }
+
         #endregion
 
         #region FormattedText Dependency Property
+
         public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
             "FormattedText",
             typeof(Inline),
@@ -217,7 +222,7 @@ namespace Flow.Launcher.ViewModel
 
         public static Inline GetFormattedText(DependencyObject textBlock)
         {
-            return (Inline)textBlock.GetValue(FormattedTextProperty);
+            return (Inline) textBlock.GetValue(FormattedTextProperty);
         }
 
         private static void FormattedTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -225,13 +230,14 @@ namespace Flow.Launcher.ViewModel
             var textBlock = d as TextBlock;
             if (textBlock == null) return;
 
-            var inline = (Inline)e.NewValue;
+            var inline = (Inline) e.NewValue;
 
             textBlock.Inlines.Clear();
             if (inline == null) return;
 
             textBlock.Inlines.Add(inline);
         }
+
         #endregion
 
         public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
@@ -260,6 +266,7 @@ namespace Flow.Launcher.ViewModel
                 // wpf use directx / double buffered already, so just reset all won't cause ui flickering
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
+
             private void AddAll(List<ResultViewModel> Items)
             {
                 for (int i = 0; i < Items.Count; i++)
@@ -268,9 +275,11 @@ namespace Flow.Launcher.ViewModel
                     if (_token.IsCancellationRequested)
                         return;
                     Add(item);
-                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
+                    OnCollectionChanged(
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
                 }
             }
+
             public void RemoveAll(int Capacity = 512)
             {
                 Clear();
@@ -290,7 +299,7 @@ namespace Flow.Launcher.ViewModel
                 if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
                     return;
 
-                if (editTime < 10 || newItems.Count < 30)
+                if (newItems.Count < 100)
                 {
                     if (Count != 0) RemoveAll(newItems.Count);
                     AddAll(newItems);
@@ -299,12 +308,16 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
+                    if (editTime < 5)
+                        AddAll(newItems.GetRange(0, 100));
                     Clear();
+
                     BulkAddAll(newItems);
                     if (Capacity > 8000 && newItems.Count < 3000)
                     {
                         Capacity = newItems.Count;
                     }
+
                     editTime++;
                 }
             }
