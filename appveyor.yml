@@ -20,6 +20,12 @@ skip_commits:
   files:
     - '*.md'
 
+environment:
+  winget_token:
+    secure: HbH4/yvdMmNLUUwN/VEbsJiGLoXNheJpXK4XQbTXVtjcpWSiOBSFeJ2KaE1n9wHs
+  auth_token:
+    secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+
 image: Visual Studio 2019
 platform: Any CPU
 configuration: Release
@@ -67,3 +73,19 @@ deploy:
     force_update: true
     on:
       APPVEYOR_REPO_TAG: true
+
+deploy_script: # this doesnt seem to run at all
+  - ps: |
+        if ($env:APPVEYOR_REPO_BRANCH -eq "dev") #swich to master for release
+        {
+            iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+            .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-v$env:flowVersion.exe -v $env:flowVersion -t $env:winget_token
+        }
+
+on_success:
+  - ps: |
+        if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
+        {
+            iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+            .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-v$env:flowVersion.exe -v $env:flowVersion -t $env:auth_token
+        }
