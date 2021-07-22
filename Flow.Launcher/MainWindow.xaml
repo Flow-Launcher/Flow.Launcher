@@ -1,4 +1,4 @@
-﻿<Window x:Class="Flow.Launcher.MainWindow"
+<Window x:Class="Flow.Launcher.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:flowlauncher="clr-namespace:Flow.Launcher"
@@ -93,7 +93,7 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="48" Height="48"
+                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="42" Height="42"
                                      Background="Transparent"/>
                 </Grid>
                 <Line x:Name="ProgressBar" HorizontalAlignment="Right"
