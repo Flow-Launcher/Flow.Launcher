@@ -75,7 +75,7 @@ namespace Flow.Launcher
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
-
+                
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
 
@@ -98,8 +98,6 @@ namespace Flow.Launcher
 
                 AutoStartup();
                 AutoUpdates();
-
-                API.SaveAppAllSettings();
 
                 _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
