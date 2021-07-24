@@ -111,7 +111,7 @@ function Publish-Portable ($outputLocation, $version) {
     
     & $outputLocation\Flow-Launcher-v$v.exe --silent | Out-Null
     mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
-    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-v$version-Portable.zip
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }
 
 function Main {
