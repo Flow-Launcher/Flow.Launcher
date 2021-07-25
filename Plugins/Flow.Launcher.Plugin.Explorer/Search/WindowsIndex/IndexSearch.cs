@@ -179,9 +179,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     {
                         SearchManager.Settings.WarnWindowsSearchServiceOff = false;
 
-                        var pluginsManagerPlugins= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
+                        var pluginsManagerPlugin= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
 
-                        var actionKeywordCount = pluginsManagerPlugins.Metadata.ActionKeywords.Count;
+                        var actionKeywordCount = pluginsManagerPlugin.Metadata.ActionKeywords.Count;
 
                         if (actionKeywordCount > 1)
                             LogException("PluginsManager's action keyword has increased to more than 1, this does not allow for determining the " +
@@ -193,7 +193,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                             MessageBoxButton.YesNo) == MessageBoxResult.Yes
                             && actionKeywordCount == 1)
                         {
-                            api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugins.Metadata.ActionKeywords[0]));
+                            api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugin.Metadata.ActionKeywords[0]));
                         }
                         else
                         {
