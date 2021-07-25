@@ -112,43 +112,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
                     return new List<Result>();
 
-                var api = SearchManager.Context.API;
-
-                return new List<Result>
-                {
-                    new Result
-                    {
-                        Title = api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
-                        SubTitle = api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
-                        Action = c =>
-                        {
-                            SearchManager.Settings.WarnWindowsSearchServiceOff = false;
-
-                            if (MessageBox.Show(string.Format(api.GetTranslation("plugin_explorer_alternative"), Environment.NewLine),
-                                api.GetTranslation("plugin_explorer_alternative_title"),
-                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                            {
-                                var pluginsManagerPlugins= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
-
-                                api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugins.Metadata.ActionKeywords[0]));
-                            }
-                            else
-                            {
-                                // Clears the warning message because same query string will not alter the displayed result list
-                                api.ChangeQuery(string.Empty);
-
-                                api.ChangeQuery(query.RawQuery);
-                            }
-
-                            var mainWindow = Application.Current.MainWindow;
-                            mainWindow.Visibility = Visibility.Visible;
-                            mainWindow.Focus();
-
-                            return false;
-                        },
-                        IcoPath = Constants.ExplorerIconImagePath
-                    }                    
-                };
+                return ResultForWindexSearchOff(query.RawQuery);
             }
         }
 
@@ -198,6 +162,47 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
                 return false;
             }
+        }
+
+        private static List<Result> ResultForWindexSearchOff(string rawQuery)
+        {
+            var api = SearchManager.Context.API;
+
+            return new List<Result>
+            {
+                new Result
+                {
+                    Title = api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                    SubTitle = api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                    Action = c =>
+                    {
+                        SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+
+                        if (MessageBox.Show(string.Format(api.GetTranslation("plugin_explorer_alternative"), Environment.NewLine),
+                            api.GetTranslation("plugin_explorer_alternative_title"),
+                            MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            var pluginsManagerPlugins= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
+
+                            api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugins.Metadata.ActionKeywords[0]));
+                        }
+                        else
+                        {
+                            // Clears the warning message because same query string will not alter the displayed result list
+                            api.ChangeQuery(string.Empty);
+
+                            api.ChangeQuery(rawQuery);
+                        }
+
+                        var mainWindow = Application.Current.MainWindow;
+                        mainWindow.Visibility = Visibility.Visible;
+                        mainWindow.Focus();
+
+                        return false;
+                    },
+                    IcoPath = Constants.ExplorerIconImagePath
+                }
+            };
         }
 
         private static void LogException(string message, Exception e)
