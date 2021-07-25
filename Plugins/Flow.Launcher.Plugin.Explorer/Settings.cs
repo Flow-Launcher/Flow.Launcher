@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using System;
@@ -32,6 +32,8 @@ namespace Flow.Launcher.Plugin.Explorer
         public string IndexSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool IndexOnlySearchKeywordEnabled { get; set; }
+
+        public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         internal enum ActionKeyword
         {

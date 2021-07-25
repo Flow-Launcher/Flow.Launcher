@@ -3,10 +3,12 @@ using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
@@ -107,12 +109,43 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             catch (COMException)
             {
                 // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
+                    return new List<Result>();
+
+                var api = SearchManager.Context.API;
+
                 return new List<Result>
                 {
                     new Result
                     {
-                        Title = SearchManager.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
-                        SubTitle = SearchManager.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                        Title = api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                        SubTitle = api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                        Action = c =>
+                        {
+                            SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+
+                            if (MessageBox.Show(string.Format(api.GetTranslation("plugin_explorer_alternative"), Environment.NewLine),
+                                api.GetTranslation("plugin_explorer_alternative_title"),
+                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            {
+                                var pluginsManagerPlugins= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
+
+                                api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugins.Metadata.ActionKeywords[0]));
+                            }
+                            else
+                            {
+                                // Clears the warning message because same query string will not alter the displayed result list
+                                api.ChangeQuery(string.Empty);
+
+                                api.ChangeQuery(query.RawQuery);
+                            }
+
+                            var mainWindow = Application.Current.MainWindow;
+                            mainWindow.Visibility = Visibility.Visible;
+                            mainWindow.Focus();
+
+                            return false;
+                        },
                         IcoPath = Constants.ExplorerIconImagePath
                     }                    
                 };
