@@ -12,13 +12,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public class SearchManager
     {
-        private readonly PluginInitContext context;
+        internal static PluginInitContext Context;
 
         private readonly Settings settings;
 
         public SearchManager(Settings settings, PluginInitContext context)
         {
-            this.context = context;
+            Context = context;
             this.settings = settings;
         }
 
@@ -99,7 +99,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 
             if (isEnvironmentVariable)
-                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, context);
+                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, Context);
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
             var isEnvironmentVariablePath = querySearch[1..].Contains("%\\");
@@ -141,8 +141,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (string.IsNullOrEmpty(querySearchString))
                 return new List<Result>();
 
-            return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
-                queryConstructor.CreateQueryHelper().ConnectionString,
+            return await IndexSearch.WindowsIndexSearchAsync(
+                querySearchString,
+                queryConstructor.CreateQueryHelper,
                 queryConstructor.QueryForFileContentSearch,
                 settings.IndexSearchExcludedSubdirectoryPaths,
                 query,
@@ -178,8 +179,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var queryConstructor = new QueryConstructor(settings);
 
-            return await IndexSearch.WindowsIndexSearchAsync(querySearchString,
-                queryConstructor.CreateQueryHelper().ConnectionString,
+            return await IndexSearch.WindowsIndexSearchAsync(
+                querySearchString,
+                queryConstructor.CreateQueryHelper,
                 queryConstructor.QueryForAllFilesAndFolders,
                 settings.IndexSearchExcludedSubdirectoryPaths,
                 query,
@@ -192,7 +194,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var queryConstructor = new QueryConstructor(settings);
 
             return await IndexSearch.WindowsIndexSearchAsync(path,
-                queryConstructor.CreateQueryHelper().ConnectionString,
+                queryConstructor.CreateQueryHelper,
                 queryConstructor.QueryForTopLevelDirectorySearch,
                 settings.IndexSearchExcludedSubdirectoryPaths,
                 query,

@@ -1,10 +1,9 @@
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.Search.Interop;
 using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,7 +83,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
              return results;
         }
 
-        internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
+        internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, 
+                                                                  Func<CSearchQueryHelper> queryHelper,
                                                                   Func<string, string> constructQuery,
                                                                   List<AccessLink> exclusionList,
                                                                   Query query,
@@ -94,12 +94,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             if (regexMatch.Success)
                 return new List<Result>();
+            
+            try
+            {
+                var constructedQuery = constructQuery(searchString);
 
-            var constructedQuery = constructQuery(searchString);
-            return RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
+                return RemoveResultsInExclusionList(
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, queryHelper().ConnectionString, query, token).ConfigureAwait(false),
                         exclusionList,
                         token);
+            }
+            catch (COMException)
+            {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                return new List<Result>
+                {
+                    new Result
+                    {
+                        Title = SearchManager.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                        SubTitle = SearchManager.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                        IcoPath = Constants.ExplorerIconImagePath
+                    }                    
+                };
+            }
         }
 
         private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
@@ -137,9 +154,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         internal static bool PathIsIndexed(string path)
         {
-            var csm = new CSearchManager();
-            var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
-            return indexManager.IncludedInCrawlScope(path) > 0;
+            try
+            {
+                var csm = new CSearchManager();
+                var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
+                return indexManager.IncludedInCrawlScope(path) > 0;
+            }
+            catch(COMException)
+            {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                return false;
+            }
         }
 
         private static void LogException(string message, Exception e)
