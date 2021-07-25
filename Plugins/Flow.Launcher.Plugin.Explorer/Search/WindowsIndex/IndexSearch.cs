@@ -1,3 +1,4 @@
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.Search.Interop;
 using System;
@@ -178,12 +179,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     {
                         SearchManager.Settings.WarnWindowsSearchServiceOff = false;
 
+                        var pluginsManagerPlugins= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
+
+                        var actionKeywordCount = pluginsManagerPlugins.Metadata.ActionKeywords.Count;
+
+                        if (actionKeywordCount > 1)
+                            LogException("PluginsManager's action keyword has increased to more than 1, this does not allow for determining the " +
+                                "right action keyword. Explorer's code for managing Windows Search service not running exception needs to be updated",
+                                new InvalidOperationException());
+
                         if (MessageBox.Show(string.Format(api.GetTranslation("plugin_explorer_alternative"), Environment.NewLine),
                             api.GetTranslation("plugin_explorer_alternative_title"),
-                            MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            MessageBoxButton.YesNo) == MessageBoxResult.Yes
+                            && actionKeywordCount == 1)
                         {
-                            var pluginsManagerPlugins= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
-
                             api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugins.Metadata.ActionKeywords[0]));
                         }
                         else
