@@ -7,14 +7,13 @@
       "Workplace"
     ],
     "Command": "ms-settings:workplace",
-    "glyph": "\ue821"
+    "Glyph": "\ue821"
   },
   {
     "Name": "EmailAndAppAccounts",
     "Area": "Accounts",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:emailandaccounts",
-    "glyph": "\ue715"
+    "Command": "ms-settings:emailandaccounts"
   },
   {
     "Name": "FamilyAndOtherPeople",
@@ -23,8 +22,7 @@
     "AltNames": [
       "OtherUsers"
     ],
-    "Command": "ms-settings:otherusers",
-    "glyph": "\ue8fa"
+    "Command": "ms-settings:otherusers"
   },
   {
     "Name": "SetUpKiosk",
@@ -33,14 +31,15 @@
     "AltNames": [
       "AssignedAccess"
     ],
-    "Command": "ms-settings:assignedaccess"
+    "Command": "ms-settings:assignedaccess",
+    "Glyph": null
   },
   {
     "Name": "SignInOptions",
     "Area": "Accounts",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:signinoptions",
-    "glyph": "\ue8d7"
+    "Glyph": "\ue8d7"
   },
   {
     "Name": "SignInOptionsDynamicLock",
@@ -53,7 +52,7 @@
     "Area": "Accounts",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:sync",
-    "glyph": "\ue895"
+    "Glyph": "\ue895"
   },
   {
     "Name": "WindowsHelloSetupFace",
@@ -72,14 +71,14 @@
     "Area": "Accounts",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:yourinfo",
-    "glyph": "\ue779"
+    "Glyph": "\ue779"
   },
   {
     "Name": "AppsAndFeatures",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:appsfeatures",
-    "glyph": null
+    "Glyph": "\ue71d"
   },
   {
     "Name": "AppFeatures",
@@ -92,27 +91,28 @@
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:appsforwebsites",
-    "glyph": "\ue78b"
+    "Glyph": "\ue78b"
   },
   {
     "Name": "DefaultApps",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:defaultapps",
-    "glyph": "\ue7ac"
+    "Glyph": "\ue7ac"
   },
   {
     "Name": "ManageOptionalFeatures",
     "Area": "Apps",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:optionalfeatures"
+    "Command": "ms-settings:optionalfeatures",
+    "Glyph": "\ue71d"
   },
   {
     "Name": "OfflineMaps",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:maps",
-    "glyph": "\ue826"
+    "Glyph": "\ue826"
   },
   {
     "Name": "OfflineMapsDownloadMaps",
@@ -125,20 +125,21 @@
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:startupapps",
-    "glyph": "\ue7b5"
+    "Glyph": "\ue7b5"
   },
   {
     "Name": "VideoPlayback",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:videoplayback",
-    "glyph": "\ue714"
+    "Glyph": "\ue714"
   },
   {
     "Name": "Notifications",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:cortana-notifications"
+    "Command": "ms-settings:cortana-notifications",
+    "Glyph": null
   },
   {
     "Name": "MoreDetails",
@@ -150,13 +151,15 @@
     "Name": "PermissionsAndHistory",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:cortana-permissions"
+    "Command": "ms-settings:cortana-permissions",
+    "Glyph": "\ue7ef"
   },
   {
     "Name": "WindowsSearch",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:cortana-windowssearch"
+    "Command": "ms-settings:cortana-windowssearch",
+    "Glyph": "\ue713"
   },
   {
     "Name": "CortanaLanguage",
@@ -171,7 +174,8 @@
     "Name": "Cortana",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:cortana"
+    "Command": "ms-settings:cortana",
+    "Glyph": null
   },
   {
     "Name": "TalkToCortana",
@@ -184,13 +188,14 @@
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:autoplay",
-    "glyph": "\uec57"
+    "Glyph": "\uec57"
   },
   {
     "Name": "Bluetooth",
     "Area": "Devices",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:bluetooth"
+    "Command": "ms-settings:bluetooth",
+    "Glyph": "\ue772"
   },
   {
     "Name": "ConnectedDevices",
@@ -211,52 +216,49 @@
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Note": "NoteTouchpad",
-    "Command": "ms-settings:mousetouchpad",
-    "glyph": "\ue962"
+    "Command": "ms-settings:mousetouchpad"
   },
   {
     "Name": "PenAndWindowsInk",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:pen",
-    "glyph": "\uedc6"
+    "Glyph": "\uedc6"
   },
   {
     "Name": "PrintersAndScanners",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:printers",
-    "glyph": "\ue749"
+    "Glyph": "\ue749"
   },
   {
     "Name": "Touchpad",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Note": "NoteTouchpad",
-    "Command": "ms-settings:devices-touchpad",
-    "glyph": "\uefa5"
+    "Command": "ms-settings:devices-touchpad"
   },
   {
     "Name": "Typing",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:typing",
-    "glyph": "\ue765"
+    "Glyph": "\ue765"
   },
   {
     "Name": "Usb",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:usb",
-    "glyph": "\ue88e"
+    "Glyph": "\ue88e"
   },
   {
     "Name": "Wheel",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Note": "NoteDialPaired",
-    "Command": "ms-settings:wheel",
-    "glyph": "\uee94"
+    "Command": "ms-settings:wheel"
   },
   {
     "Name": "Phone",
@@ -265,8 +267,7 @@
     "AltNames": [
       "MobileDevices"
     ],
-    "Command": "ms-settings:mobile-devices",
-    "glyph": "\ue8ea"
+    "Command": "ms-settings:mobile-devices"
   },
   {
     "Name": "Audio",
@@ -283,7 +284,8 @@
     "Name": "ClosedCaptions",
     "Area": "EaseOfAccess",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:easeofaccess-closedcaptioning"
+    "Command": "ms-settings:easeofaccess-closedcaptioning",
+    "Glyph": "\ue7f0"
   },
   {
     "Name": "ColorFilters",
@@ -327,7 +329,8 @@
     "Name": "EyeControl",
     "Area": "EaseOfAccess",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:easeofaccess-eyecontrol"
+    "Command": "ms-settings:easeofaccess-eyecontrol",
+    "Glyph": "\uf19d"
   },
   {
     "Name": "Fonts",
@@ -336,13 +339,14 @@
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
     "Command": "ms-settings:fonts",
-    "glyph": "\ue8d2"
+    "Glyph": "\ue8d2"
   },
   {
     "Name": "HighContrast",
     "Area": "EaseOfAccess",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:easeofaccess-highcontrast"
+    "Command": "ms-settings:easeofaccess-highcontrast",
+    "Glyph": "\ue706"
   },
   {
     "Name": "Keyboard",
@@ -357,7 +361,8 @@
       "CapsLock",
       "NumLock"
     ],
-    "Command": "ms-settings:easeofaccess-keyboard"
+    "Command": "ms-settings:easeofaccess-keyboard",
+    "Glyph": "\ued4d"
   },
   {
     "Name": "Magnifier",
@@ -366,7 +371,8 @@
     "AltNames": [
       "Zoom"
     ],
-    "Command": "ms-settings:easeofaccess-magnifier"
+    "Command": "ms-settings:easeofaccess-magnifier",
+    "Glyph": "\uf19d"
   },
   {
     "Name": "Mouse",
@@ -390,7 +396,8 @@
     "Type": "AppSettingsApp",
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
-    "Command": "ms-settings:easeofaccess-otheroptions"
+    "Command": "ms-settings:easeofaccess-otheroptions",
+    "Glyph": null
   },
   {
     "Name": "Speech",
@@ -413,28 +420,29 @@
     "Name": "Broadcasting",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:gaming-broadcasting"
+    "Command": "ms-settings:gaming-broadcasting",
+    "Glyph": null
   },
   {
     "Name": "GameBar",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-gamebar",
-    "glyph": "\uf192"
+    "Glyph": "\ue713"
   },
   {
     "Name": "GameDvr",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-gamedvr",
-    "glyph": "\ued36"
+    "Glyph": "\ue713"
   },
   {
     "Name": "GameMode",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-gamemode",
-    "glyph": "\uec4a"
+    "Glyph": "\uec4a"
   },
   {
     "Name": "PlayingGameFullScreen",
@@ -458,7 +466,7 @@
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-xboxnetworking",
-    "glyph": "\uf20b"
+    "Glyph": "\ue713"
   },
   {
     "Name": "SettingsHomePage",
@@ -510,8 +518,7 @@
     "Name": "AirplaneMode",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:network-airplanemode",
-    "glyph": "\ue709"
+    "Command": "ms-settings:network-airplanemode"
   },
   {
     "Name": "Proximity",
@@ -530,22 +537,21 @@
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:datausage",
-    "glyph": "\ueb05"
+    "Glyph": "\uec27"
   },
   {
     "Name": "DialUp",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-dialup",
-    "glyph": "\ue83c"
+    "Glyph": "\ue83c"
   },
   {
     "Name": "DirectAccess",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Note": "NoteDirectAccess",
-    "Command": "ms-settings:network-directaccess",
-    "glyph": "\ue83b"
+    "Command": "ms-settings:network-directaccess"
   },
   {
     "Name": "Ethernet",
@@ -560,7 +566,7 @@
       "Ip"
     ],
     "Command": "ms-settings:network-ethernet",
-    "glyph": "\ue839"
+    "Glyph": "\ue839"
   },
   {
     "Name": "ManageKnownNetworks",
@@ -577,8 +583,7 @@
     "Name": "MobileHotspot",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:network-mobilehotspot",
-    "glyph": "\ue704"
+    "Command": "ms-settings:network-mobilehotspot"
   },
   {
     "Name": "NFC",
@@ -594,14 +599,14 @@
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-proxy",
-    "glyph": "\ue774"
+    "Glyph": "\ue774"
   },
   {
     "Name": "NetworkStatus",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-status",
-    "glyph": "\uec27"
+    "Glyph": "\uec27"
   },
   {
     "Name": "Network",
@@ -615,15 +620,14 @@
       "Dhcp",
       "Ip"
     ],
-    "Command": "ms-settings:network",
-    "glyph": "\uec27"
+    "Command": "ms-settings:network"
   },
   {
     "Name": "Vpn",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-vpn",
-    "glyph": "\ue705"
+    "Glyph": "\ue705"
   },
   {
     "Name": "WiFi",
@@ -635,8 +639,7 @@
       "ShortNameWiFi"
     ],
     "Note": "NoteWiFiAdapter",
-    "Command": "ms-settings:network-wifi",
-    "glyph": "\ue701"
+    "Command": "ms-settings:network-wifi"
   },
   {
     "Name": "WiFiCalling",
@@ -658,7 +661,7 @@
       "Image"
     ],
     "Command": "ms-settings:personalization-background",
-    "glyph": "\ueb9f"
+    "Glyph": "\ueb9f"
   },
   {
     "Name": "ChooseWhichFoldersAppearOnStart",
@@ -667,7 +670,8 @@
     "AltNames": [
       "StartPlaces"
     ],
-    "Command": "ms-settings:personalization-start-places"
+    "Command": "ms-settings:personalization-start-places",
+    "Glyph": "\ueca5"
   },
   {
     "Name": "Colors",
@@ -683,7 +687,7 @@
       "WindowBorder"
     ],
     "Command": "ms-settings:colors",
-    "glyph": "\ue2b1"
+    "Glyph": "\ue790"
   },
   {
     "Name": "Glance",
@@ -691,7 +695,8 @@
     "Type": "AppSettingsApp",
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
-    "Command": "ms-settings:personalization-glance"
+    "Command": "ms-settings:personalization-glance",
+    "Glyph": null
   },
   {
     "Name": "LockScreen",
@@ -701,8 +706,7 @@
       "Image",
       "Picture"
     ],
-    "Command": "ms-settings:lockscreen",
-    "glyph": "\uee3f"
+    "Command": "ms-settings:lockscreen"
   },
   {
     "Name": "NavigationBar",
@@ -722,22 +726,21 @@
     "Name": "Start",
     "Area": "Personalization",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:personalization-start",
-    "glyph": "\ueca5"
+    "Command": "ms-settings:personalization-start"
   },
   {
     "Name": "Taskbar",
     "Area": "Personalization",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:taskbar",
-    "glyph": "\ue90e"
+    "Glyph": "\ue90e"
   },
   {
     "Name": "Themes",
     "Area": "Personalization",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:themes",
-    "glyph": "\ue771"
+    "Glyph": "\ue771"
   },
   {
     "Name": "AddYourPhone",
@@ -765,13 +768,15 @@
     "Name": "AccountInfo",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-accountinfo"
+    "Command": "ms-settings:privacy-accountinfo",
+    "Glyph": "\ue779"
   },
   {
     "Name": "ActivityHistory",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-activityhistory"
+    "Command": "ms-settings:privacy-activityhistory",
+    "Glyph": "\ue7c4"
   },
   {
     "Name": "AdvertisingId",
@@ -779,25 +784,29 @@
     "Type": "AppSettingsApp",
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
-    "Command": "ms-settings:privacy-advertisingid"
+    "Command": "ms-settings:privacy-advertisingid",
+    "Glyph": "\ue72e"
   },
   {
     "Name": "AppDiagnostics",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-appdiagnostics"
+    "Command": "ms-settings:privacy-appdiagnostics",
+    "Glyph": "\ue9d2"
   },
   {
     "Name": "AutomaticFileDownloads",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-automaticfiledownloads"
+    "Command": "ms-settings:privacy-automaticfiledownloads",
+    "Glyph": "\ue753"
   },
   {
     "Name": "BackgroundApps",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-backgroundapps"
+    "Command": "ms-settings:privacy-backgroundapps",
+    "Glyph": "\ue9d9"
   },
   {
     "Name": "Calendar",
@@ -809,25 +818,29 @@
     "Name": "CallHistory",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-callhistory"
+    "Command": "ms-settings:privacy-callhistory",
+    "Glyph": "\uf738"
   },
   {
     "Name": "Camera",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-webcam"
+    "Command": "ms-settings:privacy-webcam",
+    "Glyph": "\uf439"
   },
   {
     "Name": "Contacts",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-contacts"
+    "Command": "ms-settings:privacy-contacts",
+    "Glyph": "\ue716"
   },
   {
     "Name": "Documents",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-documents"
+    "Command": "ms-settings:privacy-documents",
+    "Glyph": "\ue7c3"
   },
   {
     "Name": "Email",
@@ -852,13 +865,15 @@
     "Name": "FileSystem",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-broadfilesystemaccess"
+    "Command": "ms-settings:privacy-broadfilesystemaccess",
+    "Glyph": "\ue7c3"
   },
   {
     "Name": "General",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy or privacy-general"
+    "Command": "ms-settings:privacy or privacy-general",
+    "Glyph": "\uec20"
   },
   {
     "Name": "InkingAndTyping",
@@ -867,37 +882,43 @@
     "AltNames": [
       "SpeechTyping"
     ],
-    "Command": "ms-settings:privacy-speechtyping"
+    "Command": "ms-settings:privacy-speechtyping",
+    "Glyph": "\ueadf"
   },
   {
     "Name": "Location",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-location"
+    "Command": "ms-settings:privacy-location",
+    "Glyph": "\ue707"
   },
   {
     "Name": "Messaging",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-messaging"
+    "Command": "ms-settings:privacy-messaging",
+    "Glyph": "\uebdb"
   },
   {
     "Name": "Microphone",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-microphone"
+    "Command": "ms-settings:privacy-microphone",
+    "Glyph": "\ue720"
   },
   {
     "Name": "Motion",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-motion"
+    "Command": "ms-settings:privacy-motion",
+    "Glyph": null
   },
   {
     "Name": "Notifications",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-notifications"
+    "Command": "ms-settings:privacy-notifications",
+    "Glyph": null
   },
   {
     "Name": "OtherDevices",
@@ -906,13 +927,15 @@
     "AltNames": [
       "CustomDevices"
     ],
-    "Command": "ms-settings:privacy-customdevices"
+    "Command": "ms-settings:privacy-customdevices",
+    "Glyph": "\ue772"
   },
   {
     "Name": "PhoneCalls",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-phonecalls"
+    "Command": "ms-settings:privacy-phonecalls",
+    "Glyph": "\ue77e"
   },
   {
     "Name": "Pictures",
@@ -924,7 +947,8 @@
     "Name": "Radios",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-radios"
+    "Command": "ms-settings:privacy-radios",
+    "Glyph": "\uec05"
   },
   {
     "Name": "Speech",
@@ -942,13 +966,15 @@
     "Name": "Videos",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-videos"
+    "Command": "ms-settings:privacy-videos",
+    "Glyph": "\ue8b2"
   },
   {
     "Name": "VoiceActivation",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-voiceactivation"
+    "Command": "ms-settings:privacy-voiceactivation",
+    "Glyph": "\uf12e"
   },
   {
     "Name": "Accounts",
@@ -981,7 +1007,8 @@
     "Name": "WelcomeScreen",
     "Area": "SurfaceHub",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:surfacehub-welcome"
+    "Command": "ms-settings:surfacehub-welcome",
+    "Glyph": "\uee3f"
   },
   {
     "Name": "About",
@@ -996,14 +1023,15 @@
       "Version"
     ],
     "Command": "ms-settings:about",
-    "glyph": "\ue946"
+    "Glyph": "\ue946"
   },
   {
     "Name": "AdvancedDisplaySettings",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Note": "NoteDisplayGraphics",
-    "Command": "ms-settings:display-advanced"
+    "Command": "ms-settings:display-advanced",
+    "Glyph": "\ue7f4"
   },
   {
     "Name": "AppVolumeAndDevicePreferences",
@@ -1011,8 +1039,7 @@
     "Type": "AppSettingsApp",
     "IntroducedInBuild": 18362,
     "Note": "NoteSince18362",
-    "Command": "ms-settings:apps-volume",
-    "glyph": "\ue767"
+    "Command": "ms-settings:apps-volume"
   },
   {
     "Name": "BatterySaver",
@@ -1043,7 +1070,7 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:clipboard",
-    "glyph": "\ue77f"
+    "Glyph": "\ue77f"
   },
   {
     "Name": "Display",
@@ -1055,21 +1082,21 @@
       "WarmerColor",
       "RedEye"
     ],
-    "Command": "ms-settings:display",
-    "glyph": "\ue7f4"
+    "Command": "ms-settings:display"
   },
   {
     "Name": "DefaultSaveLocations",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:savelocations",
-    "glyph": "\ueda2"
+    "Glyph": "\ueda2"
   },
   {
     "Name": "ScreenRotation",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:screenrotation"
+    "Command": "ms-settings:screenrotation",
+    "Glyph": "\ue7f4"
   },
   {
     "Name": "DuplicatingMyDisplay",
@@ -1099,8 +1126,7 @@
     "Name": "FocusAssistQuietHours",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:quiethours",
-    "glyph": "\ue708"
+    "Command": "ms-settings:quiethours"
   },
   {
     "Name": "FocusAssistQuietMoments",
@@ -1117,13 +1143,14 @@
     ],
     "Note": "NoteAdvancedGraphics",
     "Command": "ms-settings:display-advancedgraphics",
-    "glyph": "\ue7f4"
+    "Glyph": null
   },
   {
     "Name": "Messaging",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:messaging"
+    "Command": "ms-settings:messaging",
+    "Glyph": "\uebdb"
   },
   {
     "Name": "Multitasking",
@@ -1136,13 +1163,14 @@
       "VirtualDesktops"
     ],
     "Command": "ms-settings:multitasking",
-    "glyph": "\uee40"
+    "Glyph": "\ue7c4"
   },
   {
     "Name": "NightLightSettings",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:nightlight"
+    "Command": "ms-settings:nightlight",
+    "Glyph": null
   },
   {
     "Name": "PhoneDefaultApps",
@@ -1155,7 +1183,7 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:project",
-    "glyph": "\uebc6"
+    "Glyph": "\uebc6"
   },
   {
     "Name": "SharedExperiences",
@@ -1164,35 +1192,35 @@
     "AltNames": [
       "Crossdevice"
     ],
-    "Command": "ms-settings:crossdevice"
+    "Command": "ms-settings:crossdevice",
+    "Glyph": "\uf22c"
   },
   {
     "Name": "TabletMode",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:tabletmode",
-    "glyph": "\uebfc"
+    "Glyph": "\uebfc"
   },
   {
     "Name": "Taskbar",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:taskbar",
-    "glyph": "\ue90e"
+    "Glyph": "\ue90e"
   },
   {
     "Name": "NotificationsAndActions",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:notifications",
-    "glyph": "\ue91c"
+    "Glyph": null
   },
   {
     "Name": "RemoteDesktop",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:remotedesktop",
-    "glyph": "\ue8af"
+    "Command": "ms-settings:remotedesktop"
   },
   {
     "Name": "Phone",
@@ -1207,35 +1235,34 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:powersleep",
-    "glyph": "\ue7e8"
+    "Glyph": "\uf83d"
   },
   {
     "Name": "Sound",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:sound",
-    "glyph": "\ue767"
+    "Glyph": "\ue995"
   },
   {
     "Name": "StorageSense",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:storagesense",
-    "glyph": "\ueda2"
+    "Glyph": "\ueda2"
   },
   {
     "Name": "StoragePolicies",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:storagepolicies",
-    "glyph": "\ueda2"
+    "Command": "ms-settings:storagepolicies"
   },
   {
     "Name": "DateAndTime",
     "Area": "TimeAndLanguage",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:dateandtime",
-    "glyph": "\uec92"
+    "Glyph": "\uec92"
   },
   {
     "Name": "JapanImeSettings",
@@ -1254,20 +1281,21 @@
     "AltNames": [
       "RegionFormatting"
     ],
-    "Command": "ms-settings:regionformatting"
+    "Command": "ms-settings:regionformatting",
+    "Glyph": "\uf49a"
   },
   {
     "Name": "Keyboard",
     "Area": "TimeAndLanguage",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:keyboard"
+    "Command": "ms-settings:keyboard",
+    "Glyph": "\ued4d"
   },
   {
     "Name": "RegionalLanguage",
     "Area": "TimeAndLanguage",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:regionlanguage",
-    "glyph": "\ue8c1"
+    "Command": "ms-settings:regionlanguage"
   },
   {
     "Name": "BopomofoIme",
@@ -1325,8 +1353,7 @@
     "Name": "Speech",
     "Area": "TimeAndLanguage",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:speech",
-    "glyph": "\ue720"
+    "Command": "ms-settings:speech"
   },
   {
     "Name": "WubiImeSettings",
@@ -1340,49 +1367,46 @@
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:activation",
-    "glyph": "\ue930"
+    "Glyph": "\ue930"
   },
   {
     "Name": "Backup",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:backup",
-    "glyph": "\ue11c"
+    "Command": "ms-settings:backup"
   },
   {
     "Name": "DeliveryOptimization",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:delivery-optimization",
-    "glyph": "\uf785"
+    "Glyph": "\uf785"
   },
   {
     "Name": "FindMyDevice",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:findmydevice",
-    "glyph": "\ue707"
+    "Glyph": "\ue707"
   },
   {
     "Name": "ForDevelopers",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:developers",
-    "glyph": "\uec7a"
+    "Command": "ms-settings:developers"
   },
   {
     "Name": "Recovery",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:recovery",
-    "glyph": "\uebc4"
+    "Command": "ms-settings:recovery"
   },
   {
     "Name": "Troubleshoot",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:troubleshoot",
-    "glyph": "\ue15e"
+    "Glyph": "\ue90f"
   },
   {
     "Name": "WindowsSecurity",
@@ -1397,29 +1421,27 @@
       "IsolatedBrowsing",
       "ExploitProtection"
     ],
-    "Command": "ms-settings:windowsdefender",
-    "glyph": "\ue83d"
+    "Command": "ms-settings:windowsdefender"
   },
   {
     "Name": "WindowsInsiderProgram",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Note": "NoteEnrolledWIP",
-    "Command": "ms-settings:windowsinsider",
-    "glyph": "\uf1ad"
+    "Command": "ms-settings:windowsinsider"
   },
   {
     "Name": "WindowsUpdate",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:windowsupdate"
+    "Command": "ms-settings:windowsupdate",
+    "Glyph": "\ue895"
   },
   {
     "Name": "WindowsUpdateCheckForUpdates",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:windowsupdate-action",
-    "glyph": "\ue895"
+    "Command": "ms-settings:windowsupdate-action"
   },
   {
     "Name": "WindowsUpdateAdvancedOptions",
@@ -1459,7 +1481,8 @@
     "Area": "UserAccounts",
     "Type": "AppSettingsApp",
     "Note": "NoteMobileProvisioning",
-    "Command": "ms-settings:provisioning"
+    "Command": "ms-settings:provisioning",
+    "Glyph": "\ue821"
   },
   {
     "Name": "WindowsAnywhere",
@@ -1508,7 +1531,8 @@
     "Name": "AutoPlay",
     "Area": "Programs",
     "Type": "ControlPanel",
-    "Command": "control /name Microsoft.AutoPlay"
+    "Command": "control /name Microsoft.AutoPlay",
+    "Glyph": "\uec57"
   },
   {
     "Name": "BackupAndRestore",
@@ -1565,7 +1589,8 @@
     "AltNames": [
       "timedate.cpl"
     ],
-    "Command": "control /name Microsoft.DateAndTime"
+    "Command": "control /name Microsoft.DateAndTime",
+    "Glyph": "\uec92"
   },
   {
     "Name": "DefaultLocation",
@@ -1607,7 +1632,8 @@
     "Name": "Fonts",
     "Area": "AppearanceAndPersonalization",
     "Type": "ControlPanel",
-    "Command": "control /name Microsoft.Fonts"
+    "Command": "control /name Microsoft.Fonts",
+    "Glyph": "\ue8d2"
   },
   {
     "Name": "GameControllers",
@@ -1829,7 +1855,8 @@
     "Name": "Sound",
     "Area": "HardwareAndSound",
     "Type": "ControlPanel",
-    "Command": "control /name Microsoft.Sound"
+    "Command": "control /name Microsoft.Sound",
+    "Glyph": "\ue995"
   },
   {
     "Name": "SpeechRecognition",
