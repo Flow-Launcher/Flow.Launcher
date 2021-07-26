@@ -107,6 +107,13 @@ function Publish-Self-Contained ($p) {
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
+function Publish-Portable ($outputLocation, $version) {
+    
+    & $outputLocation\Flow-Launcher-v$v.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
+}
+
 function Main {
     $p = Build-Path
     $v = Build-Version
@@ -123,6 +130,8 @@ function Main {
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
+
+        Publish-Portable $o $v
     }
 }
 

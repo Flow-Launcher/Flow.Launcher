@@ -36,6 +36,8 @@ artifacts:
   name: Plugin nupkg
 - path: 'Output\Packages\Flow-Launcher-*.exe'
   name: Squirrel Installer
+- path: Output\Packages\Flow-Launcher-Portable.zip
+  name: Portable Version
 - path: 'Output\Packages\FlowLauncher-*-full.nupkg'
   name: Squirrel nupkg
 - path: 'Output\Packages\RELEASES'
@@ -53,7 +55,7 @@ deploy:
     release: v$(flowVersion)
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
+    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     draft: true
     force_update: true
     on:
@@ -63,7 +65,7 @@ deploy:
     release: v$(flowVersion)
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Squirrel nupkg, Squirrel RELEASES
+    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     force_update: true
     on:
       APPVEYOR_REPO_TAG: true
