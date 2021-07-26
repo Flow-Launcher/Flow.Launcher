@@ -76,8 +76,7 @@ environment:
 
 on_success:
   - ps: |
-        echo APPVEYOR_PULL_REQUEST_NUMBER
-        if ($env:APPVEYOR_REPO_BRANCH -eq "master")
+        if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) # branch only builds pr request number will be null, this ensures deployment only when it's non-pr master branch build
         {
             iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
             .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-v$env:flowVersion.exe -v $env:flowVersion -t $env:winget_token
