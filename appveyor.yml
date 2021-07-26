@@ -76,6 +76,7 @@ environment:
 
 on_success:
   - ps: |
+        echo APPVEYOR_PULL_REQUEST_NUMBER
         if ($env:APPVEYOR_REPO_BRANCH -eq "master")
         {
             iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
