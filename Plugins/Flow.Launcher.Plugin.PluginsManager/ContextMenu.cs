@@ -19,6 +19,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             var pluginManifestInfo = selectedResult.ContextData as UserPlugin;
 
+            if (pluginManifestInfo == null)
+                return new List<Result>();
+
             return new List<Result>
             {
                 new Result
