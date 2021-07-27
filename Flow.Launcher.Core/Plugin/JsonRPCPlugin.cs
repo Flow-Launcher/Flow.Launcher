@@ -252,18 +252,16 @@ namespace Flow.Launcher.Core.Plugin
                 
                 token.Register(() =>
                 {
-                    // ReSharper disable once AccessToDisposedClosure
                     // ReSharper disable once AccessToModifiedClosure
                     // Manually Check whether disposed
                     if (!disposed && !process.HasExited)
-                        // ReSharper disable once AccessToDisposedClosure
                         process.Kill();
                 });
 
                 try
                 {
                     // token expire won't instantly trigger the exception, 
-                    //     manually kill process at before
+                    // manually kill process at before
                     await source.CopyToAsync(buffer, token);
                 }
                 catch (OperationCanceledException)
