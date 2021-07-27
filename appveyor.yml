@@ -49,7 +49,7 @@ deploy:
     api_key:
       secure: n80IeWR3pN81p0w4uXq4mO0TdTXoJSHHFL+yTB9YBJ0Wni2DjZGYwOFdaWzW4hRi
     on:
-      branch: master
+      APPVEYOR_REPO_TAG: true
 
   - provider: GitHub
     release: v$(flowVersion)
