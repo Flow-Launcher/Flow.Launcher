@@ -17,7 +17,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var pluginManifestInfo = selectedResult.ContextData as UserPlugin;
+            if(selectedResult.ContextData is not UserPlugin pluginManifestInfo) 
+                return new List<Result>();
 
             return new List<Result>
             {
