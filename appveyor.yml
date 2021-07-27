@@ -19,6 +19,9 @@ skip_branch_with_pr: true
 skip_commits:
   files:
     - '*.md'
+    
+cache:
+  - '%USERPROFILE%\.nuget\packages
 
 image: Visual Studio 2019
 platform: Any CPU
