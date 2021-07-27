@@ -243,9 +243,18 @@ namespace Flow.Launcher.Core.Plugin
                     return Stream.Null;
                 }
 
-                var source = process.StandardOutput.BaseStream;
+                await using var source = process.StandardOutput.BaseStream;
 
                 var buffer = BufferManager.GetStream();
+                bool disposed = false;
+                process.Disposed += (_, _) => { disposed = true; };
+                token.Register(() =>
+                {
+                    if (!disposed)
+                        // ReSharper disable once AccessToDisposedClosure
+                        // Manually Check whether disposed
+                        process.Kill();
+                });
 
                 try
                 {
@@ -260,7 +269,7 @@ namespace Flow.Launcher.Core.Plugin
                 buffer.Seek(0, SeekOrigin.Begin);
 
                 token.ThrowIfCancellationRequested();
-
+                
                 if (!process.StandardError.EndOfStream)
                 {
                     using var standardError = process.StandardError;
