@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
+using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
 using Microsoft.IO;
 
@@ -234,9 +235,11 @@ namespace Flow.Launcher.Core.Plugin
 
         protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
+            Process process = null;
+            bool disposed = false;
             try
             {
-                using var process = Process.Start(startInfo);
+                process = Process.Start(startInfo);
                 if (process == null)
                 {
                     Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
@@ -246,18 +249,21 @@ namespace Flow.Launcher.Core.Plugin
                 await using var source = process.StandardOutput.BaseStream;
 
                 var buffer = BufferManager.GetStream();
-                bool disposed = false;
-                process.Disposed += (_, _) => { disposed = true; };
+                
                 token.Register(() =>
                 {
-                    if (!disposed)
+                    // ReSharper disable once AccessToDisposedClosure
+                    // ReSharper disable once AccessToModifiedClosure
+                    // Manually Check whether disposed
+                    if (!disposed && !process.HasExited)
                         // ReSharper disable once AccessToDisposedClosure
-                        // Manually Check whether disposed
                         process.Kill();
                 });
 
                 try
                 {
+                    // token expire won't instantly trigger the exception, 
+                    //     manually kill process at before
                     await source.CopyToAsync(buffer, token);
                 }
                 catch (OperationCanceledException)
@@ -269,7 +275,7 @@ namespace Flow.Launcher.Core.Plugin
                 buffer.Seek(0, SeekOrigin.Begin);
 
                 token.ThrowIfCancellationRequested();
-                
+
                 if (!process.StandardError.EndOfStream)
                 {
                     using var standardError = process.StandardError;
@@ -293,6 +299,11 @@ namespace Flow.Launcher.Core.Plugin
                     $"|JsonRPCPlugin.ExecuteAsync|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
                     e);
                 return Stream.Null;
+            }
+            finally
+            {
+                process?.Dispose();
+                disposed = true;
             }
         }
 
