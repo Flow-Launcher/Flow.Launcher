@@ -21,7 +21,7 @@ skip_commits:
     - '*.md'
     
 cache:
-  - '%USERPROFILE%\.nuget\packages
+  - '%USERPROFILE%\.nuget\packages'
 
 image: Visual Studio 2019
 platform: Any CPU
