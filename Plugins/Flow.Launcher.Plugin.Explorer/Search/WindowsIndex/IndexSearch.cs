@@ -86,12 +86,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
              return results;
         }
 
-        internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, 
-                                                                  Func<CSearchQueryHelper> queryHelper,
-                                                                  Func<string, string> constructQuery,
-                                                                  List<AccessLink> exclusionList,
-                                                                  Query query,
-                                                                  CancellationToken token)
+        internal async static Task<List<Result>> WindowsIndexSearchAsync(
+            string searchString,
+            CSearchQueryHelper queryHelper,
+            Func<string, string> constructQuery,
+            List<AccessLink> exclusionList,
+            Query query,
+            CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, reservedStringPattern);
 
@@ -103,7 +104,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 var constructedQuery = constructQuery(searchString);
 
                 return RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, queryHelper().ConnectionString, query, token).ConfigureAwait(false),
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, queryHelper.ConnectionString, query, token).ConfigureAwait(false),
                         exclusionList,
                         token);
             }
