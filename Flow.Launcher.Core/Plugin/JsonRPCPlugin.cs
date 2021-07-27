@@ -254,7 +254,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (OperationCanceledException)
                 {
                     await buffer.DisposeAsync();
-                    throw;
+                    return Stream.Null;
                 }
 
                 buffer.Seek(0, SeekOrigin.Begin);
@@ -289,10 +289,14 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var output = await ExecuteQueryAsync(query, token);
             try
             {
+                var output = await ExecuteQueryAsync(query, token);
                 return await DeserializedResultAsync(output);
+            }
+            catch (OperationCanceledException)
+            {
+                return null;
             }
             catch (Exception e)
             {
