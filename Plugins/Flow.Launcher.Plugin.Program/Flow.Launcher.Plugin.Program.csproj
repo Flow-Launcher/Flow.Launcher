@@ -58,6 +58,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
 

@@ -93,10 +93,26 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 matchResult.MatchData = new List<int>();
             }
+            
+            
+            
+            
 
+            var newScore = FuzzySharp.Fuzz.PartialTokenSetRatio(query.ToLower(), Name.ToLower());
+            if (Name.Length < query.Length)
+                newScore = 0;
+
+            var oldScore = matchResult.RawScore;
+            matchResult.RawScore = Math.Max(newScore, oldScore);
+            matchResult.MatchData = new List<int>();
+
+
+            
+            
+            
             var result = new Result
             {
-                Title = title,
+                Title = title + $"<{matchResult.Score}> <{newScore}> <{oldScore}>",
                 SubTitle = LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,

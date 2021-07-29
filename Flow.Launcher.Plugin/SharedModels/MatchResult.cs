@@ -65,8 +65,8 @@ namespace Flow.Launcher.Plugin.SharedModels
 
     public enum SearchPrecisionScore
     {
-        Regular = 50,
-        Low = 20,
+        Regular = 0,
+        Low = 0,
         None = 0
     }
 }
