@@ -269,7 +269,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
 
                             return false;
-                        }
+                        },
+                        ContextData = 
+                            new UserPlugin
+                            {
+                                Website = x.PluginNewUserPlugin.Website,
+                                UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
+                            }
                     });
 
             return Search(results, uninstallSearch);
