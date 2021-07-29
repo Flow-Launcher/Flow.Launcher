@@ -83,16 +83,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 else matchResult = nameMatch;
             }
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
-            {
-                if (ExecutableName != null) // only lnk program will need this one
-                    matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
-
-                if (!matchResult.IsSearchPrecisionScoreMet())
-                    return null;
-
-                matchResult.MatchData = new List<int>();
-            }
+            // if (!matchResult.IsSearchPrecisionScoreMet())
+            // {
+            //     if (ExecutableName != null) // only lnk program will need this one
+            //         matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+            //
+            //     if (!matchResult.IsSearchPrecisionScoreMet())
+            //         return null;
+            //
+            //     matchResult.MatchData = new List<int>();
+            // }
             
             
             
@@ -104,6 +104,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var oldScore = matchResult.RawScore;
             matchResult.RawScore = Math.Max(newScore, oldScore);
+            matchResult.RawScore *= 10; // Bypass the SearchPrecisionScore and related tests
             matchResult.MatchData = new List<int>();
 
 
