@@ -21,6 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
         public bool SearchActionKeywordEnabled { get; set; } = true;
 
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
@@ -33,6 +34,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool IndexOnlySearchKeywordEnabled { get; set; }
 
+        public string QuickAccessActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool QuickAccessKeywordEnabled { get; set; }
+
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         internal enum ActionKeyword
@@ -40,7 +45,8 @@ namespace Flow.Launcher.Plugin.Explorer
             SearchActionKeyword,
             PathSearchActionKeyword,
             FileContentSearchActionKeyword,
-            IndexSearchActionKeyword
+            IndexSearchActionKeyword,
+            QuickAccessActionKeyword
         }
 
         internal string GetActionKeyword(ActionKeyword actionKeyword) => actionKeyword switch
@@ -48,7 +54,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.SearchActionKeyword => SearchActionKeyword,
             ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
-            ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
+            ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword
         };
 
         internal void SetActionKeyword(ActionKeyword actionKeyword, string keyword) => _ = actionKeyword switch
@@ -57,6 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword = keyword,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword = keyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
+            ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
 
@@ -65,6 +73,7 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
             ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled,
+            ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
             _ => null
         };
 
@@ -73,6 +82,7 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
             ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled = enable,
+            ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
     }

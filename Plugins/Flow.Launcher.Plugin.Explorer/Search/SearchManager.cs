@@ -42,15 +42,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var querySearch = query.Search;
 
+            var results = new HashSet<Result>(PathEqualityComparator.Instance);
+
+            // This allows the user to type the below action keywords and see/search the list of quick folder links
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
+                || ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword)
+                || ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword))
+            {
+                if (string.IsNullOrEmpty(query.Search))
+                    return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
+
+                var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+
+                results.UnionWith(quickaccessLinks);
+            }
+
             if (IsFileContentSearch(query.ActionKeyword))
                 return await WindowsIndexFileContentSearchAsync(query, querySearch, token).ConfigureAwait(false);
-
-            var result = new HashSet<Result>(PathEqualityComparator.Instance);
 
             if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword) ||
                 ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword))
             {
-                result.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+                results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
             }
 
             if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword) ||
@@ -58,11 +71,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 querySearch.Length > 0 &&
                 !querySearch.IsLocationPathString())
             {
-                result.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token)
+                results.UnionWith(await WindowsIndexFilesAndFoldersSearchAsync(query, querySearch, token)
                     .ConfigureAwait(false));
             }
 
-            return result.ToList();
+            return results.ToList();
         }
 
         private bool ActionKeywordMatch(Query query, Settings.ActionKeyword allowedActionKeyword)
@@ -75,10 +88,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                               keyword == Settings.SearchActionKeyword,
                 Settings.ActionKeyword.PathSearchActionKeyword => Settings.PathSearchKeywordEnabled &&
                                                                   keyword == Settings.PathSearchActionKeyword,
-                Settings.ActionKeyword.FileContentSearchActionKeyword => keyword ==
-                                                                         Settings.FileContentSearchActionKeyword,
+                Settings.ActionKeyword.FileContentSearchActionKeyword => keyword == Settings.FileContentSearchActionKeyword,
                 Settings.ActionKeyword.IndexSearchActionKeyword => Settings.IndexOnlySearchKeywordEnabled &&
-                                                                       keyword == Settings.IndexSearchActionKeyword
+                                                                       keyword == Settings.IndexSearchActionKeyword,
+                Settings.ActionKeyword.QuickAccessActionKeyword => Settings.QuickAccessKeywordEnabled &&
+                                                                        keyword == Settings.QuickAccessActionKeyword
             };
         }
 
@@ -86,15 +100,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var querySearch = query.Search;
 
-            // This allows the user to type the assigned action keyword and only see the list of quick folder links
-            if (string.IsNullOrEmpty(query.Search))
-                return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
-
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
-
-            var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-
-            results.UnionWith(quickaccessLinks);
 
             var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
 

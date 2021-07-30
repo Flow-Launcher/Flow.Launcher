@@ -63,11 +63,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
 
-            if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword 
-                && ActionKeyword == Query.GlobalPluginWildcardSign)
+            if (ActionKeyword == Query.GlobalPluginWildcardSign 
+                && (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword 
+                        || CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.QuickAccessActionKeyword))
             {
-                MessageBox.Show(
-                    settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                switch (CurrentActionKeyword.KeywordProperty)
+                {
+                    case Settings.ActionKeyword.FileContentSearchActionKeyword:
+                        MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                        break;
+                    case Settings.ActionKeyword.QuickAccessActionKeyword:
+                        MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
+                        break;
+                }
 
                 return;
             }

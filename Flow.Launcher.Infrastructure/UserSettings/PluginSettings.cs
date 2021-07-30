@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -15,13 +15,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 if (Plugins.ContainsKey(metadata.ID))
                 {
                     var settings = Plugins[metadata.ID];
-
-                    // TODO: Remove. This is backwards compatibility for 1.8.0 release.
-                    // Introduced two new action keywords in Explorer, so need to update plugin setting in the UserData folder.
+                    
                     if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count != settings.ActionKeywords.Count)
                     {
-                        settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for index search
-                        settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for path search
+                        // TODO: Remove. This is backwards compatibility for Explorer 1.8.0 release.
+                        // Introduced two new action keywords in Explorer, so need to update plugin setting in the UserData folder.
+                        if (settings.Version.CompareTo("1.8.0") < 0)
+                        {
+                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for index search
+                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for path search
+                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for quick access action keyword
+                        }
+
+                        // TODO: Remove. This is backwards compatibility for Explorer 1.9.0 release.
+                        // Introduced a new action keywords in Explorer since 1.8.0, so need to update plugin setting in the UserData folder.
+                        if (settings.Version.CompareTo("1.8.0") > 0)
+                        {
+                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for quick access action keyword
+                        }
                     }
 
                     if (string.IsNullOrEmpty(settings.Version))
