@@ -1,5 +1,4 @@
-﻿
-/* We basically follow the Json-RPC 2.0 spec (http://www.jsonrpc.org/specification) to invoke methods between Flow Launcher and other plugins, 
+﻿/* We basically follow the Json-RPC 2.0 spec (http://www.jsonrpc.org/specification) to invoke methods between Flow Launcher and other plugins, 
  * like python or other self-execute program. But, we added addtional infos (proxy and so on) into rpc request. Also, we didn't use the
  * "id" and "jsonrpc" in the request, since it's not so useful in our request model.
  * 
@@ -13,10 +12,12 @@
  * 
  */
 
+using Flow.Launcher.Core.Resource;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
+using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -29,12 +30,8 @@ namespace Flow.Launcher.Core.Plugin
         public string Data { get; set; }
     }
 
-    public class JsonRPCModelBase
-    {
-        public int Id { get; set; }
-    }
 
-    public class JsonRPCResponseModel : JsonRPCModelBase
+    public class JsonRPCResponseModel
     {
         public string Result { get; set; }
 
@@ -48,45 +45,20 @@ namespace Flow.Launcher.Core.Plugin
 
         public string DebugMessage { get; set; }
     }
-
-    public class JsonRPCRequestModel : JsonRPCModelBase
+    
+    public class JsonRPCRequestModel
     {
         public string Method { get; set; }
 
         public object[] Parameters { get; set; }
 
+        private static readonly JsonSerializerOptions options = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
         public override string ToString()
         {
-            string rpc = string.Empty;
-            if (Parameters != null && Parameters.Length > 0)
-            {
-                string parameters = $"[{string.Join(',', Parameters.Select(GetParameterByType))}]";
-                rpc = $@"{{\""method\"":\""{Method}\"",\""parameters\"":{parameters}";
-            }
-            else
-            {
-                rpc = $@"{{\""method\"":\""{Method}\"",\""parameters\"":[]";
-            }
-
-            return rpc;
-
-        }
-
-        private string GetParameterByType(object parameter)
-        => parameter switch
-        {
-            null => "null",
-            string _ => $@"\""{ReplaceEscapes(parameter.ToString())}\""",
-            bool _ => $@"{parameter.ToString().ToLower()}",
-            _ => parameter.ToString()
-        };
-
-
-    private string ReplaceEscapes(string str)
-        {
-            return str.Replace(@"\", @"\\") //Escapes in ProcessStartInfo
-                .Replace(@"\", @"\\") //Escapes itself when passed to client
-                .Replace(@"""", @"\\""""");
+            return JsonSerializer.Serialize(this, options);
         }
     }
 
@@ -95,11 +67,7 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public class JsonRPCServerRequestModel : JsonRPCRequestModel
     {
-        public override string ToString()
-        {
-            string rpc = base.ToString();
-            return rpc + "}";
-        }
+
     }
 
     /// <summary>
@@ -108,12 +76,6 @@ namespace Flow.Launcher.Core.Plugin
     public class JsonRPCClientRequestModel : JsonRPCRequestModel
     {
         public bool DontHideAfterAction { get; set; }
-
-        public override string ToString()
-        {
-            string rpc = base.ToString();
-            return rpc + "}";
-        }
     }
 
     /// <summary>

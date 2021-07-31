@@ -16,11 +16,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     var settings = Plugins[metadata.ID];
 
-                    // TODO: Remove. This is one off for 1.2.0 release.
-                    // Introduced a new action keyword in Explorer, so need to update plugin setting in the UserData folder.
-                    // This kind of plugin meta update should be handled by a dedicated method trigger by version bump.
+                    // TODO: Remove. This is backwards compatibility for 1.8.0 release.
+                    // Introduced two new action keywords in Explorer, so need to update plugin setting in the UserData folder.
                     if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count != settings.ActionKeywords.Count)
-                        settings.ActionKeywords = metadata.ActionKeywords;
+                    {
+                        settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for index search
+                        settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for path search
+                    }
 
                     if (string.IsNullOrEmpty(settings.Version))
                         settings.Version = metadata.Version;
@@ -29,6 +31,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     {
                         metadata.ActionKeywords = settings.ActionKeywords;
                         metadata.ActionKeyword = settings.ActionKeywords[0];
+                    }
+                    else
+                    {
+                        metadata.ActionKeywords = new List<string>();
+                        metadata.ActionKeyword = string.Empty;
                     }
                     metadata.Disabled = settings.Disabled;
                     metadata.Priority = settings.Priority;

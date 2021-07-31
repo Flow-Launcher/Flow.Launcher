@@ -10,7 +10,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="125" />
         </Grid.ColumnDefinitions>
         <TextBox x:Name="tbHotkey" TabIndex="100" VerticalContentAlignment="Center" Grid.Column="0"
                  PreviewKeyDown="TbHotkey_OnPreviewKeyDown" input:InputMethod.IsInputMethodEnabled="False"/>

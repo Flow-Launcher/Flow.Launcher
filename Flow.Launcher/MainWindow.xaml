@@ -1,4 +1,4 @@
-﻿<Window x:Class="Flow.Launcher.MainWindow"
+<Window x:Class="Flow.Launcher.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:flowlauncher="clr-namespace:Flow.Launcher"
@@ -60,7 +60,7 @@
         <KeyBinding Key="D8" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="7"></KeyBinding>
         <KeyBinding Key="D9" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
-    <Grid Width="750">
+    <Grid>
         <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
             <StackPanel Orientation="Vertical">
                 <Grid>
@@ -79,7 +79,6 @@
                     Style="{DynamicResource QueryBoxStyle}"
                      Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      PreviewDragOver="OnPreviewDragOver"
-                     TextChanged="OnTextChanged"
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"
@@ -94,7 +93,7 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="48" Height="48"
+                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="42" Height="42"
                                      Background="Transparent"/>
                 </Grid>
                 <Line x:Name="ProgressBar" HorizontalAlignment="Right"

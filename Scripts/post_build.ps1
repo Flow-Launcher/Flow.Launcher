@@ -47,9 +47,19 @@ function Delete-Unused ($path, $config) {
     Remove-Item -Path $target -Include "*.xml" -Recurse 
 }
 
+function Remove-CreateDumpExe ($path, $config) {
+    $target = "$path\Output\$config"
+
+    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
+    Remove-Item -Path $target -Include "*createdump.exe" -Recurse
+}
+
+
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
+
 
 function Pack-Squirrel-Installer ($path, $version, $output) {
     # msbuild based installer generation is not working in appveyor, not sure why
@@ -97,6 +107,13 @@ function Publish-Self-Contained ($p) {
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
+function Publish-Portable ($outputLocation, $version) {
+    
+    & $outputLocation\Flow-Launcher-v$v.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
+}
+
 function Main {
     $p = Build-Path
     $v = Build-Version
@@ -108,9 +125,13 @@ function Main {
 
         Publish-Self-Contained $p
 
+        Remove-CreateDumpExe $p $config
+
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
+
+        Publish-Portable $o $v
     }
 }
 

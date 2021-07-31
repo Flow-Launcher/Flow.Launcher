@@ -5,7 +5,7 @@
     /// Otherwise if LoadSettingJsonStorage or SaveSettingJsonStorage has been callded,
     /// plugin settings will be automatically saved (see Flow.Launcher/PublicAPIInstance.SavePluginSettings) by Flow
     /// </summary>
-    public interface ISavable
+    public interface ISavable : IFeatures
     {
         void Save();
     }

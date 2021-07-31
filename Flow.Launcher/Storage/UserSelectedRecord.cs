@@ -28,6 +28,11 @@ namespace Flow.Launcher.Storage
 
         private static int GenerateStaticHashCode(string s, int start = HASH_INITIAL)
         {
+            if (s == null)
+            {
+                return start;
+            }
+
             unchecked
             {
                 // skip the empty space
