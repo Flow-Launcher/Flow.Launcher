@@ -7,7 +7,10 @@
       "Workplace"
     ],
     "Command": "ms-settings:workplace",
-    "Glyph": "\ue821"
+    "IconGlyph": {
+      "Glyph": "\ue821",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "EmailAndAppAccounts",
@@ -31,15 +34,17 @@
     "AltNames": [
       "AssignedAccess"
     ],
-    "Command": "ms-settings:assignedaccess",
-    "Glyph": null
+    "Command": "ms-settings:assignedaccess"
   },
   {
     "Name": "SignInOptions",
     "Area": "Accounts",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:signinoptions",
-    "Glyph": "\ue8d7"
+    "IconGlyph": {
+      "Glyph": "\ue8d7",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "SignInOptionsDynamicLock",
@@ -52,7 +57,10 @@
     "Area": "Accounts",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:sync",
-    "Glyph": "\ue895"
+    "IconGlyph": {
+      "Glyph": "\ue895",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "WindowsHelloSetupFace",
@@ -71,14 +79,20 @@
     "Area": "Accounts",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:yourinfo",
-    "Glyph": "\ue779"
+    "IconGlyph": {
+      "Glyph": "\ue779",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AppsAndFeatures",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:appsfeatures",
-    "Glyph": "\ue71d"
+    "IconGlyph": {
+      "Glyph": "\ue71d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AppFeatures",
@@ -91,28 +105,40 @@
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:appsforwebsites",
-    "Glyph": "\ue78b"
+    "IconGlyph": {
+      "Glyph": "\ue78b",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "DefaultApps",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:defaultapps",
-    "Glyph": "\ue7ac"
+    "IconGlyph": {
+      "Glyph": "\ue7ac",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ManageOptionalFeatures",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:optionalfeatures",
-    "Glyph": "\ue71d"
+    "IconGlyph": {
+      "Glyph": "\ue71d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "OfflineMaps",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:maps",
-    "Glyph": "\ue826"
+    "IconGlyph": {
+      "Glyph": "\ue826",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "OfflineMapsDownloadMaps",
@@ -125,21 +151,26 @@
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:startupapps",
-    "Glyph": "\ue7b5"
+    "IconGlyph": {
+      "Glyph": "\ue7b5",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "VideoPlayback",
     "Area": "Apps",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:videoplayback",
-    "Glyph": "\ue714"
+    "IconGlyph": {
+      "Glyph": "\ue714",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Notifications",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:cortana-notifications",
-    "Glyph": null
+    "Command": "ms-settings:cortana-notifications"
   },
   {
     "Name": "MoreDetails",
@@ -152,14 +183,20 @@
     "Area": "Cortana",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:cortana-permissions",
-    "Glyph": "\ue7ef"
+    "IconGlyph": {
+      "Glyph": "\ue7ef",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "WindowsSearch",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:cortana-windowssearch",
-    "Glyph": "\ue713"
+    "IconGlyph": {
+      "Glyph": "\ue713",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "CortanaLanguage",
@@ -174,8 +211,7 @@
     "Name": "Cortana",
     "Area": "Cortana",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:cortana",
-    "Glyph": null
+    "Command": "ms-settings:cortana"
   },
   {
     "Name": "TalkToCortana",
@@ -188,14 +224,20 @@
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:autoplay",
-    "Glyph": "\uec57"
+    "IconGlyph": {
+      "Glyph": "\uec57",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Bluetooth",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:bluetooth",
-    "Glyph": "\ue772"
+    "IconGlyph": {
+      "Glyph": "\ue772",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ConnectedDevices",
@@ -223,14 +265,20 @@
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:pen",
-    "Glyph": "\uedc6"
+    "IconGlyph": {
+      "Glyph": "\uedc6",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "PrintersAndScanners",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:printers",
-    "Glyph": "\ue749"
+    "IconGlyph": {
+      "Glyph": "\ue749",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Touchpad",
@@ -244,14 +292,20 @@
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:typing",
-    "Glyph": "\ue765"
+    "IconGlyph": {
+      "Glyph": "\ue765",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Usb",
     "Area": "Devices",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:usb",
-    "Glyph": "\ue88e"
+    "IconGlyph": {
+      "Glyph": "\ue88e",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Wheel",
@@ -285,7 +339,10 @@
     "Area": "EaseOfAccess",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:easeofaccess-closedcaptioning",
-    "Glyph": "\ue7f0"
+    "IconGlyph": {
+      "Glyph": "\ue7f0",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ColorFilters",
@@ -330,7 +387,10 @@
     "Area": "EaseOfAccess",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:easeofaccess-eyecontrol",
-    "Glyph": "\uf19d"
+    "IconGlyph": {
+      "Glyph": "\uf19d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Fonts",
@@ -339,14 +399,20 @@
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
     "Command": "ms-settings:fonts",
-    "Glyph": "\ue8d2"
+    "IconGlyph": {
+      "Glyph": "\ue8d2",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "HighContrast",
     "Area": "EaseOfAccess",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:easeofaccess-highcontrast",
-    "Glyph": "\ue706"
+    "IconGlyph": {
+      "Glyph": "\ue706",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Keyboard",
@@ -362,7 +428,10 @@
       "NumLock"
     ],
     "Command": "ms-settings:easeofaccess-keyboard",
-    "Glyph": "\ued4d"
+    "IconGlyph": {
+      "Glyph": "\ued4d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Magnifier",
@@ -372,7 +441,10 @@
       "Zoom"
     ],
     "Command": "ms-settings:easeofaccess-magnifier",
-    "Glyph": "\uf19d"
+    "IconGlyph": {
+      "Glyph": "\uf19d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Mouse",
@@ -396,8 +468,7 @@
     "Type": "AppSettingsApp",
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
-    "Command": "ms-settings:easeofaccess-otheroptions",
-    "Glyph": null
+    "Command": "ms-settings:easeofaccess-otheroptions"
   },
   {
     "Name": "Speech",
@@ -420,29 +491,37 @@
     "Name": "Broadcasting",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:gaming-broadcasting",
-    "Glyph": null
+    "Command": "ms-settings:gaming-broadcasting"
   },
   {
     "Name": "GameBar",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-gamebar",
-    "Glyph": "\ue713"
+    "IconGlyph": {
+      "Glyph": "\ue713",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "GameDvr",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-gamedvr",
-    "Glyph": "\ue713"
+    "IconGlyph": {
+      "Glyph": "\ue713",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "GameMode",
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-gamemode",
-    "Glyph": "\uec4a"
+    "IconGlyph": {
+      "Glyph": "\uec4a",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "PlayingGameFullScreen",
@@ -466,7 +545,10 @@
     "Area": "Gaming",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:gaming-xboxnetworking",
-    "Glyph": "\ue713"
+    "IconGlyph": {
+      "Glyph": "\ue713",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "SettingsHomePage",
@@ -537,14 +619,20 @@
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:datausage",
-    "Glyph": "\uec27"
+    "IconGlyph": {
+      "Glyph": "\uec27",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "DialUp",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-dialup",
-    "Glyph": "\ue83c"
+    "IconGlyph": {
+      "Glyph": "\ue83c",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "DirectAccess",
@@ -566,7 +654,10 @@
       "Ip"
     ],
     "Command": "ms-settings:network-ethernet",
-    "Glyph": "\ue839"
+    "IconGlyph": {
+      "Glyph": "\ue839",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ManageKnownNetworks",
@@ -599,14 +690,20 @@
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-proxy",
-    "Glyph": "\ue774"
+    "IconGlyph": {
+      "Glyph": "\ue774",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "NetworkStatus",
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-status",
-    "Glyph": "\uec27"
+    "IconGlyph": {
+      "Glyph": "\uec27",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Network",
@@ -627,7 +724,10 @@
     "Area": "NetworkAndInternet",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:network-vpn",
-    "Glyph": "\ue705"
+    "IconGlyph": {
+      "Glyph": "\ue705",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "WiFi",
@@ -661,7 +761,10 @@
       "Image"
     ],
     "Command": "ms-settings:personalization-background",
-    "Glyph": "\ueb9f"
+    "IconGlyph": {
+      "Glyph": "\ueb9f",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ChooseWhichFoldersAppearOnStart",
@@ -671,7 +774,10 @@
       "StartPlaces"
     ],
     "Command": "ms-settings:personalization-start-places",
-    "Glyph": "\ueca5"
+    "IconGlyph": {
+      "Glyph": "\ueca5",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Colors",
@@ -687,7 +793,10 @@
       "WindowBorder"
     ],
     "Command": "ms-settings:colors",
-    "Glyph": "\ue790"
+    "IconGlyph": {
+      "Glyph": "\ue790",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Glance",
@@ -695,8 +804,7 @@
     "Type": "AppSettingsApp",
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
-    "Command": "ms-settings:personalization-glance",
-    "Glyph": null
+    "Command": "ms-settings:personalization-glance"
   },
   {
     "Name": "LockScreen",
@@ -733,14 +841,20 @@
     "Area": "Personalization",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:taskbar",
-    "Glyph": "\ue90e"
+    "IconGlyph": {
+      "Glyph": "\ue90e",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Themes",
     "Area": "Personalization",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:themes",
-    "Glyph": "\ue771"
+    "IconGlyph": {
+      "Glyph": "\ue771",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AddYourPhone",
@@ -769,14 +883,20 @@
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-accountinfo",
-    "Glyph": "\ue779"
+    "IconGlyph": {
+      "Glyph": "\ue779",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ActivityHistory",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-activityhistory",
-    "Glyph": "\ue7c4"
+    "IconGlyph": {
+      "Glyph": "\ue7c4",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AdvertisingId",
@@ -785,28 +905,40 @@
     "DeprecatedInBuild": 17763,
     "Note": "NoteDeprecated17763",
     "Command": "ms-settings:privacy-advertisingid",
-    "Glyph": "\ue72e"
+    "IconGlyph": {
+      "Glyph": "\ue72e",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AppDiagnostics",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-appdiagnostics",
-    "Glyph": "\ue9d2"
+    "IconGlyph": {
+      "Glyph": "\ue9d2",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AutomaticFileDownloads",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-automaticfiledownloads",
-    "Glyph": "\ue753"
+    "IconGlyph": {
+      "Glyph": "\ue753",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "BackgroundApps",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-backgroundapps",
-    "Glyph": "\ue9d9"
+    "IconGlyph": {
+      "Glyph": "\ue9d9",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Calendar",
@@ -819,28 +951,40 @@
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-callhistory",
-    "Glyph": "\uf738"
+    "IconGlyph": {
+      "Glyph": "\uf738",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Camera",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-webcam",
-    "Glyph": "\uf439"
+    "IconGlyph": {
+      "Glyph": "\uf439",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Contacts",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-contacts",
-    "Glyph": "\ue716"
+    "IconGlyph": {
+      "Glyph": "\ue716",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Documents",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-documents",
-    "Glyph": "\ue7c3"
+    "IconGlyph": {
+      "Glyph": "\ue7c3",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Email",
@@ -866,14 +1010,20 @@
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-broadfilesystemaccess",
-    "Glyph": "\ue7c3"
+    "IconGlyph": {
+      "Glyph": "\ue7c3",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "General",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy or privacy-general",
-    "Glyph": "\uec20"
+    "IconGlyph": {
+      "Glyph": "\uec20",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "InkingAndTyping",
@@ -883,42 +1033,52 @@
       "SpeechTyping"
     ],
     "Command": "ms-settings:privacy-speechtyping",
-    "Glyph": "\ueadf"
+    "IconGlyph": {
+      "Glyph": "\ueadf",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Location",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-location",
-    "Glyph": "\ue707"
+    "IconGlyph": {
+      "Glyph": "\ue707",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Messaging",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-messaging",
-    "Glyph": "\uebdb"
+    "IconGlyph": {
+      "Glyph": "\uebdb",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Microphone",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-microphone",
-    "Glyph": "\ue720"
+    "IconGlyph": {
+      "Glyph": "\ue720",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Motion",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-motion",
-    "Glyph": null
+    "Command": "ms-settings:privacy-motion"
   },
   {
     "Name": "Notifications",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:privacy-notifications",
-    "Glyph": null
+    "Command": "ms-settings:privacy-notifications"
   },
   {
     "Name": "OtherDevices",
@@ -928,14 +1088,20 @@
       "CustomDevices"
     ],
     "Command": "ms-settings:privacy-customdevices",
-    "Glyph": "\ue772"
+    "IconGlyph": {
+      "Glyph": "\ue772",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "PhoneCalls",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-phonecalls",
-    "Glyph": "\ue77e"
+    "IconGlyph": {
+      "Glyph": "\ue77e",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Pictures",
@@ -948,7 +1114,10 @@
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-radios",
-    "Glyph": "\uec05"
+    "IconGlyph": {
+      "Glyph": "\uec05",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Speech",
@@ -967,14 +1136,20 @@
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-videos",
-    "Glyph": "\ue8b2"
+    "IconGlyph": {
+      "Glyph": "\ue8b2",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "VoiceActivation",
     "Area": "Privacy",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:privacy-voiceactivation",
-    "Glyph": "\uf12e"
+    "IconGlyph": {
+      "Glyph": "\uf12e",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Accounts",
@@ -1008,7 +1183,10 @@
     "Area": "SurfaceHub",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:surfacehub-welcome",
-    "Glyph": "\uee3f"
+    "IconGlyph": {
+      "Glyph": "\uee3f",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "About",
@@ -1023,7 +1201,10 @@
       "Version"
     ],
     "Command": "ms-settings:about",
-    "Glyph": "\ue946"
+    "IconGlyph": {
+      "Glyph": "\ue946",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AdvancedDisplaySettings",
@@ -1031,7 +1212,10 @@
     "Type": "AppSettingsApp",
     "Note": "NoteDisplayGraphics",
     "Command": "ms-settings:display-advanced",
-    "Glyph": "\ue7f4"
+    "IconGlyph": {
+      "Glyph": "\ue7f4",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "AppVolumeAndDevicePreferences",
@@ -1070,7 +1254,10 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:clipboard",
-    "Glyph": "\ue77f"
+    "IconGlyph": {
+      "Glyph": "\ue77f",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Display",
@@ -1089,14 +1276,20 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:savelocations",
-    "Glyph": "\ueda2"
+    "IconGlyph": {
+      "Glyph": "\ueda2",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ScreenRotation",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:screenrotation",
-    "Glyph": "\ue7f4"
+    "IconGlyph": {
+      "Glyph": "\ue7f4",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "DuplicatingMyDisplay",
@@ -1142,15 +1335,17 @@
       "AdvancedGraphics"
     ],
     "Note": "NoteAdvancedGraphics",
-    "Command": "ms-settings:display-advancedgraphics",
-    "Glyph": null
+    "Command": "ms-settings:display-advancedgraphics"
   },
   {
     "Name": "Messaging",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:messaging",
-    "Glyph": "\uebdb"
+    "IconGlyph": {
+      "Glyph": "\uebdb",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Multitasking",
@@ -1163,14 +1358,16 @@
       "VirtualDesktops"
     ],
     "Command": "ms-settings:multitasking",
-    "Glyph": "\ue7c4"
+    "IconGlyph": {
+      "Glyph": "\ue7c4",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "NightLightSettings",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:nightlight",
-    "Glyph": null
+    "Command": "ms-settings:nightlight"
   },
   {
     "Name": "PhoneDefaultApps",
@@ -1183,7 +1380,10 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:project",
-    "Glyph": "\uebc6"
+    "IconGlyph": {
+      "Glyph": "\uebc6",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "SharedExperiences",
@@ -1193,28 +1393,36 @@
       "Crossdevice"
     ],
     "Command": "ms-settings:crossdevice",
-    "Glyph": "\uf22c"
+    "IconGlyph": {
+      "Glyph": "\uf22c",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "TabletMode",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:tabletmode",
-    "Glyph": "\uebfc"
+    "IconGlyph": {
+      "Glyph": "\uebfc",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Taskbar",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:taskbar",
-    "Glyph": "\ue90e"
+    "IconGlyph": {
+      "Glyph": "\ue90e",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "NotificationsAndActions",
     "Area": "System",
     "Type": "AppSettingsApp",
-    "Command": "ms-settings:notifications",
-    "Glyph": null
+    "Command": "ms-settings:notifications"
   },
   {
     "Name": "RemoteDesktop",
@@ -1235,21 +1443,30 @@
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:powersleep",
-    "Glyph": "\uf83d"
+    "IconGlyph": {
+      "Glyph": "\uf83d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Sound",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:sound",
-    "Glyph": "\ue995"
+    "IconGlyph": {
+      "Glyph": "\ue995",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "StorageSense",
     "Area": "System",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:storagesense",
-    "Glyph": "\ueda2"
+    "IconGlyph": {
+      "Glyph": "\ueda2",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "StoragePolicies",
@@ -1262,7 +1479,10 @@
     "Area": "TimeAndLanguage",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:dateandtime",
-    "Glyph": "\uec92"
+    "IconGlyph": {
+      "Glyph": "\uec92",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "JapanImeSettings",
@@ -1282,14 +1502,20 @@
       "RegionFormatting"
     ],
     "Command": "ms-settings:regionformatting",
-    "Glyph": "\uf49a"
+    "IconGlyph": {
+      "Glyph": "\uf49a",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Keyboard",
     "Area": "TimeAndLanguage",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:keyboard",
-    "Glyph": "\ued4d"
+    "IconGlyph": {
+      "Glyph": "\ued4d",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "RegionalLanguage",
@@ -1367,7 +1593,10 @@
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:activation",
-    "Glyph": "\ue930"
+    "IconGlyph": {
+      "Glyph": "\ue930",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "Backup",
@@ -1380,14 +1609,20 @@
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:delivery-optimization",
-    "Glyph": "\uf785"
+    "IconGlyph": {
+      "Glyph": "\uf785",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "FindMyDevice",
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:findmydevice",
-    "Glyph": "\ue707"
+    "IconGlyph": {
+      "Glyph": "\ue707",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "ForDevelopers",
@@ -1406,7 +1641,10 @@
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:troubleshoot",
-    "Glyph": "\ue90f"
+    "IconGlyph": {
+      "Glyph": "\ue90f",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "WindowsSecurity",
@@ -1435,7 +1673,10 @@
     "Area": "UpdateAndSecurity",
     "Type": "AppSettingsApp",
     "Command": "ms-settings:windowsupdate",
-    "Glyph": "\ue895"
+    "IconGlyph": {
+      "Glyph": "\ue895",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "WindowsUpdateCheckForUpdates",
@@ -1482,7 +1723,10 @@
     "Type": "AppSettingsApp",
     "Note": "NoteMobileProvisioning",
     "Command": "ms-settings:provisioning",
-    "Glyph": "\ue821"
+    "IconGlyph": {
+      "Glyph": "\ue821",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "WindowsAnywhere",
@@ -1532,7 +1776,10 @@
     "Area": "Programs",
     "Type": "ControlPanel",
     "Command": "control /name Microsoft.AutoPlay",
-    "Glyph": "\uec57"
+    "IconGlyph": {
+      "Glyph": "\uec57",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "BackupAndRestore",
@@ -1590,7 +1837,10 @@
       "timedate.cpl"
     ],
     "Command": "control /name Microsoft.DateAndTime",
-    "Glyph": "\uec92"
+    "IconGlyph": {
+      "Glyph": "\uec92",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "DefaultLocation",
@@ -1633,7 +1883,10 @@
     "Area": "AppearanceAndPersonalization",
     "Type": "ControlPanel",
     "Command": "control /name Microsoft.Fonts",
-    "Glyph": "\ue8d2"
+    "IconGlyph": {
+      "Glyph": "\ue8d2",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "GameControllers",
@@ -1856,7 +2109,10 @@
     "Area": "HardwareAndSound",
     "Type": "ControlPanel",
     "Command": "control /name Microsoft.Sound",
-    "Glyph": "\ue995"
+    "IconGlyph": {
+      "Glyph": "\ue995",
+      "FontFamily": "Segoe MDL2 Assets"
+    }
   },
   {
     "Name": "SpeechRecognition",
