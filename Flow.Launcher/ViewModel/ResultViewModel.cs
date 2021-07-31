@@ -35,7 +35,7 @@ namespace Flow.Launcher.ViewModel
                                                 ? Result.SubTitle
                                                 : Result.SubTitleToolTip;
 
-        private bool ImageLoaded;
+        private volatile bool ImageLoaded;
 
         private ImageSource image = ImageLoader.DefaultImage;
 
@@ -46,13 +46,13 @@ namespace Flow.Launcher.ViewModel
                 if (!ImageLoaded)
                 {
                     ImageLoaded = true;
-                    LoadImage();
+                    _ = LoadImageAsync();
                 }
                 return image;
             }
             private set => image = value;
         }
-        private async void LoadImage()
+        private async ValueTask LoadImageAsync()
         {
             var imagePath = Result.IcoPath;
             if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
