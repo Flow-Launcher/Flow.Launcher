@@ -66,7 +66,9 @@ namespace Flow.Launcher.ViewModel
                                 {
                                     OnPropertyChanged(nameof(Image));
                                 });
-            } 
+
+                Glyph = Result.Glyph;
+            }
 
             Settings = settings;
         }
@@ -74,7 +76,8 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; private set; }
 
         public Visibility ShowOpenResultHotkey => Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Hidden;
-
+        public Visibility ShowIcon => Result.IcoPath != null || Result.Icon is not null || Glyph == null ? Visibility.Visible : Visibility.Hidden;
+        public Visibility ShowGlyph => Glyph is not null ? Visibility.Visible : Visibility.Hidden;
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
@@ -86,6 +89,8 @@ namespace Flow.Launcher.ViewModel
                                                 : Result.SubTitleToolTip;
 
         public LazyAsync<ImageSource> Image { get; set; }
+
+        public GlyphInfo Glyph { get; set; }
 
         private async ValueTask<ImageSource> SetImage()
         {
@@ -106,7 +111,7 @@ namespace Flow.Launcher.ViewModel
             if (ImageLoader.CacheContainImage(imagePath))
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
                 return ImageLoader.Load(imagePath);
-            
+
             return await Task.Run(() => ImageLoader.Load(imagePath));
         }
 
