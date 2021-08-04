@@ -52,7 +52,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 Score = score,
                 TitleToolTip = Constants.ToolTipOpenDirectory,
-                SubTitleToolTip = Constants.ToolTipOpenDirectory,
+                SubTitleToolTip = subtitle,
                 ContextData = new SearchResult
                 {
                     Type = ResultType.Folder,
