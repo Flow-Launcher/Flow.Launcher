@@ -16,7 +16,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     var settings = Plugins[metadata.ID];
                     
-                    if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count != settings.ActionKeywords.Count)
+                    if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count > settings.ActionKeywords.Count)
                     {
                         // TODO: Remove. This is backwards compatibility for Explorer 1.8.0 release.
                         // Introduced two new action keywords in Explorer, so need to update plugin setting in the UserData folder.
