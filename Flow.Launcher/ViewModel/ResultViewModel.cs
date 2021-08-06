@@ -6,6 +6,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using System.IO;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -60,14 +61,25 @@ namespace Flow.Launcher.ViewModel
                 Result = result;
 
                 Image = new LazyAsync<ImageSource>(
-                            SetImage,
-                            ImageLoader.DefaultImage,
-                            () =>
-                                {
-                                    OnPropertyChanged(nameof(Image));
-                                });
+                    SetImage,
+                    ImageLoader.DefaultImage,
+                    () =>
+                    {
+                        OnPropertyChanged(nameof(Image));
+                    });
 
-                Glyph = Result.Glyph;
+                if (Result.Glyph.FontFamily.Contains('/'))
+                {
+                    var fontPath = Result.Glyph.FontFamily;
+                    Glyph = Path.IsPathRooted(fontPath) ? Result.Glyph : Result.Glyph with
+                    {
+                        FontFamily = Path.Combine(Result.PluginDirectory, fontPath)
+                    };
+                }
+                else
+                {
+                    Glyph = Result.Glyph;
+                }
             }
 
             Settings = settings;
@@ -81,12 +93,12 @@ namespace Flow.Launcher.ViewModel
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
-                                            ? Result.Title
-                                            : Result.TitleToolTip;
+            ? Result.Title
+            : Result.TitleToolTip;
 
         public string ShowSubTitleToolTip => string.IsNullOrEmpty(Result.SubTitleToolTip)
-                                                ? Result.SubTitle
-                                                : Result.SubTitleToolTip;
+            ? Result.SubTitle
+            : Result.SubTitleToolTip;
 
         public LazyAsync<ImageSource> Image { get; set; }
 
