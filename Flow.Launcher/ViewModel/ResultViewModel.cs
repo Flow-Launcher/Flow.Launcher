@@ -68,17 +68,20 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(Image));
                     });
 
-                if (Result.Glyph.FontFamily.Contains('/'))
+                if (Result.Glyph is { FontFamily: not null } glyph)
                 {
-                    var fontPath = Result.Glyph.FontFamily;
-                    Glyph = Path.IsPathRooted(fontPath) ? Result.Glyph : Result.Glyph with
+                    if (glyph.FontFamily.Contains('/'))
                     {
-                        FontFamily = Path.Combine(Result.PluginDirectory, fontPath)
-                    };
-                }
-                else
-                {
-                    Glyph = Result.Glyph;
+                        var fontPath = Result.Glyph.FontFamily;
+                        Glyph = Path.IsPathRooted(fontPath) ? Result.Glyph : Result.Glyph with
+                        {
+                            FontFamily = Path.Combine(Result.PluginDirectory, fontPath)
+                        };
+                    }
+                    else
+                    {
+                        Glyph = glyph;
+                    }
                 }
             }
 
