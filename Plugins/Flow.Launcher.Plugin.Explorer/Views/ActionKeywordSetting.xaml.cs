@@ -63,22 +63,16 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
 
-            if (ActionKeyword == Query.GlobalPluginWildcardSign 
-                && (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword 
-                        || CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.QuickAccessActionKeyword))
-            {
+            if (ActionKeyword == Query.GlobalPluginWildcardSign)
                 switch (CurrentActionKeyword.KeywordProperty)
                 {
                     case Settings.ActionKeyword.FileContentSearchActionKeyword:
                         MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
-                        break;
+                        return;
                     case Settings.ActionKeyword.QuickAccessActionKeyword:
                         MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
-                        break;
+                        return;
                 }
-
-                return;
-            }
 
             var oldActionKeyword = CurrentActionKeyword.Keyword;
 
@@ -92,7 +86,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 switch (Enabled)
                 {
                     // reset to global so it does not take up an action keyword when disabled
-                    //     not for null Enable plugin
+                    // not for null Enable plugin
                     case false when oldActionKeyword != Query.GlobalPluginWildcardSign:
                         settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
                             Query.GlobalPluginWildcardSign, oldActionKeyword);
