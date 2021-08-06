@@ -185,7 +185,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var uninstallSearch = search.Replace(Settings.HotkeyUpdate, string.Empty).TrimStart();
 
-
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
                 join pluginFromManifest in pluginsManifest.UserPlugins
