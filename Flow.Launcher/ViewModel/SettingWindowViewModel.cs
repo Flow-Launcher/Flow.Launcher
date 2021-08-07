@@ -18,6 +18,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -42,6 +43,8 @@ namespace Flow.Launcher.ViewModel
             };
         }
 
+        public SettingWindow Window { private get; set; }
+        
         public Settings Settings { get; set; }
 
         public async void UpdateApp()
@@ -136,7 +139,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 InternationalizationManager.Instance.ChangeLanguage(value);
-
+                Window.UpdateLayout();
                 if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
                     ShouldUsePinyin = true;
             }

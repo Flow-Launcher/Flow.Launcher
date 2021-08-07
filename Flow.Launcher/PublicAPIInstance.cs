@@ -105,6 +105,7 @@ namespace Flow.Launcher
             Application.Current.Dispatcher.Invoke(() =>
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
+                _settingsVM.Window = sw;
             });
         }
 
