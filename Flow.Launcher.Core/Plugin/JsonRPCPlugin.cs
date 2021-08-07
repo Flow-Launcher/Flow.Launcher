@@ -234,7 +234,6 @@ namespace Flow.Launcher.Core.Plugin
                     // ReSharper disable once AccessToModifiedClosure
                     // Manually Check whether disposed
                     if (!disposed && !process.HasExited)
-                        // ReSharper disable once AccessToDisposedClosure
                         process.Kill();
                 });
 
