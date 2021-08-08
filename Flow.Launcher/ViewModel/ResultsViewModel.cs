@@ -169,12 +169,12 @@ namespace Flow.Launcher.ViewModel
             switch (Visbility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    Margin = new Thickness {Top = 8};
+                    Margin = new Thickness { Top = 8 };
                     SelectedIndex = 0;
                     Visbility = Visibility.Visible;
                     break;
                 case Visibility.Visible when Results.Count == 0:
-                    Margin = new Thickness {Top = 0};
+                    Margin = new Thickness { Top = 0 };
                     Visbility = Visibility.Collapsed;
                     break;
             }
@@ -222,7 +222,7 @@ namespace Flow.Launcher.ViewModel
 
         public static Inline GetFormattedText(DependencyObject textBlock)
         {
-            return (Inline) textBlock.GetValue(FormattedTextProperty);
+            return (Inline)textBlock.GetValue(FormattedTextProperty);
         }
 
         private static void FormattedTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -230,7 +230,7 @@ namespace Flow.Launcher.ViewModel
             var textBlock = d as TextBlock;
             if (textBlock == null) return;
 
-            var inline = (Inline) e.NewValue;
+            var inline = (Inline)e.NewValue;
 
             textBlock.Inlines.Clear();
             if (inline == null) return;
@@ -299,27 +299,15 @@ namespace Flow.Launcher.ViewModel
                 if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
                     return;
 
-                if (newItems.Count < 100)
-                {
-                    if (Count != 0) RemoveAll(newItems.Count);
-                    AddAll(newItems);
-                    editTime++;
-                    return;
-                }
-                else
-                {
-                    if (editTime < 5)
-                        AddAll(newItems.GetRange(0, 100));
-                    Clear();
+                Clear();
 
-                    BulkAddAll(newItems);
-                    if (Capacity > 8000 && newItems.Count < 3000)
-                    {
-                        Capacity = newItems.Count;
-                    }
-
-                    editTime++;
+                BulkAddAll(newItems);
+                if (Capacity > 8000 && newItems.Count < 3000)
+                {
+                    Capacity = newItems.Count;
                 }
+
+                editTime++;
             }
         }
     }
