@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.Program
 {
@@ -20,14 +21,17 @@ namespace Flow.Launcher.Plugin.Program
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(tbSuffixes.Text))
+            var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
+
+            if (suffixes.Length == 0)
             {
                 string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");
                 MessageBox.Show(warning);
                 return;
             }
 
-            _settings.ProgramSuffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator);
+            _settings.ProgramSuffixes = suffixes;
+
             string msg = context.API.GetTranslation("flowlauncher_plugin_program_update_file_suffixes");
             MessageBox.Show(msg);
 

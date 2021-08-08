@@ -31,12 +31,15 @@
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
     <system:String x:Key="pythonDirectory">Priečinok s Pythonom</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
+    <system:String x:Key="autoHideScrollBar">Automaticky skryť posuvník</system:String>
+    <system:String x:Key="autoHideScrollBarToolTip">Automaticky skrývať posuvník v okne nastavení a zobraziť ho, keď naň prejdete myšou</system:String>
     <system:String x:Key="selectPythonDirectory">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="ShouldUsePinyin">Použiť Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou Pinyin. Pinyin je štandardný systém romanizovaného pravopisu pre transliteráciu čínštiny</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -48,6 +51,7 @@
     <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita:</system:String>
     <system:String x:Key="newPriority">Nová priorita:</system:String>
+    <system:String x:Key="priority">Priorita:</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">Autor</system:String>
     <system:String x:Key="plugin_init_time">Príprava:</system:String>
@@ -70,6 +74,7 @@
     <system:String x:Key="openResultModifiers">Modifikáčné klávesy na otvorenie výsledkov</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="customQueryHotkey">Vlastná klávesová skratka na vyhľadávanie</system:String>
+    <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
     <system:String x:Key="add">Pridať</system:String>

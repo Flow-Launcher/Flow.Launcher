@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
 using System.Windows.Input;
-using NHotkey;
-using NHotkey.Wpf;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -39,7 +37,7 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
-        private readonly Settings _settings;
+        internal readonly Settings _settings;
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
@@ -80,8 +78,6 @@ namespace Flow.Launcher.ViewModel
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
 
-            SetHotkey(_settings.Hotkey, OnHotkey);
-            SetCustomPluginHotkey();
             SetOpenResultModifiers();
         }
 
@@ -112,9 +108,7 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
-            }
-
-            ;
+            };
 
             void continueAction(Task t)
             {
@@ -135,14 +129,17 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery == QueryText) // TODO: allow cancellation
+                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
                     {
-                        PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                        if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, _updateToken)))
-                        {
-                            Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
-                        }
-                        ;
+                        return;
+                    }
+
+                    var token = e.Token == default ? _updateToken : e.Token;
+
+                    PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, token)))
+                    {
+                        Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                     }
                 };
             }
@@ -290,8 +287,8 @@ namespace Flow.Launcher.ViewModel
         /// <param name="queryText"></param>
         public void ChangeQueryText(string queryText)
         {
-            QueryTextCursorMovedToEnd = true;
             QueryText = queryText;
+            QueryTextCursorMovedToEnd = true;
         }
 
         public bool LastQuerySelected { get; set; }
@@ -460,7 +457,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
-        
+
         private async void QueryResults()
         {
             _updateSource?.Cancel();
@@ -554,7 +551,7 @@ namespace Flow.Launcher.ViewModel
                 await Task.Yield();
 
                 IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
-                
+
                 currentCancellationToken.ThrowIfCancellationRequested();
 
                 results ??= _emptyResult;
@@ -565,7 +562,6 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
-
 
         private void RemoveOldQueryResults(Query query)
         {
@@ -656,96 +652,12 @@ namespace Flow.Launcher.ViewModel
 
         #region Hotkey
 
-        private void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
-        {
-            var hotkey = new HotkeyModel(hotkeyStr);
-            SetHotkey(hotkey, action);
-        }
-
-        private void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
-        {
-            string hotkeyStr = hotkey.ToString();
-            try
-            {
-                HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
-            }
-            catch (Exception)
-            {
-                string errorMsg =
-                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"),
-                        hotkeyStr);
-                MessageBox.Show(errorMsg);
-            }
-        }
-
-        public void RemoveHotkey(string hotkeyStr)
-        {
-            if (!string.IsNullOrEmpty(hotkeyStr))
-            {
-                HotkeyManager.Current.Remove(hotkeyStr);
-            }
-        }
-
-        /// <summary>
-        /// Checks if Flow Launcher should ignore any hotkeys
-        /// </summary>
-        /// <returns></returns>
-        private bool ShouldIgnoreHotkeys()
-        {
-            //double if to omit calling win32 function
-            if (_settings.IgnoreHotkeysOnFullscreen)
-                if (WindowsInteropHelper.IsWindowFullscreen())
-                    return true;
-
-            return false;
-        }
-
-        private void SetCustomPluginHotkey()
-        {
-            if (_settings.CustomPluginHotkeys == null) return;
-            foreach (CustomPluginHotkey hotkey in _settings.CustomPluginHotkeys)
-            {
-                SetHotkey(hotkey.Hotkey, (s, e) =>
-                {
-                    if (ShouldIgnoreHotkeys()) return;
-                    MainWindowVisibility = Visibility.Visible;
-                    ChangeQueryText(hotkey.ActionKeyword);
-                });
-            }
-        }
-
         private void SetOpenResultModifiers()
         {
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        private void OnHotkey(object sender, HotkeyEventArgs e)
-        {
-            if (!ShouldIgnoreHotkeys())
-            {
-                if (_settings.LastQueryMode == LastQueryMode.Empty)
-                {
-                    ChangeQueryText(string.Empty);
-                }
-                else if (_settings.LastQueryMode == LastQueryMode.Preserved)
-                {
-                    LastQuerySelected = true;
-                }
-                else if (_settings.LastQueryMode == LastQueryMode.Selected)
-                {
-                    LastQuerySelected = false;
-                }
-                else
-                {
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
-                }
-
-                ToggleFlowLauncher();
-                e.Handled = true;
-            }
-        }
-
-        private void ToggleFlowLauncher()
+        internal void ToggleFlowLauncher()
         {
             if (MainWindowVisibility != Visibility.Visible)
             {
@@ -793,7 +705,6 @@ namespace Flow.Launcher.ViewModel
                 token = default;
             }
 #endif
-
 
             foreach (var metaResults in resultsForUpdates)
             {

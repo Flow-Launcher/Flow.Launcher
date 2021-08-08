@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using System;
@@ -21,17 +21,19 @@ namespace Flow.Launcher.Plugin.Explorer
         public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
-        public bool EnableSearchActionKeyword { get; set; } = true;
+        public bool SearchActionKeywordEnabled { get; set; } = true;
 
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
 
         public string PathSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        public bool EnabledPathSearchKeyword { get; set; }
+        public bool PathSearchKeywordEnabled { get; set; }
 
         public string IndexSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        public bool EnabledIndexOnlySearchKeyword { get; set; }
+        public bool IndexOnlySearchKeywordEnabled { get; set; }
+
+        public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         internal enum ActionKeyword
         {
@@ -58,19 +60,19 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
 
-        internal bool? GetActionKeywordEnable(ActionKeyword actionKeyword) => actionKeyword switch
+        internal bool? GetActionKeywordEnabled(ActionKeyword actionKeyword) => actionKeyword switch
         {
-            ActionKeyword.SearchActionKeyword => EnableSearchActionKeyword,
-            ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword,
-            ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword,
+            ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
+            ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
+            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled,
             _ => null
         };
 
-        internal void SetActionKeywordEnable(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
+        internal void SetActionKeywordEnabled(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
         {
-            ActionKeyword.SearchActionKeyword => EnableSearchActionKeyword = enable,
-            ActionKeyword.PathSearchActionKeyword => EnabledPathSearchKeyword = enable,
-            ActionKeyword.IndexSearchActionKeyword => EnabledIndexOnlySearchKeyword = enable,
+            ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
+            ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
+            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
         };
     }

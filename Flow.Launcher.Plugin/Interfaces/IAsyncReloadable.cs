@@ -13,7 +13,7 @@ namespace Flow.Launcher.Plugin
     /// The command that allows user to manual reload is exposed via Plugin.Sys, and
     /// it will call the plugins that have implemented this interface.
     /// </summary>
-    public interface IAsyncReloadable
+    public interface IAsyncReloadable : IFeatures
     {
         Task ReloadDataAsync();
     }

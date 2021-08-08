@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
+using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
+using Microsoft.IO;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -33,22 +35,18 @@ namespace Flow.Launcher.Core.Plugin
         protected abstract string ExecuteCallback(JsonRPCRequestModel rpcRequest);
         protected abstract string ExecuteContextMenu(Result selectedResult);
 
+        private static readonly RecyclableMemoryStreamManager BufferManager = new();
+
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            string output = ExecuteContextMenu(selectedResult);
-            try
-            {
-                return DeserializedResult(output);
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|JsonRPCPlugin.LoadContextMenus|Exception on result <{selectedResult}>", e);
-                return null;
-            }
+            var output = ExecuteContextMenu(selectedResult);
+            return DeserializedResult(output);
         }
 
-        private static readonly JsonSerializerOptions _options = new()
+        private static readonly JsonSerializerOptions options = new()
         {
+            PropertyNameCaseInsensitive = true,
+            IgnoreNullValues = true,
             Converters =
             {
                 new JsonObjectConverter()
@@ -59,8 +57,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (output == Stream.Null) return null;
 
-            var queryResponseModel = await
-                JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, _options);
+            var queryResponseModel =
+                await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
             return ParseResults(queryResponseModel);
         }
@@ -70,14 +68,13 @@ namespace Flow.Launcher.Core.Plugin
             if (string.IsNullOrEmpty(output)) return null;
 
             var queryResponseModel =
-                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, _options);
+                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, options);
             return ParseResults(queryResponseModel);
         }
 
 
         private List<Result> ParseResults(JsonRPCQueryResponseModel queryResponseModel)
         {
-            var results = new List<Result>();
             if (queryResponseModel.Result == null) return null;
 
             if (!string.IsNullOrEmpty(queryResponseModel.DebugMessage))
@@ -85,7 +82,7 @@ namespace Flow.Launcher.Core.Plugin
                 context.API.ShowMsg(queryResponseModel.DebugMessage);
             }
 
-            foreach (JsonRPCResult result in queryResponseModel.Result)
+            foreach (var result in queryResponseModel.Result)
             {
                 result.Action = c =>
                 {
@@ -110,7 +107,8 @@ namespace Flow.Launcher.Core.Plugin
                             return !result.JsonRPCAction.DontHideAfterAction;
                         }
 
-                        var jsonRpcRequestModel = JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, _options);
+                        var jsonRpcRequestModel =
+                            JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, options);
 
                         if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
                         {
@@ -121,8 +119,11 @@ namespace Flow.Launcher.Core.Plugin
 
                     return !result.JsonRPCAction.DontHideAfterAction;
                 };
-                results.Add(result);
             }
+
+            var results = new List<Result>();
+
+            results.AddRange(queryResponseModel.Result);
 
             return results;
         }
@@ -213,18 +214,52 @@ namespace Flow.Launcher.Core.Plugin
 
         protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
+            Process process = null;
+            bool disposed = false;
             try
             {
-                using var process = Process.Start(startInfo);
+                process = Process.Start(startInfo);
                 if (process == null)
                 {
                     Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
                     return Stream.Null;
                 }
 
-                var result = process.StandardOutput.BaseStream;
+                await using var source = process.StandardOutput.BaseStream;
+
+                var buffer = BufferManager.GetStream();
+
+                token.Register(() =>
+                {
+                    // ReSharper disable once AccessToModifiedClosure
+                    // Manually Check whether disposed
+                    if (!disposed && !process.HasExited)
+                        process.Kill();
+                });
+
+                try
+                {
+                    // token expire won't instantly trigger the exception, 
+                    // manually kill process at before
+                    await source.CopyToAsync(buffer, token);
+                }
+                catch (OperationCanceledException)
+                {
+                    await buffer.DisposeAsync();
+                    return Stream.Null;
+                }
+
+                buffer.Seek(0, SeekOrigin.Begin);
 
                 token.ThrowIfCancellationRequested();
+
+                if (buffer.Length == 0)
+                {
+                    var errorMessage = process.StandardError.EndOfStream ? 
+                        "Empty JSONRPC Response" : 
+                        await process.StandardError.ReadToEndAsync();
+                    throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
+                }
 
                 if (!process.StandardError.EndOfStream)
                 {
@@ -233,37 +268,23 @@ namespace Flow.Launcher.Core.Plugin
 
                     if (!string.IsNullOrEmpty(error))
                     {
-                        Log.Error($"|JsonRPCPlugin.ExecuteAsync|{error}");
-                        return Stream.Null;
+                        Log.Error($"|{context.CurrentPluginMetadata.Name}.{nameof(ExecuteAsync)}|{error}");
                     }
-
-                    Log.Error("|JsonRPCPlugin.ExecuteAsync|Empty standard output and standard error.");
-                    return Stream.Null;
                 }
 
-                return result;
+                return buffer;
             }
-            catch (Exception e)
+            finally
             {
-                Log.Exception(
-                    $"|JsonRPCPlugin.ExecuteAsync|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
-                    e);
-                return Stream.Null;
+                process?.Dispose();
+                disposed = true;
             }
         }
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
             var output = await ExecuteQueryAsync(query, token);
-            try
-            {
-                return await DeserializedResultAsync(output);
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|JsonRPCPlugin.Query|Exception when query <{query}>", e);
-                return null;
-            }
+            return await DeserializedResultAsync(output);
         }
 
         public virtual Task InitAsync(PluginInitContext context)

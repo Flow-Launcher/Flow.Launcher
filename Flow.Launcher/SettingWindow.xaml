@@ -18,6 +18,7 @@
         Height="600" Width="900"
         MinWidth="850"
         MinHeight="500"
+        Loaded="OnLoaded" 
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
     <Window.InputBindings>
@@ -37,7 +38,7 @@
     <TabControl Height="auto" SelectedIndex="0">
         <TabItem Header="{DynamicResource general}">
             <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="60,0,0,0">
-                <StackPanel Orientation="Vertical" Margin="0,30,0,0">
+                <StackPanel Orientation="Vertical" Margin="0,30,0,30">
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding PortableMode}">
                         <TextBlock Text="{DynamicResource portableMode}" />
                     </ui:ToggleSwitch>
@@ -179,7 +180,7 @@
                                        Text="{Binding PluginPair.Metadata.Description}"
                                        Grid.Row="1" Opacity="0.5" Grid.Column="2" />
                             <DockPanel Grid.ColumnSpan="2" Grid.Row="2" Margin="0 10 0 8" HorizontalAlignment="Right">
-                                <TextBlock Text="Priority" Margin="15,0,0,0" MaxWidth="100"/>
+                                <TextBlock Text="{DynamicResource priority}" Margin="15,0,0,0" MaxWidth="100"/>
                                 <TextBlock Text="{Binding Priority}"
                                             ToolTip="Change Plugin Results Priority"
                                             Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
@@ -364,7 +365,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{DynamicResource actionKeywords}" Width="546">
+                            <GridViewColumn Header="{DynamicResource customQuery}" Width="546">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate DataType="userSettings:CustomPluginHotkey">
                                         <TextBlock Text="{Binding ActionKeyword}" />

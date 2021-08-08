@@ -89,7 +89,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow-Launcher-v$version.exe"
+    $file = "$output\Flow-Launcher-Setup.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
@@ -105,6 +105,13 @@ function Publish-Self-Contained ($p) {
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
+}
+
+function Publish-Portable ($outputLocation, $version) {
+    
+    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }
 
 function Main {
@@ -123,6 +130,8 @@ function Main {
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
+
+        Publish-Portable $o $v
     }
 }
 
