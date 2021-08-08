@@ -84,7 +84,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public bool ContainsKey(string key)
         {
-            return Data.ContainsKey(key) && Data[key].imageSource != null;
+            return key is not null && Data.ContainsKey(key) && Data[key].imageSource != null;
         }
 
         public int CacheSize()
