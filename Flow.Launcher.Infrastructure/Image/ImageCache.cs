@@ -70,7 +70,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
                     if (Data.Count > permissibleFactor * MaxCached)
                     {
-                        await semaphore.WaitAsync();
+                        await semaphore.WaitAsync().ConfigureAwait(false);
                         // To delete the images from the data dictionary based on the resizing of the Usage Dictionary
                         // Double Check to avoid concurrent remove
                         if (Data.Count > permissibleFactor * MaxCached)
