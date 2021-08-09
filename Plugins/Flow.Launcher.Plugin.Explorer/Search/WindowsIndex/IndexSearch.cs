@@ -88,7 +88,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         internal async static Task<List<Result>> WindowsIndexSearchAsync(
             string searchString,
-            CSearchQueryHelper queryHelper,
+            Func<CSearchQueryHelper> createQueryHelper,
             Func<string, string> constructQuery,
             List<AccessLink> exclusionList,
             Query query,
@@ -104,7 +104,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 var constructedQuery = constructQuery(searchString);
 
                 return RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, queryHelper.ConnectionString, query, token).ConfigureAwait(false),
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, query, token).ConfigureAwait(false),
                         exclusionList,
                         token);
             }

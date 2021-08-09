@@ -42,7 +42,7 @@
                             <ColumnDefinition Width="0" />
                         </Grid.ColumnDefinitions>
                         <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Left"
-                               Source="{Binding Image.Value}" Visibility="{Binding ShowImage}" />
+                               Source="{Binding Image}" Visibility="{Binding ShowIcon}" />
                         <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
                                    Text="{Binding Glyph.Glyph}" FontFamily="{Binding Glyph.FontFamily}" FontSize="24"
                                    Visibility="{Binding ShowGlyph}"/>

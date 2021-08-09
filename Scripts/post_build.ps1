@@ -89,7 +89,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow-Launcher-v$version.exe"
+    $file = "$output\Flow-Launcher-Setup.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
@@ -109,7 +109,7 @@ function Publish-Self-Contained ($p) {
 
 function Publish-Portable ($outputLocation, $version) {
     
-    & $outputLocation\Flow-Launcher-v$v.exe --silent | Out-Null
+    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
     mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
     Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }

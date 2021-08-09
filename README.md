@@ -49,7 +49,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 ### Installation
 
-| [Windows 7 and up installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `WinGet install "Flow Launcher"` |
+| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `WinGet install "Flow Launcher"` |
 | --------------------------------- | --------------------------------- | --------------------------------- |
 
 Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
@@ -59,10 +59,10 @@ Windows may complain about security due to code not being signed, this will be c
 - Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
 - Cancel/Return to previous screen: <kbd>Esc</kbd>.
 - Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
-- Saved user settings are located:
+- Type `flow user data` to open your saved user settings folder. They are located at:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
-- Logs are saved along with your user settings folder.
+- Type `open log location` to open your logs folder, they are saved along with your user settings folder.
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
@@ -74,7 +74,7 @@ If you are using Python plugins, flow will prompt to either select the location 
 
 Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
 
-If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-csharp-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
+If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
 
 ## Questions/Suggestions
 

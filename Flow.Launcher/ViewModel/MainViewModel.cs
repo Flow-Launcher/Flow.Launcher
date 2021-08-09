@@ -108,9 +108,7 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
-            }
-
-            ;
+            };
 
             void continueAction(Task t)
             {

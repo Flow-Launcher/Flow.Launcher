@@ -40,15 +40,7 @@ namespace Flow.Launcher.Core.Plugin
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             var output = ExecuteContextMenu(selectedResult);
-            try
-            {
-                return DeserializedResult(output);
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|JsonRPCPlugin.LoadContextMenus|Exception on result <{selectedResult}>", e);
-                return null;
-            }
+            return DeserializedResult(output);
         }
 
         private static readonly JsonSerializerOptions options = new()
@@ -65,23 +57,10 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (output == Stream.Null) return null;
 
-            try
-            {
-                var queryResponseModel =
-                    await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
+            var queryResponseModel =
+                await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
-                return ParseResults(queryResponseModel);
-            }
-            catch (JsonException e)
-            {
-                Log.Exception(GetType().FullName, "Unexpected Json Input", e);
-            }
-            finally
-            {
-                await output.DisposeAsync();
-            }
-
-            return null;
+            return ParseResults(queryResponseModel);
         }
 
         private List<Result> DeserializedResult(string output)
@@ -249,7 +228,7 @@ namespace Flow.Launcher.Core.Plugin
                 await using var source = process.StandardOutput.BaseStream;
 
                 var buffer = BufferManager.GetStream();
-                
+
                 token.Register(() =>
                 {
                     // ReSharper disable once AccessToModifiedClosure
@@ -274,6 +253,14 @@ namespace Flow.Launcher.Core.Plugin
 
                 token.ThrowIfCancellationRequested();
 
+                if (buffer.Length == 0)
+                {
+                    var errorMessage = process.StandardError.EndOfStream ? 
+                        "Empty JSONRPC Response" : 
+                        await process.StandardError.ReadToEndAsync();
+                    throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
+                }
+
                 if (!process.StandardError.EndOfStream)
                 {
                     using var standardError = process.StandardError;
@@ -281,22 +268,11 @@ namespace Flow.Launcher.Core.Plugin
 
                     if (!string.IsNullOrEmpty(error))
                     {
-                        Log.Error($"|JsonRPCPlugin.ExecuteAsync|{error}");
-                        return Stream.Null;
+                        Log.Error($"|{context.CurrentPluginMetadata.Name}.{nameof(ExecuteAsync)}|{error}");
                     }
-
-                    Log.Error("|JsonRPCPlugin.ExecuteAsync|Empty standard output and standard error.");
-                    return Stream.Null;
                 }
 
                 return buffer;
-            }
-            catch (Exception e)
-            {
-                Log.Exception(
-                    $"|JsonRPCPlugin.ExecuteAsync|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
-                    e);
-                return Stream.Null;
             }
             finally
             {
@@ -307,20 +283,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            try
-            {
-                var output = await ExecuteQueryAsync(query, token);
-                return await DeserializedResultAsync(output);
-            }
-            catch (OperationCanceledException)
-            {
-                return null;
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|JsonRPCPlugin.Query|Exception when query <{query}>", e);
-                return null;
-            }
+            var output = await ExecuteQueryAsync(query, token);
+            return await DeserializedResultAsync(output);
         }
 
         public virtual Task InitAsync(PluginInitContext context)
