@@ -68,11 +68,14 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
+
+                HotKeyMapper.Initialize(_mainVM);
+
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
-                
+
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
 
@@ -95,6 +98,8 @@ namespace Flow.Launcher
 
                 AutoStartup();
                 AutoUpdates();
+
+                API.SaveAppAllSettings();
 
                 _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");

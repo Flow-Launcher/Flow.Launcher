@@ -31,12 +31,15 @@
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
+    <system:String x:Key="autoHideScrollBar">Auto Hide Scroll Bar</system:String>
+    <system:String x:Key="autoHideScrollBarToolTip">Automatically hides the Settings window scroll bar and show when hover the mouse over it</system:String>
     <system:String x:Key="selectPythonDirectory">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for transliterating Chinese</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
@@ -48,6 +51,7 @@
     <system:String x:Key="newActionKeyword">New action keyword:</system:String>
     <system:String x:Key="currentPriority">Current Priority:</system:String>
     <system:String x:Key="newPriority">New Priority:</system:String>
+    <system:String x:Key="priority">Priority:</system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
     <system:String x:Key="author">Author</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
@@ -70,6 +74,7 @@
     <system:String x:Key="openResultModifiers">Open Result Modifiers</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
+    <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>
     <system:String x:Key="add">Add</system:String>
@@ -134,7 +139,7 @@
     <system:String x:Key="update">Update</system:String>
 
     <!--Hotkey Control-->
-    <system:String x:Key="hotkeyUnavailable">Hotkey unavailable</system:String>
+    <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>
 
     <!--Crash Reporter-->
     <system:String x:Key="reportWindow_version">Version</system:String>

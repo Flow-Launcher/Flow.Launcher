@@ -22,3 +22,4 @@ namespace Flow.Launcher.Infrastructure.Storage
         }
     }
 }
+

@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer
             return new ExplorerSettings(viewModel);
         }
 
-        public async Task InitAsync(PluginInitContext context)
+        public Task InitAsync(PluginInitContext context)
         {
             Context = context;
             
@@ -46,7 +46,9 @@ namespace Flow.Launcher.Plugin.Explorer
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
-            ResultManager.Init(Context);
+            ResultManager.Init(Context, Settings);
+
+            return Task.CompletedTask;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)

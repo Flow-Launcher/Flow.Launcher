@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -21,8 +21,8 @@ namespace Flow.Launcher.Core.Plugin
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
-        public static readonly List<PluginPair> GlobalPlugins = new List<PluginPair>();
-        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new Dictionary<string, PluginPair>();
+        public static readonly HashSet<PluginPair> GlobalPlugins = new();
+        public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
 
         public static IPublicAPI API { private set; get; }
 
@@ -33,7 +33,10 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
-        private static readonly string[] Directories = { Constant.PreinstalledDirectory, DataLocation.PluginsDirectory };
+        private static readonly string[] Directories =
+        {
+            Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
+        };
 
         private static void DeletePythonBinding()
         {
@@ -51,7 +54,24 @@ namespace Flow.Launcher.Core.Plugin
                 var savable = plugin.Plugin as ISavable;
                 savable?.Save();
             }
+
             API.SavePluginSettings();
+        }
+
+        public static async ValueTask DisposePluginsAsync()
+        {
+            foreach (var pluginPair in AllPlugins)
+            {
+                switch (pluginPair.Plugin)
+                {
+                    case IDisposable disposable:
+                        disposable.Dispose();
+                        break;
+                    case IAsyncDisposable asyncDisposable:
+                        await asyncDisposable.DisposeAsync();
+                        break;
+                }
+            }
         }
 
         public static async Task ReloadData()
@@ -99,7 +119,7 @@ namespace Flow.Launcher.Core.Plugin
                 try
                 {
                     var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                                                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
+                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
@@ -118,7 +138,9 @@ namespace Flow.Launcher.Core.Plugin
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             foreach (var plugin in AllPlugins)
             {
-                foreach (var actionKeyword in plugin.Metadata.ActionKeywords)
+                // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
+                // has multiple global and action keywords because we will only add them here once.
+                foreach (var actionKeyword in plugin.Metadata.ActionKeywords.Distinct())
                 {
                     switch (actionKeyword)
                     {
@@ -141,12 +163,15 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static List<PluginPair> ValidPluginsForQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
         {
             if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
             {
                 var plugin = NonGlobalPlugins[query.ActionKeyword];
-                return new List<PluginPair> { plugin };
+                return new List<PluginPair>
+                {
+                    plugin
+                };
             }
             else
             {
@@ -154,7 +179,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static async Task<List<Result>> QueryForPlugin(PluginPair pair, Query query, CancellationToken token)
+        public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             try
@@ -168,7 +193,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 token.ThrowIfCancellationRequested();
                 if (results == null)
-                    return results;
+                    return null;
                 UpdatePluginMetadata(results, metadata, query);
 
                 metadata.QueryCount += 1;
@@ -180,10 +205,6 @@ namespace Flow.Launcher.Core.Plugin
             {
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return null;
-            }
-            catch (Exception e)
-            {
-                Log.Exception($"|PluginManager.QueryForPlugin|Exception for plugin <{pair.Metadata.Name}> when query <{query}>", e);
             }
 
             return results;
@@ -229,7 +250,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 try
                 {
-                    results = plugin.LoadContextMenus(result);
+                    results = plugin.LoadContextMenus(result) ?? results;
                     foreach (var r in results)
                     {
                         r.PluginDirectory = pluginPair.Metadata.PluginDirectory;
@@ -250,6 +271,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
+            // this method is only checking for action keywords (defined as not '*') registration
+            // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
             return actionKeyword != Query.GlobalPluginWildcardSign
                    && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
@@ -274,7 +297,7 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// used to add action keyword for multiple action keyword plugin
+        /// used to remove action keyword for multiple action keyword plugin
         /// e.g. web search
         /// </summary>
         public static void RemoveActionKeyword(string id, string oldActionkeyword)
@@ -283,9 +306,7 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword == Query.GlobalPluginWildcardSign
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
-                    .Where(x => x == Query.GlobalPluginWildcardSign)
-                    .ToList()
-                    .Count == 1)
+                    .Count(x => x == Query.GlobalPluginWildcardSign) == 1)
             {
                 GlobalPlugins.Remove(plugin);
             }

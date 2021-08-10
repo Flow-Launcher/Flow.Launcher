@@ -39,7 +39,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
-        internal SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
+        [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
 
         [JsonIgnore]
         public string QuerySearchPrecisionString
@@ -96,6 +97,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool HideWhenDeactive { get; set; } = true;
         public bool RememberLastLaunchLocation { get; set; }
         public bool IgnoreHotkeysOnFullscreen { get; set; }
+
+        public bool AutoHideScrollBar { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
 

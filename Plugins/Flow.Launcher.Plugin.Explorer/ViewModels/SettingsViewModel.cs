@@ -41,18 +41,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        internal void UpdateActionKeyword(string newActionKeyword, string oldActionKeyword)
+        internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
             PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
-
-            if (Settings.FileContentSearchActionKeyword == oldActionKeyword)
-                Settings.FileContentSearchActionKeyword = newActionKeyword;
-
-            if (Settings.SearchActionKeyword == oldActionKeyword)
-                Settings.SearchActionKeyword = newActionKeyword;
         }
 
-        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword)
+        {
+            return PluginManager.ActionKeywordRegistered(newActionKeyword);
+        }
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
     }

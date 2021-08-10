@@ -17,6 +17,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -80,6 +81,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                 "|Error caused while trying to get the details of the UWP program", e);
 
                 Apps = new List<Application>().ToArray();
+            }
+
+            if (Marshal.ReleaseComObject(stream) > 0)
+            {
+                Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
             }
         }
 
@@ -559,7 +565,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
                 else
                 {
-                    ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
+                    ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
                                                     $"|Unable to get logo for {UserModelId} from {path} and" +
                                                     $" located in {Package.Location}", new FileNotFoundException());
                     return new BitmapImage(new Uri(Constant.MissingImgIcon));

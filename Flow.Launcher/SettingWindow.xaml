@@ -18,6 +18,7 @@
         Height="600" Width="900"
         MinWidth="850"
         MinHeight="500"
+        Loaded="OnLoaded" 
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
     <Window.InputBindings>
@@ -36,8 +37,8 @@
 
     <TabControl Height="auto" SelectedIndex="0">
         <TabItem Header="{DynamicResource general}">
-            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="True" Margin="60,30,0,30">
-                <StackPanel Orientation="Vertical">
+            <ScrollViewer ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="60,0,0,0">
+                <StackPanel Orientation="Vertical" Margin="0,30,0,30">
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding PortableMode}">
                         <TextBlock Text="{DynamicResource portableMode}" />
                     </ui:ToggleSwitch>
@@ -63,9 +64,14 @@
                     <ui:ToggleSwitch Margin="10" IsOn="{Binding AutoUpdates}">
                         <TextBlock Text="{DynamicResource autoUpdates}" />
                     </ui:ToggleSwitch>
-                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}">
+                    <CheckBox Margin="10" IsChecked="{Binding ShouldUsePinyin}"
+                              ToolTip="{DynamicResource ShouldUsePinyinToolTip}">
                         <TextBlock Text="{DynamicResource ShouldUsePinyin}" />
                     </CheckBox>
+                    <ui:ToggleSwitch Margin="10" IsOn="{Binding AutoHideScrollBar, Mode=TwoWay}"
+                                     ToolTip="{DynamicResource autoHideScrollBarToolTip}">
+                        <TextBlock Text="{DynamicResource autoHideScrollBar}" />
+                    </ui:ToggleSwitch>
                     <StackPanel Margin="10" Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource querySearchPrecision}" FontSize="14" />
                         <ComboBox Margin="10 0 0 0" MaxWidth="200"
@@ -112,7 +118,7 @@
                     </TextBlock>
                     <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="10, 0, 10, 10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="True">
+                             Margin="10, 0, 10, 10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="3">
@@ -174,7 +180,7 @@
                                        Text="{Binding PluginPair.Metadata.Description}"
                                        Grid.Row="1" Opacity="0.5" Grid.Column="2" />
                             <DockPanel Grid.ColumnSpan="2" Grid.Row="2" Margin="0 10 0 8" HorizontalAlignment="Right">
-                                <TextBlock Text="Priority" Margin="15,0,0,0" MaxWidth="100"/>
+                                <TextBlock Text="{DynamicResource priority}" Margin="15,0,0,0" MaxWidth="100"/>
                                 <TextBlock Text="{Binding Priority}"
                                             ToolTip="Change Plugin Results Priority"
                                             Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
@@ -216,8 +222,10 @@
                             <Run Text="{DynamicResource browserMoreThemes}" />
                         </Hyperlink>
                     </TextBlock>
-                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" Click="OpenPluginFolder">Open Theme Folder</Button>
-                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}"
+                    <Button DockPanel.Dock="Top" Margin="0,10,0,0" Width="180" HorizontalAlignment="Center" 
+                            Click="OpenPluginFolder">Open Theme Folder</Button>
+                    <ListBox DockPanel.Dock="Top" SelectedItem="{Binding SelectedTheme}" ItemsSource="{Binding Themes}" 
+                             ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
                              Margin="10, 0, 10, 10" Width="180" Height="394" />
 
                 </DockPanel>
@@ -235,7 +243,7 @@
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Text="{DynamicResource queryWindowShadowEffect}" Margin="0 30 0 0" FontSize="14" />
-                            <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect}" Margin="210 23 0 0" Width="80"/>
+                            <ui:ToggleSwitch Grid.Row="0" IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Margin="210 23 0 0" Width="80"/>
                             <TextBlock  Grid.Row="1" Text="{DynamicResource shadowEffectCPUUsage}"
                                         Width="280"
                                         FontSize="10" HorizontalAlignment="Left"/>
@@ -357,7 +365,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{DynamicResource actionKeywords}" Width="546">
+                            <GridViewColumn Header="{DynamicResource customQuery}" Width="546">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate DataType="userSettings:CustomPluginHotkey">
                                         <TextBlock Text="{Binding ActionKeyword}" />

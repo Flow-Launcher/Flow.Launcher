@@ -15,7 +15,7 @@
     /// If requiring reloading data asynchronously, please use the IAsyncReloadable interface
     /// </para>
     /// </summary>
-    public interface IReloadable
+    public interface IReloadable : IFeatures
     {
         void ReloadData();
     }

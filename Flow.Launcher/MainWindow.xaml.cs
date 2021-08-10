@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -10,6 +11,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DataFormats = System.Windows.DataFormats;
@@ -22,7 +24,6 @@ namespace Flow.Launcher
 {
     public partial class MainWindow
     {
-
         #region Private Fields
 
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
@@ -40,20 +41,23 @@ namespace Flow.Launcher
             _settings = settings;
             InitializeComponent();
         }
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        private async void OnClosing(object sender, CancelEventArgs e)
         {
             _notifyIcon.Visible = false;
             _viewModel.Save();
+            e.Cancel = true;
+            await PluginManager.DisposePluginsAsync();
+            Application.Current.Shutdown();
         }
 
         private void OnInitialized(object sender, EventArgs e)
         {
-
         }
 
         private void OnLoaded(object sender, RoutedEventArgs _)
@@ -61,8 +65,6 @@ namespace Flow.Launcher
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
 
-            // todo is there a way to set blur only once?
-            ThemeManager.Instance.SetBlurForWindow();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             InitializePosition();
@@ -72,47 +74,63 @@ namespace Flow.Launcher
 
             _viewModel.PropertyChanged += (o, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.MainWindowVisibility))
+                switch (e.PropertyName)
                 {
-                    if (_viewModel.MainWindowVisibility == Visibility.Visible)
-                    {
-                        Activate();
-                        QueryTextBox.Focus();
-                        UpdatePosition();
-                        _settings.ActivateTimes++;
-                        if (!_viewModel.LastQuerySelected)
+                    case nameof(MainViewModel.MainWindowVisibility):
                         {
-                            QueryTextBox.SelectAll();
-                            _viewModel.LastQuerySelected = true;
-                        }
+                            if (_viewModel.MainWindowVisibility == Visibility.Visible)
+                            {
+                                Activate();
+                                QueryTextBox.Focus();
+                                UpdatePosition();
+                                _settings.ActivateTimes++;
+                                if (!_viewModel.LastQuerySelected)
+                                {
+                                    QueryTextBox.SelectAll();
+                                    _viewModel.LastQuerySelected = true;
+                                }
 
-                        if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
-                        {
-                            _progressBarStoryboard.Resume();
-                            isProgressBarStoryboardPaused = false;
+                                if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                                {
+                                    _progressBarStoryboard.Begin(ProgressBar, true);
+                                    isProgressBarStoryboardPaused = false;
+                                }
+                            }
+                            else if (!isProgressBarStoryboardPaused)
+                            {
+                                _progressBarStoryboard.Stop(ProgressBar);
+                                isProgressBarStoryboardPaused = true;
+                            }
+
+                            break;
                         }
-                    }
-                    else if (!isProgressBarStoryboardPaused)
-                    {
-                        _progressBarStoryboard.Pause();
-                        isProgressBarStoryboardPaused = true;
-                    }
-                }
-                else if (e.PropertyName == nameof(MainViewModel.ProgressBarVisibility))
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
+                    case nameof(MainViewModel.ProgressBarVisibility):
                         {
-                            _progressBarStoryboard.Pause();
-                            isProgressBarStoryboardPaused = true;
+                            Dispatcher.Invoke(async () =>
+                            {
+                                if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
+                                {
+                                    await Task.Delay(50);
+                                    _progressBarStoryboard.Stop(ProgressBar);
+                                    isProgressBarStoryboardPaused = true;
+                                }
+                                else if (_viewModel.MainWindowVisibility == Visibility.Visible &&
+                                         isProgressBarStoryboardPaused)
+                                {
+                                    _progressBarStoryboard.Begin(ProgressBar, true);
+                                    isProgressBarStoryboardPaused = false;
+                                }
+                            }, System.Windows.Threading.DispatcherPriority.Render);
+
+                            break;
                         }
-                        else if (_viewModel.MainWindowVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                    case nameof(MainViewModel.QueryTextCursorMovedToEnd):
+                        if (_viewModel.QueryTextCursorMovedToEnd)
                         {
-                            _progressBarStoryboard.Resume();
-                            isProgressBarStoryboardPaused = false;
+                            MoveQueryTextToEnd();
+                            _viewModel.QueryTextCursorMovedToEnd = false;
                         }
-                    }, System.Windows.Threading.DispatcherPriority.Render);
+                        break;
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -189,14 +207,15 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
-            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
+                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
             _progressBarStoryboard.Children.Add(da);
             _progressBarStoryboard.Children.Add(da1);
             _progressBarStoryboard.RepeatBehavior = RepeatBehavior.Forever;
-            ProgressBar.BeginStoryboard(_progressBarStoryboard);
+
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
@@ -316,13 +335,9 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        private void MoveQueryTextToEnd()
         {
-            if (_viewModel.QueryTextCursorMovedToEnd)
-            {
-                QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
-                _viewModel.QueryTextCursorMovedToEnd = false;
-            }
+            QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -26,7 +27,8 @@ namespace Flow.Launcher.Infrastructure.Image
         private const int MaxCached = 50;
         public ConcurrentDictionary<string, ImageUsage> Data { get; private set; } = new ConcurrentDictionary<string, ImageUsage>();
         private const int permissibleFactor = 2;
-        
+        private SemaphoreSlim semaphore = new(1, 1);
+
         public void Initialization(Dictionary<string, int> usage)
         {
             foreach (var key in usage.Keys)
@@ -60,20 +62,29 @@ namespace Flow.Launcher.Infrastructure.Image
                             }
                 );
 
-                // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
-                // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
-                if (Data.Count > permissibleFactor * MaxCached)
+                SliceExtra();
+
+                async void SliceExtra()
                 {
-                    // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
-                    foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
-                        Data.TryRemove(key, out _);
+                    // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
+                    // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
+                    if (Data.Count > permissibleFactor * MaxCached)
+                    {
+                        await semaphore.WaitAsync().ConfigureAwait(false);
+                        // To delete the images from the data dictionary based on the resizing of the Usage Dictionary
+                        // Double Check to avoid concurrent remove
+                        if (Data.Count > permissibleFactor * MaxCached)
+                            foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key).ToArray())
+                                Data.TryRemove(key, out _);
+                        semaphore.Release();
+                    }
                 }
             }
         }
 
         public bool ContainsKey(string key)
         {
-            return Data.ContainsKey(key) && Data[key].imageSource != null;
+            return key is not null && Data.ContainsKey(key) && Data[key].imageSource != null;
         }
 
         public int CacheSize()

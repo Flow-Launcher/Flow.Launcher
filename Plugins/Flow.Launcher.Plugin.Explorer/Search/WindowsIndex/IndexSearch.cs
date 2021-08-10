@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
@@ -17,20 +19,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         // Reserved keywords in oleDB
         private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
 
-        internal async static Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
+        internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             var fileResults = new List<Result>();
 
             try
             {
-                using var conn = new OleDbConnection(connectionString);
+                await using var conn = new OleDbConnection(connectionString);
                 await conn.OpenAsync(token);
                 token.ThrowIfCancellationRequested();
 
-                using var command = new OleDbCommand(indexQueryString, conn);
+                await using var command = new OleDbCommand(indexQueryString, conn);
                 // Results return as an OleDbDataReader.
-                using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+                await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
                 token.ThrowIfCancellationRequested();
 
                 if (dataReaderResults.HasRows)
@@ -42,18 +44,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                         {
                             // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
                             var encodedFragmentPath = dataReaderResults
-                                                        .GetString(1)
-                                                        .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+                                .GetString(1)
+                                .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
 
                             var path = new Uri(encodedFragmentPath).LocalPath;
 
                             if (dataReaderResults.GetString(2) == "Directory")
                             {
                                 results.Add(ResultManager.CreateFolderResult(
-                                                                    dataReaderResults.GetString(0),
-                                                                    path,
-                                                                    path,
-                                                                    query, 0, true, true));
+                                    dataReaderResults.GetString(0),
+                                    path,
+                                    path,
+                                    query, 0, true, true));
                             }
                             else
                             {
@@ -62,6 +64,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                         }
                     }
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                // return empty result when cancelled
+                return results;
             }
             catch (InvalidOperationException e)
             {
@@ -79,22 +86,36 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
              return results;
         }
 
-        internal async static Task<List<Result>> WindowsIndexSearchAsync(string searchString, string connectionString,
-                                                                  Func<string, string> constructQuery,
-                                                                  List<AccessLink> exclusionList,
-                                                                  Query query,
-                                                                  CancellationToken token)
+        internal async static Task<List<Result>> WindowsIndexSearchAsync(
+            string searchString,
+            Func<CSearchQueryHelper> createQueryHelper,
+            Func<string, string> constructQuery,
+            List<AccessLink> exclusionList,
+            Query query,
+            CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, reservedStringPattern);
 
             if (regexMatch.Success)
                 return new List<Result>();
+            
+            try
+            {
+                var constructedQuery = constructQuery(searchString);
 
-            var constructedQuery = constructQuery(searchString);
-            return RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token).ConfigureAwait(false),
+                return RemoveResultsInExclusionList(
+                        await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, query, token).ConfigureAwait(false),
                         exclusionList,
                         token);
+            }
+            catch (COMException)
+            {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
+                    return new List<Result>();
+
+                return ResultForWindexSearchOff(query.RawQuery);
+            }
         }
 
         private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
@@ -132,9 +153,66 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         internal static bool PathIsIndexed(string path)
         {
-            var csm = new CSearchManager();
-            var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
-            return indexManager.IncludedInCrawlScope(path) > 0;
+            try
+            {
+                var csm = new CSearchManager();
+                var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
+                return indexManager.IncludedInCrawlScope(path) > 0;
+            }
+            catch(COMException)
+            {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                return false;
+            }
+        }
+
+        private static List<Result> ResultForWindexSearchOff(string rawQuery)
+        {
+            var api = SearchManager.Context.API;
+
+            return new List<Result>
+            {
+                new Result
+                {
+                    Title = api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                    SubTitle = api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                    Action = c =>
+                    {
+                        SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+
+                        var pluginsManagerPlugin= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
+
+                        var actionKeywordCount = pluginsManagerPlugin.Metadata.ActionKeywords.Count;
+
+                        if (actionKeywordCount > 1)
+                            LogException("PluginsManager's action keyword has increased to more than 1, this does not allow for determining the " +
+                                "right action keyword. Explorer's code for managing Windows Search service not running exception needs to be updated",
+                                new InvalidOperationException());
+
+                        if (MessageBox.Show(string.Format(api.GetTranslation("plugin_explorer_alternative"), Environment.NewLine),
+                            api.GetTranslation("plugin_explorer_alternative_title"),
+                            MessageBoxButton.YesNo) == MessageBoxResult.Yes
+                            && actionKeywordCount == 1)
+                        {
+                            api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugin.Metadata.ActionKeywords[0]));
+                        }
+                        else
+                        {
+                            // Clears the warning message because same query string will not alter the displayed result list
+                            api.ChangeQuery(string.Empty);
+
+                            api.ChangeQuery(rawQuery);
+                        }
+
+                        var mainWindow = Application.Current.MainWindow;
+                        mainWindow.Visibility = Visibility.Visible;
+                        mainWindow.Focus();
+
+                        return false;
+                    },
+                    IcoPath = Constants.ExplorerIconImagePath
+                }
+            };
         }
 
         private static void LogException(string message, Exception e)
