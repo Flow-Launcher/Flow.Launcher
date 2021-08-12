@@ -44,6 +44,7 @@ namespace Flow.Launcher.Core.Plugin
         public new List<JsonRPCResult> Result { get; set; }
 
         public string DebugMessage { get; set; }
+        public int RerunDelay { get; set; }
     }
     
     public class JsonRPCRequestModel
