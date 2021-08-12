@@ -79,5 +79,5 @@ on_success:
         if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:APPVEYOR_REPO_TAG -eq "true")
         {
             iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
-            .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-v$env:flowVersion.exe -v $env:flowVersion -t $env:winget_token
+            .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe -v $env:flowVersion -t $env:winget_token
         }
