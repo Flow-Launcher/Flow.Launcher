@@ -14,6 +14,7 @@ using Flow.Launcher.Plugin;
 using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
 using Microsoft.IO;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -31,7 +32,7 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
 
-        protected abstract Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token);
+        protected abstract Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token, bool rerun = false);
         protected abstract string ExecuteCallback(JsonRPCRequestModel rpcRequest);
         protected abstract string ExecuteContextMenu(Result selectedResult);
 
