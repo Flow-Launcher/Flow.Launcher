@@ -278,25 +278,24 @@ namespace Flow.Launcher.Core.Plugin
         {
             await using var output = await ExecuteQueryAsync(query, token);
             var response = await DeserializeResultAsync(output);
-            _ = TryRerun();
+            await TryRerun();
             return ParseResults(response);
-            ;
 
             async ValueTask TryRerun()
             {
-                while (response.RerunDelay > 0)
+                while (response.RerunDelay > 0 && !token.IsCancellationRequested)
                 {
-                    await Task.Delay(response.RerunDelay, token);
-                    if (token.IsCancellationRequested)
-                        return;
-                    await using var output = await ExecuteQueryAsync(query, token);
-                    response = await DeserializeResultAsync(output);
                     ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
                     {
                         Query = query,
                         Results = ParseResults(response),
                         Token = token
                     });
+
+                    await Task.Delay(response.RerunDelay, token);
+                    token.ThrowIfCancellationRequested();
+                    await using var output = await ExecuteQueryAsync(query, token, true);
+                    response = await DeserializeResultAsync(output);
                 }
             }
         }
