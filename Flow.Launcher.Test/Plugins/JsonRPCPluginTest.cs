@@ -28,7 +28,7 @@ namespace Flow.Launcher.Test.Plugins
             throw new System.NotImplementedException();
         }
 
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token, bool rerun = false)
         {
             var byteInfo = Encoding.UTF8.GetBytes(query.RawQuery);
 
