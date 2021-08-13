@@ -198,15 +198,6 @@ namespace Flow.Launcher.Core.Plugin
                     return string.Empty;
                 }
 
-                if (result.StartsWith("DEBUG:"))
-                {
-                    MessageBox.Show(new Form
-                    {
-                        TopMost = true
-                    }, result.Substring(6));
-                    return string.Empty;
-                }
-
                 return result;
             }
             catch (Exception e)
