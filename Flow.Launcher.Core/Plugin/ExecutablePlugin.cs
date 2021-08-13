@@ -24,12 +24,15 @@ namespace Flow.Launcher.Core.Plugin
             };
         }
 
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token, bool rerun)
         {
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {
-                Method = "query",
-                Parameters = new object[] {query.Search},
+                Method = rerun ? "query_rerun" : "query",
+                Parameters = new object[]
+                {
+                    query.Search
+                },
             };
 
             _startInfo.Arguments = $"\"{request}\"";
@@ -48,7 +51,10 @@ namespace Flow.Launcher.Core.Plugin
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {
                 Method = "contextmenu",
-                Parameters = new object[] {selectedResult.ContextData},
+                Parameters = new object[]
+                {
+                    selectedResult.ContextData
+                },
             };
 
             _startInfo.Arguments = $"\"{request}\"";

@@ -32,11 +32,15 @@ namespace Flow.Launcher.Core.Plugin
             _startInfo.ArgumentList.Add("-B");
         }
 
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token, bool rerun = false)
         {
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {
-                Method = "query", Parameters = new object[] {query.Search},
+                Method = rerun ? "query_rerun" : "query",
+                Parameters = new object[]
+                {
+                    query.Search
+                },
             };
 
             _startInfo.ArgumentList[2] = request.ToString();
@@ -59,7 +63,11 @@ namespace Flow.Launcher.Core.Plugin
         {
             JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
             {
-                Method = "context_menu", Parameters = new object[] {selectedResult.ContextData},
+                Method = "context_menu",
+                Parameters = new object[]
+                {
+                    selectedResult.ContextData
+                },
             };
             _startInfo.ArgumentList[2] = request.ToString();
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;

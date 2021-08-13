@@ -14,6 +14,7 @@ using Flow.Launcher.Plugin;
 using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
 using Microsoft.IO;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -21,7 +22,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu
+    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, IResultUpdated
     {
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
@@ -31,7 +32,7 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
 
-        protected abstract Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token);
+        protected abstract Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token, bool rerun = false);
         protected abstract string ExecuteCallback(JsonRPCRequestModel rpcRequest);
         protected abstract string ExecuteContextMenu(Result selectedResult);
 
@@ -40,7 +41,8 @@ namespace Flow.Launcher.Core.Plugin
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             var output = ExecuteContextMenu(selectedResult);
-            return DeserializedResult(output);
+            var response = DeserializedResult(output);
+            return ParseResults(response);
         }
 
         private static readonly JsonSerializerOptions options = new()
@@ -53,23 +55,14 @@ namespace Flow.Launcher.Core.Plugin
             }
         };
 
-        private async Task<List<Result>> DeserializedResultAsync(Stream output)
+        private static async Task<JsonRPCQueryResponseModel> DeserializeResultAsync(Stream output)
         {
-            if (output == Stream.Null) return null;
-
-            var queryResponseModel =
-                await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
-
-            return ParseResults(queryResponseModel);
+            return output == Stream.Null ? null : await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
         }
 
-        private List<Result> DeserializedResult(string output)
+        private static JsonRPCQueryResponseModel DeserializedResult(string output)
         {
-            if (string.IsNullOrEmpty(output)) return null;
-
-            var queryResponseModel =
-                JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, options);
-            return ParseResults(queryResponseModel);
+            return string.IsNullOrEmpty(output) ? null : JsonSerializer.Deserialize<JsonRPCQueryResponseModel>(output, options);
         }
 
 
@@ -255,8 +248,8 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (buffer.Length == 0)
                 {
-                    var errorMessage = process.StandardError.EndOfStream ? 
-                        "Empty JSONRPC Response" : 
+                    var errorMessage = process.StandardError.EndOfStream ?
+                        "Empty JSONRPC Response" :
                         await process.StandardError.ReadToEndAsync();
                     throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
                 }
@@ -283,14 +276,36 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var output = await ExecuteQueryAsync(query, token);
-            return await DeserializedResultAsync(output);
+            await using var output = await ExecuteQueryAsync(query, token);
+            var response = await DeserializeResultAsync(output);
+            await TryRerun();
+            return ParseResults(response);
+
+            async ValueTask TryRerun()
+            {
+                while (response.RerunDelay > 0 && !token.IsCancellationRequested)
+                {
+                    ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
+                    {
+                        Query = query,
+                        Results = ParseResults(response),
+                        Token = token
+                    });
+
+                    await Task.Delay(response.RerunDelay, token);
+                    token.ThrowIfCancellationRequested();
+                    await using var output = await ExecuteQueryAsync(query, token, true);
+                    response = await DeserializeResultAsync(output);
+                }
+            }
         }
+
 
         public virtual Task InitAsync(PluginInitContext context)
         {
             this.context = context;
             return Task.CompletedTask;
         }
+        public event ResultUpdatedEventHandler ResultsUpdated;
     }
 }
