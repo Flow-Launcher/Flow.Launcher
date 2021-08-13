@@ -36,9 +36,6 @@ namespace Flow.Launcher.Core.Plugin
         {
             _startInfo.ArgumentList[2] = request.ToString();
 
-            // todo happlebao why context can't be used in constructor
-            _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
-
             return ExecuteAsync(_startInfo, token);
         }
 
@@ -54,6 +51,9 @@ namespace Flow.Launcher.Core.Plugin
             this.context = context;
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
             _startInfo.ArgumentList.Add("");
+
+            _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
+
             return Task.CompletedTask;
         }
     }
