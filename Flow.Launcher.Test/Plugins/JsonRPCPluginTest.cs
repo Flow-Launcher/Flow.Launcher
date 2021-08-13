@@ -18,19 +18,14 @@ namespace Flow.Launcher.Test.Plugins
     {
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
 
-        protected override string ExecuteCallback(JsonRPCRequestModel rpcRequest)
+        protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override string ExecuteContextMenu(Result selectedResult)
+        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
-        }
-
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
-        {
-            var byteInfo = Encoding.UTF8.GetBytes(query.RawQuery);
+            var byteInfo = Encoding.UTF8.GetBytes(request.Parameters[0] as string ?? string.Empty);
 
             var resultStream = new MemoryStream(byteInfo);
             return Task.FromResult((Stream)resultStream);
@@ -45,7 +40,7 @@ namespace Flow.Launcher.Test.Plugins
         {
             var results = await QueryAsync(new Query
             {
-                RawQuery = resultText
+                Search = resultText
             }, default);
 
             Assert.IsNotNull(results);
@@ -85,8 +80,8 @@ namespace Flow.Launcher.Test.Plugins
 
             var pascalText = JsonSerializer.Serialize(reference);
 
-            var results1 = await QueryAsync(new Query { RawQuery = camelText }, default);
-            var results2 = await QueryAsync(new Query { RawQuery = pascalText }, default);
+            var results1 = await QueryAsync(new Query { Search = camelText }, default);
+            var results2 = await QueryAsync(new Query { Search = pascalText }, default);
 
             Assert.IsNotNull(results1);
             Assert.IsNotNull(results2);
