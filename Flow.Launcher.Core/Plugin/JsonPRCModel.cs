@@ -45,7 +45,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public string DebugMessage { get; set; }
     }
-    
+
     public class JsonRPCRequestModel
     {
         public string Method { get; set; }

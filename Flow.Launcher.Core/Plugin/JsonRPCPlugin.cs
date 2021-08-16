@@ -1,4 +1,6 @@
-﻿using Flow.Launcher.Core.Resource;
+﻿using Accessibility;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,12 +10,22 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
 using Microsoft.IO;
+using System.Text.Json.Serialization;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
+using CheckBox = System.Windows.Controls.CheckBox;
+using Control = System.Windows.Controls.Control;
+using Label = System.Windows.Controls.Label;
+using Orientation = System.Windows.Controls.Orientation;
+using TextBox = System.Windows.Controls.TextBox;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -21,7 +33,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu
+    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
@@ -34,6 +46,8 @@ namespace Flow.Launcher.Core.Plugin
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
+
+        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name, "Setting.json");
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
@@ -58,6 +72,7 @@ namespace Flow.Launcher.Core.Plugin
                 new JsonObjectConverter()
             }
         };
+        private Dictionary<string, object> Settings { get; set; }
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -292,10 +307,115 @@ namespace Flow.Launcher.Core.Plugin
             return await DeserializedResultAsync(output);
         }
 
-        public virtual Task InitAsync(PluginInitContext context)
+        public async Task InitSettingAsync()
+        {
+            if (File.Exists(SettingPath))
+                Settings = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(File.OpenRead(SettingPath), options);
+
+            var request = new JsonRPCRequestModel()
+            {
+                Method = "get_setting_template"
+            };
+            await using var result = await RequestAsync(request);
+            if (result.Length == 0)
+                return;
+            var settingsTemplate = await JsonSerializer.DeserializeAsync<Dictionary<string, JsonElement>>(result, options) ??
+                                   new();
+
+            Settings ??= new();
+
+            foreach (var (key, element) in settingsTemplate)
+            {
+                if (!Settings.ContainsKey(key))
+                {
+                    Settings[key] = element.ValueKind switch
+                    {
+                        JsonValueKind.True or JsonValueKind.False => element.GetBoolean(),
+                        JsonValueKind.String or JsonValueKind.Number => element.GetString(),
+                        JsonValueKind.Null => throw new ArgumentNullException(),
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                }
+            }
+        }
+
+        public virtual async Task InitAsync(PluginInitContext context)
         {
             this.context = context;
-            return Task.CompletedTask;
+            await InitSettingAsync();
+        }
+        private static Thickness settingControlMargin = new(10);
+        public Control CreateSettingPanel()
+        {
+            if (Settings == null)
+                return new();
+            var settingWindow = new UserControl();
+            var mainPanel = new StackPanel
+            {
+                Margin = settingControlMargin,
+                Orientation = Orientation.Vertical
+            };
+            settingWindow.Content = mainPanel;
+            foreach (var (key, value) in Settings)
+            {
+                var panel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Margin = settingControlMargin
+                };
+                var name = new Label
+                {
+                    Content = key,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                UIElement content = null;
+                switch (value)
+                {
+                    case int i:
+                    case double d:
+                        throw new TypeAccessException();
+                    case string s:
+                        var textBox = new TextBox
+                        {
+                            Text = s,
+                            Margin = settingControlMargin,
+                            VerticalAlignment = VerticalAlignment.Center
+                        };
+                        textBox.TextChanged += (_, _) =>
+                        {
+                            Settings[key] = textBox.Text;
+                        };
+                        content = textBox;
+                        break;
+                    case bool b:
+                        var checkBox = new CheckBox
+                        {
+                            IsChecked = b,
+                            Margin = settingControlMargin,
+                            VerticalAlignment = VerticalAlignment.Center
+                        };
+                        checkBox.Click += (_, _) =>
+                        {
+                            Settings[key] = checkBox.IsChecked;
+                        };
+                        content = checkBox;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                panel.Children.Add(name);
+                panel.Children.Add(content);
+                mainPanel.Children.Add(panel);
+            }
+            return settingWindow;
+        }
+        public void Save()
+        {
+            if (Settings != null)
+            {
+                Helper.ValidateDirectory(Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name));
+                File.WriteAllText(SettingPath, JsonSerializer.Serialize(Settings));
+            }
         }
     }
 }
