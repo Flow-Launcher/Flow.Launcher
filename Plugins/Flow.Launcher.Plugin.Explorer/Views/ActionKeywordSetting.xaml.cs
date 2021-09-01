@@ -19,18 +19,18 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public string ActionKeyword
         {
-            get => _actionKeyword;
+            get => actionKeyword;
             set
             {
                 // Set Enable to be true if user change ActionKeyword
                 Enabled = true;
-                _actionKeyword = value;
+                actionKeyword = value;
             }
         }
 
         public bool Enabled { get; set; }
 
-        private string _actionKeyword;
+        private string actionKeyword;
 
         public Visibility EnabledVisibility 
             => CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword
