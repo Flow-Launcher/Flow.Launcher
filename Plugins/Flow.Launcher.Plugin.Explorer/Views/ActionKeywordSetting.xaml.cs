@@ -23,18 +23,18 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             set
             {
                 // Set Enable to be true if user change ActionKeyword
-                if (Enabled is not null)
-                    Enabled = true;
+                Enabled = true;
                 _actionKeyword = value;
             }
         }
 
-        public bool? Enabled { get; set; }
+        public bool Enabled { get; set; }
 
         private string _actionKeyword;
 
-        public Visibility Visible =>
-            CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility EnabledVisibility 
+            => CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword
+                ? Visibility.Collapsed : Visibility.Visible;
 
         public ActionKeywordSetting(SettingsViewModel settingsViewModel,
             ActionKeywordView selectedActionKeyword)
