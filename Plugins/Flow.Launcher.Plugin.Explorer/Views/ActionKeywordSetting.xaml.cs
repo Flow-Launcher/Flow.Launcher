@@ -74,8 +74,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             var oldActionKeyword = CurrentActionKeyword.Keyword;
 
-            // == because of nullable
-            if (Enabled == false || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
+            if (!Enabled || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
             {
                 // Update View Data
                 CurrentActionKeyword.Keyword = Enabled == true ? ActionKeyword : Query.GlobalPluginWildcardSign;
@@ -84,7 +83,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 switch (Enabled)
                 {
                     // reset to global so it does not take up an action keyword when disabled
-                    //     not for null Enable plugin
+                    // not for null Enable plugin
                     case false when oldActionKeyword != Query.GlobalPluginWildcardSign:
                         settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
                             Query.GlobalPluginWildcardSign, oldActionKeyword);
