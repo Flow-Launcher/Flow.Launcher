@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string IndexSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        public bool IndexOnlySearchKeywordEnabled { get; set; }
+        public bool IndexSearchKeywordEnabled { get; set; }
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
-            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled,
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
-            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled = enable,
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled = enable,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
