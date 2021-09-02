@@ -32,10 +32,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private string actionKeyword;
 
-        public Visibility EnabledVisibility 
-            => CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword
-                ? Visibility.Collapsed : Visibility.Visible;
-
         public ActionKeywordSetting(SettingsViewModel settingsViewModel,
             ActionKeywordView selectedActionKeyword)
         {

@@ -1,9 +1,7 @@
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
