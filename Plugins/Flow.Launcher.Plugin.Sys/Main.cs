@@ -132,6 +132,24 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
+                    Title = "Restart With Advanced Boot Options",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced"),
+                    IcoPath = "Images\\restart_advanced.png",
+                    Action = c =>
+                    {
+                        var result = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        
+                        if (result == MessageBoxResult.Yes)
+                            Process.Start("shutdown", "/r /o /t 0");
+
+                        return true;
+                    }
+                },
+                new Result
+                {
                     Title = "Log Off",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     IcoPath = "Images\\logoff.png",
