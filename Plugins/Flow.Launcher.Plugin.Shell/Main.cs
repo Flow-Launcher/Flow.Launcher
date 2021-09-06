@@ -297,7 +297,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeperater}");
+            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
 
             // show the main window and set focus to the query box
             Window mainWindow = Application.Current.MainWindow;

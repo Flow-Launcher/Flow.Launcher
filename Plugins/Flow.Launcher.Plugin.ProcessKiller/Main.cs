@@ -25,7 +25,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             var termToSearch = query.Terms.Length <= 1
                 ? null
-                : string.Join(Plugin.Query.TermSeperater, query.Terms.Skip(1)).ToLower();
+                : string.Join(Plugin.Query.TermSeparator, query.Terms.Skip(1)).ToLower();
 
             var processlist = processHelper.GetMatchingProcesses(termToSearch);
 

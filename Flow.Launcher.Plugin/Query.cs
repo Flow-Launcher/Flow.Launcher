@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace Flow.Launcher.Plugin
         /// Raw query, this includes action keyword if it has
         /// We didn't recommend use this property directly. You should always use Search property.
         /// </summary>
-        public string RawQuery { get; internal set; }
+        public string RawQuery { get; internal init; }
 
         /// <summary>
         /// Search part of a query.
@@ -31,45 +32,40 @@ namespace Flow.Launcher.Plugin
         /// Since we allow user to switch a exclusive plugin to generic plugin, 
         /// so this property will always give you the "real" query part of the query
         /// </summary>
-        public string Search { get; internal set; }
+        public string Search { get; internal init; }
 
         /// <summary>
         /// The raw query splited into a string array.
         /// </summary>
-        public string[] Terms { get; set; }
+        public string[] Terms { get; init; }
 
         /// <summary>
         /// Query can be splited into multiple terms by whitespace
         /// </summary>
-        public const string TermSeperater = " ";
+        public const string TermSeparator = " ";
         /// <summary>
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
-        public const string ActionKeywordSeperater = ";";
+        public const string ActionKeywordSeparator = ";";
 
         /// <summary>
         /// '*' is used for System Plugin
         /// </summary>
         public const string GlobalPluginWildcardSign = "*";
 
-        public string ActionKeyword { get; set; }
+        public string ActionKeyword { get; init; }
 
         /// <summary>
         /// Return first search split by space if it has
         /// </summary>
         public string FirstSearch => SplitSearch(0);
 
+        private string _secondToEndSearch;
+
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
-        public string SecondToEndSearch
-        {
-            get
-            {
-                var index = string.IsNullOrEmpty(ActionKeyword) ? 1 : 2;
-                return string.Join(TermSeperater, Terms.Skip(index).ToArray());
-            }
-        }
+        public string SecondToEndSearch => _secondToEndSearch ??= string.Join(' ', Terms.AsMemory(2));
 
         /// <summary>
         /// Return second search split by space if it has
@@ -83,14 +79,7 @@ namespace Flow.Launcher.Plugin
 
         private string SplitSearch(int index)
         {
-            try
-            {
-                return string.IsNullOrEmpty(ActionKeyword) ? Terms[index] : Terms[index + 1];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return string.Empty;
-            }
+            return index < Terms.Length ? Terms[index] : string.Empty;
         }
 
         public override string ToString() => RawQuery;

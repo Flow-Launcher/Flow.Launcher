@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                               IcoPath = metadata.IcoPath,
                               Action = c =>
                               {
-                                  context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeperater}");
+                                  context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeparator}");
                                   return false;
                               }
                           };
