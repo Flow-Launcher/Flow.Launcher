@@ -10,31 +10,31 @@ namespace Flow.Launcher.Core.Plugin
         public static Query Build(string text, Dictionary<string, PluginPair> nonGlobalPlugins)
         {
             // replace multiple white spaces with one white space
-            var textSplit = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
-            if (textSplit.Length == 0)
+            var terms = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
+            if (terms.Length == 0)
             { // nothing was typed
                 return null;
             }
 
-            var rawQuery = string.Join(Query.TermSeparator, textSplit);
+            var rawQuery = string.Join(Query.TermSeparator, terms);
             string actionKeyword, search;
-            string possibleActionKeyword = textSplit[0];
-            string[] terms;
+            string possibleActionKeyword = terms[0];
+            string[] searchTerms;
 
             if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPair) && !pluginPair.Metadata.Disabled)
             { // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
-                search = textSplit.Length > 1 ? rawQuery[(actionKeyword.Length + 1)..] : string.Empty;
-                terms = textSplit[1..];
+                search = terms.Length > 1 ? rawQuery[(actionKeyword.Length + 1)..] : string.Empty;
+                searchTerms = terms[1..];
             }
             else
             { // non action keyword
                 actionKeyword = string.Empty;
                 search = rawQuery;
-                terms = textSplit;
+                searchTerms = terms;
             }
 
-            var query = new Query(rawQuery, search, terms, actionKeyword);
+            var query = new Query(rawQuery, search,terms, searchTerms, actionKeyword);
 
             return query;
         }

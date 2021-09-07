@@ -12,11 +12,11 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// to allow unit tests for plug ins
         /// </summary>
-        public Query(string rawQuery, string search, string[] terms, string actionKeyword = "")
+        public Query(string rawQuery, string search, string[] terms, string[] searchTerms, string actionKeyword = "")
         {
             Search = search;
             RawQuery = rawQuery;
-            Terms = terms;
+            SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }
 
@@ -35,18 +35,31 @@ namespace Flow.Launcher.Plugin
         public string Search { get; internal init; }
 
         /// <summary>
-        /// The raw query splited into a string array.
+        /// The search string split into a string array.
         /// </summary>
+        public string[] SearchTerms { get; init; }
+        
+        /// <summary>
+        /// The raw query split into a string array
+        /// </summary>
+        [Obsolete("It may or may not include action keyword, which can be confusing. Use SearchTerms instead")]
         public string[] Terms { get; init; }
 
         /// <summary>
         /// Query can be splited into multiple terms by whitespace
         /// </summary>
         public const string TermSeparator = " ";
+
+        [Obsolete("Typo")]
+        public const string TermSeperater = TermSeparator;
         /// <summary>
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
         public const string ActionKeywordSeparator = ";";
+        
+        [Obsolete("Typo")]
+        public const string ActionKeywordSeperater = ActionKeywordSeparator;
+
 
         /// <summary>
         /// '*' is used for System Plugin
@@ -65,7 +78,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
-        public string SecondToEndSearch => _secondToEndSearch ??= string.Join(' ', Terms.AsMemory(2));
+        public string SecondToEndSearch => _secondToEndSearch ??= string.Join(' ', SearchTerms.AsMemory(2));
 
         /// <summary>
         /// Return second search split by space if it has
@@ -79,7 +92,7 @@ namespace Flow.Launcher.Plugin
 
         private string SplitSearch(int index)
         {
-            return index < Terms.Length ? Terms[index] : string.Empty;
+            return index < SearchTerms.Length ? SearchTerms[index] : string.Empty;
         }
 
         public override string ToString() => RawQuery;
