@@ -33,5 +33,6 @@
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programm</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Suche Programme mit Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
 
 </ResourceDictionary>

@@ -328,18 +328,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             !e.SpecialKeyState.WinPressed
                         );
 
-                        if (elevated)
+                        if (elevated && CanRunElevated)
                         {
-                            if (!CanRunElevated)
-                            {
-                                return false;
-                            }
-
                             LaunchElevated();
                         }
                         else
                         {
                             Launch(api);
+
+                            if (elevated)
+                            {
+                                var title = "Plugin: Program";
+                                var message = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator_not_supported_message");
+                                api.ShowMsg(title, message, string.Empty);
+                            }
                         }
 
                         return true;
