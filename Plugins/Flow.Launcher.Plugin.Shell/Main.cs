@@ -73,7 +73,14 @@ namespace Flow.Launcher.Plugin.Shell
                             IcoPath = Image,
                             Action = c =>
                             {
-                                Execute(Process.Start, PrepareProcessStartInfo(m, c.SpecialKeyState.CtrlPressed));
+                                var runAsAdministrator = (
+                                    c.SpecialKeyState.CtrlPressed &&
+                                    c.SpecialKeyState.ShiftPressed &&
+                                    !c.SpecialKeyState.AltPressed &&
+                                    !c.SpecialKeyState.WinPressed
+                                );
+
+                                Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
                             }
                         }));
@@ -106,7 +113,14 @@ namespace Flow.Launcher.Plugin.Shell
                         IcoPath = Image,
                         Action = c =>
                         {
-                            Execute(Process.Start, PrepareProcessStartInfo(m.Key));
+                            var runAsAdministrator = (
+                                c.SpecialKeyState.CtrlPressed &&
+                                c.SpecialKeyState.ShiftPressed &&
+                                !c.SpecialKeyState.AltPressed &&
+                                !c.SpecialKeyState.WinPressed
+                            );
+
+                            Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
                         }
                     };
@@ -129,7 +143,14 @@ namespace Flow.Launcher.Plugin.Shell
                 IcoPath = Image,
                 Action = c =>
                 {
-                    Execute(Process.Start, PrepareProcessStartInfo(cmd));
+                    var runAsAdministrator = (
+                        c.SpecialKeyState.CtrlPressed &&
+                        c.SpecialKeyState.ShiftPressed &&
+                        !c.SpecialKeyState.AltPressed &&
+                        !c.SpecialKeyState.WinPressed
+                    );
+
+                    Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
                 }
             };
@@ -147,7 +168,14 @@ namespace Flow.Launcher.Plugin.Shell
                     IcoPath = Image,
                     Action = c =>
                     {
-                        Execute(Process.Start, PrepareProcessStartInfo(m.Key));
+                        var runAsAdministrator = (
+                            c.SpecialKeyState.CtrlPressed &&
+                            c.SpecialKeyState.ShiftPressed &&
+                            !c.SpecialKeyState.AltPressed &&
+                            !c.SpecialKeyState.WinPressed
+                        );
+
+                        Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
                     }
                 });
