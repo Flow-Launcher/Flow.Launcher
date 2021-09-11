@@ -462,18 +462,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     return true;
                 }
-                else
-                {
-                    var manifest = Package.Location + "\\AppxManifest.xml";
-                    if (File.Exists(manifest))
-                    {
-                        var file = File.ReadAllText(manifest);
 
-                        // Using OrdinalIgnoreCase since this is used internally
-                        if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
-                        {
-                            return true;
-                        }
+                var manifest = Package.Location + "\\AppxManifest.xml";
+                if (File.Exists(manifest))
+                {
+                    var file = File.ReadAllText(manifest);
+
+                    if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
                     }
                 }
 
