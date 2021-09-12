@@ -75,10 +75,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                               keyword == Settings.SearchActionKeyword,
                 Settings.ActionKeyword.PathSearchActionKeyword => Settings.PathSearchKeywordEnabled &&
                                                                   keyword == Settings.PathSearchActionKeyword,
-                Settings.ActionKeyword.FileContentSearchActionKeyword => keyword ==
-                                                                         Settings.FileContentSearchActionKeyword,
-                Settings.ActionKeyword.IndexSearchActionKeyword => Settings.IndexOnlySearchKeywordEnabled &&
-                                                                       keyword == Settings.IndexSearchActionKeyword
+                Settings.ActionKeyword.FileContentSearchActionKeyword => Settings.FileContentSearchKeywordEnabled &&
+                                                                         keyword == Settings.FileContentSearchActionKeyword,
+                Settings.ActionKeyword.IndexSearchActionKeyword => Settings.IndexSearchKeywordEnabled &&
+                                                                   keyword == Settings.IndexSearchActionKeyword
             };
         }
 
