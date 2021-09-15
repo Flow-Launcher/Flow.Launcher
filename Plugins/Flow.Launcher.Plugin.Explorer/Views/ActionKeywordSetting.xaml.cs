@@ -19,22 +19,18 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public string ActionKeyword
         {
-            get => _actionKeyword;
+            get => actionKeyword;
             set
             {
                 // Set Enable to be true if user change ActionKeyword
-                if (Enabled is not null)
-                    Enabled = true;
-                _actionKeyword = value;
+                Enabled = true;
+                actionKeyword = value;
             }
         }
 
-        public bool? Enabled { get; set; }
+        public bool Enabled { get; set; }
 
-        private string _actionKeyword;
-
-        public Visibility Visible =>
-            CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
+        private string actionKeyword;
 
         public ActionKeywordSetting(SettingsViewModel settingsViewModel,
             ActionKeywordView selectedActionKeyword)
@@ -76,8 +72,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             var oldActionKeyword = CurrentActionKeyword.Keyword;
 
-            // == because of nullable
-            if (Enabled == false || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
+            if (!Enabled || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
             {
                 // Update View Data
                 CurrentActionKeyword.Keyword = Enabled == true ? ActionKeyword : Query.GlobalPluginWildcardSign;

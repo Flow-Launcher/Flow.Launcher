@@ -327,7 +327,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
         public string Description { get; private init; }
-        public string Color => Enabled ?? true ? "Black" : "Gray";
+        public string Color => Enabled ? "Black" : "Gray";
 
         internal Settings.ActionKeyword KeywordProperty { get; }
 
@@ -337,11 +337,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             set => _settings.SetActionKeyword(KeywordProperty, value);
         }
 
-        public bool? Enabled
+        public bool Enabled
         {
             get => _settings.GetActionKeywordEnabled(KeywordProperty);
-            set => _settings.SetActionKeywordEnabled(KeywordProperty,
-                value ?? throw new ArgumentException("Unexpected null value"));
+            set => _settings.SetActionKeywordEnabled(KeywordProperty, value);
         }
     }
 }

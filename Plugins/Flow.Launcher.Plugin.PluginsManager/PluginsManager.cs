@@ -120,7 +120,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             .ChangeQuery(
                                 $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.HotkeyUpdate} {plugin.Name}");
 
-                    Application.Current.MainWindow.Show();
+                    var mainWindow = Application.Current.MainWindow;
+                    mainWindow.Visibility = Visibility.Visible;
+                    mainWindow.Focus();
+
                     shouldHideWindow = false;
 
                     return;

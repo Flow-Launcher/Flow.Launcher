@@ -1,9 +1,7 @@
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -26,13 +24,15 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
 
+        public bool FileContentSearchKeywordEnabled { get; set; } = true;
+
         public string PathSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool PathSearchKeywordEnabled { get; set; }
 
         public string IndexSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
-        public bool IndexOnlySearchKeywordEnabled { get; set; }
+        public bool IndexSearchKeywordEnabled { get; set; }
 
         public string QuickAccessActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
@@ -55,7 +55,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
-            ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword
+            ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword,
+            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
         };
 
         internal void SetActionKeyword(ActionKeyword actionKeyword, string keyword) => _ = actionKeyword switch
@@ -65,25 +66,27 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword = keyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
-            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
+            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
         };
 
-        internal bool? GetActionKeywordEnabled(ActionKeyword actionKeyword) => actionKeyword switch
+        internal bool GetActionKeywordEnabled(ActionKeyword actionKeyword) => actionKeyword switch
         {
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
-            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled,
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
+            ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
-            _ => null
+            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
 
         internal void SetActionKeywordEnabled(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
         {
             ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
             ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
-            ActionKeyword.IndexSearchActionKeyword => IndexOnlySearchKeywordEnabled = enable,
+            ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled = enable,
+            ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled = enable,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
-            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "Unexpected property")
+            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
     }
 }
