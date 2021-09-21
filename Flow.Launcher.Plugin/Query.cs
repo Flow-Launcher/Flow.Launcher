@@ -16,6 +16,9 @@ namespace Flow.Launcher.Plugin
         {
             Search = search;
             RawQuery = rawQuery;
+#pragma warning disable 618 Legacy Support
+            Terms = terms;
+#pragma warning restore 618
             SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }
@@ -38,7 +41,7 @@ namespace Flow.Launcher.Plugin
         /// The search string split into a string array.
         /// </summary>
         public string[] SearchTerms { get; init; }
-        
+
         /// <summary>
         /// The raw query split into a string array
         /// </summary>
@@ -56,7 +59,7 @@ namespace Flow.Launcher.Plugin
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
         public const string ActionKeywordSeparator = ";";
-        
+
         [Obsolete("Typo")]
         public const string ActionKeywordSeperater = ActionKeywordSeparator;
 
