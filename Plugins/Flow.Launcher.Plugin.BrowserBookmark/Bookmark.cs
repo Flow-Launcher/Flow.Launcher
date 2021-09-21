@@ -7,50 +7,19 @@ using System.Text;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class Bookmark : IEquatable<Bookmark>, IEqualityComparer<Bookmark>
+    // Source may be important in the future
+    public record Bookmark(string Name, string Url, string Source = "")
     {
-        private string m_Name;
-        public string Name
+        public override int GetHashCode()
         {
-            get
-            {
-                return m_Name;
-            }
-            set
-            {
-                m_Name = value;
-            }
-        }
-        public string Url { get; set; }
-        public string Source { get; set; }
-        public int Score { get; set; }
-
-        /* TODO: since Source maybe unimportant, we just need to compare Name and Url */
-        public bool Equals(Bookmark other)
-        {
-            return Equals(this, other);
-        }
-
-        public bool Equals(Bookmark x, Bookmark y)
-        {
-            if (Object.ReferenceEquals(x, y)) return true;
-            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
-                return false;
-
-            return x.Name == y.Name && x.Url == y.Url;
-        }
-
-        public int GetHashCode(Bookmark bookmark)
-        {
-            if (Object.ReferenceEquals(bookmark, null)) return 0;
-            int hashName = bookmark.Name == null ? 0 : bookmark.Name.GetHashCode();
-            int hashUrl = bookmark.Url == null ? 0 : bookmark.Url.GetHashCode();
+            var hashName = Name?.GetHashCode() ?? 0;
+            var hashUrl = Url?.GetHashCode() ?? 0;
             return hashName ^ hashUrl;
         }
 
-        public override int GetHashCode()
+        public virtual bool Equals(Bookmark other)
         {
-            return GetHashCode(this);
+            return other != null && Name == other.Name && Url == other.Url;
         }
     }
 }

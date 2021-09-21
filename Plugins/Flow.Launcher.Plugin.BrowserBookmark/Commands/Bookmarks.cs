@@ -20,9 +20,9 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
         {
             var allbookmarks = new List<Bookmark>();
 
-            var chromeBookmarks = new ChromeBookmarks();
-            var mozBookmarks = new FirefoxBookmarks();
-            var edgeBookmarks = new EdgeBookmarks();
+            var chromeBookmarks = new ChromeBookmarkLoader();
+            var mozBookmarks = new FirefoxBookmarkLoader();
+            var edgeBookmarks = new EdgeBookmarkLoader();
 
             //TODO: Let the user select which browser's bookmarks are displayed
             // Add Firefox bookmarks
