@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Microsoft.AspNetCore.Authentication;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -28,6 +29,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         
         protected List<Bookmark> LoadBookmarksFromFile(string path, string source)
         {
+            if (!File.Exists(path))
+                return new();
             var bookmarks = new List<Bookmark>();
             using var jsonDocument = JsonDocument.Parse(File.ReadAllText(path));
             if (!jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))

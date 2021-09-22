@@ -1,11 +1,6 @@
-﻿using BinaryAnalysis.UnidecodeSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-
-namespace Flow.Launcher.Plugin.BrowserBookmark
+namespace Flow.Launcher.Plugin.BrowserBookmark.Models
 {
     // Source may be important in the future
     public record Bookmark(string Name, string Url, string Source = "")
@@ -21,5 +16,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             return other != null && Name == other.Name && Url == other.Url;
         }
+
+        public List<CustomBrowser> CustomBrowsers { get; set; }= new();
     }
 }

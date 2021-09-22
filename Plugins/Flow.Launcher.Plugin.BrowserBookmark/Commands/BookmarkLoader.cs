@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 {
-    internal static class Bookmarks
+    internal static class BookmarkLoader
     {
         internal static MatchResult MatchProgram(Bookmark bookmark, string queryString)
         {
@@ -18,23 +19,24 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
         internal static List<Bookmark> LoadAllBookmarks()
         {
-            var allbookmarks = new List<Bookmark>();
 
             var chromeBookmarks = new ChromeBookmarkLoader();
             var mozBookmarks = new FirefoxBookmarkLoader();
             var edgeBookmarks = new EdgeBookmarkLoader();
 
+            var allBookmarks = new List<Bookmark>();
+
             //TODO: Let the user select which browser's bookmarks are displayed
             // Add Firefox bookmarks
-            mozBookmarks.GetBookmarks().ForEach(x => allbookmarks.Add(x));
+            allBookmarks.AddRange(mozBookmarks.GetBookmarks());
 
             // Add Chrome bookmarks
-            chromeBookmarks.GetBookmarks().ForEach(x => allbookmarks.Add(x));
+            allBookmarks.AddRange(chromeBookmarks.GetBookmarks());
 
             // Add Edge (Chromium) bookmarks
-            edgeBookmarks.GetBookmarks().ForEach(x => allbookmarks.Add(x));
+            allBookmarks.AddRange(edgeBookmarks.GetBookmarks());
 
-            return allbookmarks.Distinct().ToList();
+            return allBookmarks.Distinct().ToList();
         }
     }
 }

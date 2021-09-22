@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {

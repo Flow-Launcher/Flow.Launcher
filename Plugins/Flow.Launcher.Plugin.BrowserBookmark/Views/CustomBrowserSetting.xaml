@@ -1,0 +1,36 @@
+﻿<Window x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.CustomBrowserSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
+        mc:Ignorable="d"
+        Title="CustomBrowserSetting" Height="300" Width="400"
+        >
+    <Window.DataContext>
+        <local:CustomBrowser/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Browser Name" FontSize="15" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Browser Path" FontSize="15" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="30"/>
+        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Grid.Column="1" Height="60">
+            <Button Content="Confirm" Margin="15" Click="ConfirmEditCustomBrowser"/>
+            <Button Content="Cancel" Margin="15"/>
+        </StackPanel>
+    </Grid>
+</Window>
