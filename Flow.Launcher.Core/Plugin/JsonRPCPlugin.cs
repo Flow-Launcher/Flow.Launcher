@@ -30,16 +30,22 @@ namespace Flow.Launcher.Core.Plugin
         /// The language this JsonRPCPlugin support
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
-
-        protected abstract Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token);
-        protected abstract string ExecuteCallback(JsonRPCRequestModel rpcRequest);
-        protected abstract string ExecuteContextMenu(Result selectedResult);
+        protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
+        protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var output = ExecuteContextMenu(selectedResult);
+            var request = new JsonRPCRequestModel
+            {
+                Method = "context_menu",
+                Parameters = new[]
+                {
+                    selectedResult.ContextData
+                }
+            };
+            var output = Request(request);
             return DeserializedResult(output);
         }
 
@@ -100,7 +106,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        var actionResponse = ExecuteCallback(result.JsonRPCAction);
+                        var actionResponse = Request(result.JsonRPCAction);
 
                         if (string.IsNullOrEmpty(actionResponse))
                         {
@@ -192,15 +198,6 @@ namespace Flow.Launcher.Core.Plugin
                     return string.Empty;
                 }
 
-                if (result.StartsWith("DEBUG:"))
-                {
-                    MessageBox.Show(new Form
-                    {
-                        TopMost = true
-                    }, result.Substring(6));
-                    return string.Empty;
-                }
-
                 return result;
             }
             catch (Exception e)
@@ -255,8 +252,8 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (buffer.Length == 0)
                 {
-                    var errorMessage = process.StandardError.EndOfStream ? 
-                        "Empty JSONRPC Response" : 
+                    var errorMessage = process.StandardError.EndOfStream ?
+                        "Empty JSONRPC Response" :
                         await process.StandardError.ReadToEndAsync();
                     throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
                 }
@@ -283,7 +280,15 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var output = await ExecuteQueryAsync(query, token);
+            var request = new JsonRPCRequestModel
+            {
+                Method = "query",
+                Parameters = new[]
+                {
+                    query.Search
+                }
+            };
+            var output = await RequestAsync(request, token);
             return await DeserializedResultAsync(output);
         }
 
