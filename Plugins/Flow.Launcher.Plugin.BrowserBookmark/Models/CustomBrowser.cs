@@ -2,7 +2,25 @@
 {
     public class CustomBrowser : BaseModel
     {
-        public string Name { get; set; }
-        public string DataDirectoryPath { get; set; }
+        private string _name;
+        private string _dataDirectoryPath;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            } 
+        }
+        public string DataDirectoryPath
+        {
+            get => _dataDirectoryPath;
+            set
+            {
+                _dataDirectoryPath = value;
+                OnPropertyChanged(nameof(DataDirectoryPath));
+            }
+        }
     }
 }

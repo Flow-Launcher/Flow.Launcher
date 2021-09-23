@@ -2,6 +2,7 @@ using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
@@ -11,6 +12,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
     public partial class SettingsControl
     {
         public Settings Settings { get; }
+        public CustomBrowser SelectedCustomBrowser { get; set; }
 
         public SettingsControl(Settings settings)
         {
@@ -63,6 +65,14 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             {
                 Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
             }
+        }
+        private void MouseDoubleClickOnSelectedCustomBrowser(object sender, MouseButtonEventArgs e)
+        {
+            if (SelectedCustomBrowser is null)
+                return;
+
+            var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
+            window.ShowDialog();
         }
     }
 }

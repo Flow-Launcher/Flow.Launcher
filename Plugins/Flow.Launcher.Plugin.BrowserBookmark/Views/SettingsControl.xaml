@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="300" d:DesignWidth="500"
-             DataContext="{Binding RelativeSource={RelativeSource Self}, Path=Settings}">
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -33,30 +33,32 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="60" Margin="25,13,0,0">
             <Label Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath}"
                    Height="28" Margin="10"/>
-            <TextBox x:Name="browserPathBox" 
+            <TextBox x:Name="BrowserPathBox" 
                      HorizontalAlignment="Left" 
                      Height="30" 
                      TextWrapping="NoWrap" 
                      VerticalAlignment="Center"
-                     Text="{Binding BrowserPath}"
+                     Text="{Binding Settings.BrowserPath}"
                      Width="240"
                      Margin="10"/>
-            <Button x:Name="viewButton" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_choose}"
+            <Button x:Name="ViewButton" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_choose}"
                     HorizontalAlignment="Left" Margin="10" Width="100" Height="30" Click="OnChooseClick" FontSize="14" />
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Vertical">
             <TextBlock Text="CustomBrowsers" Margin="10"/>
-            <ListView Grid.Row="2" ItemsSource="{Binding CustomChromiumBrowsers}"
+            <ListView Grid.Row="2" ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
+                      SelectedItem="{Binding SelectedCustomBrowser}"
                       Margin="10"
                       BorderBrush="DarkGray"
                       BorderThickness="1"
                       Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
                       Height="auto"
-                      Name="CustomBrowsers">
+                      Name="CustomBrowsers"
+                      MouseDoubleClick="MouseDoubleClickOnSelectedCustomBrowser">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Browser Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath}" Header="DataDirectoryPath"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="Browser Name"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="DataDirectoryPath"/>
                     </GridView>
                 </ListView.View>
             </ListView>

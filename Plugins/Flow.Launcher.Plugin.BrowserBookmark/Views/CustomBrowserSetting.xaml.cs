@@ -27,8 +27,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             currentCustomBrowser = browser;
             DataContext = new CustomBrowser
             {
-                Name = browser.Name,
-                DataDirectoryPath = browser.DataDirectoryPath
+                Name = browser.Name, DataDirectoryPath = browser.DataDirectoryPath
             };
         }
 
@@ -40,6 +39,13 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
                 currentCustomBrowser.DataDirectoryPath = editedBrowser.DataDirectoryPath;
             }
             Close();
+        }
+        private void WindowKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                ConfirmEditCustomBrowser(sender, e);
+            }
         }
     }
 }
