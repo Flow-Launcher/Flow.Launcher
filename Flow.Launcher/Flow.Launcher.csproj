@@ -81,14 +81,14 @@
 
   <ItemGroup>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
-    <PackageReference Include="ModernWpfUI" Version="0.9.3" />
-    <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.4" />
+    <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
     <PackageReference Include="NuGet.CommandLine" Version="5.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="PropertyChanged.Fody" Version="3.3.1" />
-    <PackageReference Include="SharpVectors" Version="1.7.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="SharpVectors" Version="1.7.6" />
   </ItemGroup>
 
   <ItemGroup>
