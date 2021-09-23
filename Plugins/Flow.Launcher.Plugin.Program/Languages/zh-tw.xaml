@@ -33,4 +33,5 @@
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">程式</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">在 Flow Launcher 中搜尋程式</system:String>
+
 </ResourceDictionary>

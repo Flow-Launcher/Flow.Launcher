@@ -102,16 +102,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
-                Action = _ =>
+                Action = c =>
                 {
+                    var runAsAdmin = (
+                        c.SpecialKeyState.CtrlPressed &&
+                        c.SpecialKeyState.ShiftPressed &&
+                        !c.SpecialKeyState.AltPressed &&
+                        !c.SpecialKeyState.WinPressed
+                    );
+
                     var info = new ProcessStartInfo
                     {
                         FileName = LnkResolvedPath ?? FullPath,
                         WorkingDirectory = ParentDirectory,
-                        UseShellExecute = true
+                        UseShellExecute = true,
+                        Verb = runAsAdmin ? "runas" : null
                     };
 
-                    Main.StartProcess(Process.Start, info);
+                    Task.Run(() => Main.StartProcess(Process.Start, info));
 
                     return true;
                 }
