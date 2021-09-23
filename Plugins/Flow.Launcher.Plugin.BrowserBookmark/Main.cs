@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
-            cachedBookmarks = BookmarkLoader.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public List<Result> Query(Query query)
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             cachedBookmarks.Clear();
 
-            cachedBookmarks = BookmarkLoader.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public string GetTranslatedPluginTitle()

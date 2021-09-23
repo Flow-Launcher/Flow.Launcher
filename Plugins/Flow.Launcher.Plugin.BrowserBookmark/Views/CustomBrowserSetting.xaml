@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
         mc:Ignorable="d"
-        Title="CustomBrowserSetting" Height="300" Width="400"
+        Title="CustomBrowserSetting" Height="450" Width="600"
         >
     <Window.DataContext>
         <local:CustomBrowser/>
@@ -22,11 +22,11 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Browser Name" FontSize="15" 
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Browser Path" FontSize="15" 
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Browser Data Directory Path" FontSize="15" 
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path}"
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DataDirectoryPath}"
                    HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="30"/>
         <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Grid.Column="1" Height="60">
             <Button Content="Confirm" Margin="15" Click="ConfirmEditCustomBrowser"/>

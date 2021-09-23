@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             DataContext = new CustomBrowser
             {
                 Name = browser.Name,
-                Path = browser.Path
+                DataDirectoryPath = browser.DataDirectoryPath
             };
         }
 
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             if (DataContext is CustomBrowser editedBrowser)
             {
                 currentCustomBrowser.Name = editedBrowser.Name;
-                currentCustomBrowser.Path = editedBrowser.Path;
+                currentCustomBrowser.DataDirectoryPath = editedBrowser.DataDirectoryPath;
             }
             Close();
         }

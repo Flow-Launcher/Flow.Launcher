@@ -8,7 +8,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         public CustomChromiumBookmarkLoader(CustomBrowser browser)
         {
             BrowserName = browser.Name;
-            BrowserDataPath = browser.Path;
+            BrowserDataPath = browser.DataDirectoryPath;
         }
         public string BrowserDataPath { get; init; }
         public string BookmarkFilePath { get; init; }

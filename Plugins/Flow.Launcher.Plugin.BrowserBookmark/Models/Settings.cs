@@ -15,12 +15,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Models
             new CustomBrowser
             {
                 Name="awefawef",
-                Path="awefawef"
+                DataDirectoryPath="awefawef"
             },
             new CustomBrowser
             {
                 Name = "awefawefawefawef",
-                Path = "aweawefawfawef"
+                DataDirectoryPath = "aweawefawfawef"
             }
         };
     }

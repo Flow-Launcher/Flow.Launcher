@@ -3,6 +3,6 @@
     public class CustomBrowser : BaseModel
     {
         public string Name { get; set; }
-        public string Path { get; set; }
+        public string DataDirectoryPath { get; set; }
     }
 }

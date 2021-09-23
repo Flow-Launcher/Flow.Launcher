@@ -56,7 +56,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Browser Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path}" Header="Path"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath}" Header="DataDirectoryPath"/>
                     </GridView>
                 </ListView.View>
             </ListView>

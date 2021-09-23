@@ -50,10 +50,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             if (newBrowser is not
                 {
                     Name: null,
-                    Path: null
+                    DataDirectoryPath: null
                 })
             {
-                Settings.CustomBrowsers.Add(newBrowser);
+                Settings.CustomChromiumBrowsers.Add(newBrowser);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
         {
             if(CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
             {
-                Settings.CustomBrowsers.Remove(selectedCustomBrowser);
+                Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
             }
         }
     }
