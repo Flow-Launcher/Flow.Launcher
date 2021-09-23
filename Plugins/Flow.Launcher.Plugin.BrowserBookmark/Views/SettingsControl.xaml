@@ -46,7 +46,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Vertical">
             <TextBlock Text="CustomBrowsers" Margin="10"/>
-            <ListView Grid.Row="2" ItemsSource="{Binding CustomBrowsers}"
+            <ListView Grid.Row="2" ItemsSource="{Binding CustomChromiumBrowsers}"
                       Margin="10"
                       BorderBrush="DarkGray"
                       BorderThickness="1"

@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
             return StringMatcher.FuzzySearch(queryString, bookmark.Url);
         }
 
-        internal static List<Bookmark> LoadAllBookmarks()
+        internal static List<Bookmark> LoadAllBookmarks(Settings setting)
         {
 
             var chromeBookmarks = new ChromeBookmarkLoader();
@@ -35,6 +35,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
             // Add Edge (Chromium) bookmarks
             allBookmarks.AddRange(edgeBookmarks.GetBookmarks());
+
+            foreach (var browser in setting.CustomChromiumBrowsers)
+            {
+                var loader = new CustomChromiumBookmarkLoader(browser);
+                allBookmarks.AddRange(loader.GetBookmarks());
+            }
 
             return allBookmarks.Distinct().ToList();
         }
