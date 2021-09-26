@@ -48,6 +48,16 @@ namespace Flow.Plugin.WindowsSettings.Classes
         public IEnumerable<string>? AltNames { get; set; }
 
         /// <summary>
+        /// Gets or sets the Keywords names of this task link.
+        /// </summary>
+        public IEnumerable<IEnumerable<string>>? Keywords { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Ghyph of this setting
+        /// </summary>
+        public string? glyph { get; set; }
+
+        /// <summary>
         /// Gets or sets a additional note of this settings.
         /// <para>(e.g. why is not supported on your system)</para>
         /// </summary>
