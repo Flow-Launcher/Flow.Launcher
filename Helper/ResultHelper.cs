@@ -69,7 +69,20 @@ namespace Flow.Plugin.WindowsSettings.Helper
                             .FirstOrDefault();
                     }
 
+                    if (result is null && entry.Keywords is not null)
+                    {
+                        string[] searchKeywords = query.Terms[(string.IsNullOrEmpty(query.ActionKeyword) ? 0 : 1)..];
+
+                        if (searchKeywords
+                            .All(x => entry
+                                .Keywords
+                                .SelectMany(x => x)
+                                .Contains(x, StringComparer.CurrentCultureIgnoreCase))
+                        )
+                            result = NewSettingResult(midScore);
+                    }
                 }
+
                 if (result is null)
                     continue;
 
@@ -82,7 +95,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                     Action = _ => DoOpenSettingsAction(entry),
                     IcoPath = iconPath,
                     SubTitle = $"{Resources.Area} \"{entry.Area}\" {Resources.SubtitlePreposition} {entry.Type}",
-                    Title = entry.Name,
+                    Title = entry.Name + entry.glyph,
                     ContextData = entry,
                     Score = score
                 };
