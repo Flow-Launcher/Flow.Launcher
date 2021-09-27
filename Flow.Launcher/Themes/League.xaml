@@ -5,6 +5,7 @@
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#161614"/>
         <Setter Property="Foreground" Value="#b88f3a" />
+        <Setter Property="CaretBrush" Value="#b88f3a" />
     </Style>
 
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">

@@ -197,6 +197,7 @@
    <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#dddddd" />
         <Setter Property="Foreground" Value="#000000" />
+        <Setter Property="CaretBrush" Value="#000000" />
         <Setter Property="FontSize" Value="26" />
 	<Setter Property="Padding" Value="0 4 0 0" />
     </Style>
