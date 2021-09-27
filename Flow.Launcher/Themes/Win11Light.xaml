@@ -237,8 +237,8 @@
         <Setter Property="Width" Value="4"/>
     </Style>
     <Style x:Key="HighlightStyle">
-	<Setter Property="Inline.Foreground" Value="#0078d4" />
-     </Style>
+        <Setter Property="Inline.Foreground" Value="#0078d7" />
+    </Style>
      <Style x:Key="SeparatorStyle" BasedOn="{StaticResource BaseSeparatorStyle}" TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#eaeaea"/>
 	<Setter Property="Height" Value="1"/>
@@ -247,6 +247,14 @@
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#acacac" />
+    </Style>
+    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
 

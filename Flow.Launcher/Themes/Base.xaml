@@ -57,6 +57,7 @@
         <Setter Property="Stroke" Value="Blue" />
     </Style>
 
+    
     <!-- Item Style -->
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
