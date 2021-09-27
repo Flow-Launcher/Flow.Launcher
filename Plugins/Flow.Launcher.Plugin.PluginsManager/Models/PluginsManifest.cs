@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
         {
             try
             {
-                await using var jsonStream = await Http.GetStreamAsync("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json")
+                await using var jsonStream = await Http.GetStreamAsync("https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest/plugins.json")
                                  .ConfigureAwait(false);
 
                 UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(jsonStream).ConfigureAwait(false);

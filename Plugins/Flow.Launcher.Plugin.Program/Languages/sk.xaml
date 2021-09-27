@@ -53,5 +53,6 @@
     <!--Dialogs-->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspešné</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Úspešne zakázané zobrazovanie tohto programu vo výsledkoch vyhľadávania</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Táto aplikácia nie je určená na spustenie ako správca</system:String>
 
 </ResourceDictionary>

@@ -10,6 +10,7 @@
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted the {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
     <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
@@ -27,6 +28,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Done</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>

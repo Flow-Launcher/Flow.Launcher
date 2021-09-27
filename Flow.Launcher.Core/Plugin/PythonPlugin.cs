@@ -32,47 +32,28 @@ namespace Flow.Launcher.Core.Plugin
             _startInfo.ArgumentList.Add("-B");
         }
 
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
-            {
-                Method = "query", Parameters = new object[] {query.Search},
-            };
-
             _startInfo.ArgumentList[2] = request.ToString();
-
-            // todo happlebao why context can't be used in constructor
-            _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
             return ExecuteAsync(_startInfo, token);
         }
 
-        protected override string ExecuteCallback(JsonRPCRequestModel rpcRequest)
+        protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
             _startInfo.ArgumentList[2] = rpcRequest.ToString();
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
             // TODO: Async Action
             return Execute(_startInfo);
         }
-
-        protected override string ExecuteContextMenu(Result selectedResult)
-        {
-            JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
-            {
-                Method = "context_menu", Parameters = new object[] {selectedResult.ContextData},
-            };
-            _startInfo.ArgumentList[2] = request.ToString();
-            _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
-
-            // TODO: Async Action
-            return Execute(_startInfo);
-        }
-
         public override Task InitAsync(PluginInitContext context)
         {
             this.context = context;
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
             _startInfo.ArgumentList.Add("");
+
+            _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
+
             return Task.CompletedTask;
         }
     }

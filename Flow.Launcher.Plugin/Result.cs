@@ -47,7 +47,15 @@ namespace Flow.Launcher.Plugin
 
         public delegate ImageSource IconDelegate();
 
-        public IconDelegate Icon;
+        /// <summary>
+        /// Delegate to Get Image Source
+        /// </summary>
+        public IconDelegate Icon { get; set; }
+
+        /// <summary>
+        /// Information for Glyph Icon
+        /// </summary>
+        public GlyphInfo Glyph { get; init; } 
 
 
         /// <summary>

@@ -48,12 +48,7 @@ namespace Flow.Launcher
 
         public void ChangeQuery(string query, bool requery = false)
         {
-            _mainVM.ChangeQueryText(query);
-        }
-
-        public void ChangeQueryText(string query, bool selectAll = false)
-        {
-            _mainVM.ChangeQueryText(query);
+            _mainVM.ChangeQueryText(query, requery);
         }
 
         public void RestartApp()
