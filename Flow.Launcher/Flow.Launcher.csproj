@@ -45,13 +45,7 @@
   <ItemGroup>
     <Page Include="App.xaml" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Page Remove="Themes\League.xaml" />
-    <Page Remove="Themes\ThemeBuilder\Template.xaml" />
-    <Page Remove="Themes\Win11Dark.xaml" />
-  </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
   </ItemGroup>
