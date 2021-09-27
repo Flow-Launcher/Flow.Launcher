@@ -236,7 +236,7 @@
     </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
-        <!--<Setter Property="Inline.Background" Value="#515c6b" />-->
+
     </Style>
     <Style x:Key="SeparatorStyle" BasedOn="{StaticResource BaseSeparatorStyle}" TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#9a9a9a"/>
