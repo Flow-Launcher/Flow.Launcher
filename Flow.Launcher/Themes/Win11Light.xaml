@@ -8,6 +8,7 @@
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Height" Value="54" />
+        <Setter Property="Padding" Value="0 4 0 0" />
         <Setter Property="Background" Value="#2F2F2F" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
@@ -35,6 +36,7 @@
 
     <!-- Further font customisations are dynamically loaded in Theme.cs -->
     <Style x:Key="BaseQuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="Padding" Value="0 4 0 0" />
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
