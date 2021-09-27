@@ -289,6 +289,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryText!=queryText) 
             {
+                // re-query is done in QueryText's setter method
                 QueryText = queryText;
             }
             else if (reQuery)
