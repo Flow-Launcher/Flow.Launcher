@@ -44,7 +44,7 @@ namespace Flow.Launcher.ViewModel
         private Settings Settings { get; }
 
         public Visibility ShowOpenResultHotkey =>
-            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Hidden;
+            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
 
         public Visibility ShowIcon => Result.IcoPath != null || Result.Icon is not null || Glyph == null
             ? Visibility.Visible

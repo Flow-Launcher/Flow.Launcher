@@ -18,6 +18,7 @@
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="#2e3440" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Background" Value="#4c566a"></Setter>
     </Style>
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseWindowStyle}" >
@@ -52,5 +53,12 @@
 
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}" >
         <Setter Property="Width" Value="3"/>
+    </Style>
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.FontWeight" Value="Bold" />
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#353c49" />
     </Style>
 </ResourceDictionary>

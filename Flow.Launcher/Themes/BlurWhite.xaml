@@ -15,6 +15,7 @@
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}" />
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Color="White" Opacity="0.5"/>
@@ -57,4 +58,7 @@
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}">
         <Setter Property="Background" Value="#a0a0a0"/>
     </Style>
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.FontWeight" Value="Bold" />
+    </Style>    
 </ResourceDictionary>

@@ -31,6 +31,7 @@
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
     </Window.Resources>
+
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>
@@ -62,13 +63,13 @@
         <KeyBinding Key="D9" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
     <Grid>
-        <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
+        <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <TextBox x:Name="QueryTextSuggestionBox"
                          Style="{DynamicResource QuerySuggestionBoxStyle}"
                          IsEnabled="False"
-                         Margin="18,0,56,0">
+                         Margin="16,0,56,0">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
                                 <Binding ElementName="QueryTextBox" Path="Text"/>
@@ -83,24 +84,29 @@
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"
-                    Margin="18,0,56,0">
+                    Margin="16,0,56,0">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut"/>
                                 <MenuItem Command="ApplicationCommands.Copy"/>
                                 <MenuItem Command="ApplicationCommands.Paste"/>
                                 <Separator />
-                                <MenuItem Header="Settings" Click="OnContextMenusForSettingsClick" />
+                                <MenuItem Header="{DynamicResource flowlauncher_settings}"  Click="OnContextMenusForSettingsClick" />
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="42" Height="42"
-                                     Background="Transparent"/>
+                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="25" Height="25" Margin="0,2,18,0" Opacity="0.2" Background="Transparent" Style="{DynamicResource SearchIconStyle}"/>
                 </Grid>
-                <Line x:Name="ProgressBar" HorizontalAlignment="Right"
+
+
+                <Grid>
+                    <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" />
+                    <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                  Y1="0" Y2="0" X2="100" Height="2" Width="752" StrokeThickness="1">
-                </Line>
+                  Y1="0" Y2="0" X2="100" Height="2" Width="Auto" StrokeThickness="1">
+                    </Line>
+                </Grid>
+
                 <ContentControl>
                     <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
                 </ContentControl>

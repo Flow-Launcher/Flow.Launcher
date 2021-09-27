@@ -42,7 +42,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public int MaxHeight => MaxResults * 50;
+        public int MaxHeight => MaxResults * 52;
 
         public int SelectedIndex { get; set; }
 

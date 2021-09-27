@@ -244,7 +244,7 @@ namespace Flow.Launcher.Core.Resource
             effectSetter.Property = Border.EffectProperty;
             effectSetter.Value = new DropShadowEffect
             {
-                Opacity = 0.9,
+                Opacity = 0.4,
                 ShadowDepth = 2,
                 BlurRadius = 15
             };
@@ -261,7 +261,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                var baseMargin = (Thickness) marginSetter.Value;
+                var baseMargin = (Thickness)marginSetter.Value;
                 var newMargin = new Thickness(
                     baseMargin.Left + ShadowExtraMargin,
                     baseMargin.Top + ShadowExtraMargin,
@@ -282,8 +282,8 @@ namespace Flow.Launcher.Core.Resource
 
             var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
             var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-            
-            if(effectSetter != null)
+
+            if (effectSetter != null)
             {
                 windowBorderStyle.Setters.Remove(effectSetter);
             }
@@ -371,11 +371,11 @@ namespace Flow.Launcher.Core.Resource
         private void SetWindowAccent(Window w, AccentState state)
         {
             var windowHelper = new WindowInteropHelper(w);
-            
+
             // this determines the width of the main query window
             w.Width = mainWindowWidth;
             windowHelper.EnsureHandle();
-            
+
             var accent = new AccentPolicy { AccentState = state };
             var accentStructSize = Marshal.SizeOf(accent);
 

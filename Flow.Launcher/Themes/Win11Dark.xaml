@@ -6,11 +6,9 @@
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
-        <Setter Property="FontWeight" Value="Regular" />
-        <Setter Property="Height" Value="56" />
-        <Setter Property="Padding" Value="0 4 0 0" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Height" Value="54" />
         <Setter Property="Background" Value="#2F2F2F" />
-        <Setter Property="Width" Value="536" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -38,18 +36,17 @@
     <!-- Further font customisations are dynamically loaded in Theme.cs -->
     <Style x:Key="BaseQuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="DarkGray" />
-        <Setter Property="Width" Value="536" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="0 4 0 0" />
     </Style>
 
     <Style x:Key="BaseWindowBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Background" Value="#2F2F2F"></Setter>
-        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="Padding" Value="3 0 0 0" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="586" />
+        <Setter Property="Width" Value="596" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 
@@ -67,7 +64,7 @@
     <Style x:Key="BaseItemSubTitleStyle" TargetType="{x:Type TextBlock}" >
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Normal" />
     </Style>
     <Style x:Key="BaseItemNumberStyle" TargetType="{x:Type TextBlock}">
@@ -85,10 +82,10 @@
     </Style>
     <Style x:Key="BaseItemSubTitleSelectedStyle" TargetType="{x:Type TextBlock}" >
         <Setter Property="Foreground" Value="#D9D9D4" />
-        <Setter Property="FontSize" Value="13" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 
+    <!--    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#4D4D4D</SolidColorBrush>-->
 
     <Style x:Key="BaseItemImageSelectedStyle" TargetType="{x:Type Image}" >
     </Style>
@@ -101,7 +98,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <!--                    <ScrollViewer Focusable="false" Template="{DynamicResource ScrollViewerControlTemplate}">-->
                     <ScrollViewer Focusable="false" Template="{DynamicResource ScrollViewerControlTemplate}">
                         <VirtualizingStackPanel IsItemsHost="True" />
                     </ScrollViewer>
@@ -126,7 +122,7 @@
                                         ContentTemplate="{TemplateBinding ContentTemplate}"
                                         Content="{TemplateBinding Content}"
                                         Grid.Column="0"
-                                        Margin="0"
+                                        Margin="{TemplateBinding Padding}"
                                         Grid.Row="0" />
 
             <!--Scrollbar in thr rigth of ScrollViewer-->
@@ -155,7 +151,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#bebebe" BorderBrush="Transparent" BorderThickness="0" />
+                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#616161" BorderBrush="Transparent" BorderThickness="0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -182,15 +178,74 @@
         </Setter>
 
     </Style>
+    <!-- 여기까지 베이스 -->
+    <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#202020" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="FontSize" Value="26" />
+    </Style>
 
+    <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#202020" />
+        <Setter Property="Foreground" Value="#7b7b7b" />
+        <Setter Property="FontSize" Value="26" />
+    </Style>
 
-    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
-        <Setter Property="Visibility" Value="Collapsed" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-        </Style.Triggers>
+    <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#3f3f3f" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Background" Value="#202020"></Setter>
+    </Style>
+    <Style x:Key="WindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseWindowStyle}" >
+    </Style>
+    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}" />
+    <Style x:Key="ItemTitleStyle" BasedOn="{StaticResource BaseItemTitleStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style x:Key="ItemNumberStyle" BasedOn="{StaticResource BaseItemNumberStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style x:Key="ItemSubTitleStyle" BasedOn="{StaticResource BaseItemSubTitleStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#7b7b7b" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="Regular" />
+    </Style>
+    <Style x:Key="ItemTitleSelectedStyle" BasedOn="{StaticResource BaseItemTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style x:Key="ItemSubTitleSelectedStyle" BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#7b7b7b" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="Regular" />
+    </Style>
+
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#2d2d2d</SolidColorBrush>
+    <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#9a9a9a" BorderBrush="Transparent" BorderThickness="0" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}" >
+        <Setter Property="Width" Value="2"/>
+    </Style>
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.FontWeight" Value="Bold" />
+        <!--<Setter Property="Inline.Background" Value="#515c6b" />-->
+    </Style>
+    <Style x:Key="SeparatorStyle" BasedOn="{StaticResource BaseSeparatorStyle}" TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="#9a9a9a"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="12 0 12 0"/>
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="#7b7b7b" />
     </Style>
 </ResourceDictionary>
-    
+

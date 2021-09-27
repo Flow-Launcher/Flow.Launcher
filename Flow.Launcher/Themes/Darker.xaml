@@ -13,6 +13,7 @@
 
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="4" />
     </Style>
 
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
@@ -42,5 +43,12 @@
     </Style>
 
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}">
+    </Style>
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.FontWeight" Value="Bold" />
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#ffffff" />
     </Style>
 </ResourceDictionary>
