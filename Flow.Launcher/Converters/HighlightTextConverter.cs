@@ -1,4 +1,4 @@
-﻿using System.Windows;using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -31,8 +31,7 @@ namespace Flow.Launcher.Converters
                 var currentCharacter = text.Substring(i, 1);
                 if (this.ShouldHighlight(highlightData, i))
                 {
-                    //textBlock.Inlines.Add(new Bold(new Run(currentCharacter)));
-                    //textBlock.Inlines.Add(new Run(currentCharacter) { Foreground = Brushes.RoyalBlue });
+
                     textBlock.Inlines.Add(new Run(currentCharacter) { Style = (Style)Application.Current.FindResource("HighlightStyle") });
 
                 }
