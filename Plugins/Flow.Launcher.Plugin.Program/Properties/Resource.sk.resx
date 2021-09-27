@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="flowlauncher_plugin_program_delete" xml:space="preserve">
+    <value>Odstrániť</value>
+  </data>
+  <data name="flowlauncher_plugin_program_edit" xml:space="preserve">
+    <value>Upraviť</value>
+  </data>
+  <data name="flowlauncher_plugin_program_add" xml:space="preserve">
+    <value>Pridať</value>
+  </data>
+  <data name="flowlauncher_plugin_program_disable" xml:space="preserve">
+    <value>Zakázať</value>
+  </data>
+  <data name="flowlauncher_plugin_program_location" xml:space="preserve">
+    <value>Umiestnenie</value>
+  </data>
+  <data name="flowlauncher_plugin_program_all_programs" xml:space="preserve">
+    <value>Všetky programy</value>
+  </data>
+  <data name="flowlauncher_plugin_program_suffixes" xml:space="preserve">
+    <value>Prípony súborov</value>
+  </data>
+  <data name="flowlauncher_plugin_program_reindex" xml:space="preserve">
+    <value>Reindexovať</value>
+  </data>
+  <data name="flowlauncher_plugin_program_indexing" xml:space="preserve">
+    <value>Indexovanie</value>
+  </data>
+  <data name="flowlauncher_plugin_program_index_start" xml:space="preserve">
+    <value>Indexovať ponuku Štart</value>
+  </data>
+  <data name="flowlauncher_plugin_program_index_start_tooltip" xml:space="preserve">
+    <value>Ak je povolené, Flow načíta programy z ponuky Štart</value>
+  </data>
+  <data name="flowlauncher_plugin_program_index_registry" xml:space="preserve">
+    <value>Indexovať databázu Registry</value>
+  </data>
+  <data name="flowlauncher_plugin_program_index_registry_tooltip" xml:space="preserve">
+    <value>Ak je povolené, Flow načíta programy z databázy Registry</value>
+  </data>
+  <data name="flowlauncher_plugin_program_enable_description" xml:space="preserve">
+    <value>Povoliť popis programu</value>
+  </data>
+  <data name="flowlauncher_plugin_program_enable_description_tooltip" xml:space="preserve">
+    <value>Zakázaním tejto funkcie sa tiež zastaví vyhľadávanie popisu programu cez Flow</value>
+  </data>
+  <data name="flowlauncher_plugin_program_suffixes_header" xml:space="preserve">
+    <value>Prípony</value>
+  </data>
+  <data name="flowlauncher_plugin_program_max_depth_header" xml:space="preserve">
+    <value>Max. hĺbka</value>
+  </data>
+  <data name="flowlauncher_plugin_program_directory" xml:space="preserve">
+    <value>Priečinok:</value>
+  </data>
+  <data name="flowlauncher_plugin_program_browse" xml:space="preserve">
+    <value>Prehliadať</value>
+  </data>
+  <data name="flowlauncher_plugin_program_file_suffixes" xml:space="preserve">
+    <value>Prípony súboru:</value>
+  </data>
+  <data name="flowlauncher_plugin_program_max_search_depth" xml:space="preserve">
+    <value>Max. hĺbka hľadania (-1 je neobm.):</value>
+  </data>
+  <data name="flowlauncher_plugin_program_pls_select_program_source" xml:space="preserve">
+    <value>Prosím, zadajte zdroj programu</value>
+  </data>
+  <data name="flowlauncher_plugin_program_delete_program_source" xml:space="preserve">
+    <value>Naozaj chcete odstrániť vybrané zdroje programov?</value>
+  </data>
+  <data name="flowlauncher_plugin_program_update" xml:space="preserve">
+    <value>Aktualizovať</value>
+  </data>
+  <data name="flowlauncher_plugin_program_only_index_tip" xml:space="preserve">
+    <value>Flow Launcher bude indexovať iba súbory s nasledujúcimi príponami:</value>
+  </data>
+  <data name="flowlauncher_plugin_program_split_by_tip" xml:space="preserve">
+    <value>(Každú príponu oddeľte ;)</value>
+  </data>
+  <data name="flowlauncher_plugin_program_update_file_suffixes" xml:space="preserve">
+    <value>Prípony boli úspešne aktualizované</value>
+  </data>
+  <data name="flowlauncher_plugin_program_suffixes_cannot_empty" xml:space="preserve">
+    <value>Súbor s príponami nemôže byť prázdny</value>
+  </data>
+  <data name="flowlauncher_plugin_program_run_as_different_user" xml:space="preserve">
+    <value>Spustiť ako iný používateľ</value>
+  </data>
+  <data name="flowlauncher_plugin_program_run_as_administrator" xml:space="preserve">
+    <value>Spustiť ako správca</value>
+  </data>
+  <data name="flowlauncher_plugin_program_open_containing_folder" xml:space="preserve">
+    <value>Otvoriť umiestnenie súboru</value>
+  </data>
+  <data name="flowlauncher_plugin_program_disable_program" xml:space="preserve">
+    <value>Zakázať zobrazovanie tohto programu</value>
+  </data>
+  <data name="flowlauncher_plugin_program_plugin_name" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="flowlauncher_plugin_program_plugin_description" xml:space="preserve">
+    <value>Vyhľadávanie programov vo Flow Launcheri</value>
+  </data>
+  <data name="flowlauncher_plugin_program_invalid_path" xml:space="preserve">
+    <value>Neplatná cesta</value>
+  </data>
+  <data name="flowlauncher_plugin_program_customizedexplorer" xml:space="preserve">
+    <value>Vlastný správca súborov</value>
+  </data>
+  <data name="flowlauncher_plugin_program_args" xml:space="preserve">
+    <value>Arg.</value>
+  </data>
+  <data name="flowlauncher_plugin_program_tooltip_customizedexplorer" xml:space="preserve">
+    <value>Môžete si prispôsobiť otváranie umiestnenia priečinka vložením Premenných prostredia, ktoré chcete použiť. Dostupnosť premenných prostredia môžete vyskúšať cez príkazový riadok.</value>
+  </data>
+  <data name="flowlauncher_plugin_program_tooltip_args" xml:space="preserve">
+    <value>Zadajte argumenty, ktoré chcete pridať pre správcu súborov. %s pre rodičovský priečinok, %f pre celú cestu (funguje iba pre win32). Pre podrobnosti pozrite webovú stránku správcu súborov.</value>
+  </data>
+  <data name="flowlauncher_plugin_program_disable_dlgtitle_success" xml:space="preserve">
+    <value>Úspešné</value>
+  </data>
+  <data name="flowlauncher_plugin_program_disable_dlgtitle_success_message" xml:space="preserve">
+    <value>Úspešne zakázané zobrazovanie tohto programu vo výsledkoch vyhľadávania</value>
+  </data>
+</root>

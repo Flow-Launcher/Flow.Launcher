@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
+             xmlns:p="clr-namespace:Flow.Launcher.Plugin.Program.Properties"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="404.508" d:DesignWidth="600">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -16,7 +17,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
             <StackPanel Orientation="Vertical" Width="250">
-                <CheckBox Name="StartMenuEnabled" IsChecked="{Binding EnableStartMenuSource}" Margin="5" Content="{DynamicResource flowlauncher_plugin_program_index_start}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
+                <CheckBox Name="StartMenuEnabled" IsChecked="{Binding EnableStartMenuSource}" Margin="5" Content="{x:Static p:Resource.flowlauncher_plugin_program_index_start}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
                 <CheckBox Name="RegistryEnabled" IsChecked="{Binding EnableRegistrySource}"  Margin="5" Content="{DynamicResource flowlauncher_plugin_program_index_registry}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
                 <CheckBox Name="DescriptionEnabled" IsChecked="{Binding EnableDescription}" Margin="5" Content="{DynamicResource flowlauncher_plugin_program_enable_description}" ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
             </StackPanel>
