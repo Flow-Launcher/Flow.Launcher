@@ -239,6 +239,14 @@
         <Setter Property="Inline.FontWeight" Value="Bold" />
 
     </Style>
+    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="SeparatorStyle" BasedOn="{StaticResource BaseSeparatorStyle}" TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#9a9a9a"/>
         <Setter Property="Height" Value="1"/>
@@ -248,13 +256,6 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="#7b7b7b" />
     </Style>
-    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
-        <Setter Property="Visibility" Value="Collapsed" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>    
+    
 </ResourceDictionary>
 
