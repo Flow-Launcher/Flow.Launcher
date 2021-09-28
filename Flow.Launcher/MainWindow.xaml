@@ -95,7 +95,10 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="25" Height="25" Margin="0,2,18,0" Opacity="0.2" Background="Transparent" Style="{DynamicResource SearchIconStyle}"/>
+                    <Canvas Style="{DynamicResource SearchIconPosition}">
+                        <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
+                    </Canvas>
+                    
                 </Grid>
 
 

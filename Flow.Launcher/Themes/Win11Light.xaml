@@ -253,9 +253,13 @@
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
+                <Setter Property="Margin" Value="0 0 0 8" />
                 <Setter Property="Visibility" Value="Visible" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
+    </Style>
+
 </ResourceDictionary>
 

@@ -43,7 +43,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Background" Value="#2F2F2F"></Setter>
-        <Setter Property="Padding" Value="3 0 0 0" />
+        <Setter Property="Padding" Value="0 0 0 0" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="596" />
@@ -242,7 +242,7 @@
     <Style x:Key="SeparatorStyle" BasedOn="{StaticResource BaseSeparatorStyle}" TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#9a9a9a"/>
         <Setter Property="Height" Value="1"/>
-        <Setter Property="Margin" Value="12 0 12 0"/>
+        <Setter Property="Margin" Value="12 0 12 8"/>
     </Style>
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="13" />

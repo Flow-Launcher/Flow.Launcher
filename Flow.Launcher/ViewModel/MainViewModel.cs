@@ -524,7 +524,7 @@ namespace Flow.Launcher.ViewModel
             try
             {
                 // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                await Task.WhenAll(tasks);
+               await Task.WhenAll(tasks);
             }
             catch (OperationCanceledException)
             {
