@@ -5,18 +5,14 @@
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#1f1d1f"/>
         <Setter Property="Foreground" Value="#cc1081" />
-        <Setter Property="CaretBrush" Value="#cc1081" />
     </Style>
 
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#1f1d1f"/>
-        <Setter Property="Foreground" Value="#555555" />
+        <Setter Property="Foreground" Value="#cc1081" />
     </Style>
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
-        <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#1f1d1f" />
         <Setter Property="Background" Value="#1f1d1f"></Setter>
     </Style>
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseWindowStyle}" >
@@ -33,27 +29,8 @@
     </Style>
     <Style x:Key="ItemSubTitleSelectedStyle" BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#c2c2c2" />
-        <Setter Property="FontSize" Value="13" />
     </Style>
     <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#cc1081</SolidColorBrush>
-    <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#cc1081" BorderBrush="Transparent" BorderThickness="0" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}" >
-        <Setter Property="Width" Value="4"/>
-    </Style>
-    <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
-    </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="Foreground" Value="#555555" />
-    </Style>    
-    
+    <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}"></Style>
+    <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}"></Style>
 </ResourceDictionary>
