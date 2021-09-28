@@ -34,11 +34,4 @@
     <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#4F6180</SolidColorBrush>
     <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}" />
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}" />
-    <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
-    </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="Foreground" Value="#ffffff" />
-    </Style>
 </ResourceDictionary>
