@@ -98,6 +98,7 @@ namespace Flow.Launcher.Core.Resource
             UpdatePluginMetadataTranslations();
             Settings.Language = language.LanguageCode;
             CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
+            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
