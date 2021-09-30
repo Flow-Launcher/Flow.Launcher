@@ -4,10 +4,13 @@
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#001e4e"></Setter>
     </Style>
 
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="#001e4e"></Setter>
+        <Setter Property="Opacity" Value="0.4"></Setter>
     </Style>
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
@@ -22,16 +25,20 @@
     </Style>
     <Style x:Key="ItemSubTitleStyle" BasedOn="{StaticResource BaseItemSubTitleStyle}" TargetType="{x:Type TextBlock}" >
         <Setter Property="Foreground" Value="#c2c2c2"></Setter>
+        <Setter Property="FontSize" Value="12" />
     </Style>
     <Style x:Key="ItemTitleSelectedStyle" BasedOn="{StaticResource BaseItemTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#f5f5f5" />
     </Style>
     <Style x:Key="ItemSubTitleSelectedStyle" BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#c2c2c2" />
+        <Setter Property="FontSize" Value="12" />
     </Style>
     <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#006ac1</SolidColorBrush>
     <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
     </Style>
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}">
+    </Style>
+    <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
     </Style>
 </ResourceDictionary>

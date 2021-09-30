@@ -90,8 +90,6 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
-
-
     <Style x:Key="BaseItemImageSelectedStyle" TargetType="{x:Type Image}" >
     </Style>
 
@@ -100,11 +98,26 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <!--                    <ScrollViewer Focusable="false" Template="{DynamicResource ScrollViewerControlTemplate}">-->
                     <ScrollViewer Focusable="false" Template="{DynamicResource ScrollViewerControlTemplate}">
+                        <ScrollViewer.Style>
+                            <Style TargetType="ScrollViewer">
+                                <Style.Triggers>
+                                    <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
+                                        <Setter Property="Margin" Value="0 0 0 0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
+                                    </Trigger>
+                                    <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
+                                        <Setter Property="Margin" Value="0 0 0 0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ScrollViewer.Style>
                         <VirtualizingStackPanel IsItemsHost="True" />
                     </ScrollViewer>
                 </ControlTemplate>
@@ -135,7 +148,8 @@
             <ScrollBar x:Name="PART_VerticalScrollBar"
                            AutomationProperties.AutomationId="VerticalScrollBar"
                            Cursor="Arrow"
-                           Grid.Column="1"
+                           Grid.Column="0"
+                           HorizontalAlignment="Right"
                            Margin="0 0 0 0"
                            Maximum="{TemplateBinding ScrollableHeight}"
                            Minimum="0"
@@ -144,7 +158,6 @@
                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
                            ViewportSize="{TemplateBinding ViewportHeight}"
                            Style="{DynamicResource ScrollBarStyle}" />
-
         </Grid>
     </ControlTemplate>
 

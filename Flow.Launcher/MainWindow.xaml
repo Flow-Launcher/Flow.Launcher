@@ -69,7 +69,7 @@
                     <TextBox x:Name="QueryTextSuggestionBox"
                          Style="{DynamicResource QuerySuggestionBoxStyle}"
                          IsEnabled="False"
-                         Margin="16,0,56,0">
+                         Margin="16,0,66,0">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
                                 <Binding ElementName="QueryTextBox" Path="Text"/>
@@ -84,7 +84,7 @@
                      AllowDrop="True"
                      Visibility="Visible"
                     Background="Transparent"
-                    Margin="16,0,56,0">
+                    Margin="16,0,66,0">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut"/>
