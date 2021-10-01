@@ -38,7 +38,7 @@
                             <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="54" />
+                            <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -55,7 +55,7 @@
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
-                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="14 0 0 0">
+                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
                             <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0"/>
                         </Border>
                         <Border BorderThickness="0" BorderBrush="Transparent" Margin="14 0 0 0">
