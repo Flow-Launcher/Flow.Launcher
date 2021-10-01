@@ -56,7 +56,7 @@
                             </TextBlock>
                         </StackPanel>
                         <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
-                            <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0"/>
+                            <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0" Stretch="UniformToFill"/>
                         </Border>
                         <Border BorderThickness="0" BorderBrush="Transparent" Margin="14 0 0 0">
                             <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Glyph.Glyph}" FontFamily="{Binding Glyph.FontFamily}" FontSize="24" Visibility="{Binding ShowGlyph}"  Margin="12 0 0 0" Padding="0 0 12 0"/>
