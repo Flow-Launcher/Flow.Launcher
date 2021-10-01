@@ -16,9 +16,7 @@ namespace Flow.Launcher.Plugin
         {
             Search = search;
             RawQuery = rawQuery;
-#pragma warning disable 618 Legacy Support
             Terms = terms;
-#pragma warning restore 618
             SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }
@@ -81,7 +79,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
-        public string SecondToEndSearch => SearchTerms.Length > 1? _secondToEndSearch ??= string.Join(' ', SearchTerms[1..]]) : "";
+        public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
         /// Return second search split by space if it has
