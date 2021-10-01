@@ -3,6 +3,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+        xmlns:converters="clr-namespace:Flow.Launcher.Converters"
         xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
@@ -28,6 +29,7 @@
         <CommandBinding Command="Close" Executed="OnCloseExecuted"/>
     </Window.CommandBindings>
     <Window.Resources>
+        <converters:BorderClipConverter x:Key="BorderClipConverter"/>
         <CollectionViewSource Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" x:Key="SortedFonts">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source"/>
@@ -256,25 +258,36 @@
                         <StackPanel Orientation="Horizontal" Margin="0 30 0 0"
                                     HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Border Width="500" Style="{DynamicResource WindowBorderStyle}" >
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="58" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBox Grid.Row="0"
+                                <Border Style="{DynamicResource WindowRadius}">
+                                    <Border.Clip>
+                                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                                        </MultiBinding>
+                                    </Border.Clip>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="58" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBox Grid.Row="0"
                                              Text="{DynamicResource hiThere}" IsReadOnly="True"
                                              Style="{DynamicResource QueryBoxStyle}"
                                              Margin="16 0 56 0" />
-                                    <Canvas Style="{DynamicResource SearchIconPosition}">
-                                        <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
-                                    </Canvas>
-                                    <Grid Height="58" Margin="0 28 0 0">
-                                        <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" Visibility="visible"/>
+                                        <Canvas Style="{DynamicResource SearchIconPosition}">
+                                            <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
+                                        </Canvas>
+                                        <Border Height="58" Margin="0 28 0 0">
+                                            <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" Visibility="visible"/>
+                                        </Border>
+
+                                        <ContentControl Grid.Row="1">
+                                            <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
+                                        </ContentControl>
+
                                     </Grid>
-                                    <ContentControl Grid.Row="1">
-                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
-                                    </ContentControl>
-                                </Grid>
+                                </Border>
                             </Border>
                         </StackPanel>
                     </StackPanel>
