@@ -176,7 +176,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#bebebe" BorderBrush="Transparent" BorderThickness="0" />
+                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#616161" BorderBrush="Transparent" BorderThickness="0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
