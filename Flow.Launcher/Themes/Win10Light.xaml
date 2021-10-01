@@ -8,9 +8,11 @@
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="SelectionBrush" Value="#0a68d8"/>
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="#dddddd" />
         <Setter Property="Foreground" Value="#000000" />
+        <Setter Property="Background" Value="#dddddd" />
         <Setter Property="CaretBrush" Value="#000000" />
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="26" />
         <Setter Property="Padding" Value="0 4 0 0" />
     </Style>
@@ -27,7 +29,7 @@
         <Setter Property="Background" Value="#dddddd" />
     </Style>
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="596" />
+        <Setter Property="Width" Value="576" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 

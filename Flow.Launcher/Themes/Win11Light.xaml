@@ -13,7 +13,7 @@
         <Setter Property="CaretBrush" Value="#000000" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="Padding" Value="0 4 0 0" />
-    </Style>
+            </Style>
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#f3f3f3" />
         <Setter Property="Foreground" Value="#b5b5b5" />
@@ -27,7 +27,7 @@
         <Setter Property="Background" Value="#f3f3f3" />
     </Style>
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="596" />
+        <Setter Property="Width" Value="576" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 

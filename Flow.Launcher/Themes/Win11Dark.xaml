@@ -27,7 +27,7 @@
         <Setter Property="Background" Value="#202020" />
     </Style>
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="596" />
+        <Setter Property="Width" Value="576" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 

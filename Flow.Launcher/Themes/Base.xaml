@@ -7,10 +7,11 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Regular" />
-        <Setter Property="Height" Value="56" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="16 7 0 7" />
         <Setter Property="Padding" Value="0 4 0 0" />
         <Setter Property="Background" Value="#2F2F2F" />
-        <Setter Property="Width" Value="586" />
+        <Setter Property="Width" Value="470" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -39,10 +40,13 @@
     <!-- Further font customisations are dynamically loaded in Theme.cs -->
     <Style x:Key="BaseQuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="DarkGray" />
-        <Setter Property="Width" Value="56" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="16 7 0 7" />
+        <Setter Property="Width" Value="470" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="0 4 0 0" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="BaseWindowBorderStyle" TargetType="{x:Type Border}">
@@ -52,7 +56,7 @@
         <Setter Property="CornerRadius" Value="5" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="586" />
+        <Setter Property="Width" Value="576" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 

@@ -16,7 +16,7 @@
 
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="#1f1d1f"></Setter>
-        <Setter Property="Width" Value="586"></Setter>
+        <Setter Property="Width" Value="576" />
          <Setter Property="BorderThickness" Value="2"></Setter>
         <Setter Property="BorderBrush" Value="#000000"></Setter>
     </Style>
