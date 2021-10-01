@@ -30,6 +30,7 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel}">
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
+        <converters:BorderClipConverter x:Key="BorderClipConverter"/>
     </Window.Resources>
 
     <Window.InputBindings>
@@ -64,6 +65,7 @@
     </Window.InputBindings>
     <Grid>
         <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown">
+            <!-- Window Outside Clipping-->
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <TextBox x:Name="QueryTextSuggestionBox"
@@ -110,15 +112,42 @@
                     </Line>
                 </Grid>
 
-                <ContentControl>
-                    <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                </ContentControl>
-                <ContentControl>
-                    <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                </ContentControl>
-                <ContentControl>
-                    <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                </ContentControl>
+                <Border CornerRadius="4">
+                    <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Border.Clip>
+                    <ContentControl>
+                        <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                    </ContentControl>
+                </Border>
+                <Border CornerRadius="4">
+                    <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Border.Clip>
+                     <ContentControl>
+                        <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                      </ContentControl>
+                </Border>
+                <Border CornerRadius="4">
+                <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                </Border.Clip>
+                        <ContentControl>
+                          <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                         </ContentControl>
+                </Border>
             </StackPanel>
         </Border>
     </Grid>
