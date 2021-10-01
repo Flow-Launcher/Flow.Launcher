@@ -58,7 +58,7 @@
         <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
+        <Setter Property="Inline.Foreground" Value="#0078d7" />
     </Style>
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />

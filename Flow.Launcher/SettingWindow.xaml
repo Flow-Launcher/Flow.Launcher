@@ -3,6 +3,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+        xmlns:converters="clr-namespace:Flow.Launcher.Converters"
         xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
@@ -28,6 +29,7 @@
         <CommandBinding Command="Close" Executed="OnCloseExecuted"/>
     </Window.CommandBindings>
     <Window.Resources>
+        <converters:BorderClipConverter x:Key="BorderClipConverter"/>
         <CollectionViewSource Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" x:Key="SortedFonts">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source"/>
