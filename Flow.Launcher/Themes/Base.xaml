@@ -14,6 +14,7 @@
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -41,6 +42,7 @@
         <Setter Property="Width" Value="536" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="0 4 0 0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
 
     <Style x:Key="BaseWindowBorderStyle" TargetType="{x:Type Border}">
@@ -54,6 +56,10 @@
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 
+    <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="5" />
+    </Style>
+    
     <Style x:Key="BasePendingLineStyle" TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="Blue" />
     </Style>

@@ -109,7 +109,7 @@
                     </Line>
                 </Grid>
 
-                <Border CornerRadius="4">
+                <Border Style="{DynamicResource WindowRadius}">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
@@ -121,7 +121,7 @@
                         <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
                     </ContentControl>
                 </Border>
-                <Border CornerRadius="4">
+                <Border Style="{DynamicResource WindowRadius}">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
@@ -133,7 +133,7 @@
                         <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
                       </ContentControl>
                 </Border>
-                <Border CornerRadius="4">
+                <Border Style="{DynamicResource WindowRadius}">
                 <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
