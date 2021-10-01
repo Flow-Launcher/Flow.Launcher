@@ -176,7 +176,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#bebebe" BorderBrush="Transparent" BorderThickness="0" />
+                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#898989" BorderBrush="Transparent" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -185,6 +185,7 @@
     <Style x:Key="BaseScrollBarStyle" TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Background" Value="Black" />
         <!-- must set min width -->
         <Setter Property="MinWidth" Value="0"/>
         <Setter Property="Width" Value="5"/>
