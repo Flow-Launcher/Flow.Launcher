@@ -65,7 +65,6 @@
     </Window.InputBindings>
     <Grid>
         <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown">
-            <!-- Window Outside Clipping-->
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <TextBox x:Name="QueryTextSuggestionBox"
@@ -100,9 +99,7 @@
                     <Canvas Style="{DynamicResource SearchIconPosition}">
                         <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
                     </Canvas>
-                    
                 </Grid>
-
 
                 <Grid>
                     <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" />
