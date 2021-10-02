@@ -63,6 +63,11 @@
         <Setter Property="Foreground" Value="#72767d" />
         <Setter Property="Opacity" Value="0.8" />
     </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#72767d" />
+        <Setter Property="Opacity" Value="0.8" />
+    </Style>
     <!-- button style in the middle of the scrollbar -->
     <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
