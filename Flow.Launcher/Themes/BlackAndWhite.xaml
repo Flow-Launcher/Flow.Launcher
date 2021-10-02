@@ -41,4 +41,8 @@
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#b2b2b2" />
     </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#b2b2b2" />
+    </Style>
 </ResourceDictionary>

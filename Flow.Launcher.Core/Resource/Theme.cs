@@ -176,8 +176,11 @@ namespace Flow.Launcher.Core.Resource
 
             Style resultItemStyle = dict["ItemTitleStyle"] as Style;
             Style resultSubItemStyle = dict["ItemSubTitleStyle"] as Style;
+            Style resultHotkeyItemStyle = dict["ItemHotkeyStyle"] as Style;
             Style resultItemSelectedStyle = dict["ItemTitleSelectedStyle"] as Style;
             Style resultSubItemSelectedStyle = dict["ItemSubTitleSelectedStyle"] as Style;
+            Style resultHotkeyItemSelectedStyle = dict["ItemHotkeySelectedStyle"] as Style;
+
             if (resultItemStyle != null && resultSubItemStyle != null && resultSubItemSelectedStyle != null && resultItemSelectedStyle != null)
             {
                 Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultFont));
@@ -186,7 +189,7 @@ namespace Flow.Launcher.Core.Resource
                 Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
-                Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
+                Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
 
             var windowStyle = dict["WindowStyle"] as Style;

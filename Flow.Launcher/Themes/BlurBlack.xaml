@@ -77,4 +77,9 @@
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Opacity" Value="0.5" />
+    </Style>
 </ResourceDictionary>
