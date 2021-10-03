@@ -50,6 +50,7 @@
     <Page Remove="Themes\League.xaml" />
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
     <Page Remove="Themes\Win11Dark.xaml" />
+    <Resource Include="resources\Segoe Fluent Icons.ttf" />  
   </ItemGroup>
   
   <ItemGroup>

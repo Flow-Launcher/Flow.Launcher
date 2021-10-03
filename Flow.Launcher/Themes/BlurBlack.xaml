@@ -19,7 +19,7 @@
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="Black" Opacity="0.5"/>
+                <SolidColorBrush Color="Black" Opacity="0.7"/>
             </Setter.Value>
         </Setter>
     </Style>

@@ -9,11 +9,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
             <ColumnDefinition Width="125" />
+            <ColumnDefinition Width="160" />
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="tbHotkey" TabIndex="100" VerticalContentAlignment="Center" Grid.Column="0"
-                 PreviewKeyDown="TbHotkey_OnPreviewKeyDown" input:InputMethod.IsInputMethodEnabled="False"/>
-        <TextBlock x:Name="tbMsg" Visibility="Hidden" Margin="5 0 0 0" VerticalAlignment="Center" Grid.Column="1" />
+        <TextBlock x:Name="tbMsg" Visibility="Hidden" Margin="8 0 0 0" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Right"/>
+        <TextBox x:Name="tbHotkey" TabIndex="100" VerticalContentAlignment="Center" Grid.Column="1"
+                 PreviewKeyDown="TbHotkey_OnPreviewKeyDown" input:InputMethod.IsInputMethodEnabled="False" Margin="5 0 18 0"/>
     </Grid>
 </UserControl>
