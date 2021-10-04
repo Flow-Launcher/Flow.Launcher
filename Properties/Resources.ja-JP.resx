@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>バージョン情報</value>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>職場または学校へのアクセス</value>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>アクセシビリティ オプション</value>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>アクセサリ アプリ</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>アカウント情報</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>アカウント</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>アクション センター</value>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>アクティブ化</value>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>アクティビティ履歴</value>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>ハードウェアの追加</value>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>プログラムの追加と削除</value>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>電話を追加</value>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>管理ツール</value>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>ディスプレイの詳細設定</value>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>高度なグラフィックス</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>広告 ID</value>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>機内モード</value>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt + Tab キー</value>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>別名</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>アニメーション</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>アプリの色</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>コントロール パネル</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>アプリの診断</value>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>アプリの機能</value>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>システム設定</value>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>アプリのボリュームとデバイスの設定</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>アプリ</value>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>アプリと機能</value>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>Web サイト用のアプリ</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>領域</value>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>アカウント</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>管理ツール</value>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>外観と個人用設定</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>アプリ</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>クロックとリージョン</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>デバイス</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>簡単操作</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>ゲーム</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>ハードウェアとサウンド</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>ホーム ページ</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>Mixed Reality</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>ネットワークとインターネット</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>個人用設定</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>電話</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>プライバシー</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>プログラム</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>システム</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>システムとセキュリティ</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>時刻と言語</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>更新とセキュリティ</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>ユーザー アカウント</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>割り当てられたアクセス</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>オーディオ</value>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>オーディオ アラート</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>オーディオと音声</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>自動再生</value>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>ファイルの自動ダウンロード</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>バックグラウンド</value>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>バックグラウンド アプリ</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>バックアップと復元</value>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>バッテリー節約機能</value>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>バッテリー節約機能の設定</value>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>バッテリー節約機能の使用状況の詳細</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>バッテリーの使用</value>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>生体認証デバイス</value>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>BitLocker ドライブ暗号化</value>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>薄い青</value>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>青と黄</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>Bluetooth デバイス</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>配信中</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>カレンダー</value>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>通話履歴</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>カメラ</value>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie IME</value>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>携帯ネットワークと SIM</value>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>開始時に表示するフォルダーを選択</value>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>NetWare 用クライアント サービス</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>クリップボード</value>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>クローズド キャプション</value>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>カラー フィルター</value>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>色の管理</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>接続されているデバイス</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>連絡先</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Copy コマンド</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>コア分離</value>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>デバイス間の Cortana</value>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana - 言語</value>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>資格情報マネージャー</value>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>クロスデバイス</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>カスタム デバイス</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>濃い色</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>ダーク モード</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>データ利用状況</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>日付と時刻</value>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>既定のアプリ</value>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>既定のカメラ</value>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>既定の場所</value>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>既定のプログラム</value>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>既定の保存場所</value>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>配信の最適化</value>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>デスクトップのテーマ</value>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>デバイス マネージャー</value>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>デバイスとプリンター</value>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>ダイヤルアップ</value>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>直接アクセス</value>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>電話を直接開く</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>表示プロパティ</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>ドキュメント</value>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>ディスプレイの複製</value>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>これらの時間帯</value>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>Ease of Access Center</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>エディション</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>メール</value>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>メールとアプリのアカウント</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>暗号化</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>環境</value>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>イーサネット</value>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Exploit Protection</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>視線制御</value>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>アイ トラッカー</value>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>家族とその他のユーザー</value>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>フィードバックと診断</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>ファイル システム</value>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>デバイスの検索</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>ファイアウォール</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>集中モード - 通知オフ時間</value>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>集中モード - サイレント</value>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>フォルダー オプション</value>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>開発者向け</value>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>ゲーム バー</value>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>ゲーム コントローラー</value>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>ゲーム録画</value>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>ゲーム モード</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>ゲートウェイ</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>プログラムの取得</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>グランス</value>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>グラフィックスの設定</value>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>グレースケール</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>緑の週</value>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>ヘッドセットのディスプレイ</value>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>ハイ コントラスト</value>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>ホログラフィック オーディオ</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>ホログラフィック環境</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>ホログラフィック ヘッドセット</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>ホログラフィック管理</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>ホーム グループ</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>イメージ</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>インデックス作成オプション</value>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>赤外線</value>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>手描き入力とタイピング</value>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>インターネット オプション</value>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>反転色</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>分離閲覧</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>日本語入力システムの設定</value>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>ジョイスティックのプロパティ</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>キーボード</value>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>キーパッド</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>キー</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>明るい色</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>ライト モード</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>場所</value>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>ロック画面</value>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>拡大鏡</value>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>メール - Microsoft Exchange または Windows メッセージング</value>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>既知のネットワークを管理</value>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>オプション機能の管理</value>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>メッセージング</value>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>従量制課金接続</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>マイク</value>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>モバイル デバイス</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>モバイル ホットスポット</value>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>モーション</value>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>マウス</value>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>マウスとタッチパッド</value>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>マウス、フォント、キーボード、プリンターのプロパティ</value>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>マウス ポインター</value>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>マルチメディアのプロパティ</value>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>マルチタスキング</value>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>NFC トランザクション</value>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>ナレーター</value>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>ナビゲーション バー</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>ネットワーク</value>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>ネットワークと共有センター</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>ネットワーク接続</value>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>ネットワークのプロパティ</value>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>ネットワーク セットアップ ウィザード</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>ネットワークの状態</value>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>夜間モード</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>夜間モード設定</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>メモ</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>モバイル デバイスをデバイスに接続している場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>グラフィックの詳細オプションをサポートしているデバイスでのみ使用できます。</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>タブレットなどのバッテリが搭載されているデバイスでのみ使用できます。</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>Windows 10、バージョン 1809 (ビルド 17763) およびそれ以降では非推奨になりました。</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>ダイヤルがペアリングされている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>DirectAccess が有効になっている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>ディスプレイの詳細オプションをサポートしているデバイスでのみ使用できます。</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>ユーザーが WIP に登録されている場合にのみプレゼンテーションを実行します。</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>アイトラッカー ハードウェアが必要です。</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>Microsoft 日本語入力メソッド エディターがインストールされている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>Microsoft Pinyin 入力メソッド エディターがインストールされている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>Microsoft Wubi 入力メソッド エディターがインストールされている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>Mixed Reality ポータル アプリがインストールされている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>モバイルで、企業がプロビジョニング パッケージをデプロイ済みの場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>Windows 10、バージョン 1903 (ビルド 18362) で追加されました。</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>Windows 10、バージョン 2004 (ビルド 19041) で追加されました。</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>たとえば、サード パーティによって "設定アプリ" がインストールされている場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>タッチパッド ハードウェアがある場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>デバイスに Wi-Fi アダプターがある場合にのみ使用できます。</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>デバイスは Windows Anywhere 対応でなければなりません。</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>企業がプロビジョニング パッケージをデプロイしている場合にのみ使用できます。</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>通知とアクション</value>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>NumLock</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>ODBC データ ソース管理者 (32 ビット)</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>ODBC データ ソース管理者 (64 ビット)</value>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>オフライン ファイル</value>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>オフラインのマップ</value>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>オフラインのマップ - マップのダウンロード</value>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>オンスクリーン</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>OS</value>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>その他のデバイス</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>その他のオプション</value>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>他のユーザー</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>保護者による制限</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>パスワードのプロパティ</value>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>ペンと入力デバイス</value>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>ペンとタッチ</value>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>ペンと Windows Ink</value>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>近くの人との接続</value>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>パフォーマンスの情報とツール</value>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>アクセス許可と履歴</value>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>個人用設定 (カテゴリ)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>電話</value>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>電話とモデム</value>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>電話とモデム - オプション</value>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>通話</value>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>電話 - 既定のアプリ</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Pinyin IME 設定</value>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Pinyin IME 設定 - ドメイン辞書</value>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Pinyin IME 設定 - キーの構成</value>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Pinyin IME 設定 - UDP</value>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>ゲームをフルスクリーンでプレイしています</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Windows の設定を検索するためのプラグイン</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Windows の設定</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>電源とスリープ</value>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>電源オプション</value>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>プレゼンテーション</value>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>画面の印刷</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>プリンター</value>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>プリンターとスキャナー</value>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>問題のレポートと解決策</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>プロセッサ</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>プログラムと機能</value>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>この PC へのプロジェクション</value>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>プロビジョニング</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>近接通信</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>プロキシ</value>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>サイレント ゲーム</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>無線</value>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>認識</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>復元</value>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>赤目</value>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>赤-緑</value>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>赤の週</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>リージョン</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>地域と言語</value>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>地域の書式設定</value>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>地域の言語</value>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>地域設定のプロパティ</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>RemoteApp とデスクトップ接続</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>リモート デスクトップ</value>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>スキャナーとカメラ</value>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>スケジュール済み</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>スケジュールされたタスク</value>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>画面の回転</value>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>スクロール バー</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>スクロール ロック</value>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>Windows の検索</value>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Security Center</value>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>セキュリティ プロセッサ</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>セッションのクリーンアップ</value>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>キオスクの設定</value>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>ホーム ページの設定</value>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>共有エクスペリエンス</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>WiFi</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>ショートカット</value>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>サインイン オプション</value>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>サインイン オプション - 動的ロック</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>サウンド</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>音声</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>音声認識</value>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>音声入力</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>開始位置</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>スタートアップ アプリ</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>ストレージ</value>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>ストレージ ポリシー</value>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>ストレージ センサー</value>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>同期センター</value>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>設定の同期</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>システム</value>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>システム プロパティと新しいハードウェアの追加ウィザード</value>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>タブ</value>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>タブレット モード</value>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>タブレット PC の設定</value>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>会話</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>Cortana に話しかける</value>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>タスク バー</value>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>タスク バーの色</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>タスク</value>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>チーム会議</value>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>チーム デバイスの管理</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>テキスト読み上げ</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>タイムライン</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>タッチ</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>タッチ フィードバック</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>タッチパッド</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>トラブルシューティング</value>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>入力</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>アンインストール</value>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>ユーザー アカウント</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>ビデオの再生</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>仮想デスクトップ</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>ウイルス</value>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>音声のアクティブ化</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>音量</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>壁紙</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>暖色</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>ウェルカム センター</value>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>ようこそ画面</value>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>ホイール</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Wi-Fi 通話</value>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Wi-Fi の設定</value>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>ウィンドウの境界線</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Windows ファイアウォール</value>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Windows Hello の設定 - Face</value>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Windows Hello の設定 - 指紋</value>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Windows Insider Program</value>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Windows モビリティ センター</value>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows Search</value>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Windows セキュリティ</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update - 詳細オプション</value>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update - 更新プログラムの確認</value>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update - 再起動オプション</value>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update - オプションの更新プログラムを表示</value>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update - 更新履歴の表示</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>ワイヤレス</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>ワークプレース</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>ワークプレースのプロビジョニング</value>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>Wubi IME 設定</value>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>Wubi IME 設定 - UDP</value>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Xbox ネットワーク</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>ユーザー情報</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>通話</value>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>第二色覚異常</value>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>第一色覚異常</value>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>第三色覚異常</value>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+</root>
