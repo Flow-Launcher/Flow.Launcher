@@ -26,7 +26,9 @@
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseWindowStyle}" >
         <Setter Property="Width" Value="576" />
     </Style>
-    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}" ></Style>
+    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="#32EC32" />
+    </Style>
     <Style x:Key="ItemTitleStyle" BasedOn="{StaticResource BaseItemTitleStyle}" TargetType="{x:Type TextBlock}" >
         <Setter Property="Foreground" Value="#a09b8c"></Setter>
     </Style>

@@ -18,7 +18,9 @@
         <Setter Property="Background" Value="#000000" />
     </Style>
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseWindowStyle}" />
-    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}" />
+    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="White" />
+    </Style>
     <Style x:Key="ItemTitleStyle" BasedOn="{StaticResource BaseItemTitleStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
     </Style>

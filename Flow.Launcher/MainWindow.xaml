@@ -103,7 +103,7 @@
                     <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" />
                     <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                  Y1="0" Y2="0" X2="100" Height="2" Width="Auto" StrokeThickness="1">
+                  Y1="0" Y2="0" X1="0" X2="100" Height="2" Width="752" StrokeThickness="1">
                     </Line>
                 </Grid>
 

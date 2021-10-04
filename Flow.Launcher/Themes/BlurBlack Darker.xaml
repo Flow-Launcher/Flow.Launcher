@@ -34,6 +34,7 @@
     </Style>
 
     <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="White" />
     </Style>
 
     <!-- Item Style -->

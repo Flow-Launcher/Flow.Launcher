@@ -29,11 +29,11 @@
     </Style>
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="576" />
-
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
-
     <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="#ffffff" />
+        <Setter Property="Opacity" Value="0.6" />
     </Style>
 
     <!-- Item Style -->
