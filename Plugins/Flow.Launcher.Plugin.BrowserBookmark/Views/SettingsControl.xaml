@@ -7,21 +7,21 @@
              Background="White"
              d:DesignHeight="300" d:DesignWidth="500"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="80"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <Grid Grid.Row="0" Margin="40 20 0 0">
+            <Grid Grid.Row="0" Margin="30 20 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="160" />
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_openBookmarks}"
-                       FontSize="15" Margin="0 5 0 0"/>
+                       FontSize="15" Margin="10 5 0 0"/>
                 <RadioButton Grid.Column="1" Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" 
                              Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newWindow}"
                              Click="OnNewBrowserWindowClick" />
@@ -30,7 +30,7 @@
                              Click="OnNewTabClick" />
             </Grid>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="60" Margin="25,13,0,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="60" Margin="30,20,0,0">
             <Label Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath}"
                    Height="28" Margin="10"/>
             <TextBox x:Name="BrowserPathBox" 
@@ -44,8 +44,8 @@
             <Button x:Name="ViewButton" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_choose}"
                     HorizontalAlignment="Left" Margin="10" Width="100" Height="30" Click="OnChooseClick" FontSize="14" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Vertical">
-            <TextBlock Text="CustomBrowsers" Margin="10"/>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="30,20,0,0">
+            <TextBlock Text="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}" Margin="10"/>
             <ListView Grid.Row="2" ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
                       SelectedItem="{Binding SelectedCustomBrowser}"
                       Margin="10"
@@ -57,14 +57,14 @@
                       MouseDoubleClick="MouseDoubleClickOnSelectedCustomBrowser">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="Browser Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="DataDirectoryPath"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Content="Add Custom Browser" Margin="10" Click="NewCustomBrowser"/>
-                <Button Content="Delete Custom Browser" Margin="10" Click="DeleteCustomBrowser"/>
+                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" Margin="10" Click="NewCustomBrowser"/>
+                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" Margin="10" Click="DeleteCustomBrowser"/>
             </StackPanel>
         </StackPanel>
     </Grid>

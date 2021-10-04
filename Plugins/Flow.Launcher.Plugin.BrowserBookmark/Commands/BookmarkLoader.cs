@@ -26,7 +26,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
             var allBookmarks = new List<Bookmark>();
 
-            //TODO: Let the user select which browser's bookmarks are displayed
             // Add Firefox bookmarks
             allBookmarks.AddRange(mozBookmarks.GetBookmarks());
 

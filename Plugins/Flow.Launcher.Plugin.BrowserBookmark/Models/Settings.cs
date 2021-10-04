@@ -10,18 +10,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Models
 
         public string BrowserPath { get; set; }
 
-        public ObservableCollection<CustomBrowser> CustomChromiumBrowsers { get; set; } = new()
-        {
-            new CustomBrowser
-            {
-                Name="awefawef",
-                DataDirectoryPath="awefawef"
-            },
-            new CustomBrowser
-            {
-                Name = "awefawefawefawef",
-                DataDirectoryPath = "aweawefawfawef"
-            }
-        };
+        public ObservableCollection<CustomBrowser> CustomChromiumBrowsers { get; set; } = new();
     }
 }
