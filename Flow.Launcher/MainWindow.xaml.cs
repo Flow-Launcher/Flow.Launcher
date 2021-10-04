@@ -333,6 +333,28 @@ namespace Flow.Launcher
                 _viewModel.SelectPrevPageCommand.Execute(null);
                 e.Handled = true;
             }
+            else if (e.Key == Key.Right)
+            {
+                int caretPosition = QueryTextBox.CaretIndex;
+                int queryLength = QueryTextBox.Text.Length;
+                if (caretPosition == queryLength && queryLength != 0)
+                {
+                    _viewModel.LoadContextMenuCommand.Execute(null);
+                    e.Handled = true;
+                }
+                else { }
+            }
+            else if (e.Key == Key.Left)
+            {
+                int caretPosition = QueryTextBox.CaretIndex;
+                int queryLength = QueryTextBox.Text.Length;
+                if (caretPosition == queryLength && queryLength == 0)
+                {
+                    _viewModel.EscCommand.Execute(null);
+                    e.Handled = true;
+                }
+                else { }
+            }
         }
 
         private void MoveQueryTextToEnd()

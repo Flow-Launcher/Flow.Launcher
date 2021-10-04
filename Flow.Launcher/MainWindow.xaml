@@ -47,6 +47,8 @@
         <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding SelectPrevPageCommand}"></KeyBinding>
         <KeyBinding Key="Home" Modifiers="Alt" Command="{Binding SelectFirstResultCommand}"></KeyBinding>
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding LoadContextMenuCommand}"></KeyBinding>
+        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}"></KeyBinding>
+        <KeyBinding Key="Left" Command="{Binding EscCommand}"></KeyBinding>
         <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding LoadHistoryCommand}"></KeyBinding>
         <KeyBinding Key="Enter" Modifiers="Ctrl+Shift" Command="{Binding OpenResultCommand}"></KeyBinding>
         <KeyBinding Key="Enter" Modifiers="Shift" Command="{Binding LoadContextMenuCommand}"></KeyBinding>
