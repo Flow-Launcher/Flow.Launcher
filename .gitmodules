@@ -1,0 +1,3 @@
+[submodule ".\\Plugins\\Flow.Launcher.Plugin.WindowsSettings"]
+	path = .\\Plugins\\Flow.Launcher.Plugin.WindowsSettings
+	url = git@github.com:Flow-Launcher/Flow.Plugin.WindowsSettings.git
