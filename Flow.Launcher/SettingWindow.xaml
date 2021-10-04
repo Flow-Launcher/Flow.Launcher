@@ -419,7 +419,7 @@
             </TabItem.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
