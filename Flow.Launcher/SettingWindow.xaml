@@ -16,9 +16,9 @@
         Title="{DynamicResource flowlauncher_settings}"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
-        Height="800" Width="1280"
-        MinWidth="1280"
-        MinHeight="700"
+        Height="700" Width="900"
+        MinWidth="850"
+        MinHeight="600"
         Loaded="OnLoaded" 
         Closed="OnClosed"        
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
