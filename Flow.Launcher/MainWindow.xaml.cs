@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -313,47 +313,43 @@ namespace Flow.Launcher
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down)
+            switch (e.Key)
             {
-                _viewModel.SelectNextItemCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Up)
-            {
-                _viewModel.SelectPrevItemCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageDown)
-            {
-                _viewModel.SelectNextPageCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageUp)
-            {
-                _viewModel.SelectPrevPageCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Right)
-            {
-                int caretPosition = QueryTextBox.CaretIndex;
-                int queryLength = QueryTextBox.Text.Length;
-                if (caretPosition == queryLength && queryLength != 0)
-                {
-                    _viewModel.LoadContextMenuCommand.Execute(null);
+                case Key.Down:
+                    _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
-                }
-                else { }
-            }
-            else if (e.Key == Key.Left)
-            {
-                int caretPosition = QueryTextBox.CaretIndex;
-                int queryLength = QueryTextBox.Text.Length;
-                if (caretPosition == queryLength && queryLength == 0)
-                {
-                    _viewModel.EscCommand.Execute(null);
+                    break;
+                case Key.Up:
+                    _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
-                }
-                else { }
+                    break;
+                case Key.PageDown:
+                    _viewModel.SelectNextPageCommand.Execute(null);
+                    e.Handled = true;
+                    break;
+                case Key.PageUp:
+                    _viewModel.SelectPrevPageCommand.Execute(null);
+                    e.Handled = true;
+                    break;
+                case Key.Right:
+                    if (_viewModel.SelectedIsFromQueryResults() 
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length 
+                        && !string.IsNullOrEmpty(QueryTextBox.Text))
+                    {
+                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
+                case Key.Left:
+                    if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
+                    {
+                        _viewModel.EscCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
+                default:
+                    break;
+
             }
         }
 
