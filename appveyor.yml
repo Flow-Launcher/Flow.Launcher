@@ -7,6 +7,10 @@ init:
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
+install:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git submodule update --init --recursive
+
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
