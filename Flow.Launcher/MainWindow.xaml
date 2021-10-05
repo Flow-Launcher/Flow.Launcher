@@ -130,7 +130,7 @@
                         </MultiBinding>
                     </Border.Clip>
                      <ContentControl>
-                        <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                        <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="ContextMenu"/>
                       </ContentControl>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
@@ -142,7 +142,7 @@
                         </MultiBinding>
                 </Border.Clip>
                         <ContentControl>
-                          <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                        <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
                          </ContentControl>
                 </Border>
             </StackPanel>
