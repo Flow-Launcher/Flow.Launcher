@@ -47,7 +47,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Page Remove="Themes\League.xaml" />
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
     <Resource Include="resources\Segoe Fluent Icons.ttf" />  
   </ItemGroup>
