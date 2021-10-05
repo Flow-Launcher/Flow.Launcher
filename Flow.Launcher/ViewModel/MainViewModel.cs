@@ -292,6 +292,8 @@ namespace Flow.Launcher.ViewModel
         }
 
         public bool LastQuerySelected { get; set; }
+
+        // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
@@ -524,7 +526,7 @@ namespace Flow.Launcher.ViewModel
             try
             {
                 // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-               await Task.WhenAll(tasks);
+                await Task.WhenAll(tasks);
             }
             catch (OperationCanceledException)
             {
@@ -632,7 +634,7 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        private bool SelectedIsFromQueryResults()
+        internal bool SelectedIsFromQueryResults()
         {
             var selected = SelectedResults == Results;
             return selected;
