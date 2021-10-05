@@ -81,6 +81,11 @@
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Normal" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Height" Value="0" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="BaseItemNumberStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -99,6 +104,11 @@
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Height" Value="0" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="BaseItemImageSelectedStyle" TargetType="{x:Type Image}" >
     </Style>
