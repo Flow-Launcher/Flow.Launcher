@@ -13,7 +13,7 @@
         <Setter Property="Foreground" Value="#d2d8e5" />
         <Setter Property="CaretBrush" Value="#FFAA47" />
         <Setter Property="FontSize" Value="26" />
-        <Setter Property="Width" Value="490" />
+        <Setter Property="Width" Value="520" />
         <Setter Property="Height" Value="42" />
         <Setter Property="Padding" Value="0 4 0 0" />
     </Style>
@@ -21,7 +21,7 @@
         <Setter Property="Background" Value="#303840" />
         <Setter Property="Foreground" Value="#798189" />
         <Setter Property="FontSize" Value="26" />
-        <Setter Property="Width" Value="490" />
+        <Setter Property="Width" Value="520" />
         <Setter Property="Height" Value="42" />
         <Setter Property="Padding" Value="0 4 0 0" />
     </Style>
