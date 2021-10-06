@@ -94,6 +94,14 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
+    <Style x:Key="BaseGlyphStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25"/>
+    </Style>
     <Style x:Key="BaseItemTitleSelectedStyle" TargetType="{x:Type TextBlock}" >
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
