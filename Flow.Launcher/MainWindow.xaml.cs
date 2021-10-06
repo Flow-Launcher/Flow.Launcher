@@ -11,8 +11,6 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
-using System.Windows.Threading;
-using System.Globalization;
 using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
@@ -33,6 +31,7 @@ namespace Flow.Launcher
         private Settings _settings;
         private NotifyIcon _notifyIcon;
         private MainViewModel _viewModel;
+
         #endregion
 
         public MainWindow(Settings settings, MainViewModel mainVM)
@@ -40,29 +39,13 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
-
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
-            timer.Tick += Timer_Tick;
-            timer.Start();
             InitializeComponent();
         }
 
         public MainWindow()
         {
-
             InitializeComponent();
-            
-        
         }
-
-        private void Timer_Tick(object sender, EventArgs e) 
-        {
-                ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
-                DateBox.Text = System.DateTime.Now.ToString("ddd MM/dd", CultureInfo.InvariantCulture);
-
-        }
-
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {

@@ -586,10 +586,7 @@
                                             <Canvas Style="{DynamicResource SearchIconPosition}">
                                                 <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
                                             </Canvas>
-                                            <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
-                                                <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}"></TextBlock>
-                                                <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}"></TextBlock>
-                                            </StackPanel>
+
                                             <Border Margin="0 0 0 0" Grid.Row="1">
                                                 <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" Visibility="visible"/>
                                             </Border>
