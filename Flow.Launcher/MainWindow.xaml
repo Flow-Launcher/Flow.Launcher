@@ -32,7 +32,6 @@
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>
     </Window.Resources>
-
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>
@@ -93,6 +92,7 @@
                                 <MenuItem Command="ApplicationCommands.Paste"/>
                                 <Separator />
                                 <MenuItem Header="{DynamicResource flowlauncher_settings}"  Click="OnContextMenusForSettingsClick" />
+                                <MenuItem Command="{Binding EscCommand}" Header="Close"/>
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
