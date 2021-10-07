@@ -418,8 +418,7 @@
             </TabItem.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="74"></RowDefinition>
@@ -429,33 +428,55 @@
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3">
-                    <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
+                    <ListBox SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True">
-                        
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Margin="0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding Image, IsAsync=True}"
+
+                                    <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}">
+                                        <Expander.Header>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition Width="470"/>
+                                                    <ColumnDefinition Width="130" />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition  Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="{Binding Image, IsAsync=True}"
                                            Width="32" Height="32" Margin="12 0 0 0" Grid.Column="0"/>
-                                        <StackPanel Grid.Column="1" Margin="12 0 0 0">
-                                            <TextBlock Text="{Binding PluginPair.Metadata.Name}" TextWrapping="Wrap" ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                            <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
-                                            <Run Text="{Binding PluginPair.Metadata.Version}"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Grid>
+                                                <StackPanel Grid.Column="1" Margin="12 0 14 0">
+                                                    <TextBlock Text="{Binding PluginPair.Metadata.Name}" TextWrapping="Wrap" ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                                    <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
+                                            <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                                    <TextBlock Text="{DynamicResource priority}" VerticalAlignment="Center" Margin="0 0 10 0" MaxWidth="100" FontSize="12"/>
+                                                    <Button Content="{Binding Priority}"
+                                            ToolTip="Change Plugin Results Priority"
+                                            Cursor="Hand" Foreground="Black" Width="50"
+                                            Click="OnPluginPriorityClick" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                                <ui:ToggleSwitch Grid.Column="3" OffContent="{DynamicResource disable}" OnContent="{DynamicResource enable}" 
+                                                    MaxWidth="110" HorizontalAlignment="Right"
+                                                    IsOn="{Binding PluginState}"/>
+                                            </Grid>
+                                        </Expander.Header>
+                                        <Border Width="500" Height="500" BorderThickness="1" BorderBrush="Black">
+                                            <ContentControl ContentTemplateSelector="{StaticResource PluginViewModels}" Content="{Binding SettingProvider}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                        </Border>
+                                    </Expander>
+
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
 
+                <!--
                 <Border BorderThickness="1 2 0 0" BorderBrush="#f3f3f3" Grid.Column="2" Grid.RowSpan="2" Padding="12 12 12 12">
                 <Grid Grid.Column="1" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
@@ -531,6 +552,7 @@
                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 </Grid>
                 </Border>
+                -->
             </Grid>
         </TabItem>
         <TabItem>
