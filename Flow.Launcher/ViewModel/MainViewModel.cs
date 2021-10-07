@@ -596,8 +596,8 @@ namespace Flow.Launcher.ViewModel
                 menu = new Result
                 {
                     Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
-                    //IcoPath = "Images\\up.png",
-                    Glyph = new GlyphInfo(FontFamily: "Segoe Fluent Icons", Glyph: "\xeac2"),
+                    IcoPath = "Images\\up.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {

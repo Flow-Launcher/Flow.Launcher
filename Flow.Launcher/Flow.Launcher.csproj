@@ -48,7 +48,6 @@
   
   <ItemGroup>
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
-    <Resource Include="resources\Segoe Fluent Icons.ttf" />  
   </ItemGroup>
   
   <ItemGroup>
@@ -76,6 +75,9 @@
     <Content Include="Themes\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

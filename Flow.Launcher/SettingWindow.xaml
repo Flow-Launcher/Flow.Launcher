@@ -20,7 +20,7 @@
         MinWidth="850"
         MinHeight="600"
         Loaded="OnLoaded" 
-        Closed="OnClosed"        
+        Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="Close"/>
@@ -28,7 +28,6 @@
     <Window.CommandBindings>
         <CommandBinding Command="Close" Executed="OnCloseExecuted"/>
     </Window.CommandBindings>
-
 
     <Window.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>
@@ -677,6 +676,19 @@
 
                             <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5" Margin="0 30 0 0">
                                 <StackPanel Orientation="Vertical">
+                                    <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Text="{DynamicResource useGlyphUI}" Style="{DynamicResource SettingTitleLabel}" />
+                                                <TextBlock Text="{DynamicResource useGlyphUIEffect}" Style="{DynamicResource SettingSubTitleLabel}" />
+                                            </StackPanel>
+                                            <ui:ToggleSwitch IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" Width="80" Grid.Column="2" Grid.Row="0" Margin="0 0 18 0"/>
+                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                      &#xf6b8;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                    <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
                                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <TextBlock Grid.Column="1" Text="{DynamicResource queryBoxFont}" VerticalAlignment="Center" />

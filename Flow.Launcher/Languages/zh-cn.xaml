@@ -76,8 +76,7 @@
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗？</system:String>
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。</system:String>
-    <system:String x:Key="shadowEffectPerformance">如果您的计算机性能有限，则不建议使用。</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
 
     <!--设置，代理-->
     <system:String x:Key="proxy">HTTP 代理</system:String>

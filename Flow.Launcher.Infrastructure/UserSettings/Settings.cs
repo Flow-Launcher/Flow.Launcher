@@ -32,6 +32,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
+        public bool UseGlyphIcons { get; set; } = true;
 
 
         /// <summary>

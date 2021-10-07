@@ -304,6 +304,12 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool UseGlyphIcons
+        {
+            get { return Settings.UseGlyphIcons; }
+            set { Settings.UseGlyphIcons = value; }
+        }
+
         public Brush PreviewBackground
         {
             get
