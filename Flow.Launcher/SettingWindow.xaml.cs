@@ -184,13 +184,13 @@ namespace Flow.Launcher
             settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled;
         }
 
-        private void OnPluginPriorityClick(object sender, MouseButtonEventArgs e)
+        private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
+            
+            
                 PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(viewModel.SelectedPlugin.PluginPair.Metadata.ID, settings, viewModel.SelectedPlugin);
                 priorityChangeWindow.ShowDialog();
-            }
+            
         }
 
         private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
@@ -266,5 +266,9 @@ namespace Flow.Launcher
             FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
 
+        /*private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
+        {
+
+        }*/
     }
 }
