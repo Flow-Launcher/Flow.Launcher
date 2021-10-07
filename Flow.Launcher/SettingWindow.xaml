@@ -447,7 +447,7 @@
                                             <TextBlock Text="{Binding PluginPair.Metadata.Name}" TextWrapping="Wrap" ToolTip="{Binding PluginPair.Metadata.Version}" />
                                             <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
                                             <Run Text="{Binding PluginPair.Metadata.Version}"/>
-                                            </TextBlock>
+                                            </TextBlock>a
                                         </StackPanel>
                                     </Grid>
                                 </DockPanel>

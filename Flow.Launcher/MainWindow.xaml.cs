@@ -207,9 +207,9 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
-            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
+            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
                 new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
-            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 50, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
             _progressBarStoryboard.Children.Add(da);
