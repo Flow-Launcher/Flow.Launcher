@@ -17,7 +17,7 @@
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         Height="700" Width="1000"
-        MinWidth="850"
+        MinWidth="900"
         MinHeight="600"
         Loaded="OnLoaded" 
         Closed="OnClosed"
@@ -190,11 +190,11 @@
 
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="Transparent"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="#ffffff"></Setter>
             <Setter Property="Padding" Value="0 12 18 12" />
-            <Setter Property="Margin" Value="0 0 0 0" />
-            <Setter Property="Width" Value="800" />
+            <Setter Property="Margin" Value="0 4 18 0" />
+            
+            <Setter Property="BorderBrush" Value="#e5e5e5" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -203,11 +203,12 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}"
+                    Padding="{TemplateBinding Padding}" CornerRadius="5"
                     SnapsToDevicePixels="True">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{TemplateBinding Content}"
+                                              
                                     ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                     ContentTemplate="{TemplateBinding ContentTemplate}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -230,16 +231,18 @@
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
                                 
+                                
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
+                                <Setter TargetName="Bd" Property="Background" Value="Red" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5"/>
-                                <Setter TargetName="Bd" Property="Margin" Value="0 10 0 10"/>
+                                
+                                
                                 
                             </MultiTrigger>
                             <Trigger Property="IsEnabled" Value="False">
@@ -483,27 +486,25 @@
                     <RowDefinition Height="74"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Background="#f3f3f3" Padding="5 18 0 0">
+                <Border Grid.Row="0" Background="#f3f3f3" Padding="5 0 0 0">
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1">
-                    <ListBox SelectedItem="{Binding SelectedPlugin}"
+                    <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="0, 0, 12, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False">
+                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False" Padding="0" Width="Auto">
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <DockPanel Margin="0">
-                                
-                                    <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft" Background="Transparent">
+                                <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft" Background="Transparent" Padding="0">
                                         <Expander.Header>
                                             <Grid FlowDirection="LeftToRight">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="54"/>
                                                     <ColumnDefinition Width="450"/>
                                                     <ColumnDefinition />
                                                     <ColumnDefinition Width="90"/>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="0"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Image Source="{Binding Image, IsAsync=True}"
                                            Width="32" Height="32" Margin="12 0 0 0" Grid.Column="0"/>
@@ -527,37 +528,39 @@
                                         </Expander.Header>
 
                                         <Grid FlowDirection="LeftToRight">
-                                            <StackPanel Orientation="Vertical" Margin="22 12 0 0">
+                                            <StackPanel Orientation="Vertical" Margin="0 12 0 0">
                                             <StackPanel>
-                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52"  BorderThickness="0 1 0 1">
+                                                <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52" Width="auto" BorderThickness="0 1 0 0">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                        <StackPanel Style="{StaticResource TextPanel}">
-                                                            <TextBlock Text="{DynamicResource actionKeywords}" Style="{DynamicResource SettingTitleLabel}" />
-                                                        </StackPanel>
-                                                        <TextBlock Text="{Binding ActionKeywordsText}"
+                                                        <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal">
+                                                            <TextBlock Text="{DynamicResource actionKeywords}" Style="{DynamicResource SettingTitleLabel}" Margin="48 0 0 0"/>
+                                                                <TextBlock Text="{Binding ActionKeywordsText}" DockPanel.Dock="Right"
                                             Visibility="{Binding ActionKeywordsVisibility}"
                                             ToolTip="Change Action Keywords"
                                             Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
-                                            MouseUp="OnPluginActionKeywordsClick" MaxWidth="100" />
+                                            MouseUp="OnPluginActionKeywordsClick" MaxWidth="100" HorizontalAlignment="Right"/>
+                                                            </StackPanel>
+                  
                                                     </ItemsControl>
                                                 </Border>
                                             </StackPanel>
                                                 
                                             <StackPanel>
-                                                    <Border BorderBrush="#CECECE" Background="White">
-                                        <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SettingProvider}" Padding="0" Margin="0" VerticalAlignment="Center"/>
+                                                    <Border Background="White" Padding="14 0 0 0" BorderThickness="0 1 0 0"  BorderBrush="#e6e6e6" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                                        <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SettingProvider}" Padding="0" Margin="0" VerticalAlignment="Top" MaxWidth="750"/>
                                                     </Border>
                                                 </StackPanel>
                                                 
                                                 <StackPanel>
-                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}"  Margin="0" BorderThickness="0">
+                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" VerticalAlignment="Center" Margin="0" BorderThickness="0 1 0 0" Padding="0 12 0 0">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                        <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal">
-                                                            <TextBlock Text="{DynamicResource plugin_init_time}" FontSize="10" Margin="10 0 0 0" MaxWidth="100"/>
-                                                                <TextBlock Text="{Binding InitilizaTime}" FontSize="10" Margin="5 0 0 0" MaxWidth="100"/>
+                                                        <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <TextBlock Text="{DynamicResource plugin_init_time}" FontSize="11" Margin="10 0 0 0" MaxWidth="100" />
+                                                                <TextBlock Text="{Binding InitilizaTime}" FontSize="11" Margin="5 0 0 0" MaxWidth="100"/>
                                                                 <TextBlock Text="{DynamicResource plugin_query_time}" FontSize="10" Margin="10 0 0 0" MaxWidth="100"/>
-                                                                <TextBlock Text="{Binding QueryTime}" FontSize="10" Margin="5 0 0 0" MaxWidth="100"/>
-                                                        </StackPanel>
+                                                                <TextBlock Text="{Binding QueryTime}" FontSize="11" Margin="5 0 0 0" MaxWidth="100"/>
+                                                                <TextBlock Text="{Binding PluginPair.Metadata.Version}" FontSize="11" Margin="5 0 0 0" MaxWidth="100" VerticalAlignment="Center"/>
+                                                            </StackPanel>
                                                         <TextBlock Text="{DynamicResource pluginDirectory}"
                                             MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
                                             MouseUp="OnPluginDirecotyClick" Foreground="Blue" HorizontalAlignment="Right"/>
@@ -569,7 +572,6 @@
                                         </Grid>
                                     </Expander>
                                     
-                                </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

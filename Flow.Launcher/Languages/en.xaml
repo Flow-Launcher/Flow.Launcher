@@ -44,8 +44,8 @@
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
-    <system:String x:Key="enable">Enable</system:String>
-    <system:String x:Key="disable">Disable</system:String>
+    <system:String x:Key="enable">On</system:String>
+    <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywords">Action keyword:</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
     <system:String x:Key="newActionKeyword">New action keyword:</system:String>
