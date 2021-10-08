@@ -36,6 +36,7 @@
                 <scm:SortDescription PropertyName="Source"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="Margin" Value="0" />
@@ -186,12 +187,69 @@
         </Style>
 
 
+
+
         <Style x:Key="PluginList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#ffffff"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Padding" Value="0 12 18 12" />
             <Setter Property="Margin" Value="0 0 0 0" />
-
+            <Setter Property="Width" Value="800" />
+            <!--#region Template for blue highlight win10-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5"/>
+                                
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5"/>
+                                <Setter TargetName="Bd" Property="Margin" Value="0 10 0 10"/>
+                                
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--#endregion-->
             <Setter Property="Height" Value="Auto"></Setter>
             
         </Style>
@@ -428,23 +486,24 @@
                 <Border Grid.Row="0" Background="#f3f3f3" Padding="5 18 0 0">
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
-                <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3">
+                <Border Grid.Column="0" Grid.Row="1">
                     <ListBox SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True">
+                             Margin="0, 0, 12, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False">
+
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Margin="0">
-
-                                    <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft">
+                                
+                                    <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft" Background="Transparent">
                                         <Expander.Header>
                                             <Grid FlowDirection="LeftToRight">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="500"/>
-                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="450"/>
                                                     <ColumnDefinition />
-                                                    <ColumnDefinition  Width="Auto"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Image Source="{Binding Image, IsAsync=True}"
                                            Width="32" Height="32" Margin="12 0 0 0" Grid.Column="0"/>
@@ -468,9 +527,9 @@
                                         </Expander.Header>
 
                                         <Grid FlowDirection="LeftToRight">
-                                            <StackPanel Orientation="Vertical" Margin="0 12 0 0">
+                                            <StackPanel Orientation="Vertical" Margin="22 12 0 0">
                                             <StackPanel>
-                                                <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52">
+                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52"  BorderThickness="0 1 0 1">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
                                                         <StackPanel Style="{StaticResource TextPanel}">
                                                             <TextBlock Text="{DynamicResource actionKeywords}" Style="{DynamicResource SettingTitleLabel}" />
@@ -483,14 +542,15 @@
                                                     </ItemsControl>
                                                 </Border>
                                             </StackPanel>
+                                                
                                             <StackPanel>
-                                                    <Border BorderBrush="#cecece" BorderThickness="0 1 0 1" Background="White">
+                                                    <Border BorderBrush="#CECECE" Background="White">
                                         <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SettingProvider}" Padding="0" Margin="0" VerticalAlignment="Center"/>
                                                     </Border>
                                                 </StackPanel>
                                                 
                                                 <StackPanel>
-                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}"  Margin="0">
+                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}"  Margin="0" BorderThickness="0">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
                                                         <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal">
                                                             <TextBlock Text="{DynamicResource plugin_init_time}" FontSize="10" Margin="10 0 0 0" MaxWidth="100"/>
