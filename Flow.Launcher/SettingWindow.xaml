@@ -431,14 +431,14 @@
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3">
                     <ListBox SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll ="False" >
+                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Margin="0">
 
-                                    <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}">
+                                    <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft">
                                         <Expander.Header>
-                                            <Grid>
+                                            <Grid FlowDirection="LeftToRight">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="500"/>
@@ -466,9 +466,9 @@
                                                     IsOn="{Binding PluginState}"/>
                                             </Grid>
                                         </Expander.Header>
-                                        
-                                        <Grid>
-                                            <StackPanel Orientation="Vertical">
+
+                                        <Grid FlowDirection="LeftToRight">
+                                            <StackPanel Orientation="Vertical" Margin="0 12 0 0">
                                             <StackPanel>
                                                 <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
