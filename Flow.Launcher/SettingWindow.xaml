@@ -655,13 +655,23 @@
                                             </StackPanel>
 
                                             <StackPanel>
-                                                <Border Background="White" Padding="14 14 14 14"
+                                                <Border Background="White" Padding="14 0 14 0"
                                                         BorderThickness="0 1 0 0" BorderBrush="#e6e6e6"
                                                         VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                                         MaxHeight="480">
-                                                    <ContentControl
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                        <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=SettingControl, Path=ActualHeight}" Value="0">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                    </Style>
+                                                    </Border.Style>
+                                                    <ContentControl x:Name="SettingControl"
                                                         Content="{Binding SettingControl}"
-                                                        Padding="0" Margin="0" VerticalAlignment="Stretch"
+                                                        Padding="0" Margin="0 14 0 14" VerticalAlignment="Stretch"
                                                         MaxWidth="750" />
                                                 </Border>
                                             </StackPanel>
