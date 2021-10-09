@@ -690,9 +690,16 @@
                                                         Padding="0 12 0 0" >
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
                                                         <StackPanel Style="{StaticResource TextPanel}"
-                                                                    Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 -14 0">
-                                                            <TextBlock Text="{DynamicResource plugin_init_time}" 
+                                                               Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 -14 0">
+                                                            <TextBlock Text="{DynamicResource author}" 
                                                                        FontSize="11" Margin="10 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
+                                                            <TextBlock Text="{Binding PluginPair.Metadata.Author}" FontSize="11" Foreground="#8F8F8F"
+                                                                       Margin="5 0 0 0" MaxWidth="100" />
+                                                            <TextBlock Text="|"
+                                                                       FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F"
+                                                                       VerticalAlignment="Center" />
+                                                            <TextBlock Text="{DynamicResource plugin_init_time}" 
+                                                                       FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
                                                             <TextBlock Text="{Binding InitilizaTime}" FontSize="11" Foreground="#8F8F8F"
                                                                        Margin="5 0 0 0" MaxWidth="100" />
                                                             <TextBlock Text="|"
@@ -806,6 +813,7 @@
                 -->
             </Grid>
         </TabItem>
+
         <TabItem>
             <TabItem.Header>
                 <Grid>
