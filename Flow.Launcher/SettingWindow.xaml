@@ -229,6 +229,7 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 10 0 10" />
 
 
                             </MultiTrigger>
@@ -240,6 +241,7 @@
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 10 0 10" />
 
 
                             </MultiTrigger>
@@ -253,7 +255,14 @@
             </Setter>
             <!--#endregion-->
             <Setter Property="Height" Value="Auto" />
+        </Style>
 
+        <Style x:Key="PriorityButton" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Text}" Value="1">
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
     </Window.Resources>
@@ -566,12 +575,36 @@
                                                 </TextBlock>
                                             </StackPanel>
                                             <StackPanel Grid.Column="3" Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource priority}" Margin="15,0,0,0"
-                                                           MaxWidth="100" VerticalAlignment="Center" />
-                                                <TextBlock Text="{Binding Priority}" VerticalAlignment="Center"
+                                                <TextBlock Text="{DynamicResource priority}" Margin="0,0,8,0"
+                                                           MaxWidth="100" VerticalAlignment="Center" FontSize="12"/>
+                                                <Border CornerRadius="5">
+                                                    <Button x:Name="PriorityButton" Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
                                                            ToolTip="Change Plugin Results Priority"
-                                                           Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
-                                                           MouseUp="OnPluginPriorityClick" />
+                                                           Margin="5 0 0 0" Cursor="Hand"
+                                                           Click="OnPluginPriorityClick">
+                                                    <!--#region Priority Button Style-->
+                                                        <Button.Resources>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="CornerRadius" Value="2"/>
+                                                            </Style>
+                                                        </Button.Resources>
+                                                        <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Padding" Value="12 8 12 8" />
+                                                            <Setter Property="BorderThickness" Value="0" />
+                                                            <Setter Property="FontWeight" Value="DemiBold" />
+                                                            <Setter Property="Foreground" Value="Black" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
+                                                                        <Setter Property="Foreground" Value="#878787" />
+                                                                        <Setter Property="FontWeight" Value="Normal" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <!--#endregion-->
+                                                </Button>
+                                                </Border>
                                             </StackPanel>
                                             <ui:ToggleSwitch Grid.Column="4" OffContent="{DynamicResource disable}"
                                                              OnContent="{DynamicResource enable}"
