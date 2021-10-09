@@ -30,6 +30,12 @@ namespace Flow.Launcher.Plugin
         void RestartApp();
 
         /// <summary>
+        /// Run a shell command or external program
+        /// </summary>
+        /// <param name="cmd">The command or program to run</param>
+        void ShellRun(string cmd);
+
+        /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings
         /// </summary>
         void SaveAppAllSettings();

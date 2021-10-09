@@ -103,6 +103,16 @@ namespace Flow.Launcher
             });
         }
 
+        public void ShellRun(string cmd)
+        {
+            System.Diagnostics.Process process = new();
+            var startInfo = process.StartInfo;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = $"/C {cmd}";
+            startInfo.CreateNoWindow = true;
+            process.Start();
+        }
+
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
 
         public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
