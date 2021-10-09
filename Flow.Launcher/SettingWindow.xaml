@@ -527,12 +527,20 @@
             </TabItem.Header>
 
             <Grid>
-
-                <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5" />
-                <Border>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="74"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="#f3f3f3" Padding="5 18 0 0">
+                    <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                </Border>
+                <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3">
                     <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
                              Padding="0 0 0 18" Width="Auto" HorizontalAlignment="Stretch">
