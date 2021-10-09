@@ -538,7 +538,7 @@
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3">
-                    <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
+                    <ListBox SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
@@ -656,11 +656,11 @@
 
                                             <StackPanel>
 
-                                                <!--#region SubInfo Styling -->
-                                                <Border Background="White" Padding="14 0 14 0"
+                                                
+                                                <Border Background="White" Padding="0"
                                                         BorderThickness="0 1 0 0" BorderBrush="#e6e6e6"
-                                                        VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                                                        MaxHeight="480">
+                                                        VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                                    <!--#region SubInfo Styling -->
                                                     <Border.Style>
                                                         <Style TargetType="{x:Type Border}">
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -668,6 +668,7 @@
                                                                 <DataTrigger Binding="{Binding ElementName=SettingControl, Path=ActualHeight}" Value="0">
                                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                                     <Setter Property="BorderThickness" Value="0" />
+                                                                    <Setter Property="Padding" Value="0" />
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
@@ -676,8 +677,8 @@
                                                 <!--#endregion-->
                                                 <ContentControl x:Name="SettingControl" 
                                                         Content="{Binding SettingControl}"
-                                                        Padding="0 12 0 12" Margin="0 0 0 0" VerticalAlignment="Stretch"
-                                                        MaxWidth="750" >
+                                                        Padding="1" Margin="0" VerticalAlignment="Stretch"
+                                                        MaxWidth="750" MaxHeight="550">
                                                     </ContentControl>
                                                 
                                             </StackPanel>
