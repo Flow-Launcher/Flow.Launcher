@@ -191,9 +191,9 @@
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="#ffffff"></Setter>
-            <Setter Property="Padding" Value="0 12 18 12" />
+            <Setter Property="Padding" Value="0 12 0 12" />
             <Setter Property="Margin" Value="0 4 18 0" />
-            
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="BorderBrush" Value="#e5e5e5" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
@@ -238,7 +238,7 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="Red" />
+                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5"/>
                                 
@@ -258,6 +258,8 @@
         </Style>
 
     </Window.Resources>
+
+    
 
     <TabControl Height="auto" SelectedIndex="1" TabStripPlacement="Left" Background="#f3f3f3">
         <TabItem Style="{DynamicResource logo}">
@@ -478,37 +480,33 @@
                     <TextBlock Grid.Column="1" Text="{DynamicResource plugin}"></TextBlock>
                 </Grid>
             </TabItem.Header>
+            
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="74"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Background="#f3f3f3" Padding="5 0 0 0">
+                
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
-                </Border>
-                <Border Grid.Column="0" Grid.Row="1">
+                
+                <Border>
                     <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False" Padding="0" Width="Auto">
+                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False" Padding="0" Width="Auto" HorizontalAlignment="Stretch">
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft" Background="Transparent" Padding="0">
-                                        <Expander.Header>
-                                            <Grid FlowDirection="LeftToRight">
+                                <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft" Background="Transparent" Padding="0" Style="{StaticResource ExpanderStyle1}">
+                                    <Expander.Header >
+                                        <Grid FlowDirection="LeftToRight" HorizontalAlignment="Left" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="54"/>
-                                                    <ColumnDefinition Width="450"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="90"/>
-                                                    <ColumnDefinition Width="0"/>
+                                                    <ColumnDefinition Width="100" MinWidth="100"/>
+                                                    <ColumnDefinition Width="*" MinWidth="350" MaxWidth="700"/>
+                                                    <ColumnDefinition MaxWidth="1400"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="80"/>
                                                 </Grid.ColumnDefinitions>
+                                            <StackPanel FlowDirection="LeftToRight"  Grid.Column="0" Margin="24 0 0 0" VerticalAlignment="Center">
                                                 <Image Source="{Binding Image, IsAsync=True}"
-                                           Width="32" Height="32" Margin="12 0 0 0" Grid.Column="0"/>
-                                                <StackPanel Grid.Column="1" Margin="12 0 14 0">
+                                           Width="32" Height="32" Margin="32 0 0 0" FlowDirection="LeftToRight"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Margin="12 0 14 0">
                                                     <TextBlock Text="{Binding PluginPair.Metadata.Name}" TextWrapping="Wrap" ToolTip="{Binding PluginPair.Metadata.Version}" />
                                                     <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
                                             <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12"/>
@@ -525,12 +523,13 @@
                                                     MaxWidth="110" HorizontalAlignment="Right"
                                                     IsOn="{Binding PluginState}"/>
                                             </Grid>
-                                        </Expander.Header>
+                                        
+                                    </Expander.Header>
 
                                         <Grid FlowDirection="LeftToRight">
                                             <StackPanel Orientation="Vertical" Margin="0 12 0 0">
                                             <StackPanel>
-                                                <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52" Width="auto" BorderThickness="0 1 0 0">
+                                                <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52" Width="auto" BorderThickness="0 1 0 0" CornerRadius="0">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
                                                         <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal">
                                                             <TextBlock Text="{DynamicResource actionKeywords}" Style="{DynamicResource SettingTitleLabel}" Margin="48 0 0 0"/>
@@ -546,8 +545,8 @@
                                             </StackPanel>
                                                 
                                             <StackPanel>
-                                                    <Border Background="White" Padding="14 0 0 0" BorderThickness="0 1 0 0"  BorderBrush="#e6e6e6" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                                        <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SettingProvider}" Padding="0" Margin="0" VerticalAlignment="Top" MaxWidth="750"/>
+                                                    <Border Background="White" Padding="14 14 14 14" BorderThickness="0 1 0 0"  BorderBrush="#e6e6e6" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxHeight="480">
+                                                        <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SettingProvider}" Padding="0" Margin="0" VerticalAlignment="Stretch" MaxWidth="750"/>
                                                     </Border>
                                                 </StackPanel>
                                                 
