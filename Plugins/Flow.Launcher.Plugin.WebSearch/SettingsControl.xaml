@@ -32,7 +32,7 @@
             </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Margin="10 10 0 0">
+    <Grid Margin="14">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="48" />
