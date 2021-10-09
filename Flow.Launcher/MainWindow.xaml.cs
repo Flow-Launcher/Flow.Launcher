@@ -207,9 +207,9 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
-            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
+            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
                 new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
-            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 50, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
             _progressBarStoryboard.Children.Add(da);
@@ -313,25 +313,43 @@ namespace Flow.Launcher
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down)
+            switch (e.Key)
             {
-                _viewModel.SelectNextItemCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.Up)
-            {
-                _viewModel.SelectPrevItemCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageDown)
-            {
-                _viewModel.SelectNextPageCommand.Execute(null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.PageUp)
-            {
-                _viewModel.SelectPrevPageCommand.Execute(null);
-                e.Handled = true;
+                case Key.Down:
+                    _viewModel.SelectNextItemCommand.Execute(null);
+                    e.Handled = true;
+                    break;
+                case Key.Up:
+                    _viewModel.SelectPrevItemCommand.Execute(null);
+                    e.Handled = true;
+                    break;
+                case Key.PageDown:
+                    _viewModel.SelectNextPageCommand.Execute(null);
+                    e.Handled = true;
+                    break;
+                case Key.PageUp:
+                    _viewModel.SelectPrevPageCommand.Execute(null);
+                    e.Handled = true;
+                    break;
+                case Key.Right:
+                    if (_viewModel.SelectedIsFromQueryResults()
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                        && !string.IsNullOrEmpty(QueryTextBox.Text))
+                    {
+                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
+                case Key.Left:
+                    if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
+                    {
+                        _viewModel.EscCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
+                default:
+                    break;
+
             }
         }
 

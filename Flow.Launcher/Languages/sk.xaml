@@ -81,8 +81,7 @@
     <system:String x:Key="pleaseSelectAnItem">Vyberte položku, prosím</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Tieňový efekt v poli vyhľadávania</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU.</system:String>
-    <system:String x:Key="shadowEffectPerformance">Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
 
     <!--Setting Proxy-->
     <system:String x:Key="proxy">HTTP Proxy</system:String>

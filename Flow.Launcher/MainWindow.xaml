@@ -30,6 +30,7 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel}">
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
+        <converters:BorderClipConverter x:Key="BorderClipConverter"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
@@ -45,6 +46,8 @@
         <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding SelectPrevPageCommand}"></KeyBinding>
         <KeyBinding Key="Home" Modifiers="Alt" Command="{Binding SelectFirstResultCommand}"></KeyBinding>
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding LoadContextMenuCommand}"></KeyBinding>
+        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}"></KeyBinding>
+        <KeyBinding Key="Left" Command="{Binding EscCommand}"></KeyBinding>
         <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding LoadHistoryCommand}"></KeyBinding>
         <KeyBinding Key="Enter" Modifiers="Ctrl+Shift" Command="{Binding OpenResultCommand}"></KeyBinding>
         <KeyBinding Key="Enter" Modifiers="Shift" Command="{Binding LoadContextMenuCommand}"></KeyBinding>
@@ -62,13 +65,12 @@
         <KeyBinding Key="D9" Modifiers="{Binding OpenResultCommandModifiers}" Command="{Binding OpenResultCommand}" CommandParameter="8"></KeyBinding>
     </Window.InputBindings>
     <Grid>
-        <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown" CornerRadius="5" >
+        <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <TextBox x:Name="QueryTextSuggestionBox"
                          Style="{DynamicResource QuerySuggestionBoxStyle}"
-                         IsEnabled="False"
-                         Margin="18,0,56,0">
+                         IsEnabled="False">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
                                 <Binding ElementName="QueryTextBox" Path="Text"/>
@@ -82,34 +84,67 @@
                      PreviewDragOver="OnPreviewDragOver"
                      AllowDrop="True"
                      Visibility="Visible"
-                    Background="Transparent"
-                    Margin="18,0,56,0">
+                    Background="Transparent">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut"/>
                                 <MenuItem Command="ApplicationCommands.Copy"/>
                                 <MenuItem Command="ApplicationCommands.Paste"/>
                                 <Separator />
-                                <MenuItem Header="Settings" Click="OnContextMenusForSettingsClick" />
+                                <MenuItem Header="{DynamicResource flowlauncher_settings}"  Click="OnContextMenusForSettingsClick" />
+                                <MenuItem Command="{Binding EscCommand}" Header="Close"/>
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                    <svgc:SvgControl Source="{Binding Image}" HorizontalAlignment="Right" Width="42" Height="42"
-                                     Background="Transparent"/>
+                    <Canvas Style="{DynamicResource SearchIconPosition}">
+                        <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
+                    </Canvas>
                 </Grid>
-                <Line x:Name="ProgressBar" HorizontalAlignment="Right"
+
+                <Grid ClipToBounds="True">
+                    <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" />
+                    <Line x:Name="ProgressBar" HorizontalAlignment="Right"
                   Style="{DynamicResource PendingLineStyle}" Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                  Y1="0" Y2="0" X2="100" Height="2" Width="752" StrokeThickness="1">
-                </Line>
-                <ContentControl>
-                    <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                </ContentControl>
-                <ContentControl>
-                    <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                </ContentControl>
-                <ContentControl>
-                    <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                </ContentControl>
+                  Y1="0" Y2="0" X1="-150" X2="-50" Height="2" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" StrokeThickness="1">
+                    </Line>
+                </Grid>
+
+                <Border Style="{DynamicResource WindowRadius}">
+                    <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Border.Clip>
+                    <ContentControl>
+                        <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                    </ContentControl>
+                </Border>
+                <Border Style="{DynamicResource WindowRadius}">
+                    <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Border.Clip>
+                     <ContentControl>
+                        <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="ContextMenu"/>
+                      </ContentControl>
+                </Border>
+                <Border Style="{DynamicResource WindowRadius}">
+                <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                </Border.Clip>
+                        <ContentControl>
+                        <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
+                         </ContentControl>
+                </Border>
             </StackPanel>
         </Border>
     </Grid>

@@ -300,6 +300,8 @@ namespace Flow.Launcher.ViewModel
         }
 
         public bool LastQuerySelected { get; set; }
+
+        // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
@@ -603,6 +605,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
@@ -640,7 +643,7 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        private bool SelectedIsFromQueryResults()
+        internal bool SelectedIsFromQueryResults()
         {
             var selected = SelectedResults == Results;
             return selected;

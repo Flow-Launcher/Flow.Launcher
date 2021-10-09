@@ -44,13 +44,42 @@ namespace Flow.Launcher.ViewModel
         private Settings Settings { get; }
 
         public Visibility ShowOpenResultHotkey =>
-            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Hidden;
+            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
 
-        public Visibility ShowIcon => Result.IcoPath != null || Result.Icon is not null || Glyph == null
-            ? Visibility.Visible
-            : Visibility.Hidden;
+        public Visibility ShowIcon
+        {
+            get
+            {
+                // If both glyph and image icons are not available, it will then be the default icon
+                if (!ImgIconAvailable && !GlyphAvailable)
+                    return Visibility.Visible;
 
-        public Visibility ShowGlyph => Glyph is not null ? Visibility.Visible : Visibility.Hidden;
+                // Although user can choose to use glyph icons, plugins may choose to supply only image icons.
+                // In this case we ignore the setting because otherwise icons will not display as intended
+                if (Settings.UseGlyphIcons && !GlyphAvailable && ImgIconAvailable)
+                    return Visibility.Visible;
+
+                return !Settings.UseGlyphIcons && ImgIconAvailable ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        public Visibility ShowGlyph
+        {
+            get
+            {
+                // Although user can choose to not use glyph icons, plugins may choose to supply only glyph icons.
+                // In this case we ignore the setting because otherwise icons will not display as intended
+                if (!Settings.UseGlyphIcons && !ImgIconAvailable && GlyphAvailable)
+                    return Visibility.Visible;
+
+                return Settings.UseGlyphIcons && GlyphAvailable ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        private bool GlyphAvailable => Glyph is not null;
+
+        private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
+
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)

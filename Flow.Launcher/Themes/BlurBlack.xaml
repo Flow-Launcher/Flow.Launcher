@@ -6,7 +6,9 @@
     </ResourceDictionary.MergedDictionaries>
 
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
-
+    <Style x:Key="ItemGlyph"  BasedOn="{StaticResource BaseGlyphStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#FFFFFFFF" />
         <Setter Property="Background" Value="Transparent" />
@@ -19,7 +21,7 @@
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="Black" Opacity="0.3"/>
+                <SolidColorBrush Color="Black" Opacity="0.7"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -33,6 +35,7 @@
     </Style>
 
     <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="White" />
     </Style>
 
     <!-- Item Style -->
@@ -54,9 +57,32 @@
 
     <!-- button style in the middle of the scrollbar -->
     <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#ffffff" Opacity="0.5" BorderBrush="Transparent" BorderThickness="0" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}">
         <Setter Property="Background" Value="#a0a0a0"/>
+    </Style>
+    <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}" BasedOn="{StaticResource BaseSearchIconStyle}">
+        <Setter Property="Fill" Value="#ffffff" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Opacity" Value="0.5" />
     </Style>
 </ResourceDictionary>

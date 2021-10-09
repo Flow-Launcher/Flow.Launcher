@@ -96,6 +96,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Shutdown",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
@@ -115,6 +116,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Restart",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe777"),
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
@@ -134,6 +136,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Restart With Advanced Boot Options",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xecc5"),
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
                     {
@@ -152,6 +155,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Log Off",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
                     Action = c => ExitWindowsEx(EWX_LOGOFF, 0)
                 },
@@ -159,6 +163,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Lock",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_lock"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72e"),
                     IcoPath = "Images\\lock.png",
                     Action = c =>
                     {
@@ -170,6 +175,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Sleep",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
                     Action = c => FormsApplication.SetSuspendState(PowerState.Suspend, false, false)
                 },
@@ -177,6 +183,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Hibernate",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe945"),
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
@@ -194,6 +201,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Empty Recycle Bin",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     Action = c =>
                     {
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html

@@ -190,7 +190,8 @@ namespace Flow.Launcher.Plugin.Program
                                 "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
                         return false;
                     },
-                    IcoPath = "Images/disable.png"
+                    IcoPath = "Images/disable.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xece4"),
                 }
             );
 
