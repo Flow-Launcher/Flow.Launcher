@@ -19,35 +19,35 @@
         Height="700" Width="1000"
         MinWidth="900"
         MinHeight="600"
-        Loaded="OnLoaded" 
+        Loaded="OnLoaded"
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
     <Window.InputBindings>
-        <KeyBinding Key="Escape" Command="Close"/>
+        <KeyBinding Key="Escape" Command="Close" />
     </Window.InputBindings>
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="OnCloseExecuted"/>
+        <CommandBinding Command="Close" Executed="OnCloseExecuted" />
     </Window.CommandBindings>
 
     <Window.Resources>
-        <converters:BorderClipConverter x:Key="BorderClipConverter"/>
+        <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <CollectionViewSource Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" x:Key="SortedFonts">
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Source"/>
+                <scm:SortDescription PropertyName="Source" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        
+
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
-            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" MaxWidth="60" MinWidth="20"/>
+                                <ColumnDefinition Width="auto" MaxWidth="60" MinWidth="20" />
                                 <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="Auto" MaxWidth="550" MinWidth="40"/>
+                                <ColumnDefinition Width="Auto" MaxWidth="550" MinWidth="40" />
 
                             </Grid.ColumnDefinitions>
 
@@ -69,7 +69,7 @@
         <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="0 0 0 0" />
         </Style>
-   
+
         <Style x:Key="SettingSubTitleLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="#5f5f5f" />
             <Setter Property="FontSize" Value="12" />
@@ -122,14 +122,14 @@
                                         Margin="0 10 5 0"
                                         BorderBrush="Transparent"
                                         BorderThickness="0">
-                                        <Border x:Name="border" 
-                                            CornerRadius="5"
-                                            Background="WhiteSmoke">
+                                        <Border x:Name="border"
+                                                CornerRadius="5"
+                                                Background="WhiteSmoke">
                                             <ContentPresenter x:Name="ContentSite"
-                                                  Margin="12 12 0 12"
-                                                  HorizontalAlignment="LEFT"
-                                                  VerticalAlignment="Center"
-                                                  ContentSource="Header" TextBlock.Foreground="#000" />
+                                                              Margin="12 12 0 12"
+                                                              HorizontalAlignment="LEFT"
+                                                              VerticalAlignment="Center"
+                                                              ContentSource="Header" TextBlock.Foreground="#000" />
                                         </Border>
                                     </Border>
                                 </Grid>
@@ -161,13 +161,14 @@
                             <Grid>
                                 <Grid>
                                     <Border
-                                        x:Name="Spacer" Width="Auto" Height="Auto" Padding="0 0 0 0" Margin="0 5 8 0" BorderBrush="Transparent" BorderThickness="0">
-                                        <Border x:Name="border"  CornerRadius="5" Background="#f3f3f3">
+                                        x:Name="Spacer" Width="Auto" Height="Auto" Padding="0 0 0 0" Margin="0 5 8 0"
+                                        BorderBrush="Transparent" BorderThickness="0">
+                                        <Border x:Name="border" CornerRadius="5" Background="#f3f3f3">
                                             <ContentPresenter x:Name="ContentSite"
-                                                  Margin="12 12 0 12"
-                                                  HorizontalAlignment="LEFT"
-                                                  VerticalAlignment="Center"
-                                                  ContentSource="Header" TextBlock.Foreground="#000" />
+                                                              Margin="12 12 0 12"
+                                                              HorizontalAlignment="LEFT"
+                                                              VerticalAlignment="Center"
+                                                              ContentSource="Header" TextBlock.Foreground="#000" />
                                         </Border>
                                     </Border>
                                 </Grid>
@@ -187,10 +188,8 @@
         </Style>
 
 
-
-
         <Style x:Key="PluginList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#ffffff"></Setter>
+            <Setter Property="Background" Value="#ffffff" />
             <Setter Property="Padding" Value="0 12 0 12" />
             <Setter Property="Margin" Value="0 4 18 0" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -200,18 +199,18 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border x:Name="Bd"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}" CornerRadius="5"
-                    SnapsToDevicePixels="True">
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}" CornerRadius="5"
+                                SnapsToDevicePixels="True">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Content="{TemplateBinding Content}"
-                                              
-                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <MultiTrigger>
@@ -220,8 +219,8 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5"/>
-                                
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
+
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -230,8 +229,8 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
-                                
-                                
+
+
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -240,39 +239,39 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5"/>
-                                
-                                
-                                
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
+
+
                             </MultiTrigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                <Setter TargetName="Bd" Property="TextElement.Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <!--#endregion-->
-            <Setter Property="Height" Value="Auto"></Setter>
-            
+            <Setter Property="Height" Value="Auto" />
+
         </Style>
 
     </Window.Resources>
 
-    
 
     <TabControl Height="auto" SelectedIndex="1" TabStripPlacement="Left" Background="#f3f3f3">
         <TabItem Style="{DynamicResource logo}">
             <TabItem.Header>
                 <Grid Margin="0 18 0 0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="27"/>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="25" />
                     </Grid.RowDefinitions>
-                    <Image Source="images/app.png" Width="50" Height="50" Grid.Row="0"/>
-                    <TextBlock Text="Flow Launcher" Grid.Row="1" TextAlignment="center" Margin="0 12 0 0"/>
-                    <TextBlock Text="{Binding Version}" Grid.Row="2" TextAlignment="center" FontSize="12" Margin="0 5 0 0"/>
+                    <Image Source="images/app.png" Width="50" Height="50" Grid.Row="0" />
+                    <TextBlock Text="Flow Launcher" Grid.Row="1" TextAlignment="center" Margin="0 12 0 0" />
+                    <TextBlock Text="{Binding Version}" Grid.Row="2" TextAlignment="center" FontSize="12"
+                               Margin="0 5 0 0" />
                 </Grid>
             </TabItem.Header>
         </TabItem>
@@ -280,27 +279,36 @@
             <TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Margin="0 0 12 0">&#xe713;</TextBlock>
-                    <TextBlock Grid.Column="1" Text="{DynamicResource general}"></TextBlock>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xe713;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{DynamicResource general}" />
                 </Grid>
             </TabItem.Header>
-            
-            <ScrollViewer ScrollViewer.CanContentScroll="False" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="0,0,0,0" Background="#f3f3f3">
+
+            <ScrollViewer ScrollViewer.CanContentScroll="False"
+                          ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
+                          Margin="0,0,0,0" Background="#f3f3f3">
                 <StackPanel Orientation="Vertical" Margin="5,18,25,30">
-                    <TextBlock Text="{DynamicResource general}" Grid.Row="2" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                    <TextBlock Text="{DynamicResource general}" Grid.Row="2" TextAlignment="left" FontSize="30"
+                               Margin="0 5 0 5" />
 
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource startFlowLauncherOnSystemStartup}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource startFlowLauncherOnSystemStartup}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}" HorizontalAlignment="Right"
-                                    Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck" Style="{DynamicResource SideControlCheckBox}">
-                            </CheckBox>
-                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                            <CheckBox IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
+                                      HorizontalAlignment="Right"
+                                      Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck"
+                                      Style="{DynamicResource SideControlCheckBox}" />
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xe8fc;
                             </TextBlock>
                         </ItemsControl>
@@ -309,11 +317,13 @@
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource hideOnStartup}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource hideOnStartup}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.HideOnStartup}" Style="{DynamicResource SideControlCheckBox}" >
-                            </CheckBox>
-                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                            <CheckBox IsChecked="{Binding Settings.HideOnStartup}"
+                                      Style="{DynamicResource SideControlCheckBox}" />
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xed1a;
                             </TextBlock>
                         </ItemsControl>
@@ -322,10 +332,11 @@
                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0 30 0 0">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource hideFlowLauncherWhenLoseFocus}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource hideFlowLauncherWhenLoseFocus}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.HideWhenDeactive}" Style="{DynamicResource SideControlCheckBox}" >
-                            </CheckBox>
+                            <CheckBox IsChecked="{Binding Settings.HideWhenDeactive}"
+                                      Style="{DynamicResource SideControlCheckBox}" />
                         </ItemsControl>
                     </Border>
 
@@ -333,31 +344,35 @@
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource hideNotifyIcon}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource hideNotifyIcon}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.HideNotifyIcon}" Style="{DynamicResource SideControlCheckBox}" >
-                            </CheckBox>
+                            <CheckBox IsChecked="{Binding Settings.HideNotifyIcon}"
+                                      Style="{DynamicResource SideControlCheckBox}" />
                         </ItemsControl>
                     </Border>
 
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource rememberLastLocation}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource rememberLastLocation}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" >
-                            </CheckBox>
+                            <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}"
+                                      Style="{DynamicResource SideControlCheckBox}" />
                         </ItemsControl>
                     </Border>
 
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource ignoreHotkeysOnFullscreen}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource ignoreHotkeysOnFullscreen}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}" Style="{DynamicResource SideControlCheckBox}" >
-                            </CheckBox>
-                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                            <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}"
+                                      Style="{DynamicResource SideControlCheckBox}" />
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xe7fc;
                             </TextBlock>
                         </ItemsControl>
@@ -366,12 +381,16 @@
                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0 30 0 0">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource ShouldUsePinyin}" Style="{DynamicResource SettingTitleLabel}" />
-                                <TextBlock Text="{DynamicResource ShouldUsePinyinToolTip}" Style="{DynamicResource SettingSubTitleLabel}" />
+                                <TextBlock Text="{DynamicResource ShouldUsePinyin}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource ShouldUsePinyinToolTip}"
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding Settings.ShouldUsePinyin}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}" Style="{DynamicResource SideControlCheckBox}" >
-                            </CheckBox>
-                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                            <CheckBox IsChecked="{Binding Settings.ShouldUsePinyin}"
+                                      ToolTip="{DynamicResource ShouldUsePinyinToolTip}"
+                                      Style="{DynamicResource SideControlCheckBox}" />
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xe98a;
                             </TextBlock>
                         </ItemsControl>
@@ -380,10 +399,13 @@
                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0 30 0 0">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource autoUpdates}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource autoUpdates}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <ui:ToggleSwitch IsOn="{Binding AutoUpdates}" FocusVisualMargin="5" Style="{DynamicResource SideControlToggle}" Width="100"/>
-                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                            <ui:ToggleSwitch IsOn="{Binding AutoUpdates}" FocusVisualMargin="5"
+                                             Style="{DynamicResource SideControlToggle}" Width="100" />
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xecc5;
                             </TextBlock>
                         </ItemsControl>
@@ -392,10 +414,13 @@
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource portableMode}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource portableMode}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
-                            <ui:ToggleSwitch IsOn="{Binding PortableMode}" FocusVisualMargin="5" Style="{DynamicResource SideControlToggle}" Width="100"/>
-                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                            <ui:ToggleSwitch IsOn="{Binding PortableMode}" FocusVisualMargin="5"
+                                             Style="{DynamicResource SideControlToggle}" Width="100" />
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0"
+                                       VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xe88e;
                             </TextBlock>
                         </ItemsControl>
@@ -405,29 +430,36 @@
                         <StackPanel Orientation="Vertical">
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource querySearchPrecision}" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource querySearchPrecision}"
+                                               VerticalAlignment="Center" />
                                     <ComboBox Margin="10 0 18 0" MaxWidth="200"
-                              ItemsSource="{Binding QuerySearchPrecisionStrings}" 
-                              SelectedItem="{Binding Settings.QuerySearchPrecisionString}" Grid.Column="2"/>
+                                              ItemsSource="{Binding QuerySearchPrecisionStrings}"
+                                              SelectedItem="{Binding Settings.QuerySearchPrecisionString}"
+                                              Grid.Column="2" />
                                 </ItemsControl>
                             </Border>
-                            <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                            <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource lastQueryMode}" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource lastQueryMode}"
+                                               VerticalAlignment="Center" />
                                     <ComboBox Margin="10 0 18 0" MaxWidth="200"
-                              ItemsSource="{Binding LastQueryModes}" SelectedValue="{Binding Settings.LastQueryMode}"
-                              DisplayMemberPath="Display" SelectedValuePath="Value" Grid.Column="2"/>
+                                              ItemsSource="{Binding LastQueryModes}"
+                                              SelectedValue="{Binding Settings.LastQueryMode}"
+                                              DisplayMemberPath="Display" SelectedValuePath="Value" Grid.Column="2" />
                                 </ItemsControl>
                             </Border>
-                            <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                            <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource maxShowResults}" VerticalAlignment="Center"/>
-                                    <ComboBox Margin="10 0 18 0" Width="100" ItemsSource="{Binding MaxResultsRange}" HorizontalContentAlignment="Center"
-                              SelectedItem="{Binding Settings.MaxResultsToShow}" Grid.Column="2"/>
-                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                &#xe8fd;
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource maxShowResults}"
+                                               VerticalAlignment="Center" />
+                                    <ComboBox Margin="10 0 18 0" Width="100" ItemsSource="{Binding MaxResultsRange}"
+                                              HorizontalContentAlignment="Center"
+                                              SelectedItem="{Binding Settings.MaxResultsToShow}" Grid.Column="2" />
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                        &#xe8fd;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
@@ -437,12 +469,15 @@
                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0 30 0 0">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource pythonDirectory}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource pythonDirectory}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Grid.Column="2">
-                                <TextBox Text="{Binding Settings.PluginSettings.PythonDirectory, TargetNullValue='No Setting'}" Width="300" Height="26"/>
+                                <TextBox
+                                    Text="{Binding Settings.PluginSettings.PythonDirectory, TargetNullValue='No Setting'}"
+                                    Width="300" Height="26" />
                                 <Button Click="OnSelectPythonDirectoryClick"
-                            Content="{DynamicResource selectPythonDirectory}" Margin="10 10 18 10"/>
+                                        Content="{DynamicResource selectPythonDirectory}" Margin="10 10 18 10" />
                             </StackPanel>
                         </ItemsControl>
                     </Border>
@@ -450,20 +485,25 @@
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource language}" Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource language}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
                             </StackPanel>
                             <ComboBox Margin="10 0 16 0" MaxWidth="200"
-                              ItemsSource="{Binding Languages}" SelectedValue="{Binding Language}"
-                              DisplayMemberPath="Display" SelectedValuePath="LanguageCode" Grid.Column="2"/>
+                                      ItemsSource="{Binding Languages}" SelectedValue="{Binding Language}"
+                                      DisplayMemberPath="Display" SelectedValuePath="LanguageCode" Grid.Column="2" />
                         </ItemsControl>
                     </Border>
                     <Border Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource autoHideScrollBar}" Style="{DynamicResource SettingTitleLabel}" />
-                                <TextBlock Text="{DynamicResource autoHideScrollBarToolTip}" Style="{DynamicResource SettingSubTitleLabel}" />
+                                <TextBlock Text="{DynamicResource autoHideScrollBar}"
+                                           Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource autoHideScrollBarToolTip}"
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
                             </StackPanel>
-                            <ui:ToggleSwitch IsOn="{Binding AutoHideScrollBar}" FocusVisualMargin="5" Style="{DynamicResource SideControlToggle}" Width="100" ToolTip="{DynamicResource autoHideScrollBarToolTip}"/>
+                            <ui:ToggleSwitch IsOn="{Binding AutoHideScrollBar}" FocusVisualMargin="5"
+                                             Style="{DynamicResource SideControlToggle}" Width="100"
+                                             ToolTip="{DynamicResource autoHideScrollBarToolTip}" />
                         </ItemsControl>
                     </Border>
                 </StackPanel>
@@ -473,104 +513,143 @@
             <TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Margin="0 0 12 0">&#xea86;</TextBlock>
-                    <TextBlock Grid.Column="1" Text="{DynamicResource plugin}"></TextBlock>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xea86;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{DynamicResource plugin}" />
                 </Grid>
             </TabItem.Header>
-            
+
             <Grid>
-                
-                    <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
-                
+
+                <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 5" />
                 <Border>
                     <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource PluginList}" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False" Padding="0" Width="Auto" HorizontalAlignment="Stretch">
+                             Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemContainerStyle="{StaticResource PluginList}"
+                             ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
+                             Padding="0" Width="Auto" HorizontalAlignment="Stretch">
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Expander Grid.Column="4" x:Name="expanderHeader" IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" FlowDirection="RightToLeft" Background="Transparent" Padding="0" Style="{StaticResource ExpanderStyle1}">
-                                    <Expander.Header >
-                                        <Grid FlowDirection="LeftToRight" HorizontalAlignment="Left" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="100" MinWidth="100"/>
-                                                    <ColumnDefinition Width="*" MinWidth="350" MaxWidth="700"/>
-                                                    <ColumnDefinition MaxWidth="1400"/>
-                                                    <ColumnDefinition Width="100"/>
-                                                    <ColumnDefinition Width="80"/>
-                                                </Grid.ColumnDefinitions>
-                                            <StackPanel FlowDirection="LeftToRight"  Grid.Column="0" Margin="24 0 0 0" VerticalAlignment="Center">
+                                <Expander Grid.Column="4" x:Name="expanderHeader"
+                                          IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"
+                                          FlowDirection="RightToLeft" Background="Transparent" Padding="0"
+                                          Style="{StaticResource ExpanderStyle1}">
+                                    <Expander.Header>
+                                        <Grid FlowDirection="LeftToRight" HorizontalAlignment="Left"
+                                              Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" MinWidth="100" />
+                                                <ColumnDefinition Width="*" MinWidth="350" MaxWidth="700" />
+                                                <ColumnDefinition MaxWidth="1400" />
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="80" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel FlowDirection="LeftToRight" Grid.Column="0" Margin="24 0 0 0"
+                                                        VerticalAlignment="Center">
                                                 <Image Source="{Binding Image, IsAsync=True}"
-                                           Width="32" Height="32" Margin="32 0 0 0" FlowDirection="LeftToRight"/>
+                                                       Width="32" Height="32" Margin="32 0 0 0"
+                                                       FlowDirection="LeftToRight" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Margin="12 0 14 0">
-                                                    <TextBlock Text="{Binding PluginPair.Metadata.Name}" TextWrapping="Wrap" ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                                    <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
-                                            <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12"/>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="3" Orientation="Horizontal">
-                                                <TextBlock Text="{DynamicResource priority}" Margin="15,0,0,0" MaxWidth="100" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Priority}" VerticalAlignment="Center"
-                                            ToolTip="Change Plugin Results Priority"
-                                            Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
-                                            MouseUp="OnPluginPriorityClick"/>
-                                                </StackPanel>
-                                                <ui:ToggleSwitch Grid.Column="4" OffContent="{DynamicResource disable}" OnContent="{DynamicResource enable}" 
-                                                    MaxWidth="110" HorizontalAlignment="Right"
-                                                    IsOn="{Binding PluginState}"/>
-                                            </Grid>
-                                        
+                                                <TextBlock Text="{Binding PluginPair.Metadata.Name}"
+                                                           TextWrapping="Wrap"
+                                                           ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                                <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
+                                                    <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource priority}" Margin="15,0,0,0"
+                                                           MaxWidth="100" VerticalAlignment="Center" />
+                                                <TextBlock Text="{Binding Priority}" VerticalAlignment="Center"
+                                                           ToolTip="Change Plugin Results Priority"
+                                                           Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
+                                                           MouseUp="OnPluginPriorityClick" />
+                                            </StackPanel>
+                                            <ui:ToggleSwitch Grid.Column="4" OffContent="{DynamicResource disable}"
+                                                             OnContent="{DynamicResource enable}"
+                                                             MaxWidth="110" HorizontalAlignment="Right"
+                                                             IsOn="{Binding PluginState}" />
+                                        </Grid>
+
                                     </Expander.Header>
 
-                                        <Grid FlowDirection="LeftToRight">
-                                            <StackPanel Orientation="Vertical" Margin="0 12 0 0">
+                                    <Grid FlowDirection="LeftToRight">
+                                        <StackPanel Orientation="Vertical" Margin="0 12 0 0">
                                             <StackPanel>
-                                                <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" Height="52" Width="auto" BorderThickness="0 1 0 0" CornerRadius="0">
+                                                <Border Style="{DynamicResource SettingGroupBox}"
+                                                        Visibility="{Binding ActionKeywordsVisibility}" Height="52"
+                                                        Width="auto" BorderThickness="0 1 0 0" CornerRadius="0">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                        <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal">
-                                                            <TextBlock Text="{DynamicResource actionKeywords}" Style="{DynamicResource SettingTitleLabel}" Margin="48 0 0 0"/>
-                                                                <TextBlock Text="{Binding ActionKeywordsText}" DockPanel.Dock="Right"
-                                            Visibility="{Binding ActionKeywordsVisibility}"
-                                            ToolTip="Change Action Keywords"
-                                            Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
-                                            MouseUp="OnPluginActionKeywordsClick" MaxWidth="100" HorizontalAlignment="Right"/>
-                                                            </StackPanel>
-                  
+                                                        <StackPanel Style="{StaticResource TextPanel}"
+                                                                    Orientation="Horizontal">
+                                                            <TextBlock Text="{DynamicResource actionKeywords}"
+                                                                       Style="{DynamicResource SettingTitleLabel}"
+                                                                       Margin="48 0 0 0" />
+                                                            <TextBlock Text="{Binding ActionKeywordsText}"
+                                                                       DockPanel.Dock="Right"
+                                                                       Visibility="{Binding ActionKeywordsVisibility}"
+                                                                       ToolTip="Change Action Keywords"
+                                                                       Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
+                                                                       MouseUp="OnPluginActionKeywordsClick"
+                                                                       MaxWidth="100" HorizontalAlignment="Right" />
+                                                        </StackPanel>
+
                                                     </ItemsControl>
                                                 </Border>
                                             </StackPanel>
-                                                
+
                                             <StackPanel>
-                                                    <Border Background="White" Padding="14 14 14 14" BorderThickness="0 1 0 0"  BorderBrush="#e6e6e6" VerticalAlignment="Center" HorizontalAlignment="Stretch" MaxHeight="480">
-                                                        <ContentControl Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.SettingProvider}" Padding="0" Margin="0" VerticalAlignment="Stretch" MaxWidth="750"/>
-                                                    </Border>
-                                                </StackPanel>
-                                                
-                                                <StackPanel>
-                                                    <Border Style="{DynamicResource SettingGroupBox}" Visibility="{Binding ActionKeywordsVisibility}" VerticalAlignment="Center" Margin="0" BorderThickness="0 1 0 0" Padding="0 12 0 0">
+                                                <Border Background="White" Padding="14 14 14 14"
+                                                        BorderThickness="0 1 0 0" BorderBrush="#e6e6e6"
+                                                        VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                                        MaxHeight="480">
+                                                    <ContentControl
+                                                        Content="{Binding SettingControl}"
+                                                        Padding="0" Margin="0" VerticalAlignment="Stretch"
+                                                        MaxWidth="750" />
+                                                </Border>
+                                            </StackPanel>
+
+                                            <StackPanel>
+                                                <Border Style="{DynamicResource SettingGroupBox}"
+                                                        Visibility="{Binding ActionKeywordsVisibility}"
+                                                        VerticalAlignment="Center" Margin="0" BorderThickness="0 1 0 0"
+                                                        Padding="0 12 0 0">
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                        <StackPanel Style="{StaticResource TextPanel}" Orientation="Horizontal" VerticalAlignment="Center">
-                                                            <TextBlock Text="{DynamicResource plugin_init_time}" FontSize="11" Margin="10 0 0 0" MaxWidth="100" />
-                                                                <TextBlock Text="{Binding InitilizaTime}" FontSize="11" Margin="5 0 0 0" MaxWidth="100"/>
-                                                                <TextBlock Text="{DynamicResource plugin_query_time}" FontSize="10" Margin="10 0 0 0" MaxWidth="100"/>
-                                                                <TextBlock Text="{Binding QueryTime}" FontSize="11" Margin="5 0 0 0" MaxWidth="100"/>
-                                                                <TextBlock Text="{Binding PluginPair.Metadata.Version}" FontSize="11" Margin="5 0 0 0" MaxWidth="100" VerticalAlignment="Center"/>
-                                                            </StackPanel>
+                                                        <StackPanel Style="{StaticResource TextPanel}"
+                                                                    Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <TextBlock Text="{DynamicResource plugin_init_time}"
+                                                                       FontSize="11" Margin="10 0 0 0" MaxWidth="100" />
+                                                            <TextBlock Text="{Binding InitilizaTime}" FontSize="11"
+                                                                       Margin="5 0 0 0" MaxWidth="100" />
+                                                            <TextBlock Text="{DynamicResource plugin_query_time}"
+                                                                       FontSize="10" Margin="10 0 0 0" MaxWidth="100" />
+                                                            <TextBlock Text="{Binding QueryTime}" FontSize="11"
+                                                                       Margin="5 0 0 0" MaxWidth="100" />
+                                                            <TextBlock Text="{Binding PluginPair.Metadata.Version}"
+                                                                       FontSize="11" Margin="5 0 0 0" MaxWidth="100"
+                                                                       VerticalAlignment="Center" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{DynamicResource pluginDirectory}"
-                                            MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
-                                            MouseUp="OnPluginDirecotyClick" Foreground="Blue" HorizontalAlignment="Right"/>
+                                                                   MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
+                                                                   MouseUp="OnPluginDirecotyClick" Foreground="Blue"
+                                                                   HorizontalAlignment="Right" />
                                                     </ItemsControl>
                                                 </Border>
 
                                             </StackPanel>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Expander>
-                                    
+                                        </StackPanel>
+                                    </Grid>
+                                </Expander>
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -658,62 +737,74 @@
         <TabItem>
             <TabItem.Header>
                 <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Margin="0 0 12 0">&#xe790;</TextBlock>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource theme}"></TextBlock>
-                    </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xe790;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{DynamicResource theme}" />
+                </Grid>
             </TabItem.Header>
             <Border Padding=" 0 0 0 0 ">
-                <ScrollViewer ScrollViewer.CanContentScroll="False" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="0,0,0,0" Background="#f3f3f3" Padding="0 0 18 0">
+                <ScrollViewer ScrollViewer.CanContentScroll="False"
+                              ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
+                              Margin="0,0,0,0" Background="#f3f3f3" Padding="0 0 18 0">
                     <Grid Margin="0 0 0 0" Background="#f3f3f3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0" />
-                            <RowDefinition  Height="350"/>
-                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="350" />
+                            <RowDefinition Height="80" />
                             <RowDefinition />
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Padding="5 18 0 0" Grid.Row="0">
-                            <TextBlock Text="{DynamicResource theme}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                            <TextBlock Text="{DynamicResource theme}" TextAlignment="left" FontSize="30"
+                                       Margin="0 5 0 5" />
                         </Border>
 
                         <StackPanel Background="{Binding PreviewBackground}" Grid.Row="1" Margin="0">
                             <StackPanel Orientation="Horizontal" Margin="0 30 0 0"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Border Width="500" Style="{DynamicResource WindowBorderStyle}" >
+                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Border Width="500" Style="{DynamicResource WindowBorderStyle}">
                                     <Border Style="{DynamicResource WindowRadius}">
                                         <Border.Clip>
                                             <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
-                                                <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
-                                                <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                                <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                                <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
                                             </MultiBinding>
                                         </Border.Clip>
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="54"/>
+                                                <RowDefinition Height="54" />
                                                 <RowDefinition />
                                                 <RowDefinition />
                                             </Grid.RowDefinitions>
                                             <Border Grid.Row="0">
                                                 <TextBox
-                                             Text="{DynamicResource hiThere}" IsReadOnly="True"
-                                             Style="{DynamicResource QueryBoxStyle}"/>
+                                                    Text="{DynamicResource hiThere}" IsReadOnly="True"
+                                                    Style="{DynamicResource QueryBoxStyle}" />
 
                                             </Border>
                                             <Canvas Style="{DynamicResource SearchIconPosition}">
-                                                <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
+                                                <Path Data="{DynamicResource SearchIconImg}"
+                                                      Style="{DynamicResource SearchIconStyle}" Margin="0"
+                                                      Stretch="Fill" />
                                             </Canvas>
 
                                             <Border Margin="0 0 0 0" Grid.Row="1">
-                                                <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" Visibility="visible"/>
+                                                <Rectangle Width="Auto" HorizontalAlignment="Stretch"
+                                                           Style="{DynamicResource SeparatorStyle}"
+                                                           Visibility="visible" />
                                             </Border>
 
                                             <ContentControl Grid.Row="2">
-                                                <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
+                                                <flowlauncher:ResultListBox
+                                                    DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                    Visibility="Visible" />
                                             </ContentControl>
 
                                         </Grid>
@@ -723,25 +814,29 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="3">
-                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 8 0 0" Padding="0" HorizontalAlignment="Stretch">
-                                <ListBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}" ui:ScrollViewerHelper.AutoHideScrollBars="True" 
-                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="#ffffff" Padding="18" HorizontalAlignment="Center" 
+                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 8 0 0" Padding="0"
+                                    HorizontalAlignment="Stretch">
+                                <ListBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}"
+                                         ui:ScrollViewerHelper.AutoHideScrollBars="True"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="#ffffff"
+                                         Padding="18" HorizontalAlignment="Center"
                                          HorizontalContentAlignment="Center">
                                     <ListBox.ItemContainerStyle>
                                         <Style TargetType="ListBoxItem">
                                             <Style.Triggers>
-                                                <Trigger Property="IsSelected" Value="True" >
+                                                <Trigger Property="IsSelected" Value="True">
                                                     <Setter Property="FontWeight" Value="Bold" />
                                                     <Setter Property="Background" Value="#cccccc" />
                                                     <Setter Property="Foreground" Value="Black" />
                                                     <Setter Property="Margin" Value="12 8 12 8" />
                                                     <Setter Property="BorderBrush" Value="#cccccc" />
                                                 </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True" >
+                                                <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Margin" Value="12 8 12 8" />
                                                     <Setter Property="Foreground" Value="#3E99D1" />
                                                 </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False" >
+                                                <Trigger Property="IsMouseOver" Value="False">
                                                     <Setter Property="Background" Value="#f3f3f3" />
                                                     <Setter Property="Foreground" Value="Black" />
                                                     <Setter Property="Margin" Value="12 8 12 8" />
@@ -758,7 +853,9 @@
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Height="40" Width="Auto" Margin="0 0 0 0">
-                                                <TextBlock Text="{Binding}" Margin="0" HorizontalAlignment="Center"  VerticalAlignment="Center" Focusable="True" FontSize="13" TextWrapping="Wrap" Padding="10"></TextBlock>
+                                                <TextBlock Text="{Binding}" Margin="0" HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center" Focusable="True" FontSize="13"
+                                                           TextWrapping="Wrap" Padding="10" />
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
@@ -772,23 +869,28 @@
                             </Border>
                             <Border>
                                 <TextBlock DockPanel.Dock="Top" Margin="10" HorizontalAlignment="Right">
-                                    <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                            <Run Text="{DynamicResource browserMoreThemes}" />
+                                    <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}"
+                                               RequestNavigate="OnRequestNavigate">
+                                        <Run Text="{DynamicResource browserMoreThemes}" />
                                     </Hyperlink>
                                 </TextBlock>
                             </Border>
                         </StackPanel>
-                        
+
                         <StackPanel Grid.Row="2">
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Text="{DynamicResource queryWindowShadowEffect}" Style="{DynamicResource SettingTitleLabel}" />
-                                        <TextBlock Text="{DynamicResource shadowEffectCPUUsage}" Style="{DynamicResource SettingSubTitleLabel}" />
+                                        <TextBlock Text="{DynamicResource queryWindowShadowEffect}"
+                                                   Style="{DynamicResource SettingTitleLabel}" />
+                                        <TextBlock Text="{DynamicResource shadowEffectCPUUsage}"
+                                                   Style="{DynamicResource SettingSubTitleLabel}" />
                                     </StackPanel>
-                                    <ui:ToggleSwitch IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Width="80" Grid.Column="2" Grid.Row="0" Margin="0 0 18 0"/>
-                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                      &#xeb91;
+                                    <ui:ToggleSwitch IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Width="80"
+                                                     Grid.Column="2" Grid.Row="0" Margin="0 0 18 0" />
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                        &#xeb91;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
@@ -796,32 +898,39 @@
 
                         <StackPanel Grid.Row="4" Margin="0 0 0 10" Orientation="Vertical">
 
-                            <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5" Margin="0 30 0 0">
+                            <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5"
+                                    Margin="0 30 0 0">
                                 <StackPanel Orientation="Vertical">
                                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Text="{DynamicResource useGlyphUI}" Style="{DynamicResource SettingTitleLabel}" />
-                                                <TextBlock Text="{DynamicResource useGlyphUIEffect}" Style="{DynamicResource SettingSubTitleLabel}" />
+                                                <TextBlock Text="{DynamicResource useGlyphUI}"
+                                                           Style="{DynamicResource SettingTitleLabel}" />
+                                                <TextBlock Text="{DynamicResource useGlyphUIEffect}"
+                                                           Style="{DynamicResource SettingSubTitleLabel}" />
                                             </StackPanel>
-                                            <ui:ToggleSwitch IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" Width="80" Grid.Column="2" Grid.Row="0" Margin="0 0 18 0"/>
-                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                      &#xf6b8;
+                                            <ui:ToggleSwitch IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" Width="80"
+                                                             Grid.Column="2" Grid.Row="0" Margin="0 0 18 0" />
+                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                                       Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                                &#xf6b8;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
-                                    <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                    <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <TextBlock Grid.Column="1" Text="{DynamicResource queryBoxFont}" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{DynamicResource queryBoxFont}"
+                                                       VerticalAlignment="Center" />
                                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0 0 20 0">
                                                 <ComboBox ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                      SelectedItem="{Binding SelectedQueryBoxFont}"
-                                      HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="20 0 0 0" />
+                                                          SelectedItem="{Binding SelectedQueryBoxFont}"
+                                                          HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                          Width="180" Margin="20 0 0 0" />
                                                 <ComboBox ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
-                                      SelectedItem="{Binding SelectedQueryBoxFontFaces}"
-                                      HorizontalAlignment="Left" VerticalAlignment="Top"
-                                      Width="130" Margin="10 0 0 0">
+                                                          SelectedItem="{Binding SelectedQueryBoxFontFaces}"
+                                                          HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                          Width="130" Margin="10 0 0 0">
                                                     <ComboBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
@@ -835,24 +944,26 @@
                                                     </ComboBox.ItemTemplate>
                                                 </ComboBox>
                                             </StackPanel>
-                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                                       Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
                                                 &#xe990;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
-                                    <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                    <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <TextBlock Grid.Column="1" Text="{DynamicResource resultItemFont}" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{DynamicResource resultItemFont}"
+                                                       VerticalAlignment="Center" />
                                             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0 0 20 0">
                                                 <ComboBox ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                      SelectedItem="{Binding SelectedResultFont}"
-                                      HorizontalAlignment="Left" VerticalAlignment="Top"
-                                      Width="180" Margin="20 -2 0 0" />
+                                                          SelectedItem="{Binding SelectedResultFont}"
+                                                          HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                          Width="180" Margin="20 -2 0 0" />
                                                 <ComboBox ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
-                                      SelectedItem="{Binding SelectedResultFontFaces}"
-                                      HorizontalAlignment="Left" VerticalAlignment="Top"
-                                      Width="130" Margin="10 -2 0 0">
+                                                          SelectedItem="{Binding SelectedResultFontFaces}"
+                                                          HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                          Width="130" Margin="10 -2 0 0">
                                                     <ComboBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
@@ -866,7 +977,8 @@
                                                     </ComboBox.ItemTemplate>
                                                 </ComboBox>
                                             </StackPanel>
-                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                                       Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
                                                 &#xe8fd;
                                             </TextBlock>
                                         </ItemsControl>
@@ -880,10 +992,14 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Text="Theme Folder" Style="{DynamicResource SettingTitleLabel}" />
                                         </StackPanel>
-                                        <Button DockPanel.Dock="Top" Margin="0,0,18,0" Width="180" HorizontalAlignment="Center" 
-                            Click="OpenPluginFolder" Grid.Column="2">Open Theme Folder</Button>
-                                        <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                &#xe838;
+                                        <Button DockPanel.Dock="Top" Margin="0,0,18,0" Width="180"
+                                                HorizontalAlignment="Center"
+                                                Click="OpenPluginFolder" Grid.Column="2">
+                                            Open Theme Folder
+                                        </Button>
+                                        <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                                   Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                            &#xe838;
                                         </TextBlock>
                                     </ItemsControl>
                                 </Border>
@@ -893,80 +1009,98 @@
                 </ScrollViewer>
             </Border>
         </TabItem>
-                
-   
+
+
         <TabItem>
             <TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Margin="0 0 12 0">&#xe92e;</TextBlock>
-                    <TextBlock Grid.Column="1" Text="{DynamicResource hotkey}"></TextBlock>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xe92e;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{DynamicResource hotkey}" />
                 </Grid>
             </TabItem.Header>
-            <ScrollViewer ScrollViewer.CanContentScroll="False" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="0,0,0,0" Background="#f3f3f3">
+            <ScrollViewer ScrollViewer.CanContentScroll="False"
+                          ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
+                          Margin="0,0,0,0" Background="#f3f3f3">
                 <Border Background="#f3f3f3">
                     <Grid Margin="5 18 18 10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50" />
                             <RowDefinition Height="80" />
-                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="150" />
                             <RowDefinition Height="50" />
                             <RowDefinition Height="250" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{DynamicResource hotkey}" Grid.Row="0" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                        <TextBlock Text="{DynamicResource hotkey}" Grid.Row="0" TextAlignment="left" FontSize="30"
+                                   Margin="0 5 0 5" />
 
                         <StackPanel Grid.Row="1">
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Text="{DynamicResource flowlauncherHotkey}" Style="{DynamicResource SettingTitleLabel}" />
-                                        <TextBlock Text="Choose what you want" Style="{DynamicResource SettingSubTitleLabel}" />
+                                        <TextBlock Text="{DynamicResource flowlauncherHotkey}"
+                                                   Style="{DynamicResource SettingTitleLabel}" />
+                                        <TextBlock Text="Choose what you want"
+                                                   Style="{DynamicResource SettingSubTitleLabel}" />
                                     </StackPanel>
                                     <flowlauncher:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
-                                       Loaded="OnHotkeyControlLoaded" Height="35" Grid.Column="2" Grid.Row="0" Width="300" Margin="0 0 0 0" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
+                                                                Loaded="OnHotkeyControlLoaded" Height="35"
+                                                                Grid.Column="2" Grid.Row="0" Width="300"
+                                                                Margin="0 0 0 0" HorizontalAlignment="Right"
+                                                                HorizontalContentAlignment="Right" />
 
-                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                      &#xeda7;
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                        &#xeda7;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
                         </StackPanel>
 
-                        <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5" Margin="0 12 0 0" Grid.Row="2">
+                        <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5"
+                                Margin="0 12 0 0" Grid.Row="2">
                             <StackPanel Orientation="Vertical">
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource openResultModifiers}" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource openResultModifiers}"
+                                                   VerticalAlignment="Center" />
                                         <ComboBox Margin="0 0 18 0" Width="120"
-                              ItemsSource="{Binding OpenResultModifiersList}" 
-                              SelectedItem="{Binding Settings.OpenResultModifiers}" FontSize="14" Grid.Column="2"/>
+                                                  ItemsSource="{Binding OpenResultModifiersList}"
+                                                  SelectedItem="{Binding Settings.OpenResultModifiers}" FontSize="14"
+                                                  Grid.Column="2" />
                                     </ItemsControl>
                                 </Border>
 
-                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}" Grid.Column="1">
-                                            <TextBlock Text="{DynamicResource showOpenResultHotkey}" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Display Hotkey in Query Result " Style="{DynamicResource SettingSubTitleLabel}" />
+                                            <TextBlock Text="{DynamicResource showOpenResultHotkey}"
+                                                       VerticalAlignment="Center" />
+                                            <TextBlock Text="Display Hotkey in Query Result "
+                                                       Style="{DynamicResource SettingSubTitleLabel}" />
                                         </StackPanel>
-                                        <CheckBox IsChecked="{Binding Settings.ShowOpenResultHotkey}" Style="{DynamicResource SideControlCheckBox}">
-                                        </CheckBox>
+                                        <CheckBox IsChecked="{Binding Settings.ShowOpenResultHotkey}"
+                                                  Style="{DynamicResource SideControlCheckBox}" />
                                     </ItemsControl>
                                 </Border>
                             </StackPanel>
                         </Border>
 
-                        <TextBlock Grid.Row="3" VerticalAlignment="Center" Margin="0 0 12 2" Text="{DynamicResource customQueryHotkey}" FontSize="14" Padding="0 12 0 0 "/>
+                        <TextBlock Grid.Row="3" VerticalAlignment="Center" Margin="0 0 12 2"
+                                   Text="{DynamicResource customQueryHotkey}" FontSize="14" Padding="0 12 0 0 " />
                         <ListView Grid.Row="4" ItemsSource="{Binding Settings.CustomPluginHotkeys}"
-                          SelectedItem="{Binding SelectedCustomPluginHotkey}"
-                          Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
-                          BorderBrush="DarkGray" BorderThickness="1" Background="#ffffff"
-                          Margin="0 0 0 0">
+                                  SelectedItem="{Binding SelectedCustomPluginHotkey}"
+                                  Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
+                                  BorderBrush="DarkGray" BorderThickness="1" Background="#ffffff"
+                                  Margin="0 0 0 0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="{DynamicResource hotkey}" Width="180">
@@ -987,82 +1121,107 @@
                             </ListView.View>
                         </ListView>
                         <StackPanel Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Orientation="Horizontal" Width="350" Margin="0">
+                                    Orientation="Horizontal" Width="350" Margin="0">
                             <Button Click="OnDeleteCustomHotkeyClick" Width="100"
-                            Margin="10" Content="{DynamicResource delete}" />
+                                    Margin="10" Content="{DynamicResource delete}" />
                             <Button Click="OnnEditCustomHotkeyClick" Width="100" Margin="10"
-                            Content="{DynamicResource edit}" />
+                                    Content="{DynamicResource edit}" />
                             <Button Click="OnAddCustomeHotkeyClick" Width="100" Margin="10 10 0 10"
-                            Content="{DynamicResource add}" />
+                                    Content="{DynamicResource add}" />
                         </StackPanel>
                     </Grid>
                 </Border>
             </ScrollViewer>
         </TabItem>
-        
-        
+
+
         <TabItem>
             <TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Margin="0 0 12 0">&#xec27;</TextBlock>
-                    <TextBlock Grid.Column="1" Text="{DynamicResource proxy}"></TextBlock>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xec27;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{DynamicResource proxy}" />
                 </Grid>
             </TabItem.Header>
-            <ScrollViewer ScrollViewer.CanContentScroll="False" ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}" Margin="0,0,0,0" Background="#f3f3f3" Padding="5 0 18 0">
+            <ScrollViewer ScrollViewer.CanContentScroll="False"
+                          ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
+                          Margin="0,0,0,0" Background="#f3f3f3" Padding="5 0 18 0">
                 <Border Background="#f3f3f3">
-    
+
                     <StackPanel>
                         <Border Margin="0 18 0 0">
-                            <TextBlock Text="{DynamicResource proxy}" Grid.Row="0" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                            <TextBlock Text="{DynamicResource proxy}" Grid.Row="0" TextAlignment="left" FontSize="30"
+                                       Margin="0 5 0 5" />
                         </Border>
 
 
-                        <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5" Margin="0 12 0 0">
+                        <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5"
+                                Margin="0 12 0 0">
                             <StackPanel Orientation="Vertical">
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource enableProxy}" VerticalAlignment="Center"/>
-                                        <CheckBox IsChecked="{Binding Settings.Proxy.Enabled}" Style="{DynamicResource SideControlCheckBox}" />
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource enableProxy}"
+                                                   VerticalAlignment="Center" />
+                                        <CheckBox IsChecked="{Binding Settings.Proxy.Enabled}"
+                                                  Style="{DynamicResource SideControlCheckBox}" />
                                     </ItemsControl>
                                 </Border>
-                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource server}" VerticalAlignment="Center"  Margin="22 0 0 0"/>
-                                        <TextBox Text="{Binding Settings.Proxy.Server}"  Grid.Column="2" Padding="5" Margin="0 0 16 0" IsEnabled="{Binding Settings.Proxy.Enabled}" Width="300"/>
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource server}"
+                                                   VerticalAlignment="Center" Margin="22 0 0 0" />
+                                        <TextBox Text="{Binding Settings.Proxy.Server}" Grid.Column="2" Padding="5"
+                                                 Margin="0 0 16 0" IsEnabled="{Binding Settings.Proxy.Enabled}"
+                                                 Width="300" />
                                     </ItemsControl>
                                 </Border>
-                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource port}" VerticalAlignment="Center" Margin="22 0 0 0"/>
-                                        <TextBox Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty} }" Grid.Column="2" IsEnabled="{Binding Settings.Proxy.Enabled}" Width="100" Margin="0 0 16 0"/>
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource port}"
+                                                   VerticalAlignment="Center" Margin="22 0 0 0" />
+                                        <TextBox
+                                            Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty} }"
+                                            Grid.Column="2" IsEnabled="{Binding Settings.Proxy.Enabled}" Width="100"
+                                            Margin="0 0 16 0" />
                                     </ItemsControl>
                                 </Border>
-                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource userName}" VerticalAlignment="Center" Margin="22 0 0 0"/>
-                                        <TextBox Text="{Binding Settings.Proxy.UserName}" Grid.Column="2" Padding="5" IsEnabled="{Binding Settings.Proxy.Enabled}" Width="200" Margin="0 0 16 0"/>
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource userName}"
+                                                   VerticalAlignment="Center" Margin="22 0 0 0" />
+                                        <TextBox Text="{Binding Settings.Proxy.UserName}" Grid.Column="2" Padding="5"
+                                                 IsEnabled="{Binding Settings.Proxy.Enabled}" Width="200"
+                                                 Margin="0 0 16 0" />
                                     </ItemsControl>
                                 </Border>
-                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto"/>
+                                <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource password}" VerticalAlignment="Center" Margin="22 0 0 0"/>
-                                        <TextBox Text="{Binding Settings.Proxy.Password}" Grid.Column="2" Padding="5" IsEnabled="{Binding Settings.Proxy.Enabled}" Width="200" Margin="0 0 16 0"/>
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource password}"
+                                                   VerticalAlignment="Center" Margin="22 0 0 0" />
+                                        <TextBox Text="{Binding Settings.Proxy.Password}" Grid.Column="2" Padding="5"
+                                                 IsEnabled="{Binding Settings.Proxy.Enabled}" Width="200"
+                                                 Margin="0 0 16 0" />
                                     </ItemsControl>
                                 </Border>
                             </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0" BorderThickness="0">
                             <ItemsControl Style="{StaticResource SettingGrid}">
-                                <TextBlock Grid.Column="1" Text="{DynamicResource testProxy}" VerticalAlignment="Center"/>
-                                <Button Content="{DynamicResource testProxy}" IsEnabled="{Binding Settings.Proxy.Enabled}" HorizontalAlignment="Right" Margin="0 0 16 0"  Width="150" Click="OnTestProxyClick" Grid.Column="2" />
+                                <TextBlock Grid.Column="1" Text="{DynamicResource testProxy}"
+                                           VerticalAlignment="Center" />
+                                <Button Content="{DynamicResource testProxy}"
+                                        IsEnabled="{Binding Settings.Proxy.Enabled}" HorizontalAlignment="Right"
+                                        Margin="0 0 16 0" Width="150" Click="OnTestProxyClick" Grid.Column="2" />
                             </ItemsControl>
                         </Border>
                     </StackPanel>
@@ -1073,61 +1232,65 @@
             <TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Margin="0 0 12 0">&#xe946;</TextBlock>
-                    <TextBlock Grid.Column="1" Text="{DynamicResource about}"></TextBlock>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xe946;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="{DynamicResource about}" />
                 </Grid>
             </TabItem.Header>
             <Border Background="#f3f3f3">
-            <Grid Height="400" Margin="65,0">
-                <!--<TextBlock Text="{DynamicResource about}" Grid.Row="0" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>  -->
-                <Grid.Resources>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Margin" Value="10, 25, 0, 0" />
-                        <Setter Property="FontSize" Value="14" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ActivatedTimes, Mode=OneWay}" FontSize="12" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource website}"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
-                    <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                        <Run Text="{Binding Website, Mode=OneWay}" />
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Version" />
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Version}" />
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource releaseNotes}" />
-                <TextBlock Grid.Row="3" Grid.Column="1">
-                    <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}"
-                               RequestNavigate="OnRequestNavigate">
-                        <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource documentation}" />
-                <TextBlock Grid.Row="4" Grid.Column="1">
-                    <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}"
-                               RequestNavigate="OnRequestNavigate">
-                        <Run Text="{Binding Documentation, Mode=OneWay}" />
-                    </Hyperlink>
-                </TextBlock>
-                <Button Grid.Row="5" Grid.Column="0"
-                        Content="{DynamicResource checkUpdates}" Click="OnCheckUpdates"
-                        HorizontalAlignment="Left" Margin="10 30 10 10" />
-            </Grid>
+                <Grid Height="400" Margin="65,0">
+                    <!--<TextBlock Text="{DynamicResource about}" Grid.Row="0" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>  -->
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Margin" Value="10, 25, 0, 0" />
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ActivatedTimes, Mode=OneWay}"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource website}" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                        <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                            <Run Text="{Binding Website, Mode=OneWay}" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Version" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Version}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource releaseNotes}" />
+                    <TextBlock Grid.Row="3" Grid.Column="1">
+                        <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}"
+                                   RequestNavigate="OnRequestNavigate">
+                            <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource documentation}" />
+                    <TextBlock Grid.Row="4" Grid.Column="1">
+                        <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}"
+                                   RequestNavigate="OnRequestNavigate">
+                            <Run Text="{Binding Documentation, Mode=OneWay}" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <Button Grid.Row="5" Grid.Column="0"
+                            Content="{DynamicResource checkUpdates}" Click="OnCheckUpdates"
+                            HorizontalAlignment="Left" Margin="10 30 10 10" />
+                </Grid>
             </Border>
         </TabItem>
     </TabControl>

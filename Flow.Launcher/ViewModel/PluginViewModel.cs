@@ -3,6 +3,7 @@ using System.Windows.Media;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -14,11 +15,23 @@ namespace Flow.Launcher.ViewModel
         public bool PluginState
         {
             get { return !PluginPair.Metadata.Disabled; }
-            set 
+            set
             {
-                PluginPair.Metadata.Disabled = !value; 
+                PluginPair.Metadata.Disabled = !value;
             }
         }
+
+        public Control SettingControl
+        {
+            get
+            {
+                if (PluginPair.Plugin is not ISettingProvider settingProvider)
+                    return new Control();
+
+                return settingProvider.CreateSettingPanel();
+            }
+        }
+
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime.ToString() + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
@@ -28,7 +41,7 @@ namespace Flow.Launcher.ViewModel
         public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
         {
             PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeyword, newActionKeyword);
-            
+
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
