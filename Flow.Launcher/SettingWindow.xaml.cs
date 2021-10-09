@@ -193,14 +193,13 @@ namespace Flow.Launcher
             
         }
 
-        private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
+        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
+        
                 var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
                 ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
                 changeKeywordsWindow.ShowDialog();
-            }
+            
         }
 
         private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
@@ -265,6 +264,13 @@ namespace Flow.Launcher
         {
             FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
+
+        /*
+        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        */
 
         /*private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
         {

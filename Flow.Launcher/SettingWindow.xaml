@@ -229,7 +229,7 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0 10 0 10" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 10" />
 
 
                             </MultiTrigger>
@@ -241,7 +241,7 @@
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0 10 0 10" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 10" />
 
 
                             </MultiTrigger>
@@ -257,13 +257,6 @@
             <Setter Property="Height" Value="Auto" />
         </Style>
 
-        <Style x:Key="PriorityButton" TargetType="Button">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Text}" Value="1">
-                    <Setter Property="Foreground" Value="Red" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
 
     </Window.Resources>
 
@@ -542,7 +535,7 @@
                              Margin="0, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
-                             Padding="0" Width="Auto" HorizontalAlignment="Stretch">
+                             Padding="0 0 0 18" Width="Auto" HorizontalAlignment="Stretch">
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -618,22 +611,36 @@
                                         <StackPanel Orientation="Vertical" Margin="0 12 0 0">
                                             <StackPanel>
                                                 <Border Style="{DynamicResource SettingGroupBox}"
-                                                        Visibility="{Binding ActionKeywordsVisibility}" Height="52"
+                                                        Visibility="{Binding ActionKeywordsVisibility}" Height="52" Padding="0"
                                                         Width="auto" BorderThickness="0 1 0 0" CornerRadius="0">
-                                                    <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                        <StackPanel Style="{StaticResource TextPanel}"
-                                                                    Orientation="Horizontal">
-                                                            <TextBlock Text="{DynamicResource actionKeywords}"
+                                                    <ItemsControl VerticalAlignment="Center" Padding="22 0 18 0">
+                                                        <DockPanel>
+                                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" DockPanel.Dock="Left"
+                                       VerticalAlignment="Center" Margin="48 0 10 0">&#xe819;</TextBlock>
+                                                            <TextBlock Grid.Column="0" Text="{DynamicResource actionKeywords}"
                                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                                       Margin="48 0 0 0" />
-                                                            <TextBlock Text="{Binding ActionKeywordsText}"
+                                                                       Margin="0 0 0 0"  VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left"/>
+
+                                                            
+                                                                <Button Grid.Column="2" Content="{Binding ActionKeywordsText}"
                                                                        DockPanel.Dock="Right"
                                                                        Visibility="{Binding ActionKeywordsVisibility}"
                                                                        ToolTip="Change Action Keywords"
-                                                                       Margin="5 0 0 0" Cursor="Hand" Foreground="Blue"
-                                                                       MouseUp="OnPluginActionKeywordsClick"
-                                                                       MaxWidth="100" HorizontalAlignment="Right" />
-                                                        </StackPanel>
+                                                                       Margin="5 0 0 0" Cursor="Hand" FontWeight="Bold"
+                                                                       Click="OnPluginActionKeywordsClick" HorizontalAlignment="Right"
+                                                                       Width="100" Height="32">
+                                                                
+                                                                <Button.Resources>
+                                                                    <Style TargetType="Border">
+                                                                        <Setter Property="CornerRadius" Value="2"/>
+                                                                        <Setter Property="BorderThickness" Value="1 1 1 2"/>
+                                                                        <Setter Property="BorderBrush" Value="#ececec"/>
+                                                                        <Setter Property="Background" Value="#ffffff"/>
+
+                                                                    </Style>
+                                                                </Button.Resources>
+                                                            </Button>
+                                                        </DockPanel>
 
                                                     </ItemsControl>
                                                 </Border>
@@ -652,29 +659,36 @@
                                             </StackPanel>
 
                                             <StackPanel>
-                                                <Border Style="{DynamicResource SettingGroupBox}"
+                                                <Border Style="{DynamicResource SettingGroupBox}" CornerRadius="0"
                                                         Visibility="{Binding ActionKeywordsVisibility}"
                                                         VerticalAlignment="Center" Margin="0" BorderThickness="0 1 0 0"
-                                                        Padding="0 12 0 0">
+                                                        Padding="0 12 0 0" >
                                                     <ItemsControl Style="{DynamicResource SettingGrid}">
                                                         <StackPanel Style="{StaticResource TextPanel}"
-                                                                    Orientation="Horizontal" VerticalAlignment="Center">
-                                                            <TextBlock Text="{DynamicResource plugin_init_time}"
-                                                                       FontSize="11" Margin="10 0 0 0" MaxWidth="100" />
-                                                            <TextBlock Text="{Binding InitilizaTime}" FontSize="11"
+                                                                    Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 -14 0">
+                                                            <TextBlock Text="{DynamicResource plugin_init_time}" 
+                                                                       FontSize="11" Margin="10 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
+                                                            <TextBlock Text="{Binding InitilizaTime}" FontSize="11" Foreground="#8F8F8F"
                                                                        Margin="5 0 0 0" MaxWidth="100" />
+                                                            <TextBlock Text="|"
+                                                                       FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F"
+                                                                       VerticalAlignment="Center" />
                                                             <TextBlock Text="{DynamicResource plugin_query_time}"
-                                                                       FontSize="10" Margin="10 0 0 0" MaxWidth="100" />
-                                                            <TextBlock Text="{Binding QueryTime}" FontSize="11"
+                                                                       FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
+                                                            <TextBlock Text="{Binding QueryTime}" FontSize="11" Foreground="#8F8F8F"
                                                                        Margin="5 0 0 0" MaxWidth="100" />
-                                                            <TextBlock Text="{Binding PluginPair.Metadata.Version}"
+                                                            <TextBlock Text="| version"
+                                                                       FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F"
+                                                                       VerticalAlignment="Center" />
+                                                            <TextBlock Text="{Binding PluginPair.Metadata.Version}" Foreground="#8F8F8F"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100"
                                                                        VerticalAlignment="Center" />
-                                                        </StackPanel>
-                                                        <TextBlock Text="{DynamicResource pluginDirectory}"
+                                                            <TextBlock Text="{DynamicResource pluginDirectory}"
                                                                    MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
                                                                    MouseUp="OnPluginDirecotyClick" Foreground="Blue"
-                                                                   HorizontalAlignment="Right" />
+                                                                   HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center"/>
+                                                        </StackPanel>
+                                               
                                                     </ItemsControl>
                                                 </Border>
 
