@@ -13,6 +13,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Helper;
+using System.Windows.Controls;
 
 namespace Flow.Launcher
 {
@@ -186,20 +187,18 @@ namespace Flow.Launcher
 
         private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
         {
-            
-            
-                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(viewModel.SelectedPlugin.PluginPair.Metadata.ID, settings, viewModel.SelectedPlugin);
+            if (sender is Control { DataContext: PluginViewModel pluginViewModel })
+            {
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, settings, pluginViewModel);
                 priorityChangeWindow.ShowDialog();
-            
+            }
         }
 
         private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
         {
-        
-                var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
-                changeKeywordsWindow.ShowDialog();
-            
+            var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
+            ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
+            changeKeywordsWindow.ShowDialog();
         }
 
         private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
