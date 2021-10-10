@@ -37,6 +37,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
+        
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Margin" Value="0" />
@@ -48,13 +49,9 @@
                                 <ColumnDefinition Width="auto" MaxWidth="60" MinWidth="20" />
                                 <ColumnDefinition Width="8*" />
                                 <ColumnDefinition Width="Auto" MaxWidth="550" MinWidth="40" />
-
                             </Grid.ColumnDefinitions>
-
                         </Grid>
-
                     </ItemsPanelTemplate>
-
                 </Setter.Value>
             </Setter>
         </Style>
@@ -101,6 +98,7 @@
         </Style>
 
         <Style TargetType="{x:Type TabItem}" x:Key="logo">
+            <!--#region Logo Style -->
             <Setter Property="Margin" Value="0" />
             <Setter Property="HorizontalAlignment" Value="center" />
             <Setter Property="Background" Value="Transparent" />
@@ -152,6 +150,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <!--#endregion-->
         </Style>
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
@@ -161,7 +160,7 @@
                             <Grid>
                                 <Grid>
                                     <Border
-                                        x:Name="Spacer" Width="Auto" Height="Auto" Padding="0 0 0 0" Margin="0 5 8 0"
+                                        x:Name="Spacer" Width="Auto" Height="Auto" Padding="0 0 0 0" Margin="8 4 8 0"
                                         BorderBrush="Transparent" BorderThickness="0">
                                         <Border x:Name="border" CornerRadius="5" Background="#f3f3f3">
                                             <ContentPresenter x:Name="ContentSite"
@@ -264,7 +263,6 @@
             <Setter Property="Margin" Value="0 0 8 4" />
             <Setter Property="BorderBrush" Value="#e5e5e5" />
             <Setter Property="MinWidth" Value="330"/>
-            <Setter Property="MaxWidth" Value="400"/>
             <Setter Property="Height" Value="98"/>
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
@@ -328,10 +326,42 @@
             <!--#endregion-->
         </Style>
 
+        <!-- For Tab Header responsive Width -->
+        <Style  TargetType="{x:Type TabControl}">
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2.2*"/>
+                                <ColumnDefinition Width="7.8*"/>
+                            </Grid.ColumnDefinitions>
+                            <TabPanel 
+             Grid.Column="0"
+             Panel.ZIndex="1" 
+             Margin="0,0,0,0"
+                               
+             IsItemsHost="True"
+             Background="#F6F6F6" />
+                            <Border 
+             Grid.Column="1"
+             BorderBrush="Black" 
+             BorderThickness="0" 
+             CornerRadius="0
+                                " >
+                                <ContentPresenter ContentSource="SelectedContent" Grid.Column="1"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
 
-    <TabControl Height="auto" SelectedIndex="1" TabStripPlacement="Left" Background="#f3f3f3">
+        <TabControl Height="auto" SelectedIndex="1" TabStripPlacement="Left" Background="#f3f3f3">
         <TabItem Style="{DynamicResource logo}">
             <TabItem.Header>
                 <Grid Margin="0 18 0 0">
@@ -347,7 +377,7 @@
                 </Grid>
             </TabItem.Header>
         </TabItem>
-        <TabItem Width="180">
+        <TabItem> <!-- LEFT TAB WIDTH -->
             <TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -973,7 +1003,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0" />
                             <RowDefinition Height="350" />
-                            <RowDefinition Height="80" />
+                            <RowDefinition  />
                             <RowDefinition />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -1030,6 +1060,25 @@
                             </StackPanel>
                         </StackPanel>
 
+                        <StackPanel Grid.Row="2" VerticalAlignment="Top">
+                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Text="{DynamicResource queryWindowShadowEffect}"
+                                                   Style="{DynamicResource SettingTitleLabel}" />
+                                        <TextBlock Text="{DynamicResource shadowEffectCPUUsage}"
+                                                   Style="{DynamicResource SettingSubTitleLabel}" />
+                                    </StackPanel>
+                                    <ui:ToggleSwitch IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Width="80"
+                                                     Grid.Column="2" Grid.Row="0" Margin="0 0 18 0" />
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                        &#xeb91;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+                        </StackPanel>
+                        
                         <StackPanel Grid.Row="3">
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0 8 0 0" Padding="0"
                                     HorizontalAlignment="Stretch">
@@ -1094,24 +1143,6 @@
                             </Border>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2">
-                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Text="{DynamicResource queryWindowShadowEffect}"
-                                                   Style="{DynamicResource SettingTitleLabel}" />
-                                        <TextBlock Text="{DynamicResource shadowEffectCPUUsage}"
-                                                   Style="{DynamicResource SettingSubTitleLabel}" />
-                                    </StackPanel>
-                                    <ui:ToggleSwitch IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Width="80"
-                                                     Grid.Column="2" Grid.Row="0" Margin="0 0 18 0" />
-                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
-                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                        &#xeb91;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
-                        </StackPanel>
 
                         <StackPanel Grid.Row="4" Margin="0 0 0 10" Orientation="Vertical">
 
