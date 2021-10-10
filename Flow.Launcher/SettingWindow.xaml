@@ -229,7 +229,7 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 10" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 0" />
 
 
                             </MultiTrigger>
@@ -241,7 +241,7 @@
                                 <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 10" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 0" />
 
 
                             </MultiTrigger>
@@ -257,6 +257,14 @@
             <Setter Property="Height" Value="Auto" />
         </Style>
 
+        <!--#region PluginStore Style-->
+        <Style x:Key="StoreList" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="#ffffff" />
+            <Setter Property="Padding" Value="0 12 12 18" />
+            <Setter Property="Margin" Value="0 0 6 4" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="BorderBrush" Value="#e5e5e5" />
+        </Style>
 
     </Window.Resources>
 
@@ -740,6 +748,81 @@
 
             </Grid>
         </TabItem>
+
+        <!--#region Plugin Store -->
+        <TabItem>
+            <TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                               Margin="0 0 12 0">
+                        &#xe719;
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Text="Plugin Store" />
+                </Grid>
+            </TabItem.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="74"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="#f3f3f3" Padding="5 18 0 0">
+                    <TextBlock Text="Plugin Store" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                </Border>
+                <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
+                    <ListBox
+                             ItemsSource="{Binding PluginViewModels}"
+                             Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemContainerStyle="{StaticResource StoreList}"
+                             ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
+                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemHeight="100"
+                               ItemWidth="390"
+                               Orientation="Horizontal" VerticalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="72"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0 0 0 0"
+                                                        VerticalAlignment="Center" >
+                                        <Image Source="{Binding Image, IsAsync=True}"
+                                                       Width="32" Height="32" Margin="8 0 6 0"
+                                                        VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="0 0 8 0"  VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding PluginPair.Metadata.Name}"
+                                                           TextWrapping="WrapWithOverflow"
+                                                           ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                        <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
+                                                    <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                </Grid>
+
+
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+
+            </Grid>
+        </TabItem>
+        <!--#endregion-->
 
         <TabItem>
             <TabItem.Header>
