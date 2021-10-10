@@ -110,7 +110,7 @@ namespace Flow.Launcher.Helper
                     return;
 
                 mainViewModel.MainWindowVisibility = Visibility.Visible;
-                mainViewModel.ChangeQueryText(hotkey.ActionKeyword);
+                mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
             });
         }
 
