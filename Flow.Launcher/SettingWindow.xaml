@@ -260,10 +260,70 @@
         <!--#region PluginStore Style-->
         <Style x:Key="StoreList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="#ffffff" />
-            <Setter Property="Padding" Value="0 12 12 18" />
-            <Setter Property="Margin" Value="0 0 6 4" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0 0 0 0" />
+            <Setter Property="Margin" Value="0 0 8 4" />
             <Setter Property="BorderBrush" Value="#e5e5e5" />
+
+            <!--#region Template for blue highlight win10-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}" CornerRadius="5"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
+
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 0" />
+
+
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0 0 0 0" />
+
+
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="TextElement.Foreground"
+                                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--#endregion-->
         </Style>
 
     </Window.Resources>
@@ -785,34 +845,88 @@
                              Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100"
-                               ItemWidth="390"
-                               Orientation="Horizontal" VerticalAlignment="Center"/>
+                                <WrapPanel ItemHeight="100" ItemWidth="390" Margin="0"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="72"/>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" Margin="0 0 0 0"
+                                <!-- Hover Layout Style-->
+                                <Border x:Name="HoverArea" Padding="0" MinWidth="390" BorderBrush="Black" BorderThickness="0" Background="Transparent" >
+                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="72"/>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Margin="0 0 0 0"
                                                         VerticalAlignment="Center" >
-                                        <Image Source="{Binding Image, IsAsync=True}"
+                                            <StackPanel.Style>
+                                                <Style>
+                                                    <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                            <Setter Property="StackPanel.Opacity" Value="1"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <Image Source="{Binding Image, IsAsync=True}"
                                                        Width="32" Height="32" Margin="8 0 6 0"
                                                         VerticalAlignment="Center"/>
                                     </StackPanel>
-                                    <StackPanel Grid.Column="1" Margin="0 0 8 0"  VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding PluginPair.Metadata.Name}"
-                                                           TextWrapping="WrapWithOverflow"
+                                        <StackPanel Grid.Column="1" Margin="0 0 8 0" VerticalAlignment="Center" Panel.ZIndex="0">
+                                            <StackPanel.Style>
+                                                <Style>
+                                                    <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                            <Setter Property="StackPanel.Opacity" Value="1"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock Text="{Binding PluginPair.Metadata.Name}"
+                                                           TextWrapping="WrapWithOverflow" Padding="0 0 20 0"
                                                            ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                        <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0">
+                                            <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0" Padding="0 0 20 0">
                                                     <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12" />
-                                        </TextBlock>
-                                    </StackPanel>
+                                            </TextBlock>
 
-                                </Grid>
+                                        </StackPanel>
+                                        <StackPanel  Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch">
+                                            <StackPanel.Style>
+                                                <Style>
+                                                    <Setter Property="StackPanel.Visibility" Value="Collapsed"></Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                            <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+
+
+                                            <Grid Width="390" Height="100" HorizontalAlignment="Center" Panel.ZIndex="1">
+                                                <Grid.Background>
+                                                    <SolidColorBrush Color="#f6f6f6" Opacity=".8"/>
+                                                </Grid.Background>
+                                                <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="120" MinHeight="50" VerticalAlignment="Center">
+                                                    <Button.Style>
+                                                        <Style>
+                                                            <Setter Property="Button.Visibility" Value="Collapsed"></Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                                    <Setter Property="Button.Visibility" Value="Visible"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+
+
+                                </Border>
 
 
                             </DataTemplate>
