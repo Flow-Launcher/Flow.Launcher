@@ -852,7 +852,7 @@
                             <DataTemplate>
                                 <!-- Hover Layout Style-->
                                 <Border x:Name="HoverArea" Padding="0" MinWidth="390" BorderBrush="Black" BorderThickness="0" Background="Transparent" >
-                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="72"/>
                                             <ColumnDefinition Width="*" />
@@ -905,21 +905,30 @@
                                             </StackPanel.Style>
 
 
-                                            <Grid Width="390" Height="100" HorizontalAlignment="Center" Panel.ZIndex="1">
+                                            <Grid Width="390" Height="94" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1">
                                                 <Grid.Background>
-                                                    <SolidColorBrush Color="#f6f6f6" Opacity=".8"/>
+                                                    <SolidColorBrush Color="#f6f6f6" Opacity=".95"/>
                                                 </Grid.Background>
-                                                <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="120" MinHeight="50" VerticalAlignment="Center">
-                                                    <Button.Style>
-                                                        <Style>
-                                                            <Setter Property="Button.Visibility" Value="Collapsed"></Setter>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="Button.Visibility" Value="Visible"></Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="150" />
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding PluginPair.Metadata.Name}" FontWeight="Bold"
+                                                           TextWrapping="WrapWithOverflow" Padding="0 0 0 0" Margin="20 0 0 0"
+                                                           ToolTip="{Binding PluginPair.Metadata.Name}" />
+                                                    <TextBlock Text="{Binding PluginPair.Metadata.Version}"
+                                                           TextWrapping="WrapWithOverflow" Padding="0 0 20 0" Margin="10 0 0 0"
+                                                           ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                                    </StackPanel>
+                                                    <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="20 2 0 0" Padding="0 0 20 0" >
+                                                    <Run Text="{Binding PluginPair.Metadata.Author}" FontSize="12" />
+                                                    </TextBlock>
+                                                </StackPanel>
+
+                                                <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="90" MinHeight="40" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
                                                 </Button>
                                             </Grid>
                                         </StackPanel>
