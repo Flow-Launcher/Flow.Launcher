@@ -285,9 +285,17 @@ namespace Flow.Launcher.ViewModel
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
-        public void ChangeQueryText(string queryText)
+        public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            QueryText = queryText;
+            if (QueryText!=queryText) 
+            {
+                // re-query is done in QueryText's setter method
+                QueryText = queryText;
+            }
+            else if (reQuery)
+            {
+                Query();
+            }
             QueryTextCursorMovedToEnd = true;
         }
 
