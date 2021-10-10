@@ -657,28 +657,28 @@
                                                            ToolTip="Change Plugin Results Priority"
                                                            Margin="5 0 0 0" Cursor="Hand"
                                                            Click="OnPluginPriorityClick">
-                                                    <!--#region Priority Button Style-->
+                                                        <!--#region Priority Button Style-->
                                                         <Button.Resources>
                                                             <Style TargetType="Border">
                                                                 <Setter Property="CornerRadius" Value="2"/>
                                                             </Style>
                                                         </Button.Resources>
                                                         <Button.Style>
-                                                        <Style TargetType="Button">
-                                                            <Setter Property="Padding" Value="12 8 12 8" />
-                                                            <Setter Property="BorderThickness" Value="0" />
-                                                            <Setter Property="FontWeight" Value="DemiBold" />
-                                                            <Setter Property="Foreground" Value="Black" />
+                                                            <Style TargetType="Button">
+                                                                <Setter Property="Padding" Value="12 8 12 8" />
+                                                                <Setter Property="BorderThickness" Value="0" />
+                                                                <Setter Property="FontWeight" Value="DemiBold" />
+                                                                <Setter Property="Foreground" Value="Black" />
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
                                                                         <Setter Property="Foreground" Value="#878787" />
                                                                         <Setter Property="FontWeight" Value="Normal" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
-                                                    <!--#endregion-->
-                                                </Button>
+                                                            </Style>
+                                                        </Button.Style>
+                                                        <!--#endregion-->
+                                                    </Button>
                                                 </Border>
                                             </StackPanel>
                                             <ui:ToggleSwitch Grid.Column="4" OffContent="{DynamicResource disable}"
@@ -703,15 +703,15 @@
                                                                        Style="{DynamicResource SettingTitleLabel}"
                                                                        Margin="0 0 0 0"  VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left"/>
 
-                                                            
-                                                                <Button Grid.Column="2" Content="{Binding ActionKeywordsText}"
+
+                                                            <Button Grid.Column="2" Content="{Binding ActionKeywordsText}"
                                                                        DockPanel.Dock="Right"
                                                                        Visibility="{Binding ActionKeywordsVisibility}"
                                                                        ToolTip="Change Action Keywords"
                                                                        Margin="5 0 0 0" Cursor="Hand" FontWeight="Bold"
                                                                        Click="OnPluginActionKeywordsClick" HorizontalAlignment="Right"
                                                                        Width="100" Height="40">
-                                                                
+
                                                                 <Button.Resources>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="CornerRadius" Value="2"/>
@@ -730,7 +730,7 @@
 
                                             <StackPanel>
 
-                                                
+
                                                 <Border Background="White" Padding="0"
                                                         BorderThickness="0 1 0 0" BorderBrush="#e6e6e6"
                                                         VerticalAlignment="Center" HorizontalAlignment="Stretch">
@@ -753,8 +753,8 @@
                                                         Content="{Binding SettingControl}"
                                                         Padding="1" Margin="0" VerticalAlignment="Stretch"
                                                         MaxWidth="750" MaxHeight="550">
-                                                    </ContentControl>
-                                                
+                                                </ContentControl>
+
                                             </StackPanel>
 
                                             <StackPanel>
@@ -794,7 +794,7 @@
                                                                    MouseUp="OnPluginDirecotyClick" Foreground="Blue"
                                                                    HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center"/>
                                                         </StackPanel>
-                                               
+
                                                     </ItemsControl>
                                                 </Border>
 
@@ -840,7 +840,7 @@
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
                     <ListBox x:Name="StoreListBox"
-                             ItemsSource="{Binding PluginViewModels}"
+                             ItemsSource="{Binding ExternalPlugins}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource StoreList}"
                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
@@ -849,9 +849,9 @@
                             <ItemsPanelTemplate>
                                 <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 12 18" VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
-                            
-                            
-                            
+
+
+
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -874,10 +874,10 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <Image Source="{Binding Image, IsAsync=True}"
-                                                       Width="32" Height="32" Margin="8 0 6 0"
-                                                        VerticalAlignment="Center"/>
-                                    </StackPanel>
+                                            <Image Source="{Binding IcoPath, IsAsync=True}"
+                                                   Width="32" Height="32" Margin="8 0 6 0"
+                                                   VerticalAlignment="Center"/>
+                                        </StackPanel>
                                         <StackPanel Grid.Column="1" Margin="0 0 8 0" VerticalAlignment="Center" Panel.ZIndex="0">
                                             <StackPanel.Style>
                                                 <Style>
@@ -889,11 +889,11 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <TextBlock Text="{Binding PluginPair.Metadata.Name}"
+                                            <TextBlock Text="{Binding Name}"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 20 0"
-                                                           ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                                           ToolTip="{Binding Version}" />
                                             <TextBlock Opacity="0.5" TextWrapping="WrapWithOverflow" Margin="0 2 0 0" Padding="0 0 20 0">
-                                                    <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12" />
+                                                    <Run Text="{Binding Description}" FontSize="12" />
                                             </TextBlock>
 
                                         </StackPanel >
@@ -917,18 +917,18 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
                                                 </Grid.ColumnDefinitions>
-                                                
+
                                                 <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                                                     <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding PluginPair.Metadata.Name}" FontWeight="Bold"
+                                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 0 0" Margin="20 0 0 0"
-                                                           ToolTip="{Binding PluginPair.Metadata.Name}" />
-                                                    <TextBlock Text="{Binding PluginPair.Metadata.Version}"
+                                                           ToolTip="{Binding Name}" />
+                                                        <TextBlock Text="{Binding Version}"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 20 0" Margin="10 0 0 0"
-                                                           ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                                           ToolTip="{Binding Version}" />
                                                     </StackPanel>
                                                     <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="20 2 0 0" Padding="0 0 20 0" >
-                                                    <Run Text="{Binding PluginPair.Metadata.Author}" FontSize="12" />
+                                                    <Run Text="{Binding Author}" FontSize="12" />
                                                     </TextBlock>
                                                 </StackPanel>
 

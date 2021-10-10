@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -234,6 +235,14 @@ namespace Flow.Launcher.ViewModel
                     .Select(p => new PluginViewModel { PluginPair = p })
                     .ToList();
                 return metadatas;
+            }
+        }
+
+        public IList<UserPlugin> ExternalPlugins
+        {
+            get
+            {
+                return PluginsManifest.UserPlugins;
             }
         }
 
