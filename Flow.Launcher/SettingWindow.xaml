@@ -263,7 +263,9 @@
             <Setter Property="Padding" Value="0 0 0 0" />
             <Setter Property="Margin" Value="0 0 8 4" />
             <Setter Property="BorderBrush" Value="#e5e5e5" />
-
+            <Setter Property="MinWidth" Value="330"/>
+            <Setter Property="MaxWidth" Value="400"/>
+            <Setter Property="Height" Value="98"/>
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -837,7 +839,7 @@
                     <TextBlock Text="Plugin Store" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
-                    <ListBox
+                    <ListBox x:Name="StoreListBox"
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource StoreList}"
@@ -845,13 +847,16 @@
                              Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel ItemHeight="100" ItemWidth="390" Margin="0"/>
+                                <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 12 18" VerticalAlignment="Top" />
                             </ItemsPanelTemplate>
+                            
+                            
+                            
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <!-- Hover Layout Style-->
-                                <Border x:Name="HoverArea" Padding="0" MinWidth="390" BorderBrush="Black" BorderThickness="0" Background="Transparent" >
+                                <Border Padding="0" BorderBrush="Black" BorderThickness="0" Background="Transparent" >
                                     <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="72"/>
@@ -887,12 +892,12 @@
                                             <TextBlock Text="{Binding PluginPair.Metadata.Name}"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 20 0"
                                                            ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                            <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="0 2 0 0" Padding="0 0 20 0">
+                                            <TextBlock Opacity="0.5" TextWrapping="WrapWithOverflow" Margin="0 2 0 0" Padding="0 0 20 0">
                                                     <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12" />
                                             </TextBlock>
 
-                                        </StackPanel>
-                                        <StackPanel  Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch">
+                                        </StackPanel >
+                                        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                             <StackPanel.Style>
                                                 <Style>
                                                     <Setter Property="StackPanel.Visibility" Value="Collapsed"></Setter>
@@ -905,16 +910,15 @@
                                             </StackPanel.Style>
 
 
-                                            <Grid Width="390" Height="94" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1">
+                                            <Grid Height="98" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1" Width="auto">
                                                 <Grid.Background>
                                                     <SolidColorBrush Color="#f6f6f6" Opacity=".95"/>
                                                 </Grid.Background>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="150" />
+                                                    <ColumnDefinition Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
                                                 </Grid.ColumnDefinitions>
                                                 
-                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                                                     <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="{Binding PluginPair.Metadata.Name}" FontWeight="Bold"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 0 0" Margin="20 0 0 0"
@@ -928,7 +932,7 @@
                                                     </TextBlock>
                                                 </StackPanel>
 
-                                                <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="90" MinHeight="40" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+                                                <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="90" MinHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0 0 20 0">
                                                 </Button>
                                             </Grid>
                                         </StackPanel>
