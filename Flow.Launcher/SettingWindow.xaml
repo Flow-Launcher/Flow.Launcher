@@ -820,10 +820,20 @@
                                                             <TextBlock Text="{Binding PluginPair.Metadata.Version}" Foreground="#8F8F8F"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100"
                                                                        VerticalAlignment="Center" />
+
+                                                            <TextBlock
+                                                                   MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
+                                                                   HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center">
+                                                                  <Hyperlink NavigateUri="{Binding PluginPair.Metadata.Website}"
+                                                                        RequestNavigate="OnRequestNavigate" Foreground="#8F8F8F">
+                                                                       <Run Text="Website" />
+                                                                </Hyperlink>
+                                                            </TextBlock>
+
                                                             <TextBlock Text="{DynamicResource pluginDirectory}"
                                                                    MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
-                                                                   MouseUp="OnPluginDirecotyClick" Foreground="Blue"
-                                                                   HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center"/>
+                                                                   MouseUp="OnPluginDirecotyClick" Foreground="#8f8f8f"
+                                                                   HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center" TextDecorations="Underline"/>
                                                         </StackPanel>
 
                                                     </ItemsControl>
