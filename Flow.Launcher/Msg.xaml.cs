@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -9,8 +9,12 @@ using System.Windows.Media;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
-using Notification.Wpf;
-using Notification.Wpf.Converters;
+/*using Notification.Wpf;
+using Notification.Wpf.Converters;*/
+using Windows.UI;
+using Windows.Data;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 
 namespace Flow.Launcher
 {
@@ -25,7 +29,7 @@ namespace Flow.Launcher
 
         public void Show(string title, string subTitle, string iconPath)
         {
-            var notificationManager = new NotificationManager();
+            
 
             tbTitle.Text = title;
             tbSubTitle.Text = subTitle;
@@ -40,6 +44,23 @@ namespace Flow.Launcher
             else {
                 imgIco.Source = ImageLoader.Load(iconPath);
             }
+            
+            /* Using Windows Notification System */ 
+            var ToastTitle = title;
+            var ToastsubTitle = subTitle;
+            var Icon = imgIco.Source;
+            var xml = $"<?xml version=\"1.0\"?><toast><visual><binding template=\"ToastImageAndText04\"><image id=\"1\" src=\"{Icon}\" alt=\"meziantou\"/><text id=\"1\">{ToastTitle}</text>" +
+                $"<text id=\"2\">{ToastsubTitle}</text></binding></visual></toast>";
+            var toastXml = new XmlDocument();
+            toastXml.LoadXml(xml);
+            var toast = new ToastNotification(toastXml);
+            ToastNotificationManager.CreateToastNotifier("Flow Launcher").Show(toast);
+
+
+
+            /* Using Notification.wpf  */
+            /*
+            var notificationManager = new NotificationManager();
 
             var content = new NotificationContent
             {
@@ -52,8 +73,10 @@ namespace Flow.Launcher
                 Foreground = new SolidColorBrush(Colors.White),
                 Icon = imgIco.Source
             };
+            
            
             notificationManager.Show(content);
+            */
         }
 
     }
