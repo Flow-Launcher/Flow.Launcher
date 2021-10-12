@@ -156,7 +156,15 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    MainWindowVisibility = Visibility.Collapsed;
+
+
+                    Application.Current.MainWindow.Opacity = 0;
+
+                    var overlayTask = Task.Delay(30).ContinueWith(_ => {
+                        MainWindowVisibility = Visibility.Collapsed;
+                    }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+
+
                 }
             });
 
@@ -664,11 +672,27 @@ namespace Flow.Launcher.ViewModel
         {
             if (MainWindowVisibility != Visibility.Visible)
             {
+               
                 MainWindowVisibility = Visibility.Visible;
             }
             else
             {
+                
                 MainWindowVisibility = Visibility.Collapsed;
+            }
+        }
+
+        internal void ToggleFlowLauncherOpacity()
+        {
+            if (MainWindowVisibility != Visibility.Visible)
+            {
+
+                Application.Current.MainWindow.Opacity = 1;
+            }
+            else
+            {
+
+                Application.Current.MainWindow.Opacity = 0;
             }
         }
 
