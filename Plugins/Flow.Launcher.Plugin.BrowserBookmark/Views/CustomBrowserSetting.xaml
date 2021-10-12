@@ -31,8 +31,8 @@
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DataDirectoryPath}"
                    HorizontalAlignment="Left" VerticalAlignment="Center" Width="200" Height="30" Margin="50 0 0 0"/>
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal" Grid.Column="1" Height="70">
-            <Button Content="Confirm" Margin="15" Click="ConfirmEditCustomBrowser"/>
-            <Button Content="Cancel" Margin="15"/>
+            <Button Name="btnConfirm" Content="Confirm" Margin="15" Click="ConfirmCancelEditCustomBrowser"/>
+            <Button Content="Cancel" Margin="15" Click="ConfirmCancelEditCustomBrowser"/>
         </StackPanel>
     </Grid>
 </Window>
