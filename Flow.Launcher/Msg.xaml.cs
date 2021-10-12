@@ -9,8 +9,6 @@ using System.Windows.Media;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
-/*using Notification.Wpf;
-using Notification.Wpf.Converters;*/
 using Windows.UI;
 using Windows.Data;
 using Windows.Data.Xml.Dom;
@@ -56,27 +54,6 @@ namespace Flow.Launcher
             var toast = new ToastNotification(toastXml);
             ToastNotificationManager.CreateToastNotifier("Flow Launcher").Show(toast);
 
-
-
-            /* Using Notification.wpf  */
-            /*
-            var notificationManager = new NotificationManager();
-
-            var content = new NotificationContent
-            {
-                Title = title,
-                Message = subTitle,
-                Type = NotificationType.Notification,
-                CloseOnClick = true, // Set true if u want close message when left mouse button click on message (base = true)
-
-                Background = new SolidColorBrush(Colors.Black),
-                Foreground = new SolidColorBrush(Colors.White),
-                Icon = imgIco.Source
-            };
-            
-           
-            notificationManager.Show(content);
-            */
         }
 
     }
