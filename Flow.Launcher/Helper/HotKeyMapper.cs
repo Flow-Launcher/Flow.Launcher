@@ -60,8 +60,8 @@ namespace Flow.Launcher.Helper
             if (!ShouldIgnoreHotkeys())
             {
                 UpdateLastQUeryMode();
-                
-                var overlayTask = Task.Delay(20).ContinueWith(_ => {
+                mainViewModel.ToggleFlowLauncherOpacity();
+                var overlayTask = Task.Delay(30).ContinueWith(_ => {
                     mainViewModel.ToggleFlowLauncher();
                 }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
                 e.Handled = true;
