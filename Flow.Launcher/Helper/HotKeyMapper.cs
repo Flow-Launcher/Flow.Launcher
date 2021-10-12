@@ -6,6 +6,8 @@ using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
 using System.Windows;
 using Flow.Launcher.ViewModel;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Flow.Launcher.Helper
 {
@@ -58,8 +60,10 @@ namespace Flow.Launcher.Helper
             if (!ShouldIgnoreHotkeys())
             {
                 UpdateLastQUeryMode();
-
-                mainViewModel.ToggleFlowLauncher();
+                
+                var overlayTask = Task.Delay(20).ContinueWith(_ => {
+                    mainViewModel.ToggleFlowLauncher();
+                }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
                 e.Handled = true;
             }
         }
@@ -77,7 +81,7 @@ namespace Flow.Launcher.Helper
             switch(settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
-                    mainViewModel.ChangeQueryText(string.Empty);
+                    mainViewModel.ChangeQueryText("");
                     break;
                 case LastQueryMode.Preserved:
                     mainViewModel.LastQuerySelected = true;
