@@ -17,6 +17,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom" >Načítať prehliadač z:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Názov prehliadača</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookDataDirectory">Umiestnenie priečinka Data</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Pridať vlastnú záložku prehliadača</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Odstrániť vlastnú záložku prehliadača</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Pridať</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Odstrániť</system:String>
 </ResourceDictionary>
