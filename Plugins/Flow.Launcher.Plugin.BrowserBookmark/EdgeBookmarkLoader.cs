@@ -10,22 +10,17 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class EdgeBookmarkLoader : ChromiumBookmarkLoader
     {
-
-        private readonly List<Bookmark> _bookmarks = new();
-
-        private void LoadEdgeBookmarks()
+        private List<Bookmark> LoadEdgeBookmarks()
         {
+            var bookmarks = new List<Bookmark>();
             var platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            LoadBookmarks(Path.Combine(platformPath, @"Microsoft\Edge\User Data"), "Microsoft Edge");
-            LoadBookmarks(Path.Combine(platformPath, @"Microsoft\Edge Dev\User Data"), "Microsoft Edge Dev");
-            LoadBookmarks(Path.Combine(platformPath, @"Microsoft\Edge SxS\User Data"), "Microsoft Edge Canary");
+            bookmarks.AddRange(LoadBookmarks(Path.Combine(platformPath, @"Microsoft\Edge\User Data"), "Microsoft Edge"));
+            bookmarks.AddRange(LoadBookmarks(Path.Combine(platformPath, @"Microsoft\Edge Dev\User Data"), "Microsoft Edge Dev"));
+            bookmarks.AddRange(LoadBookmarks(Path.Combine(platformPath, @"Microsoft\Edge SxS\User Data"), "Microsoft Edge Canary"));
+
+            return bookmarks;
         }
         
-        public override List<Bookmark> GetBookmarks()
-        {
-            _bookmarks.Clear();
-            LoadEdgeBookmarks();
-            return _bookmarks;
-        }
+        public override List<Bookmark> GetBookmarks() => LoadEdgeBookmarks();
     }
 }
