@@ -31,8 +31,10 @@ Flow Launcher version: (Settings => About)
 
 ## Flow Launcher Error Log
 
+<details>
 <!-- 
      The latest log file can be found here: %AppData%\FlowLauncher\Logs\<version>\<date>.txt
      or for portable mode: %LocalAppData%\FlowLauncher\<App-Version>\UserData\Logs\<version>\<date>.txt
      Drag and drop the log file below this comment.
 -->
+</details>
