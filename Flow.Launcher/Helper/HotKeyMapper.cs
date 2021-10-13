@@ -60,12 +60,13 @@ namespace Flow.Launcher.Helper
             if (!ShouldIgnoreHotkeys())
             {
                 UpdateLastQUeryMode();
-                var overlayTask = Task.Delay(30).ContinueWith(_ => {
+                var overlayTask = Task.Delay(50).ContinueWith(_ => {
                     mainViewModel.ToggleFlowLauncher();
                 });
                 e.Handled = true;
             }
         }
+
 
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys

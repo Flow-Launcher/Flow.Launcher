@@ -177,7 +177,7 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     UpdateLastQUeryMode();
-                    var overlayTask = Task.Delay(30).ContinueWith(_ => {
+                    var overlayTask = Task.Delay(50).ContinueWith(_ => {
                         MainWindowVisibility = Visibility.Collapsed;
                     });
                 }
@@ -691,7 +691,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                MainWindowVisibility = Visibility.Collapsed;
+                MainWindowVisibility = Visibility.Collapsed;   
             }
         }
 
