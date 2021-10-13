@@ -6,11 +6,11 @@ labels: 'bug'
 assignees: ''
 ---
 
-**Describe the bug/issue**
+## Describe the bug/issue
 
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+## To Reproduce
 
 Steps to reproduce the behavior:
 
@@ -18,18 +18,18 @@ Steps to reproduce the behavior:
 2. ...
 3. ...
 
-**Screenshots**
+## Screenshots
 
 If applicable, add screenshots to help explain your problem.
 
-**Your System**
+## Your System
 
 ```
 Windows build number: (run "ver" at a command prompt)
 Flow Launcher version: (Settings => About) 
 ```
 
-**Flow Launcher Error Log**
+## Flow Launcher Error Log
 
 <!-- 
      The latest log file can be found here: %AppData%\FlowLauncher\Logs\<version>\<date>.txt
