@@ -1,7 +1,7 @@
 ---
 name: "\U0001F41E Bug report"
 about: Create a bug report to help us improve Flow Launcher
-title: "[Describe Your Bug]"
+title: "BUG: "
 labels: 'bug'
 assignees: ''
 ---
