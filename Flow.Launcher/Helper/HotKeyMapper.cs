@@ -63,7 +63,7 @@ namespace Flow.Launcher.Helper
                 mainViewModel.ToggleFlowLauncherOpacity();
                 var overlayTask = Task.Delay(30).ContinueWith(_ => {
                     mainViewModel.ToggleFlowLauncher();
-                }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+                });
                 e.Handled = true;
             }
         }
@@ -81,7 +81,7 @@ namespace Flow.Launcher.Helper
             switch(settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
-                    mainViewModel.ChangeQueryText("");
+                    mainViewModel.ChangeQueryText(string.Empty);
                     break;
                 case LastQueryMode.Preserved:
                     mainViewModel.LastQuerySelected = true;
