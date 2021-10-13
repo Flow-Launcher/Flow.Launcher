@@ -10,7 +10,7 @@ assignees: ''
 
 - [ ] I have checked that this issue has not already been reported.
 
-## Describe the bug/issue
+## Problem Description
 
 A clear and concise description of what the bug is.
 
@@ -33,7 +33,7 @@ Windows build number: (run "ver" at a command prompt)
 Flow Launcher version: (Settings => About) 
 ```
 
-## Flow Launcher Error Log
+## Error Log
 
 <!--
      The latest log file can be found here: %AppData%\FlowLauncher\Logs\<version>\<date>.txt
