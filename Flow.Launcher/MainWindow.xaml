@@ -28,6 +28,22 @@
         PreviewKeyDown="OnKeyDown"
         Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         d:DataContext="{d:DesignInstance vm:MainViewModel}">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.5">
+       
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetProperty="Top" From="530" To="500" Duration="0:0:.5">
+                        <DoubleAnimation.EasingFunction>
+                            <QuarticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>    
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>

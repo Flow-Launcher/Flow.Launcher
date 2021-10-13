@@ -14,7 +14,6 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
@@ -163,7 +162,7 @@ namespace Flow.Launcher.ViewModel
 
                     var overlayTask = Task.Delay(30).ContinueWith(_ => {
                         MainWindowVisibility = Visibility.Collapsed;
-                    }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+                    });
 
 
                 }
