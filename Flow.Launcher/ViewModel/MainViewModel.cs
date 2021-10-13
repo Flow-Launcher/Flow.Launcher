@@ -50,6 +50,8 @@ namespace Flow.Launcher.ViewModel
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
+
+
         #endregion
 
         #region Constructor
@@ -145,6 +147,24 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private void UpdateLastQUeryMode()
+        {
+            switch (_settings.LastQueryMode)
+            {
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    break;
+                case LastQueryMode.Preserved:
+                    LastQuerySelected = true;
+                    break;
+                case LastQueryMode.Selected:
+                    LastQuerySelected = false;
+                    break;
+                default:
+                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+
+            }
+        }
 
         private void InitializeKeyCommands()
         {
@@ -156,15 +176,10 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-
-
-                    Application.Current.MainWindow.Opacity = 0;
-
+                    UpdateLastQUeryMode();
                     var overlayTask = Task.Delay(30).ContinueWith(_ => {
                         MainWindowVisibility = Visibility.Collapsed;
                     });
-
-
                 }
             });
 
@@ -672,27 +687,11 @@ namespace Flow.Launcher.ViewModel
         {
             if (MainWindowVisibility != Visibility.Visible)
             {
-               
                 MainWindowVisibility = Visibility.Visible;
             }
             else
             {
-                
                 MainWindowVisibility = Visibility.Collapsed;
-            }
-        }
-
-        internal void ToggleFlowLauncherOpacity()
-        {
-            if (MainWindowVisibility != Visibility.Visible)
-            {
-
-                Application.Current.MainWindow.Opacity = 1;
-            }
-            else
-            {
-
-                Application.Current.MainWindow.Opacity = 0;
             }
         }
 
