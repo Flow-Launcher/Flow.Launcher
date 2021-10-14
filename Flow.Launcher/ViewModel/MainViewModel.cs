@@ -732,6 +732,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
         #endregion
 
         public void OnHotkey()
