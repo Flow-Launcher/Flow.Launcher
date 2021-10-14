@@ -21,6 +21,8 @@ using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.Windows.Threading;
+using NHotkey;
+
 
 namespace Flow.Launcher.ViewModel
 {
@@ -368,7 +370,6 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Visibility ProgressBarVisibility { get; set; }
-
         public Visibility MainWindowVisibility { get; set; }
 
         public ICommand EscCommand { get; set; }
@@ -735,7 +736,7 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
-        public void OnHotkey()
+        public void OnHotkey(object sender, HotkeyEventArgs e)
         {
             if (!ShouldIgnoreHotkeys())
             {
@@ -765,7 +766,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
-        private bool ShouldIgnoreHotkeys()
+       public bool ShouldIgnoreHotkeys()
         {
             return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
         }
