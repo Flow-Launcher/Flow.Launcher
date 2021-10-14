@@ -732,6 +732,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void Hide()
+        {
+            if (MainWindowVisibility != Visibility.Collapsed)
+            {
+                ToggleFlowLauncher();
+            }
+        }
+
         #endregion
 
         public void OnHotkey()
