@@ -23,6 +23,7 @@ namespace Flow.Launcher
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
+        private static MainViewModel mainViewModel;
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
@@ -126,7 +127,7 @@ namespace Flow.Launcher
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
 
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnHotkey);
+                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, mainViewModel.OnHotkey);
                 HotKeyMapper.RemoveHotkey(settings.Hotkey);
                 settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
             }
