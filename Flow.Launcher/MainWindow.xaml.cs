@@ -357,5 +357,21 @@ namespace Flow.Launcher
         {
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.SystemKey == Key.RightAlt)
+            {
+                QuickView();
+                // e.Handled = true; You need to evaluate if you really want to mark this key as handled!
+            }
+
+            base.OnKeyDown(e);
+        }
+
+        public void QuickView()
+        {
+            QueryTextBox.Text = "hello";
+        }
     }
 }
