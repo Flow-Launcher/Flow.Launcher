@@ -34,7 +34,6 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
-        <KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Command="{Binding SelectNextItemCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding SelectPrevItemCommand}"></KeyBinding>
@@ -108,7 +107,18 @@
                   Y1="0" Y2="0" X1="-150" X2="-50" Height="2" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" StrokeThickness="1">
                     </Line>
                 </Grid>
-
+                <Border Height="200" Visibility="Collapsed" x:Name="QuickPreview">
+                    <StackPanel>
+                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
+                            <Grid>
+                                <TextBox x:Name="PreviewTitle" Text=""></TextBox>
+                                <TextBox x:Name="SubTitle" Text=""></TextBox>
+                                <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0" Stretch="UniformToFill"/>
+                            </Grid>
+                        </Border>
+                        <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" />
+                    </StackPanel>
+                </Border>
                 <Border Style="{DynamicResource WindowRadius}">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -134,16 +144,16 @@
                       </ContentControl>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
-                <Border.Clip>
+                    <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
                             <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
                             <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
                         </MultiBinding>
-                </Border.Clip>
-                        <ContentControl>
+                    </Border.Clip>
+                    <ContentControl>
                         <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
-                         </ContentControl>
+                    </ContentControl>
                 </Border>
             </StackPanel>
         </Border>

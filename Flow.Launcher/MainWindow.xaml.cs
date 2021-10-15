@@ -19,6 +19,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using System.Globalization;
 
 namespace Flow.Launcher
 {
@@ -33,6 +34,8 @@ namespace Flow.Launcher
         private MainViewModel _viewModel;
 
         #endregion
+
+        
 
         public MainWindow(Settings settings, MainViewModel mainVM)
         {
@@ -347,6 +350,10 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.F1:
+                    QuickPreviewToggle();
+                    e.Handled = true;
+                    break;
                 default:
                     break;
 
@@ -358,20 +365,22 @@ namespace Flow.Launcher
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
+        public void QuickPreviewToggle()
         {
-            if (e.SystemKey == Key.RightAlt)
-            {
-                QuickView();
-                // e.Handled = true; You need to evaluate if you really want to mark this key as handled!
+
+            if (QuickPreview.Visibility == Visibility.Collapsed)
+            { 
+                QuickPreview.Visibility = Visibility.Visible;
+                System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                var Selected = ResultListBox.SelectedItem;
+                System.Diagnostics.Debug.WriteLine(Selected);
             }
-
-            base.OnKeyDown(e);
+            else
+            {
+                QuickPreview.Visibility = Visibility.Collapsed;
+                System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~ Hide ~~~~~~~~~~~~~~~~");
+            }
         }
 
-        public void QuickView()
-        {
-            QueryTextBox.Text = "hello";
-        }
     }
 }
