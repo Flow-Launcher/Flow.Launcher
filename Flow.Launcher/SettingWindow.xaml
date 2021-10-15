@@ -871,15 +871,19 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="72"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Background="#f3f3f3" Padding="5 18 0 0">
+                <Border Grid.Row="0" Grid.Column="0" Background="#f3f3f3" Padding="5 18 0 0">
                     <TextBlock Text="Plugin Store" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
-                <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
+                <Border Grid.Row="0" Grid.Column="1" Background="#f3f3f3" Padding="5 18 32 0">
+                    <Button Content="Refresh" FontSize="13" Margin="0 5 0 5" HorizontalAlignment="Right" Background="#ffffff" Padding="12 4 12 4" Height="34" BorderBrush="#cecece" BorderThickness="1 1 1 2"/>
+                </Border>
+                <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
                     <ListBox x:Name="StoreListBox"
                              ItemsSource="{Binding ExternalPlugins}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
