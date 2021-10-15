@@ -968,9 +968,14 @@
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 20 0" Margin="10 0 0 0"
                                                            ToolTip="{Binding Version}" />
                                                     </StackPanel>
-                                                    <TextBlock Opacity="0.5" TextWrapping="Wrap" Margin="20 2 100 0" Padding="0 0 20 0" >
-                                                    <Run Text="{Binding Author}" FontSize="12" />
-                                                    </TextBlock>
+                                                    <StackPanel Orientation="Vertical" Margin="20 2 120 0">
+                                                        <TextBlock TextWrapping="Wrap"  Padding="0 0 0 0" >
+                                                            <Hyperlink NavigateUri="{Binding PluginPair.Metadata.Website}"
+                                                                        RequestNavigate="OnRequestNavigate" Foreground="#5F5F5F">
+                                                                <Run Text="{Binding Author}" FontSize="12" />
+                                                            </Hyperlink>
+                                                        </TextBlock>
+                                                    </StackPanel>
                                                 </StackPanel>
 
                                                 <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="90" MinHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0 0 20 0">
