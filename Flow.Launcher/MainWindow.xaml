@@ -107,17 +107,24 @@
                   Y1="0" Y2="0" X1="-150" X2="-50" Height="2" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" StrokeThickness="1">
                     </Line>
                 </Grid>
-                <Border Height="200" Visibility="Collapsed" x:Name="QuickPreview">
-                    <StackPanel>
-                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
+                <Border Height="200" Visibility="Collapsed" x:Name="QuickPreview" BorderThickness="0 0 0 0" BorderBrush="#cecece" Margin="0 0 0 0">
+                    <DockPanel>
+                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="16 0 16 0" VerticalAlignment="Stretch" DockPanel.Dock="Top">
                             <Grid>
-                                <TextBox x:Name="PreviewTitle" Text=""></TextBox>
-                                <TextBox x:Name="SubTitle" Text=""></TextBox>
-                                <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0" Stretch="UniformToFill"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="120"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="18"/>
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" x:Name="ImageIcon" Width="72" Height="72" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0" Stretch="UniformToFill"/>
+                                <TextBlock Grid.Row="1" x:Name="Title" FontSize="20" FontWeight="Bold" Style="{DynamicResource ItemTitleStyle}">
+                                </TextBlock>
+                                <TextBlock Grid.Row="2" x:Name="PreviewSubTitle" Text="Path" FontSize="16" Style="{DynamicResource ItemSubTitleStyle}"></TextBlock>
                             </Grid>
                         </Border>
-                        <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" />
-                    </StackPanel>
+                        <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource QuickViewSeparatorStyle}" />
+                    </DockPanel>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
                     <Border.Clip>

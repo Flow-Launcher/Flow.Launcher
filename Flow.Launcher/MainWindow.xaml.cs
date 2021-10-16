@@ -371,14 +371,16 @@ namespace Flow.Launcher
             if (QuickPreview.Visibility == Visibility.Collapsed)
             { 
                 QuickPreview.Visibility = Visibility.Visible;
-                System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                var Selected = ResultListBox.SelectedItem;
-                System.Diagnostics.Debug.WriteLine(Selected);
+                //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+               // string text = ResultListBox.GetItemText(ResultListBox.SelectedItem);
+               //var Selected = ResultListBox.SelectedItem;
+                //System.Diagnostics.Debug.WriteLine(Selected);
+                //PreviewTitle.Text = Selected.ToString
             }
             else
             {
                 QuickPreview.Visibility = Visibility.Collapsed;
-                System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~ Hide ~~~~~~~~~~~~~~~~");
+                //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~ Hide ~~~~~~~~~~~~~~~~");
             }
         }
 
