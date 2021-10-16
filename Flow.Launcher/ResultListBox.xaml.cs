@@ -24,8 +24,9 @@ namespace Flow.Launcher
             {
                 ScrollIntoView(e.AddedItems[0]);
             }
-
-
+            //string text = ((sender as ListBox)?.SelectedItem as ListBoxItem).ToString();
+            //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //System.Diagnostics.Debug.WriteLine(text);
 
         }
 
