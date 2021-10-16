@@ -884,24 +884,40 @@
                     <Button Content="Refresh" FontSize="13" Margin="0 5 0 5" HorizontalAlignment="Right" Background="#ffffff" Padding="12 4 12 4" Height="34" BorderBrush="#cecece" BorderThickness="1 1 1 2"/>
                 </Border>
                 <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
-                    <ListBox x:Name="StoreListBox"
+                    <ListBox  x:Name="StoreListBox"
                              ItemsSource="{Binding ExternalPlugins}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             ItemContainerStyle="{StaticResource StoreList}"
+                             ItemContainerStyle="{StaticResource StoreList}" SelectionMode="Single"
                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
                              Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 6 18" VerticalAlignment="Top" SnapsToDevicePixels="True"/>
                             </ItemsPanelTemplate>
-                            
-                            
-                            
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <!-- Hover Layout Style-->
-                                <Border Padding="0" BorderBrush="Black" BorderThickness="0" Background="Transparent" >
+
+                                <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Background="Transparent" 
+                                                  Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" 
+                                                  HorizontalAlignment="Left" HorizontalContentAlignment="left">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            <ControlTemplate.Triggers>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="{x:Type ToggleButton}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+
                                     <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="72"/>
@@ -911,10 +927,10 @@
                                                         VerticalAlignment="Center" >
                                             <StackPanel.Style>
                                                 <Style>
-                                                    <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                            <Setter Property="StackPanel.Opacity" Value="1"></Setter>
+                                                            <Setter Property="StackPanel.Opacity" Value="1" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -926,10 +942,10 @@
                                         <StackPanel Grid.Column="1" Margin="0 0 8 0" VerticalAlignment="Center" Panel.ZIndex="0">
                                             <StackPanel.Style>
                                                 <Style>
-                                                    <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                            <Setter Property="StackPanel.Opacity" Value="1"></Setter>
+                                                            <Setter Property="StackPanel.Opacity" Value="1" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -945,17 +961,17 @@
                                         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                             <StackPanel.Style>
                                                 <Style>
-                                                    <Setter Property="StackPanel.Visibility" Value="Collapsed"></Setter>
+                                                    <Setter Property="StackPanel.Visibility" Value="Collapsed" />
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible"></Setter>
+                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
 
 
-                                            <Grid Height="98" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1" Width="auto">
+                                            <Grid Height="94" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1">
                                                 <Grid.Background>
                                                     <SolidColorBrush Color="#f6f6f6" Opacity=".95"/>
                                                 </Grid.Background>
@@ -974,24 +990,22 @@
                                                     </StackPanel>
                                                     <StackPanel Orientation="Vertical" Margin="20 2 120 0">
                                                         <TextBlock TextWrapping="Wrap"  Padding="0 0 0 0" >
-                                                            <Hyperlink NavigateUri="{Binding PluginPair.Metadata.Website}"
+                                                            <Hyperlink NavigateUri="{Binding Website}"
                                                                         RequestNavigate="OnRequestNavigate" Foreground="#5F5F5F">
                                                                 <Run Text="{Binding Author}" FontSize="12" />
                                                             </Hyperlink>
                                                         </TextBlock>
                                                     </StackPanel>
                                                 </StackPanel>
-
-                                                <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="90" MinHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0 0 20 0">
-                                                </Button>
+                                                <Border Padding="0 0 20 0">
+                                                    <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"  Width="90" MinHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0 0 0 0">
+                                                    </Button>
+                                                </Border>
                                             </Grid>
                                         </StackPanel>
                                     </Grid>
 
-
-                                </Border>
-
-
+                                </ToggleButton>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
