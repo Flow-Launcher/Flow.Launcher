@@ -284,7 +284,7 @@ namespace Flow.Launcher.ViewModel
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            msg.Show(
+                            Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
                                 "");
