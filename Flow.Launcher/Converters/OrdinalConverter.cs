@@ -8,11 +8,9 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ListBoxItem listBoxItem)
-            {
-                ListBox listBox = ItemsControl.ItemsControlFromItemContainer(listBoxItem) as ListBox;
+            if (value is ListBoxItem listBoxItem
+                && ItemsControl.ItemsControlFromItemContainer(listBoxItem) is ListBox listBox)
                 return listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem) + 1;
-            }
 
             return 0;
         }
