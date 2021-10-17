@@ -19,6 +19,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using System.Globalization;
 
 namespace Flow.Launcher
 {
@@ -33,6 +34,8 @@ namespace Flow.Launcher
         private MainViewModel _viewModel;
 
         #endregion
+
+        
 
         public MainWindow(Settings settings, MainViewModel mainVM)
         {
@@ -347,6 +350,10 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.F1:
+                    QuickPreviewToggle();
+                    e.Handled = true;
+                    break;
                 default:
                     break;
 
@@ -357,5 +364,25 @@ namespace Flow.Launcher
         {
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
+
+        public void QuickPreviewToggle()
+        {
+
+            if (QuickPreview.Visibility == Visibility.Collapsed)
+            { 
+                QuickPreview.Visibility = Visibility.Visible;
+                //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+               // string text = ResultListBox.GetItemText(ResultListBox.SelectedItem);
+               //var Selected = ResultListBox.SelectedItem;
+                //System.Diagnostics.Debug.WriteLine(Selected);
+                //PreviewTitle.Text = Selected.ToString
+            }
+            else
+            {
+                QuickPreview.Visibility = Visibility.Collapsed;
+                //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~ Hide ~~~~~~~~~~~~~~~~");
+            }
+        }
+
     }
 }

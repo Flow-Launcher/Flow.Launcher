@@ -6,20 +6,26 @@ namespace Flow.Launcher
 {
     public partial class ResultListBox
     {
+        public ICommand SelectionChangedCommand { get; set; }
+
         protected object _lock = new object();
         private Point _lastpos;
         private ListBoxItem curItem = null;
+
         public ResultListBox()
         {
             InitializeComponent();
         }
 
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+           
             if (e.AddedItems.Count > 0 && e.AddedItems[0] != null)
             {
                 ScrollIntoView(e.AddedItems[0]);
             }
+            
+
         }
 
         private void OnMouseEnter(object sender, MouseEventArgs e)

@@ -34,7 +34,6 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
-        <KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Command="{Binding SelectNextItemCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding SelectPrevItemCommand}"></KeyBinding>
@@ -108,7 +107,39 @@
                   Y1="0" Y2="0" X1="-150" X2="-50" Height="2" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" StrokeThickness="1">
                     </Line>
                 </Grid>
-
+                <Border MinHeight="230" Visibility="Collapsed" x:Name="QuickPreview" Margin="0 0 0 0" HorizontalAlignment="Left">
+                    
+                    <DockPanel DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch">
+                        <Border HorizontalAlignment="Stretch" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}},Path=ActualWidth}"  BorderThickness="0" BorderBrush="#000000" DockPanel.Dock="Bottom">
+                            <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource QuickViewSeparatorStyle}"/>
+                        </Border>
+                        <Border BorderThickness="0" BorderBrush="#000000" Margin="20 18 20 22" VerticalAlignment="Center" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+                            <Grid HorizontalAlignment="Stretch">
+                                <StackPanel HorizontalAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Row="0" Grid.Column="0" MaxHeight="200" Height="64" x:Name="ImageIcon" Width="64" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 8" Stretch="UniformToFill"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding Glyph.Glyph}" FontFamily="{Binding Glyph.FontFamily}" Visibility="{Binding ShowGlyph}" Style="{DynamicResource ItemGlyph}" FontSize="64" Width="64" Height="64" Margin="0 0 0 6"/>
+                                    
+                                    <TextBlock Grid.Row="1" x:Name="Title" Text="{Binding Result.Title}" FontSize="18" TextAlignment="Center" FontWeight="SemiBold" Style="{DynamicResource ItemTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch">
+                                    </TextBlock>
+                                        <TextBlock Grid.Row="2" x:Name="SubTitle" Text="{Binding Result.SubTitle}" TextAlignment="Center" FontSize="15" Style="{DynamicResource ItemSubTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0 4 0 0"></TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                            
+                        </Border>
+                        
+                    </DockPanel>
+                    
+                </Border>
                 <Border Style="{DynamicResource WindowRadius}">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -134,16 +165,16 @@
                       </ContentControl>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
-                <Border.Clip>
+                    <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
                             <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
                             <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
                         </MultiBinding>
-                </Border.Clip>
-                        <ContentControl>
+                    </Border.Clip>
+                    <ContentControl>
                         <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
-                         </ContentControl>
+                    </ContentControl>
                 </Border>
             </StackPanel>
         </Border>
