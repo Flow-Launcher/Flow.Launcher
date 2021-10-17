@@ -83,20 +83,37 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 else matchResult = nameMatch;
             }
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
-            {
-                if (ExecutableName != null) // only lnk program will need this one
-                    matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+            // if (!matchResult.IsSearchPrecisionScoreMet())
+            // {
+            //     if (ExecutableName != null) // only lnk program will need this one
+            //         matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+            //
+            //     if (!matchResult.IsSearchPrecisionScoreMet())
+            //         return null;
+            //
+            //     matchResult.MatchData = new List<int>();
+            // }
+            
+            
+            
+            
 
-                if (!matchResult.IsSearchPrecisionScoreMet())
-                    return null;
+            var newScore = FuzzySharp.Fuzz.PartialTokenSetRatio(query.ToLower(), Name.ToLower());
+            if (Name.Length < query.Length)
+                newScore = 0;
 
-                matchResult.MatchData = new List<int>();
-            }
+            var oldScore = matchResult.RawScore;
+            matchResult.RawScore = Math.Max(newScore, oldScore);
+            matchResult.RawScore *= 10; // Bypass the SearchPrecisionScore and related tests
+            matchResult.MatchData = new List<int>();
 
+
+            
+            
+            
             var result = new Result
             {
-                Title = title,
+                Title = title + $"<{matchResult.Score}> <{newScore}> <{oldScore}>",
                 SubTitle = LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
