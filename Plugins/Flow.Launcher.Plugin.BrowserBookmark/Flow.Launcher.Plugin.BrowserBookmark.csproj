@@ -69,4 +69,8 @@
     <PackageReference Include="UnidecodeSharp" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Bookmark.cs" />
+  </ItemGroup>
+
 </Project>

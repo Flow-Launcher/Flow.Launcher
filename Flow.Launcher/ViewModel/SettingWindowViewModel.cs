@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -47,7 +48,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void UpdateApp()
         {
-            await _updater.UpdateApp(App.API, false);
+            await _updater.UpdateAppAsync(App.API, false);
         }
 
         public bool AutoUpdates
@@ -263,6 +264,12 @@ namespace Flow.Launcher.ViewModel
                     return new Control();
                 }
             }
+        }
+
+        public async Task RefreshExternalPluginsAsync()
+        {
+            await PluginsManifest.UpdateManifestAsync();
+            OnPropertyChanged(nameof(ExternalPlugins));
         }
 
 

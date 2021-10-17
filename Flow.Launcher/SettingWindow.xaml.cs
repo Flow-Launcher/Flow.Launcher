@@ -14,6 +14,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Helper;
 using System.Windows.Controls;
+using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
@@ -262,6 +263,22 @@ namespace Flow.Launcher
         private void OpenPluginFolder(object sender, RoutedEventArgs e)
         {
             FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+        }
+
+        private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
+        {
+            _ = viewModel.RefreshExternalPluginsAsync();
+        }
+
+        private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button { DataContext: UserPlugin plugin })
+            {
+                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+                var actionKeywrod = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeywrod} install {plugin.Name}");
+                API.ShowMainWindow();
+            }
         }
 
         /*
