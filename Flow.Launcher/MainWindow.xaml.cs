@@ -190,7 +190,7 @@ namespace Flow.Launcher
             _notifyIcon.ContextMenuStrip = menu;
             _notifyIcon.MouseClick += (o, e) =>
             {
-                if (e.Button == MouseButtons.Left)
+                if (e.Button == MouseButtons.Right)
                 {
                     if (menu.Visible)
                     {
@@ -202,6 +202,7 @@ namespace Flow.Launcher
                         menu.Show(p);
                     }
                 }
+
             };
         }
 
