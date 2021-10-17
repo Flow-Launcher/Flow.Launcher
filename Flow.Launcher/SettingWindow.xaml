@@ -37,7 +37,6 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Margin" Value="0" />
@@ -188,6 +187,13 @@
             </Setter>
         </Style>
 
+        <!-- Plugin Store Item when Selected layout for nothing-->
+        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}">
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="#ffffff" />
@@ -911,14 +917,14 @@
 
                                 <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Background="Transparent" 
                                                   Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" 
-                                                  HorizontalAlignment="Left" HorizontalContentAlignment="left">
+                                                  HorizontalAlignment="Left" HorizontalContentAlignment="left" Style="{StaticResource StoreItem}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="{x:Type ButtonBase}">
                                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                             <ControlTemplate.Triggers/>
                                         </ControlTemplate>
                                     </ToggleButton.Template>
-
+                                    
                                     <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="72"/>
