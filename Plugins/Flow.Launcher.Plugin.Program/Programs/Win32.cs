@@ -97,7 +97,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var result = new Result
             {
                 Title = title,
-                SubTitle = LnkResolvedPath ?? FullPath,
+                //SubTitle = LnkResolvedPath ?? FullPath,
+                SubTitle = "",
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
