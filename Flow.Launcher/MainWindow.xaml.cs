@@ -263,7 +263,7 @@ namespace Flow.Launcher
         {
             if (_settings.HideWhenDeactive)
             {
-                Hide();
+                _viewModel.Hide();
             }
         }
 
