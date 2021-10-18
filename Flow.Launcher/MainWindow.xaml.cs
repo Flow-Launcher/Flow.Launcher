@@ -87,6 +87,7 @@ namespace Flow.Launcher
                                 QueryTextBox.Focus();
                                 UpdatePosition();
                                 _settings.ActivateTimes++;
+                                QuickPreview.Visibility = Visibility.Collapsed; //Preview area close when open
                                 if (!_viewModel.LastQuerySelected)
                                 {
                                     QueryTextBox.SelectAll();
