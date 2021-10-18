@@ -107,10 +107,10 @@
                   Y1="0" Y2="0" X1="-150" X2="-50" Height="2" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" StrokeThickness="1">
                     </Line>
                 </Grid>
-                <Border MinHeight="230" Visibility="Collapsed" x:Name="QuickPreview" Margin="0 0 0 0" HorizontalAlignment="Left">
+                <Border MinHeight="230" Visibility="Collapsed" x:Name="QuickPreview" Margin="0 0 0 0" HorizontalAlignment="Left"  BorderThickness="1" BorderBrush="#00000000">
                     
                     <DockPanel DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch">
-                        <Border HorizontalAlignment="Stretch" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}},Path=ActualWidth}"  BorderThickness="0" BorderBrush="#000000" DockPanel.Dock="Bottom">
+                        <Border HorizontalAlignment="Stretch" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Border}},Path=ActualWidth}"  DockPanel.Dock="Bottom">
                             <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource QuickViewSeparatorStyle}"/>
                         </Border>
                         <Border BorderThickness="0" BorderBrush="#000000" Margin="20 18 20 22" VerticalAlignment="Center" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
