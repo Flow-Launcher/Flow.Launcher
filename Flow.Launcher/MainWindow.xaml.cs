@@ -178,33 +178,35 @@ namespace Flow.Launcher
                 Visible = !_settings.HideNotifyIcon
             };
             var menu = new ContextMenuStrip();
-            var items = menu.Items;
-
-            var open = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayOpen"));
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem header = new MenuItem() { Header = "Flow Launcher", IsEnabled = false };
+            MenuItem open = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") };
+            MenuItem settings = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings") };
+            MenuItem exit = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit") };
             open.Click += (o, e) => Visibility = Visibility.Visible;
-            var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
-            setting.Click += (o, e) => App.API.OpenSettingDialog();
-            var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
+            settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
+            contextMenu.Items.Add(header);
+            contextMenu.Items.Add(open);
+            contextMenu.Items.Add(settings);
+            contextMenu.Items.Add(exit);
 
-            _notifyIcon.ContextMenuStrip = menu;
+            _notifyIcon.ContextMenuStrip = menu; /*it need for close the context menu. if not, context menu can't close. */
             _notifyIcon.MouseClick += (o, e) =>
             {
-                if (e.Button == MouseButtons.Right)
+                switch (e.Button)
                 {
-                    if (menu.Visible)
-                    {
-                        menu.Close();
-                    }
-                    else
-                    {
-                        var p = System.Windows.Forms.Cursor.Position;
-                        menu.Show(p);
-                    }
-                }
+                    case MouseButtons.Left:
+                        _viewModel.ToggleFlowLauncher();
+                        break;
 
+                    case MouseButtons.Right:
+                        contextMenu.IsOpen = true;
+                        break;
+                }
             };
         }
+
 
         private void InitProgressbarAnimation()
         {
