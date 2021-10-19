@@ -162,10 +162,6 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            //var header = menu.Items[0];
-            //var open = menu.Items[1];            
-            //var setting = menu.Items[2];
-            //var exit = menu.Items[3];
 
             var header = new MenuItem() { Header = "Flow Launcher", IsEnabled = false };
             var open = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") };
@@ -178,15 +174,6 @@ namespace Flow.Launcher
             open.Click += (o, e) => Visibility = Visibility.Visible;
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
-            //System.Diagnostics.Trace.WriteLine("~~~~~~~~~~~~~~~~~~");
-            //System.Diagnostics.Trace.WriteLine(menu);
-            //System.Diagnostics.Trace.WriteLine(open);
-
-            //contextMenu.Items.Remove(0, open);
-            //contextMenu.Items.Insert(0, open);
-            //open.Text = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
-            //setting.Text = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            //exit.Text = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -197,23 +184,8 @@ namespace Flow.Launcher
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
-            //_contextMenu = new ContextMenu();
             var menu = new ContextMenuStrip();
-            //ContextMenu contextMenu = new ContextMenu();
             contextMenu = new ContextMenu();
-            //var items = menu.Items;
-
-            //            var open = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayOpen"));
-            //open.Click += (o, e) => Visibility = Visibility.Visible;
-            //var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
-            //setting.Click += (o, e) => App.API.OpenSettingDialog();
-            //var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
-            //exit.Click += (o, e) => Close();
-
-            //            MenuItem header = new MenuItem() { Header = "Flow Launcher", IsEnabled = false };
-            //MenuItem open = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") };
-            //MenuItem settings = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings") };
-            //MenuItem exit = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit") };
 
             MenuItem header = new MenuItem() { Header = "Flow Launcher", IsEnabled = false };
             MenuItem open = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") };
@@ -227,12 +199,6 @@ namespace Flow.Launcher
             contextMenu.Items.Add(open);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
-            //var header = contextMenu.Items.Add(new MenuItem() { Header = "Flow Launcher", IsEnabled = false});
-            //var open = contextMenu.Items.Add(new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") });
-            //var setting = contextMenu.Items.Add(new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings") });
-            //var exit = contextMenu.Items.Add(new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit") });
-            
-            //open.Click += (o, e) => Visibility = _viewModel.ToggleFlowLauncher();
 
             _notifyIcon.ContextMenuStrip = menu; /*it need for close the context menu. if not, context menu can't close. */
             _notifyIcon.MouseClick += (o, e) =>
@@ -244,29 +210,10 @@ namespace Flow.Launcher
                         break;
 
                     case MouseButtons.Right:
-                        //      if (!this.UseWinFormsMenu.IsChecked.GetValueOrDefault())
-                        //     {
-                        //     this.TrayContextMenu.IsOpen = true;
-                        //   }
-                        //var p = System.Windows.Forms.Cursor.Position;
-                        //menu.Show(p);
                         contextMenu.IsOpen = true;
                         break;
                 }
             };
-            /*
-            {
-                if (e.Button == MouseButtons.Left)
-                {
-                    _viewModel.ToggleFlowLauncher();
-                }
-                else if (e.Button == MouseButtons.Right)
-                {
-                    var p = System.Windows.Forms.Cursor.Position;
-                    menu.Show(p);
-                }
-
-            };*/
         }
 
 
