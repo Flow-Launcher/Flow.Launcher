@@ -21,8 +21,13 @@ namespace Flow.Launcher.Helper
             mainViewModel = mainVM;
             settings = mainViewModel._settings;
 
-            SetHotkey(settings.Hotkey, mainViewModel.OnHotkey);
+            SetHotkey(settings.Hotkey, OnToggleHotkey);
             LoadCustomPluginHotkey();
+        }
+
+        internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        {
+            mainViewModel.ToggleFlowLauncher();
         }
 
         private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
