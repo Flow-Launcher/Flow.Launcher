@@ -10,7 +10,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class Settings : BaseModel
     {
         private string language = "en";
-
+        private int maxresult = 5;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public bool ShowOpenResultHotkey { get; set; } = true;
@@ -73,7 +73,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
-        public int MaxResultsToShow { get; set; } = 5;
+        public int MaxResultsToShow
+        {
+            get => maxresult; set
+            {
+                maxresult = value;
+                OnPropertyChanged();
+            }
+        }
         public int ActivateTimes { get; set; }
 
 
