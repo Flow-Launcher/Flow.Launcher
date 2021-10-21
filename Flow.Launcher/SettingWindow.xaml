@@ -478,6 +478,8 @@
                             <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock Text="{DynamicResource ignoreHotkeysOnFullscreen}"
                                            Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource ignoreHotkeysOnFullscreenToolTip}"
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
                             </StackPanel>
                             <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}"
                                       Style="{DynamicResource SideControlCheckBox}" />
@@ -526,6 +528,8 @@
                             <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock Text="{DynamicResource portableMode}"
                                            Style="{DynamicResource SettingTitleLabel}" />
+                                <TextBlock Text="{DynamicResource portableModeToolTIp}"
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
                             </StackPanel>
                             <ui:ToggleSwitch IsOn="{Binding PortableMode}" FocusVisualMargin="5"
                                              Style="{DynamicResource SideControlToggle}" Width="100" />
@@ -540,8 +544,12 @@
                         <StackPanel Orientation="Vertical">
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource querySearchPrecision}"
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource querySearchPrecision}"
                                                VerticalAlignment="Center" />
+                                        <TextBlock Text="{DynamicResource querySearchPrecisionToolTip}"
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
+                                    </StackPanel>
                                     <ComboBox Margin="10 0 18 0" MaxWidth="200"
                                               ItemsSource="{Binding QuerySearchPrecisionStrings}"
                                               SelectedItem="{Binding Settings.QuerySearchPrecisionString}"
@@ -551,8 +559,12 @@
                             <Separator BorderBrush="#e5e5e5" BorderThickness="1" Width="Auto" />
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource lastQueryMode}"
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource lastQueryMode}"
                                                VerticalAlignment="Center" />
+                                        <TextBlock Text="{DynamicResource lastQueryModeToolTip}"
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
+                                    </StackPanel>
                                     <ComboBox Margin="10 0 18 0" MaxWidth="200"
                                               ItemsSource="{Binding LastQueryModes}"
                                               SelectedValue="{Binding Settings.LastQueryMode}"
@@ -651,7 +663,7 @@
                              Margin="5, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
-                             Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True">
+                             Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Margin="0,0,0,18"/>
@@ -871,7 +883,7 @@
                                Margin="0 0 12 0">
                         &#xe719;
                     </TextBlock>
-                    <TextBlock Grid.Column="1" Text="Plugin Store" />
+                    <TextBlock Grid.Column="1" Text="{DynamicResource pluginStore}" />
                 </Grid>
             </TabItem.Header>
 
@@ -885,10 +897,10 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Grid.Column="0" Background="#f3f3f3" Padding="5 18 0 0">
-                    <TextBlock Text="Plugin Store" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
+                    <TextBlock Text="{DynamicResource pluginStore}" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1" Background="#f3f3f3" Padding="5 18 32 0">
-                    <Button Content="Refresh" 
+                    <Button Content="{DynamicResource refresh}" 
                             FontSize="13" 
                             Margin="0 5 0 5" 
                             HorizontalAlignment="Right" 
@@ -905,7 +917,7 @@
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource StoreList}" SelectionMode="Single"
                              ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
-                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
+                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 6 18" VerticalAlignment="Top" SnapsToDevicePixels="True"/>
@@ -1005,7 +1017,7 @@
                                                     </StackPanel>
                                                 </StackPanel>
                                                 <Border Padding="0 0 20 0">
-                                                    <Button Foreground="Black" Name="ShortCutButtonPrev" Content="Install"
+                                                    <Button Foreground="Black" Name="ShortCutButtonPrev" Content="{DynamicResource install}"
                                                            Click="OnExternalPluginInstallClick"
                                                             Width="90" MinHeight="40" HorizontalAlignment="Right"
                                                             VerticalAlignment="Center" Grid.Column="1" Margin="0 0 0 0">
@@ -1282,12 +1294,11 @@
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
-                                            <TextBlock Text="Theme Folder" Style="{DynamicResource SettingTitleLabel}" />
+                                            <TextBlock Text="{DynamicResource ThemeFolder}" Style="{DynamicResource SettingTitleLabel}" />
                                         </StackPanel>
                                         <Button DockPanel.Dock="Top" Margin="0,0,18,0" Width="180"
                                                 HorizontalAlignment="Center"
-                                                Click="OpenPluginFolder" Grid.Column="2">
-                                            Open Theme Folder
+                                                Click="OpenPluginFolder" Grid.Column="2" Content="{DynamicResource OpenThemeFolder}">
                                         </Button>
                                         <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
                                                    Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
@@ -1339,7 +1350,7 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Text="{DynamicResource flowlauncherHotkey}"
                                                    Style="{DynamicResource SettingTitleLabel}" />
-                                        <TextBlock Text="Choose what you want"
+                                        <TextBlock Text="{DynamicResource flowlauncherHotkeyToolTip}"
                                                    Style="{DynamicResource SettingSubTitleLabel}" />
                                     </StackPanel>
                                     <flowlauncher:HotkeyControl x:Name="HotkeyControl" HotkeyChanged="OnHotkeyChanged"
@@ -1361,9 +1372,13 @@
                             <StackPanel Orientation="Vertical">
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Grid.Column="1" Text="{DynamicResource openResultModifiers}"
                                                    VerticalAlignment="Center" />
-                                        <ComboBox Margin="0 0 18 0" Width="120"
+                                            <TextBlock Text="{DynamicResource openResultModifiersToolTip}"
+                                                   Style="{DynamicResource SettingSubTitleLabel}" />
+                                        </StackPanel>
+                            <ComboBox Margin="0 0 18 0" Width="120"
                                                   ItemsSource="{Binding OpenResultModifiersList}"
                                                   SelectedItem="{Binding Settings.OpenResultModifiers}" FontSize="14"
                                                   Grid.Column="2" />
@@ -1376,7 +1391,7 @@
                                         <StackPanel Style="{StaticResource TextPanel}" Grid.Column="1">
                                             <TextBlock Text="{DynamicResource showOpenResultHotkey}"
                                                        VerticalAlignment="Center" />
-                                            <TextBlock Text="Display Hotkey in Query Result "
+                                            <TextBlock Text="{DynamicResource showOpenResultHotkeyToolTip}"
                                                        Style="{DynamicResource SettingSubTitleLabel}" />
                                         </StackPanel>
                                         <CheckBox IsChecked="{Binding Settings.ShowOpenResultHotkey}"
