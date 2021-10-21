@@ -10,11 +10,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class Settings : BaseModel
     {
         private string language = "en";
-        private int windowsize = 580;
+        public double windowsize = 580;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public bool ShowOpenResultHotkey { get; set; } = true;
-        public int WindowSize
+        public double WindowSize
         {
             get => windowsize; set
             {

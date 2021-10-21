@@ -304,6 +304,12 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public double WindowWidthSize
+        {
+            get { return Settings.WindowSize; }
+            set { Settings.WindowSize = value; }
+        }
+
         public bool UseGlyphIcons
         {
             get { return Settings.UseGlyphIcons; }
