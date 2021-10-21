@@ -191,7 +191,7 @@ namespace Flow.Launcher.Core.Resource
             }
 
             var windowStyle = dict["WindowStyle"] as Style;
-
+            /*
             var width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
                 .Select(x => x.Value).FirstOrDefault();
 
@@ -202,9 +202,10 @@ namespace Flow.Launcher.Core.Resource
                 width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
                 .Select(x => x.Value).FirstOrDefault();
             }
-
+            */
+            var width = Settings.WindowSize;
+            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
             mainWindowWidth = (double)width;
-
             return dict;
         }
 

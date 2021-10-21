@@ -21,6 +21,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 windowsize = value;
                 OnPropertyChanged();
             }
+
         }
 
         public string Language
