@@ -307,7 +307,7 @@ namespace Flow.Launcher.ViewModel
         public double WindowWidthSize
         {
             get { return Settings.WindowSize; }
-            set { Settings.WindowSize = value;}
+            set { Settings.WindowSize = value; ThemeManager.Instance.ChangeTheme(Settings.Theme); }
         }
 
         public bool UseGlyphIcons

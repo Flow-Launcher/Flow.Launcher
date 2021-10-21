@@ -677,13 +677,11 @@
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Text="Window Width Size" Style="{DynamicResource SettingTitleLabel}"/>
+                                        <TextBlock Text="{DynamicResource windowWidthSize}" Style="{DynamicResource SettingTitleLabel}"/>
                                     </StackPanel>
-                                    <!--<Button DockPanel.Dock="Top" Margin="0,0,18,0" Width="180" HorizontalAlignment="Center" 
-                            Click="OpenPluginFolder" Grid.Column="2">Open Theme Folder</Button>-->
                                     <StackPanel Orientation="Horizontal" Grid.Column="2">
                                         <TextBlock Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Right" Width="100" Margin="0 0 8 2"/>
-                                        <Slider Name="WindowWidthValue" Value="{Binding Settings.WindowSize, Mode=TwoWay}" Maximum="900" Minimum="400" Margin="0,0,18,0" TickFrequency="10" IsSnapToTickEnabled="True" Width="400"/>
+                                        <Slider Name="WindowWidthValue" Value="{Binding WindowWidthSize, Mode=TwoWay}" Maximum="900" Minimum="400" Margin="0,0,18,0" TickFrequency="10" IsSnapToTickEnabled="True" Width="400"/>
                                     </StackPanel>
                                     <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
                                 &#xe740;
