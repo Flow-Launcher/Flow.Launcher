@@ -52,10 +52,14 @@
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywords">액션 키워드</system:String>
+    <system:String x:Key="currentPriority">현재 중요도:</system:String>
+    <system:String x:Key="newPriority">새 중요도:</system:String>
+    <system:String x:Key="priority">중요도</system:String>
     <system:String x:Key="pluginDirectory">플러그인 디렉토리</system:String>
     <system:String x:Key="author">저자</system:String>
     <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
+    
     
     <!--Setting Plugin Store-->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
@@ -128,6 +132,7 @@
     <system:String x:Key="documentation">사용 팁:</system:String>
 
     <!--Priority Setting Dialog-->
+    <system:String x:Key="changePriorityWindow">중요도 변경</system:String>
     <system:String x:Key="priority_tips">높은 수를 넣을수록 상위 결과에 표시됩니다. 5를 시도해보세요. 다른 플러그인 보다 결과를 낮추고 싶다면, 그보다 낮은 수를 입력하세요.</system:String>
     <system:String x:Key="invalidPriority">중요도에 올바른 정수를 입력하세요.</system:String>
     <!--Action Keyword Setting Dialog-->
