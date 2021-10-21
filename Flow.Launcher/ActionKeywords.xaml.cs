@@ -30,7 +30,7 @@ namespace Flow.Launcher
 
         private void ActionKeyword_OnLoaded(object sender, RoutedEventArgs e)
         {
-            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeperater, plugin.Metadata.ActionKeywords.ToArray());
+            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeparator, plugin.Metadata.ActionKeywords.ToArray());
             tbAction.Focus();
         }
 
