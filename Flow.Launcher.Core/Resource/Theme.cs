@@ -189,20 +189,8 @@ namespace Flow.Launcher.Core.Resource
                     new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
-
+            /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
-            /*
-            var width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
-                .Select(x => x.Value).FirstOrDefault();
-
-            if (width == null)
-            {
-                windowStyle = dict["BaseWindowStyle"] as Style;
-
-                width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
-                .Select(x => x.Value).FirstOrDefault();
-            }
-            */
             var width = Settings.WindowSize;
             windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
             mainWindowWidth = (double)width;
