@@ -26,6 +26,7 @@
         LocationChanged="OnLocationChanged"
         Deactivated="OnDeactivated"
         PreviewKeyDown="OnKeyDown"
+        Width="{Binding MainWindowWidth, Mode=OneTime}"
         Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         d:DataContext="{d:DesignInstance vm:MainViewModel}">
     <Window.Resources>

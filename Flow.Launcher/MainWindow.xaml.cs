@@ -20,6 +20,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using System.Globalization;
+using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -136,6 +137,10 @@ namespace Flow.Launcher
                             MoveQueryTextToEnd();
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
+                        break;
+                    case nameof(MainViewModel.MainWindowWidth):
+                        MinWidth = _viewModel.MainWindowWidth;
+                        MaxWidth = _viewModel.MainWindowWidth;
                         break;
                 }
             };

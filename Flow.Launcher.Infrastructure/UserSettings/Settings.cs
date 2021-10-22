@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -14,9 +15,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public bool ShowOpenResultHotkey { get; set; } = true;
+        public double WindowSize { get; set; } = 580;
+
         public string Language
         {
-            get => language; set
+            get => language;
+            set
             {
                 language = value;
                 OnPropertyChanged();
@@ -52,7 +56,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 try
                 {
                     var precisionScore = (SearchPrecisionScore)Enum
-                                            .Parse(typeof(SearchPrecisionScore), value);
+                        .Parse(typeof(SearchPrecisionScore), value);
 
                     QuerySearchPrecision = precisionScore;
                     StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;

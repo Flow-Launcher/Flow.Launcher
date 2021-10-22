@@ -1208,8 +1208,23 @@
 
                         <StackPanel Grid.Row="4" Margin="0 0 0 10" Orientation="Vertical">
 
-                            <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5"
-                                    Margin="0 30 0 0">
+                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Text="{DynamicResource windowWidthSize}" Style="{DynamicResource SettingTitleLabel}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <TextBlock Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Right" Width="100" Margin="0 0 8 2"/>
+                                        <Slider Name="WindowWidthValue" Value="{Binding WindowWidthSize, Mode=TwoWay}" Maximum="900" Minimum="400" Margin="0,0,18,0" TickFrequency="10" IsSnapToTickEnabled="True" Width="300"/>
+                                    </StackPanel>
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                &#xe740;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
+
+                            <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5" Margin="0 30 0 0">
                                 <StackPanel Orientation="Vertical">
                                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
@@ -1297,6 +1312,7 @@
                             </Border>
 
                             <StackPanel>
+
                                 <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
@@ -1312,6 +1328,7 @@
                                         </TextBlock>
                                     </ItemsControl>
                                 </Border>
+
                             </StackPanel>
                         </StackPanel>
                     </Grid>
