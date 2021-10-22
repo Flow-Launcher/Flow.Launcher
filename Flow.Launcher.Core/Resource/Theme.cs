@@ -365,7 +365,6 @@ namespace Flow.Launcher.Core.Resource
             var windowHelper = new WindowInteropHelper(w);
 
             // this determines the width of the main query window
-            w.Width = mainWindowWidth;
             windowHelper.EnsureHandle();
 
             var accent = new AccentPolicy { AccentState = state };
