@@ -52,6 +52,7 @@ namespace Flow.Launcher.ViewModel
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
+        private bool _keepVisibility = false;
 
         #endregion
 
@@ -64,10 +65,20 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = new Query();
 
             _settings = settings;
-            _settings.PropertyChanged += (_, args) =>
+            _settings.PropertyChanged += async (_, args) =>
             {
                 if (args.PropertyName == nameof(Settings.WindowSize))
                 {
+                    ChangeQueryText("");
+                    if (MainWindowVisibility == Visibility.Collapsed)
+                    {
+                        ToggleFlowLauncher();
+                        _keepVisibility = true;
+                        await Task.Delay(1000);
+                        _keepVisibility = false;
+                        Application.Current.MainWindow.Activate();
+                    }
+
                     OnPropertyChanged(nameof(MainWindowWidth));
                 }
             };
@@ -742,7 +753,7 @@ namespace Flow.Launcher.ViewModel
 
         public void Hide()
         {
-            if (MainWindowVisibility != Visibility.Collapsed)
+            if (MainWindowVisibility != Visibility.Collapsed && !_keepVisibility)
             {
                 ToggleFlowLauncher();
             }
