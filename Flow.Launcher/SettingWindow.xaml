@@ -658,105 +658,102 @@
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 0"/>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
-                    <ScrollViewer ScrollViewer.CanContentScroll="False"
-                                  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
-                                  Margin="0,0,0,0" Background="#f3f3f3">
-                        <ListBox SelectedItem="{Binding SelectedPlugin}"
+                    <ListBox SelectedItem="{Binding SelectedPlugin}"
                              ItemsSource="{Binding PluginViewModels}"
-                             Margin="5, 0, 0, 0"
+                             Margin="5, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
-                             Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Margin="0,0,0,18"/>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Expander Grid.Column="4" x:Name="expanderHeader"
+                             Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Margin="0,0,0,18"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Expander Grid.Column="4" x:Name="expanderHeader"
                                           IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"
                                           FlowDirection="RightToLeft" Background="Transparent" Padding="0"
                                           Style="{StaticResource ExpanderStyle1}">
-                                        <Expander.Header>
-                                            <Grid FlowDirection="LeftToRight" HorizontalAlignment="Left"
+                                    <Expander.Header>
+                                        <Grid FlowDirection="LeftToRight" HorizontalAlignment="Left"
                                               Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="100" MinWidth="100" />
-                                                    <ColumnDefinition Width="*" MinWidth="350" MaxWidth="700" />
-                                                    <ColumnDefinition MaxWidth="1400" />
-                                                    <ColumnDefinition Width="100" />
-                                                    <ColumnDefinition Width="80" />
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel FlowDirection="LeftToRight" Grid.Column="0" Margin="24 0 0 0"
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" MinWidth="100" />
+                                                <ColumnDefinition Width="*" MinWidth="350" MaxWidth="700" />
+                                                <ColumnDefinition MaxWidth="1400" />
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="80" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel FlowDirection="LeftToRight" Grid.Column="0" Margin="24 0 0 0"
                                                         VerticalAlignment="Center">
-                                                    <Image Source="{Binding Image, IsAsync=True}"
+                                                <Image Source="{Binding Image, IsAsync=True}"
                                                        Width="32" Height="32" Margin="32 0 0 0"
                                                        FlowDirection="LeftToRight" />
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="1" Margin="12 0 14 0">
-                                                    <TextBlock Text="{Binding PluginPair.Metadata.Name}"
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Margin="12 0 14 0">
+                                                <TextBlock Text="{Binding PluginPair.Metadata.Name}"
                                                            TextWrapping="Wrap"
                                                            ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                                    <TextBlock TextWrapping="Wrap" Margin="0 2 0 0" Foreground="#5f5f5f">
+                                                <TextBlock TextWrapping="Wrap" Margin="0 2 0 0" Foreground="#5f5f5f">
                                                     <Run Text="{Binding PluginPair.Metadata.Description}" FontSize="12" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="3" Orientation="Horizontal">
-                                                    <TextBlock Text="{DynamicResource priority}" Margin="0,0,8,0"
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource priority}" Margin="0,0,8,0"
                                                            MaxWidth="100" VerticalAlignment="Center" FontSize="12"/>
-                                                    <Border CornerRadius="5">
-                                                        <Button x:Name="PriorityButton" Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
+                                                <Border CornerRadius="5">
+                                                    <Button x:Name="PriorityButton" Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
                                                            ToolTip="Change Plugin Results Priority"
                                                            Margin="5 0 0 0" Cursor="Hand"
                                                            Click="OnPluginPriorityClick">
-                                                            <!--#region Priority Button Style-->
-                                                            <Button.Resources>
-                                                                <Style TargetType="Border">
-                                                                    <Setter Property="CornerRadius" Value="2"/>
-                                                                </Style>
-                                                            </Button.Resources>
-                                                            <Button.Style>
-                                                                <Style TargetType="Button">
-                                                                    <Setter Property="Padding" Value="12 8 12 8" />
-                                                                    <Setter Property="BorderThickness" Value="0" />
-                                                                    <Setter Property="FontWeight" Value="DemiBold" />
-                                                                    <Setter Property="Foreground" Value="Black" />
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
-                                                                            <Setter Property="Foreground" Value="#878787" />
-                                                                            <Setter Property="FontWeight" Value="Normal" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Button.Style>
-                                                            <!--#endregion-->
-                                                        </Button>
-                                                    </Border>
-                                                </StackPanel>
-                                                <ui:ToggleSwitch Grid.Column="4" OffContent="{DynamicResource disable}"
+                                                        <!--#region Priority Button Style-->
+                                                        <Button.Resources>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="CornerRadius" Value="2"/>
+                                                            </Style>
+                                                        </Button.Resources>
+                                                        <Button.Style>
+                                                            <Style TargetType="Button">
+                                                                <Setter Property="Padding" Value="12 8 12 8" />
+                                                                <Setter Property="BorderThickness" Value="0" />
+                                                                <Setter Property="FontWeight" Value="DemiBold" />
+                                                                <Setter Property="Foreground" Value="Black" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
+                                                                        <Setter Property="Foreground" Value="#878787" />
+                                                                        <Setter Property="FontWeight" Value="Normal" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Button.Style>
+                                                        <!--#endregion-->
+                                                    </Button>
+                                                </Border>
+                                            </StackPanel>
+                                            <ui:ToggleSwitch Grid.Column="4" OffContent="{DynamicResource disable}"
                                                              OnContent="{DynamicResource enable}"
                                                              MaxWidth="110" HorizontalAlignment="Right"
                                                              IsOn="{Binding PluginState}" />
-                                            </Grid>
+                                        </Grid>
 
-                                        </Expander.Header>
+                                    </Expander.Header>
 
-                                        <Grid FlowDirection="LeftToRight">
-                                            <StackPanel Orientation="Vertical" Margin="0 12 0 0">
-                                                <StackPanel>
-                                                    <Border Style="{DynamicResource SettingGroupBox}"
+                                    <Grid FlowDirection="LeftToRight">
+                                        <StackPanel Orientation="Vertical" Margin="0 12 0 0">
+                                            <StackPanel>
+                                                <Border Style="{DynamicResource SettingGroupBox}"
                                                         Visibility="{Binding ActionKeywordsVisibility}" Height="52" Padding="0"
                                                         Width="auto" BorderThickness="0 1 0 0" CornerRadius="0">
-                                                        <ItemsControl VerticalAlignment="Center" Padding="22 0 18 0">
-                                                            <DockPanel>
-                                                                <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" DockPanel.Dock="Left"
+                                                    <ItemsControl VerticalAlignment="Center" Padding="22 0 18 0">
+                                                        <DockPanel>
+                                                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" DockPanel.Dock="Left"
                                        VerticalAlignment="Center" Margin="48 0 10 0">&#xe819;</TextBlock>
-                                                                <TextBlock Grid.Column="0" Text="{DynamicResource actionKeywords}"
+                                                            <TextBlock Grid.Column="0" Text="{DynamicResource actionKeywords}"
                                                                        Style="{DynamicResource SettingTitleLabel}"
                                                                        Margin="0 0 0 0"  VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left"/>
 
 
-                                                                <Button Grid.Column="2" Content="{Binding ActionKeywordsText}"
+                                                            <Button Grid.Column="2" Content="{Binding ActionKeywordsText}"
                                                                        DockPanel.Dock="Right"
                                                                        Visibility="{Binding ActionKeywordsVisibility}"
                                                                        ToolTip="Change Action Keywords"
@@ -764,111 +761,110 @@
                                                                        Click="OnPluginActionKeywordsClick" HorizontalAlignment="Right"
                                                                        Width="100" Height="40">
 
-                                                                    <Button.Resources>
-                                                                        <Style TargetType="Border">
-                                                                            <Setter Property="CornerRadius" Value="2"/>
-                                                                            <Setter Property="BorderThickness" Value="1 1 1 2"/>
-                                                                            <Setter Property="BorderBrush" Value="#ececec"/>
-                                                                            <Setter Property="Background" Value="#ffffff"/>
+                                                                <Button.Resources>
+                                                                    <Style TargetType="Border">
+                                                                        <Setter Property="CornerRadius" Value="2"/>
+                                                                        <Setter Property="BorderThickness" Value="1 1 1 2"/>
+                                                                        <Setter Property="BorderBrush" Value="#ececec"/>
+                                                                        <Setter Property="Background" Value="#ffffff"/>
 
-                                                                        </Style>
-                                                                    </Button.Resources>
-                                                                </Button>
-                                                            </DockPanel>
+                                                                    </Style>
+                                                                </Button.Resources>
+                                                            </Button>
+                                                        </DockPanel>
 
-                                                        </ItemsControl>
-                                                    </Border>
-                                                </StackPanel>
+                                                    </ItemsControl>
+                                                </Border>
+                                            </StackPanel>
 
-                                                <StackPanel>
+                                            <StackPanel>
 
 
-                                                    <Border Background="White" Padding="0"
+                                                <Border Background="White" Padding="0"
                                                         BorderThickness="0 1 0 0" BorderBrush="#e6e6e6"
                                                         VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                                        <!--#region SubInfo Styling -->
-                                                        <Border.Style>
-                                                            <Style TargetType="{x:Type Border}">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ElementName=SettingControl, Path=ActualHeight}" Value="0">
-                                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                                        <Setter Property="BorderThickness" Value="0" />
-                                                                        <Setter Property="Padding" Value="0" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Border.Style>
-                                                    </Border>
-                                                    <!--#endregion-->
-                                                    <ContentControl x:Name="SettingControl" 
+                                                    <!--#region SubInfo Styling -->
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=SettingControl, Path=ActualHeight}" Value="0">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Setter Property="BorderThickness" Value="0" />
+                                                                    <Setter Property="Padding" Value="0" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                </Border>
+                                                <!--#endregion-->
+                                                <ContentControl x:Name="SettingControl" 
                                                         Content="{Binding SettingControl}"
                                                         Padding="1" Margin="0" VerticalAlignment="Stretch"
                                                         MaxWidth="750" MaxHeight="550">
-                                                    </ContentControl>
+                                                </ContentControl>
 
-                                                </StackPanel>
+                                            </StackPanel>
 
-                                                <StackPanel>
-                                                    <Border Style="{DynamicResource SettingGroupBox}" CornerRadius="0"
+                                            <StackPanel>
+                                                <Border Style="{DynamicResource SettingGroupBox}" CornerRadius="0"
                                                         Visibility="{Binding ActionKeywordsVisibility}"
                                                         VerticalAlignment="Center" Margin="0" BorderThickness="0 1 0 0"
                                                         Padding="0 12 0 0" >
-                                                        <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                            <StackPanel Style="{StaticResource TextPanel}"
+                                                    <ItemsControl Style="{DynamicResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}"
                                                                Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 -14 0">
-                                                                <TextBlock Text="{DynamicResource author}" 
+                                                            <TextBlock Text="{DynamicResource author}" 
                                                                        FontSize="11" Margin="10 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
-                                                                <TextBlock Text="{Binding PluginPair.Metadata.Author}" FontSize="11" Foreground="#8F8F8F"
+                                                            <TextBlock Text="{Binding PluginPair.Metadata.Author}" FontSize="11" Foreground="#8F8F8F"
                                                                        Margin="5 0 0 0" MaxWidth="100" />
-                                                                <TextBlock Text="|"
+                                                            <TextBlock Text="|"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F"
                                                                        VerticalAlignment="Center" />
-                                                                <TextBlock Text="{DynamicResource plugin_init_time}" 
+                                                            <TextBlock Text="{DynamicResource plugin_init_time}" 
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
-                                                                <TextBlock Text="{Binding InitilizaTime}" FontSize="11" Foreground="#8F8F8F"
+                                                            <TextBlock Text="{Binding InitilizaTime}" FontSize="11" Foreground="#8F8F8F"
                                                                        Margin="5 0 0 0" MaxWidth="100" />
-                                                                <TextBlock Text="|"
+                                                            <TextBlock Text="|"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F"
                                                                        VerticalAlignment="Center" />
-                                                                <TextBlock Text="{DynamicResource plugin_query_time}"
+                                                            <TextBlock Text="{DynamicResource plugin_query_time}"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F" />
-                                                                <TextBlock Text="{Binding QueryTime}" FontSize="11" Foreground="#8F8F8F"
+                                                            <TextBlock Text="{Binding QueryTime}" FontSize="11" Foreground="#8F8F8F"
                                                                        Margin="5 0 0 0" MaxWidth="100" />
-                                                                <TextBlock Text="| version"
+                                                            <TextBlock Text="| version"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100" Foreground="#8F8F8F"
                                                                        VerticalAlignment="Center" />
-                                                                <TextBlock Text="{Binding PluginPair.Metadata.Version}" Foreground="#8F8F8F"
+                                                            <TextBlock Text="{Binding PluginPair.Metadata.Version}" Foreground="#8F8F8F"
                                                                        FontSize="11" Margin="5 0 0 0" MaxWidth="100"
                                                                        VerticalAlignment="Center" />
 
-                                                                <TextBlock
+                                                            <TextBlock
                                                                    MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
                                                                    HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center">
                                                                   <Hyperlink NavigateUri="{Binding PluginPair.Metadata.Website}"
                                                                         RequestNavigate="OnRequestNavigate" Foreground="#8F8F8F">
                                                                        <Run Text="Website" />
                                                                 </Hyperlink>
-                                                                </TextBlock>
+                                                            </TextBlock>
 
-                                                                <TextBlock Text="{DynamicResource pluginDirectory}"
+                                                            <TextBlock Text="{DynamicResource pluginDirectory}"
                                                                    MaxWidth="120" Cursor="Hand" Margin="10,0,0,0"
                                                                    MouseUp="OnPluginDirecotyClick" Foreground="#8f8f8f"
                                                                    HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center" TextDecorations="Underline"/>
-                                                            </StackPanel>
+                                                        </StackPanel>
 
-                                                        </ItemsControl>
-                                                    </Border>
+                                                    </ItemsControl>
+                                                </Border>
 
-                                                </StackPanel>
                                             </StackPanel>
-                                        </Grid>
-                                    </Expander>
+                                        </StackPanel>
+                                    </Grid>
+                                </Expander>
 
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Border>
 
             </Grid>
@@ -915,128 +911,124 @@
                             BorderThickness="1 1 1 2"/>
                 </Border>
                 <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
-                    <ScrollViewer ScrollViewer.CanContentScroll="False"
-                                  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
-                                  Margin="0,0,0,0" Background="#f3f3f3">
-                        <ListBox  x:Name="StoreListBox"
+                    <ListBox  x:Name="StoreListBox"
                              ItemsSource="{Binding ExternalPlugins}"
-                             Margin="6, 0, 0, 0"
+                             Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource StoreList}" SelectionMode="Single"
-                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 6 18" VerticalAlignment="Top" SnapsToDevicePixels="True"/>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <!-- Hover Layout Style-->
+                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 6 18" VerticalAlignment="Top" SnapsToDevicePixels="True"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Hover Layout Style-->
 
-                                    <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Background="Transparent" 
+                                <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}" Background="Transparent" 
                                                   Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" 
                                                   HorizontalAlignment="Left" HorizontalContentAlignment="left" Style="{StaticResource StoreItem}">
-                                        <ToggleButton.Template>
-                                            <ControlTemplate TargetType="{x:Type ButtonBase}">
-                                                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                <ControlTemplate.Triggers/>
-                                            </ControlTemplate>
-                                        </ToggleButton.Template>
-
-                                        <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="72"/>
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Column="0" Margin="0 0 0 0"
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            <ControlTemplate.Triggers/>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                    
+                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="72"/>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Margin="0 0 0 0"
                                                         VerticalAlignment="Center" >
-                                                <StackPanel.Style>
-                                                    <Style>
-                                                        <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                <Setter Property="StackPanel.Opacity" Value="1" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>
-                                                <Image Source="{Binding IcoPath, IsAsync=True}"
+                                            <StackPanel.Style>
+                                                <Style>
+                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                            <Setter Property="StackPanel.Opacity" Value="1" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <Image Source="{Binding IcoPath, IsAsync=True}"
                                                    Width="32" Height="32" Margin="8 0 6 0"
                                                    VerticalAlignment="Center"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="1" Margin="0 0 8 0" VerticalAlignment="Center" Panel.ZIndex="0">
-                                                <StackPanel.Style>
-                                                    <Style>
-                                                        <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                <Setter Property="StackPanel.Opacity" Value="1" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>
-                                                <TextBlock Text="{Binding Name}"
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Margin="0 0 8 0" VerticalAlignment="Center" Panel.ZIndex="0">
+                                            <StackPanel.Style>
+                                                <Style>
+                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                            <Setter Property="StackPanel.Opacity" Value="1" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock Text="{Binding Name}"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 20 0"
                                                            ToolTip="{Binding Version}" />
-                                                <TextBlock TextWrapping="WrapWithOverflow" Margin="0 2 0 0" Padding="0 0 20 0" Foreground="#5f5f5f">
+                                            <TextBlock TextWrapping="WrapWithOverflow" Margin="0 2 0 0" Padding="0 0 20 0" Foreground="#5f5f5f">
                                                     <Run Text="{Binding Description}" FontSize="12" Foreground="#5f5f5f"/>
-                                                </TextBlock>
+                                            </TextBlock>
 
-                                            </StackPanel >
-                                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                                <StackPanel.Style>
-                                                    <Style>
-                                                        <Setter Property="StackPanel.Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>
+                                        </StackPanel >
+                                        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                            <StackPanel.Style>
+                                                <Style>
+                                                    <Setter Property="StackPanel.Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
+                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
 
 
-                                                <Grid Height="94" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1">
-                                                    <Grid.Background>
-                                                        <SolidColorBrush Color="#f6f6f6" Opacity=".95"/>
-                                                    </Grid.Background>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
-                                                    </Grid.ColumnDefinitions>
+                                            <Grid Height="94" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1">
+                                                <Grid.Background>
+                                                    <SolidColorBrush Color="#f6f6f6" Opacity=".95"/>
+                                                </Grid.Background>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
+                                                </Grid.ColumnDefinitions>
 
-                                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding Name}" FontWeight="Bold"
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 0 0" Margin="20 0 0 0"
                                                            ToolTip="{Binding Name}" />
-                                                            <TextBlock Text="{Binding Version}"
+                                                        <TextBlock Text="{Binding Version}"
                                                            TextWrapping="WrapWithOverflow" Padding="0 0 20 0" Margin="10 0 0 0"
                                                            ToolTip="{Binding Version}" />
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Vertical" Margin="20 2 120 0">
-                                                            <TextBlock TextWrapping="Wrap"  Padding="0 0 0 0" >
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Vertical" Margin="20 2 120 0">
+                                                        <TextBlock TextWrapping="Wrap"  Padding="0 0 0 0" >
                                                             <Hyperlink NavigateUri="{Binding Website}"
                                                                         RequestNavigate="OnRequestNavigate" Foreground="#5F5F5F">
                                                                 <Run Text="{Binding Author}" FontSize="12" />
                                                             </Hyperlink>
-                                                            </TextBlock>
-                                                        </StackPanel>
+                                                        </TextBlock>
                                                     </StackPanel>
-                                                    <Border Padding="0 0 20 0">
-                                                        <Button Foreground="Black" Name="ShortCutButtonPrev" Content="{DynamicResource install}"
+                                                </StackPanel>
+                                                <Border Padding="0 0 20 0">
+                                                    <Button Foreground="Black" Name="ShortCutButtonPrev" Content="{DynamicResource install}"
                                                            Click="OnExternalPluginInstallClick"
                                                             Width="90" MinHeight="40" HorizontalAlignment="Right"
                                                             VerticalAlignment="Center" Grid.Column="1" Margin="0 0 0 0">
-                                                        </Button>
-                                                    </Border>
-                                                </Grid>
-                                            </StackPanel>
-                                        </Grid>
+                                                    </Button>
+                                                </Border>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
 
-                                    </ToggleButton>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Border>
 
             </Grid>
