@@ -63,8 +63,10 @@
                 </ListView.View>
             </ListView>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" Margin="10" Click="NewCustomBrowser"/>
-                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" Margin="10" Click="DeleteCustomBrowser"/>
+                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" 
+                        Margin="10" Click="NewCustomBrowser" Width="80" />
+                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" 
+                        Margin="10" Click="DeleteCustomBrowser" Width="80"/>
             </StackPanel>
         </StackPanel>
     </Grid>

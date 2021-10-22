@@ -129,7 +129,7 @@ namespace Flow.Launcher
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
 
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, mainViewModel.OnHotkey);
+                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
                 HotKeyMapper.RemoveHotkey(settings.Hotkey);
                 settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
             }

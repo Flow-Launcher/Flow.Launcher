@@ -13,30 +13,35 @@
     <system:String x:Key="iconTraySettings">Settings</system:String>
     <system:String x:Key="iconTrayAbout">About</system:String>
     <system:String x:Key="iconTrayExit">Exit</system:String>
+    <system:String x:Key="closeWindow">Close</system:String>
 
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Settings</system:String>
     <system:String x:Key="general">General</system:String>
     <system:String x:Key="portableMode">Portable Mode</system:String>
+    <system:String x:Key="portableModeToolTIp">All setting into single folder. You can use with USB drive or cloud.</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher on system startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
     <system:String x:Key="rememberLastLocation">Remember last launch location</system:String>
     <system:String x:Key="language">Language</system:String>
     <system:String x:Key="lastQueryMode">Last Query Style</system:String>
+    <system:String x:Key="lastQueryModeToolTip">When you open Query box, decide what to do.</system:String>
     <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">If you're a gamer, We recommend turning it on.</system:String>
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
-    <system:String x:Key="autoHideScrollBar">Auto Hide Scroll Bar</system:String>
-    <system:String x:Key="autoHideScrollBarToolTip">Automatically hides the Settings window scroll bar and show when hover the mouse over it</system:String>
+    <system:String x:Key="autoHideScrollBar">Auto Hide Scroll Bar in Setting</system:String>
+    <system:String x:Key="autoHideScrollBarToolTip">If you feel the scroll bar in the setting window is small, We recommend turning it off.</system:String>
     <system:String x:Key="selectPythonDirectory">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Search results become more accurate.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
@@ -57,6 +62,12 @@
     <system:String x:Key="plugin_init_time">Init time:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
 
+
+    <!--Setting Plugin Store-->
+    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="refresh">Refresh</system:String>
+    <system:String x:Key="install">Install</system:String>
+
     <!--Setting Theme-->
     <system:String x:Key="theme">Theme</system:String>
     <system:String x:Key="browserMoreThemes">Browse for more themes</system:String>
@@ -67,12 +78,17 @@
     <system:String x:Key="opacity">Opacity</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
+    <system:String x:Key="ThemeFolder">Theme Folder</system:String>
+    <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Enter the shortcut that open the Flow Launcher.</system:String>
     <system:String x:Key="openResultModifiers">Open Result Modifiers</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Shortcuts to select the result list.</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Display Shortcut in Result list .</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
     <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">Delete</system:String>
@@ -117,6 +133,7 @@
     <system:String x:Key="documentation">Usage Tips:</system:String>
 
     <!--Priority Setting Dialog-->
+    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
     <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 

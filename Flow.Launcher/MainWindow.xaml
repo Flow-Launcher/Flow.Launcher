@@ -91,7 +91,7 @@
                                 <MenuItem Command="ApplicationCommands.Paste"/>
                                 <Separator />
                                 <MenuItem Header="{DynamicResource flowlauncher_settings}"  Click="OnContextMenusForSettingsClick" />
-                                <MenuItem Command="{Binding EscCommand}" Header="Close"/>
+                                <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}"/>
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
