@@ -662,7 +662,6 @@
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="5, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
-                             ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
                              Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -916,7 +915,6 @@
                              ItemsSource="{Binding ExternalPlugins}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource StoreList}" SelectionMode="Single"
-                             ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.CanContentScroll="False"
                              Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
