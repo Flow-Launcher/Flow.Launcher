@@ -325,11 +325,7 @@ namespace Flow.Launcher.ViewModel
         public double WindowWidthSize
         {
             get => Settings.WindowSize;
-            set
-            {
-                Settings.WindowSize = value;
-                Application.Current.MainWindow.Visibility = Visibility.Visible;
-            }
+            set => Settings.WindowSize = value;
         }
 
         public bool UseGlyphIcons

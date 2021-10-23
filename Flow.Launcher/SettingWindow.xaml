@@ -1068,8 +1068,8 @@
 
                         <StackPanel Background="{Binding PreviewBackground}" Grid.Row="1" Margin="0">
                             <StackPanel Orientation="Horizontal" Margin="0 30 0 0"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Border Width="500" Style="{DynamicResource WindowBorderStyle}">
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}" >
                                     <Border Style="{DynamicResource WindowRadius}">
                                         <Border.Clip>
                                             <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -1097,9 +1097,7 @@
                                             </Canvas>
 
                                             <Border Margin="0 0 0 0" Grid.Row="1">
-                                                <Rectangle Width="Auto" HorizontalAlignment="Stretch"
-                                                           Style="{DynamicResource SeparatorStyle}"
-                                                           Visibility="Visible" />
+                                                <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}" Visibility="Visible"/>
                                             </Border>
 
                                             <ContentControl Grid.Row="2">
@@ -1114,20 +1112,30 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" VerticalAlignment="Top">
+                        <StackPanel Grid.Row="2" Orientation="Vertical">
                             <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Text="{DynamicResource queryWindowShadowEffect}"
-                                                   Style="{DynamicResource SettingTitleLabel}" />
-                                        <TextBlock Text="{DynamicResource shadowEffectCPUUsage}"
-                                                   Style="{DynamicResource SettingSubTitleLabel}" />
+                                        <TextBlock Text="{DynamicResource queryWindowShadowEffect}" Style="{DynamicResource SettingTitleLabel}" />
+                                        <TextBlock Text="{DynamicResource shadowEffectCPUUsage}" Style="{DynamicResource SettingSubTitleLabel}" />
                                     </StackPanel>
-                                    <ui:ToggleSwitch IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Width="80"
-                                                     Grid.Column="2" Grid.Row="0" Margin="0 0 18 0" />
-                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
-                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                        &#xeb91;
+                                    <ui:ToggleSwitch IsOn="{Binding DropShadowEffect, Mode=TwoWay}" Width="80" Grid.Column="2" Grid.Row="0" Margin="0 0 18 0"/>
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                      &#xeb91;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Text="{DynamicResource windowWidthSize}" Style="{DynamicResource SettingTitleLabel}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <TextBlock Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Right" Width="100" Margin="0 0 8 2"/>
+                                        <Slider Name="WindowWidthValue" Value="{Binding WindowWidthSize, Mode=TwoWay}" IsMoveToPointEnabled="True" Maximum="900" Minimum="400" Margin="0,0,18,0" TickFrequency="10" IsSnapToTickEnabled="True" Width="300"/>
+                                    </StackPanel>
+                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                &#xe740;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
@@ -1199,23 +1207,6 @@
 
 
                         <StackPanel Grid.Row="4" Margin="0 0 0 10" Orientation="Vertical">
-
-                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Text="{DynamicResource windowWidthSize}" Style="{DynamicResource SettingTitleLabel}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
-                                        <TextBlock Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextAlignment="Right" Width="100" Margin="0 0 8 2"/>
-                                        <Slider Name="WindowWidthValue" Value="{Binding WindowWidthSize, Mode=TwoWay}" Maximum="900" Minimum="400" Margin="0,0,18,0" TickFrequency="10" IsSnapToTickEnabled="True" Width="300"/>
-                                    </StackPanel>
-                                    <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
-                                &#xe740;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
-
-
                             <Border Style="{DynamicResource SettingGroupBox}" Padding="0" CornerRadius="5" Margin="0 30 0 0">
                                 <StackPanel Orientation="Vertical">
                                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0" BorderThickness="0">
