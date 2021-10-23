@@ -165,6 +165,19 @@
                         <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
                          </ContentControl>
                 </Border>
+                <Border Height="35" VerticalAlignment="Center">
+                    <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Border.Clip>
+                    <StackPanel>
+                    <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
+                        <TextBlock VerticalAlignment="Center" Foreground="#828282" TextAlignment="Center" x:Name="TipText"></TextBlock>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Border>
     </Grid>

@@ -33,6 +33,7 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private MainViewModel _viewModel;
 
+
         #endregion
 
         public MainWindow(Settings settings, MainViewModel mainVM)
@@ -314,6 +315,7 @@ namespace Flow.Launcher
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            TipSelector();
             switch (e.Key)
             {
                 case Key.Down:
@@ -357,6 +359,65 @@ namespace Flow.Launcher
         private void MoveQueryTextToEnd()
         {
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
+        }
+
+        public void TipSelector()
+        {
+            //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //string text = ResultListBox.GetItemText(ResultListBox.SelectedItem);
+            //string selected = ResultListBox.GetItemText(ResultListBox.SelectedValue);
+            //string selected = ((ListBoxItem)ResultListBox.SelectedValue).Content.ToString();
+            //var Selected = ResultListBox.SelectedItem.ToString();
+            //string selected = ResultListBox.SelectedItem.ToString();
+            var selected = ResultListBox.SelectedItem;
+
+            if (selected == null)
+            {
+                var data = "";
+            }
+            else if (selected != null)
+            {
+                var data = ResultListBox.SelectedItem.ToString();
+                System.Diagnostics.Debug.WriteLine(data);
+
+                if (QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                           && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
+                {
+                    TipText.Text = "Press → or Ctrl+O to Open Context Menu";
+                }
+                else if (data.Contains(".jpg") || data.Contains(".JPG") || data.Contains(".png") || data.Contains(".PNG") && QueryTextBox.CaretIndex != QueryTextBox.Text.Length || QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                           && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
+                {
+                    TipText.Text = "Press F1 to Open Preview";
+                }
+                else if (data.Contains(".exe") || data.Contains(".EXE") || data.Contains(".lnk") || data.Contains(".lnk") && QueryTextBox.CaretIndex != QueryTextBox.Text.Length || QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                    && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
+                {
+                    TipText.Text = "Press CTRL+Enter to Run as Admin";
+                }
+                else if (data.Contains(".doc") || data.Contains(".DOC") || data.Contains(".txt") || data.Contains(".TXT") && QueryTextBox.CaretIndex != QueryTextBox.Text.Length || QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                    && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
+                {
+                    TipText.Text = "Press CTRL+Enter to Open Containig Folder";
+                }
+                else if (QueryTextBox.CaretIndex != QueryTextBox.Text.Length
+                           && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
+                {
+                    TipText.Text = "Press Ctrl+O to Open Context Menu";
+                }
+                else if (string.IsNullOrEmpty(QueryTextBox.Text) == true && _viewModel.ContextMenu.Visbility == Visibility.Collapsed)
+                {
+                    TipText.Text = "Type File, App, URL, anything.";
+                }
+                else if (string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
+                {
+                    TipText.Text = "Press ESC or ← to return to results";
+                }
+                else if (!string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
+                {
+                    TipText.Text = "Press ESC to return to results";
+                }
+            }
         }
     }
 }
