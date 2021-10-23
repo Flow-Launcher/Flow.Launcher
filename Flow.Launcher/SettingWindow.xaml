@@ -615,17 +615,6 @@
                                       DisplayMemberPath="Display" SelectedValuePath="LanguageCode" Grid.Column="2" />
                         </ItemsControl>
                     </Border>
-                    <Border Style="{DynamicResource SettingGroupBox}">
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Text="{DynamicResource autoHideScrollBar}"
-                                           Style="{DynamicResource SettingTitleLabel}" />
-                            </StackPanel>
-                            <ui:ToggleSwitch IsOn="{Binding AutoHideScrollBar}" FocusVisualMargin="5"
-                                             Style="{DynamicResource SideControlToggle}" Width="100"
-                                             ToolTip="{DynamicResource autoHideScrollBarToolTip}" />
-                        </ItemsControl>
-                    </Border>
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
