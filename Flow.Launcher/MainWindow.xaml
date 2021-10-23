@@ -165,7 +165,7 @@
                         <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
                          </ContentControl>
                 </Border>
-                <Border Height="35" VerticalAlignment="Center">
+                <Border VerticalAlignment="Center" x:Name="TipBox" Style="{DynamicResource TipBoxStyle}" Margin="0 10 0 10">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
@@ -174,10 +174,13 @@
                         </MultiBinding>
                     </Border.Clip>
                     <StackPanel>
-                    <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
-                        <TextBlock VerticalAlignment="Center" Foreground="#828282" TextAlignment="Center" x:Name="TipText"></TextBlock>
+                        <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
+                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource ItemHotkeyStyle}" LineHeight="15" Margin="0 0 0 0" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
                     </StackPanel>
                 </Border>
+
+                <UniformGrid Columns="2" Rows="5" Name="TipGrid">
+                </UniformGrid>
             </StackPanel>
         </Border>
     </Grid>

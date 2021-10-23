@@ -74,6 +74,8 @@ namespace Flow.Launcher
             // so we need set focus during startup
             QueryTextBox.Focus();
 
+            TipSelector();
+
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -315,7 +317,6 @@ namespace Flow.Launcher
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            TipSelector();
             switch (e.Key)
             {
                 case Key.Down:
@@ -341,6 +342,7 @@ namespace Flow.Launcher
                     {
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
+                        TipSelector();
                     }
                     break;
                 case Key.Left:
@@ -348,6 +350,7 @@ namespace Flow.Launcher
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
+                        TipSelector();
                     }
                     break;
                 default:
@@ -363,14 +366,8 @@ namespace Flow.Launcher
 
         public void TipSelector()
         {
-            //System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            //string text = ResultListBox.GetItemText(ResultListBox.SelectedItem);
-            //string selected = ResultListBox.GetItemText(ResultListBox.SelectedValue);
-            //string selected = ((ListBoxItem)ResultListBox.SelectedValue).Content.ToString();
-            //var Selected = ResultListBox.SelectedItem.ToString();
-            //string selected = ResultListBox.SelectedItem.ToString();
+            /*
             var selected = ResultListBox.SelectedItem;
-
             if (selected == null)
             {
                 var data = "";
@@ -379,45 +376,21 @@ namespace Flow.Launcher
             {
                 var data = ResultListBox.SelectedItem.ToString();
                 System.Diagnostics.Debug.WriteLine(data);
-
+            */
                 if (QueryTextBox.CaretIndex == QueryTextBox.Text.Length
                            && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
                 {
-                    TipText.Text = "Press → or Ctrl+O to Open Context Menu";
-                }
-                else if (data.Contains(".jpg") || data.Contains(".JPG") || data.Contains(".png") || data.Contains(".PNG") && QueryTextBox.CaretIndex != QueryTextBox.Text.Length || QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                           && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
-                {
-                    TipText.Text = "Press F1 to Open Preview";
-                }
-                else if (data.Contains(".exe") || data.Contains(".EXE") || data.Contains(".lnk") || data.Contains(".lnk") && QueryTextBox.CaretIndex != QueryTextBox.Text.Length || QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                    && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
-                {
-                    TipText.Text = "Press CTRL+Enter to Run as Admin";
-                }
-                else if (data.Contains(".doc") || data.Contains(".DOC") || data.Contains(".txt") || data.Contains(".TXT") && QueryTextBox.CaretIndex != QueryTextBox.Text.Length || QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                    && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
-                {
-                    TipText.Text = "Press CTRL+Enter to Open Containig Folder";
-                }
-                else if (QueryTextBox.CaretIndex != QueryTextBox.Text.Length
-                           && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
-                {
-                    TipText.Text = "Press Ctrl+O to Open Context Menu";
-                }
-                else if (string.IsNullOrEmpty(QueryTextBox.Text) == true && _viewModel.ContextMenu.Visbility == Visibility.Collapsed)
-                {
-                    TipText.Text = "Type File, App, URL, anything.";
-                }
+                    TipText1.Text = "컨텍스트 메뉴 : Ctrl+O 또는 → | 포함된 폴더 열기 : Ctrl+Enter";
+            }
                 else if (string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
                 {
-                    TipText.Text = "Press ESC or ← to return to results";
-                }
-                else if (!string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
+                    TipText1.Text = "결과로 돌아가기 : ESC 또는 ←";
+               }
+                else
                 {
-                    TipText.Text = "Press ESC to return to results";
-                }
+                    TipText1.Text = "컨텍스트 메뉴 : Ctrl+O 또는 → | 포함된 폴더 열기 : Ctrl+Enter";
             }
+     
         }
     }
 }
