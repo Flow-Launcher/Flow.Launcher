@@ -223,31 +223,16 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
     <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
-        <Setter Property="Visibility" Value="Collapsed" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
-    
     <Style x:Key="BaseItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
-
     <Style x:Key="BaseItemHotkeySelecetedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
