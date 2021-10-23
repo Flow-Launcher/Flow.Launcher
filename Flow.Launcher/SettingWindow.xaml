@@ -549,7 +549,7 @@
                     <Grid Margin="0 0 0 0" Background="#f3f3f3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0" />
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="330"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition />
                             <RowDefinition Height="*"/>
