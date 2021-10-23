@@ -132,10 +132,6 @@ namespace Flow.Launcher
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
-                    case nameof(MainViewModel.MainWindowWidth):
-                        MinWidth = _viewModel.MainWindowWidth;
-                        MaxWidth = _viewModel.MainWindowWidth;
-                        break;
                 }
             };
             _settings.PropertyChanged += (o, e) =>
