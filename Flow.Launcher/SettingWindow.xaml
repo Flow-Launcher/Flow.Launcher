@@ -620,8 +620,6 @@
                             <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock Text="{DynamicResource autoHideScrollBar}"
                                            Style="{DynamicResource SettingTitleLabel}" />
-                                <TextBlock Text="{DynamicResource autoHideScrollBarToolTip}"
-                                           Style="{DynamicResource SettingSubTitleLabel}" />
                             </StackPanel>
                             <ui:ToggleSwitch IsOn="{Binding AutoHideScrollBar}" FocusVisualMargin="5"
                                              Style="{DynamicResource SideControlToggle}" Width="100"
