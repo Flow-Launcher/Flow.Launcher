@@ -1,0 +1,38 @@
+﻿<Window x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.CustomBrowserSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="CustomBrowserSetting" Height="350" Width="600"
+        KeyDown="WindowKeyDown"
+        >
+    <Window.DataContext>
+        <local:CustomBrowser/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Browser Name" FontSize="15" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="80 0 0 0"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Browser Data Directory Path" FontSize="15" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="80 0 0 0"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="30" Margin="50 0 0 0"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DataDirectoryPath}"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Width="200" Height="30" Margin="50 0 0 0"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal" Grid.Column="1" Height="70">
+            <Button Name="btnConfirm" Content="Confirm" Margin="15" Click="ConfirmCancelEditCustomBrowser"/>
+            <Button Content="Cancel" Margin="15" Click="ConfirmCancelEditCustomBrowser"/>
+        </StackPanel>
+    </Grid>
+</Window>

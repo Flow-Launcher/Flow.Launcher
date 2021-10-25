@@ -2,33 +2,34 @@ using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
     /// <summary>
     /// Interaction logic for BrowserBookmark.xaml
     /// </summary>
-    public partial class SettingsControl : UserControl
+    public partial class SettingsControl
     {
-        private readonly Settings _settings;
+        public Settings Settings { get; }
+        public CustomBrowser SelectedCustomBrowser { get; set; }
 
         public SettingsControl(Settings settings)
         {
+            Settings = settings;
             InitializeComponent();
-            _settings = settings;
-            browserPathBox.Text = _settings.BrowserPath;
-            NewWindowBrowser.IsChecked = _settings.OpenInNewBrowserWindow;
-            NewTabInBrowser.IsChecked = !_settings.OpenInNewBrowserWindow;
+            NewWindowBrowser.IsChecked = Settings.OpenInNewBrowserWindow;
+            NewTabInBrowser.IsChecked = !Settings.OpenInNewBrowserWindow;
         }
 
         private void OnNewBrowserWindowClick(object sender, RoutedEventArgs e)
         {
-            _settings.OpenInNewBrowserWindow = true;
+            Settings.OpenInNewBrowserWindow = true;
         }
 
         private void OnNewTabClick(object sender, RoutedEventArgs e)
         {
-            _settings.OpenInNewBrowserWindow = false;
+            Settings.OpenInNewBrowserWindow = false;
         }
 
         private void OnChooseClick(object sender, RoutedEventArgs e)
@@ -39,14 +40,39 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             fileBrowserDialog.CheckPathExists = true;
             if (fileBrowserDialog.ShowDialog() == true)
             {
-                browserPathBox.Text = fileBrowserDialog.FileName;
-                _settings.BrowserPath = fileBrowserDialog.FileName;
+                Settings.BrowserPath = fileBrowserDialog.FileName;
             }
         }
 
-        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
+        private void NewCustomBrowser(object sender, RoutedEventArgs e)
         {
-            _settings.BrowserPath = browserPathBox.Text;
+            var newBrowser = new CustomBrowser();
+            var window = new CustomBrowserSettingWindow(newBrowser);
+            window.ShowDialog();
+            if (newBrowser is not
+                {
+                    Name: null,
+                    DataDirectoryPath: null
+                })
+            {
+                Settings.CustomChromiumBrowsers.Add(newBrowser);
+            }
+        }
+
+        private void DeleteCustomBrowser(object sender, RoutedEventArgs e)
+        {
+            if(CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
+            {
+                Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
+            }
+        }
+        private void MouseDoubleClickOnSelectedCustomBrowser(object sender, MouseButtonEventArgs e)
+        {
+            if (SelectedCustomBrowser is null)
+                return;
+
+            var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
+            window.ShowDialog();
         }
     }
 }

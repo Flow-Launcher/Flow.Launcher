@@ -20,6 +20,7 @@
          IsSynchronizedWithCurrentItem="True"
          PreviewMouseDown="ListBox_PreviewMouseDown">
     <!--IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083-->
+
     <ListBox.ItemTemplate>
         <DataTemplate>
             <Button>
@@ -29,7 +30,7 @@
                     </ControlTemplate>
                 </Button.Template>
                 <Button.Content>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0"
                           Cursor="Hand" UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter"/>
@@ -37,33 +38,35 @@
                             <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="32" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="0" />
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Left"
-                               Source="{Binding Image}" Visibility="{Binding ShowIcon}" />
-                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   Text="{Binding Glyph.Glyph}" FontFamily="{Binding Glyph.FontFamily}" FontSize="24"
-                                   Visibility="{Binding ShowGlyph}"/>
-                        <Grid Margin="5 0 5 0" Grid.Column="1" HorizontalAlignment="Stretch">
+                        <StackPanel Visibility="{Binding ShowOpenResultHotkey}" Grid.Column="2" Margin="0 0 10 0">
+                            <TextBlock Margin="12 0 12 0" Style="{DynamicResource ItemHotkeyStyle}" HorizontalAlignment="Right" Opacity="0.8" VerticalAlignment="Center" Padding="0 10 0 10" x:Name="Hotkey">
+                                <TextBlock.Visibility>
+                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" />
+                                </TextBlock.Visibility>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}+{1}">
+                                        <Binding Path="OpenResultModifiers" />
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OrdinalConverter}" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
+                            <Image x:Name="ImageIcon" Width="32" Height="32" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}"  Margin="0 0 0 0" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Glyph.Glyph}" FontFamily="{Binding Glyph.FontFamily}" Visibility="{Binding ShowGlyph}" Style="{DynamicResource ItemGlyph}"/>
+                        </Border>
+                        <Grid Margin="6 0 10 0" Grid.Column="1" HorizontalAlignment="Stretch">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" x:Name="SubTitleRowDefinition" />
                             </Grid.RowDefinitions>
-                            <StackPanel Visibility="{Binding ShowOpenResultHotkey}">
-                                <TextBlock Margin="0 5 5 0" Style="{DynamicResource ItemSubTitleStyle}" HorizontalAlignment="Right" Opacity="0.8" >
-                                    <TextBlock.Visibility>
-                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" />
-                                    </TextBlock.Visibility>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0}+{1}">
-                                            <Binding Path="OpenResultModifiers" />
-                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OrdinalConverter}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </StackPanel>
+
                             <TextBlock Style="{DynamicResource ItemTitleStyle}" DockPanel.Dock="Left"
                                        VerticalAlignment="Center" ToolTip="{Binding ShowTitleToolTip}" x:Name="Title"
                                        Text="{Binding Result.Title}">
@@ -83,17 +86,20 @@
                                     </MultiBinding>
                                 </vm:ResultsViewModel.FormattedText>
                             </TextBlock>
+
                         </Grid>
+
                     </Grid>
                 </Button.Content>
             </Button>
-            <!-- a result item height is 50 including margin -->
+            <!-- a result item height is 52 including margin -->
             <DataTemplate.Triggers>
                 <DataTrigger
                     Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
                     Value="True">
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
+                    <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
                     <Setter TargetName="ImageIcon" Property="Style" Value="{DynamicResource ItemImageSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
@@ -104,7 +110,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="50" />
+            <Setter Property="Height" Value="52" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />
