@@ -33,10 +33,56 @@
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>
+        <Style  TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="#0C000000"></Setter>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#00000000"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <XmlDataProvider x:Key="InventoryData" XPath="Inventory/Books">
+            <x:XData>
+                <Inventory xmlns="" version="1.0" encoding="UTF-8">
+                    <Books>
+                        <Book ISBN="0-7356-1370-2" Stock="in" Number="8">
+                            <Title>F1</Title>
+                            <Summary>Toggle Help Window</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-0562-9" Stock="in" Number="9">
+                            <Title>F2</Title>
+                            <Summary>Preview Toggle</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-0562-9" Stock="in" Number="9">
+                            <Title>Ctrl+Enter</Title>
+                            <Summary>Open Contaning Folder</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>Ctrl+Shift+Enter</Title>
+                            <Summary>Run as Admin</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>Ctrl+C</Title>
+                            <Summary>Copy File Path</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>Shift+Enter</Title>
+                            <Summary>Open Context Menu</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>ESC</Title>
+                            <Summary>Back to Result in Context Menu</Summary>
+                        </Book>
+                    </Books>
+                </Inventory>
+            </x:XData>
+        </XmlDataProvider>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
-        <KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>
+        <!--<KeyBinding Key="F1" Command="{Binding StartHelpCommand}"></KeyBinding>-->
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Command="{Binding SelectNextItemCommand}"></KeyBinding>
         <KeyBinding Key="Tab" Modifiers="Shift" Command="{Binding SelectPrevItemCommand}"></KeyBinding>
@@ -165,6 +211,49 @@
                         <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
                          </ContentControl>
                 </Border>
+
+                <Border VerticalAlignment="Center" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" BorderThickness="0 1 0 1" BorderBrush="#cecece">
+                    <Border.Clip>
+                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </Border.Clip>
+                    <StackPanel>
+                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+
+                            <ListBox AlternationCount="2" Focusable="False" Width="420" DockPanel.Dock="Right">
+                            <ListBox.ItemsSource>
+                                <Binding Source="{StaticResource InventoryData}"
+               XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
+                            </ListBox.ItemsSource>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="20 8 4 8">
+                                            <DockPanel LastChildFill="True">
+                                                <TextBlock FontSize="13" Foreground="#96000000" TextAlignment="Left" Width="120" FontWeight="SemiBold" Margin="0 0 10 0" DockPanel.Dock="Left">
+                                                <TextBlock.Text>
+                                                     <Binding XPath="Title"/>
+                                                </TextBlock.Text>
+                                        </TextBlock>
+                                        <TextBlock FontSize="13" Foreground="#7C7C7C">
+                                            <TextBlock.Text>
+                                                <Binding XPath="Summary"/>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                        
+                                    </DockPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                            <Border Background="#00C39C57" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0 0 1 0" BorderBrush="#cecece">
+                            </Border>
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
+
                 <Border VerticalAlignment="Center" x:Name="TipBox" Style="{DynamicResource TipBoxStyle}" Margin="0 10 0 10">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -179,8 +268,10 @@
                     </StackPanel>
                 </Border>
 
-                <UniformGrid Columns="2" Rows="5" Name="TipGrid">
-                </UniformGrid>
+
+         
+
+
             </StackPanel>
         </Border>
     </Grid>

@@ -321,10 +321,12 @@ namespace Flow.Launcher
             {
                 case Key.Down:
                     _viewModel.SelectNextItemCommand.Execute(null);
+                    //Starter.Visibility = Visibility.Visible;
                     e.Handled = true;
                     break;
                 case Key.Up:
                     _viewModel.SelectPrevItemCommand.Execute(null);
+                    //Starter.Visibility = Visibility.Collapsed;
                     e.Handled = true;
                     break;
                 case Key.PageDown:
@@ -353,6 +355,9 @@ namespace Flow.Launcher
                         TipSelector();
                     }
                     break;
+                case Key.F1:
+                    StarterToggle();
+                    break;
                 default:
                     break;
 
@@ -362,6 +367,18 @@ namespace Flow.Launcher
         private void MoveQueryTextToEnd()
         {
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
+        }
+
+        public void StarterToggle()
+        {
+            if (Starter.Visibility != Visibility.Visible)
+            {
+                Starter.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Starter.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void TipSelector()
@@ -380,15 +397,15 @@ namespace Flow.Launcher
                 if (QueryTextBox.CaretIndex == QueryTextBox.Text.Length
                            && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
                 {
-                    TipText1.Text = "컨텍스트 메뉴 : Ctrl+O 또는 → | 포함된 폴더 열기 : Ctrl+Enter";
+                    TipText1.Text = "컨텍스트 메뉴 : → 또는 Ctrl+O | 포함된 폴더 열기 : Ctrl+Enter";
             }
                 else if (string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
                 {
-                    TipText1.Text = "결과로 돌아가기 : ESC 또는 ←";
+                    TipText1.Text = "결과로 돌아가기 : ← 또는 ESC";
                }
                 else
                 {
-                    TipText1.Text = "컨텍스트 메뉴 : Ctrl+O 또는 → | 포함된 폴더 열기 : Ctrl+Enter";
+                    TipText1.Text = "컨텍스트 메뉴 : → 또는 Ctrl+O | 포함된 폴더 열기 : Ctrl+Enterr";
             }
      
         }
