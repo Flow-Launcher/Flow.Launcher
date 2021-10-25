@@ -19,8 +19,8 @@ namespace Flow.Launcher
         {
             /* Using Windows Notification System */
             var Icon = !File.Exists(iconPath)
-                ? ImageLoader.Load(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"))
-                : ImageLoader.Load(iconPath);
+                ? Path.Combine(Constant.ProgramDirectory, "Images\\app.png")
+                : iconPath;
 
             var xml = $"<?xml version=\"1.0\"?><toast><visual><binding template=\"ToastImageAndText04\"><image id=\"1\" src=\"{Icon}\" alt=\"meziantou\"/><text id=\"1\">{title}</text>" +
                 $"<text id=\"2\">{subTitle}</text></binding></visual></toast>";
