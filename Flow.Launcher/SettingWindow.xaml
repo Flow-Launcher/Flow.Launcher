@@ -401,7 +401,6 @@
             </TabItem.Header>
 
             <ScrollViewer ScrollViewer.CanContentScroll="False"
-                          ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
                           Margin="0,0,0,0" Background="#f3f3f3">
                 <StackPanel Orientation="Vertical" Margin="5,18,25,30">
                     <TextBlock Text="{DynamicResource general}" Grid.Row="2" TextAlignment="left" FontSize="30"
@@ -649,7 +648,7 @@
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="5, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
-                             Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
+                             Padding="0 0 7 0" Width="Auto" HorizontalAlignment="Stretch" SnapsToDevicePixels="True">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Margin="0,0,0,18"/>
@@ -902,7 +901,7 @@
                              ItemsSource="{Binding ExternalPlugins}"
                              Margin="6, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource StoreList}" SelectionMode="Single"
-                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"  ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}">
+                             Padding="0 0 0 0" Width="Auto" VerticalContentAlignment="Center" HorizontalAlignment="Stretch">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid IsItemsHost="True" HorizontalAlignment="Left" Columns="2" Margin="0 0 6 18" VerticalAlignment="Top" SnapsToDevicePixels="True"/>
@@ -1038,7 +1037,6 @@
             </TabItem.Header>
             <Border Padding=" 0 0 0 0 ">
                 <ScrollViewer ScrollViewer.CanContentScroll="False"
-                              ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
                               Margin="0,0,0,0" Background="#f3f3f3" Padding="6 0 24 0">
                     <Grid Margin="0 0 0 0" Background="#f3f3f3">
                         <Grid.RowDefinitions>
@@ -1314,7 +1312,6 @@
                 </Grid>
             </TabItem.Header>
             <ScrollViewer ScrollViewer.CanContentScroll="False"
-                          ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
                           Margin="0,0,0,0" Background="#f3f3f3" Padding="0 0 6 0">
                 <Border Background="#f3f3f3">
                     <Grid Margin="5 18 18 10">
@@ -1442,7 +1439,6 @@
                 </Grid>
             </TabItem.Header>
             <ScrollViewer ScrollViewer.CanContentScroll="False"
-                          ui:ScrollViewerHelper.AutoHideScrollBars="{Binding AutoHideScrollBar, Mode=OneWay}"
                           Margin="0,0,0,0" Background="#f3f3f3" Padding="5 0 24 0">
                 <Border Background="#f3f3f3">
 
