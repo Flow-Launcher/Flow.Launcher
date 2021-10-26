@@ -774,7 +774,7 @@
                                                         <Style TargetType="{x:Type Border}">
                                                             <Setter Property="Visibility" Value="Visible" />
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=SettingControl, Path=ActualHeight}" Value="0">
+                                                                <DataTrigger Binding="{Binding ElementName=PluginSettingControl, Path=ActualHeight}" Value="0">
                                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                                     <Setter Property="BorderThickness" Value="0" />
                                                                     <Setter Property="Padding" Value="0" />
@@ -784,7 +784,7 @@
                                                     </Border.Style>
                                                 </Border>
                                                 <!--#endregion-->
-                                                <ContentControl x:Name="SettingControl" 
+                                                <ContentControl x:Name="PluginSettingControl" 
                                                         Content="{Binding SettingControl}"
                                                         Padding="1" Margin="0" VerticalAlignment="Stretch"
                                                         MaxWidth="750" MaxHeight="550">
