@@ -312,6 +312,12 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowSize = value;
         }
 
+        public bool BeginnersGuide
+        {
+            get => Settings.BeginnerGuide;
+            set => Settings.BeginnerGuide = value;
+        }
+
         public bool UseGlyphIcons
         {
             get => Settings.UseGlyphIcons;

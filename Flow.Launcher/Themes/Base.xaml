@@ -239,11 +239,33 @@
     </Style>
 
     <Style x:Key="StartHereMessage" TargetType="TextBlock">
-        <Setter Property="Visibility" Value="Collapsed" />
+        <Setter Property="Foreground" Value="#FFB8B8B8"/>
+        <Setter Property="Opacity" Value="1" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
-                <Setter Property="Visibility" Value="Visible" />
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.0" To="1" Duration="0:0:0.2"
+                                    />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="1" To="0.0" Duration="0:0:0.2"
+                                    />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+
             </DataTrigger>
+
         </Style.Triggers>
     </Style>
     

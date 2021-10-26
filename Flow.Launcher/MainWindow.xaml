@@ -72,6 +72,14 @@
                             <Summary>Open Context Menu</Summary>
                         </Book>
                         <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>Ctrl+Backspace</Title>
+                            <Summary>Clear Query</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>Ctrl+H</Title>
+                            <Summary>Clear Query</Summary>
+                        </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
                             <Title>ESC</Title>
                             <Summary>Back to Result in Context Menu</Summary>
                         </Book>
@@ -145,7 +153,7 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
-                        <TextBlock Style="{DynamicResource StartHereMessage}" Canvas.Right="44" IsHitTestVisible="false" Opacity="0.25" FontSize="14" Canvas.Top="6">Search Here or Press F1 to Open the Guide</TextBlock>
+                        <TextBlock Style="{DynamicResource StartHereMessage}" TextAlignment="Right" Canvas.Right="55" IsHitTestVisible="false" FontSize="14" Canvas.Top="6">Press F1 for Help</TextBlock>
                         <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
                     </Canvas>
                 </Grid>
@@ -258,11 +266,7 @@
                         <TextBlock VerticalAlignment="Center" Style="{DynamicResource ItemHotkeyStyle}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
                     </StackPanel>
                 </Border>
-
-
-         
-
-
+                
             </StackPanel>
         </Border>
     </Grid>
