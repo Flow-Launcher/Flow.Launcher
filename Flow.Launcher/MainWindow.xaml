@@ -36,7 +36,7 @@
         <Style  TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="#0C000000"></Setter>
+                    <Setter Property="Background" Value="#10828282"></Setter>
                 </Trigger>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="1">
                     <Setter Property="Background" Value="#00000000"></Setter>
@@ -212,47 +212,39 @@
                          </ContentControl>
                 </Border>
 
-                <Border VerticalAlignment="Center" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" BorderThickness="0 1 0 1" BorderBrush="#cecece">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
-                        </MultiBinding>
-                    </Border.Clip>
-                    <StackPanel>
-                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
-
-                            <ListBox AlternationCount="2" Focusable="False" Width="420" DockPanel.Dock="Right">
-                            <ListBox.ItemsSource>
-                                <Binding Source="{StaticResource InventoryData}"
+                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="4" VerticalOffset="0" IsOpen="True">
+                    <Border Style="{DynamicResource WindowBorderStyle}" CornerRadius="5">
+                        <StackPanel>
+                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 5 0 5">
+                                <ListBox AlternationCount="2" Focusable="False" Width="380" DockPanel.Dock="Right" Background="Transparent">
+                                <ListBox.ItemsSource>
+                                    <Binding Source="{StaticResource InventoryData}"
                XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
-                            </ListBox.ItemsSource>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Padding="20 8 4 8">
+                                </ListBox.ItemsSource>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="20 8 4 8">
                                             <DockPanel LastChildFill="True">
-                                                <TextBlock FontSize="13" Foreground="#96000000" TextAlignment="Left" Width="120" FontWeight="SemiBold" Margin="0 0 10 0" DockPanel.Dock="Left">
-                                                <TextBlock.Text>
-                                                     <Binding XPath="Title"/>
-                                                </TextBlock.Text>
-                                        </TextBlock>
-                                        <TextBlock FontSize="13" Foreground="#7C7C7C">
-                                            <TextBlock.Text>
-                                                <Binding XPath="Summary"/>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                        
-                                    </DockPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                            <Border Background="#00C39C57" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0 0 1 0" BorderBrush="#cecece">
-                            </Border>
+                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemTitleStyle}" TextAlignment="Left" Width="120" FontWeight="SemiBold" Margin="0 0 0 0" DockPanel.Dock="Left">
+                                                    <TextBlock.Text>
+                                                        <Binding XPath="Title"/>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemSubTitleStyle}">
+                                                    <TextBlock.Text>
+                                                        <Binding XPath="Summary"/>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </DockPanel>
                     </StackPanel>
-                </Border>
+                    </Border>
+                </Popup>
 
                 <Border VerticalAlignment="Center" x:Name="TipBox" Style="{DynamicResource TipBoxStyle}" Margin="0 10 0 10">
                     <Border.Clip>

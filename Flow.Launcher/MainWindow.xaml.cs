@@ -371,13 +371,13 @@ namespace Flow.Launcher
 
         public void StarterToggle()
         {
-            if (Starter.Visibility != Visibility.Visible)
+            if (Starter.IsOpen != true)
             {
-                Starter.Visibility = Visibility.Visible;
+                Starter.IsOpen = true;
             }
             else
             {
-                Starter.Visibility = Visibility.Collapsed;
+                Starter.IsOpen = false;
             }
         }
 

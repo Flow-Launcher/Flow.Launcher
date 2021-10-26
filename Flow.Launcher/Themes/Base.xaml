@@ -253,8 +253,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="StarterStyle" TargetType="Border">
-        <Setter Property="Visibility" Value="Collapsed" />
+    <Style x:Key="StarterStyle" TargetType="Popup">
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
                 <Setter Property="Visibility" Value="Collapsed" />
