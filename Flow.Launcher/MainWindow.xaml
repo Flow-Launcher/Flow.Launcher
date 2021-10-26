@@ -36,10 +36,10 @@
         <Style  TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="#10828282"></Setter>
+                    <Setter Property="Background" Value="Transparent"></Setter>
                 </Trigger>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="#00000000"></Setter>
+                    <Setter Property="Background" Value="#10828282"></Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -212,10 +212,10 @@
                          </ContentControl>
                 </Border>
 
-                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="4" VerticalOffset="0" IsOpen="True">
-                    <Border Style="{DynamicResource WindowBorderStyle}" CornerRadius="5">
+                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="-2" IsOpen="True" AllowsTransparency="True">
+                    <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
-                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 5 0 5">
+                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
                                 <ListBox AlternationCount="2" Focusable="False" Width="380" DockPanel.Dock="Right" Background="Transparent">
                                 <ListBox.ItemsSource>
                                     <Binding Source="{StaticResource InventoryData}"
