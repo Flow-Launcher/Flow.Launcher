@@ -323,11 +323,13 @@ namespace Flow.Launcher
                     _viewModel.SelectNextItemCommand.Execute(null);
                     //Starter.Visibility = Visibility.Visible;
                     e.Handled = true;
+                    TipSelector();
                     break;
                 case Key.Up:
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     //Starter.Visibility = Visibility.Collapsed;
                     e.Handled = true;
+                    TipSelector();
                     break;
                 case Key.PageDown:
                     _viewModel.SelectNextPageCommand.Execute(null);
@@ -397,15 +399,15 @@ namespace Flow.Launcher
                 if (QueryTextBox.CaretIndex == QueryTextBox.Text.Length
                            && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
                 {
-                    TipText1.Text = "컨텍스트 메뉴 : → 또는 Ctrl+O | 포함된 폴더 열기 : Ctrl+Enter";
+                    TipText1.Text = "Context Menu : → | Containing Folder : Ctrl+Enter";
             }
                 else if (string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
                 {
-                    TipText1.Text = "결과로 돌아가기 : ← 또는 ESC";
+                    TipText1.Text = "Back to Result : ← or ESC";
                }
                 else
                 {
-                    TipText1.Text = "컨텍스트 메뉴 : → 또는 Ctrl+O | 포함된 폴더 열기 : Ctrl+Enterr";
+                    TipText1.Text = "Search Anything, Press F1 to Small Guide";
             }
      
         }

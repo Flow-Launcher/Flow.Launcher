@@ -145,6 +145,7 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
+                        <TextBlock Style="{DynamicResource StartHereMessage}" Canvas.Right="44" IsHitTestVisible="false" Opacity="0.25" FontSize="14" Canvas.Top="6">Search Here or Press F1 to Open the Guide</TextBlock>
                         <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
                     </Canvas>
                 </Grid>
@@ -212,31 +213,29 @@
                          </ContentControl>
                 </Border>
 
-                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="-2" IsOpen="True" AllowsTransparency="True">
+                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="-1" AllowsTransparency="True">
                     <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
-                                <ListBox AlternationCount="2" Focusable="False" Width="380" DockPanel.Dock="Right" Background="Transparent">
+                                <ListBox AlternationCount="2" Focusable="False" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent">
                                 <ListBox.ItemsSource>
-                                    <Binding Source="{StaticResource InventoryData}"
-               XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
+                                    <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
                                 </ListBox.ItemsSource>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Padding="20 8 4 8">
+                                        <Border Padding="14 8 4 8">
                                             <DockPanel LastChildFill="True">
-                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemTitleStyle}" TextAlignment="Left" Width="120" FontWeight="SemiBold" Margin="0 0 0 0" DockPanel.Dock="Left">
+                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemTitleStyle}" TextAlignment="Left" FontWeight="SemiBold" Margin="0 0 12 0" DockPanel.Dock="Left">
                                                     <TextBlock.Text>
                                                         <Binding XPath="Title"/>
                                                     </TextBlock.Text>
                                                 </TextBlock>
-                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemSubTitleStyle}">
-                                                    <TextBlock.Text>
-                                                        <Binding XPath="Summary"/>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-
-                                            </DockPanel>
+                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemSubTitleStyle}" Margin="0 0 12 0">
+                                                        <TextBlock.Text>
+                                                            <Binding XPath="Summary"/>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DockPanel>
                                         </Border>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -246,7 +245,7 @@
                     </Border>
                 </Popup>
 
-                <Border VerticalAlignment="Center" x:Name="TipBox" Style="{DynamicResource TipBoxStyle}" Margin="0 10 0 10">
+                <Border VerticalAlignment="Center" x:Name="TipBox" Style="{DynamicResource TipBoxStyle}" Margin="0 10 0 0" Padding="0 0 0 0">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
@@ -256,7 +255,7 @@
                     </Border.Clip>
                     <StackPanel>
                         <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
-                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource ItemHotkeyStyle}" LineHeight="15" Margin="0 0 0 0" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource ItemHotkeyStyle}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
                     </StackPanel>
                 </Border>
 
