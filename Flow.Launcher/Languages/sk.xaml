@@ -31,8 +31,6 @@
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
     <system:String x:Key="pythonDirectory">Priečinok s Pythonom</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
-    <system:String x:Key="autoHideScrollBar">Automaticky skryť posuvník</system:String>
-    <system:String x:Key="autoHideScrollBarToolTip">Automaticky skrývať posuvník v okne nastavení a zobraziť ho, keď naň prejdete myšou</system:String>
     <system:String x:Key="selectPythonDirectory">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
