@@ -90,8 +90,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
-                msg.Show(title, subTitle, iconPath);
+                Notification.Show(title, subTitle, iconPath);
             });
         }
 

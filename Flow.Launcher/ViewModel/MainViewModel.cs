@@ -272,19 +272,14 @@ namespace Flow.Launcher.ViewModel
 
             ReloadPluginDataCommand = new RelayCommand(_ =>
             {
-                var msg = new Msg
-                {
-                    Owner = Application.Current.MainWindow
-                };
-
                 Hide();
-
+                
                 PluginManager
                     .ReloadData()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            msg.Show(
+                            Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
                                 "");
