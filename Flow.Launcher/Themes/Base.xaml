@@ -254,7 +254,6 @@
     </Style>
 
     <!-- Guide UI Styles -->
-    
      
     <Storyboard x:Key="FadeIn">
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1" Duration="0:0:0.2"/>
@@ -284,50 +283,8 @@
                     <BeginStoryboard Storyboard="{StaticResource RemoveFade}" />
                 </MultiDataTrigger.ExitActions>
             </MultiDataTrigger>
-            <!--
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
-                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
-                </MultiDataTrigger.Conditions>
-                <MultiDataTrigger.EnterActions>
-                    <BeginStoryboard Storyboard="{StaticResource FadeIn}" />
-                </MultiDataTrigger.EnterActions>
-                <MultiDataTrigger.ExitActions>
-                    <BeginStoryboard Storyboard="{StaticResource FadeOut}" />
-                </MultiDataTrigger.ExitActions>
-            </MultiDataTrigger>
-            -->
-            <!--
-            <DataTrigger Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard Storyboard="{StaticResource FadeIn}" />
-                </DataTrigger.EnterActions>
-                <DataTrigger.ExitActions>
-                    <BeginStoryboard Storyboard="{StaticResource FadeOut}" />
-                </DataTrigger.ExitActions>
-            </DataTrigger>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
-                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
-                </MultiDataTrigger.Conditions>
-                <Setter Property="Opacity" Value="0" />
-            </MultiDataTrigger>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
-                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
-                </MultiDataTrigger.Conditions>
-                <Setter Property="Opacity" Value="0" />
-            </MultiDataTrigger>
-            -->
         </Style.Triggers>
     </Style>
-
-   
 
     <Style x:Key="SmallTipStyle" TargetType="Border">
         <Setter Property="Visibility" Value="Collapsed" />
@@ -374,6 +331,16 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="HotKeyPopupListStyle" TargetType="{x:Type ListBoxItem}">
+        <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="Transparent"></Setter>
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="#10828282"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!--for classic themes-->
     <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">

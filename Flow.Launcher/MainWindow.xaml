@@ -33,16 +33,6 @@
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Style.Triggers>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="Transparent"></Setter>
-                </Trigger>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="#10828282"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <XmlDataProvider x:Key="InventoryData" XPath="Inventory/Books">
             <x:XData>
                 <Inventory xmlns="" version="1.0" encoding="UTF-8">
@@ -225,7 +215,7 @@
                     <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
-                                <ListBox AlternationCount="2" Focusable="False" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent">
+                                <ListBox AlternationCount="2" Focusable="False" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent" ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}">
                                 <ListBox.ItemsSource>
                                     <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
                                 </ListBox.ItemsSource>
