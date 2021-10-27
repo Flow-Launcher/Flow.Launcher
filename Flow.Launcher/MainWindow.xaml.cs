@@ -268,6 +268,7 @@ namespace Flow.Launcher
             {
                 _viewModel.Hide();
             }
+            HotkeyPopup.IsOpen = false;
         }
 
         private void UpdatePosition()
