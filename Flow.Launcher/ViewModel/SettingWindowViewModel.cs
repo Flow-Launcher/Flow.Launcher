@@ -314,8 +314,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool BeginnersGuide
         {
-            get => Settings.BeginnerGuide;
-            set => Settings.BeginnerGuide = value;
+            get => Settings.BeginnersGuide;
+            set => Settings.BeginnersGuide = value;
         }
 
         public bool UseGlyphIcons

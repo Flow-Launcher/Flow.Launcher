@@ -221,7 +221,7 @@
                          </ContentControl>
                 </Border>
 
-                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="-1" AllowsTransparency="True">
+                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="0" AllowsTransparency="True">
                     <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">

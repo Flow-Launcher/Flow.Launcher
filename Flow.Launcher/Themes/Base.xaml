@@ -272,7 +272,11 @@
     <Style x:Key="TipBoxStyle" TargetType="Border">
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
+            <DataTrigger Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            
+            <!--<DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
                 <Setter Property="Visibility" Value="Visible" />
             </DataTrigger>
             <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
@@ -280,7 +284,7 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
                 <Setter Property="Visibility" Value="Collapsed" />
-            </DataTrigger>
+            </DataTrigger>-->
         </Style.Triggers>
     </Style>
 

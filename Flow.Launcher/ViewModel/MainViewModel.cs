@@ -70,6 +70,10 @@ namespace Flow.Launcher.ViewModel
                 {
                     OnPropertyChanged(nameof(MainWindowWidth));
                 }
+                else if (args.PropertyName == nameof(Settings.BeginnersGuide))
+                {
+                    OnPropertyChanged(nameof(BeginnersGuide));
+                }
             };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
@@ -387,6 +391,7 @@ namespace Flow.Launcher.ViewModel
         public Visibility MainWindowVisibility { get; set; }
 
         public double MainWindowWidth => _settings.WindowSize;
+        public bool BeginnersGuide => _settings.BeginnersGuide;
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }

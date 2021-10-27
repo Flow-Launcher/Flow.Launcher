@@ -692,8 +692,7 @@
                                         <TextBlock Text="Beginner's Guide under Result" Style="{DynamicResource SettingTitleLabel}"/>
                                         <TextBlock Text="If you want to know the more shortcut, press F1 in Search box." Style="{DynamicResource SettingSubTitleLabel}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="0"
-                                    Checked="OnAutoStartupChecked" Unchecked="OnAutoStartupUncheck" Style="{DynamicResource SideControlCheckBox}">
+                                    <CheckBox IsChecked="{Binding BeginnersGuide, Mode=TwoWay}" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="0" Style="{DynamicResource SideControlCheckBox}">
                                     </CheckBox>
                                     <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20" Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
                                       &#xe897;

@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
-        public bool BeginnerGuide { get; set; } = true;
+        public bool BeginnersGuide { get; set; } = true;
 
         public string Language
         {
