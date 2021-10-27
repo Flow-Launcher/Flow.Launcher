@@ -272,19 +272,30 @@
     <Style x:Key="TipBoxStyle" TargetType="Border">
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            
-            <!--<DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
+            <DataTrigger Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="False">
                 <Setter Property="Visibility" Value="Collapsed" />
-            </DataTrigger>-->
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
         </Style.Triggers>
     </Style>
 
