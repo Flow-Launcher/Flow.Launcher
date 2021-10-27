@@ -83,8 +83,8 @@
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
-    <system:String x:Key="openResultModifiers">Open Result Modifiers</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier to action results via keyboard.</system:String>
+    <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
