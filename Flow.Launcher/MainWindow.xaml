@@ -33,7 +33,7 @@
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>
-        <Style  TargetType="{x:Type ListBoxItem}">
+        <Style TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                     <Setter Property="Background" Value="Transparent"></Setter>
@@ -221,7 +221,7 @@
                          </ContentControl>
                 </Border>
 
-                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="Starter" Style="{DynamicResource StarterStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="0" AllowsTransparency="True">
+                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="HotkeyPopup" Style="{DynamicResource HotkeyPopupStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="0" AllowsTransparency="True">
                     <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
@@ -229,7 +229,7 @@
                                 <ListBox.ItemsSource>
                                     <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
                                 </ListBox.ItemsSource>
-                                <ListBox.ItemTemplate>
+                                    <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Border Padding="14 8 4 8">
                                             <DockPanel LastChildFill="True">
@@ -253,7 +253,7 @@
                     </Border>
                 </Popup>
 
-                <Border VerticalAlignment="Center" x:Name="TipBox" Style="{DynamicResource TipBoxStyle}" Margin="0 10 0 0" Padding="0 0 0 0">
+                <Border VerticalAlignment="Center" x:Name="SmallTip" Style="{DynamicResource SmallTipStyle}" Margin="0 10 0 0" Padding="0 0 0 0">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>

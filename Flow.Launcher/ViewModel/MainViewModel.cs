@@ -725,7 +725,8 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 var main = new MainWindow();
-                main.Starter.IsOpen = false;
+                main.HotkeyPopup.IsOpen = false;
+
                 switch (_settings.LastQueryMode)
                 {
                     case LastQueryMode.Empty:

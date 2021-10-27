@@ -358,7 +358,7 @@ namespace Flow.Launcher
                     }
                     break;
                 case Key.F1:
-                    StarterToggle();
+                    HotkeyPopupToggle();
                     break;
                 default:
                     break;
@@ -371,15 +371,15 @@ namespace Flow.Launcher
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
 
-        public void StarterToggle()
+        public void HotkeyPopupToggle()
         {
-            if (Starter.IsOpen != true)
+            if (HotkeyPopup.IsOpen != true)
             {
-                Starter.IsOpen = true;
+                HotkeyPopup.IsOpen = true;
             }
             else
             {
-                Starter.IsOpen = false;
+                HotkeyPopup.IsOpen = false;
             }
         }
 
