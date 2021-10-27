@@ -316,8 +316,8 @@ namespace Flow.Launcher.ViewModel
         private string _queryText;
 
         public string QueryText
-        {
-            get => _queryText;
+        {            
+            get => _queryText;         
             set
             {
                 _queryText = value;

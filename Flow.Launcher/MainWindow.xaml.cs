@@ -74,7 +74,7 @@ namespace Flow.Launcher
             // so we need set focus during startup
             QueryTextBox.Focus();
 
-            TipSelector();
+            
 
             _viewModel.PropertyChanged += (o, e) =>
             {
@@ -322,15 +322,11 @@ namespace Flow.Launcher
             {
                 case Key.Down:
                     _viewModel.SelectNextItemCommand.Execute(null);
-                    //Starter.Visibility = Visibility.Visible;
                     e.Handled = true;
-                    TipSelector();
                     break;
                 case Key.Up:
                     _viewModel.SelectPrevItemCommand.Execute(null);
-                    //Starter.Visibility = Visibility.Collapsed;
-                    e.Handled = true;
-                    TipSelector();
+                    e.Handled = true; 
                     break;
                 case Key.PageDown:
                     _viewModel.SelectNextPageCommand.Execute(null);
@@ -347,7 +343,6 @@ namespace Flow.Launcher
                     {
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
-                        TipSelector();
                     }
                     break;
                 case Key.Left:
@@ -355,7 +350,6 @@ namespace Flow.Launcher
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
-                        TipSelector();
                     }
                     break;
                 case Key.F1:
@@ -384,7 +378,7 @@ namespace Flow.Launcher
             }
         }
 
-        public void TipSelector()
+        public void SmallTipSelector()
         {
             /*
             var selected = ResultListBox.SelectedItem;

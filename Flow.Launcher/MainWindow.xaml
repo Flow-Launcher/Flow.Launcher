@@ -211,11 +211,11 @@
                          </ContentControl>
                 </Border>
 
-                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="HotkeyPopup" Style="{DynamicResource HotkeyPopupStyle}" Margin="0 0 0 0" Placement="Right"  HorizontalOffset="6" VerticalOffset="0" AllowsTransparency="True">
+                <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="HotkeyPopup" Style="{DynamicResource HotkeyPopupStyle}" Margin="12" Placement="Right"  HorizontalOffset="0" VerticalOffset="-1" AllowsTransparency="True">
                     <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
-                                <ListBox AlternationCount="2" Focusable="False" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent" ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}">
+                                <ListBox AlternationCount="2" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent" ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}">
                                 <ListBox.ItemsSource>
                                     <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
                                 </ListBox.ItemsSource>
