@@ -272,7 +272,7 @@ namespace Flow.Launcher.ViewModel
 
         #region theme
 
-        public static string Theme => @"http://www.wox.one/theme/builder";
+        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
 
         public string SelectedTheme
         {

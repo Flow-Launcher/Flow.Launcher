@@ -1176,7 +1176,7 @@
                                 <TextBlock DockPanel.Dock="Top" Margin="10" HorizontalAlignment="Right">
                                     <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}"
                                                RequestNavigate="OnRequestNavigate">
-                                        <Run Text="{DynamicResource browserMoreThemes}" />
+                                        <Run Text="{DynamicResource howToCreateTheme}" />
                                     </Hyperlink>
                                 </TextBlock>
                             </Border>
