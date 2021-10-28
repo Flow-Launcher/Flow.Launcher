@@ -644,7 +644,8 @@
                     <TextBlock Text="{DynamicResource plugin}" TextAlignment="left" FontSize="30" Margin="0 5 0 0"/>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
-                    <ListBox SelectedItem="{Binding SelectedPlugin}"  ScrollViewer.CanContentScroll="False"
+                    <ListBox SelectedItem="{Binding SelectedPlugin}"
+                             ScrollViewer.CanContentScroll="False"
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="5, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
