@@ -81,6 +81,8 @@ namespace Flow.Launcher
             }
         }
 
+
+
         public void SetHotkey(string keyStr, bool triggerValidate = true)
         {
             SetHotkey(new HotkeyModel(keyStr), triggerValidate);

@@ -149,7 +149,8 @@
     <system:String x:Key="actionkeyword_tips">Use * if you don't want to specify an action keyword</system:String>
 
     <!--Custom Query Hotkey Dialog-->
-    <system:String x:Key="customeQueryHotkeyTitle">Custom Plugin Hotkey</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
     <system:String x:Key="preview">Preview</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>

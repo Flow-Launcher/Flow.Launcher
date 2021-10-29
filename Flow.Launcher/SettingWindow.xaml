@@ -19,6 +19,7 @@
         Height="700" Width="1000"
         MinWidth="900"
         MinHeight="600"
+        MouseDown="window_MouseDown"
         Loaded="OnLoaded"
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
