@@ -85,7 +85,7 @@
                     </GridViewColumn>
                     <GridViewColumn Header="{DynamicResource flowlauncher_plugin_websearch_url}"
                                     DisplayMemberBinding="{Binding Url}"
-                                    Width="Auto">
+                                    Width="400">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Url}"/>

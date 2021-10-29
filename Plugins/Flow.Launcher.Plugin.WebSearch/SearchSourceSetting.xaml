@@ -6,60 +6,9 @@
         xmlns:vm="clr-namespace:Flow.Launcher.Plugin.WebSearch"
         mc:Ignorable="d" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="{DynamicResource flowlauncher_plugin_websearch_window_title}" Height="425" Width="550"
+        Title="{DynamicResource flowlauncher_plugin_websearch_window_title}" Height="590" Width="550"
         d:DataContext="{d:DesignInstance vm:SearchSourceViewModel}" Background="#F3F3F3" BorderBrush="#cecece">
     <Grid>
-        <!--
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="60" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock Margin="10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource flowlauncher_plugin_websearch_title}" />
-        <TextBox Text="{Binding SearchSource.Title}" Margin="10" Grid.Row="0" Width="300" Grid.Column="1"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Left" />
-
-        <TextBlock Margin="10" FontSize="14" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource flowlauncher_plugin_websearch_url}" />
-        <TextBox Text="{Binding SearchSource.Url}" Margin="10" Grid.Row="1" Width="300" Grid.Column="1"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Left" />
-
-        <TextBlock Margin="10" FontSize="14" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource flowlauncher_plugin_websearch_action_keyword}" />
-        <TextBox Text="{Binding SearchSource.ActionKeyword}" Margin="10" Grid.Row="2" Width="300" Grid.Column="1"
-                 VerticalAlignment="Center" HorizontalAlignment="Left" />
-
-        <TextBlock Margin="10" FontSize="14" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource flowlauncher_plugin_websearch_enable}" />
-        <CheckBox IsChecked="{Binding SearchSource.Enabled}" Margin="10" Grid.Row="3" Grid.Column="1"
-                  VerticalAlignment="Center" />
-
-        <TextBlock Margin="10" FontSize="14" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource flowlauncher_plugin_websearch_icon}" />
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="10">
-            <Image Name="imgPreviewIcon" Width="24" Height="24" Margin="0 0 20 0" />
-            <Button Click="OnSelectIconClick" Height="35"
-                    Content="{DynamicResource flowlauncher_plugin_websearch_select_icon}" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1">
-            <Button Click="OnCancelButtonClick"
-                    Margin="10 0 10 0" Width="80" Height="35"
-                    Content="{DynamicResource flowlauncher_plugin_websearch_cancel}" />
-            <Button Click="OnConfirmButtonClick"
-                    Margin="10 0 10 0" Width="80" Height="35"
-                    Content="{DynamicResource flowlauncher_plugin_websearch_confirm}" />
-        </StackPanel>
-        -->
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="80"/>
@@ -70,6 +19,14 @@
                     <StackPanel Grid.Row="0" Margin="0 0 0 12">
                         <TextBlock Grid.Column="0" Text="{DynamicResource flowlauncher_plugin_websearch_window_title}"  FontSize="20" FontWeight="SemiBold" FontFamily="Segoe UI" TextAlignment="Left"
                                        Margin="0 0 0 0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock 
+                           Text="{DynamicResource flowlauncher_plugin_websearch_guide_1}" Foreground="#1b1b1b" FontSize="14" TextWrapping="WrapWithOverflow" TextAlignment="Left"/>
+                        <TextBlock 
+                           Text="{DynamicResource flowlauncher_plugin_websearch_guide_2}" FontWeight="SemiBold" Foreground="#1b1b1b" FontSize="14" TextWrapping="WrapWithOverflow" TextAlignment="Center" Margin="0 12 0 12"/>
+                        <TextBlock 
+                           Text="{DynamicResource flowlauncher_plugin_websearch_guide_3}" Foreground="#1b1b1b" FontSize="14" TextWrapping="WrapWithOverflow" TextAlignment="Left" Margin="0 0 0 14"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="10" FontSize="14" VerticalAlignment="Center" Width="100"
