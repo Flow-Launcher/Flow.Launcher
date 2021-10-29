@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:Flow.Launcher.Plugin.WebSearch"
-        mc:Ignorable="d"
+        mc:Ignorable="d" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Title="{DynamicResource flowlauncher_plugin_websearch_window_title}" Height="425" Width="550"
         d:DataContext="{d:DesignInstance vm:SearchSourceViewModel}" Background="#F3F3F3" BorderBrush="#cecece">
