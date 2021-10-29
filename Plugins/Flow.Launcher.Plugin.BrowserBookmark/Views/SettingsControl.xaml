@@ -5,35 +5,69 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              Background="White"
-             d:DesignHeight="300" d:DesignWidth="500">
-    <Grid>
+             d:DesignHeight="300" d:DesignWidth="500"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="90" />
-            <RowDefinition />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <Grid Grid.Row="0" Margin="40 40 0 0">
+            <Grid Grid.Row="0" Margin="30 20 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="160" />
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_openBookmarks}"
-                       FontSize="15" Margin="0 5 0 0"/>
-                <RadioButton Grid.Column="1" Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" 
-                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newWindow}"
-                             Click="OnNewBrowserWindowClick" />
-                <RadioButton Grid.Column="2" Name="NewTabInBrowser" GroupName="OpenSearchBehaviour" 
-                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newTab}" 
-                             Click="OnNewTabClick" />
+                       FontSize="15" Margin="10 5 0 0"/>
+                <RadioButton Grid.Column="1" Name="NewWindowBrowser"
+                             IsChecked="{Binding OpenInNewBrowserWindow}"
+                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newWindow}"/>
+                <RadioButton Grid.Column="2" Name="NewTabInBrowser"
+                             IsChecked="{Binding OpenInNewTab, Mode=OneTime}"
+                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newTab}"/>
             </Grid>
         </StackPanel>
-        <StackPanel VerticalAlignment="Top" Grid.Row="1" Height="106" Margin="41,13,0,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="60" Margin="30,20,0,0">
             <Label Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath}"
-                   Height="28" Margin="0,0,155,0" HorizontalAlignment="Left" Width="290"/>
-            <TextBox x:Name="browserPathBox" HorizontalAlignment="Left" Height="34" TextWrapping="NoWrap" VerticalAlignment="Top" Width="311" RenderTransformOrigin="0.502,-1.668" TextChanged="OnBrowserPathTextChanged" />
-            <Button x:Name="viewButton" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_choose}"
-                    HorizontalAlignment="Left" Margin="340,-35,-1,0" Width="100" Height="34" Click="OnChooseClick" FontSize="14" />
+                   Height="28" Margin="10"/>
+            <TextBox x:Name="BrowserPathBox" 
+                     HorizontalAlignment="Left" 
+                     Height="30" 
+                     TextWrapping="NoWrap" 
+                     VerticalAlignment="Center"
+                     Text="{Binding Settings.BrowserPath}"
+                     Width="240"
+                     Margin="10"/>
+            <Button x:Name="ViewButton" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_choose}"
+                    HorizontalAlignment="Left" Margin="10" Width="100" Height="30" Click="OnChooseClick" FontSize="14" />
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="30,20,0,0">
+            <TextBlock Text="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}" Margin="10"/>
+            <ListView Grid.Row="2" ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
+                      SelectedItem="{Binding SelectedCustomBrowser}"
+                      Margin="10"
+                      BorderBrush="DarkGray"
+                      BorderThickness="1"
+                      Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
+                      Height="auto"
+                      Name="CustomBrowsers"
+                      MouseDoubleClick="MouseDoubleClickOnSelectedCustomBrowser">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" 
+                        Margin="10" Click="NewCustomBrowser" Width="80" />
+                <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" 
+                        Margin="10" Click="DeleteCustomBrowser" Width="80"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

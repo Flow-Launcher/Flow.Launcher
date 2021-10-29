@@ -12,11 +12,11 @@ namespace Flow.Launcher.Plugin.PluginIndicator
         {
             // if query contains more than one word, eg. github tips 
             // user has decided to type something else rather than wanting to see the available action keywords
-            if (query.Terms.Length > 1)
+            if (query.SearchTerms.Length > 1)
                 return new List<Result>();
 
             var results = from keyword in PluginManager.NonGlobalPlugins.Keys
-                          where keyword.StartsWith(query.Terms[0])
+                          where keyword.StartsWith(query.SearchTerms[0])
                           let metadata = PluginManager.NonGlobalPlugins[keyword].Metadata
                           where !metadata.Disabled
                           select new Result
@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                               IcoPath = metadata.IcoPath,
                               Action = c =>
                               {
-                                  context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeperater}");
+                                  context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeparator}");
                                   return false;
                               }
                           };

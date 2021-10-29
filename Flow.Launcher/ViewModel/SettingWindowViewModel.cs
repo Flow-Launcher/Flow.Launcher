@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -46,7 +48,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void UpdateApp()
         {
-            await _updater.UpdateApp(App.API, false);
+            await _updater.UpdateAppAsync(App.API, false);
         }
 
         public bool AutoUpdates
@@ -59,12 +61,6 @@ namespace Flow.Launcher.ViewModel
                 if (value)
                     UpdateApp();
             }
-        }
-
-        public bool AutoHideScrollBar
-        {
-            get => Settings.AutoHideScrollBar;
-            set => Settings.AutoHideScrollBar = value;
         }
 
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
@@ -237,6 +233,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public IList<UserPlugin> ExternalPlugins
+        {
+            get
+            {
+                return PluginsManifest.UserPlugins;
+            }
+        }
+
         public Control SettingProvider
         {
             get
@@ -254,6 +258,12 @@ namespace Flow.Launcher.ViewModel
                     return new Control();
                 }
             }
+        }
+
+        public async Task RefreshExternalPluginsAsync()
+        {
+            await PluginsManifest.UpdateManifestAsync();
+            OnPropertyChanged(nameof(ExternalPlugins));
         }
 
 

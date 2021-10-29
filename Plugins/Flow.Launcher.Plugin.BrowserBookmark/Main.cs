@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public List<Result> Query(Query query)
@@ -45,7 +45,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     Title = c.Name,
                     SubTitle = c.Url,
                     IcoPath = @"Images\bookmark.png",
-                    Score = Bookmarks.MatchProgram(c, param).Score,
+                    Score = BookmarkLoader.MatchProgram(c, param).Score,
                     Action = _ =>
                     {
                         if (_settings.OpenInNewBrowserWindow)
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             cachedBookmarks.Clear();
 
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public string GetTranslatedPluginTitle()

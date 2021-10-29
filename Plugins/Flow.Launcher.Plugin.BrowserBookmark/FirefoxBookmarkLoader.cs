@@ -1,3 +1,4 @@
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class FirefoxBookmarks
+    public class FirefoxBookmarkLoader : IBookmarkLoader
     {
         private const string queryAllBookmarks = @"SELECT moz_places.url, moz_bookmarks.title
               FROM moz_places
@@ -27,10 +28,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             if (string.IsNullOrEmpty(PlacesPath) || !File.Exists(PlacesPath))
                 return new List<Bookmark>();
 
-            var bookmarList = new List<Bookmark>();
+            var bookmarkList = new List<Bookmark>();
 
             // create the connection string and init the connection
-            string dbPath = string.Format(dbPathFormat, PlacesPath);            
+            string dbPath = string.Format(dbPathFormat, PlacesPath);
             using (var dbConnection = new SQLiteConnection(dbPath))
             {
                 // Open connection to the database file and execute the query
@@ -38,14 +39,13 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 var reader = new SQLiteCommand(queryAllBookmarks, dbConnection).ExecuteReader();
 
                 // return results in List<Bookmark> format
-                bookmarList = reader.Select(x => new Bookmark()
-                {
-                    Name = (x["title"] is DBNull) ? string.Empty : x["title"].ToString(),
-                    Url = x["url"].ToString()
-                }).ToList();
+                bookmarkList = reader.Select(
+                    x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(), 
+                        x["url"].ToString())
+                ).ToList();
             }
 
-            return bookmarList;
+            return bookmarkList;
         }
 
         /// <summary>
@@ -63,7 +63,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
                 // get firefox default profile directory from profiles.ini
                 string ini;
-                using (var sReader = new StreamReader(profileIni)) {
+                using (var sReader = new StreamReader(profileIni))
+                {
                     ini = sReader.ReadToEnd();
                 }
 
@@ -95,7 +96,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     Version=2
                 */
 
-                var lines = ini.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
+                var lines = ini.Split(new string[]
+                {
+                    "\r\n"
+                }, StringSplitOptions.None).ToList();
 
                 var defaultProfileFolderNameRaw = lines.Where(x => x.Contains("Default=") && x != "Default=1").FirstOrDefault() ?? string.Empty;
 
@@ -104,14 +108,14 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
                 var defaultProfileFolderName = defaultProfileFolderNameRaw.Split('=').Last();
 
-                var indexOfDefaultProfileAtttributePath = lines.IndexOf("Path="+ defaultProfileFolderName);
+                var indexOfDefaultProfileAtttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
 
                 // Seen in the example above, the IsRelative attribute is always above the Path attribute
                 var relativeAttribute = lines[indexOfDefaultProfileAtttributePath - 1];
 
                 return relativeAttribute == "0" // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
-                        ? defaultProfileFolderName + @"\places.sqlite"
-                        : Path.Combine(profileFolderPath, defaultProfileFolderName) + @"\places.sqlite";
+                    ? defaultProfileFolderName + @"\places.sqlite"
+                    : Path.Combine(profileFolderPath, defaultProfileFolderName) + @"\places.sqlite";
             }
         }
     }

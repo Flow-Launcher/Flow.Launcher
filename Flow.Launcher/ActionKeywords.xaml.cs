@@ -30,7 +30,7 @@ namespace Flow.Launcher
 
         private void ActionKeyword_OnLoaded(object sender, RoutedEventArgs e)
         {
-            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeperater, plugin.Metadata.ActionKeywords.ToArray());
+            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeparator, plugin.Metadata.ActionKeywords.ToArray());
             tbAction.Focus();
         }
 
@@ -44,7 +44,7 @@ namespace Flow.Launcher
             var oldActionKeyword = plugin.Metadata.ActionKeywords[0];
             var newActionKeyword = tbAction.Text.Trim();
             newActionKeyword = newActionKeyword.Length > 0 ? newActionKeyword : "*";
-            if (!pluginViewModel.IsActionKeywordRegistered(newActionKeyword))
+            if (!PluginViewModel.IsActionKeywordRegistered(newActionKeyword))
             {
                 pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);
                 Close();
