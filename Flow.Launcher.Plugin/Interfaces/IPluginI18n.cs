@@ -1,4 +1,6 @@
-﻿namespace Flow.Launcher.Plugin
+﻿using System.Globalization;
+
+namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Represent plugins that support internationalization
@@ -8,5 +10,10 @@
         string GetTranslatedPluginTitle();
 
         string GetTranslatedPluginDescription();
+
+        void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+
+        }
     }
 }
