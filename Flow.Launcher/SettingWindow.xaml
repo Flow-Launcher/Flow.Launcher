@@ -587,6 +587,26 @@
                         </StackPanel>
                     </Border>
 
+                    <Border Style="{DynamicResource SettingGroupBox}" Margin="0 30 0 0" BorderThickness="0">
+                        <ItemsControl Style="{StaticResource SettingGrid}">
+                            <StackPanel Style="{StaticResource TextPanel}">
+                                <TextBlock Grid.Column="1" Text="Default File Manager"
+                                               VerticalAlignment="Center" />
+                                <TextBlock Text="Select the file manager to use when opening the folder."
+                                           Style="{DynamicResource SettingSubTitleLabel}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button Margin="10 0 18 0" MaxWidth="200" Width="120"
+                                        Content="Explorer" Click="OnSelectFileManagerClick"/>
+                            </StackPanel>
+
+                            <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"
+                                               Grid.Column="0" VerticalAlignment="Center" Margin="24 0 16 0">
+                                        &#xe838;
+                            </TextBlock>
+                        </ItemsControl>
+                    </Border>
+
                     <Border Style="{DynamicResource SettingGroupBox}" Margin="0 30 0 0">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
