@@ -19,7 +19,8 @@ using Microsoft.IO;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 using CheckBox = System.Windows.Controls.CheckBox;
 using Control = System.Windows.Controls.Control;
 using Label = System.Windows.Controls.Label;
@@ -47,6 +48,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
 
+        private string SettingConfigurationPath => Path.Combine(context.CurrentPluginMetadata.PluginDirectory, "SettingConfiguration.yaml");
         private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name, "Setting.json");
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -309,32 +311,22 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task InitSettingAsync()
         {
+            if (!File.Exists(SettingConfigurationPath))
+                return;
+
             if (File.Exists(SettingPath))
                 Settings = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(File.OpenRead(SettingPath), options);
 
-            var request = new JsonRPCRequestModel()
-            {
-                Method = "get_setting_template"
-            };
-            await using var result = await RequestAsync(request);
-            if (result.Length == 0)
-                return;
-            var settingsTemplate = await JsonSerializer.DeserializeAsync<Dictionary<string, JsonElement>>(result, options) ??
-                                   new();
+            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+            _settingsTemplate = deserializer.Deserialize<JsonRpcConfigurationModel>(await File.ReadAllTextAsync(SettingConfigurationPath));
 
-            Settings ??= new();
+            Settings ??= new Dictionary<string, object>();
 
-            foreach (var (key, element) in settingsTemplate)
+            foreach (var (type, attribute) in _settingsTemplate.Body)
             {
-                if (!Settings.ContainsKey(key))
+                if (!Settings.ContainsKey(attribute.Name))
                 {
-                    Settings[key] = element.ValueKind switch
-                    {
-                        JsonValueKind.True or JsonValueKind.False => element.GetBoolean(),
-                        JsonValueKind.String or JsonValueKind.Number => element.GetString(),
-                        JsonValueKind.Null => throw new ArgumentNullException(),
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
+                    Settings[attribute.Name] = attribute.DefaultValue;
                 }
             }
         }
@@ -344,7 +336,8 @@ namespace Flow.Launcher.Core.Plugin
             this.context = context;
             await InitSettingAsync();
         }
-        private static Thickness settingControlMargin = new(10);
+        private static readonly Thickness settingControlMargin = new(10);
+        private JsonRpcConfigurationModel _settingsTemplate;
         public Control CreateSettingPanel()
         {
             if (Settings == null)
@@ -352,61 +345,139 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new StackPanel
             {
-                Margin = settingControlMargin,
-                Orientation = Orientation.Vertical
+                Margin = settingControlMargin, Orientation = Orientation.Vertical
             };
             settingWindow.Content = mainPanel;
-            foreach (var (key, value) in Settings)
+
+            foreach (var (type, attribute) in _settingsTemplate.Body)
             {
                 var panel = new StackPanel
                 {
                     Orientation = Orientation.Horizontal,
                     Margin = settingControlMargin
                 };
-                var name = new Label
+                var name = new Label()
                 {
-                    Content = key,
-                    VerticalAlignment = VerticalAlignment.Center
+                    Content = attribute.Label,
+                    Margin = settingControlMargin
                 };
-                UIElement content = null;
-                switch (value)
+
+                Control contentControl;
+
+                switch (type)
                 {
-                    case int i:
-                    case double d:
-                        throw new TypeAccessException();
-                    case string s:
-                        var textBox = new TextBox
+                    case "Input":
                         {
-                            Text = s,
-                            Margin = settingControlMargin,
-                            VerticalAlignment = VerticalAlignment.Center
-                        };
-                        textBox.TextChanged += (_, _) =>
+                            var textBox = new TextBox()
+                            {
+                                Width = 300, Text = Settings[attribute.Name] as string ?? string.Empty,
+                                Margin = settingControlMargin
+                            };
+                            textBox.TextChanged += (_, _) =>
+                            {
+                                Settings[attribute.Name] = textBox.Text;
+                            };
+                            contentControl = textBox;
+                            break;
+                        }
+                    case "textarea":
                         {
-                            Settings[key] = textBox.Text;
-                        };
-                        content = textBox;
-                        break;
-                    case bool b:
+                            var textBox = new TextBox()
+                            {
+                                Width = 300,
+                                Height = 100,
+                                Margin = settingControlMargin,
+                                TextWrapping = TextWrapping.WrapWithOverflow,
+                                Text = Settings[attribute.Name] as string ?? string.Empty
+                            };
+                            textBox.TextChanged += (sender, _) =>
+                            {
+                                Settings[attribute.Name] = ((TextBox)sender).Text;
+                            };
+                            contentControl = textBox;
+                            break;
+                        }
+                    case "dropdown":
+                        {
+                            var comboBox = new ComboBox()
+                            {
+                                ItemsSource = attribute.Options, SelectedItem = Settings[attribute.Name],
+                                Margin = settingControlMargin
+                            };
+                            comboBox.SelectionChanged += (sender, _) =>
+                            {
+                                Settings[attribute.Name] = (string)((ComboBox)sender).SelectedItem;
+                            };
+                            contentControl = comboBox;
+                            break;
+                        }
+                    case "checkbox":
                         var checkBox = new CheckBox
                         {
-                            IsChecked = b,
-                            Margin = settingControlMargin,
-                            VerticalAlignment = VerticalAlignment.Center
+                            IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
+                            Margin = settingControlMargin
                         };
                         checkBox.Click += (_, _) =>
                         {
-                            Settings[key] = checkBox.IsChecked;
+                            Settings[attribute.Name] = !((bool)Settings[attribute.Name]);
                         };
-                        content = checkBox;
+                        contentControl = checkBox;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        continue;
                 }
                 panel.Children.Add(name);
-                panel.Children.Add(content);
+                panel.Children.Add(contentControl);
                 mainPanel.Children.Add(panel);
             }
+
+            // foreach (var (key, value) in Settings)
+            // {
+            //     var panel = new StackPanel
+            //     {
+            //         Orientation = Orientation.Horizontal, Margin = settingControlMargin
+            //     };
+            //     var name = new Label
+            //     {
+            //         Content = key, VerticalAlignment = VerticalAlignment.Center
+            //     };
+            //     UIElement content = null;
+            //     switch (value)
+            //     {
+            //         case int i:
+            //         case double d:
+            //             throw new TypeAccessException();
+            //         case string s:
+            //             var textBox = new TextBox
+            //             {
+            //                 Text = s,
+            //                 Margin = settingControlMargin,
+            //                 VerticalAlignment = VerticalAlignment.Center
+            //             };
+            //             textBox.TextChanged += (_, _) =>
+            //             {
+            //                 Settings[key] = textBox.Text;
+            //             };
+            //             content = textBox;
+            //             break;
+            //         case bool b:
+            //             var checkBox = new CheckBox
+            //             {
+            //                 IsChecked = b,
+            //                 Margin = settingControlMargin,
+            //                 VerticalAlignment = VerticalAlignment.Center
+            //             };
+            //             checkBox.Click += (_, _) =>
+            //             {
+            //                 Settings[key] = checkBox.IsChecked;
+            //             };
+            //             content = checkBox;
+            //             break;
+            //         default:
+            //             throw new ArgumentOutOfRangeException();
+            //     }
+            //     
+            // }
             return settingWindow;
         }
         public void Save()
