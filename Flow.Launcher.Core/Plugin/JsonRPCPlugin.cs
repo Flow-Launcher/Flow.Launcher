@@ -48,8 +48,8 @@ namespace Flow.Launcher.Core.Plugin
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
 
-        private string SettingConfigurationPath => Path.Combine(context.CurrentPluginMetadata.PluginDirectory, "SettingConfiguration.yaml");
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name, "Setting.json");
+        private string SettingConfigurationPath => Path.Combine(context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
+        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name, "Settings.json");
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
@@ -417,9 +417,9 @@ namespace Flow.Launcher.Core.Plugin
                             IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
                             Margin = settingControlMargin
                         };
-                        checkBox.Click += (_, _) =>
+                        checkBox.Click += (sender, _) =>
                         {
-                            Settings[attribute.Name] = !((bool)Settings[attribute.Name]);
+                            Settings[attribute.Name] = ((CheckBox) sender).IsChecked;
                         };
                         contentControl = checkBox;
                         break;
