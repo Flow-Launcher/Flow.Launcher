@@ -71,7 +71,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
 
                     if (result is null && entry.Keywords is not null)
                     {
-                        string[] searchKeywords = query.Terms[(string.IsNullOrEmpty(query.ActionKeyword) ? 0 : 1)..];
+                        string[] searchKeywords = query.SearchTerms;
 
                         if (searchKeywords
                             .All(x => entry

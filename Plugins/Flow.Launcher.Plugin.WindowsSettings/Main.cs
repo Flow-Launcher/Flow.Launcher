@@ -53,6 +53,11 @@ namespace Flow.Plugin.WindowsSettings
         private IEnumerable<WindowsSetting>? _settingsList;
 
         /// <summary>
+        /// List that contains translated string
+        /// </summary>
+        private IEnumerable<WindowsSetting> _translatedSettingList = new List<WindowsSetting>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Main"/> class.
         /// </summary>
         public Main()
@@ -85,7 +90,7 @@ namespace Flow.Plugin.WindowsSettings
             Log.Init(_context.API);
             ResultHelper.Init(_context.API);
 
-            TranslationHelper.TranslateAllSettings(_settingsList);
+            _translatedSettingList = TranslationHelper.TranslateAllSettings(_settingsList);
         }
 
         /// <summary>
@@ -95,13 +100,7 @@ namespace Flow.Plugin.WindowsSettings
         /// <returns>A filtered list, can be empty when nothing was found.</returns>
         public List<Result> Query(Query query)
          {
-            if (_settingsList is null)
-            {
-                return new List<Result>(0);
-            }
-
-
-            var newList = ResultHelper.GetResultList(_settingsList, query, _defaultIconPath);
+            var newList = ResultHelper.GetResultList(_translatedSettingList, query, _defaultIconPath);
             return newList;
 
             

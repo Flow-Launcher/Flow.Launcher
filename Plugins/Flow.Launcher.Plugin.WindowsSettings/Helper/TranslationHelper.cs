@@ -19,12 +19,12 @@ namespace Flow.Plugin.WindowsSettings.Helper
         /// Translate all settings of the given list with <see cref="WindowsSetting"/>.
         /// </summary>
         /// <param name="settingsList">The list that contains <see cref="WindowsSetting"/> to translate.</param>
-        internal static void TranslateAllSettings(in IEnumerable<WindowsSetting>? settingsList)
+        internal static IEnumerable<WindowsSetting> TranslateAllSettings(in IEnumerable<WindowsSetting>? settingsList)
         {
+            var translatedSettings = new List<WindowsSetting>();
+
             if (settingsList is null)
-            {
-                return;
-            }
+                return new List<WindowsSetting>();
 
             foreach (var settings in settingsList)
             {
@@ -47,9 +47,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                     Log.Warn($"Resource string for [{settings.Name}] not found", typeof(Main));
                 }
 
-                settings.Area = area ?? settings.Area ?? string.Empty;
-                settings.Name = name ?? settings.Name ?? string.Empty;
-                settings.Type = type ?? settings.Type ?? string.Empty;
+
 
                 if (!string.IsNullOrEmpty(settings.Note))
                 {
@@ -61,11 +59,10 @@ namespace Flow.Plugin.WindowsSettings.Helper
 
                     settings.Note = note ?? settings.Note ?? string.Empty;
                 }
-
-                if (!(settings.AltNames is null) && settings.AltNames.Any())
+                List<string>? translatedAltNames = null;
+                if (settings.AltNames is not null && settings.AltNames.Any())
                 {
-                    var translatedAltNames = new Collection<string>();
-
+                    translatedAltNames = new List<string>();
                     foreach (var altName in settings.AltNames)
                     {
                         if (string.IsNullOrWhiteSpace(altName))
@@ -82,9 +79,18 @@ namespace Flow.Plugin.WindowsSettings.Helper
                         translatedAltNames.Add(translatedAltName ?? altName);
                     }
 
-                    settings.AltNames = translatedAltNames;
                 }
+                var translatedSetting = new WindowsSetting
+                {
+                    Area = area ?? settings.Area,
+                    Name = name ?? settings.Name,
+                    Type = type ?? settings.Type,
+                    AltNames = translatedAltNames
+                };
+
+                translatedSettings.Add(translatedSetting);
             }
+            return translatedSettings;
         }
     }
 }
