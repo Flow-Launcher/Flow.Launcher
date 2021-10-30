@@ -115,6 +115,12 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
+        {
+                SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow();
+                fileManagerChangeWindow.ShowDialog();
+        }
+
         #endregion
 
         #region Hotkey
