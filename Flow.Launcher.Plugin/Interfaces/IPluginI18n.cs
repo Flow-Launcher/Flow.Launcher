@@ -11,6 +11,9 @@ namespace Flow.Launcher.Plugin
 
         string GetTranslatedPluginDescription();
 
+        /// <summary>
+        /// The method will be invoked when language of flow changed
+        /// </summary>
         void OnCultureInfoChanged(CultureInfo newCulture)
         {
 
