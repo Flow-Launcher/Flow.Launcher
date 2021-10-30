@@ -1,8 +1,10 @@
 ﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
@@ -127,7 +129,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     try
                     {
-                        if (c.SpecialKeyState.CtrlPressed)
+                        if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
+                        {
+                            Task.Run(() =>
+                            {
+                                try
+                                {
+                                    Process.Start(new ProcessStartInfo
+                                    {
+                                        FileName = filePath,
+                                        UseShellExecute = true,
+                                        Verb = "runas",
+                                    });
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.Message, "Could not start " + filePath);
+                                }
+                            });
+                        }
+                        else if (c.SpecialKeyState.CtrlPressed)
                         {
                             FilesFolders.OpenContainingFolder(filePath);
                         }

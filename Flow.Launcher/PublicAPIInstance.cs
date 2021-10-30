@@ -48,12 +48,7 @@ namespace Flow.Launcher
 
         public void ChangeQuery(string query, bool requery = false)
         {
-            _mainVM.ChangeQueryText(query);
-        }
-
-        public void ChangeQueryText(string query, bool selectAll = false)
-        {
-            _mainVM.ChangeQueryText(query);
+            _mainVM.ChangeQueryText(query, requery);
         }
 
         public void RestartApp()
@@ -72,6 +67,8 @@ namespace Flow.Launcher
         }
 
         public void RestarApp() => RestartApp();
+
+        public void ShowMainWindow() => _mainVM.MainWindowVisibility = Visibility.Visible;
 
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
@@ -95,8 +92,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
-                msg.Show(title, subTitle, iconPath);
+                Notification.Show(title, subTitle, iconPath);
             });
         }
 

@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(_ =>
+            _manifestUpdateTask = pluginManager.UpdateManifestAsync().ContinueWith(_ =>
              {
                  lastUpdateTime = DateTime.Now;
              }, TaskContinuationOptions.OnlyOnRanToCompletion);
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if ((DateTime.Now - lastUpdateTime).TotalHours > 12 && _manifestUpdateTask.IsCompleted) // 12 hours
             {
-                _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(t =>
+                _manifestUpdateTask = pluginManager.UpdateManifestAsync().ContinueWith(t =>
                 {
                     lastUpdateTime = DateTime.Now;
                 }, TaskContinuationOptions.OnlyOnRanToCompletion);
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public async Task ReloadDataAsync()
         {
-            await pluginManager.UpdateManifest();
+            await pluginManager.UpdateManifestAsync();
             lastUpdateTime = DateTime.Now;
         }
     }

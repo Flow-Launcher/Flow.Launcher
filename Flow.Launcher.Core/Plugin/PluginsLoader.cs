@@ -120,8 +120,8 @@ namespace Flow.Launcher.Core.Plugin
 
             var pythonPath = string.Empty;
             
-            if (MessageBox.Show("Flow detected you have installed Python plugins, " +
-                                "would you like to install Python to run them? " +
+            if (MessageBox.Show("Flow detected you have installed Python plugins, which " +
+                                "will need Python to run. Would you like to download Python? " +
                                 Environment.NewLine + Environment.NewLine +
                                 "Click no if it's already installed, " +
                                 "and you will be prompted to select the folder that contains the Python executable",

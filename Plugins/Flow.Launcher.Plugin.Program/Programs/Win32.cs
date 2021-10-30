@@ -102,16 +102,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
-                Action = _ =>
+                Action = c =>
                 {
+                    var runAsAdmin = (
+                        c.SpecialKeyState.CtrlPressed &&
+                        c.SpecialKeyState.ShiftPressed &&
+                        !c.SpecialKeyState.AltPressed &&
+                        !c.SpecialKeyState.WinPressed
+                    );
+
                     var info = new ProcessStartInfo
                     {
                         FileName = LnkResolvedPath ?? FullPath,
                         WorkingDirectory = ParentDirectory,
-                        UseShellExecute = true
+                        UseShellExecute = true,
+                        Verb = runAsAdmin ? "runas" : null
                     };
 
-                    Main.StartProcess(Process.Start, info);
+                    Task.Run(() => Main.StartProcess(Process.Start, info));
 
                     return true;
                 }
@@ -141,7 +149,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         return true;
                     },
-                    IcoPath = "Images/user.png"
+                    IcoPath = "Images/user.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee"),
                 },
                 new Result
                 {
@@ -160,7 +169,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         return true;
                     },
-                    IcoPath = "Images/cmd.png"
+                    IcoPath = "Images/cmd.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef"),
                 },
                 new Result
                 {
@@ -184,7 +194,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         return true;
                     },
-                    IcoPath = "Images/folder.png"
+                    IcoPath = "Images/folder.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe838"),
                 }
             };
             return contextMenus;

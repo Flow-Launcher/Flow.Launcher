@@ -15,12 +15,12 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Vertical" Width="250">
+            <StackPanel Orientation="Vertical" Width="Auto">
                 <CheckBox Name="StartMenuEnabled" IsChecked="{Binding EnableStartMenuSource}" Margin="5" Content="{DynamicResource flowlauncher_plugin_program_index_start}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
                 <CheckBox Name="RegistryEnabled" IsChecked="{Binding EnableRegistrySource}"  Margin="5" Content="{DynamicResource flowlauncher_plugin_program_index_registry}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
                 <CheckBox Name="DescriptionEnabled" IsChecked="{Binding EnableDescription}" Margin="5" Content="{DynamicResource flowlauncher_plugin_program_enable_description}" ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
             </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto">
                 <Button Height="31" HorizontalAlignment="Right" Margin="10" Width="100" x:Name="btnLoadAllProgramSource" Click="btnLoadAllProgramSource_OnClick" Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
                 <Button Height="31" HorizontalAlignment="Right" Margin="10" Width="100" x:Name="btnProgramSuffixes" Click="BtnProgramSuffixes_OnClick" Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
                 <Button Height="31" HorizontalAlignment="Right" Margin="10" Width="100" x:Name="btnReindex" Click="btnReindex_Click" Content="{DynamicResource flowlauncher_plugin_program_reindex}" />

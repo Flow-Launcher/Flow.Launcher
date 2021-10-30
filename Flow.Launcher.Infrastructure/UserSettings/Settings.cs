@@ -32,6 +32,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
+        public bool UseGlyphIcons { get; set; } = true;
 
 
         /// <summary>
@@ -97,8 +98,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool HideWhenDeactive { get; set; } = true;
         public bool RememberLastLaunchLocation { get; set; }
         public bool IgnoreHotkeysOnFullscreen { get; set; }
-
-        public bool AutoHideScrollBar { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
 

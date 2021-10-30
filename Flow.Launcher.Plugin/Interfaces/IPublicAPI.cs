@@ -60,6 +60,11 @@ namespace Flow.Launcher.Plugin
         void ShowMsgError(string title, string subTitle = "");
 
         /// <summary>
+        /// Show the MainWindow when hiding
+        /// </summary>
+        void ShowMainWindow();
+
+        /// <summary>
         /// Show message box
         /// </summary>
         /// <param name="title">Message title</param>
