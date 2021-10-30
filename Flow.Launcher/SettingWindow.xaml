@@ -617,8 +617,17 @@
                                            Style="{DynamicResource SettingSubTitleLabel}" />
                             </StackPanel>
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                <Button Margin="10 0 18 0" MaxWidth="200" Width="120"
-                                        Content="Explorer" Click="OnSelectFileManagerClick"/>
+                                <Button Margin="10 0 18 0" MaxWidth="250" Width="160"
+                                        Content="Explorer" Click="OnSelectFileManagerClick">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="2"/>
+                                            <Setter Property="BorderThickness" Value="1 1 1 2"/>
+                                            <Setter Property="BorderBrush" Value="#ececec"/>
+                                            <Setter Property="Background" Value="#ffffff"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
                             </StackPanel>
 
                             <TextBlock FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20"

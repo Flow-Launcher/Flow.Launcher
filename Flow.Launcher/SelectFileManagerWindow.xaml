@@ -3,54 +3,123 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:local="clr-namespace:Flow.Launcher"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="SelectFileManagerWindow" Height="450" Width="500" ResizeMode="NoResize" Background="#f3f3f3">
+        Title="{DynamicResource fileManagerWindow}" Height="420" Width="500" ResizeMode="NoResize" Background="#f3f3f3">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" VerticalAlignment="Center">
-            <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="40"  TextAlignment="Center"
-                               Margin="0 0 0 0">
-                        &#xe8d0;
-            </TextBlock>
-        </StackPanel>
+        <Border BorderThickness="0 0 0 1" BorderBrush="#e5e5e5" Background="#ffffff" Padding="26 26 26 0">
+            <Grid>
+                <StackPanel>
+                    <StackPanel Grid.Row="0" Margin="0 0 0 12">
+                        <TextBlock Grid.Column="0" Text="{DynamicResource fileManagerWindow}"  FontSize="20" FontWeight="SemiBold" FontFamily="Segoe UI" TextAlignment="Left"
+                                       Margin="0 0 0 0" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock 
+                           Text="{DynamicResource fileManager_tips}" Foreground="#1b1b1b" FontSize="14" TextWrapping="WrapWithOverflow" TextAlignment="Left"/>
+                    </StackPanel>
 
-        <Border Background="#ffffff" Grid.Row="1" BorderBrush="#cecece" BorderThickness="1" Margin="14 0 14 0" Padding="0 14 0 0" CornerRadius="5">
-            <StackPanel Orientation="Vertical" >
+                    <StackPanel Orientation="Horizontal" Margin="14 28 0 0">
+                        <TextBlock FontSize="14" Grid.Column="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Left" Text="{DynamicResource fileManager_name}" />
+                        <ComboBox Height="35" SelectedIndex="0" HorizontalAlignment="Left" Margin="14 0 0 0" Name="comboBox" VerticalAlignment="Center" Width="200">
+                            <ComboBoxItem Content="Explorer (Default)" />
+                            <ComboBoxItem Content="Custom" />
+                            <ComboBoxItem Content="Files" />
+                            <ComboBoxItem Content="Directory Opus" />
+                            <ComboBoxItem Content="Total Commander" />
+                        </ComboBox>
+                    </StackPanel>
+                    <Rectangle Margin="0 20 0 12" Height="1" Fill="#cecece"></Rectangle>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 0" HorizontalAlignment="Stretch">
+                        <Grid Width="430">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="14" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"
+                       HorizontalAlignment="Left" Text="{DynamicResource fileManager_path}" Margin="14 0 0 0"/>
+                            <TextBox Margin="10 0 15 0" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Background" Value="#ffffff"/>
+                                        <Setter Property="Height" Value="34"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="6 6 0 0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
-                    <TextBlock FontSize="14" Grid.Column="1" VerticalAlignment="Center"
-                       HorizontalAlignment="Left" Text="{DynamicResource currentPriority}" />
-                    <TextBlock x:Name="OldPriority" Grid.Row="0" Grid.Column="1" Margin="14 0 10 0" FontSize="14"
-                       VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" />
+                                        <Setter Property="BorderBrush" Value="#000000"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="0">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Text" Value=""/>
+                                                <Setter Property="Background" Value="#cecece"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="2">
+                                                <Setter Property="Text" Value="Files"/>
+                                                
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="3">
+                                                <Setter Property="Text" Value="c:\programe files\dopus\dopus.exe"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="4">
+                                                <Setter Property="Text" Value="C:\Program Files\TOTALCMD\totalcommander.exe"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+
+                            </TextBox>
+                            
+                            
+                            
+                            <TextBlock FontSize="14" VerticalAlignment="Center" Margin="14 0 0 0"
+                       HorizontalAlignment="Left" Text="{DynamicResource fileManager_arg}" Grid.Column="0" Grid.Row="1"/>
+                            <TextBox  Margin="10 0 15 0" Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" >
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Background" Value="#ffffff"/>
+                                        <Setter Property="Height" Value="34"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Padding" Value="6 6 0 0"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+
+                                        <Setter Property="BorderBrush" Value="#000000"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="0">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Text" Value=""/>
+                                                <Setter Property="Background" Value="#cecece"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="2">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=SelectedIndex, ElementName=comboBox}" Value="3">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
                 </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                    <TextBlock FontSize="14" VerticalAlignment="Center"
-                       HorizontalAlignment="Right" Text="{DynamicResource newPriority}" />
-                    <TextBox x:Name="tbAction" Margin="14 10 15 10" Width="105" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                </StackPanel>
-
-            </StackPanel>
+            </Grid>
         </Border>
-        <StackPanel Grid.Row="2" VerticalAlignment="Center">
-            <TextBlock  Foreground="Gray"
-                   Text="{DynamicResource priority_tips}" TextWrapping="WrapWithOverflow" TextAlignment="Center"
-                   Margin="20,0,20,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1">
-            <Button x:Name="btnCancel" Click="BtnCancel_OnClick" Margin="0 0 10 0" Width="80" Height="30"
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+            <Button x:Name="btnCancel" Margin="0 0 5 0" Width="100" Height="30"
                     Content="{DynamicResource cancel}" />
-            <Button x:Name="btnDone" Margin="10 0 0 0" Width="80" Height="30" Click="btnDone_OnClick">
+            <Button x:Name="btnDone" Margin="5 0 0 0" Width="100" Height="30">
                 <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
             </Button>
         </StackPanel>

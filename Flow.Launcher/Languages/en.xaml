@@ -133,6 +133,13 @@
     <system:String x:Key="releaseNotes">Release Notes</system:String>
     <system:String x:Key="documentation">Usage Tips:</system:String>
 
+    <!--FileManager Setting Dialog-->
+    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments (optional) if necessary.</system:String>
+    <system:String x:Key="fileManager_name">File Manager</system:String>
+    <system:String x:Key="fileManager_path">Path</system:String>
+    <system:String x:Key="fileManager_arg">Argument</system:String>
+
     <!--Priority Setting Dialog-->
     <system:String x:Key="changePriorityWindow">Change Priority</system:String>
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
