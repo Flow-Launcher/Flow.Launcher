@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -67,6 +67,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.ProcessKiller", "Plugins\Flow.Launcher.Plugin.ProcessKiller\Flow.Launcher.Plugin.ProcessKiller.csproj", "{588088F4-3262-4F9F-9663-A05DE12534C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.PluginsManager", "Plugins\Flow.Launcher.Plugin.PluginsManager\Flow.Launcher.Plugin.PluginsManager.csproj", "{4792A74A-0CEA-4173-A8B2-30E6764C6217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flow.Plugin.WindowsSettings", "Plugins\Flow.Launcher.Plugin.WindowsSettings\Flow.Plugin.WindowsSettings.csproj", "{5043CECE-E6A7-4867-9CBE-02D27D83747A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -283,6 +285,18 @@ Global
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217}.Release|x64.Build.0 = Release|Any CPU
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217}.Release|x86.ActiveCfg = Release|Any CPU
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217}.Release|x86.Build.0 = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|Any CPU.Build.0 = Debug|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x64.ActiveCfg = Debug|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x64.Build.0 = Debug|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x86.ActiveCfg = Debug|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x86.Build.0 = Debug|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|Any CPU.ActiveCfg = Release|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|Any CPU.Build.0 = Release|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x64.ActiveCfg = Release|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x64.Build.0 = Release|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x86.ActiveCfg = Release|x64
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -300,6 +314,7 @@ Global
 		{F9C4C081-4CC3-4146-95F1-E102B4E10A5F} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{588088F4-3262-4F9F-9663-A05DE12534C3} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F26ACB50-3F6C-4907-B0C9-1ADACC1D0DED}
