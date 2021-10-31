@@ -6,7 +6,7 @@
              xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d" 
-             d:DesignHeight="404.508" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="600" Height="500">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -56,7 +56,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_location}" Width="550">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_location}" Width="480">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Location, ConverterParameter=(null), Converter={program:LocationConverter}}"/>
