@@ -53,7 +53,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void OnInitialized(object sender, EventArgs e)
@@ -185,7 +185,7 @@ namespace Flow.Launcher
             var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
             setting.Click += (o, e) => App.API.OpenSettingDialog();
             var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
-            exit.Click += (o, e) => Close();
+            exit.Click += (o, e) => Environment.Exit(0);
 
             _notifyIcon.ContextMenuStrip = menu;
             _notifyIcon.MouseClick += (o, e) =>
