@@ -729,7 +729,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (MainWindowVisibility != Visibility.Collapsed)
             {
-                ToggleFlowLauncher();
+                MainWindowVisibility = Visibility.Collapsed;
             }
         }
 
