@@ -59,7 +59,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void OnInitialized(object sender, EventArgs e)

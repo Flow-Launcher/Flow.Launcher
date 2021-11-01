@@ -35,8 +35,6 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
-    <system:String x:Key="autoHideScrollBar">설정 창 스크롤바 숨기기</system:String>
-    <system:String x:Key="autoHideScrollBarToolTip">설정 창 스크롤바가 작다면 끄는 것을 추천합니다.</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>

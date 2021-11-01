@@ -1,12 +1,6 @@
 ﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
@@ -17,18 +11,32 @@ namespace Flow.Launcher
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         public static void Show(string title, string subTitle, string iconPath)
         {
-            /* Using Windows Notification System */
+            var legacy = Environment.OSVersion.Version.Major < 10;
+            // Handle notification for win7/8
+            if (legacy)
+            {
+                LegacyShow(title, subTitle, iconPath);
+                return;
+            }
+
+            // Using Windows Notification System
             var Icon = !File.Exists(iconPath)
-                ? ImageLoader.Load(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"))
-                : ImageLoader.Load(iconPath);
+                ? Path.Combine(Constant.ProgramDirectory, "Images\\app.png")
+                : iconPath;
 
             var xml = $"<?xml version=\"1.0\"?><toast><visual><binding template=\"ToastImageAndText04\"><image id=\"1\" src=\"{Icon}\" alt=\"meziantou\"/><text id=\"1\">{title}</text>" +
-                $"<text id=\"2\">{subTitle}</text></binding></visual></toast>";
+                      $"<text id=\"2\">{subTitle}</text></binding></visual></toast>";
             var toastXml = new XmlDocument();
             toastXml.LoadXml(xml);
             var toast = new ToastNotification(toastXml);
             ToastNotificationManager.CreateToastNotifier("Flow Launcher").Show(toast);
 
+        }
+
+        private static void LegacyShow(string title, string subTitle, string iconPath)
+        {
+            var msg = new Msg();
+            msg.Show(title, subTitle, iconPath);
         }
     }
 }

@@ -31,7 +31,8 @@ namespace Flow.Launcher.ViewModel
             set => PluginPair.Metadata.Disabled = !value;
         }
 
-        public Control SettingControl => PluginPair.Plugin is not ISettingProvider settingProvider ? new Control() : settingProvider.CreateSettingPanel();
+        private Control _settingControl;
+        public Control SettingControl => _settingControl ??= PluginPair.Plugin is not ISettingProvider settingProvider ? new Control() : settingProvider.CreateSettingPanel();
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
