@@ -19,6 +19,7 @@
         Height="700" Width="1000"
         MinWidth="900"
         MinHeight="600"
+        MouseDown="window_MouseDown"
         Loaded="OnLoaded"
         Closed="OnClosed"
         d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}">
@@ -645,6 +646,7 @@
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" Background="#f3f3f3" Padding="0 0 0 0">
                     <ListBox SelectedItem="{Binding SelectedPlugin}"
+                             ScrollViewer.CanContentScroll="False"
                              ItemsSource="{Binding PluginViewModels}"
                              Margin="5, 0, 0, 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ItemContainerStyle="{StaticResource PluginList}"
@@ -1176,7 +1178,7 @@
                                 <TextBlock DockPanel.Dock="Top" Margin="10" HorizontalAlignment="Right">
                                     <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}"
                                                RequestNavigate="OnRequestNavigate">
-                                        <Run Text="{DynamicResource browserMoreThemes}" />
+                                        <Run Text="{DynamicResource howToCreateTheme}" />
                                     </Hyperlink>
                                 </TextBlock>
                             </Border>
