@@ -101,7 +101,7 @@ namespace Flow.Launcher
 
                 API.SaveAppAllSettings();
 
-                _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
+                _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Collapsed : Visibility.Visible;
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }

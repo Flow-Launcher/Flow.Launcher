@@ -135,7 +135,8 @@
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments (optional) if necessary.</system:String>
     <system:String x:Key="fileManager_name">File Manager</system:String>
     <system:String x:Key="fileManager_path">Path</system:String>
-    <system:String x:Key="fileManager_arg">Argument</system:String>
+    <system:String x:Key="fileManager_directory_arg">Argument For Directory</system:String>
+    <system:String x:Key="fileManager_file_arg">Argument For File Parent Directory</system:String>
 
     <!--Priority Setting Dialog-->
     <system:String x:Key="changePriorityWindow">Change Priority</system:String>

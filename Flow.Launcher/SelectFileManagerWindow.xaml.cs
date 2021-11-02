@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +21,11 @@ namespace Flow.Launcher
     /// </summary>
     public partial class SelectFileManagerWindow : Window
     {
-        public SelectFileManagerWindow()
+        public Settings Settings { get; }
+
+        public SelectFileManagerWindow(Settings settings)
         {
+            Settings = settings;
             InitializeComponent();
         }
     }

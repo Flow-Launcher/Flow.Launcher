@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -33,6 +35,29 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
+
+        public CustomExplorerViewModel CustomExplorer { get; set; }
+        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = new()
+        {
+            new()
+            {
+                Name = "Explorer",
+                Path = "explorer",
+                FileArgument = "/select, \"%f\"",
+                DirectoryArgument = "\"%d\"",
+                Editable = false
+            },
+            new()
+            {
+                Name = "Total Commander",
+                Path = @"C:\Program Files\TOTALCMD\totalcommander.exe"
+            },
+            new()
+            {
+                Name = "Dopus",
+                Path = @"c:\programe files\dopus\dopus.exe"
+            }
+        };
 
 
         /// <summary>

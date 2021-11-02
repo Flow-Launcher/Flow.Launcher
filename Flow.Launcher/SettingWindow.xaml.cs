@@ -117,7 +117,7 @@ namespace Flow.Launcher
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
         {
-                SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow();
+                SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
                 fileManagerChangeWindow.ShowDialog();
         }
 
