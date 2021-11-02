@@ -199,5 +199,20 @@
     <!--General Guide & Hotkey-->
     <system:String x:Key="SmallTip01">Context Menu : &#129046; or Shift+Enter | Containing Folder : Ctrl+Enter</system:String>
     <system:String x:Key="SmallTip02">Back to Result : &#129044; or ESC</system:String>
-    
+    <system:String x:Key="Hotkey01">F1</system:String>
+    <system:String x:Key="Hotkey01Action">Toggle Help Window</system:String>
+    <system:String x:Key="Hotkey02">F2</system:String>
+    <system:String x:Key="Hotkey02Action">Preview Toggle</system:String>
+    <system:String x:Key="Hotkey03">Shift+Enter</system:String>
+    <system:String x:Key="Hotkey03Action">Open Context Menu</system:String>
+    <system:String x:Key="Hotkey04">Ctrl+Enter</system:String>
+    <system:String x:Key="Hotkey04Action">Open Contaning Folder</system:String>
+    <system:String x:Key="Hotkey05">Ctrl+Shift+Enter</system:String>
+    <system:String x:Key="Hotkey05Action">Run as Admin</system:String>
+    <system:String x:Key="Hotkey06">Ctrl+C</system:String>
+    <system:String x:Key="Hotkey06Action">Copy File Path</system:String>
+    <system:String x:Key="Hotkey07">Ctrl+H</system:String>
+    <system:String x:Key="Hotkey07Action">Query History</system:String>
+    <system:String x:Key="Hotkey08">ESC</system:String>
+    <system:String x:Key="Hotkey08Action">Back to Result in Context Menu</system:String>
 </ResourceDictionary>

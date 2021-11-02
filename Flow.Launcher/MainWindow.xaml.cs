@@ -317,7 +317,46 @@ namespace Flow.Launcher
         {
             List<Hotkey> list = new List<Hotkey>();
 
-            list.Add(new Hotkey() { strHotkey = "Hello", strHotkeyAction = "Asd" });
+            list.Add(new Hotkey() 
+            { 
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey01")), 
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey01Action")) 
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey02")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey02Action"))
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey03")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey03Action"))
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey04")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey04Action"))
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey05")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey05Action"))
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey06")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey06Action"))
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey07")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey07Action"))
+            });
+            list.Add(new Hotkey()
+            {
+                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey08")),
+                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey08Action"))
+            });
 
             return list;
         }

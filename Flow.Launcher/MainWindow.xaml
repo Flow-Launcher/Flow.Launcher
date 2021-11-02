@@ -33,46 +33,6 @@
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter"/>
         <converters:BorderClipConverter x:Key="BorderClipConverter"/>
-        <XmlDataProvider x:Key="InventoryData" XPath="Inventory/Books">
-            <x:XData>
-                <Inventory xmlns="" version="1.0" encoding="UTF-8">
-                    <Books>
-                        <Book ISBN="0-7356-1370-2" Stock="in" Number="8">
-                            <Title>F1</Title>
-                            <Summary>Toggle Help Window</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-0562-9" Stock="in" Number="9">
-                            <Title>F2</Title>
-                            <Summary>Preview Toggle</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>Shift+Enter</Title>
-                            <Summary>Open Context Menu</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-0562-9" Stock="in" Number="9">
-                            <Title>Ctrl+Enter</Title>
-                            <Summary>Open Contaning Folder</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>Ctrl+Shift+Enter</Title>
-                            <Summary>Run as Admin</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>Ctrl+C</Title>
-                            <Summary>Copy File Path</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>Ctrl+H</Title>
-                            <Summary>Query History</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>ESC</Title>
-                            <Summary>Back to Result in Context Menu</Summary>
-                        </Book>
-                    </Books>
-                </Inventory>
-            </x:XData>
-        </XmlDataProvider>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}"></KeyBinding>
@@ -212,9 +172,6 @@
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
                                 <ListBox x:Name="HotkeyList" AlternationCount="2" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent" ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}">
-                                    <ListBox.ItemsSource>
-                                        <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
-                                    </ListBox.ItemsSource>
                                 </ListBox>
                         </DockPanel>
                     </StackPanel>
