@@ -316,6 +316,32 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="SmallTipText" TargetType="TextBlock">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="TextBlock.Text" Value="{DynamicResource SmallTip01}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="TextBlock.Text" Value="{DynamicResource SmallTip02}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="TextBlock.Text" Value="{DynamicResource SmallTip01}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="HotkeyPopupStyle" TargetType="Popup">
         <Setter Property="IsOpen" Value="False" />
         <Style.Triggers>
@@ -334,6 +360,20 @@
     <Style x:Key="HotKeyPopupListStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Padding="14 8 4 8">
+                        <DockPanel LastChildFill="True">
+                            <TextBlock FontSize="13" Style="{DynamicResource ItemTitleStyle}" Text="{Binding Path = strHotkey}" TextAlignment="Left" FontWeight="SemiBold" Margin="0 0 12 0" DockPanel.Dock="Left">
+                            </TextBlock>
+                            <TextBlock FontSize="13" Style="{DynamicResource ItemSubTitleStyle}" Text="{Binding Path = strHotkeyAction}"  Margin="0 0 12 0">
+                            </TextBlock>
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                 <Setter Property="Background" Value="Transparent"></Setter>

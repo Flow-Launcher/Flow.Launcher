@@ -45,6 +45,10 @@
                             <Title>F2</Title>
                             <Summary>Preview Toggle</Summary>
                         </Book>
+                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
+                            <Title>Shift+Enter</Title>
+                            <Summary>Open Context Menu</Summary>
+                        </Book>
                         <Book ISBN="0-7356-0562-9" Stock="in" Number="9">
                             <Title>Ctrl+Enter</Title>
                             <Summary>Open Contaning Folder</Summary>
@@ -58,16 +62,8 @@
                             <Summary>Copy File Path</Summary>
                         </Book>
                         <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>Shift+Enter</Title>
-                            <Summary>Open Context Menu</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
-                            <Title>Ctrl+Backspace</Title>
-                            <Summary>Clear Query</Summary>
-                        </Book>
-                        <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
                             <Title>Ctrl+H</Title>
-                            <Summary>Clear Query</Summary>
+                            <Summary>Query History</Summary>
                         </Book>
                         <Book ISBN="0-7356-1377-X" Stock="in" Number="9">
                             <Title>ESC</Title>
@@ -215,35 +211,17 @@
                     <Border Style="{DynamicResource WindowBorderStyle}">
                         <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Margin="0 0 0 0">
-                                <ListBox AlternationCount="2" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent" ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}">
-                                <ListBox.ItemsSource>
-                                    <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
-                                </ListBox.ItemsSource>
-                                    <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Padding="14 8 4 8">
-                                            <DockPanel LastChildFill="True">
-                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemTitleStyle}" TextAlignment="Left" FontWeight="SemiBold" Margin="0 0 12 0" DockPanel.Dock="Left">
-                                                    <TextBlock.Text>
-                                                        <Binding XPath="Title"/>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                                    <TextBlock FontSize="13" Style="{DynamicResource ItemSubTitleStyle}" Margin="0 0 12 0">
-                                                        <TextBlock.Text>
-                                                            <Binding XPath="Summary"/>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                </DockPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                                <ListBox x:Name="HotkeyList" AlternationCount="2" Padding="0 0 0 0" DockPanel.Dock="Right" Background="Transparent" ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}">
+                                    <ListBox.ItemsSource>
+                                        <Binding Source="{StaticResource InventoryData}" XPath="*[@Stock='out'] | *[@Number>=8 or @Number=3]"/>
+                                    </ListBox.ItemsSource>
+                                </ListBox>
                         </DockPanel>
                     </StackPanel>
                     </Border>
                 </Popup>
 
-                <Border VerticalAlignment="Center" x:Name="SmallTip" Style="{DynamicResource SmallTipStyle}" Margin="0 10 0 0" Padding="0 0 0 0">
+                <Border VerticalAlignment="Center" x:Name="SmallTipBorder" Style="{DynamicResource SmallTipStyle}" Margin="0 10 0 0" Padding="0 0 0 0">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
@@ -253,7 +231,7 @@
                     </Border.Clip>
                     <StackPanel>
                         <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
-                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource ItemHotkeyStyle}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource SmallTipText}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
                     </StackPanel>
                 </Border>
                 

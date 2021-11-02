@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -70,11 +71,12 @@ namespace Flow.Launcher
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             InitializePosition();
+
+            this.HotkeyList.ItemsSource = HotkeyListData(); 
+
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
-
-            
 
             _viewModel.PropertyChanged += (o, e) =>
             {
@@ -311,6 +313,14 @@ namespace Flow.Launcher
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
         }
+        private List<Hotkey> HotkeyListData()
+        {
+            List<Hotkey> list = new List<Hotkey>();
+
+            list.Add(new Hotkey() { strHotkey = "Hello", strHotkeyAction = "Asd" });
+
+            return list;
+        }
 
         /// <summary>
         /// Register up and down key
@@ -378,33 +388,12 @@ namespace Flow.Launcher
             }
         }
 
-        public void SmallTipSelector()
-        {
-            /*
-            var selected = ResultListBox.SelectedItem;
-            if (selected == null)
-            {
-                var data = "";
-            }
-            else if (selected != null)
-            {
-                var data = ResultListBox.SelectedItem.ToString();
-                System.Diagnostics.Debug.WriteLine(data);
-            */
-                if (QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                           && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
-                {
-                    TipText1.Text = "Context Menu : → | Containing Folder : Ctrl+Enter";
-            }
-                else if (string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
-                {
-                    TipText1.Text = "Back to Result : ← or ESC";
-               }
-                else
-                {
-                    TipText1.Text = "Search Anything, Press F1 to Small Guide";
-            }
-     
-        }
     }
+    public class Hotkey
+    {
+        public string strHotkey { get; set; }
+        public string strHotkeyAction { get; set; }
+
+    }
+
 }

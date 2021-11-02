@@ -308,6 +308,8 @@ namespace Flow.Launcher.ViewModel
         public ResultsViewModel ContextMenu { get; private set; }
         public ResultsViewModel History { get; private set; }
 
+        public string SmallTipText { get; set; }
+
         private string _queryText;
 
         public string QueryText
@@ -818,6 +820,37 @@ namespace Flow.Launcher.ViewModel
             Results.AddResults(resultsForUpdates, token);
         }
 
+        public void SmallTipSelector()
+        {
+            //test.Text = "Not available";
+            /*
+            /*
+            var selected = ResultListBox.SelectedItem;
+            if (selected == null)
+            {
+                var data = "";
+            }
+            else if (selected != null)
+            {
+                var data = ResultListBox.SelectedItem.ToString();
+                System.Diagnostics.Debug.WriteLine(data);
+            ****
+            if (MainWindow.QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                       && !string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Collapsed && _viewModel.Results.Visbility == Visibility.Visible)
+            {
+                TipText1.Text = "Context Menu : ¡æ | Containing Folder : Ctrl+Enter";
+            }
+            else if (string.IsNullOrEmpty(QueryTextBox.Text) && _viewModel.ContextMenu.Visbility == Visibility.Visible && _viewModel.Results.Visbility == Visibility.Collapsed)
+            {
+                TipText1.Text = "Back to Result : ¡ç or ESC";
+            }
+            else
+            {
+                TipText1.Text = "Search Anything, Press F1 to Small Guide";
+            }
+            */
+
+        }
         #endregion
     }
 }
