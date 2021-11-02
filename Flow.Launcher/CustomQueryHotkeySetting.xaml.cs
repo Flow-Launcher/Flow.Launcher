@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 
-
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window

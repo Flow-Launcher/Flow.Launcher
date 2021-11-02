@@ -281,6 +281,7 @@ namespace Flow.Launcher
                 API.ShowMainWindow();
             }
         }
+
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
         {
             TextBox textBox = Keyboard.FocusedElement as TextBox;
@@ -290,6 +291,5 @@ namespace Flow.Launcher
                 textBox.MoveFocus(tRequest);
             }
         }
-
     }
 }
