@@ -281,17 +281,5 @@ namespace Flow.Launcher
                 API.ShowMainWindow();
             }
         }
-
-        /*
-        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-        */
-
-        /*private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
-        {
-
-        }*/
     }
 }

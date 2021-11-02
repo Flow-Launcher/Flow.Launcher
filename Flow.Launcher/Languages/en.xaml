@@ -19,7 +19,7 @@
     <system:String x:Key="flowlauncher_settings">Flow Launcher Settings</system:String>
     <system:String x:Key="general">General</system:String>
     <system:String x:Key="portableMode">Portable Mode</system:String>
-    <system:String x:Key="portableModeToolTIp">Store all settings and user data in a central folder. Compatible with most removeable drives and cloud services.</system:String>
+    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher on system startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
@@ -32,10 +32,9 @@
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a Full screen application is active (Recommended for games).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
-    <system:String x:Key="autoHideScrollBar">Auto Hide Scroll Bar in Setting</system:String>
     <system:String x:Key="selectPythonDirectory">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
@@ -84,10 +83,10 @@
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
-    <system:String x:Key="openResultModifiers">Open Result Modifiers</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier to action results via keyboard.</system:String>
+    <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Show result modifier with results.</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
     <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">Delete</system:String>
