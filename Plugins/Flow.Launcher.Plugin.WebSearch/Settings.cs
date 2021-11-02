@@ -164,6 +164,22 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
+                Title = "Youtube Music",
+                ActionKeyword = "ytmusic",
+                Icon = "youtubemusic.png",
+                Url = "https://music.youtube.com/search?q={q}",
+                Enabled = true
+            },
+            new SearchSource
+            {
+                Title = "Netflix",
+                ActionKeyword = "netflix",
+                Icon = "netflix.png",
+                Url = "https://www.netflix.com/search?q={q}",
+                Enabled = true
+            },
+            new SearchSource
+            {
                 Title = "Bing",
                 ActionKeyword = "bing",
                 Icon = "bing.png",
