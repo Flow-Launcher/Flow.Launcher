@@ -80,7 +80,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                     }
 
                 }
-                var translatedSetting = new WindowsSetting
+                var translatedSetting = settings with
                 {
                     Area = area ?? settings.Area,
                     Name = name ?? settings.Name,

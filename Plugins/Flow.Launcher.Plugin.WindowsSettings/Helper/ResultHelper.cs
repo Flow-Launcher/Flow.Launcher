@@ -150,12 +150,8 @@ namespace Flow.Plugin.WindowsSettings.Helper
             ProcessStartInfo processStartInfo;
 
             var command = entry.Command;
-
-            if (command.Contains("%windir%", StringComparison.InvariantCultureIgnoreCase))
-            {
-                var windowsFolder = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
-                command = command.Replace("%windir%", windowsFolder, StringComparison.InvariantCultureIgnoreCase);
-            }
+            
+            command = Environment.ExpandEnvironmentVariables(command);
 
             if (command.Contains(' '))
             {

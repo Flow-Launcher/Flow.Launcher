@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using Flow.Launcher.Plugin;
 using Flow.Plugin.WindowsSettings.Classes;
@@ -104,6 +105,11 @@ namespace Flow.Plugin.WindowsSettings
             return newList;
 
             
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            _translatedSettingList = TranslationHelper.TranslateAllSettings(_settingsList);
         }
 
         /// <summary>
