@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Flow.Launcher
 {
@@ -98,6 +99,16 @@ namespace Flow.Launcher
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             Close();
+        }
+
+        private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
+        {
+            TextBox textBox = Keyboard.FocusedElement as TextBox;
+            if (textBox != null)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                textBox.MoveFocus(tRequest);
+            }
         }
     }
 }

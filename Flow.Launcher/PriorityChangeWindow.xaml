@@ -6,52 +6,45 @@
         xmlns:local="clr-namespace:Flow.Launcher"
         Loaded="PriorityChangeWindow_Loaded"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="{DynamicResource changePriorityWindow}" Height="400" Width="350" ResizeMode="NoResize" Background="#f3f3f3">
+        Title="{DynamicResource changePriorityWindow}" Height="365" Width="350" Background="#F3F3F3" BorderBrush="#cecece">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" VerticalAlignment="Center">
-        <TextBlock Grid.Column="0" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="40"  TextAlignment="Center"
-                               Margin="0 0 0 0">
-                        &#xe8d0;
-        </TextBlock>
-        </StackPanel>
-
-        <Border Background="#ffffff" Grid.Row="1" BorderBrush="#cecece" BorderThickness="1" Margin="14 0 14 0" Padding="0 14 0 0" CornerRadius="5">
-        <StackPanel Orientation="Vertical" >
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
-            <TextBlock FontSize="14" Grid.Column="1" VerticalAlignment="Center"
+        <Border BorderThickness="0 0 0 1" BorderBrush="#e5e5e5" Background="#ffffff" Padding="26 26 26 0">
+            <Grid>
+                <StackPanel>
+                    <StackPanel Grid.Row="0" Margin="0 0 0 12">
+                        <TextBlock Grid.Column="0" Text="{DynamicResource changePriorityWindow}"  FontSize="20" FontWeight="SemiBold" FontFamily="Segoe UI" TextAlignment="Left"
+                                       Margin="0 0 0 0" />
+                    </StackPanel>
+                    <StackPanel>
+                         <TextBlock 
+                           Text="{DynamicResource priority_tips}" Foreground="#1b1b1b" FontSize="14" TextWrapping="WrapWithOverflow" TextAlignment="Left"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0 28 0 0">
+                        <TextBlock FontSize="14" Grid.Column="1" VerticalAlignment="Center"
                        HorizontalAlignment="Left" Text="{DynamicResource currentPriority}" />
-            <TextBlock x:Name="OldPriority" Grid.Row="0" Grid.Column="1" Margin="14 0 10 0" FontSize="14"
+                        <TextBlock x:Name="OldPriority" Grid.Row="0" Grid.Column="1" Margin="10 0 10 0" FontSize="14"
                        VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" />
-            </StackPanel>
+                    </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                <TextBlock FontSize="14" VerticalAlignment="Center"
+                    <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                        <TextBlock FontSize="14" VerticalAlignment="Center"
                        HorizontalAlignment="Right" Text="{DynamicResource newPriority}" />
-                <TextBox x:Name="tbAction" Margin="14 10 15 10" Width="105" VerticalAlignment="Center" HorizontalAlignment="Left" />
-            </StackPanel>
-            
-        </StackPanel>
+                        <TextBox x:Name="tbAction" Margin="10 0 15 0" Width="105" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
         </Border>
-        <StackPanel Grid.Row="2" VerticalAlignment="Center">
-        <TextBlock  Foreground="Gray"
-                   Text="{DynamicResource priority_tips}" TextWrapping="WrapWithOverflow" TextAlignment="Center"
-                   Margin="20,0,20,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1">
-            <Button x:Name="btnCancel" Click="BtnCancel_OnClick" Margin="0 0 10 0" Width="80" Height="30"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+            <Button x:Name="btnCancel" Click="BtnCancel_OnClick" Margin="0 0 5 0" Width="100" Height="30"
                     Content="{DynamicResource cancel}" />
-            <Button x:Name="btnDone" Margin="10 0 0 0" Width="80" Height="30" Click="btnDone_OnClick">
+            <Button x:Name="btnDone" Margin="5 0 0 0" Width="100" Height="30" Click="btnDone_OnClick">
                 <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
             </Button>
         </StackPanel>
