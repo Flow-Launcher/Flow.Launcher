@@ -57,6 +57,13 @@
       "Enabled": true
     },
     {
+      "Title": "FindIcon",
+      "ActionKeyword": "findicon",
+      "IconPath": "Images\\pictures.png",
+      "Url": "http://findicons.com/search/{q}",
+      "Enabled": true
+    },
+    {
       "Title": "Facebook",
       "ActionKeyword": "facebook",
       "IconPath": "Images\\facebook.png",
