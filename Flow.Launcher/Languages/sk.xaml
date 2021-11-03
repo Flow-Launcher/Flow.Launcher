@@ -49,6 +49,7 @@
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zap.</system:String>
     <system:String x:Key="disable">Vyp.</system:String>
+    <system:String x:Key="actionKeywordsTitle">Nastavenie kľúčového slova akcie</system:String>
     <system:String x:Key="actionKeywords">Skratka akcie</system:String>
     <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky:</system:String>
     <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
@@ -68,7 +69,8 @@
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
-    <system:String x:Key="browserMoreThemes">Prehliadať viac motívov</system:String>
+    <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
+    <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhľadávacieho poľa</system:String>
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
@@ -104,7 +106,7 @@
     <system:String x:Key="enableProxy">Povoliť HTTP Proxy</system:String>
     <system:String x:Key="server">HTTP Server</system:String>
     <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">Použív. meno</system:String>
+    <system:String x:Key="userName">Používateľské meno</system:String>
     <system:String x:Key="password">Heslo</system:String>
     <system:String x:Key="testProxy">Test Proxy</system:String>
     <system:String x:Key="save">Uložiť</system:String>
@@ -145,10 +147,11 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="actionkeyword_tips">Použite * ak nechcete určiť skratku pre akciu</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov. </system:String>
 
     <!--Custom Query Hotkey Dialog-->
-    <system:String x:Key="customeQueryHotkeyTitle">Vlastná klávesová skratka pre plugin</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka pre vlastné vyhľadávanie</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Stlačením klávesovej skratky sa automaticky vloží zadaný výraz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
