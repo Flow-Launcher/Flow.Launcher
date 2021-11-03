@@ -102,4 +102,7 @@
         <Setter Property="Height" Value="32" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
+    <Color x:Key="SmallTipTextColor">#8f8f8f</Color>
+    <Color x:Key="StartHereMessageColor">#B5B5B5</Color>
 </ResourceDictionary>
+

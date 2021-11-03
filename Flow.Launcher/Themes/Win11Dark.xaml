@@ -103,4 +103,6 @@
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
     </Style>
+    <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
+    <Color x:Key="StartHereMessageColor">#4d4d4d</Color>    
 </ResourceDictionary>

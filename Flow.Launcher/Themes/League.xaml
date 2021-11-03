@@ -74,5 +74,6 @@
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
     </Style>
-
+    <Color x:Key="SmallTipTextColor">#5b5a56</Color>
+    <Color x:Key="StartHereMessageColor">#5b5a56</Color>
 </ResourceDictionary>

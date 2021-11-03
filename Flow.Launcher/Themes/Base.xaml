@@ -4,6 +4,13 @@
                     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
 
     <!-- Further font customisations are dynamically loaded in Theme.cs -->
+    <system:Double x:Key="WindowCornerRadiusValue">5</system:Double>
+    <CornerRadius x:Key="WindowCornerRadius" 
+    TopLeft="{StaticResource WindowCornerRadiusValue}" 
+    TopRight="{StaticResource WindowCornerRadiusValue}" 
+    BottomRight="{StaticResource WindowCornerRadiusValue}" 
+    BottomLeft="{StaticResource WindowCornerRadiusValue}" />
+
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
@@ -60,9 +67,18 @@
     </Style>
 
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
-        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="CornerRadius" Value="{StaticResource WindowCornerRadius}" />
     </Style>
-    
+
+    <Style x:Key="ResultRadius" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="{StaticResource WindowCornerRadius}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=SmallTipBorder, UpdateSourceTrigger=PropertyChanged, Path=Visibility}" Value="Visible">
+                <Setter Property="CornerRadius" Value="0" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="BasePendingLineStyle" TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="Blue" />
     </Style>
@@ -264,9 +280,9 @@
     <Storyboard x:Key="RemoveFade">
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0.0" Duration="0:0:0.2"/>
     </Storyboard>
-    
+
     <Style x:Key="StartHereMessage" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="#FFB8B8B8"/>
+        <Setter Property="Foreground" Value="{DynamicResource StartHereMessageColor}"/>
         <Setter Property="Opacity" Value="1" />
         <Style.Triggers>
             <MultiDataTrigger>
@@ -317,6 +333,7 @@
     </Style>
 
     <Style x:Key="SmallTipText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource SmallTipTextColor}"/>
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -407,5 +424,7 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
+    <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
+    <Color x:Key="StartHereMessageColor">#7b7b7b</Color>
 </ResourceDictionary>
     

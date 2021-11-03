@@ -70,4 +70,6 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="#687693" />
     </Style>
+    <Color x:Key="SmallTipTextColor">#687693</Color>
+    <Color x:Key="StartHereMessageColor">#687693</Color>
 </ResourceDictionary>

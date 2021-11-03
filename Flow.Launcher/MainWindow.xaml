@@ -99,7 +99,12 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
-                        <TextBlock Style="{DynamicResource StartHereMessage}" TextAlignment="Right" Canvas.Right="55" IsHitTestVisible="false" FontSize="14" Canvas.Top="6">Press F1 for Help</TextBlock>
+                        <TextBlock Style="{DynamicResource StartHereMessage}" TextAlignment="Right" Canvas.Right="55" IsHitTestVisible="false" FontSize="14" Canvas.Top="6">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush x:Name="StartHereColor" Color="{DynamicResource StartHereMessageColor}" />
+                            </TextBlock.Foreground>
+                            Press F1 for Help
+                        </TextBlock>
                         <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
                     </Canvas>
                 </Grid>
@@ -130,7 +135,18 @@
                     </Line>
                 </Grid>
 
-                <Border Style="{DynamicResource WindowRadius}">
+                <Border Style="{DynamicResource ResultRadius}">
+                    <!--<Border.Style>
+                        <Style TargetType="Border">
+                            
+                            <Setter Property="CornerRadius" Value="5" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=SmallTipBorder, UpdateSourceTrigger=PropertyChanged, Path=Visibility}" Value="Visible">
+                                    <Setter Property="CornerRadius" Value="0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>-->
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">
                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
@@ -138,33 +154,17 @@
                             <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
                         </MultiBinding>
                     </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
-                        </MultiBinding>
-                    </Border.Clip>
-                     <ContentControl>
-                        <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="ContextMenu"/>
-                      </ContentControl>
-                </Border>
-                <Border Style="{DynamicResource WindowRadius}">
-                <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
-                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}"/>
-                        </MultiBinding>
-                </Border.Clip>
+                    <Grid>
                         <ContentControl>
-                        <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
-                         </ContentControl>
+                            <flowlauncher:ResultListBox x:Name="ResultListBox" DataContext="{Binding Results}" PreviewMouseDown="OnPreviewMouseButtonDown" />
+                        </ContentControl>
+                        <ContentControl>
+                            <flowlauncher:ResultListBox DataContext="{Binding ContextMenu}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="ContextMenu"/>
+                        </ContentControl>
+                        <ContentControl>
+                            <flowlauncher:ResultListBox DataContext="{Binding History}" PreviewMouseDown="OnPreviewMouseButtonDown" x:Name="History"/>
+                        </ContentControl>
+                    </Grid>
                 </Border>
 
                 <Popup VerticalAlignment="Center" StaysOpen="False" x:Name="HotkeyPopup" Style="{DynamicResource HotkeyPopupStyle}" Margin="12" Placement="Right"  HorizontalOffset="0" VerticalOffset="-1" AllowsTransparency="True">
@@ -188,10 +188,13 @@
                     </Border.Clip>
                     <StackPanel>
                         <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
-                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource SmallTipText}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource SmallTipText}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush x:Name="SmallTipColor" Color="{DynamicResource SmallTipTextColor}" />
+                            </TextBlock.Foreground>
+                        </TextBlock>
                     </StackPanel>
                 </Border>
-                
             </StackPanel>
         </Border>
     </Grid>

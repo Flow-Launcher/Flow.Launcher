@@ -4,6 +4,12 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <system:Double x:Key="WindowCornerRadiusValue">5</system:Double>
+    <CornerRadius x:Key="WindowCornerRadius" 
+    TopLeft="{StaticResource WindowCornerRadiusValue}" 
+    TopRight="{StaticResource WindowCornerRadiusValue}" 
+    BottomRight="{StaticResource WindowCornerRadiusValue}" 
+    BottomLeft="{StaticResource WindowCornerRadiusValue}" />
     <Style x:Key="ItemGlyph"  BasedOn="{StaticResource BaseGlyphStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#000000" />
     </Style>
@@ -26,8 +32,8 @@
     </Style>
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource WindowCornerRadius}" />
         <Setter Property="BorderBrush" Value="#aaaaaa" />
-        <Setter Property="CornerRadius" Value="5" />
         <Setter Property="Background" Value="#f3f3f3" />
     </Style>
     <Style x:Key="WindowStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}">
@@ -100,4 +106,7 @@
         <Setter Property="Height" Value="32" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
+    <Color x:Key="SmallTipTextColor">#8f8f8f</Color>
+    <Color x:Key="StartHereMessageColor">#B5B5B5</Color>
+    
 </ResourceDictionary>
