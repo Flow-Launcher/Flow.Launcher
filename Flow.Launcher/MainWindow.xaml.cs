@@ -342,11 +342,13 @@ namespace Flow.Launcher
                 strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey05")),
                 strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey05Action"))
             });
+            /* Ctrl+C feature
             list.Add(new Hotkey()
             {
-                strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey06")),
-                strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey06Action"))
+               strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey06")),
+               strHotkeyAction = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey06Action"))
             });
+            */
             list.Add(new Hotkey()
             {
                 strHotkey = string.Format(InternationalizationManager.Instance.GetTranslation("Hotkey07")),
