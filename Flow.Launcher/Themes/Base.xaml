@@ -93,14 +93,12 @@
     
     <!-- Item Style -->
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
     <Style x:Key="BaseItemSubTitleStyle" TargetType="{x:Type TextBlock}" >
-        <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
         <Setter Property="FontSize" Value="13" />
@@ -127,14 +125,12 @@
         <Setter Property="FontSize" Value="25"/>
     </Style>
     <Style x:Key="BaseItemTitleSelectedStyle" TargetType="{x:Type TextBlock}" >
-        <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
     <Style x:Key="BaseItemSubTitleSelectedStyle" TargetType="{x:Type TextBlock}" >
-        <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>

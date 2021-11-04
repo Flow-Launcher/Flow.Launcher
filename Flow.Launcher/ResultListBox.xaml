@@ -61,7 +61,7 @@
                         <Border BorderThickness="0" BorderBrush="Transparent" Margin="9 0 0 0">
                             <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Glyph.Glyph}" FontFamily="{Binding Glyph.FontFamily}" Visibility="{Binding ShowGlyph}" Style="{DynamicResource ItemGlyph}"/>
                         </Border>
-                        <Grid Margin="6 0 10 0" Grid.Column="1" HorizontalAlignment="Stretch">
+                        <Grid Margin="6 0 18 0" Grid.Column="1" HorizontalAlignment="Stretch">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" x:Name="SubTitleRowDefinition" />
