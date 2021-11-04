@@ -108,5 +108,9 @@
     </Style>
     <Color x:Key="SmallTipTextColor">#8f8f8f</Color>
     <Color x:Key="StartHereMessageColor">#B5B5B5</Color>
-    
+
+    <Style x:Key="HotKeyBorder" TargetType="Border" BasedOn="{StaticResource BaseHotKeyBorder}">
+        <Setter Property="Background" Value="#FFBBBBBB" />
+    </Style>
+    <Color x:Key="HotkeyTextColor">White</Color>
 </ResourceDictionary>

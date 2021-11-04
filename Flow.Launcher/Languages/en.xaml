@@ -198,8 +198,9 @@
 
     <!--General Guide & Hotkey-->
     <system:String x:Key="StartHereMsg">Press F1 for Help</system:String>
-    <system:String x:Key="SmallTip01">Context Menu : &#129046; or Shift+Enter | Open Containing Folder : Ctrl+Enter</system:String>
-    <system:String x:Key="SmallTip02">Back to Result : &#129044; or ESC</system:String>
+    <system:String x:Key="SmallTipContextMenu">Context Menu</system:String>
+    <system:String x:Key="SmallTipOpenFolder">Open Containing Folder</system:String>
+    <system:String x:Key="SmallTipBackResult">Back to Result</system:String>
     <system:String x:Key="Hotkey01">F1</system:String>
     <system:String x:Key="Hotkey01Action">Toggle Help Window</system:String>
     <system:String x:Key="Hotkey02">F2</system:String>

@@ -188,11 +188,62 @@
                     </Border.Clip>
                     <StackPanel>
                         <Rectangle Width="Auto" HorizontalAlignment="Stretch" Style="{DynamicResource SeparatorStyle}"/>
-                        <TextBlock VerticalAlignment="Center" Style="{DynamicResource SmallTipText}" LineHeight="15" Margin="0 0 0 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush x:Name="SmallTipColor" Color="{DynamicResource SmallTipTextColor}" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
+                        <WrapPanel HorizontalAlignment="Center" Margin="12 0 8 0" x:Name="SmallTipPanel01" Style="{DynamicResource SmallTipPanel01Style}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Border Style="{DynamicResource HotKeyBorder}">
+                                    <TextBlock FontSize="10">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource HotkeyTextColor}" />
+                                        </TextBlock.Foreground>&#129046;</TextBlock>
+                                </Border>
+                                <Border Style="{DynamicResource HotKeyBorder}">
+                                    <TextBlock FontSize="10">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource HotkeyTextColor}" />
+                                        </TextBlock.Foreground>
+                                        SHIFT+ENTER</TextBlock>
+                                </Border>
+                                <TextBlock VerticalAlignment="Center" LineHeight="15" Margin="4 0 6 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText1" Text="{DynamicResource SmallTipContextMenu}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource SmallTipTextColor}" />
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Border Style="{DynamicResource HotKeyBorder}">
+                                    <TextBlock FontSize="10">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource HotkeyTextColor}" />
+                                        </TextBlock.Foreground>CTRL+ENTER</TextBlock>
+                                </Border>
+                                <TextBlock VerticalAlignment="Center" LineHeight="15" Margin="4 0 4 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText2" Text="{DynamicResource SmallTipOpenFolder}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource SmallTipTextColor}" />
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel HorizontalAlignment="Center" Margin="12 0 8 0" x:Name="SmallTipPanel02" Style="{DynamicResource SmallTipPanel02Style}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Border Style="{DynamicResource HotKeyBorder}">
+                                    <TextBlock FontSize="10">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource HotkeyTextColor}" />
+                                        </TextBlock.Foreground>&#129044;</TextBlock>
+                                </Border>
+                                <Border Style="{DynamicResource HotKeyBorder}">
+                                    <TextBlock FontSize="10">
+                                        <TextBlock.Foreground>
+                                            <SolidColorBrush Color="{DynamicResource HotkeyTextColor}" />
+                                        </TextBlock.Foreground>ESC</TextBlock>
+                                </Border>
+                                <TextBlock VerticalAlignment="Center" LineHeight="15" Margin="4 0 6 8" TextWrapping="WrapWithOverflow" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" x:Name="TipText3" Text="{DynamicResource SmallTipBackResult}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource SmallTipTextColor}" />
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
                     </StackPanel>
                 </Border>
             </StackPanel>

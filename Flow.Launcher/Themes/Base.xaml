@@ -281,8 +281,15 @@
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0.0" Duration="0:0:0.2"/>
     </Storyboard>
 
+    <Style x:Key="BaseHotKeyBorder" TargetType="Border">
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Background" Value="#42000000" />
+        <Setter Property="Padding" Value="8 2 8 2" />
+        <Setter Property="Margin" Value="4 0 2 8" />
+    </Style>
+
     <Style x:Key="StartHereMessage" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource StartHereMessageColor}"/>
+        <Setter Property="Foreground" Value="#B0B0B0"/>
         <Setter Property="Opacity" Value="1" />
         <Style.Triggers>
             <MultiDataTrigger>
@@ -331,34 +338,53 @@
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>
-
-    <Style x:Key="SmallTipText" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource SmallTipTextColor}"/>
+    
+    <Style x:Key="SmallTipPanel01Style" TargetType="WrapPanel">
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="TextBlock.Text" Value="{DynamicResource SmallTip01}" />
+                <Setter Property="Visibility" Value="Visible" />
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="TextBlock.Text" Value="{DynamicResource SmallTip02}" />
+                <Setter Property="Visibility" Value="Collapsed" />
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding BeginnersGuide, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="TextBlock.Text" Value="{DynamicResource SmallTip01}" />
+                <Setter Property="Visibility" Value="Collapsed" />
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>
-
+    
+    <Style x:Key="SmallTipPanel02Style" TargetType="WrapPanel">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Collapsed" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+  
     <Style x:Key="HotkeyPopupStyle" TargetType="Popup">
         <Setter Property="IsOpen" Value="False" />
         <Style.Triggers>
@@ -424,7 +450,13 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
+
+    <Style x:Key="HotKeyBorder" TargetType="Border" BasedOn="{StaticResource BaseHotKeyBorder}">
+        <Setter Property="Background" Value="#42000000" />
+    </Style>
+
     <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
     <Color x:Key="StartHereMessageColor">#7b7b7b</Color>
+    <Color x:Key="HotkeyTextColor">White</Color>
 </ResourceDictionary>
     
