@@ -69,44 +69,54 @@
     <Grid>
         <Border Style="{DynamicResource WindowBorderStyle}" MouseDown="OnMouseDown">
             <StackPanel Orientation="Vertical">
-                <Grid>
-                    <TextBox x:Name="QueryTextSuggestionBox"
-                         Style="{DynamicResource QuerySuggestionBoxStyle}"
-                         IsEnabled="False">
-                        <TextBox.Text>
-                            <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                <Binding ElementName="QueryTextBox" Path="Text"/>
-                                <Binding ElementName="ResultListBox" Path="SelectedItem"/>
-                            </MultiBinding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBox x:Name="QueryTextBox"
-                    Style="{DynamicResource QueryBoxStyle}"
-                     Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     PreviewDragOver="OnPreviewDragOver"
-                     AllowDrop="True"
-                     Visibility="Visible"
-                    Background="Transparent">
-                        <TextBox.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="ApplicationCommands.Cut"/>
-                                <MenuItem Command="ApplicationCommands.Copy"/>
-                                <MenuItem Command="ApplicationCommands.Paste"/>
-                                <Separator />
-                                <MenuItem Header="{DynamicResource flowlauncher_settings}"  Click="OnContextMenusForSettingsClick" />
-                                <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}"/>
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
-                    </TextBox>
-                    <Canvas Style="{DynamicResource SearchIconPosition}">
-                        <TextBlock Style="{DynamicResource StartHereMessage}" Text="{StaticResource StartHereMsg}" TextAlignment="Right" Canvas.Right="55" IsHitTestVisible="false" FontSize="14" Canvas.Top="6">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush x:Name="StartHereColor" Color="{DynamicResource StartHereMessageColor}" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
-                    </Canvas>
-                </Grid>
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
+                        <Grid>
+                            <Border x:Name="MenuSignPanel" Style="{DynamicResource MenuSignPanelStyle}">
+                            <TextBlock x:Name="MenuSignText" Style="{DynamicResource MenuSignTextStyle}" FontSize="20" VerticalAlignment="Center" ></TextBlock></Border>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel>
+                        <Grid>
+                            <TextBox x:Name="QueryTextSuggestionBox"
+                                 Style="{DynamicResource QuerySuggestionBoxStyle}"
+                                 IsEnabled="False">
+                                <TextBox.Text>
+                                    <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
+                                        <Binding ElementName="QueryTextBox" Path="Text"/>
+                                        <Binding ElementName="ResultListBox" Path="SelectedItem"/>
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBox x:Name="QueryTextBox"
+                            Style="{DynamicResource QueryBoxStyle}"
+                             Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             PreviewDragOver="OnPreviewDragOver"
+                             AllowDrop="True"
+                             Visibility="Visible"
+                            Background="Transparent">
+                                <TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="ApplicationCommands.Cut"/>
+                                        <MenuItem Command="ApplicationCommands.Copy"/>
+                                        <MenuItem Command="ApplicationCommands.Paste"/>
+                                        <Separator />
+                                        <MenuItem Header="{DynamicResource flowlauncher_settings}"  Click="OnContextMenusForSettingsClick" />
+                                        <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}"/>
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+                            </TextBox>
+                            <Canvas Style="{DynamicResource SearchIconPosition}">
+                                <TextBlock Style="{DynamicResource StartHereMessage}" Text="{StaticResource StartHereMsg}" TextAlignment="Right" Canvas.Right="55" IsHitTestVisible="false" FontSize="14" Canvas.Top="6">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush x:Name="StartHereColor" Color="{DynamicResource StartHereMessageColor}" />
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <Path Data="{DynamicResource SearchIconImg}" Style="{DynamicResource SearchIconStyle}" Margin="0"  Stretch="Fill"/>
+                            </Canvas>
+                        </Grid>
+                    </StackPanel>
+                </DockPanel>
 
                 <Grid ClipToBounds="True">
                     <ContentControl>
@@ -133,7 +143,7 @@
                   Y1="0" Y2="0" X1="-150" X2="-50" Height="2" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}},Path=ActualWidth}" StrokeThickness="1">
                     </Line>
                 </Grid>
-
+                    
                 <Border Style="{DynamicResource ResultRadius}">
                     <Border.Clip>
                         <MultiBinding Converter="{StaticResource BorderClipConverter}">

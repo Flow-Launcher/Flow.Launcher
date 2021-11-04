@@ -3,13 +3,20 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
 
-    <!-- Further font customisations are dynamically loaded in Theme.cs -->
+    <!-- Palette -->
+    <SolidColorBrush x:Key="LineColor" Color="#7b7b7b" Opacity="0.5"/>
+    <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
+    <Color x:Key="StartHereMessageColor">#7b7b7b</Color>
+    <Color x:Key="HotkeyTextColor">White</Color>
     <system:Double x:Key="WindowCornerRadiusValue">5</system:Double>
     <CornerRadius x:Key="WindowCornerRadius" 
     TopLeft="{StaticResource WindowCornerRadiusValue}" 
     TopRight="{StaticResource WindowCornerRadiusValue}" 
     BottomRight="{StaticResource WindowCornerRadiusValue}" 
     BottomLeft="{StaticResource WindowCornerRadiusValue}" />
+    
+    <!-- Further font customisations are dynamically loaded in Theme.cs -->
+    
 
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
@@ -427,6 +434,59 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="BaseMenuSignPanelStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource LineColor}" />
+        <Setter Property="BorderThickness" Value="0 0 1 0" />
+        <Setter Property="Margin" Value="0 4 0 4" />
+        <Setter Property="Padding" Value="16 0 12 0" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Collapsed" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BaseMenuSignTextStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#E3E0E3" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{DynamicResource Action}"/>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="{DynamicResource History}"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
     <!--for classic themes-->
     <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#555555" />
@@ -454,9 +514,11 @@
     <Style x:Key="HotKeyBorder" TargetType="Border" BasedOn="{StaticResource BaseHotKeyBorder}">
         <Setter Property="Background" Value="#42000000" />
     </Style>
-
-    <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
-    <Color x:Key="StartHereMessageColor">#7b7b7b</Color>
-    <Color x:Key="HotkeyTextColor">White</Color>
+    <Style x:Key="MenuSignTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseMenuSignTextStyle}">
+    </Style>
+    <Style x:Key="MenuSignPanelStyle" TargetType="Border" BasedOn="{StaticResource BaseMenuSignPanelStyle}">
+        <Setter Property="BorderBrush" Value="{StaticResource LineColor}" />
+    </Style>
+    
 </ResourceDictionary>
     
