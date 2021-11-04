@@ -196,6 +196,10 @@
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Update description</system:String>
 
+    <!--Menu Panel-->
+    <system:String x:Key="Action">Action</system:String>
+    <system:String x:Key="History">History</system:String>
+
     <!--General Guide & Hotkey-->
     <system:String x:Key="StartHereMsg">Press F1 for Help</system:String>
     <system:String x:Key="SmallTipContextMenu">Context Menu</system:String>

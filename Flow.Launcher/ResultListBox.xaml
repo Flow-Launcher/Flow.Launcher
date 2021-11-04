@@ -43,7 +43,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Visibility="{Binding ShowOpenResultHotkey}" Grid.Column="2" Margin="0 0 10 0">
-                            <TextBlock Margin="12 0 12 0" Style="{DynamicResource ItemHotkeyStyle}" HorizontalAlignment="Right" Opacity="0.8" VerticalAlignment="Center" Padding="0 10 0 10" x:Name="Hotkey">
+                            <TextBlock Margin="0 0 12 0" Style="{DynamicResource ItemHotkeyStyle}" HorizontalAlignment="Right" Opacity="0.8" VerticalAlignment="Center" Padding="0 10 0 10" x:Name="Hotkey">
                                 <TextBlock.Visibility>
                                     <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" />
                                 </TextBlock.Visibility>
