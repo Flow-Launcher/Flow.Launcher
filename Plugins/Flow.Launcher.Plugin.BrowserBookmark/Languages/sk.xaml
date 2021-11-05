@@ -14,7 +14,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Prehliadať</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Kopírovať URL</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Kopírovať URL záložky do schránky</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom" >Načítať prehliadač z:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Načítať prehliadač z:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Názov prehliadača</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookDataDirectory">Umiestnenie priečinka Data</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Pridať</system:String>

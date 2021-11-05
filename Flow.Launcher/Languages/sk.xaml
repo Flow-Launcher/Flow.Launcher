@@ -13,53 +13,64 @@
     <system:String x:Key="iconTraySettings">Nastavenia</system:String>
     <system:String x:Key="iconTrayAbout">O aplikácii</system:String>
     <system:String x:Key="iconTrayExit">Ukončiť</system:String>
+    <system:String x:Key="closeWindow">Zavrieť</system:String>
 
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
+    <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného centrálneho priečinka (Užitočné pri vyberateľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
     <system:String x:Key="language">Jazyk</system:String>
     <system:String x:Key="lastQueryMode">Posledné vyhľadávanie</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Zobrazí/skryje predchádzajúce výsledky pri opätovnej aktivácii Flow Launchera.</system:String>
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
     <system:String x:Key="maxShowResults">Max. výsledkov</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Zakázať aktiváciu Flow Launchera, keď je aktívna aplikácia na celú obrazovku (odporúčané pre hry).</system:String>
     <system:String x:Key="pythonDirectory">Priečinok s Pythonom</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
-    <system:String x:Key="autoHideScrollBar">Automaticky skryť posuvník</system:String>
-    <system:String x:Key="autoHideScrollBarToolTip">Automaticky skrývať posuvník v okne nastavení a zobraziť ho, keď naň prejdete myšou</system:String>
     <system:String x:Key="selectPythonDirectory">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
     <system:String x:Key="ShouldUsePinyin">Použiť Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou Pinyin. Pinyin je štandardný systém romanizovaného pravopisu pre transliteráciu čínštiny</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
-
+    
     <!--Setting Plugin-->
-    <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugin">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
-    <system:String x:Key="enable">Povolené</system:String>
-    <system:String x:Key="disable">Zakázané</system:String>
+    <system:String x:Key="enable">Zap.</system:String>
+    <system:String x:Key="disable">Vyp.</system:String>
+    <system:String x:Key="actionKeywordsTitle">Nastavenie kľúčového slova akcie</system:String>
     <system:String x:Key="actionKeywords">Skratka akcie</system:String>
     <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky:</system:String>
     <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita:</system:String>
     <system:String x:Key="newPriority">Nová priorita:</system:String>
-    <system:String x:Key="priority">Priorita:</system:String>
+    <system:String x:Key="priority">Priorita</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
-    <system:String x:Key="author">Autor</system:String>
+    <system:String x:Key="author">Autor:</system:String>
     <system:String x:Key="plugin_init_time">Príprava:</system:String>
     <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
+    
+
+    <!--Setting Plugin Store-->
+    <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
+    <system:String x:Key="refresh">Obnoviť</system:String>
+    <system:String x:Key="install">Inštalovať</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Motív</system:String>
-    <system:String x:Key="browserMoreThemes">Prehliadať viac motívov</system:String>
+    <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
+    <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhľadávacieho poľa</system:String>
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
@@ -67,12 +78,17 @@
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, návrat na predvolený motív</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, návrat na predvolený motív</system:String>
+    <system:String x:Key="ThemeFolder">Priečinok s motívmi</system:String>
+    <system:String x:Key="OpenThemeFolder">Otvoriť priečinok s motívmi</system:String>
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
     <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
-    <system:String x:Key="openResultModifiers">Modifikáčné klávesy na otvorenie výsledkov</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
+    <system:String x:Key="openResultModifiers">Otvoriť výsledok modifikačným klávesom</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
     <system:String x:Key="customQueryHotkey">Vlastná klávesová skratka na vyhľadávanie</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
@@ -90,7 +106,7 @@
     <system:String x:Key="enableProxy">Povoliť HTTP Proxy</system:String>
     <system:String x:Key="server">HTTP Server</system:String>
     <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">Použív. meno</system:String>
+    <system:String x:Key="userName">Používateľské meno</system:String>
     <system:String x:Key="password">Heslo</system:String>
     <system:String x:Key="testProxy">Test Proxy</system:String>
     <system:String x:Key="save">Uložiť</system:String>
@@ -117,6 +133,7 @@
     <system:String x:Key="documentation">Tipy na používanie:</system:String>
 
     <!--Priority Setting Dialog-->
+    <system:String x:Key="changePriorityWindow">Zmena priority</system:String>
     <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné doplnky, zadajte záporné číslo</system:String>
     <system:String x:Key="invalidPriority">Prosím, zadajte platné číslo pre prioritu!</system:String>
 
@@ -130,10 +147,11 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="actionkeyword_tips">Použite * ak nechcete určiť skratku pre akciu</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov. </system:String>
 
     <!--Custom Query Hotkey Dialog-->
-    <system:String x:Key="customeQueryHotkeyTitle">Vlastná klávesová skratka pre plugin</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka pre vlastné vyhľadávanie</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Stlačením klávesovej skratky sa automaticky vloží zadaný výraz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
@@ -162,8 +180,8 @@
     <system:String x:Key="pleaseWait">Čakajte, prosím…</system:String>
 
     <!--update-->
-    <system:String x:Key="update_flowlauncher_update_check">Kontrolujú sa akutalizácie</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">Už máte najnovšiu verizu Flow Launchera</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Kontrolujú sa aktualizácie</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Už máte najnovšiu verziu Flow Launchera</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Bola nájdená aktualizácia</system:String>
     <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa…</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">Flow Launcher nedokázal presunúť používateľské údaje do aktualizovanej verzie.

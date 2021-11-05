@@ -22,12 +22,12 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_openBookmarks}"
                        FontSize="15" Margin="10 5 0 0"/>
-                <RadioButton Grid.Column="1" Name="NewWindowBrowser" GroupName="OpenSearchBehaviour" 
-                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newWindow}"
-                             Click="OnNewBrowserWindowClick" />
-                <RadioButton Grid.Column="2" Name="NewTabInBrowser" GroupName="OpenSearchBehaviour" 
-                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newTab}" 
-                             Click="OnNewTabClick" />
+                <RadioButton Grid.Column="1" Name="NewWindowBrowser"
+                             IsChecked="{Binding OpenInNewBrowserWindow}"
+                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newWindow}"/>
+                <RadioButton Grid.Column="2" Name="NewTabInBrowser"
+                             IsChecked="{Binding OpenInNewTab, Mode=OneTime}"
+                             Content="{DynamicResource flowlauncher_plugin_browserbookmark_settings_newTab}"/>
             </Grid>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Height="60" Margin="30,20,0,0">

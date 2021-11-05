@@ -68,6 +68,8 @@ namespace Flow.Launcher
 
         public void RestarApp() => RestartApp();
 
+        public void ShowMainWindow() => _mainVM.MainWindowVisibility = Visibility.Visible;
+
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
         public void SaveAppAllSettings()
@@ -90,8 +92,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var msg = useMainWindowAsOwner ? new Msg {Owner = Application.Current.MainWindow} : new Msg();
-                msg.Show(title, subTitle, iconPath);
+                Notification.Show(title, subTitle, iconPath);
             });
         }
 

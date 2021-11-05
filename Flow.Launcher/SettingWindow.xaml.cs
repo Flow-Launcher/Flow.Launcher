@@ -13,6 +13,8 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Helper;
+using System.Windows.Controls;
+using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
@@ -185,23 +187,20 @@ namespace Flow.Launcher
             settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled;
         }
 
-        private void OnPluginPriorityClick(object sender, MouseButtonEventArgs e)
+        private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (sender is Control { DataContext: PluginViewModel pluginViewModel })
             {
-                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(viewModel.SelectedPlugin.PluginPair.Metadata.ID, settings, viewModel.SelectedPlugin);
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, settings, pluginViewModel);
                 priorityChangeWindow.ShowDialog();
             }
         }
 
-        private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
+        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
-                changeKeywordsWindow.ShowDialog();
-            }
+            var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
+            ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
+            changeKeywordsWindow.ShowDialog();
         }
 
         private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
@@ -267,5 +266,30 @@ namespace Flow.Launcher
             FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
 
+        private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
+        {
+            _ = viewModel.RefreshExternalPluginsAsync();
+        }
+
+        private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button { DataContext: UserPlugin plugin })
+            {
+                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+                var actionKeywrod = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeywrod} install {plugin.Name}");
+                API.ShowMainWindow();
+            }
+        }
+
+        private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
+        {
+            TextBox textBox = Keyboard.FocusedElement as TextBox;
+            if (textBox != null)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                textBox.MoveFocus(tRequest);
+            }
+        }
     }
 }
