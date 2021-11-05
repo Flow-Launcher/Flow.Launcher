@@ -49,6 +49,7 @@
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Off</system:String>
+    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
     <system:String x:Key="actionKeywords">Action keyword</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
     <system:String x:Key="newActionKeyword">New action keyword:</system:String>
@@ -68,7 +69,8 @@
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Theme</system:String>
-    <system:String x:Key="browserMoreThemes">Browse for more themes</system:String>
+    <system:String x:Key="browserMoreThemes">Theme Gallery</system:String>
+    <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
     <system:String x:Key="hiThere">Hi There</system:String>
     <system:String x:Key="queryBoxFont">Query Box Font</system:String>
     <system:String x:Key="resultItemFont">Result Item Font</system:String>
@@ -153,10 +155,11 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
     <system:String x:Key="success">Success</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Use * if you don't want to specify an action keyword</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keyword you need to start the plug-in. Use * if you don't want to specify an action keyword. In the case, The plug-in works without keywords. </system:String>
 
     <!--Custom Query Hotkey Dialog-->
-    <system:String x:Key="customeQueryHotkeyTitle">Custom Plugin Hotkey</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
     <system:String x:Key="preview">Preview</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
