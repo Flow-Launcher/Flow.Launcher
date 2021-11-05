@@ -4,7 +4,7 @@
                     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
 
     <!-- Palette -->
-    <SolidColorBrush x:Key="LineColor" Color="#7b7b7b" Opacity="0.5"/>
+    <SolidColorBrush x:Key="LineColor" Color="#7b7b7b"/>
     <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
     <Color x:Key="StartHereMessageColor">#7b7b7b</Color>
     <Color x:Key="HotkeyTextColor">White</Color>
@@ -437,8 +437,8 @@
     <Style x:Key="BaseMenuSignPanelStyle" TargetType="Border">
         <Setter Property="BorderBrush" Value="{StaticResource LineColor}" />
         <Setter Property="BorderThickness" Value="0 0 1 0" />
-        <Setter Property="Margin" Value="0 4 0 4" />
-        <Setter Property="Padding" Value="16 0 12 0" />
+        <Setter Property="Margin" Value="0 4 0 0" />
+        <Setter Property="Padding" Value="20 0 16 0" />
         <Setter Property="Height" Value="40" />
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>

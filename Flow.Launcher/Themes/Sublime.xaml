@@ -107,5 +107,11 @@
     </Style>
     <Color x:Key="SmallTipTextColor">#7b858f</Color>
     <Color x:Key="StartHereMessageColor">#7b858f</Color>
-
+    <Style x:Key="MenuSignPanelStyle" TargetType="Border" BasedOn="{StaticResource BaseMenuSignPanelStyle}">
+        <Setter Property="Margin" Value="0 4 0 0" />
+        <Setter Property="BorderBrush" Value="#3c454e" />
+    </Style>
+    <Style x:Key="MenuSignTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseMenuSignTextStyle}">
+        <Setter Property="Foreground" Value="#5bafb0" />
+    </Style>
 </ResourceDictionary>

@@ -66,7 +66,7 @@
         <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
+        <Setter Property="Inline.Foreground" Value="#00D7D7" />
     </Style>
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="13" />
@@ -104,5 +104,9 @@
         <Setter Property="Height" Value="32" />
     </Style>
     <Color x:Key="SmallTipTextColor">#7b7b7b</Color>
-    <Color x:Key="StartHereMessageColor">#4d4d4d</Color>    
+    <Color x:Key="StartHereMessageColor">#4d4d4d</Color>
+    <Style x:Key="MenuSignPanelStyle" TargetType="Border" BasedOn="{StaticResource BaseMenuSignPanelStyle}">
+        <Setter Property="Margin" Value="0 4 0 0" />
+        <Setter Property="BorderBrush" Value="#4d4d4d" />
+    </Style>
 </ResourceDictionary>

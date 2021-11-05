@@ -5,12 +5,6 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="LineColor" Color="#D9D9D9"/>
-    <system:Double x:Key="WindowCornerRadiusValue">5</system:Double>
-    <CornerRadius x:Key="WindowCornerRadius" TopLeft="{StaticResource WindowCornerRadiusValue}" 
-                  TopRight="{StaticResource WindowCornerRadiusValue}" BottomRight="{StaticResource WindowCornerRadiusValue}"
-                  BottomLeft="{StaticResource WindowCornerRadiusValue}" />
-
     <Style x:Key="ItemGlyph"  BasedOn="{StaticResource BaseGlyphStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#000000" />
     </Style>
@@ -97,7 +91,7 @@
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}">
     </Style>
     <Style x:Key="SeparatorStyle" BasedOn="{StaticResource BaseSeparatorStyle}" TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="{StaticResource LineColor}"/>
+        <Setter Property="Fill" Value="#D9D9D9"/>
         <Setter Property="Height" Value="1"/>
         <Setter Property="Margin" Value="12 0 12 8"/>
     </Style>
@@ -109,15 +103,20 @@
     </Style>
     <Color x:Key="SmallTipTextColor">#8f8f8f</Color>
     <Color x:Key="StartHereMessageColor">#B5B5B5</Color>
+
+    <system:Double x:Key="WindowCornerRadiusValue">5</system:Double>
+    <CornerRadius x:Key="WindowCornerRadius" TopLeft="{StaticResource WindowCornerRadiusValue}" 
+                  TopRight="{StaticResource WindowCornerRadiusValue}" BottomRight="{StaticResource WindowCornerRadiusValue}"
+                  BottomLeft="{StaticResource WindowCornerRadiusValue}" />
     <Style x:Key="MenuSignPanelStyle" TargetType="Border" BasedOn="{StaticResource BaseMenuSignPanelStyle}">
         <Setter Property="Margin" Value="0 4 0 0" />
-        <Setter Property="BorderBrush" Value="{StaticResource LineColor}" />
+        <Setter Property="BorderBrush" Value="#D9D9D9" />
     </Style>
     <Style x:Key="MenuSignTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseMenuSignTextStyle}">
         <Setter Property="Foreground" Value="#000000" />
     </Style>
-
     <Style x:Key="HotKeyBorder" TargetType="Border" BasedOn="{StaticResource BaseHotKeyBorder}">
         <Setter Property="Background" Value="#FFBBBBBB" />
     </Style>
+
 </ResourceDictionary>

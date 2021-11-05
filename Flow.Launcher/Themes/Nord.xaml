@@ -14,7 +14,7 @@
 
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#4c566a" />
-        <Setter Property="Foreground" Value="#eceff4" />
+        <Setter Property="Foreground" Value="#72809D" />
         <Setter Property="FontSize" Value="25" />
     </Style>
 
@@ -72,4 +72,7 @@
     </Style>
     <Color x:Key="SmallTipTextColor">#687693</Color>
     <Color x:Key="StartHereMessageColor">#687693</Color>
+    <Style x:Key="MenuSignPanelStyle" TargetType="Border" BasedOn="{StaticResource BaseMenuSignPanelStyle}">
+        <Setter Property="BorderBrush" Value="#596479" />
+    </Style>
 </ResourceDictionary>

@@ -73,4 +73,7 @@
     </Style>
     <Color x:Key="SmallTipTextColor">#8391AB</Color>
     <Color x:Key="StartHereMessageColor">#8391AB</Color>
+    <Style x:Key="MenuSignPanelStyle" TargetType="Border" BasedOn="{StaticResource BaseMenuSignPanelStyle}">
+        <Setter Property="BorderBrush" Value="#596479" />
+    </Style>
 </ResourceDictionary>
