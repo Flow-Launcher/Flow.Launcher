@@ -1114,7 +1114,7 @@
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
-                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 18">
+                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Text="{DynamicResource windowWidthSize}" Style="{DynamicResource SettingTitleLabel}"/>
@@ -1131,7 +1131,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="3">
-                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 8 0 0" Padding="0"
+                            <Border Style="{DynamicResource SettingGroupBox}" Margin="0 12 0 0" Padding="0"
                                     HorizontalAlignment="Stretch">
                                 <ListBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}"
                                          ui:ScrollViewerHelper.AutoHideScrollBars="True"
