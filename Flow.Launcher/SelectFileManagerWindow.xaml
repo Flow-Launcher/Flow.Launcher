@@ -53,9 +53,8 @@
                                   Margin="14,0,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
-                                  ItemsSource="{Binding Settings.CustomExplorerList}"
-                                  SelectedIndex="0"
-                                  SelectedItem="{Binding Settings.CustomExplorer}">
+                                  ItemsSource="{Binding CustomExplorers}"
+                                  SelectedIndex="{Binding SelectedCustomExplorerIndex}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
@@ -66,7 +65,7 @@
                     <Rectangle Height="1" Margin="0,20,0,12" Fill="#cecece" />
                     <StackPanel Margin="0,0,0,0"
                                 HorizontalAlignment="Stretch"
-                                DataContext="{Binding Settings.CustomExplorer}"
+                                DataContext="{Binding CustomExplorer}"
                                 Orientation="Horizontal">
                         <Grid Width="430">
                             <Grid.ColumnDefinitions>
@@ -163,13 +162,15 @@
                     Width="100"
                     Height="30"
                     Margin="0,0,5,0"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource cancel}"
+                    Click="btnCancel_Click"/>
             <Button x:Name="btnDone"
                     Width="100"
                     Height="30"
-                    Margin="5,0,0,0">
-                <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
-            </Button>
+                    Margin="5,0,0,0"
+                    Content="{DynamicResource done}"
+                    Click="btnDone_Click"
+                   />
         </StackPanel>
     </Grid>
 </Window>

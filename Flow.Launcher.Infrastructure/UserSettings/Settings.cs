@@ -39,7 +39,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
 
-        public CustomExplorerViewModel CustomExplorer { get; set; }
+        public int CustomExplorerIndex { get; set; } = 0;
+        public CustomExplorerViewModel CustomExplorer
+        {
+            get => CustomExplorerList[CustomExplorerIndex];
+            set => CustomExplorerList[CustomExplorerIndex] = value;
+        }
+
         public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = new()
         {
             new()

@@ -618,7 +618,7 @@
                             </StackPanel>
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                 <Button Margin="10 0 18 0" MaxWidth="250" Width="160"
-                                        Content="Explorer" Click="OnSelectFileManagerClick">
+                                        Content="{Binding Settings.CustomExplorer.Name}" Click="OnSelectFileManagerClick">
                                     <Button.Resources>
                                         <Style TargetType="Border">
                                             <Setter Property="CornerRadius" Value="2"/>
