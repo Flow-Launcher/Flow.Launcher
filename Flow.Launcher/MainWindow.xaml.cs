@@ -185,7 +185,7 @@ namespace Flow.Launcher
             var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
             setting.Click += (o, e) => App.API.OpenSettingDialog();
             var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
-            exit.Click += (o, e) => Environment.Exit(0);
+            exit.Click += (o, e) => Close();
 
             _notifyIcon.ContextMenuStrip = menu;
             _notifyIcon.MouseClick += (o, e) =>

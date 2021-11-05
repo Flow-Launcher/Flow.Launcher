@@ -273,7 +273,7 @@ namespace Flow.Launcher.ViewModel
             ReloadPluginDataCommand = new RelayCommand(_ =>
             {
                 Hide();
-                
+
                 PluginManager
                     .ReloadData()
                     .ContinueWith(_ =>
@@ -315,7 +315,7 @@ namespace Flow.Launcher.ViewModel
         /// <param name="queryText"></param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            if (QueryText!=queryText) 
+            if (QueryText != queryText)
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
@@ -696,7 +696,7 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        public async void ToggleFlowLauncher()
+        public void ToggleFlowLauncher()
         {
             if (MainWindowVisibility != Visibility.Visible)
             {
