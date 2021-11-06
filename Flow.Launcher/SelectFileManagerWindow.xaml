@@ -7,14 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="{DynamicResource fileManagerWindow}"
-    Width="600"
-    Height="550"
     Background="#f3f3f3"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Width="600">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="80" />
@@ -152,7 +151,7 @@
                             <TextBlock
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Margin="14,10,0,0"
+                                Margin="14,10,0,20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -161,7 +160,7 @@
                                 Grid.Row="3"
                                 Grid.Column="1"
                                 Width="Auto"
-                                Margin="10,10,15,0"
+                                Margin="10,10,15,20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsEnabled="{Binding Editable}"
