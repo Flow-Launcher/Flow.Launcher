@@ -66,7 +66,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Directory Opus",
-                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopus.exe",
+                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
                 DirectoryArgument = "/cmd Go \"%d\"",
                 FileArgument = "/cmd Go \"%f\""
                 
