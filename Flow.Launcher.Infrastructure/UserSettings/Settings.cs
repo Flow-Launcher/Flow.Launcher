@@ -51,23 +51,31 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 Name = "Explorer",
                 Path = "explorer",
-                FileArgument = "/select, \"%f\"",
                 DirectoryArgument = "\"%d\"",
+                FileArgument = "/select, \"%f\"",
                 Editable = false
             },
             new()
             {
                 Name = "Total Commander",
                 Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
-                FileArgument = "\"%d\"",
-                DirectoryArgument = "\"%d\""
+                DirectoryArgument = "/O /A /S /T \"%d\"",
+                FileArgument = "/O /A /S /T \"%f\""
             },
             new()
             {
                 Name = "Directory Opus",
                 Path = @"C:\Program Files\GPSoftware\Directory Opus\dopus.exe",
-                FileArgument = "\"%d\"",
-                DirectoryArgument = "\"%d\""
+                DirectoryArgument = "/cmd Go \"%d\"",
+                FileArgument = "/cmd Go \"%f\""
+                
+            },
+            new()
+            {
+                Name = "Files",
+                Path = "Files",
+                DirectoryArgument = "-select \"%d\"",
+                FileArgument = "-select \"%f\""
             }
         };
 
