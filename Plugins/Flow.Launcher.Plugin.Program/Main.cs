@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.Program
 
         private static bool IsStartupIndexProgramsRequired => _settings.LastIndexTime.AddDays(3) < DateTime.Today;
 
-        private static PluginInitContext _context;
+        internal static PluginInitContext Context { get; private set; }
 
         private static BinaryStorage<Win32[]> _win32Storage;
         private static BinaryStorage<UWP.Application[]> _uwpStorage;
