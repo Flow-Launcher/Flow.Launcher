@@ -58,12 +58,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Total Commander",
-                Path = @"C:\Program Files\TOTALCMD\totalcommander.exe"
+                Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
+                FileArgument = "\"%d\"",
+                DirectoryArgument = "\"%d\""
             },
             new()
             {
-                Name = "Dopus",
-                Path = @"c:\programe files\dopus\dopus.exe"
+                Name = "Directory Opus",
+                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopus.exe",
+                FileArgument = "\"%d\"",
+                DirectoryArgument = "\"%d\""
             }
         };
 
