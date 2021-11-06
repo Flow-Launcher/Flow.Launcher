@@ -2,6 +2,7 @@
 using Flow.Launcher.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -36,13 +37,13 @@ namespace Flow.Launcher
                 PropertyChanged?.Invoke(this, new(nameof(CustomExplorer)));
             }
         }
-        public List<CustomExplorerViewModel> CustomExplorers { get; set; }
+        public ObservableCollection<CustomExplorerViewModel> CustomExplorers { get; set; }
 
         public CustomExplorerViewModel CustomExplorer => CustomExplorers[SelectedCustomExplorerIndex];
         public SelectFileManagerWindow(Settings settings)
         {
             Settings = settings;
-            CustomExplorers = Settings.CustomExplorerList.Select(x => x.Copy()).ToList();
+            CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(Settings.CustomExplorerList.Select(x => x.Copy()));
             SelectedCustomExplorerIndex = Settings.CustomExplorerIndex;
             InitializeComponent();
         }
@@ -55,8 +56,22 @@ namespace Flow.Launcher
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
             Settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
-            Settings.CustomExplorerList = CustomExplorers;
+            Settings.CustomExplorerList = CustomExplorers.ToList();
             Close();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CustomExplorers.Add(new()
+            {
+                Name = "New Profile"
+            });
+            SelectedCustomExplorerIndex = CustomExplorers.Count - 1;
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            CustomExplorers.RemoveAt(SelectedCustomExplorerIndex--);
         }
     }
 }
