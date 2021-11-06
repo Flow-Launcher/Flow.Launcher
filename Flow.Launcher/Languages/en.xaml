@@ -141,7 +141,7 @@
     <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
     <system:String x:Key="fileManager_path">File Manager Path</system:String>
     <system:String x:Key="fileManager_directory_arg">Argument For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For Folder Containing File</system:String>
+    <system:String x:Key="fileManager_file_arg">Argument For File</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Change Priority</system:String>
