@@ -61,6 +61,9 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                        <Button Click="btnAdd_Click" Content="{DynamicResource add}" />
+                        <Button Click="btnDelete_Click" Content="{DynamicResource delete}" IsEnabled="{Binding CustomExplorer.Editable}" />
+
                     </StackPanel>
                     <Rectangle Height="1" Margin="0,20,0,12" Fill="#cecece" />
                     <StackPanel Margin="0,0,0,0"
@@ -73,7 +76,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50" />
+                                <RowDefinition />
+                                <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
@@ -83,8 +87,34 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="14"
-                                       Text="{DynamicResource fileManager_path}" />
+                                       Text="{DynamicResource fileManager_profile_name}" />
                             <TextBox Grid.Row="0"
+                                     Grid.Column="1"
+                                     Width="Auto"
+                                     Margin="10,0,15,0"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Center"
+                                     IsEnabled="{Binding Editable}"
+                                     Text="{Binding Name}">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Background" Value="#ffffff" />
+                                        <Setter Property="Height" Value="34" />
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="Padding" Value="6,6,0,0" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="BorderBrush" Value="#000000" />
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Margin="14,0,0,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="14"
+                                       Text="{DynamicResource fileManager_path}" />
+                            <TextBox Grid.Row="1"
                                      Grid.Column="1"
                                      Width="Auto"
                                      Margin="10,0,15,0"
@@ -103,14 +133,14 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBlock Grid.Row="1"
+                            <TextBlock Grid.Row="2"
                                        Grid.Column="0"
                                        Margin="14,15,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="14"
                                        Text="{DynamicResource fileManager_directory_arg}" />
-                            <TextBox Grid.Row="1"
+                            <TextBox Grid.Row="2"
                                      Grid.Column="1"
                                      Width="Auto"
                                      Margin="10,15,15,0"
@@ -129,14 +159,14 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBlock Grid.Row="2"
+                            <TextBlock Grid.Row="3"
                                        Grid.Column="0"
                                        Margin="14,15,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="14"
                                        Text="{DynamicResource fileManager_file_arg}" />
-                            <TextBox Grid.Row="2"
+                            <TextBox Grid.Row="3"
                                      Grid.Column="1"
                                      Width="Auto"
                                      Margin="10,15,15,0"
