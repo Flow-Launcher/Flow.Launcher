@@ -86,9 +86,9 @@
                         HorizontalAlignment="Stretch"
                         DataContext="{Binding CustomExplorer}"
                         Orientation="Horizontal">
-                        <Grid Width="535">
+                        <Grid Width="545">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250" />
+                                <ColumnDefinition Width="220" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
