@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         Title="{DynamicResource fileManagerWindow}"
-        Width="500"
-        Height="420"
+        Width="600"
+        Height="500"
         Background="#f3f3f3"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         ResizeMode="NoResize"
@@ -67,13 +67,14 @@
                                 HorizontalAlignment="Stretch"
                                 DataContext="{Binding CustomExplorer}"
                                 Orientation="Horizontal">
-                        <Grid Width="430">
+                        <Grid Width="500">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="250" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50" />
+                                <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
@@ -104,7 +105,7 @@
                             </TextBox>
                             <TextBlock Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="14,0,0,0"
+                                       Margin="14,15,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="14"
@@ -112,9 +113,10 @@
                             <TextBox Grid.Row="1"
                                      Grid.Column="1"
                                      Width="Auto"
-                                     Margin="10,0,15,0"
+                                     Margin="10,15,15,0"
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Center"
+                                     IsEnabled="{Binding Editable}"
                                      Text="{Binding DirectoryArgument}">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
@@ -127,19 +129,20 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBlock Grid.Row="1"
+                            <TextBlock Grid.Row="2"
                                        Grid.Column="0"
-                                       Margin="14,0,0,0"
+                                       Margin="14,15,0,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="14"
-                                       Text="{DynamicResource fileManager_directory_arg}" />
-                            <TextBox Grid.Row="1"
+                                       Text="{DynamicResource fileManager_file_arg}" />
+                            <TextBox Grid.Row="2"
                                      Grid.Column="1"
                                      Width="Auto"
-                                     Margin="10,0,15,0"
+                                     Margin="10,15,15,0"
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Center"
+                                     IsEnabled="{Binding Editable}"
                                      Text="{Binding FileArgument}">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
@@ -162,15 +165,14 @@
                     Width="100"
                     Height="30"
                     Margin="0,0,5,0"
-                    Content="{DynamicResource cancel}"
-                    Click="btnCancel_Click"/>
+                    Click="btnCancel_Click"
+                    Content="{DynamicResource cancel}" />
             <Button x:Name="btnDone"
                     Width="100"
                     Height="30"
                     Margin="5,0,0,0"
-                    Content="{DynamicResource done}"
                     Click="btnDone_Click"
-                   />
+                    Content="{DynamicResource done}" />
         </StackPanel>
     </Grid>
 </Window>
