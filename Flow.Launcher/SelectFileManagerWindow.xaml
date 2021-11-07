@@ -106,6 +106,7 @@
                                 FontSize="14"
                                 Text="{DynamicResource fileManager_profile_name}" />
                             <TextBox
+                                x:Name="ProfileTextBox"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Width="Auto"
@@ -123,6 +124,7 @@
                                 FontSize="14"
                                 Text="{DynamicResource fileManager_path}" />
                             <TextBox
+                                x:Name="PathTextBox"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Width="Auto"
@@ -140,6 +142,7 @@
                                 FontSize="14"
                                 Text="{DynamicResource fileManager_directory_arg}" />
                             <TextBox
+                                x:Name="directoryArgTextBox"
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Width="Auto"
@@ -157,6 +160,7 @@
                                 FontSize="14"
                                 Text="{DynamicResource fileManager_file_arg}" />
                             <TextBox
+                                x:Name="fileArgTextBox"
                                 Grid.Row="3"
                                 Grid.Column="1"
                                 Width="Auto"
@@ -187,7 +191,27 @@
                 Height="30"
                 Margin="5,0,0,0"
                 Click="btnDone_Click"
-                Content="{DynamicResource done}" />
+                Content="{DynamicResource done}"
+                ForceCursor="True">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=directoryArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
