@@ -1,3 +1,5 @@
 files:
   - source: /Flow.Launcher/Languages/*.xaml
-    translation: /Flow.Launcher.Translations/%two_letters_code%/%original_file_name%
+    translation: /Flow.Launcher.Translations/%two_letters_code%.xaml
+  - source: /Plugins/Flow.Launcher.Plugin.BrowserBookmark/Languages/*.xaml
+    translation: /Plugins/Flow.Launcher.Plugin.BrowserBookmark/Translations/%two_letters_code%.xaml
