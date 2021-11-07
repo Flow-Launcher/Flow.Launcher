@@ -55,8 +55,8 @@ namespace Flow.Launcher
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
-            Settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
             Settings.CustomExplorerList = CustomExplorers.ToList();
+            Settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
             Close();
         }
 
