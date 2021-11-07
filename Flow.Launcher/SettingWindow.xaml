@@ -91,16 +91,26 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
-        <Style x:Key="SideControlCheckBox" TargetType="{x:Type CheckBox}">
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Center" />
+        <Style
+            x:Key="SideControlCheckBox"
+            BasedOn="{StaticResource DefaultCheckBoxStyle}"
+            TargetType="{x:Type CheckBox}">
+            <Setter Property="Width" Value="24" />
             <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="Margin" Value="0,4,18,4" />
+            <Setter Property="Margin" Value="0,4,0,4" />
             <Setter Property="LayoutTransform">
                 <Setter.Value>
-                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style
+            x:Key="SideToggleSwitch"
+            BasedOn="{StaticResource DefaultToggleSwitch}"
+            TargetType="{x:Type ui:ToggleSwitch}">
+            <Setter Property="Grid.Column" Value="2" />
+            <Setter Property="Margin" Value="0,4,0,4" />
         </Style>
 
         <Style x:Key="logo" TargetType="{x:Type TabItem}">
@@ -449,7 +459,6 @@
                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                             </StackPanel>
                             <CheckBox
-                                HorizontalAlignment="Right"
                                 Checked="OnAutoStartupChecked"
                                 IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
                                 Style="{DynamicResource SideControlCheckBox}"
@@ -558,7 +567,8 @@
                                 Grid.Column="2"
                                 Width="100"
                                 FocusVisualMargin="5"
-                                IsOn="{Binding AutoUpdates}" />
+                                IsOn="{Binding AutoUpdates}"
+                                Style="{DynamicResource SideToggleSwitch}" />
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="24,0,16,0"
@@ -580,7 +590,8 @@
                                 Grid.Column="2"
                                 Width="100"
                                 FocusVisualMargin="5"
-                                IsOn="{Binding PortableMode}" />
+                                IsOn="{Binding PortableMode}"
+                                Style="{DynamicResource SideToggleSwitch}" />
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="24,0,16,0"
@@ -794,7 +805,7 @@
                                                     MaxWidth="700" />
                                                 <ColumnDefinition MaxWidth="1400" />
                                                 <ColumnDefinition Width="100" />
-                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition Width="90" />
                                             </Grid.ColumnDefinitions>
                                             <StackPanel
                                                 Grid.Column="0"
@@ -905,7 +916,7 @@
                                                             <Button
                                                                 Grid.Column="2"
                                                                 Width="100"
-                                                                Height="40"
+                                                                Height="34"
                                                                 Margin="5,0,0,0"
                                                                 HorizontalAlignment="Right"
                                                                 Click="OnPluginActionKeywordsClick"
@@ -914,18 +925,7 @@
                                                                 DockPanel.Dock="Right"
                                                                 FontWeight="Bold"
                                                                 ToolTip="Change Action Keywords"
-                                                                Visibility="{Binding ActionKeywordsVisibility}">
-
-                                                                <Button.Resources>
-                                                                    <Style TargetType="Border">
-                                                                        <Setter Property="CornerRadius" Value="2" />
-                                                                        <Setter Property="BorderThickness" Value="1,1,1,2" />
-                                                                        <Setter Property="BorderBrush" Value="#ececec" />
-                                                                        <Setter Property="Background" Value="#ffffff" />
-
-                                                                    </Style>
-                                                                </Button.Resources>
-                                                            </Button>
+                                                                Visibility="{Binding ActionKeywordsVisibility}" />
                                                         </DockPanel>
 
                                                     </ItemsControl>
@@ -1455,8 +1455,8 @@
                                     <ui:ToggleSwitch
                                         Grid.Row="0"
                                         Grid.Column="2"
-                                        Width="80"
-                                        Margin="0,0,18,0"
+                                        Width="100"
+                                        Margin="0,0,2,0"
                                         IsOn="{Binding DropShadowEffect, Mode=TwoWay}" />
                                     <TextBlock
                                         Grid.Column="0"
@@ -1576,8 +1576,8 @@
                                             <ui:ToggleSwitch
                                                 Grid.Row="0"
                                                 Grid.Column="2"
-                                                Width="80"
-                                                Margin="0,0,18,0"
+                                                Width="100"
+                                                Margin="0,0,2,0"
                                                 IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" />
                                             <TextBlock
                                                 Grid.Column="0"
@@ -1759,7 +1759,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="43" />
                             <RowDefinition Height="80" />
-                            <RowDefinition Height="150" />
+                            <RowDefinition Height="160" />
                             <RowDefinition Height="50" />
                             <RowDefinition Height="250" />
                             <RowDefinition Height="70" />
@@ -1840,11 +1840,18 @@
                                     BorderThickness="0"
                                     Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <StackPanel Grid.Column="1" Style="{StaticResource TextPanel}">
-                                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource showOpenResultHotkey}" />
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Text="{DynamicResource showOpenResultHotkey}" />
                                             <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource showOpenResultHotkeyToolTip}" />
                                         </StackPanel>
-                                        <CheckBox IsChecked="{Binding Settings.ShowOpenResultHotkey}" Style="{DynamicResource SideControlCheckBox}" />
+                                        <CheckBox
+                                            Grid.Column="2"
+                                            FontSize="14"
+                                            IsChecked="{Binding Settings.ShowOpenResultHotkey}"
+                                            Style="{DynamicResource SideControlCheckBox}" />
                                     </ItemsControl>
                                 </Border>
                             </StackPanel>
@@ -2060,10 +2067,7 @@
                                 </Border>
                             </StackPanel>
                         </Border>
-                        <Border
-                            Margin="0,12,0,0"
-                            BorderThickness="0"
-                            Style="{DynamicResource SettingGroupBox}">
+                        <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
                             <ItemsControl Style="{StaticResource SettingGrid}">
                                 <TextBlock
                                     Grid.Column="1"
