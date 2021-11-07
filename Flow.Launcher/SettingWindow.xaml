@@ -685,9 +685,10 @@
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                 <TextBox
                                     Width="300"
-                                    Height="26"
+                                    Height="34"
                                     Text="{Binding Settings.PluginSettings.PythonDirectory, TargetNullValue='No Setting'}" />
                                 <Button
+                                    Height="34"
                                     Margin="10,10,18,10"
                                     Click="OnSelectPythonDirectoryClick"
                                     Content="{DynamicResource selectPythonDirectory}" />
