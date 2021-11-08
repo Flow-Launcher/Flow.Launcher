@@ -1477,7 +1477,7 @@
                                 HorizontalAlignment="Stretch"
                                 Style="{DynamicResource SettingGroupBox}">
                                 <ListBox
-                                    Padding="18"
+                                    Margin="12,12,12,12"
                                     HorizontalAlignment="Center"
                                     HorizontalContentAlignment="Center"
                                     ui:ScrollViewerHelper.AutoHideScrollBars="True"
@@ -1488,24 +1488,46 @@
                                     SelectedItem="{Binding SelectedTheme}">
                                     <ListBox.ItemContainerStyle>
                                         <Style TargetType="ListBoxItem">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                    <Setter Property="Background" Value="#cccccc" />
-                                                    <Setter Property="Foreground" Value="Black" />
-                                                    <Setter Property="Margin" Value="12,8,12,8" />
-                                                    <Setter Property="BorderBrush" Value="#cccccc" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Margin" Value="12,8,12,8" />
-                                                    <Setter Property="Foreground" Value="#3E99D1" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter Property="Background" Value="#f3f3f3" />
-                                                    <Setter Property="Foreground" Value="Black" />
-                                                    <Setter Property="Margin" Value="12,8,12,8" />
-                                                </Trigger>
-                                            </Style.Triggers>
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                            <Setter Property="Padding" Value="0,0,0,0" />
+                                            <Setter Property="Margin" Value="4" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                        <Border
+                                                            x:Name="Bd"
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="#fefefe"
+                                                            BorderBrush="#e5e5e5"
+                                                            BorderThickness="1,1,1,0"
+                                                            CornerRadius="4"
+                                                            SnapsToDevicePixels="true">
+                                                            <Border
+                                                                x:Name="Bd2"
+                                                                BorderBrush="#d3d3d3"
+                                                                BorderThickness="0,0,0,2"
+                                                                CornerRadius="4">
+                                                                <ContentPresenter
+                                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Border>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="true">
+                                                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ToggleSwitchFillOn}" />
+                                                                <Setter TargetName="Bd2" Property="BorderThickness" Value="0" />
+                                                                <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="#ffffff" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
                                         </Style>
                                     </ListBox.ItemContainerStyle>
                                     <ListBox.Template>
@@ -1518,15 +1540,15 @@
                                         <DataTemplate>
                                             <Grid
                                                 Width="Auto"
-                                                Height="40"
+                                                Height="34"
                                                 Margin="0,0,0,0">
                                                 <TextBlock
                                                     Margin="0"
-                                                    Padding="10"
+                                                    Padding="14,12,14,12"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Focusable="True"
-                                                    FontSize="13"
+                                                    FontSize="12"
                                                     Text="{Binding}"
                                                     TextWrapping="Wrap" />
                                             </Grid>
@@ -1534,7 +1556,7 @@
                                     </ListBox.ItemTemplate>
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel HorizontalAlignment="Right" />
+                                            <WrapPanel />
                                         </ItemsPanelTemplate>
                                     </ListBox.ItemsPanel>
                                 </ListBox>
