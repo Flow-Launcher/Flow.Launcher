@@ -121,6 +121,12 @@ namespace Flow.Launcher
                 fileManagerChangeWindow.ShowDialog();
         }
 
+        private void OnSelectDefaultBrowserClick(object sender, RoutedEventArgs e)
+        {
+            SelectBrowserWindow test = new SelectBrowserWindow();
+            test.ShowDialog();
+        }
+
         #endregion
 
         #region Hotkey
