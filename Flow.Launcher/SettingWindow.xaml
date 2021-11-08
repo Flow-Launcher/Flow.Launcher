@@ -827,7 +827,7 @@
                                                 <TextBlock
                                                     Margin="0,2,0,0"
                                                     Foreground="#5f5f5f"
-                                                    TextWrapping="Wrap">
+                                                    TextWrapping="WrapWithOverflow">
                                                     <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
                                                 </TextBlock>
                                             </StackPanel>
@@ -838,10 +838,10 @@
                                                     VerticalAlignment="Center"
                                                     FontSize="12"
                                                     Text="{DynamicResource priority}" />
-                                                <Border CornerRadius="5">
+                                                <Border>
                                                     <Button
                                                         x:Name="PriorityButton"
-                                                        Margin="5,0,0,0"
+                                                        Margin="0,0,0,0"
                                                         VerticalAlignment="Center"
                                                         Click="OnPluginPriorityClick"
                                                         Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
