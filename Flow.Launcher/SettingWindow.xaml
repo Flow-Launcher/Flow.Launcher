@@ -1818,7 +1818,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="43" />
                             <RowDefinition Height="80" />
-                            <RowDefinition Height="160" />
+                            <RowDefinition Height="146" />
                             <RowDefinition Height="50" />
                             <RowDefinition Height="250" />
                             <RowDefinition Height="70" />
@@ -1896,6 +1896,7 @@
                                     BorderThickness="1" />
                                 <Border
                                     Margin="0"
+                                    Padding="0,10,0,0"
                                     BorderThickness="0"
                                     Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
