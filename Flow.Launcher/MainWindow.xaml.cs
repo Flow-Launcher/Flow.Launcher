@@ -11,6 +11,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
@@ -167,18 +168,9 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-
-            var header = new MenuItem() { Header = "Flow Launcher", IsEnabled = false };
-            var open = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") };
-            var settings = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings") };
-            var exit = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit") };
-            menu.Items[0] = header;
-            menu.Items[1] = open;
-            menu.Items[2] = settings;
-            menu.Items[3] = exit;
-            open.Click += (o, e) => Visibility = Visibility.Visible;
-            settings.Click += (o, e) => App.API.OpenSettingDialog();
-            exit.Click += (o, e) => Close();
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -189,13 +181,25 @@ namespace Flow.Launcher
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
-            var menu = new ContextMenuStrip();
             contextMenu = new ContextMenu();
 
-            MenuItem header = new MenuItem() { Header = "Flow Launcher", IsEnabled = false };
-            MenuItem open = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") };
-            MenuItem settings = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings") };
-            MenuItem exit = new MenuItem() { Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit") };
+            var header = new MenuItem
+            {
+                Header = "Flow Launcher", 
+                IsEnabled = false
+            };
+            var open = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen")
+            };
+            var settings = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
+            };
+            var exit = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
+            };
 
             open.Click += (o, e) => Visibility = Visibility.Visible;
             settings.Click += (o, e) => App.API.OpenSettingDialog();
@@ -205,7 +209,7 @@ namespace Flow.Launcher
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
-            _notifyIcon.ContextMenuStrip = menu; /*it need for close the context menu. if not, context menu can't close. */
+            _notifyIcon.ContextMenuStrip = new ContextMenuStrip(); // it need for close the context menu. if not, context menu can't close. 
             _notifyIcon.MouseClick += (o, e) =>
             {
                 switch (e.Button)
