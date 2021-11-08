@@ -696,16 +696,7 @@
                                     MaxWidth="250"
                                     Margin="10,0,18,0"
                                     Click="OnSelectFileManagerClick"
-                                    Content="{Binding Settings.CustomExplorer.Name}">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="2" />
-                                            <Setter Property="BorderThickness" Value="1,1,1,2" />
-                                            <Setter Property="BorderBrush" Value="#ececec" />
-                                            <Setter Property="Background" Value="#ffffff" />
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
+                                    Content="{Binding Settings.CustomExplorer.Name}" />
                             </StackPanel>
 
                             <TextBlock
