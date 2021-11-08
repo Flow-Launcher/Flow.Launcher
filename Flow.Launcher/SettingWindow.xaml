@@ -681,10 +681,7 @@
                         </StackPanel>
                     </Border>
 
-                    <Border
-                        Margin="0,30,0,0"
-                        BorderThickness="0"
-                        Style="{DynamicResource SettingGroupBox}">
+                    <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock
