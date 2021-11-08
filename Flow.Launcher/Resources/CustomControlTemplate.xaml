@@ -92,7 +92,7 @@
                             <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource CheckBoxBackgroundUnchecked}" />
                             <Setter TargetName="RootGrid" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUnchecked}" />
                             <Setter TargetName="NormalRectangle" Property="Stroke" Value="#868686" />
-                            <Setter TargetName="NormalRectangle" Property="Fill" Value="{DynamicResource CheckBoxCheckBackgroundFillUnchecked}" />
+                            <Setter TargetName="NormalRectangle" Property="Fill" Value="#ededed" />
                             <Setter TargetName="CheckGlyph" Property="Foreground" Value="{DynamicResource CheckBoxCheckGlyphForegroundUnchecked}" />
                         </MultiTrigger>
                         <!--  UncheckedPointerOver  -->
@@ -116,9 +116,9 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ContentPresenter" Property="Foreground" Value="{DynamicResource CheckBoxForegroundUncheckedPressed}" />
                             <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource CheckBoxBackgroundUncheckedPressed}" />
-                            <Setter TargetName="RootGrid" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUncheckedPressed}" />
-                            <Setter TargetName="NormalRectangle" Property="Stroke" Value="{DynamicResource CheckBoxCheckBackgroundStrokeUncheckedPressed}" />
-                            <Setter TargetName="NormalRectangle" Property="Fill" Value="{DynamicResource CheckBoxCheckBackgroundFillUncheckedPressed}" />
+                            <Setter TargetName="RootGrid" Property="BorderBrush" Value="#b7b7b7" />
+                            <Setter TargetName="NormalRectangle" Property="Stroke" Value="#b7b7b7" />
+                            <Setter TargetName="NormalRectangle" Property="Fill" Value="#dcdcdc" />
                             <Setter TargetName="CheckGlyph" Property="Foreground" Value="{DynamicResource CheckBoxCheckGlyphForegroundUncheckedPressed}" />
                         </MultiTrigger>
                         <!--  UncheckedDisabled  -->
@@ -536,6 +536,7 @@
                             TextWrapping="Wrap"
                             Visibility="{TemplateBinding ui:ControlHelper.HeaderVisibility}" />
                         <Border
+                            x:Name="OutLine"
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
@@ -704,19 +705,23 @@
                         </Trigger>
                         <!--  Pressed  -->
                         <Trigger SourceName="ToggleButton" Property="IsPressed" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ComboBoxBackgroundPressed}" />
+                            <Setter TargetName="Background" Property="Background" Value="#f6f6f6" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="0" />
                             <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ComboBoxBorderBrushPressed}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxForegroundPressed}" />
+                            <Setter TargetName="OutLine" Property="BorderBrush" Value="#e5e5e5" />
+                            <Setter TargetName="OutLine" Property="BorderThickness" Value="1,1,1,1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="#878787" />
                             <Setter TargetName="PlaceholderTextBlock" Property="Foreground" Value="{DynamicResource ComboBoxPlaceHolderForegroundPressed}" />
                         </Trigger>
                         <!--  Disabled  -->
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ComboBoxBackgroundDisabled}" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ComboBoxBorderBrushDisabled}" />
-                            <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource ComboBoxHeaderForegroundDisabled}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxForegroundDisabled}" />
-                            <Setter TargetName="PlaceholderTextBlock" Property="Foreground" Value="{DynamicResource ComboBoxPlaceHolderForegroundDisabled}" />
-                            <Setter TargetName="DropDownGlyph" Property="Foreground" Value="{DynamicResource ComboBoxDropDownGlyphForegroundDisabled}" />
+                            <Setter TargetName="Background" Property="Background" Value="#f6f6f6" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="0" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ComboBoxBorderBrushPressed}" />
+                            <Setter TargetName="OutLine" Property="BorderBrush" Value="#e5e5e5" />
+                            <Setter TargetName="OutLine" Property="BorderThickness" Value="1,1,1,1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="#878787" />
+                            <Setter TargetName="PlaceholderTextBlock" Property="Foreground" Value="{DynamicResource ComboBoxPlaceHolderForegroundPressed}" />
                         </Trigger>
 
                         <!--  Focused  -->
@@ -1531,9 +1536,9 @@
                         </MultiTrigger>
                         <!--  Pressed  -->
                         <Trigger SourceName="SwitchThumb" Property="IsDragging" Value="true">
-                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource ToggleSwitchStrokeOffPressed}" />
-                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource ToggleSwitchFillOffPressed}" />
-                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource ToggleSwitchKnobFillOffPressed}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="#5a5a5a" />
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="#dcdcdc" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="#5a5a5a" />
                             <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource ToggleSwitchKnobFillOnPressed}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource ToggleSwitchFillOnPressed}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource ToggleSwitchStrokeOnPressed}" />
