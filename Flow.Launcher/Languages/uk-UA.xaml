@@ -1,6 +1,5 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--MainWindow-->
     <system:String x:Key="registerHotkeyFailed">Реєстрація хоткея {0} не вдалася</system:String>
     <system:String x:Key="couldnotStartCmd">Не вдалося запустити {0}</system:String>
@@ -13,76 +12,129 @@
     <system:String x:Key="iconTraySettings">Налаштування</system:String>
     <system:String x:Key="iconTrayAbout">Про Flow Launcher</system:String>
     <system:String x:Key="iconTrayExit">Закрити</system:String>
+    <system:String x:Key="closeWindow">Close</system:String>
 
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Налаштування Flow Launcher</system:String>
     <system:String x:Key="general">Основні</system:String>
+    <system:String x:Key="portableMode">Portable Mode</system:String>
+    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускати Flow Launcher при запуску системи</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher якщо втрачено фокус</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher якщо втрачено фоку</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не повідомляти про доступні нові версії</system:String>
-    <system:String x:Key="rememberLastLocation">Запам'ятати останнє місце запуску</system:String>
+    <system:String x:Key="rememberLastLocation">Запам'ятати останнє місце запуск</system:String>
     <system:String x:Key="language">Мова</system:String>
+    <system:String x:Key="lastQueryMode">Last Query Style</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
+    <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
+    <system:String x:Key="LastQuerySelected">Select last Query</system:String>
+    <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
     <system:String x:Key="pythonDirectory">Директорія Python</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
     <system:String x:Key="selectPythonDirectory">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
+    <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
+    <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">Плагіни</system:String>
     <system:String x:Key="browserMorePlugins">Знайти більше плагінів</system:String>
+    <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Відключити</system:String>
+    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
     <system:String x:Key="actionKeywords">Ключове слово</system:String>
-    <system:String x:Key="pluginDirectory">Директорія плагіну</system:String>
-    <system:String x:Key="author">Автор</system:String>
+    <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
+    <system:String x:Key="newActionKeyword">New action keyword:</system:String>
+    <system:String x:Key="currentPriority">Current Priority:</system:String>
+    <system:String x:Key="newPriority">New Priority:</system:String>
+    <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="pluginDirectory">Директорія плагін</system:String>
+    <system:String x:Key="author">Авто</system:String>
     <system:String x:Key="plugin_init_time">Ініціалізація:</system:String>
     <system:String x:Key="plugin_query_time">Запит:</system:String>
+
+
+    <!--Setting Plugin Store-->
+    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="refresh">Refresh</system:String>
+    <system:String x:Key="install">Install</system:String>
 
     <!--Setting Theme-->
     <system:String x:Key="theme">Теми</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
+    <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
+    <system:String x:Key="hiThere">Hi There</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
     <system:String x:Key="opacity">Прозорість</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
+    <system:String x:Key="ThemeFolder">Theme Folder</system:String>
+    <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">Гарячі клавіші</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="openResultModifiers">Відкриті модифікатори результатів</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="showOpenResultHotkey">Показати клавішу швидкого доступ</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
-    <system:String x:Key="showOpenResultHotkey">Показати клавішу швидкого доступу</system:String>
+    <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Змінити</system:String>
     <system:String x:Key="add">Додати</system:String>
-    <system:String x:Key="pleaseSelectAnItem">Спочатку виберіть елемент</system:String>
+    <system:String x:Key="pleaseSelectAnItem">Спочатку виберіть елемен</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ви впевнені, що хочете видалити гарячу клавішу ({0}) плагіну?</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
+    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
+    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
 
     <!--Setting Proxy-->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
     <system:String x:Key="enableProxy">Включити HTTP Proxy</system:String>
-    <system:String x:Key="server">HTTP Сервер</system:String>
-    <system:String x:Key="port">Порт</system:String>
+    <system:String x:Key="server">HTTP Серве</system:String>
+    <system:String x:Key="port">Пор</system:String>
     <system:String x:Key="userName">Логін</system:String>
     <system:String x:Key="password">Пароль</system:String>
     <system:String x:Key="testProxy">Перевірити Proxy</system:String>
     <system:String x:Key="save">Зберегти</system:String>
-    <system:String x:Key="serverCantBeEmpty">Необхідно вказати "HTTP Сервер"</system:String>
-    <system:String x:Key="portCantBeEmpty">Необхідно вказати "Порт"</system:String>
-    <system:String x:Key="invalidPortFormat">Невірний формат порту</system:String>
+    <system:String x:Key="serverCantBeEmpty">Необхідно вказати &quot;HTTP Сервер&quot;</system:String>
+    <system:String x:Key="portCantBeEmpty">Необхідно вказати &quot;Порт&quot;</system:String>
+    <system:String x:Key="invalidPortFormat">Невірний формат порт</system:String>
     <system:String x:Key="saveProxySuccessfully">Налаштування Proxy успішно збережено</system:String>
     <system:String x:Key="proxyIsCorrect">Proxy успішно налаштований</system:String>
     <system:String x:Key="proxyConnectFailed">Невдале підключення Proxy</system:String>
 
     <!--Setting About-->
     <system:String x:Key="about">Про Flow Launcher</system:String>
-    <system:String x:Key="website">Сайт</system:String>
+    <system:String x:Key="website">Сай</system:String>
     <system:String x:Key="version">Версия</system:String>
     <system:String x:Key="about_activate_times">Ви скористалися Flow Launcher вже {0} разів</system:String>
     <system:String x:Key="checkUpdates">Перевірити наявність оновлень</system:String>
     <system:String x:Key="newVersionTips">Доступна нова версія {0}, будь ласка, перезавантажте Flow Launcher</system:String>
+    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="downloadUpdatesFailed">
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
+        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+    </system:String>
     <system:String x:Key="releaseNotes">Примітки до поточного релізу:</system:String>
+    <system:String x:Key="documentation">Usage Tips:</system:String>
+
+    <!--Priority Setting Dialog-->
+    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
+    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
+    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">Поточна гаряча клавіша</system:String>
@@ -91,13 +143,16 @@
     <system:String x:Key="done">Готово</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Не вдалося знайти вказаний плагін</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Нова гаряча клавіша не може бути порожньою</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">Нова гаряча клавіша вже використовується іншим плагіном. Будь ласка, вкажіть нову</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Нова гаряча клавіша вже використовується іншим плагіном. Будь ласка, вкажіть нов</system:String>
     <system:String x:Key="success">Збережено</system:String>
-    <system:String x:Key="actionkeyword_tips">Використовуйте * у разі, якщо ви не хочете ставити конкретну гарячу клавішу</system:String>
+    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="actionkeyword_tips">Використовуйте * у разі, якщо ви не хочете ставити конкретну гарячу клавіш </system:String>
 
     <!--Custom Query Hotkey Dialog-->
+    <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
     <system:String x:Key="preview">Перевірити</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Гаряча клавіша недоступна. Будь ласка, вкажіть нову</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">Гаряча клавіша недоступна. Будь ласка, вкажіть нов</system:String>
     <system:String x:Key="invalidPluginHotkey">Недійсна гаряча клавіша плагіна</system:String>
     <system:String x:Key="update">Оновити</system:String>
 
@@ -106,25 +161,37 @@
 
     <!--Crash Reporter-->
     <system:String x:Key="reportWindow_version">Версія</system:String>
-    <system:String x:Key="reportWindow_time">Час</system:String>
+    <system:String x:Key="reportWindow_time">Ча</system:String>
     <system:String x:Key="reportWindow_reproduce">Будь ласка, розкажіть нам, як додаток вийшов із ладу, щоб ми могли це виправити</system:String>
-    <system:String x:Key="reportWindow_send_report">Надіслати звіт</system:String>
+    <system:String x:Key="reportWindow_send_report">Надіслати зві</system:String>
     <system:String x:Key="reportWindow_cancel">Скасувати</system:String>
     <system:String x:Key="reportWindow_general">Основне</system:String>
     <system:String x:Key="reportWindow_exceptions">Винятки</system:String>
-    <system:String x:Key="reportWindow_exception_type">Тип винятку</system:String>
+    <system:String x:Key="reportWindow_exception_type">Тип винятк</system:String>
     <system:String x:Key="reportWindow_source">Джерело</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Траса стеку</system:String>
+    <system:String x:Key="reportWindow_stack_trace">Траса стек</system:String>
     <system:String x:Key="reportWindow_sending">Відправити</system:String>
     <system:String x:Key="reportWindow_report_succeed">Звіт успішно відправлено</system:String>
-    <system:String x:Key="reportWindow_report_failed">Не вдалося відправити звіт</system:String>
+    <system:String x:Key="reportWindow_report_failed">Не вдалося відправити зві</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Стався збій в додатоку Flow Launcher</system:String>
 
+    <!--General Notice-->
+    <system:String x:Key="pleaseWait">Please wait...</system:String>
+
     <!--update-->
+    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">Flow Launcher was not able to move your user profile data to the new update version.
+        Please manually move your profile data folder from {0} to {1}</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Доступна нова версія Flow Launcher V{0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Сталася помилка під час спроби встановити оновлення</system:String>
     <system:String x:Key="update_flowlauncher_update">Оновити</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Скасувати</system:String>
+    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Це оновлення перезавантажить Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Ці файли будуть оновлені</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Оновити файли</system:String>
