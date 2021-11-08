@@ -854,7 +854,7 @@
                                                             </Style>
                                                         </Button.Resources>
                                                         <Button.Style>
-                                                            <Style TargetType="Button">
+                                                            <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
                                                                 <Setter Property="Padding" Value="12,8,12,8" />
                                                                 <Setter Property="BorderThickness" Value="0" />
                                                                 <Setter Property="FontWeight" Value="DemiBold" />
