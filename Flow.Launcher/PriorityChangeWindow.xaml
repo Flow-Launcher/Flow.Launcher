@@ -46,22 +46,12 @@
                             TextWrapping="WrapWithOverflow" />
                     </StackPanel>
 
-                    <!--
-                    <StackPanel Orientation="Horizontal" Margin="0 28 0 0">
-                        <TextBlock FontSize="14" Grid.Column="1" VerticalAlignment="Center"
-                       HorizontalAlignment="Left" Text="{DynamicResource currentPriority}" />
-                        <TextBlock x:Name="OldPriority" Grid.Row="0" Grid.Column="1" Margin="10 0 10 0" FontSize="14"
-                       VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" />
-                    </StackPanel>
-                    -->
-
-                    <StackPanel Margin="0,18,0,18" Orientation="Horizontal">
+                    <StackPanel Margin="0,24,0,24" Orientation="Horizontal">
                         <TextBlock
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource priority}" />
-                        <!--<TextBox x:Name="tbAction" Margin="10 0 15 0" Width="105" VerticalAlignment="Center" HorizontalAlignment="Left" />-->
                         <ui:NumberBox
                             x:Name="tbAction"
                             Width="190"
