@@ -1464,7 +1464,7 @@
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
-                            <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
