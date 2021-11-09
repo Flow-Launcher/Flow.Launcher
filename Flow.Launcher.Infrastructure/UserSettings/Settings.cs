@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -37,6 +38,47 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
+
+        public int CustomExplorerIndex { get; set; } = 0;
+        public CustomExplorerViewModel CustomExplorer
+        {
+            get => CustomExplorerList[CustomExplorerIndex];
+            set => CustomExplorerList[CustomExplorerIndex] = value;
+        }
+
+        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = new()
+        {
+            new()
+            {
+                Name = "Explorer",
+                Path = "explorer",
+                DirectoryArgument = "\"%d\"",
+                FileArgument = "/select, \"%f\"",
+                Editable = false
+            },
+            new()
+            {
+                Name = "Total Commander",
+                Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
+                DirectoryArgument = "/O /A /S /T \"%d\"",
+                FileArgument = "/O /A /S /T \"%f\""
+            },
+            new()
+            {
+                Name = "Directory Opus",
+                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
+                DirectoryArgument = "/cmd Go \"%d\" NEW",
+                FileArgument = "/cmd Go \"%f\" NEW"
+
+            },
+            new()
+            {
+                Name = "Files",
+                Path = "Files",
+                DirectoryArgument = "-select \"%d\"",
+                FileArgument = "-select \"%f\""
+            }
+        };
 
 
         /// <summary>
