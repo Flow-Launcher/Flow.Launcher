@@ -22,6 +22,7 @@ using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.Windows.Threading;
 using NHotkey;
+using Windows.Web.Syndication;
 
 
 namespace Flow.Launcher.ViewModel
@@ -63,6 +64,13 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = new Query();
 
             _settings = settings;
+            _settings.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(Settings.WindowSize))
+                {
+                    OnPropertyChanged(nameof(MainWindowWidth));
+                }
+            };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -372,6 +380,8 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
+
+        public double MainWindowWidth => _settings.WindowSize;
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
