@@ -73,5 +73,19 @@ namespace Flow.Launcher
         {
             CustomExplorers.RemoveAt(SelectedCustomExplorerIndex--);
         }
+
+        private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
+                path.Text = dlg.FileName;
+                path.Focus();
+                ((Button)sender).Focus();
+            }
+        }
     }
 }
