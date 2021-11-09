@@ -88,7 +88,7 @@
                         Orientation="Horizontal">
                         <Grid Width="545">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="200" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -123,16 +123,35 @@
                                 VerticalAlignment="Center"
                                 FontSize="14"
                                 Text="{DynamicResource fileManager_path}" />
-                            <TextBox
-                                x:Name="PathTextBox"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Width="Auto"
-                                Margin="10,10,15,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                IsEnabled="{Binding Editable}"
-                                Text="{Binding Path}" />
+                            <DockPanel Grid.Row="1" Grid.Column="1">
+                                <TextBox
+                                    x:Name="PathTextBox"
+                                    Width="230"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    IsEnabled="{Binding Editable}"
+                                    Text="{Binding Path}" />
+                                <Button
+                                    Name="btnBrowseFile"
+                                    Width="80"
+                                    Margin="0,10,15,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Click="btnBrowseFile_Click"
+                                    Content="{DynamicResource selectPythonDirectory}"
+                                    DockPanel.Dock="Right">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged, Path=IsEnabled}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DockPanel>
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
