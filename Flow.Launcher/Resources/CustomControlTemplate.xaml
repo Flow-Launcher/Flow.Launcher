@@ -82,7 +82,8 @@
         <Style.Setters>
             <Setter Property="IsTabStop" Value="False" />
             <Setter Property="MinWidth" Value="34" />
-            <Setter Property="Height" Value="20" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Margin" Value="4,0,0,0" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
@@ -445,9 +446,7 @@
                         <RepeatButton
                             x:Name="UpSpinButton"
                             Grid.Row="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="110,0,0,0"
+                            Grid.Column="1"
                             ui:ControlHelper.CornerRadius="0"
                             Content="{StaticResource ChevronUp}"
                             FontSize="11"
@@ -457,9 +456,7 @@
                         <RepeatButton
                             x:Name="DownSpinButton"
                             Grid.Row="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="150,0,0,0"
+                            Grid.Column="2"
                             ui:ControlHelper.CornerRadius="0"
                             Content="{StaticResource ChevronDown}"
                             FontSize="11"
@@ -1578,7 +1575,6 @@
                                         </ControlTemplate.Resources>
                                         <Border
                                             x:Name="ButtonLayoutGrid"
-                                            Margin="0,0,88,0"
                                             Background="{DynamicResource TextControlButtonBackground}"
                                             BorderBrush="{DynamicResource TextControlButtonBorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
