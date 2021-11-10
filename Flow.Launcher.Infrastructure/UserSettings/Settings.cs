@@ -42,7 +42,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int CustomExplorerIndex { get; set; } = 0;
         public CustomExplorerViewModel CustomExplorer
         {
-            get => CustomExplorerList[CustomExplorerIndex];
+            get => CustomExplorerList[CustomExplorerIndex < CustomExplorerList.Count ? CustomExplorerIndex : 0];
             set => CustomExplorerList[CustomExplorerIndex] = value;
         }
 
@@ -69,7 +69,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
                 DirectoryArgument = "/cmd Go \"%d\"",
                 FileArgument = "/cmd Go \"%f\""
-                
+
             },
             new()
             {
