@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -41,7 +42,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int CustomExplorerIndex { get; set; } = 0;
         public CustomExplorerViewModel CustomExplorer
         {
-            get => CustomExplorerList[CustomExplorerIndex];
+            get => CustomExplorerList[CustomExplorerIndex < CustomExplorerList.Count ? CustomExplorerIndex : 0];
             set => CustomExplorerList[CustomExplorerIndex] = value;
         }
 

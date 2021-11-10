@@ -281,7 +281,7 @@ namespace Flow.Launcher.ViewModel
             ReloadPluginDataCommand = new RelayCommand(_ =>
             {
                 Hide();
-                
+
                 PluginManager
                     .ReloadData()
                     .ContinueWith(_ =>
@@ -323,7 +323,7 @@ namespace Flow.Launcher.ViewModel
         /// <param name="queryText"></param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            if (QueryText!=queryText) 
+            if (QueryText != queryText)
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
@@ -706,7 +706,7 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        public async void ToggleFlowLauncher()
+        public void ToggleFlowLauncher()
         {
             if (MainWindowVisibility != Visibility.Visible)
             {
@@ -714,33 +714,30 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                switch (_settings.LastQueryMode)
-                {
-                    case LastQueryMode.Empty:
-                        ChangeQueryText(string.Empty);
-                        Application.Current.MainWindow.Opacity = 0; // Trick for no delay
-                        await Task.Delay(100);
-                        Application.Current.MainWindow.Opacity = 1;
-                        break;
-                    case LastQueryMode.Preserved:
-                        LastQuerySelected = true;
-                        break;
-                    case LastQueryMode.Selected:
-                        LastQuerySelected = false;
-                        break;
-                    default:
-                        throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
-                }
-                MainWindowVisibility = Visibility.Collapsed;
+                Hide();
             }
         }
 
-        public void Hide()
+        public async void Hide()
         {
-            if (MainWindowVisibility != Visibility.Collapsed)
+            switch (_settings.LastQueryMode)
             {
-                ToggleFlowLauncher();
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    Application.Current.MainWindow.Opacity = 0; // Trick for no delay
+                    await Task.Delay(100);
+                    Application.Current.MainWindow.Opacity = 1;
+                    break;
+                case LastQueryMode.Preserved:
+                    LastQuerySelected = true;
+                    break;
+                case LastQueryMode.Selected:
+                    LastQuerySelected = false;
+                    break;
+                default:
+                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
+            MainWindowVisibility = Visibility.Collapsed;
         }
 
         #endregion
