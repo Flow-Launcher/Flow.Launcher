@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Flow.Launcher.Core;
 
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {    
     [TypeConverter(typeof(LocalizationConverter))]
     public enum DecimalSeparator
