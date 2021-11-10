@@ -372,6 +372,8 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
+        public double MainWindowOpacity { get; set; } = 1;
+        public bool WinToggleStatus { get; set; } = true;
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
@@ -698,9 +700,11 @@ namespace Flow.Launcher.ViewModel
 
         public void ToggleFlowLauncher()
         {
-            if (MainWindowVisibility != Visibility.Visible)
+            if (WinToggleStatus != true)
             {
-                MainWindowVisibility = Visibility.Visible;
+                MainWindowVisibility = Visibility.Visible; /* temp */
+                WinToggleStatus = true;
+                MainWindowOpacity = 1;
             }
             else
             {
@@ -710,13 +714,15 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            WinToggleStatus = false;
+            MainWindowOpacity = 0;
             switch (_settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
-                    Application.Current.MainWindow.Opacity = 0; // Trick for no delay
+                    MainWindowOpacity = 0; ; // Trick for no delay
                     await Task.Delay(100);
-                    Application.Current.MainWindow.Opacity = 1;
+                    MainWindowOpacity = 0;
                     break;
                 case LastQueryMode.Preserved:
                     LastQuerySelected = true;
@@ -727,7 +733,9 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-            MainWindowVisibility = Visibility.Collapsed;
+            MainWindowVisibility = Visibility.Hidden;/* temp */
+            //MainWIndowOpacity = 0;
+
         }
 
         #endregion

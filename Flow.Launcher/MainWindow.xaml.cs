@@ -78,9 +78,9 @@ namespace Flow.Launcher
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(MainViewModel.MainWindowVisibility):
+                    case nameof(MainViewModel.WinToggleStatus):
                         {
-                            if (_viewModel.MainWindowVisibility == Visibility.Visible)
+                            if (_viewModel.WinToggleStatus == true)
                             {
                                 Activate();
                                 QueryTextBox.Focus();
