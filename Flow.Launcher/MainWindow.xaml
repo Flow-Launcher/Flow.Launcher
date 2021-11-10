@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    x:Name="QueryBoxWindow"
     Title="Flow Launcher"
     d:DataContext="{d:DesignInstance vm:MainViewModel}"
     AllowDrop="True"

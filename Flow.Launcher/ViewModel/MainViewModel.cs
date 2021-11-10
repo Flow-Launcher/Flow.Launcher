@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -698,6 +699,7 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
+
         public void ToggleFlowLauncher()
         {
             if (WinToggleStatus != true)
@@ -714,7 +716,6 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
-            WinToggleStatus = false;
             MainWindowOpacity = 0;
             switch (_settings.LastQueryMode)
             {
@@ -733,9 +734,21 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-            MainWindowVisibility = Visibility.Hidden;/* temp */
+            //MainWindowVisibility = Visibility.Hidden;/* temp */
+            //MainWindowOpacity = 0;
+            WinToggleStatus = false;
+            //await Task.Delay(100);
+            MainWindowVisibility = Visibility.Collapsed;
             //MainWIndowOpacity = 0;
 
+        }
+
+        private void endAnimation(object sender, EventArgs e)
+        {
+
+            // Does not appear to have any effect:
+            // the brush remains yellow.
+            MainWindowOpacity = 1;
         }
 
         #endregion
