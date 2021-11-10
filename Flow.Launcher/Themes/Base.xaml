@@ -69,6 +69,32 @@
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="750" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Style.Triggers>
+            <Trigger Property="Visibility" Value="Visible">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                FillBehavior="Stop"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.0"
+                                To="1.0"
+                                Duration="0:0:0.2" />
+                            <DoubleAnimation
+                                AutoReverse="False"
+                                Storyboard.TargetProperty="(Canvas.Top)"
+                                From="130"
+                                To="120"
+                                Duration="0:0:0.2">
+                                <DoubleAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseInOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">

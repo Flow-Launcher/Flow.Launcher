@@ -742,15 +742,6 @@ namespace Flow.Launcher.ViewModel
             //MainWIndowOpacity = 0;
 
         }
-
-        private void endAnimation(object sender, EventArgs e)
-        {
-
-            // Does not appear to have any effect:
-            // the brush remains yellow.
-            MainWindowOpacity = 1;
-        }
-
         #endregion
 
 
