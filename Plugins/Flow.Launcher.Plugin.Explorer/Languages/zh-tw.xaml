@@ -3,8 +3,8 @@
 
     <!--Dialogues-->
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
-    <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">請選擇一個資料夾</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">你確認要刪除{0}嗎</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted the {0}</system:String>
@@ -16,20 +16,20 @@
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
 
     <!--Controls-->
-    <system:String x:Key="plugin_explorer_delete">Delete</system:String>
-    <system:String x:Key="plugin_explorer_edit">Edit</system:String>
-    <system:String x:Key="plugin_explorer_add">Add</system:String>
+    <system:String x:Key="plugin_explorer_delete">刪除</system:String>
+    <system:String x:Key="plugin_explorer_edit">編</system:String>
+    <system:String x:Key="plugin_explorer_add">新增</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">搜尋:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_done">Done</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">確</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
 
@@ -40,12 +40,12 @@
     <!--Context menu items-->
     <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder">Delete</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">刪除</system:String>
     <system:String x:Key="plugin_explorer_path">Path:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">開啟檔案位置</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>

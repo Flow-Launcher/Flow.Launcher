@@ -3,15 +3,15 @@
 
     <!--Command List-->
     <system:String x:Key="flowlauncher_plugin_sys_command">Command</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_desc">Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_desc">説明</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Shutdown Computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Restart Computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Restart the computer with Advanced Boot Options for Safe and Debugging modes, as well as other options</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Log off</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Lock this computer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit">Close Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart">Restart Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcherを終了する</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcherを再起動する</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak this app</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Put computer to sleep</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Empty recycle bin</system:String>
@@ -24,7 +24,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Open the location where Flow Launcher's settings are stored</system:String>
 
     <!--Dialogs-->
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Success</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">成功しまし</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">All Flow Launcher settings saved</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Are you sure you want to shut the computer down?</system:String>
