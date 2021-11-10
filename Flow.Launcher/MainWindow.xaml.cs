@@ -34,6 +34,8 @@ namespace Flow.Launcher
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
 
+        private double AnimationStartY { get; set; }
+        private double AnimationEndY { get; set; }
         #endregion
 
         public MainWindow(Settings settings, MainViewModel mainVM)
@@ -157,6 +159,8 @@ namespace Flow.Launcher
             Left = WindowLeft();
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left;
+            AnimationStartY = Top;
+            AnimationEndY = Top - 10;
         }
 
         private void UpdateNotifyIconText()
@@ -286,11 +290,15 @@ namespace Flow.Launcher
             {
                 Left = _settings.WindowLeft;
                 Top = _settings.WindowTop;
+                AnimationStartY = Top;
+                AnimationEndY = Top - 10;
             }
             else
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+                AnimationStartY = Top;
+                AnimationEndY = Top - 10;
             }
         }
 

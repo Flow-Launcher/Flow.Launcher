@@ -721,25 +721,24 @@ namespace Flow.Launcher.ViewModel
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
-                    MainWindowOpacity = 0; ; // Trick for no delay
-                    await Task.Delay(100);
-                    MainWindowOpacity = 0;
+                    MainWindowOpacity = 0; // Trick for no delay
+                    await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
+                    MainWindowOpacity = 0;
+                    await Task.Delay(100); 
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
+                    MainWindowOpacity = 0;
+                    await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-            //MainWindowVisibility = Visibility.Hidden;/* temp */
-            //MainWindowOpacity = 0;
             WinToggleStatus = false;
-            //await Task.Delay(100);
             MainWindowVisibility = Visibility.Collapsed;
-            //MainWIndowOpacity = 0;
 
         }
         #endregion
