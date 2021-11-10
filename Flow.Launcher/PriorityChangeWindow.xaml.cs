@@ -62,7 +62,6 @@ namespace Flow.Launcher
         private void PriorityChangeWindow_Loaded(object sender, RoutedEventArgs e)
         {
             tbAction.Text = pluginViewModel.Priority.ToString();
-            //OldPriority.Text = pluginViewModel.Priority.ToString();
             tbAction.Focus();
         }
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
