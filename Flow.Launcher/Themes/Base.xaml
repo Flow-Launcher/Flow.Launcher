@@ -79,15 +79,15 @@
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.0"
                                 To="1.0"
-                                Duration="0:0:0.25" />
+                                Duration="0:0:0.2" />
                             <DoubleAnimation
                                 AutoReverse="False"
                                 Storyboard.TargetProperty="(Canvas.Top)"
-                                From="120"
-                                To="112"
-                                Duration="0:0:0.25">
+                                From="420"
+                                To="412"
+                                Duration="0:0:0.2">
                                 <DoubleAnimation.EasingFunction>
-                                    <CircleEase EasingMode="EaseInOut" />
+                                    <QuadraticEase EasingMode="EaseInOut" />
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
