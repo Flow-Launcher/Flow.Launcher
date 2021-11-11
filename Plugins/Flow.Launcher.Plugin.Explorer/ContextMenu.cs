@@ -230,7 +230,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        FilesFolders.OpenContainingFolder(record.FullPath);
+                        Context.API.OpenDirectory(Path.GetDirectoryName(record.FullPath), record.FullPath);
                     }
                     catch (Exception e)
                     {

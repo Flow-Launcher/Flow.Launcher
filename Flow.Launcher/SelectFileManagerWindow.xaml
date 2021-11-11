@@ -1,0 +1,244 @@
+﻿<Window
+    x:Class="Flow.Launcher.SelectFileManagerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Title="{DynamicResource fileManagerWindow}"
+    Background="#f3f3f3"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid Width="600">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Border
+            Padding="26,26,26,0"
+            Background="#ffffff"
+            BorderBrush="#e5e5e5"
+            BorderThickness="0,0,0,1">
+            <Grid>
+                <StackPanel>
+                    <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontFamily="Segoe UI"
+                            FontSize="20"
+                            FontWeight="SemiBold"
+                            Text="{DynamicResource fileManagerWindow}"
+                            TextAlignment="Left" />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="14"
+                            Foreground="#1b1b1b"
+                            Text="{DynamicResource fileManager_tips}"
+                            TextAlignment="Left"
+                            TextWrapping="WrapWithOverflow" />
+                        <TextBlock
+                            Margin="0,14,0,0"
+                            FontSize="14"
+                            Foreground="#1b1b1b">
+                            <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Margin="14,28,0,0" Orientation="Horizontal">
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource fileManager_name}" />
+                        <ComboBox
+                            Name="comboBox"
+                            Width="200"
+                            Height="35"
+                            Margin="14,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding CustomExplorers}"
+                            SelectedIndex="{Binding SelectedCustomExplorerIndex}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button
+                            Margin="10,0,0,0"
+                            Click="btnAdd_Click"
+                            Content="{DynamicResource add}" />
+                        <Button
+                            Margin="10,0,0,0"
+                            Click="btnDelete_Click"
+                            Content="{DynamicResource delete}"
+                            IsEnabled="{Binding CustomExplorer.Editable}" />
+
+                    </StackPanel>
+                    <Rectangle
+                        Height="1"
+                        Margin="0,20,0,12"
+                        Fill="#cecece" />
+                    <StackPanel
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        DataContext="{Binding CustomExplorer}"
+                        Orientation="Horizontal">
+                        <Grid Width="545">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="14,5,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{DynamicResource fileManager_profile_name}" />
+                            <TextBox
+                                x:Name="ProfileTextBox"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Width="Auto"
+                                Margin="10,5,15,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                IsEnabled="{Binding Editable}"
+                                Text="{Binding Name}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="14,10,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{DynamicResource fileManager_path}" />
+                            <DockPanel Grid.Row="1" Grid.Column="1">
+                                <TextBox
+                                    x:Name="PathTextBox"
+                                    Width="250"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    IsEnabled="{Binding Editable}"
+                                    Text="{Binding Path}" />
+                                <Button
+                                    Name="btnBrowseFile"
+                                    Width="80"
+                                    Margin="0,10,15,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Click="btnBrowseFile_Click"
+                                    Content="{DynamicResource selectPythonDirectory}"
+                                    DockPanel.Dock="Right">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged, Path=IsEnabled}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DockPanel>
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Margin="14,10,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{DynamicResource fileManager_directory_arg}"
+                                TextWrapping="WrapWithOverflow" />
+                            <TextBox
+                                x:Name="directoryArgTextBox"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Width="Auto"
+                                Margin="10,10,15,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                IsEnabled="{Binding Editable}"
+                                Text="{Binding DirectoryArgument}" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Margin="14,10,0,20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{DynamicResource fileManager_file_arg}"
+                                TextWrapping="WrapWithOverflow" />
+                            <TextBox
+                                x:Name="fileArgTextBox"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                Width="Auto"
+                                Margin="10,10,15,20"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                IsEnabled="{Binding Editable}"
+                                Text="{Binding FileArgument}" />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                x:Name="btnCancel"
+                Width="100"
+                Height="30"
+                Margin="0,0,5,0"
+                Click="btnCancel_Click"
+                Content="{DynamicResource cancel}" />
+            <Button
+                x:Name="btnDone"
+                Width="100"
+                Height="30"
+                Margin="5,0,0,0"
+                Click="btnDone_Click"
+                Content="{DynamicResource done}"
+                ForceCursor="True">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=directoryArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,91 +1,166 @@
-<UserControl x:Class="Flow.Launcher.Plugin.Program.Views.ProgramSetting"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             mc:Ignorable="d" 
-             d:DesignHeight="404.508" d:DesignWidth="600">
-    <Grid Margin="10">
+<UserControl
+    x:Class="Flow.Launcher.Plugin.Program.Views.ProgramSetting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
+    Height="450"
+    d:DesignHeight="404.508"
+    d:DesignWidth="600"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="120" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Vertical" Width="Auto">
-                <CheckBox Name="StartMenuEnabled" IsChecked="{Binding EnableStartMenuSource}" Margin="5" Content="{DynamicResource flowlauncher_plugin_program_index_start}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
-                <CheckBox Name="RegistryEnabled" IsChecked="{Binding EnableRegistrySource}"  Margin="5" Content="{DynamicResource flowlauncher_plugin_program_index_registry}" ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
-                <CheckBox Name="DescriptionEnabled" IsChecked="{Binding EnableDescription}" Margin="5" Content="{DynamicResource flowlauncher_plugin_program_enable_description}" ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            Orientation="Horizontal">
+            <StackPanel Width="Auto" Orientation="Vertical">
+                <CheckBox
+                    Name="StartMenuEnabled"
+                    Margin="5"
+                    Content="{DynamicResource flowlauncher_plugin_program_index_start}"
+                    IsChecked="{Binding EnableStartMenuSource}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
+                <CheckBox
+                    Name="RegistryEnabled"
+                    Margin="5"
+                    Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
+                    IsChecked="{Binding EnableRegistrySource}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
+                <CheckBox
+                    Name="DescriptionEnabled"
+                    Margin="5"
+                    Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
+                    IsChecked="{Binding EnableDescription}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
             </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="Auto">
-                <Button Height="31" HorizontalAlignment="Right" Margin="10" Width="100" x:Name="btnLoadAllProgramSource" Click="btnLoadAllProgramSource_OnClick" Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
-                <Button Height="31" HorizontalAlignment="Right" Margin="10" Width="100" x:Name="btnProgramSuffixes" Click="BtnProgramSuffixes_OnClick" Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
-                <Button Height="31" HorizontalAlignment="Right" Margin="10" Width="100" x:Name="btnReindex" Click="btnReindex_Click" Content="{DynamicResource flowlauncher_plugin_program_reindex}" />
+            <StackPanel
+                Width="Auto"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnLoadAllProgramSource"
+                    Width="100"
+                    Height="31"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Click="btnLoadAllProgramSource_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
+                <Button
+                    x:Name="btnProgramSuffixes"
+                    Width="100"
+                    Height="31"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Click="BtnProgramSuffixes_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
+                <Button
+                    x:Name="btnReindex"
+                    Width="100"
+                    Height="31"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Click="btnReindex_Click"
+                    Content="{DynamicResource flowlauncher_plugin_program_reindex}" />
             </StackPanel>
         </StackPanel>
-        <ListView x:Name="programSourceView" Grid.Row="1" AllowDrop="True" SelectionMode="Extended" Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
-                  Margin="0,13,0,10"
-                  BorderBrush="DarkGray"
-                  BorderThickness="1"
-                  GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
-                  PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
-                  DragEnter="programSourceView_DragEnter"
-                  Drop="programSourceView_Drop">
+        <ListView
+            x:Name="programSourceView"
+            Grid.Row="1"
+            Margin="0,13,0,10"
+            AllowDrop="True"
+            BorderBrush="DarkGray"
+            BorderThickness="1"
+            DragEnter="programSourceView_DragEnter"
+            Drop="programSourceView_Drop"
+            GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
+            PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
+            SelectionMode="Extended"
+            Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick"/>
+                    <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="150">
+                    <GridViewColumn Width="150" Header="Name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Name}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Enabled">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Enabled}" MaxWidth="60" TextAlignment="Center"/>
+                                <TextBlock
+                                    MaxWidth="60"
+                                    Text="{Binding Enabled}"
+                                    TextAlignment="Center" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_location}" Width="550">
+                    <GridViewColumn Width="550" Header="{DynamicResource flowlauncher_plugin_program_location}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Location, ConverterParameter=(null), Converter={program:LocationConverter}}"/>
+                                <TextBlock Text="{Binding Location, ConverterParameter=(null), Converter={program:LocationConverter}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <DockPanel  Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="1">
-            <StackPanel x:Name="indexingPanel" Visibility="Hidden" HorizontalAlignment="Left" Orientation="Horizontal">
-                <ProgressBar x:Name="progressBarIndexing" Height="20" Width="80" Minimum="0" Maximum="100" IsIndeterminate="True" />
-                <TextBlock Margin="10 0 0 0" Height="20" HorizontalAlignment="Center" Text="{DynamicResource flowlauncher_plugin_program_indexing}" />
+        <DockPanel
+            Grid.Row="2"
+            Grid.RowSpan="1"
+            Margin="0,0,0,0">
+            <StackPanel
+                x:Name="indexingPanel"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal"
+                Visibility="Hidden">
+                <ProgressBar
+                    x:Name="progressBarIndexing"
+                    Width="80"
+                    Height="20"
+                    IsIndeterminate="True"
+                    Maximum="100"
+                    Minimum="0" />
+                <TextBlock
+                    Height="20"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Center"
+                    Text="{DynamicResource flowlauncher_plugin_program_indexing}" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button x:Name="btnProgramSourceStatus" Click="btnProgramSourceStatus_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_disable}" />
-                <Button x:Name="btnEditProgramSource" Click="btnEditProgramSource_OnClick" Width="100" Margin="10" Content="{DynamicResource flowlauncher_plugin_program_edit}"/>
-                <Button x:Name="btnAddProgramSource" Click="btnAddProgramSource_OnClick" Width="100" Margin="10 10 0 10" Content="{DynamicResource flowlauncher_plugin_program_add}"/>
+                <Button
+                    x:Name="btnProgramSourceStatus"
+                    Width="100"
+                    Margin="10"
+                    Click="btnProgramSourceStatus_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_disable}" />
+                <Button
+                    x:Name="btnEditProgramSource"
+                    Width="100"
+                    Margin="10"
+                    Click="btnEditProgramSource_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_edit}" />
+                <Button
+                    x:Name="btnAddProgramSource"
+                    Width="100"
+                    Margin="10,10,0,10"
+                    Click="btnAddProgramSource_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_add}" />
             </StackPanel>
         </DockPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <TextBlock Text="{DynamicResource flowlauncher_plugin_program_customizedexplorer}" VerticalAlignment="Center" FontSize="15"
-                   ToolTip= "{DynamicResource flowlauncher_plugin_program_tooltip_customizedexplorer}"/>
-            <TextBox Margin="10,0,10,0" TextWrapping="NoWrap" VerticalAlignment="Center" Width="200" Height="30" FontSize="15"
-                 Text="{Binding CustomizedExplorerPath}" x:Name="CustomizeExplorerBox"/>
-            <TextBlock Text="{DynamicResource flowlauncher_plugin_program_args}" VerticalAlignment="Center" FontSize="15"
-                       ToolTip="{DynamicResource flowlauncher_plugin_program_tooltip_args}" />
-            <TextBox Margin="10,0,0,0" Width="135" Height="30" FontSize="15" x:Name="CustomizeArgsBox" Text="{Binding CustomizedExplorerArg}"></TextBox>
-        </StackPanel>
     </Grid>
 </UserControl>
 
