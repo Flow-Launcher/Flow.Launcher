@@ -51,6 +51,17 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
+        public void WindowAnimator()
+        {
+            System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~");
+            Storyboard sb = new Storyboard();
+            DoubleAnimation da = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(100));
+            Storyboard.SetTarget(da, this);
+            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+            sb.Children.Add(da);
+            sb.Begin(this);
+        }
+
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _notifyIcon.Visible = false;
@@ -66,6 +77,7 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            WindowAnimator();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
 
@@ -237,6 +249,8 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
+
+
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {

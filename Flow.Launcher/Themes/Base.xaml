@@ -69,6 +69,7 @@
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="750" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <!--
         <Style.Triggers>
             <Trigger Property="Visibility" Value="Visible">
                 <Trigger.EnterActions>
@@ -95,6 +96,7 @@
                 </Trigger.EnterActions>
             </Trigger>
         </Style.Triggers>
+        -->
     </Style>
 
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
