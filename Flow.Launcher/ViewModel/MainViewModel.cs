@@ -380,6 +380,8 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
+        public double MainWindowOpacity { get; set; } = 1;
+        public bool WinToggleStatus { get; set; } = true;
 
         public double MainWindowWidth => _settings.WindowSize;
 
@@ -708,9 +710,12 @@ namespace Flow.Launcher.ViewModel
 
         public void ToggleFlowLauncher()
         {
-            if (MainWindowVisibility != Visibility.Visible)
+            if (WinToggleStatus != true)
             {
                 MainWindowVisibility = Visibility.Visible;
+                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
+                WinToggleStatus = true;
+                MainWindowOpacity = 1;
             }
             else
             {
@@ -720,24 +725,30 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            MainWindowOpacity = 0;
             switch (_settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
-                    Application.Current.MainWindow.Opacity = 0; // Trick for no delay
-                    await Task.Delay(100);
-                    Application.Current.MainWindow.Opacity = 1;
+                    MainWindowOpacity = 0; // Trick for no delay
+                    await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
+                    MainWindowOpacity = 0;
+                    await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
+                    MainWindowOpacity = 0;
+                    await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
+            WinToggleStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
+
         }
 
         #endregion

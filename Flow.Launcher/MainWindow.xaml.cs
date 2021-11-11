@@ -196,7 +196,7 @@ namespace Flow.Launcher
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
             };
 
-            open.Click += (o, e) => Visibility = Visibility.Visible;
+            open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
@@ -234,6 +234,48 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
+
+        public void WindowAnimator()
+        {
+            InitializePosition();
+            Storyboard sb = new Storyboard();
+            var da = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.2),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da2 = new DoubleAnimation
+            {
+                From = Top + 8,
+                To = Top,
+                Duration = TimeSpan.FromSeconds(0.2),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da3 = new DoubleAnimation
+            {
+                From = Left,
+                To = Left,
+                Duration = TimeSpan.FromSeconds(0.1),
+                FillBehavior = FillBehavior.Stop
+            };
+            System.Diagnostics.Debug.WriteLine("Left: " + Left);
+            System.Diagnostics.Debug.WriteLine("Top: " + Top);
+            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
+            sb.Children.Add(da3);
+            Storyboard.SetTarget(da, this);
+            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+
+            sb.Children.Add(da);
+            sb.Children.Add(da2);
+
+            sb.Begin(FlowMainWindow);
+        }
+
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
