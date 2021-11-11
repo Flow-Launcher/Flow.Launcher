@@ -34,8 +34,6 @@ namespace Flow.Launcher
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
 
-        private double AnimationStartY { get; set; }
-        private double AnimationEndY { get; set; }
         #endregion
 
         public MainWindow(Settings settings, MainViewModel mainVM)
@@ -55,11 +53,38 @@ namespace Flow.Launcher
         {
             System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~");
             Storyboard sb = new Storyboard();
-            DoubleAnimation da = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(100));
+            var da = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.2),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da2 = new DoubleAnimation
+            {
+                From = Top + 8,
+                To = Top,
+                Duration = TimeSpan.FromSeconds(0.2),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da3 = new DoubleAnimation
+            {
+                From = Left,
+                To = Left,
+                Duration = TimeSpan.FromSeconds(0.1),
+                FillBehavior = FillBehavior.Stop
+            };
+
             Storyboard.SetTarget(da, this);
             Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
             sb.Children.Add(da);
-            sb.Begin(this);
+            sb.Children.Add(da2);
+            sb.Children.Add(da3);
+            sb.Begin(FlowMainWindow);
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
@@ -77,7 +102,6 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
-            WindowAnimator();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
 
@@ -171,8 +195,6 @@ namespace Flow.Launcher
             Left = WindowLeft();
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left;
-            AnimationStartY = Top;
-            AnimationEndY = Top - 10;
         }
 
         private void UpdateNotifyIconText()
@@ -304,15 +326,11 @@ namespace Flow.Launcher
             {
                 Left = _settings.WindowLeft;
                 Top = _settings.WindowTop;
-                AnimationStartY = Top;
-                AnimationEndY = Top - 10;
             }
             else
             {
                 Left = WindowLeft();
                 Top = WindowTop();
-                AnimationStartY = Top;
-                AnimationEndY = Top - 10;
             }
         }
 
