@@ -52,6 +52,8 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
+            _settings.WindowTop = Top;
+            _settings.WindowLeft = Left;
             _notifyIcon.Visible = false;
             _viewModel.Save();
             e.Cancel = true;
@@ -79,9 +81,9 @@ namespace Flow.Launcher
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(MainViewModel.MainWindowVisibility):
+                    case nameof(MainViewModel.WinToggleStatus):
                         {
-                            if (_viewModel.MainWindowVisibility == Visibility.Visible)
+                            if (_viewModel.WinToggleStatus == true)
                             {
                                 Activate();
                                 QueryTextBox.Focus();
@@ -157,7 +159,7 @@ namespace Flow.Launcher
             Top = WindowTop();
             Left = WindowLeft();
             _settings.WindowTop = Top;
-            _settings.WindowLeft = Left;
+            _settings.WindowLeft = Left; 
         }
 
         private void UpdateNotifyIconText()
@@ -237,7 +239,6 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
-            InitializePosition();
             Storyboard sb = new Storyboard();
             var da = new DoubleAnimation
             {
