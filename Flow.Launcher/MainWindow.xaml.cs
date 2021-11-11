@@ -68,7 +68,7 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromSeconds(0.2),
                 FillBehavior = FillBehavior.Stop
             };
-
+            /*
             var da3 = new DoubleAnimation
             {
                 From = Left,
@@ -76,14 +76,16 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromSeconds(0.1),
                 FillBehavior = FillBehavior.Stop
             };
-
+            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
+            sb.Children.Add(da3);
+            */
             Storyboard.SetTarget(da, this);
             Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
             Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
+            
             sb.Children.Add(da);
             sb.Children.Add(da2);
-            sb.Children.Add(da3);
+            
             sb.Begin(FlowMainWindow);
         }
 
@@ -104,10 +106,9 @@ namespace Flow.Launcher
         {
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
-
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
-            InitializePosition();
+            //InitializePosition();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
@@ -191,10 +192,32 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
+            /*
             Top = WindowTop();
             Left = WindowLeft();
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left;
+            */
+            if (_settings.RememberLastLaunchLocation)
+            {
+                System.Diagnostics.Debug.WriteLine("rrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                System.Diagnostics.Debug.WriteLine(_settings.WindowLeft);
+                System.Diagnostics.Debug.WriteLine(_settings.WindowTop);
+                Left = _settings.WindowLeft;
+                Top = _settings.WindowTop;
+                System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.Diagnostics.Debug.WriteLine(_settings.WindowLeft);
+                System.Diagnostics.Debug.WriteLine(_settings.WindowTop);
+            }
+            else
+            {
+                Left = WindowLeft();
+                Top = WindowTop();
+                System.Diagnostics.Debug.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                System.Diagnostics.Debug.WriteLine(_settings.WindowLeft);
+                System.Diagnostics.Debug.WriteLine(_settings.WindowTop);
+            }
+
         }
 
         private void UpdateNotifyIconText()
@@ -233,7 +256,7 @@ namespace Flow.Launcher
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
             };
 
-            open.Click += (o, e) => Visibility = Visibility.Visible;
+            open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
@@ -326,11 +349,17 @@ namespace Flow.Launcher
             {
                 Left = _settings.WindowLeft;
                 Top = _settings.WindowTop;
+                System.Diagnostics.Debug.WriteLine("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+                System.Diagnostics.Debug.WriteLine(_settings.WindowLeft);
+                System.Diagnostics.Debug.WriteLine(_settings.WindowTop);
             }
             else
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+                System.Diagnostics.Debug.WriteLine("cccccccccccccccccccccccccccccccc");
+                System.Diagnostics.Debug.WriteLine(_settings.WindowLeft);
+                System.Diagnostics.Debug.WriteLine(_settings.WindowTop);
             }
         }
 
@@ -340,7 +369,11 @@ namespace Flow.Launcher
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
+                System.Diagnostics.Debug.WriteLine("ddddddddddddddddddddddddddddddddddddddddd");
+                System.Diagnostics.Debug.WriteLine(_settings.WindowLeft);
+                System.Diagnostics.Debug.WriteLine(_settings.WindowTop);
             }
+
         }
 
         private double WindowLeft()
