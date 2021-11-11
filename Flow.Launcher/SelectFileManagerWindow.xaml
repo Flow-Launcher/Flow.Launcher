@@ -42,6 +42,12 @@
                             Text="{DynamicResource fileManager_tips}"
                             TextAlignment="Left"
                             TextWrapping="WrapWithOverflow" />
+                        <TextBlock
+                            Margin="0,14,0,0"
+                            FontSize="14"
+                            Foreground="#1b1b1b">
+                            <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
+                        </TextBlock>
                     </StackPanel>
 
                     <StackPanel Margin="14,28,0,0" Orientation="Horizontal">
@@ -88,7 +94,7 @@
                         Orientation="Horizontal">
                         <Grid Width="545">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="180" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -126,7 +132,7 @@
                             <DockPanel Grid.Row="1" Grid.Column="1">
                                 <TextBox
                                     x:Name="PathTextBox"
-                                    Width="230"
+                                    Width="250"
                                     Margin="10,10,10,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
@@ -159,7 +165,8 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
-                                Text="{DynamicResource fileManager_directory_arg}" />
+                                Text="{DynamicResource fileManager_directory_arg}"
+                                TextWrapping="WrapWithOverflow" />
                             <TextBox
                                 x:Name="directoryArgTextBox"
                                 Grid.Row="2"
@@ -177,7 +184,8 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
-                                Text="{DynamicResource fileManager_file_arg}" />
+                                Text="{DynamicResource fileManager_file_arg}"
+                                TextWrapping="WrapWithOverflow" />
                             <TextBox
                                 x:Name="fileArgTextBox"
                                 Grid.Row="3"
