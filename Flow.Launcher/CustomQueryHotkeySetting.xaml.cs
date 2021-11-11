@@ -1,8 +1,6 @@
 ﻿using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;

@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
@@ -26,7 +21,7 @@ namespace Flow.Launcher.Plugin.Program
 
         private static bool IsStartupIndexProgramsRequired => _settings.LastIndexTime.AddDays(3) < DateTime.Today;
 
-        private static PluginInitContext _context;
+        internal static PluginInitContext Context { get; private set; }
 
         private static BinaryStorage<Win32[]> _win32Storage;
         private static BinaryStorage<UWP.Application[]> _uwpStorage;
@@ -63,7 +58,7 @@ namespace Flow.Launcher.Plugin.Program
                           .AsParallel()
                           .WithCancellation(token)
                           .Where(p => p.Enabled)
-                          .Select(p => p.Result(query.Search, _context.API))
+                          .Select(p => p.Result(query.Search, Context.API))
                           .Where(r => r?.Score > 0)
                           .ToList());
 
@@ -80,7 +75,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task InitAsync(PluginInitContext context)
         {
-            _context = context;
+            Context = context;
 
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
@@ -93,8 +88,8 @@ namespace Flow.Launcher.Plugin.Program
                 _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
                 _uwps = _uwpStorage.TryLoad(new UWP.Application[] { });
             });
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
+            context.API.LogInfo("Flow.Launcher.Plugin.Program.Main", $"Number of preload win32 programs <{_win32s.Length}>");
+            context.API.LogInfo("Flow.Launcher.Plugin.Program.Main", $"Number of preload uwps <{_uwps.Length}>");
 
 
             bool indexedWinApps = false;
@@ -155,17 +150,17 @@ namespace Flow.Launcher.Plugin.Program
 
         public Control CreateSettingPanel()
         {
-            return new ProgramSetting(_context, _settings, _win32s, _uwps);
+            return new ProgramSetting(Context, _settings, _win32s, _uwps);
         }
 
         public string GetTranslatedPluginTitle()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_program_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_program_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_program_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_program_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -174,19 +169,19 @@ namespace Flow.Launcher.Plugin.Program
             var program = selectedResult.ContextData as IProgram;
             if (program != null)
             {
-                menuOptions = program.ContextMenus(_context.API);
+                menuOptions = program.ContextMenus(Context.API);
             }
 
             menuOptions.Add(
                 new Result
                 {
-                    Title = _context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
                     Action = c =>
                     {
                         DisableProgram(program);
-                        _context.API.ShowMsg(
-                            _context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
-                            _context.API.GetTranslation(
+                        Context.API.ShowMsg(
+                            Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                            Context.API.GetTranslation(
                                 "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
                         return false;
                     },
@@ -235,7 +230,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 var name = "Plugin: Program";
                 var message = $"Unable to start: {info.FileName}";
-                _context.API.ShowMsg(name, message, string.Empty);
+                Context.API.ShowMsg(name, message, string.Empty);
             }
         }
 

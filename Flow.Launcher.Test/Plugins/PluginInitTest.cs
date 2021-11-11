@@ -1,6 +1,4 @@
 ﻿using NUnit.Framework;
-using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure.Exception;
 
 namespace Flow.Launcher.Test.Plugins
 {

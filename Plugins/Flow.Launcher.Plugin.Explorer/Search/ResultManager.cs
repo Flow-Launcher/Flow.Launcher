@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.SharedCommands;
+﻿using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -27,7 +26,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
                     if (c.SpecialKeyState.CtrlPressed || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
@@ -123,7 +122,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = Path.GetFileName(filePath),
                 SubTitle = filePath,
                 IcoPath = filePath,
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
+                TitleHighlightData = Context.API.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
                 Action = c =>
                 {

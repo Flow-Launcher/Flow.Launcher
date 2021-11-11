@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Caculator.ViewModels;
 using Flow.Launcher.Plugin.Caculator.Views;
 

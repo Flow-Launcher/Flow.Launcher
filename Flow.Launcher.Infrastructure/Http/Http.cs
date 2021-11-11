@@ -1,15 +1,12 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
-using System.ComponentModel;
 using System.Threading;
-using System.Windows.Interop;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.Http

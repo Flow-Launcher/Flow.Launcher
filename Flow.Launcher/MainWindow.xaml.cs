@@ -11,16 +11,11 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
-using Microsoft.AspNetCore.Authorization;
-using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
-using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
-using System.Windows.Interop;
 
 namespace Flow.Launcher
 {

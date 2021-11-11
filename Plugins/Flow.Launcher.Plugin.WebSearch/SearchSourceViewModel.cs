@@ -1,8 +1,6 @@
 using Flow.Launcher.Infrastructure.Image;
 using System;
-using System.Drawing;
 using System.IO;
-using System.Windows;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch

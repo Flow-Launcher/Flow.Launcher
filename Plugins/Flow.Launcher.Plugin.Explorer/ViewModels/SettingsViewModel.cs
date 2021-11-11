@@ -1,9 +1,6 @@
-﻿using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin.Explorer.Search;
+﻿using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
@@ -43,12 +40,13 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
         {
-            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+            Context.API.RemoveActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword);
+            Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, newActionKeyword);
         }
 
         internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword)
         {
-            return PluginManager.ActionKeywordRegistered(newActionKeyword);
+            return Context.API.ActionKeywordRegistered(newActionKeyword);
         }
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;

@@ -8,11 +8,8 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
-using ICSharpCode.SharpZipLib.Zip;
-using JetBrains.Annotations;
 using Microsoft.IO;
 
 namespace Flow.Launcher.Core.Plugin

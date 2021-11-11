@@ -1,7 +1,6 @@
 ﻿using Flow.Launcher.Plugin.Program.Programs;
 using NUnit.Framework;
 using System;
-using Windows.ApplicationModel;
 
 namespace Flow.Launcher.Test.Plugins
 {

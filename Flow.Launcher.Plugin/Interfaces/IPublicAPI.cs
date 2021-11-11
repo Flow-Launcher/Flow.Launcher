@@ -153,6 +153,13 @@ namespace Flow.Launcher.Plugin
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
         /// <summary>
+        /// Check whether actionKeyword is registered
+        /// </summary>
+        /// <param name="actionKeyword"></param>
+        /// <returns></returns>
+        bool ActionKeywordRegistered(string actionKeyword);
+
+        /// <summary>
         /// Log debug message
         /// Message will only be logged in Debug mode
         /// </summary>

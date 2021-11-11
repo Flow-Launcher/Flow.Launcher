@@ -13,11 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -85,7 +84,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             if (Marshal.ReleaseComObject(stream) > 0)
             {
-                Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
+                Main.Context.API.LogException("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked", new ContextMarshalException());
             }
         }
 
@@ -285,18 +284,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
                 {
                     title = Name;
-                    matchResult = StringMatcher.FuzzySearch(query, title);
+                    matchResult = Main.Context.API.FuzzySearch(query, title);
                 }
                 else if (Description.StartsWith(Name))
                 {
                     title = Description;
-                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                    matchResult = Main.Context.API.FuzzySearch(query, Description);
                 }
                 else
                 {
                     title = $"{Name}: {Description}";
-                    var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                    var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                    var nameMatch = Main.Context.API.FuzzySearch(query, Name);
+                    var desciptionMatch = Main.Context.API.FuzzySearch(query, Description);
                     if (desciptionMatch.Score > nameMatch.Score)
                     {
                         for (int i = 0; i < desciptionMatch.MatchData.Count; i++)

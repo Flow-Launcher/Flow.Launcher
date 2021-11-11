@@ -1,6 +1,5 @@
 using Microsoft.Win32;
 using System.Windows;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows.Input;
 using System.ComponentModel;

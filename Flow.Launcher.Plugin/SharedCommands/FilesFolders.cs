@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {

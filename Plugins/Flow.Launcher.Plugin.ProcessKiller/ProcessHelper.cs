@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,6 +9,13 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     internal class ProcessHelper
     {
+        public IPublicAPI API { get; init; }
+
+        public ProcessHelper (IPublicAPI api)
+        {
+            API = api;
+        }
+
         private readonly HashSet<string> _systemProcessList = new HashSet<string>()
         {
             "conhost",
@@ -49,7 +54,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 }
                 else
                 {
-                    var score = StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score;
+                    var score = API.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score;
                     if (score > 0)
                     {
                         processlist.Add(new ProcessResult(p, score));
@@ -79,7 +84,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception e)
             {
-                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
+                API.LogException("ProcessKiller","Failed to kill process {p.ProcessName}", e);
             }
         }
 

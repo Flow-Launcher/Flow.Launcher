@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin

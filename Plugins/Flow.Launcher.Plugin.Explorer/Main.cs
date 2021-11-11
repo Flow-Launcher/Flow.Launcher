@@ -1,5 +1,5 @@
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
@@ -47,6 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
+            DirectoryInfoSearch.PublicAPI = Context.API;
 
             return Task.CompletedTask;
         }

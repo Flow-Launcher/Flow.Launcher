@@ -1,4 +1,3 @@
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.Search.Interop;
 using System;

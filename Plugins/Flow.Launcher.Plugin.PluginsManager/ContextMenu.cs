@@ -1,8 +1,5 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {

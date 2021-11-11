@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
@@ -18,13 +16,14 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
-        private Settings _settings { get; set;}
+        private Settings _settings { get; set; }
 
         public void Init(PluginInitContext context)
         {
             this.context = context;
-            
+
             _settings = context.API.LoadSettingJsonStorage<Settings>();
+            BookmarkLoader.publicAPI = context.API;
 
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
@@ -129,7 +128,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                         catch (Exception e)
                         {
                             var message = "Failed to set url in clipboard";
-                            Log.Exception("Main",message, e, "LoadContextMenus");
+                            context.API.LogException($"BrowserBookmark.{nameof(Main)}",message, e, "LoadContextMenus");
 
                             context.API.ShowMsg(message);
 

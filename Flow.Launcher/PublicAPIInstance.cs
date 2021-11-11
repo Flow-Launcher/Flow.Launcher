@@ -123,6 +123,7 @@ namespace Flow.Launcher
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
             CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
 
+        public bool ActionKeywordRegistered(string actionKeyword) => PluginManager.ActionKeywordRegistered(actionKeyword);
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
 
@@ -158,7 +159,7 @@ namespace Flow.Launcher
             if (!_pluginJsonStorages.ContainsKey(type))
                 _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            return ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Load();
+            return ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Load();
         }
 
         public void SaveSettingJsonStorage<T>() where T : new()
@@ -167,7 +168,7 @@ namespace Flow.Launcher
             if (!_pluginJsonStorages.ContainsKey(type))
                 _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
+            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
         public void SaveJsonStorage<T>(T settings) where T : new()
@@ -175,7 +176,7 @@ namespace Flow.Launcher
             var type = typeof(T);
             _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
-            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
+            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
@@ -188,7 +189,7 @@ namespace Flow.Launcher
         {
             if (GlobalKeyboardEvent != null)
             {
-                return GlobalKeyboardEvent((int) keyevent, vkcode, state);
+                return GlobalKeyboardEvent((int)keyevent, vkcode, state);
             }
 
             return true;

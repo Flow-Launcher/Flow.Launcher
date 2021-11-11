@@ -2,9 +2,6 @@ using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {

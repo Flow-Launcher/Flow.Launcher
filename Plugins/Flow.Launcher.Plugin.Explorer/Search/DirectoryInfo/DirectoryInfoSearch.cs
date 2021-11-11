@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin.SharedCommands;
+﻿using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +9,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
     public static class DirectoryInfoSearch
     {
+        public static IPublicAPI PublicAPI { get; set; }
+
         internal static List<Result> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
         {
             var criteria = ConstructSearchCriteria(search);
@@ -76,7 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                Log.Exception("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
+                PublicAPI.LogException("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
                 results.Add(new Result {Title = e.Message, Score = 501});
 
                 return results;

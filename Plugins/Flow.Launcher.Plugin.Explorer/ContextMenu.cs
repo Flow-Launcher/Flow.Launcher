@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
@@ -14,6 +13,7 @@ using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
 using DialogResult = System.Windows.Forms.DialogResult;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
+using System.Runtime.CompilerServices;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -48,9 +48,13 @@ namespace Flow.Launcher.Plugin.Explorer
                 contextMenus.Add(CreateOpenWindowsIndexingOptions());
 
                 if (record.ShowIndexState)
-                    contextMenus.Add(new Result {Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"), 
-                                                    SubTitle = "Location: " + record.FullPath,
-                                                    Score = 501, IcoPath = Constants.IndexImagePath});
+                    contextMenus.Add(new Result
+                    {
+                        Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"),
+                        SubTitle = "Location: " + record.FullPath,
+                        Score = 501,
+                        IcoPath = Constants.IndexImagePath
+                    });
 
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
@@ -105,7 +109,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         IcoPath = Constants.RemoveQuickAccessImagePath
                     });
                 }
-                
+
                 contextMenus.Add(new Result
                 {
                     Title = Context.API.GetTranslation("plugin_explorer_copypath"),
@@ -161,10 +165,10 @@ namespace Flow.Launcher.Plugin.Explorer
                             try
                             {
                                 if (MessageBox.Show(
-                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"),fileOrFolder), 
-                                        string.Empty, 
-                                        MessageBoxButton.YesNo, 
-                                        MessageBoxIcon.Warning) 
+                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"), fileOrFolder),
+                                        string.Empty,
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxIcon.Warning)
                                     == DialogResult.No)
                                     return false;
 
@@ -176,7 +180,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                 Task.Run(() =>
                                 {
                                     Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess"),
-                                                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), fileOrFolder), 
+                                                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), fileOrFolder),
                                                                         Constants.ExplorerIconImageFullPath);
                                 });
                             }
@@ -250,7 +254,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             string editorPath = "Notepad.exe"; // TODO add the ability to create a custom editor
 
-            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor") 
+            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor")
                                     + " " + Path.GetFileNameWithoutExtension(editorPath);
 
             return new Result
@@ -283,13 +287,13 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
                 Action = _ =>
                 {
-                    if(!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
+                    if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
                         Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink { Path = record.FullPath });
 
                     Task.Run(() =>
                     {
-                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"), 
-                                                            Context.API.GetTranslation("plugin_explorer_path") + 
+                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"),
+                                                            Context.API.GetTranslation("plugin_explorer_path") +
                                                             " " + record.FullPath, Constants.ExplorerIconImageFullPath);
 
                         // so the new path can be persisted to storage and not wait till next ViewModel save.
@@ -313,11 +317,11 @@ namespace Flow.Launcher.Plugin.Explorer
                     try
                     {
                         var psi = new ProcessStartInfo
-                                    {
-                                        FileName = "control.exe",
-                                        UseShellExecute = true,
-                                        Arguments = "srchadmin.dll"
-                                    };
+                        {
+                            FileName = "control.exe",
+                            UseShellExecute = true,
+                            Arguments = "srchadmin.dll"
+                        };
 
                         Process.Start(psi);
                         return true;
@@ -334,9 +338,9 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-        public void LogException(string message, Exception e)
+        public void LogException(string message, Exception e, [CallerMemberName] string methodName = "")
         {
-            Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
+            Context.API.LogException("Flow.Launcher.Plugin.Folder", message, e, methodName);
         }
 
         private bool CanRunAsDifferentUser(string path)

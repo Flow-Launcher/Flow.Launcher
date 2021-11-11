@@ -1,24 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using System.Dynamic;
-using System.Runtime.InteropServices;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
     public class Main : IPlugin, IPluginI18n, IContextMenu
     {
-        private ProcessHelper processHelper = new ProcessHelper();
+        private ProcessHelper processHelper;
 
         private static PluginInitContext _context;
 
         public void Init(PluginInitContext context)
         {
             _context = context;
+            processHelper = new(context.API);
         }
 
         public List<Result> Query(Query query)
@@ -85,7 +79,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     IcoPath = path,
                     Title = p.ProcessName + " - " + p.Id,
                     SubTitle = path,
-                    TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
+                    TitleHighlightData = _context.API.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
                     ContextData = p.ProcessName,
                     Action = (c) =>

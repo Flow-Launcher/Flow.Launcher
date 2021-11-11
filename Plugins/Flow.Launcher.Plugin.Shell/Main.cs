@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using WindowsInput;
 using WindowsInput.Native;
-using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
+using Flow.Launcher.Infrastructure.Hotkey;
 
 namespace Flow.Launcher.Plugin.Shell
 {
@@ -88,7 +86,7 @@ namespace Flow.Launcher.Plugin.Shell
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Flow.Launcher.Plugin.Shell.Main.Query|Exception when query for <{query}>", e);
+                    context.API.LogException("Flow.Launcher.Plugin.Shell.Main", $"Exception when query for <{query}>", e);
                 }
                 return results;
             }

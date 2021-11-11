@@ -7,13 +7,10 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Infrastructure.Logger;
 using System.Diagnostics;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Flow.Launcher.Plugin.Program.Programs
@@ -60,18 +57,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
             {
                 title = Name;
-                matchResult = StringMatcher.FuzzySearch(query, title);
+                matchResult = Main.Context.API.FuzzySearch(query, title);
             }
             else if (Description.StartsWith(Name))
             {
                 title = Description;
-                matchResult = StringMatcher.FuzzySearch(query, Description);
+                matchResult = Main.Context.API.FuzzySearch(query, Description);
             }
             else
             {
                 title = $"{Name}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                var nameMatch = Main.Context.API.FuzzySearch(query, Name);
+                var desciptionMatch = Main.Context.API.FuzzySearch(query, Description);
                 if (desciptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
@@ -86,7 +83,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!matchResult.IsSearchPrecisionScoreMet())
             {
                 if (ExecutableName != null) // only lnk program will need this one
-                    matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+                    matchResult = Main.Context.API.FuzzySearch(query, ExecutableName);
 
                 if (!matchResult.IsSearchPrecisionScoreMet())
                     return null;

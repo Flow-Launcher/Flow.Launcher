@@ -1,8 +1,4 @@
 using Flow.Launcher.Plugin.Explorer.ViewModels;
-using ICSharpCode.SharpZipLib.Zip;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 

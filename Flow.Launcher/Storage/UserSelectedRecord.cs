@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Storage
 {

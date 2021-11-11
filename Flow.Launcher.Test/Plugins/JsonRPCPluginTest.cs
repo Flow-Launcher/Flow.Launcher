@@ -1,5 +1,4 @@
-﻿using NUnit;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 using System.Threading.Tasks;

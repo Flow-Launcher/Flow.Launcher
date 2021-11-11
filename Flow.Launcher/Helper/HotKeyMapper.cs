@@ -6,8 +6,6 @@ using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
 using System.Windows;
 using Flow.Launcher.ViewModel;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Flow.Launcher.Helper
 {
