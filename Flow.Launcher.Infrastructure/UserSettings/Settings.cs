@@ -40,6 +40,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseGlyphIcons { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
+
+        [JsonIgnore]
         public CustomExplorerViewModel CustomExplorer
         {
             get => CustomExplorerList[CustomExplorerIndex < CustomExplorerList.Count ? CustomExplorerIndex : 0];
