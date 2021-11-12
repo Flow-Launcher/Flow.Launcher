@@ -713,8 +713,8 @@ namespace Flow.Launcher.ViewModel
             if (WinToggleStatus != true)
             {
                 MainWindowVisibility = Visibility.Visible;
-                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
                 WinToggleStatus = true;
+                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
                 MainWindowOpacity = 1;
             }
             else
