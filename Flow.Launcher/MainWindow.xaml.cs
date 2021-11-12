@@ -239,6 +239,7 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
+            InitializePosition();
             Storyboard sb = new Storyboard();
             var da = new DoubleAnimation
             {
