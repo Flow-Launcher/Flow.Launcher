@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         try
                         {
-                            FilesFolders.OpenPath(path);
+                            Context.API.OpenDirectory(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = 500,
                 Action = c =>
                 {
-                    FilesFolders.OpenPath(retrievedDirectoryPath);
+                    Context.API.OpenDirectory(retrievedDirectoryPath);
                     return true;
                 },
                 TitleToolTip = retrievedDirectoryPath,
@@ -149,7 +149,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
-                            FilesFolders.OpenContainingFolder(filePath);
+                            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
                         }
                         else
                         {

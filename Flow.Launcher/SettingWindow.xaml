@@ -691,6 +691,35 @@
                     <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{DynamicResource defaultFileManager}" />
+                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button
+                                    Width="160"
+                                    MaxWidth="250"
+                                    Margin="10,0,18,0"
+                                    Click="OnSelectFileManagerClick"
+                                    Content="{Binding Settings.CustomExplorer.Name}" />
+                            </StackPanel>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="24,0,16,0"
+                                VerticalAlignment="Center"
+                                FontFamily="/Resources/#Segoe Fluent Icons"
+                                FontSize="20">
+                                &#xe838;
+                            </TextBlock>
+                        </ItemsControl>
+                    </Border>
+
+                    <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                        <ItemsControl Style="{StaticResource SettingGrid}">
+                            <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource pythonDirectory}" />
                             </StackPanel>
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
@@ -1388,11 +1417,15 @@
                                 TextAlignment="left" />
                         </Border>
 
-                        <StackPanel Grid.Row="1" Margin="0" Background="{Binding PreviewBackground}">
-                            <StackPanel Margin="0,30,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Orientation="Horizontal">
+                        <StackPanel
+                            Grid.Row="1"
+                            Margin="0"
+                            Background="{Binding PreviewBackground}">
+                            <StackPanel
+                                Margin="0,30,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
                                 <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
                                     <Border Style="{DynamicResource WindowRadius}">
                                         <Border.Clip>
@@ -1470,26 +1503,29 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock Width="100"
-                                                   Margin="0,0,8,2"
-                                                   VerticalAlignment="Center"
-                                                   Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                                                   TextAlignment="Right" />
-                                        <Slider Name="WindowWidthValue"
-                                                Width="300"
-                                                Margin="0,0,18,0"
-                                                IsMoveToPointEnabled="True"
-                                                IsSnapToTickEnabled="True"
-                                                Maximum="900"
-                                                Minimum="400"
-                                                TickFrequency="10"
-                                                Value="{Binding WindowWidthSize, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Width="100"
+                                            Margin="0,0,8,2"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                            TextAlignment="Right" />
+                                        <Slider
+                                            Name="WindowWidthValue"
+                                            Width="300"
+                                            Margin="0,0,18,0"
+                                            IsMoveToPointEnabled="True"
+                                            IsSnapToTickEnabled="True"
+                                            Maximum="900"
+                                            Minimum="400"
+                                            TickFrequency="10"
+                                            Value="{Binding WindowWidthSize, Mode=TwoWay}" />
                                     </StackPanel>
-                                    <TextBlock Grid.Column="0"
-                                               Margin="24,0,16,0"
-                                               VerticalAlignment="Center"
-                                               FontFamily="/Resources/#Segoe Fluent Icons"
-                                               FontSize="20">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="24,0,16,0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Resources/#Segoe Fluent Icons"
+                                        FontSize="20">
                                         &#xe740;
                                     </TextBlock>
                                 </ItemsControl>
