@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -712,6 +713,12 @@ namespace Flow.Launcher.ViewModel
         {
             if (WinToggleStatus != true)
             {
+                if (_settings.UseSound)
+                {
+                    MediaPlayer media = new MediaPlayer();
+                    media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                    media.Play();
+                }
                 MainWindowVisibility = Visibility.Visible;
                 WinToggleStatus = true;
                 ((MainWindow)Application.Current.MainWindow).WindowAnimator();

@@ -37,6 +37,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
 
+        public bool UseAnimation { get; set; } = true;
+        public bool UseSound { get; set; } = false;
+
 
         /// <summary>
         /// when false Alphabet static service will always return empty results

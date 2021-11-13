@@ -238,44 +238,47 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
-            if (_animating)
-                return;
+            if (_settings.UseAnimation)
+            { 
+                if (_animating)
+                    return;
                 
-            _animating = true;
-            UpdatePosition();
-            Storyboard sb = new Storyboard();
-            var da = new DoubleAnimation
-            {
-                From = 0,
-                To = 1,
-                Duration = TimeSpan.FromSeconds(0.2),
-                FillBehavior = FillBehavior.Stop
-            };
+                _animating = true;
+                UpdatePosition();
+                Storyboard sb = new Storyboard();
+                var da = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromSeconds(0.2),
+                    FillBehavior = FillBehavior.Stop
+                };
 
-            var da2 = new DoubleAnimation
-            {
-                From = Top + 8,
-                To = Top,
-                Duration = TimeSpan.FromSeconds(0.2),
-                FillBehavior = FillBehavior.Stop
-            };
+                var da2 = new DoubleAnimation
+                {
+                    From = Top + 8,
+                    To = Top,
+                    Duration = TimeSpan.FromSeconds(0.2),
+                    FillBehavior = FillBehavior.Stop
+                };
 
-            var da3 = new DoubleAnimation
-            {
-                From = Left,
-                To = Left,
-                Duration = TimeSpan.FromSeconds(0.1),
-                FillBehavior = FillBehavior.Stop
-            };
-            Storyboard.SetTarget(da, this);
-            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
-            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
-            sb.Children.Add(da);
-            sb.Children.Add(da2);
-            sb.Children.Add(da3);
-            sb.Completed += (_, _) => _animating = false;
-            sb.Begin(FlowMainWindow);
+                var da3 = new DoubleAnimation
+                {
+                    From = Left,
+                    To = Left,
+                    Duration = TimeSpan.FromSeconds(0.1),
+                    FillBehavior = FillBehavior.Stop
+                };
+                Storyboard.SetTarget(da, this);
+                Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+                Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+                Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
+                sb.Children.Add(da);
+                sb.Children.Add(da2);
+                sb.Children.Add(da3);
+                sb.Completed += (_, _) => _animating = false;
+                sb.Begin(FlowMainWindow);
+            }
         }
 
 
