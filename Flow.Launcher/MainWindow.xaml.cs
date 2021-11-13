@@ -87,7 +87,7 @@ namespace Flow.Launcher
                             {
                                 Activate();
                                 QueryTextBox.Focus();
-                                UpdatePosition();
+                                //UpdatePosition();
                                 _settings.ActivateTimes++;
                                 if (!_viewModel.LastQuerySelected)
                                 {
@@ -156,10 +156,22 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
+            /*
             Top = WindowTop();
             Left = WindowLeft();
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left; 
+            */
+            if (_settings.RememberLastLaunchLocation)
+            {
+                Left = _settings.WindowLeft;
+                Top = _settings.WindowTop;
+            }
+            else
+            {
+                Left = WindowLeft();
+                Top = WindowTop();
+            }
         }
 
         private void UpdateNotifyIconText()
@@ -265,17 +277,13 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromSeconds(0.1),
                 FillBehavior = FillBehavior.Stop
             };
-            System.Diagnostics.Debug.WriteLine("Left: " + Left);
-            System.Diagnostics.Debug.WriteLine("Top: " + Top);
             Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
-            sb.Children.Add(da3);
             Storyboard.SetTarget(da, this);
             Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
             Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-
             sb.Children.Add(da);
             sb.Children.Add(da2);
-
+            sb.Children.Add(da3);
             sb.Begin(FlowMainWindow);
         }
 
