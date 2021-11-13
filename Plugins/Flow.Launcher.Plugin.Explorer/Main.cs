@@ -1,10 +1,13 @@
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -48,6 +51,7 @@ namespace Flow.Launcher.Plugin.Explorer
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
             DirectoryInfoSearch.PublicAPI = Context.API;
+            IndexSearch.PublicAPI = Context.API;
 
             return Task.CompletedTask;
         }

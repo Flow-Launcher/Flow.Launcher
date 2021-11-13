@@ -14,6 +14,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     internal static class IndexSearch
     {
+        internal static IPublicAPI PublicAPI { get; set; }
+
 
         // Reserved keywords in oleDB
         private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
@@ -219,7 +221,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 #if DEBUG // Please investigate and handle error from index search
             throw e;
 #else
-            Log.Exception($"|Flow.Launcher.Plugin.Explorer.IndexSearch|{message}", e);
+            PublicAPI.LogException("Flow.Plugin.Explorer",message, e);
 #endif            
         }
     }
