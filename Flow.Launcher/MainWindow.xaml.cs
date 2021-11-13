@@ -11,16 +11,11 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
-using Microsoft.AspNetCore.Authorization;
-using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
-using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
-using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -149,21 +144,19 @@ namespace Flow.Launcher
                         break;
                 }
             };
-
-            InitializePosition();
         }
 
         private void InitializePosition()
         {
             if (_settings.RememberLastLaunchLocation)
             {
-                this.Top = this._settings.WindowTop;
-                this.Left = this._settings.WindowLeft;
+                Top = _settings.WindowTop;
+                Left = _settings.WindowLeft;
             }
             else
             {
-                this.Left = WindowLeft();
-                this.Top = WindowTop();
+                Left = WindowLeft();
+                Top = WindowTop();
             }
         }
 
@@ -341,15 +334,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (_settings.RememberLastLaunchLocation)
-            {
-                return;
-                _settings.WindowLeft = Left;
-                _settings.WindowTop = Top;
-            }
-        }
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
