@@ -22,6 +22,8 @@ using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
+using System.Reflection;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
@@ -78,6 +80,11 @@ namespace Flow.Launcher
             _mainVM.Save();
             _settingsVM.Save();
             ImageLoader.Save();
+        }
+
+        public string GetSettingLocation()
+        {
+           return Path.Combine(DataLocation.PluginSettingsDirectory, Assembly.GetCallingAssembly().GetName().Name)
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadData();

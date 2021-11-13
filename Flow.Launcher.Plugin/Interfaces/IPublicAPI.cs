@@ -100,6 +100,8 @@ namespace Flow.Launcher.Plugin
         /// <returns></returns>
         List<PluginPair> GetAllPlugins();
 
+        string GetSettingLocation();
+
         /// <summary>
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
