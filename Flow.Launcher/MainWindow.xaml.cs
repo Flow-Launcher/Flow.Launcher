@@ -29,6 +29,7 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
+        private bool _animating;
 
         #endregion
 
@@ -37,8 +38,8 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
-            InitializePosition();
             InitializeComponent();
+            InitializePosition();
         }
 
         public MainWindow()
@@ -180,7 +181,7 @@ namespace Flow.Launcher
 
             var header = new MenuItem
             {
-                Header = "Flow Launcher", 
+                Header = "Flow Launcher",
                 IsEnabled = false
             };
             var open = new MenuItem
@@ -237,6 +238,10 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
+            if (_animating)
+                return;
+                
+            _animating = true;
             UpdatePosition();
             Storyboard sb = new Storyboard();
             var da = new DoubleAnimation
@@ -269,6 +274,7 @@ namespace Flow.Launcher
             sb.Children.Add(da);
             sb.Children.Add(da2);
             sb.Children.Add(da3);
+            sb.Completed += (_, _) => _animating = false;
             sb.Begin(FlowMainWindow);
         }
 
@@ -322,6 +328,9 @@ namespace Flow.Launcher
 
         private void UpdatePosition()
         {
+            if (_animating)
+                return;
+
             if (_settings.RememberLastLaunchLocation)
             {
                 Left = _settings.WindowLeft;
@@ -337,6 +346,8 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
+            if (_animating)
+                return;
             if (_settings.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
