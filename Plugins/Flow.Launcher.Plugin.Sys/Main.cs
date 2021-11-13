@@ -59,8 +59,8 @@ namespace Flow.Launcher.Plugin.Sys
             var results = new List<Result>();
             foreach (var c in commands)
             {
-                var titleMatch = StringMatcher.FuzzySearch(query.Search, c.Title);
-                var subTitleMatch = StringMatcher.FuzzySearch(query.Search, c.SubTitle);
+                var titleMatch = context.API.FuzzySearch(query.Search, c.Title);
+                var subTitleMatch = context.API.FuzzySearch(query.Search, c.SubTitle);
 
                 var score = Math.Max(titleMatch.Score, subTitleMatch.Score);
                 if (score > 0)
