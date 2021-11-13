@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
 {
@@ -100,7 +101,18 @@ namespace Flow.Launcher.Plugin
         /// <returns></returns>
         List<PluginPair> GetAllPlugins();
 
+        /// <summary>
+        /// Get Current Plugin Setting Location (through reflection)
+        /// </summary>
+        /// <returns></returns>
         string GetSettingLocation();
+
+        /// <summary>
+        /// Load a ImageSource through Flow's Image Management System
+        /// </summary>
+        /// <param name="pathToImage"></param>
+        /// <returns></returns>
+        ImageSource LoadImage(string pathToImage, bool loadFullImage = false);
 
         /// <summary>
         /// Fired after global keyboard events

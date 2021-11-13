@@ -24,6 +24,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Reflection;
 using Flow.Launcher.Infrastructure.UserSettings;
+using System.Windows.Media;
 
 namespace Flow.Launcher
 {
@@ -84,7 +85,7 @@ namespace Flow.Launcher
 
         public string GetSettingLocation()
         {
-           return Path.Combine(DataLocation.PluginSettingsDirectory, Assembly.GetCallingAssembly().GetName().Name)
+            return Path.Combine(DataLocation.PluginSettingsDirectory, Assembly.GetCallingAssembly().GetName().Name);
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadData();
@@ -122,10 +123,12 @@ namespace Flow.Launcher
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
 
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
+        public ImageSource LoadImage(string pathToImage, bool loadFullImage) => ImageLoader.Load(pathToImage, loadFullImage);
+
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url, token);
 
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
-            Http.GetStreamAsync(url);
+            Http.GetStreamAsync(url, token);
 
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
             CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
