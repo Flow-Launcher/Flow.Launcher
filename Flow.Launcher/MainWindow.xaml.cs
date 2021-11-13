@@ -42,6 +42,7 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
+            InitializePosition();
             InitializeComponent();
         }
 
@@ -69,10 +70,8 @@ namespace Flow.Launcher
         {
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
-
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
-            InitializePosition();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
@@ -85,9 +84,9 @@ namespace Flow.Launcher
                         {
                             if (_viewModel.WinToggleStatus == true)
                             {
+                                UpdatePosition();
                                 Activate();
                                 QueryTextBox.Focus();
-                                //UpdatePosition();
                                 _settings.ActivateTimes++;
                                 if (!_viewModel.LastQuerySelected)
                                 {
@@ -156,21 +155,15 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            /*
-            Top = WindowTop();
-            Left = WindowLeft();
-            _settings.WindowTop = Top;
-            _settings.WindowLeft = Left; 
-            */
             if (_settings.RememberLastLaunchLocation)
             {
-                Left = _settings.WindowLeft;
-                Top = _settings.WindowTop;
+                this.Top = this._settings.WindowTop;
+                this.Left = this._settings.WindowLeft;
             }
             else
             {
-                Left = WindowLeft();
-                Top = WindowTop();
+                this.Left = WindowLeft();
+                this.Top = WindowTop();
             }
         }
 
@@ -251,7 +244,6 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
-            //InitializePosition();
             UpdatePosition();
             Storyboard sb = new Storyboard();
             var da = new DoubleAnimation
@@ -277,10 +269,10 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromSeconds(0.1),
                 FillBehavior = FillBehavior.Stop
             };
-            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
             Storyboard.SetTarget(da, this);
             Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
             Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
             sb.Children.Add(da);
             sb.Children.Add(da2);
             sb.Children.Add(da3);
@@ -328,6 +320,7 @@ namespace Flow.Launcher
 
         private void OnDeactivated(object sender, EventArgs e)
         {
+            _viewModel.Save();
             if (_settings.HideWhenDeactive)
             {
                 _viewModel.Hide();
@@ -345,6 +338,16 @@ namespace Flow.Launcher
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+            }
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_settings.RememberLastLaunchLocation)
+            {
+                return;
+                _settings.WindowLeft = Left;
+                _settings.WindowTop = Top;
             }
         }
 

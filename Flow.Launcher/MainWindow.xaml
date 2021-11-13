@@ -26,6 +26,7 @@
     PreviewKeyDown="OnKeyDown"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
+    SizeChanged="OnSizeChanged"
     SizeToContent="Height"
     Style="{DynamicResource WindowStyle}"
     Topmost="True"
