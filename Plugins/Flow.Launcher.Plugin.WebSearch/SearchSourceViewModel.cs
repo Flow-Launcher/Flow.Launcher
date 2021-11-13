@@ -1,4 +1,3 @@
-using Flow.Launcher.Infrastructure.Image;
 using System;
 using System.IO;
 using System.Windows;
@@ -58,7 +57,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         internal ImageSource LoadPreviewIcon(string pathToPreviewIconImage)
         {
-            return ImageLoader.Load(pathToPreviewIconImage);
+            return Main.Context.API.LoadImage(pathToPreviewIconImage);
         }
     }
 }

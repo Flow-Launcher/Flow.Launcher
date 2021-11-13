@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,8 +16,8 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
-                
-                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+
+                using var resultStream = await Main.Context.API.HttpGetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
 
                 using var json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token));
                 var root = json.RootElement.GetProperty("AS");
@@ -39,14 +37,14 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
-                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                Main.Context.API.LogException("Bing.Suggestion", "Can't get suggestion from baidu", e);
                 return null;
             }
             catch (JsonException e)
             {
-                Log.Exception("|Bing.Suggestions|can't parse suggestions", e);
+                Main.Context.API.LogException("Baidu.Suggestion", "Can't parse suggestions from bing", e);
                 return new List<string>();
-            } 
+            }
         }
 
         public override string ToString()

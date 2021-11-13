@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
 using System.Threading;
 using System.Text.Json;
@@ -18,7 +16,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             {
                 const string api = "https://www.google.com/complete/search?output=chrome&q=";
 
-                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query)).ConfigureAwait(false);
+                using var resultStream = await Main.Context.API.HttpGetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
 
                 using var json = await JsonDocument.ParseAsync(resultStream, cancellationToken: token);
 
@@ -32,12 +30,12 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
             {
-                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                Main.Context.API.LogException("Google.Suggestions", "Can't get suggestion from Google", e);
                 return null;
             }
             catch (JsonException e)
             {
-                Log.Exception("|Google.Suggestions|can't parse suggestions", e);
+                Main.Context.API.LogException("Google.Suggestions", "Can't parse suggestion from Google", e);
                 return new List<string>();
             }
         }

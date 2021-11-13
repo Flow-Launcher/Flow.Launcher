@@ -5,15 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
     public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
     {
-        private PluginInitContext _context;
+        internal static PluginInitContext Context { get; private set; }
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -44,7 +42,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 string keyword = string.Empty;
                 keyword = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? query.ToString() : query.Search;
                 var title = keyword;
-                string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
+                string subtitle = Context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
 
                 //Action Keyword match apear on top
                 var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + 1;
@@ -163,21 +161,19 @@ namespace Flow.Launcher.Plugin.WebSearch
 
             void Init()
             {
-                _context = context;
+                Context = context;
 
-                _settings = _context.API.LoadSettingJsonStorage<Settings>();
+                _settings = Context.API.LoadSettingJsonStorage<Settings>();
                 _viewModel = new SettingsViewModel(_settings);
-                
-                var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
-                var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
+
+                var pluginDirectory = Context.CurrentPluginMetadata.PluginDirectory;
 
                 // Default images directory is in the WebSearch's application folder  
-                DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
-                Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+                var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
 
                 // Custom images directory is in the WebSearch's data location folder 
-                var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
-                CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
+                var name = Path.GetFileNameWithoutExtension(Context.CurrentPluginMetadata.ExecuteFileName);
+                CustomImagesDirectory = Path.Combine(Context.API.GetSettingLocation(), "CustomIcons");
             };
         }
 
@@ -185,19 +181,19 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         public Control CreateSettingPanel()
         {
-            return new SettingsControl(_context, _viewModel);
+            return new SettingsControl(Context, _viewModel);
         }
 
         #endregion
 
         public string GetTranslatedPluginTitle()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_websearch_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_websearch_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return _context.API.GetTranslation("flowlauncher_plugin_websearch_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_websearch_plugin_description");
         }
 
         public event ResultUpdatedEventHandler ResultsUpdated;

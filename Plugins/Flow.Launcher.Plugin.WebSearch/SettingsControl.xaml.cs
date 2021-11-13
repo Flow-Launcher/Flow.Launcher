@@ -1,7 +1,6 @@
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Core.Plugin;
 using System.ComponentModel;
 using System.Windows.Data;
 
@@ -44,7 +43,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (result == MessageBoxResult.Yes)
                 {
                     var id = _context.CurrentPluginMetadata.ID;
-                    PluginManager.RemoveActionKeyword(id, selected.ActionKeyword);
+                    _context.API.RemoveActionKeyword(id, selected.ActionKeyword);
                     _settings.SearchSources.Remove(selected);
                 }
             }
