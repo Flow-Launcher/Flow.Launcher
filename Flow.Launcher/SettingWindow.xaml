@@ -846,7 +846,9 @@
                                                     Height="32"
                                                     Margin="32,0,0,0"
                                                     FlowDirection="LeftToRight"
-                                                    Source="{Binding Image, IsAsync=True}" />
+                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                    Source="{Binding Image, IsAsync=True}"
+                                                    Stretch="Uniform" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Margin="12,0,14,0">
                                                 <TextBlock
@@ -1253,12 +1255,17 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <Image
-                                                Width="32"
-                                                Height="32"
-                                                Margin="8,0,6,0"
-                                                VerticalAlignment="Center"
-                                                Source="{Binding IcoPath, IsAsync=True}" />
+
+                                            <Border Margin="8,0,0,0">
+                                                <Image
+                                                    Width="32"
+                                                    Height="32"
+                                                    Margin="0,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                    Source="{Binding IcoPath, IsAsync=True}"
+                                                    Stretch="Uniform" />
+                                            </Border>
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="1"
