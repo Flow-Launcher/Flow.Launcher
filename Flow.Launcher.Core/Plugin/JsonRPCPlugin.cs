@@ -416,6 +416,17 @@ namespace Flow.Launcher.Core.Plugin
                             contentControl = textBox;
                             break;
                         }
+                    case "passwordBox":
+                        {
+                            var passwordBox = new PasswordBox()
+                            {
+                                Width = 300,
+                                Margin = settingControlMargin,
+                                Password = Settings[attribute.Name] as string ?? string.Empty,
+                                PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar
+                            };
+                            break;
+                        }
                     case "dropdown":
                         {
                             var comboBox = new ComboBox()

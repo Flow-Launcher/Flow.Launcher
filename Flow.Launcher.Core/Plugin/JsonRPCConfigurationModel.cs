@@ -29,6 +29,7 @@ namespace Flow.Launcher.Core.Plugin
         public bool Validation { get; set; }
         public List<string> Options { get; set; }
         public string DefaultValue { get; set; }
+        public char passwordChar { get; set; }
         public void Deconstruct(out string Name, out string Label, out string Description, out bool Validation, out List<string> Options, out string DefaultValue)
         {
             Name = this.Name;
