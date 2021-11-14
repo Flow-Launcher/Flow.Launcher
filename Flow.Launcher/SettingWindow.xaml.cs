@@ -15,7 +15,6 @@ using Flow.Launcher.ViewModel;
 using Flow.Launcher.Helper;
 using System.Windows.Controls;
 using Flow.Launcher.Core.ExternalPlugins;
-using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
 {

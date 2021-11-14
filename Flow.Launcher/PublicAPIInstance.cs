@@ -70,7 +70,7 @@ namespace Flow.Launcher
 
         public void RestarApp() => RestartApp();
 
-        public void ShowMainWindow() => _mainVM.MainWindowVisibility = Visibility.Visible;
+        public void ShowMainWindow() => _mainVM.Show();
 
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 

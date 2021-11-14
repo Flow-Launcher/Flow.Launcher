@@ -713,21 +713,26 @@ namespace Flow.Launcher.ViewModel
         {
             if (WinToggleStatus != true)
             {
-                if (_settings.UseSound)
-                {
-                    MediaPlayer media = new MediaPlayer();
-                    media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                    media.Play();
-                }
-                MainWindowVisibility = Visibility.Visible;
-                WinToggleStatus = true;
-                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
-                MainWindowOpacity = 1;
+                Show();
             }
             else
             {
                 Hide();
             }
+        }
+
+        public void Show()
+        {
+            if (_settings.UseSound)
+            {
+                MediaPlayer media = new MediaPlayer();
+                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                media.Play();
+            }
+            MainWindowVisibility = Visibility.Visible;
+            WinToggleStatus = true;
+            ((MainWindow)Application.Current.MainWindow).WindowAnimator();
+            MainWindowOpacity = 1;
         }
 
         public async void Hide()
