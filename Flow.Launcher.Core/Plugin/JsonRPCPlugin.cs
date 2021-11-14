@@ -148,6 +148,14 @@ namespace Flow.Launcher.Core.Plugin
 
             results.AddRange(queryResponseModel.Result);
 
+            if (queryResponseModel.SettingsChange != null)
+            {
+                foreach (var (key, value) in queryResponseModel.SettingsChange)
+                {
+                    Settings[key] = value;
+                }
+            }
+
             return results;
         }
 
@@ -300,10 +308,11 @@ namespace Flow.Launcher.Core.Plugin
             var request = new JsonRPCRequestModel
             {
                 Method = "query",
-                Parameters = new[]
+                Parameters = new object[]
                 {
                     query.Search
-                }
+                },
+                Settings = Settings
             };
             var output = await RequestAsync(request, token);
             return await DeserializedResultAsync(output);
@@ -345,7 +354,8 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new StackPanel
             {
-                Margin = settingControlMargin, Orientation = Orientation.Vertical
+                Margin = settingControlMargin,
+                Orientation = Orientation.Vertical
             };
             settingWindow.Content = mainPanel;
 
@@ -370,7 +380,8 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                Width = 300, Text = Settings[attribute.Name] as string ?? string.Empty,
+                                Width = 300,
+                                Text = Settings[attribute.Name] as string ?? string.Empty,
                                 Margin = settingControlMargin
                             };
                             textBox.TextChanged += (_, _) =>
@@ -401,7 +412,8 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var comboBox = new ComboBox()
                             {
-                                ItemsSource = attribute.Options, SelectedItem = Settings[attribute.Name],
+                                ItemsSource = attribute.Options,
+                                SelectedItem = Settings[attribute.Name],
                                 Margin = settingControlMargin
                             };
                             comboBox.SelectionChanged += (sender, _) =>
@@ -419,7 +431,7 @@ namespace Flow.Launcher.Core.Plugin
                         };
                         checkBox.Click += (sender, _) =>
                         {
-                            Settings[attribute.Name] = ((CheckBox) sender).IsChecked;
+                            Settings[attribute.Name] = ((CheckBox)sender).IsChecked;
                         };
                         contentControl = checkBox;
                         break;
