@@ -109,6 +109,14 @@ namespace Flow.Launcher.Core.Plugin
             {
                 result.Action = c =>
                 {
+                    if (result.SettingsChange is not null)
+                    {
+                        foreach (var (key, value) in result.SettingsChange)
+                        {
+                            Settings[key] = value;
+                        }
+                    }
+
                     if (result.JsonRPCAction == null) return false;
 
                     if (string.IsNullOrEmpty(result.JsonRPCAction.Method))
@@ -442,54 +450,6 @@ namespace Flow.Launcher.Core.Plugin
                 panel.Children.Add(contentControl);
                 mainPanel.Children.Add(panel);
             }
-
-            // foreach (var (key, value) in Settings)
-            // {
-            //     var panel = new StackPanel
-            //     {
-            //         Orientation = Orientation.Horizontal, Margin = settingControlMargin
-            //     };
-            //     var name = new Label
-            //     {
-            //         Content = key, VerticalAlignment = VerticalAlignment.Center
-            //     };
-            //     UIElement content = null;
-            //     switch (value)
-            //     {
-            //         case int i:
-            //         case double d:
-            //             throw new TypeAccessException();
-            //         case string s:
-            //             var textBox = new TextBox
-            //             {
-            //                 Text = s,
-            //                 Margin = settingControlMargin,
-            //                 VerticalAlignment = VerticalAlignment.Center
-            //             };
-            //             textBox.TextChanged += (_, _) =>
-            //             {
-            //                 Settings[key] = textBox.Text;
-            //             };
-            //             content = textBox;
-            //             break;
-            //         case bool b:
-            //             var checkBox = new CheckBox
-            //             {
-            //                 IsChecked = b,
-            //                 Margin = settingControlMargin,
-            //                 VerticalAlignment = VerticalAlignment.Center
-            //             };
-            //             checkBox.Click += (_, _) =>
-            //             {
-            //                 Settings[key] = checkBox.IsChecked;
-            //             };
-            //             content = checkBox;
-            //             break;
-            //         default:
-            //             throw new ArgumentOutOfRangeException();
-            //     }
-            //     
-            // }
             return settingWindow;
         }
         public void Save()

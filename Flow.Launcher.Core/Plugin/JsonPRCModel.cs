@@ -90,5 +90,7 @@ namespace Flow.Launcher.Core.Plugin
     public class JsonRPCResult : Result
     {
         public JsonRPCClientRequestModel JsonRPCAction { get; set; }
+
+        public Dictionary<string, object> SettingsChange { get; set; }
     }
 }
