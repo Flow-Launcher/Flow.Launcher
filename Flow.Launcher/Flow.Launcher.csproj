@@ -77,6 +77,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="Resources\open.wav" />
     <Content Include="Resources\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -102,6 +103,10 @@
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\open.wav" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
