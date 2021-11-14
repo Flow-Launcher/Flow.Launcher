@@ -250,7 +250,7 @@ namespace Flow.Launcher
                 {
                     From = 0,
                     To = 1,
-                    Duration = TimeSpan.FromSeconds(0.2),
+                    Duration = TimeSpan.FromSeconds(0.18),
                     FillBehavior = FillBehavior.Stop
                 };
 
@@ -258,7 +258,7 @@ namespace Flow.Launcher
                 {
                     From = Top + 8,
                     To = Top,
-                    Duration = TimeSpan.FromSeconds(0.2),
+                    Duration = TimeSpan.FromSeconds(0.18),
                     FillBehavior = FillBehavior.Stop
                 };
 
@@ -266,7 +266,7 @@ namespace Flow.Launcher
                 {
                     From = Left,
                     To = Left,
-                    Duration = TimeSpan.FromSeconds(0.1),
+                    Duration = TimeSpan.FromSeconds(0.18),
                     FillBehavior = FillBehavior.Stop
                 };
                 Storyboard.SetTarget(da, this);
@@ -314,8 +314,10 @@ namespace Flow.Launcher
             e.Handled = true;
         }
 
-        private void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
+        private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
+            _viewModel.Hide();
+            await Task.Delay(100);
             App.API.OpenSettingDialog();
         }
 
