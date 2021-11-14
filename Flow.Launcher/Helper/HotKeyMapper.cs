@@ -78,7 +78,7 @@ namespace Flow.Launcher.Helper
                 if (mainViewModel.ShouldIgnoreHotkeys())
                     return;
 
-                mainViewModel.MainWindowVisibility = Visibility.Visible;
+                mainViewModel.Show();
                 mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
             });
         }

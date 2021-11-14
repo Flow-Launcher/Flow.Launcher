@@ -92,6 +92,7 @@ namespace Flow.Launcher
         {
             App.API.ChangeQuery(tbAction.Text);
             Application.Current.MainWindow.Visibility = Visibility.Visible;
+            Application.Current.MainWindow.Opacity = 1;
             Application.Current.MainWindow.Focus();
 
         }
