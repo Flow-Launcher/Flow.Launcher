@@ -261,21 +261,11 @@ namespace Flow.Launcher
                     Duration = TimeSpan.FromSeconds(0.18),
                     FillBehavior = FillBehavior.Stop
                 };
-
-                var da3 = new DoubleAnimation
-                {
-                    From = Left,
-                    To = Left,
-                    Duration = TimeSpan.FromSeconds(0.18),
-                    FillBehavior = FillBehavior.Stop
-                };
                 Storyboard.SetTarget(da, this);
                 Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
                 Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-                Storyboard.SetTargetProperty(da3, new PropertyPath(Window.LeftProperty));
                 sb.Children.Add(da);
                 sb.Children.Add(da2);
-                sb.Children.Add(da3);
                 sb.Completed += (_, _) => _animating = false;
                 sb.Begin(FlowMainWindow);
             }
