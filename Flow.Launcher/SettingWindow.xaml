@@ -691,6 +691,35 @@
                     <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{DynamicResource defaultFileManager}" />
+                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button
+                                    Width="160"
+                                    MaxWidth="250"
+                                    Margin="10,0,18,0"
+                                    Click="OnSelectFileManagerClick"
+                                    Content="{Binding Settings.CustomExplorer.Name}" />
+                            </StackPanel>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="24,0,16,0"
+                                VerticalAlignment="Center"
+                                FontFamily="/Resources/#Segoe Fluent Icons"
+                                FontSize="20">
+                                &#xe838;
+                            </TextBlock>
+                        </ItemsControl>
+                    </Border>
+
+                    <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                        <ItemsControl Style="{StaticResource SettingGrid}">
+                            <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource pythonDirectory}" />
                             </StackPanel>
                             <StackPanel Grid.Column="2" Orientation="Horizontal">

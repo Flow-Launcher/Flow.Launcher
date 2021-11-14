@@ -125,6 +125,12 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
+        {
+                SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
+                fileManagerChangeWindow.ShowDialog();
+        }
+
         #endregion
 
         #region Hotkey
@@ -235,7 +241,7 @@ namespace Flow.Launcher
             {
                 var directory = viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
                 if (!string.IsNullOrEmpty(directory))
-                    FilesFolders.OpenPath(directory);
+                    PluginManager.API.OpenDirectory(directory);
             }
         }
         #endregion
@@ -273,7 +279,7 @@ namespace Flow.Launcher
 
         private void OpenPluginFolder(object sender, RoutedEventArgs e)
         {
-            FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
 
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
