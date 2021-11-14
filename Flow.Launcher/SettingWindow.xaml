@@ -14,7 +14,7 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource flowlauncher_settings}"
     Width="1000"
-    Height="700"
+    Height="650"
     MinWidth="900"
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"

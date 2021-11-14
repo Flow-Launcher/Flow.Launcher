@@ -15,6 +15,7 @@ using Flow.Launcher.ViewModel;
 using Flow.Launcher.Helper;
 using System.Windows.Controls;
 using Flow.Launcher.Core.ExternalPlugins;
+using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
 {
@@ -44,6 +45,15 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var workingHeight = dip2.Y * 0.8;
+            var top = (dip2.Y / 2) - (workingHeight / 2);
+            this.Height = workingHeight;
+            this.Top = top;
+
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
