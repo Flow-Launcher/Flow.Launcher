@@ -27,6 +27,7 @@ using Label = System.Windows.Controls.Label;
 using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
+using System.Windows.Data;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -74,7 +75,14 @@ namespace Flow.Launcher.Core.Plugin
                 new JsonObjectConverter()
             }
         };
+
+        private static readonly JsonSerializerOptions settingSerializeOption = new()
+        {
+            WriteIndented = true
+        };
         private Dictionary<string, object> Settings { get; set; }
+
+        private Dictionary<string, Control> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -109,13 +117,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 result.Action = c =>
                 {
-                    if (result.SettingsChange is not null)
-                    {
-                        foreach (var (key, value) in result.SettingsChange)
-                        {
-                            Settings[key] = value;
-                        }
-                    }
+                    UpdateSettings(result.SettingsChange);
 
                     if (result.JsonRPCAction == null) return false;
 
@@ -156,13 +158,7 @@ namespace Flow.Launcher.Core.Plugin
 
             results.AddRange(queryResponseModel.Result);
 
-            if (queryResponseModel.SettingsChange != null)
-            {
-                foreach (var (key, value) in queryResponseModel.SettingsChange)
-                {
-                    Settings[key] = value;
-                }
-            }
+            UpdateSettings(queryResponseModel.SettingsChange);
 
             return results;
         }
@@ -384,7 +380,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 switch (type)
                 {
-                    case "Input":
+                    case "input":
                         {
                             var textBox = new TextBox()
                             {
@@ -462,6 +458,7 @@ namespace Flow.Launcher.Core.Plugin
                     default:
                         continue;
                 }
+                _settingControls[attribute.Name] = contentControl;
                 panel.Children.Add(name);
                 panel.Children.Add(contentControl);
                 mainPanel.Children.Add(panel);
@@ -473,7 +470,40 @@ namespace Flow.Launcher.Core.Plugin
             if (Settings != null)
             {
                 Helper.ValidateDirectory(Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name));
-                File.WriteAllText(SettingPath, JsonSerializer.Serialize(Settings));
+                File.WriteAllText(SettingPath, JsonSerializer.Serialize(Settings, settingSerializeOption));
+            }
+        }
+
+        public void UpdateSettings(Dictionary<string, object> settings)
+        {
+            if (settings == null || settings.Count == 0)
+                return;
+
+            foreach (var (key, value) in settings)
+            {
+                if (Settings.ContainsKey(key))
+                {
+                    Settings[key] = value;
+                }
+                if (_settingControls.ContainsKey(key))
+                {
+
+                    switch (_settingControls[key])
+                    {
+                        case TextBox textBox:
+                            textBox.Dispatcher.Invoke(() => textBox.Text = value as string);
+                            break;
+                        case PasswordBox passwordBox:
+                            passwordBox.Dispatcher.Invoke(() => passwordBox.Password = value as string);
+                            break;
+                        case ComboBox comboBox:
+                            comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
+                            break;
+                        case CheckBox checkBox:
+                            checkBox.Dispatcher.Invoke(() => checkBox.IsChecked = value is bool isChecked ? isChecked : bool.Parse(value as string));
+                            break;
+                    }
+                }
             }
         }
     }
