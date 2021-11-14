@@ -106,7 +106,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\open.wav" />
+    <Resource Include="Resources\open.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
