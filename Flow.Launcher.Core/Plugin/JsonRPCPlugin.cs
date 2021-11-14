@@ -425,6 +425,11 @@ namespace Flow.Launcher.Core.Plugin
                                 Password = Settings[attribute.Name] as string ?? string.Empty,
                                 PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar
                             };
+                            passwordBox.PasswordChanged += (sender, _) =>
+                            {
+                                Settings[attribute.Name] = ((PasswordBox)sender).Password;
+                            };
+                            contentControl = passwordBox;
                             break;
                         }
                     case "dropdown":
