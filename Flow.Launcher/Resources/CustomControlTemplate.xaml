@@ -1897,16 +1897,16 @@
                 <ControlTemplate TargetType="Button">
                     <Border
                         x:Name="Background"
-                        Background="#fefefe"
-                        BorderBrush="#e5e5e5"
-                        BorderThickness="1,1,1,0"
+                        Background="{StaticResource ButtonBackgroundColor}"
+                        BorderBrush="{StaticResource ButtonOutBorder}"
+                        BorderThickness="{StaticResource CustomButtonOutBorderThickness}"
                         CornerRadius="4"
                         SnapsToDevicePixels="True">
                         <Border
                             x:Name="Border"
                             Padding="{TemplateBinding Padding}"
-                            BorderBrush="#d3d3d3"
-                            BorderThickness="0,0,0,2"
+                            BorderBrush="{StaticResource ButtonInsideBorder}"
+                            BorderThickness="{StaticResource CustomButtonInsideBorderThickness}"
                             CornerRadius="4">
                             <ContentPresenter
                                 x:Name="ContentPresenter"
@@ -1919,27 +1919,27 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="#f6f6f6" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="1,1,1,0" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="#e5e5e5" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#d3d3d3" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,2" />
+                            <Setter TargetName="Background" Property="Background" Value="{StaticResource ButtonMouseOver}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="{StaticResource CustomButtonOutBorderThickness}" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{StaticResource ButtonOutBorder}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonInsideBorder}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource CustomButtonInsideBorderThickness}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="#f6f6f6" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="1,1,1,1" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="#e5e5e5" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#f6f6f6" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="#5d5d5d" />
+                            <Setter TargetName="Background" Property="Background" Value="{StaticResource ButtonMousePressed}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="{StaticResource PressedCustomButtonOutBorderThickness}" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{StaticResource ButtonMousePressedInsideBorder}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonInsideMouseOverBorder}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource PressedCustomButtonInsideBorderThickness}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonMousePressedText}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Background" Property="Background" Value="#f6f6f6" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="1,1,1,1" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="#e5e5e5" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#f6f6f6" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="#9d9d9d" />
+                            <Setter TargetName="Background" Property="Background" Value="{StaticResource ButtonBackgroundDisabledColor}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="{StaticResource DisabledCustomButtonOutBorderThickness}" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{StaticResource ButtonOutBorder}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonInsideBorderDisabled}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource DisabledCustomButtonInsideBorderThickness}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonDisabledText}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

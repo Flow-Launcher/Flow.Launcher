@@ -996,7 +996,7 @@
                                                                         <Setter Property="Padding" Value="12,8,12,8" />
                                                                         <Setter Property="BorderThickness" Value="0" />
                                                                         <Setter Property="FontWeight" Value="DemiBold" />
-                                                                        <Setter Property="Foreground" Value="{StaticResource Color02B}" />
+                                                                        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
                                                                                 <Setter Property="Foreground" Value="{StaticResource Color08B}" />
@@ -1473,8 +1473,7 @@
                                                                 HorizontalAlignment="Right"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnExternalPluginInstallClick"
-                                                                Content="{DynamicResource install}"
-                                                                Foreground="Black" />
+                                                                Content="{DynamicResource install}" />
                                                         </Border>
                                                     </Grid>
                                                 </StackPanel>
@@ -1680,14 +1679,14 @@
                                                                 <Border
                                                                     x:Name="Bd"
                                                                     Padding="{TemplateBinding Padding}"
-                                                                    Background="#fefefe"
-                                                                    BorderBrush="#e5e5e5"
+                                                                    Background="{StaticResource Color12B}"
+                                                                    BorderBrush="{StaticResource Color03B}"
                                                                     BorderThickness="1,1,1,0"
                                                                     CornerRadius="4"
                                                                     SnapsToDevicePixels="true">
                                                                     <Border
                                                                         x:Name="Bd2"
-                                                                        BorderBrush="#d3d3d3"
+                                                                        BorderBrush="{StaticResource Color14B}"
                                                                         BorderThickness="0,0,0,2"
                                                                         CornerRadius="4">
                                                                         <ContentPresenter

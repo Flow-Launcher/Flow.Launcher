@@ -17,6 +17,11 @@
     <SolidColorBrush x:Key="Color09B" Color="#ededed" />
     <SolidColorBrush x:Key="Color10B" Color="#c42b1c" />
     <SolidColorBrush x:Key="Color11B" Color="#c83c31" />
+    <SolidColorBrush x:Key="Color12B" Color="#fefefe" />
+    <SolidColorBrush x:Key="Color13B" Color="#e5e5e5" />
+    <SolidColorBrush x:Key="Color14B" Color="#d3d3d3" />
+    <SolidColorBrush x:Key="Color15B" Color="#5d5d5d" />
+    <SolidColorBrush x:Key="Color16B" Color="#f6f6f6" />
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>
@@ -28,6 +33,31 @@
     <Color x:Key="Color09">#ededed</Color>
     <Color x:Key="Color10">#c42b1c</Color>
     <Color x:Key="Color11">#c81c31</Color>
+    <Color x:Key="Color12">#fefefe</Color>
+    <Color x:Key="Color13">#e5e5e5</Color>
+    <Color x:Key="Color14">#d3d3d3</Color>
+    <Color x:Key="Color15">#5d5d5d</Color>
+    <Color x:Key="Color16">#f6f6f6</Color>
+
+    <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
+    <SolidColorBrush x:Key="ButtonInsideBorder" Color="#d3d3d3" />
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#fefefe" />
+    <SolidColorBrush x:Key="ButtonMouseOver" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="ButtonInsideMouseOverBorder" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="ButtonMousePressed" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="ButtonMousePressedInsideBorder" Color="#d3d3d3" />
+    <SolidColorBrush x:Key="ButtonMousePressedText" Color="#5d5d5d" />
+    <SolidColorBrush x:Key="ButtonBackgroundDisabledColor" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="ButtonInsideBorderDisabled" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="ButtonDisabledText" Color="#9d9d9d" />
+    <Thickness x:Key="CustomButtonOutBorderThickness">1,1,1,0</Thickness>
+    <Thickness x:Key="CustomButtonInsideBorderThickness">0,0,0,2</Thickness>
+    <Thickness x:Key="PressedCustomButtonOutBorderThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="PressedCustomButtonInsideBorderThickness">0,0,0,1</Thickness>
+    <Thickness x:Key="DisabledCustomButtonOutBorderThickness">1,1,1,0</Thickness>
+    <Thickness x:Key="DisabledCustomButtonInsideBorderThickness">0,0,0,1</Thickness>
+
+
 
     <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>
