@@ -83,7 +83,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         };
 
         public bool UseAnimation { get; set; } = true;
-        public bool UseSound { get; set; } = false;
+        public bool UseSound { get; set; } = true;
 
 
         /// <summary>
