@@ -11,8 +11,8 @@ namespace Flow.Launcher
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         public static void Show(string title, string subTitle, string iconPath)
         {
-            var legacy = Environment.OSVersion.Version.Major < 10;
-            // Handle notification for win7/8
+            var legacy = Environment.OSVersion.Version.Build < 19041;
+            // Handle notification for win7/8/early win10
             if (legacy)
             {
                 LegacyShow(title, subTitle, iconPath);
