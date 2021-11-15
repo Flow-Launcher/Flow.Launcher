@@ -336,8 +336,6 @@ namespace Flow.Launcher
                 this.restoreButton.Visibility = Visibility.Collapsed;
             }
         }
-        
-
         private void Window_StateChanged(object sender, EventArgs e)
         {
             this.RefreshMaximizeRestoreButton();

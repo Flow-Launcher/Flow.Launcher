@@ -5,6 +5,20 @@
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
 
+    <!--  Setting Window  -->
+    <Style x:Key="PageTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+    </Style>
+    <Style x:Key="Glyph" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+    </Style>
+    <Style x:Key="TabMenu" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+    </Style>
+    <Style x:Key="SettingSeparatorStyle" TargetType="{x:Type Separator}">
+        <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
+    </Style>
+
     <!--  Title Bar  -->
 
     <Style x:Key="WindowMainPanelStyle" TargetType="{x:Type Border}">

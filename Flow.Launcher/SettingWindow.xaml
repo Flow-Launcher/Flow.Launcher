@@ -68,8 +68,8 @@
             </Setter>
         </Style>
         <Style x:Key="SettingGroupBox" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="#ffffff" />
-            <Setter Property="BorderBrush" Value="#e5e5e5" />
+            <Setter Property="Background" Value="{StaticResource Color02B}" />
+            <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="5" />
             <Setter Property="Margin" Value="0,5,0,0" />
@@ -78,11 +78,12 @@
 
         </Style>
         <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource Color05B}" />
             <Setter Property="Margin" Value="0,0,0,0" />
         </Style>
 
         <Style x:Key="SettingSubTitleLabel" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="#5F5F5F" />
+            <Setter Property="Foreground" Value="{StaticResource Color04B}" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Padding" Value="0,0,24,0" />
@@ -142,7 +143,7 @@
                                         BorderThickness="0">
                                         <Border
                                             x:Name="border"
-                                            Background="WhiteSmoke"
+                                            Background="Transparent"
                                             CornerRadius="5">
                                             <ContentPresenter
                                                 x:Name="ContentSite"
@@ -186,7 +187,7 @@
                                         BorderThickness="0">
                                         <Border
                                             x:Name="border"
-                                            Background="#f3f3f3"
+                                            Background="{StaticResource Color01B}"
                                             CornerRadius="5">
                                             <ContentPresenter
                                                 x:Name="ContentSite"
@@ -202,10 +203,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#eaeaea" />
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#eaeaea" />
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -221,11 +222,11 @@
         </Style>
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#ffffff" />
+            <Setter Property="Background" Value="{StaticResource Color02B}" />
             <Setter Property="Padding" Value="0,12,0,12" />
             <Setter Property="Margin" Value="0,0,18,5" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="BorderBrush" Value="#e5e5e5" />
+            <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -292,10 +293,10 @@
 
         <!--#region PluginStore Style-->
         <Style x:Key="StoreList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#ffffff" />
+            <Setter Property="Background" Value="{StaticResource Color02B}" />
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
-            <Setter Property="BorderBrush" Value="#e5e5e5" />
+            <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
             <Setter Property="MinWidth" Value="330" />
             <Setter Property="Height" Value="98" />
             <!--#region Template for blue highlight win10-->
@@ -323,8 +324,8 @@
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color07B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
 
                             </MultiTrigger>
@@ -333,8 +334,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
 
@@ -344,8 +345,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
@@ -376,7 +377,7 @@
                                 Grid.Column="0"
                                 Margin="0,0,0,0"
                                 Panel.ZIndex="1"
-                                Background="#f3f3f3"
+                                Background="{StaticResource Color01B}"
                                 IsItemsHost="True" />
                             <Border
                                 Grid.Column="1"
@@ -392,7 +393,7 @@
         </Style>
     </Window.Resources>
     <Border Style="{StaticResource WindowMainPanelStyle}">
-        <Grid Background="#f3f3f3">
+        <Grid Background="{StaticResource Color01B}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -415,7 +416,7 @@
                 Grid.Column="1"
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
-                FontSize="14"
+                FontSize="12"
                 Text="{DynamicResource flowlauncher_settings}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
@@ -500,13 +501,8 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Margin="0,12,0,0"
+                                Style="{StaticResource TabMenu}"
                                 Text="Flow Launcher"
-                                TextAlignment="center" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Margin="0,5,0,0"
-                                FontSize="12"
-                                Text="{Binding Version}"
                                 TextAlignment="center" />
                         </Grid>
                     </TabItem.Header>
@@ -523,22 +519,27 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xe713;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource general}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource general}" />
                         </Grid>
                     </TabItem.Header>
 
                     <ScrollViewer
                         Margin="0,0,0,0"
-                        Background="#f3f3f3"
+                        Background="{StaticResource Color01B}"
                         ScrollViewer.CanContentScroll="False">
                         <StackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
                                 Margin="0,5,0,5"
                                 FontSize="30"
+                                Style="{StaticResource PageTitle}"
                                 Text="{DynamicResource general}"
                                 TextAlignment="left" />
 
@@ -557,7 +558,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
                                 </ItemsControl>
@@ -574,7 +576,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xed1a;
                                     </TextBlock>
                                 </ItemsControl>
@@ -620,7 +623,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xe7fc;
                                     </TextBlock>
                                 </ItemsControl>
@@ -641,7 +645,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xe98a;
                                     </TextBlock>
                                 </ItemsControl>
@@ -663,7 +668,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xecc5;
                                     </TextBlock>
                                 </ItemsControl>
@@ -686,7 +692,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xe88e;
                                     </TextBlock>
                                 </ItemsControl>
@@ -707,6 +714,7 @@
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource querySearchPrecision}" />
                                                 <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource querySearchPrecisionToolTip}" />
                                             </StackPanel>
@@ -720,8 +728,8 @@
                                     </Border>
                                     <Separator
                                         Width="Auto"
-                                        BorderBrush="#e5e5e5"
-                                        BorderThickness="1" />
+                                        BorderThickness="1"
+                                        Style="{StaticResource SettingSeparatorStyle}" />
                                     <Border
                                         Margin="0"
                                         BorderThickness="0"
@@ -731,6 +739,7 @@
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource lastQueryMode}" />
                                                 <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource lastQueryModeToolTip}" />
                                             </StackPanel>
@@ -746,8 +755,8 @@
                                     </Border>
                                     <Separator
                                         Width="Auto"
-                                        BorderBrush="#e5e5e5"
-                                        BorderThickness="1" />
+                                        BorderThickness="1"
+                                        Style="{StaticResource SettingSeparatorStyle}" />
                                     <Border
                                         Margin="0"
                                         BorderThickness="0"
@@ -756,6 +765,7 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
+                                                Style="{DynamicResource SettingTitleLabel}"
                                                 Text="{DynamicResource maxShowResults}" />
                                             <ComboBox
                                                 Grid.Column="2"
@@ -769,7 +779,8 @@
                                                 Margin="24,0,16,0"
                                                 VerticalAlignment="Center"
                                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20">
+                                                FontSize="20"
+                                                Style="{StaticResource Glyph}">
                                                 &#xe8fd;
                                             </TextBlock>
                                         </ItemsControl>
@@ -783,6 +794,7 @@
                                         <TextBlock
                                             Grid.Column="1"
                                             VerticalAlignment="Center"
+                                            Style="{DynamicResource SettingTitleLabel}"
                                             Text="{DynamicResource defaultFileManager}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
                                     </StackPanel>
@@ -800,7 +812,8 @@
                                         Margin="24,0,16,0"
                                         VerticalAlignment="Center"
                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
+                                        FontSize="20"
+                                        Style="{StaticResource Glyph}">
                                         &#xe838;
                                     </TextBlock>
                                 </ItemsControl>
@@ -854,10 +867,14 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xea86;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource plugin}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource plugin}" />
                         </Grid>
                     </TabItem.Header>
 
@@ -869,13 +886,11 @@
                             <RowDefinition Height="73" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Border
-                            Grid.Row="0"
-                            Padding="5,18,0,0"
-                            Background="#f3f3f3">
+                        <Border Grid.Row="0" Padding="5,18,0,0">
                             <TextBlock
                                 Margin="0,5,0,0"
                                 FontSize="30"
+                                Style="{StaticResource PageTitle}"
                                 Text="{DynamicResource plugin}"
                                 TextAlignment="left" />
                         </Border>
@@ -883,12 +898,13 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Padding="0,0,0,0"
-                            Background="#f3f3f3">
+                            Background="{StaticResource Color01B}">
                             <ListBox
                                 Width="Auto"
                                 Margin="5,0,0,0"
                                 Padding="0,0,7,0"
                                 HorizontalAlignment="Stretch"
+                                Background="{StaticResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
                                 ItemsSource="{Binding PluginViewModels}"
                                 ScrollViewer.CanContentScroll="False"
@@ -1018,7 +1034,8 @@
                                                                         VerticalAlignment="Center"
                                                                         DockPanel.Dock="Left"
                                                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                                                        FontSize="20">
+                                                                        FontSize="20"
+                                                                        Style="{StaticResource Glyph}">
                                                                         &#xe819;
                                                                     </TextBlock>
                                                                     <TextBlock
@@ -1223,10 +1240,14 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xe719;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource pluginStore}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource pluginStore}" />
                         </Grid>
                     </TabItem.Header>
 
@@ -1242,27 +1263,23 @@
                         <Border
                             Grid.Row="0"
                             Grid.Column="0"
-                            Padding="5,18,0,0"
-                            Background="#f3f3f3">
+                            Padding="5,18,0,0">
                             <TextBlock
                                 Margin="0,5,0,5"
                                 FontSize="30"
+                                Style="{StaticResource PageTitle}"
                                 Text="{DynamicResource pluginStore}"
                                 TextAlignment="left" />
                         </Border>
                         <Border
                             Grid.Row="0"
                             Grid.Column="1"
-                            Padding="5,18,32,0"
-                            Background="#f3f3f3">
+                            Padding="5,18,32,0">
                             <Button
                                 Height="34"
                                 Margin="0,5,0,5"
                                 Padding="12,4,12,4"
                                 HorizontalAlignment="Right"
-                                Background="#ffffff"
-                                BorderBrush="#cecece"
-                                BorderThickness="1,1,1,2"
                                 Click="OnPluginStoreRefreshClick"
                                 Content="{DynamicResource refresh}"
                                 FontSize="13" />
@@ -1271,8 +1288,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Padding="0,0,0,0"
-                            Background="#f3f3f3">
+                            Padding="0,0,0,0">
                             <ListBox
                                 x:Name="StoreListBox"
                                 Width="Auto"
@@ -1280,6 +1296,7 @@
                                 Padding="0,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
+                                Background="{StaticResource Color01B}"
                                 ItemContainerStyle="{StaticResource StoreList}"
                                 ItemsSource="{Binding ExternalPlugins}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -1404,7 +1421,7 @@
                                                         VerticalAlignment="Stretch"
                                                         Panel.ZIndex="1">
                                                         <Grid.Background>
-                                                            <SolidColorBrush Opacity=".95" Color="#f6f6f6" />
+                                                            <SolidColorBrush Opacity=".95" Color="{StaticResource Color07}" />
                                                         </Grid.Background>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
@@ -1478,19 +1495,22 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xe790;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource theme}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource theme}" />
                         </Grid>
                     </TabItem.Header>
                     <Border Padding="0,0,0,0">
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
-                            Background="#f3f3f3"
                             ScrollViewer.CanContentScroll="False">
-                            <Grid Margin="0,0,0,0" Background="#f3f3f3">
+                            <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />
                                     <RowDefinition Height="350" />
@@ -1502,6 +1522,7 @@
                                     <TextBlock
                                         Margin="0,5,0,5"
                                         FontSize="30"
+                                        Style="{StaticResource PageTitle}"
                                         Text="{DynamicResource theme}"
                                         TextAlignment="left" />
                                 </Border>
@@ -1581,7 +1602,8 @@
                                                 Margin="24,0,16,0"
                                                 VerticalAlignment="Center"
                                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20">
+                                                FontSize="20"
+                                                Style="{StaticResource Glyph}">
                                                 &#xeb91;
                                             </TextBlock>
                                         </ItemsControl>
@@ -1596,6 +1618,7 @@
                                                     Width="100"
                                                     Margin="0,0,8,2"
                                                     VerticalAlignment="Center"
+                                                    Foreground="{StaticResource Color05B}"
                                                     Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                                                     TextAlignment="Right" />
                                                 <Slider
@@ -1614,7 +1637,8 @@
                                                 Margin="24,0,16,0"
                                                 VerticalAlignment="Center"
                                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20">
+                                                FontSize="20"
+                                                Style="{StaticResource Glyph}">
                                                 &#xe740;
                                             </TextBlock>
                                         </ItemsControl>
@@ -1757,15 +1781,16 @@
                                                         Margin="24,0,16,0"
                                                         VerticalAlignment="Center"
                                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20">
+                                                        FontSize="20"
+                                                        Style="{StaticResource Glyph}">
                                                         &#xf6b8;
                                                     </TextBlock>
                                                 </ItemsControl>
                                             </Border>
                                             <Separator
                                                 Width="Auto"
-                                                BorderBrush="#e5e5e5"
-                                                BorderThickness="1" />
+                                                BorderThickness="1"
+                                                Style="{StaticResource SettingSeparatorStyle}" />
                                             <Border
                                                 Margin="0"
                                                 BorderThickness="0"
@@ -1774,6 +1799,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
                                                         Text="{DynamicResource queryBoxFont}" />
                                                     <StackPanel
                                                         Grid.Column="2"
@@ -1811,15 +1837,16 @@
                                                         Margin="24,0,16,0"
                                                         VerticalAlignment="Center"
                                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20">
+                                                        FontSize="20"
+                                                        Style="{StaticResource Glyph}">
                                                         &#xe990;
                                                     </TextBlock>
                                                 </ItemsControl>
                                             </Border>
                                             <Separator
                                                 Width="Auto"
-                                                BorderBrush="#e5e5e5"
-                                                BorderThickness="1" />
+                                                BorderThickness="1"
+                                                Style="{StaticResource SettingSeparatorStyle}" />
                                             <Border
                                                 Margin="0"
                                                 BorderThickness="0"
@@ -1828,6 +1855,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
                                                         Text="{DynamicResource resultItemFont}" />
                                                     <StackPanel
                                                         Grid.Column="2"
@@ -1865,7 +1893,8 @@
                                                         Margin="24,0,16,0"
                                                         VerticalAlignment="Center"
                                                         FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20">
+                                                        FontSize="20"
+                                                        Style="{StaticResource Glyph}">
                                                         &#xe8fd;
                                                     </TextBlock>
                                                 </ItemsControl>
@@ -1892,7 +1921,8 @@
                                                     Margin="24,0,16,0"
                                                     VerticalAlignment="Center"
                                                     FontFamily="/Resources/#Segoe Fluent Icons"
-                                                    FontSize="20">
+                                                    FontSize="20"
+                                                    Style="{StaticResource Glyph}">
                                                     &#xe838;
                                                 </TextBlock>
                                             </ItemsControl>
@@ -1916,18 +1946,21 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xe92e;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource hotkey}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource hotkey}" />
                         </Grid>
                     </TabItem.Header>
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
-                        Background="#f3f3f3"
                         ScrollViewer.CanContentScroll="False">
-                        <Border Background="#f3f3f3">
+                        <Border>
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="43" />
@@ -1941,6 +1974,7 @@
                                     Grid.Row="0"
                                     Margin="0,5,0,2"
                                     FontSize="30"
+                                    Style="{StaticResource PageTitle}"
                                     Text="{DynamicResource hotkey}"
                                     TextAlignment="left" />
 
@@ -1968,7 +2002,8 @@
                                                 Margin="24,0,16,0"
                                                 VerticalAlignment="Center"
                                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20">
+                                                FontSize="20"
+                                                Style="{StaticResource Glyph}">
                                                 &#xeda7;
                                             </TextBlock>
                                         </ItemsControl>
@@ -1991,6 +2026,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
                                                         Text="{DynamicResource openResultModifiers}" />
                                                     <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource openResultModifiersToolTip}" />
                                                 </StackPanel>
@@ -2006,8 +2042,8 @@
 
                                         <Separator
                                             Width="Auto"
-                                            BorderBrush="#e5e5e5"
-                                            BorderThickness="1" />
+                                            BorderThickness="1"
+                                            Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
                                             Padding="0,10,0,0"
@@ -2018,6 +2054,7 @@
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
                                                         Text="{DynamicResource showOpenResultHotkey}" />
                                                     <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource showOpenResultHotkeyToolTip}" />
                                                 </StackPanel>
@@ -2041,7 +2078,7 @@
                                 <ListView
                                     Grid.Row="4"
                                     Margin="0,0,0,0"
-                                    Background="#ffffff"
+                                    Background="{StaticResource Color02B}"
                                     BorderBrush="DarkGray"
                                     BorderThickness="1"
                                     ItemsSource="{Binding Settings.CustomPluginHotkeys}"
@@ -2106,18 +2143,21 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xec27;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource proxy}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource proxy}" />
                         </Grid>
                     </TabItem.Header>
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
-                        Background="#f3f3f3"
                         ScrollViewer.CanContentScroll="False">
-                        <Border Background="#f3f3f3">
+                        <Border>
 
                             <StackPanel>
                                 <Border Margin="0,18,0,0">
@@ -2125,6 +2165,7 @@
                                         Grid.Row="0"
                                         Margin="0,5,0,0"
                                         FontSize="30"
+                                        Style="{StaticResource PageTitle}"
                                         Text="{DynamicResource proxy}"
                                         TextAlignment="left" />
                                 </Border>
@@ -2144,14 +2185,15 @@
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource enableProxy}" />
                                                 <CheckBox IsChecked="{Binding Settings.Proxy.Enabled}" Style="{DynamicResource SideControlCheckBox}" />
                                             </ItemsControl>
                                         </Border>
                                         <Separator
                                             Width="Auto"
-                                            BorderBrush="#e5e5e5"
-                                            BorderThickness="1" />
+                                            BorderThickness="1"
+                                            Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
                                             BorderThickness="0"
@@ -2161,6 +2203,7 @@
                                                     Grid.Column="1"
                                                     Margin="22,0,0,0"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource server}" />
                                                 <TextBox
                                                     Grid.Column="2"
@@ -2173,8 +2216,8 @@
                                         </Border>
                                         <Separator
                                             Width="Auto"
-                                            BorderBrush="#e5e5e5"
-                                            BorderThickness="1" />
+                                            BorderThickness="1"
+                                            Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
                                             BorderThickness="0"
@@ -2184,6 +2227,7 @@
                                                     Grid.Column="1"
                                                     Margin="22,0,0,0"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource port}" />
                                                 <TextBox
                                                     Grid.Column="2"
@@ -2195,8 +2239,8 @@
                                         </Border>
                                         <Separator
                                             Width="Auto"
-                                            BorderBrush="#e5e5e5"
-                                            BorderThickness="1" />
+                                            BorderThickness="1"
+                                            Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
                                             BorderThickness="0"
@@ -2206,6 +2250,7 @@
                                                     Grid.Column="1"
                                                     Margin="22,0,0,0"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource userName}" />
                                                 <TextBox
                                                     Grid.Column="2"
@@ -2218,8 +2263,8 @@
                                         </Border>
                                         <Separator
                                             Width="Auto"
-                                            BorderBrush="#e5e5e5"
-                                            BorderThickness="1" />
+                                            BorderThickness="1"
+                                            Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
                                             BorderThickness="0"
@@ -2229,6 +2274,7 @@
                                                     Grid.Column="1"
                                                     Margin="22,0,0,0"
                                                     VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource password}" />
                                                 <TextBox
                                                     Grid.Column="2"
@@ -2246,6 +2292,7 @@
                                         <TextBlock
                                             Grid.Column="1"
                                             VerticalAlignment="Center"
+                                            Style="{DynamicResource SettingTitleLabel}"
                                             Text="{DynamicResource testProxy}" />
                                         <Button
                                             Grid.Column="2"
@@ -2272,19 +2319,24 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20">
+                                FontSize="20"
+                                Style="{StaticResource TabMenu}">
                                 &#xe946;
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource about}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource TabMenu}"
+                                Text="{DynamicResource about}" />
                         </Grid>
                     </TabItem.Header>
-                    <Border Background="#f3f3f3">
+                    <Border>
                         <Grid Height="400" Margin="65,0">
                             <!--<TextBlock Text="{DynamicResource about}" Grid.Row="0" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>  -->
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Margin" Value="10,25,0,0" />
                                     <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="Foreground" Value="{StaticResource Color05B}" />
                                 </Style>
                             </Grid.Resources>
                             <Grid.ColumnDefinitions>
