@@ -400,9 +400,10 @@ namespace Flow.Launcher.Core.Plugin
                             var textBox = new TextBox()
                             {
                                 Width = 300,
-                                Height = 100,
+                                Height = 120,
                                 Margin = settingControlMargin,
                                 TextWrapping = TextWrapping.WrapWithOverflow,
+                                AcceptsReturn = true,
                                 Text = Settings[attribute.Name] as string ?? string.Empty
                             };
                             textBox.TextChanged += (sender, _) =>
