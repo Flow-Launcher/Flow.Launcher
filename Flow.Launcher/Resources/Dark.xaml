@@ -13,6 +13,10 @@
     <SolidColorBrush x:Key="Color05B" Color="#ffffff" />
     <SolidColorBrush x:Key="Color06B" Color="#2d2d2d" />
     <SolidColorBrush x:Key="Color07B" Color="#363636" />
+    <SolidColorBrush x:Key="Color08B" Color="#878787" />
+    <SolidColorBrush x:Key="Color09B" Color="#292929" />
+    <SolidColorBrush x:Key="Color10B" Color="#c42b1c" />
+    <SolidColorBrush x:Key="Color11B" Color="#c83c31" />
     <Color x:Key="Color01">#202020</Color>
     <Color x:Key="Color02">#2b2b2b</Color>
     <Color x:Key="Color03">#1d1d1d</Color>
@@ -20,6 +24,10 @@
     <Color x:Key="Color05">#ffffff</Color>
     <Color x:Key="Color06">#2d2d2d</Color>
     <Color x:Key="Color07">#363636</Color>
+    <Color x:Key="Color08">#878787</Color>
+    <Color x:Key="Color09">#292929</Color>
+    <Color x:Key="Color10">#c42b1c</Color>
+    <Color x:Key="Color11">#c81c31</Color>
 
 
     <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>

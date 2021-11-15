@@ -252,8 +252,8 @@
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color07B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
 
                             </MultiTrigger>
@@ -262,8 +262,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
 
@@ -273,8 +273,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="#ffffff" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#e5e5e5" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
@@ -417,12 +417,14 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="12"
+                Foreground="{StaticResource Color05B}"
                 Text="{DynamicResource flowlauncher_settings}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
-                                <Setter Property="Foreground" Value="{DynamicResource WindowTitleBarInactiveText}" />
+                                <Setter Property="Foreground" Value="{StaticResource Color07B}" />
+                                <!--  Not work. check  -->
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -955,12 +957,13 @@
                                                     </StackPanel>
                                                     <StackPanel Grid.Column="1" Margin="12,0,14,0">
                                                         <TextBlock
+                                                            Foreground="{StaticResource Color05B}"
                                                             Text="{Binding PluginPair.Metadata.Name}"
                                                             TextWrapping="Wrap"
                                                             ToolTip="{Binding PluginPair.Metadata.Version}" />
                                                         <TextBlock
                                                             Margin="0,2,0,0"
-                                                            Foreground="#5f5f5f"
+                                                            Foreground="{StaticResource Color04B}"
                                                             TextWrapping="WrapWithOverflow">
                                                             <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
                                                         </TextBlock>
@@ -971,6 +974,7 @@
                                                             Margin="0,0,8,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="12"
+                                                            Foreground="{StaticResource Color08B}"
                                                             Text="{DynamicResource priority}" />
                                                         <Border>
                                                             <Button
@@ -992,10 +996,10 @@
                                                                         <Setter Property="Padding" Value="12,8,12,8" />
                                                                         <Setter Property="BorderThickness" Value="0" />
                                                                         <Setter Property="FontWeight" Value="DemiBold" />
-                                                                        <Setter Property="Foreground" Value="Black" />
+                                                                        <Setter Property="Foreground" Value="{StaticResource Color02B}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
-                                                                                <Setter Property="Foreground" Value="#878787" />
+                                                                                <Setter Property="Foreground" Value="{StaticResource Color08B}" />
                                                                                 <Setter Property="FontWeight" Value="Normal" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
@@ -1074,8 +1078,8 @@
                                                             Padding="0"
                                                             HorizontalAlignment="Stretch"
                                                             VerticalAlignment="Center"
-                                                            Background="White"
-                                                            BorderBrush="#e6e6e6"
+                                                            Background="{StaticResource Color02B}"
+                                                            BorderBrush="{StaticResource Color03B}"
                                                             BorderThickness="0,1,0,0">
                                                             <!--#region SubInfo Styling-->
                                                             <Border.Style>
@@ -1100,7 +1104,6 @@
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
                                                             Content="{Binding SettingControl}" />
-
                                                     </StackPanel>
 
                                                     <StackPanel>
@@ -1383,17 +1386,18 @@
                                                     </StackPanel.Style>
                                                     <TextBlock
                                                         Padding="0,0,20,0"
+                                                        Foreground="{StaticResource Color05B}"
                                                         Text="{Binding Name}"
                                                         TextWrapping="WrapWithOverflow"
                                                         ToolTip="{Binding Version}" />
                                                     <TextBlock
                                                         Margin="0,2,0,0"
                                                         Padding="0,0,20,0"
-                                                        Foreground="#5f5f5f"
+                                                        Foreground="{StaticResource Color04B}"
                                                         TextWrapping="WrapWithOverflow">
                                                         <Run
                                                             FontSize="12"
-                                                            Foreground="#5f5f5f"
+                                                            Foreground="{StaticResource Color04B}"
                                                             Text="{Binding Description}" />
                                                     </TextBlock>
 
@@ -1436,12 +1440,14 @@
                                                                     Margin="20,0,0,0"
                                                                     Padding="0,0,0,0"
                                                                     FontWeight="Bold"
+                                                                    Foreground="{StaticResource Color05B}"
                                                                     Text="{Binding Name}"
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Name}" />
                                                                 <TextBlock
                                                                     Margin="10,0,0,0"
                                                                     Padding="0,0,20,0"
+                                                                    Foreground="{StaticResource Color05B}"
                                                                     Text="{Binding Version}"
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Version}" />
@@ -1449,7 +1455,7 @@
                                                             <StackPanel Margin="20,2,120,0" Orientation="Vertical">
                                                                 <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
                                                                     <Hyperlink
-                                                                        Foreground="#5F5F5F"
+                                                                        Foreground="{StaticResource Color04B}"
                                                                         NavigateUri="{Binding Website}"
                                                                         RequestNavigate="OnRequestNavigate">
                                                                         <Run FontSize="12" Text="{Binding Author}" />
@@ -2074,6 +2080,7 @@
                                     Padding="0,12,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="14"
+                                    Foreground="{StaticResource Color05B}"
                                     Text="{DynamicResource customQueryHotkey}" />
                                 <ListView
                                     Grid.Row="4"

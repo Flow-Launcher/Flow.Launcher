@@ -32,7 +32,7 @@
     </Style>
 
     <Style x:Key="TitleBarButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{DynamicResource WindowTextBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
@@ -41,7 +41,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
                         x:Name="border"
-                        Background="#f3f3f3"
+                        Background="{StaticResource Color01B}"
                         BorderThickness="0"
                         SnapsToDevicePixels="true">
                         <ContentPresenter
@@ -54,10 +54,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="#C6C6C6" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="#B0B0B0" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color09B}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -66,7 +66,7 @@
     </Style>
 
     <Style x:Key="TitleBarCloseButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
@@ -88,11 +88,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="#E10000" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color10B}" />
                             <Setter Property="Foreground" Value="{DynamicResource MouseOverWindowCloseButtonForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PressedWindowCloseButtonBackgroundBrush}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color11B}" />
                             <Setter Property="Foreground" Value="{DynamicResource MouseOverWindowCloseButtonForegroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>

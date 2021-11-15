@@ -13,6 +13,10 @@
     <SolidColorBrush x:Key="Color05B" Color="#000000" />
     <SolidColorBrush x:Key="Color06B" Color="#eaeaea" />
     <SolidColorBrush x:Key="Color07B" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="Color08B" Color="#878787" />
+    <SolidColorBrush x:Key="Color09B" Color="#ededed" />
+    <SolidColorBrush x:Key="Color10B" Color="#c42b1c" />
+    <SolidColorBrush x:Key="Color11B" Color="#c83c31" />
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>
@@ -20,6 +24,10 @@
     <Color x:Key="Color05">#000000</Color>
     <Color x:Key="Color06">#eaeaea</Color>
     <Color x:Key="Color07">#f6f6f6</Color>
+    <Color x:Key="Color08">#878787</Color>
+    <Color x:Key="Color09">#ededed</Color>
+    <Color x:Key="Color10">#c42b1c</Color>
+    <Color x:Key="Color11">#c81c31</Color>
 
     <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>
