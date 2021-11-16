@@ -68,7 +68,7 @@
             </Setter>
         </Style>
         <Style x:Key="SettingGroupBox" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="{StaticResource Color02B}" />
+            <Setter Property="Background" Value="{StaticResource Color00B}" />
             <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="5" />

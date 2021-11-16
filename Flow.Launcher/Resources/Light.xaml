@@ -6,11 +6,12 @@
     xmlns:primitives="http://schemas.modernwpf.com/2019"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <SolidColorBrush x:Key="Color00B" Color="#fbfbfb" />
     <SolidColorBrush x:Key="Color01B" Color="#f3f3f3" />
     <SolidColorBrush x:Key="Color02B" Color="#ffffff" />
     <SolidColorBrush x:Key="Color03B" Color="#e5e5e5" />
     <SolidColorBrush x:Key="Color04B" Color="#5f5f5f" />
-    <SolidColorBrush x:Key="Color05B" Color="#000000" />
+    <SolidColorBrush x:Key="Color05B" Color="#1b1b1b" />
     <SolidColorBrush x:Key="Color06B" Color="#eaeaea" />
     <SolidColorBrush x:Key="Color07B" Color="#f6f6f6" />
     <SolidColorBrush x:Key="Color08B" Color="#878787" />
@@ -22,6 +23,12 @@
     <SolidColorBrush x:Key="Color14B" Color="#d3d3d3" />
     <SolidColorBrush x:Key="Color15B" Color="#5d5d5d" />
     <SolidColorBrush x:Key="Color16B" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="Color17B" Color="#868686" />
+    <SolidColorBrush x:Key="Color18B" Color="#b7b7b7" />
+    <SolidColorBrush x:Key="Color19B" Color="#dcdcdc" />
+    <SolidColorBrush x:Key="Color20B" Color="#5a5a5a" />
+    <SolidColorBrush x:Key="Color21B" Color="#cccccc" />
+    <SolidColorBrush x:Key="Color22B" Color="#f0f0f0" />
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>
@@ -38,6 +45,12 @@
     <Color x:Key="Color14">#d3d3d3</Color>
     <Color x:Key="Color15">#5d5d5d</Color>
     <Color x:Key="Color16">#f6f6f6</Color>
+    <Color x:Key="Color17">#868686</Color>
+    <Color x:Key="Color18">#b7b7b7</Color>
+    <Color x:Key="Color19">#dcdcdc</Color>
+    <Color x:Key="Color20">#5a5a5a</Color>
+    <Color x:Key="Color21">#cccccc</Color>
+    <Color x:Key="Color22">#f0f0f0</Color>
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#d3d3d3" />
@@ -54,8 +67,8 @@
     <Thickness x:Key="CustomButtonInsideBorderThickness">0,0,0,2</Thickness>
     <Thickness x:Key="PressedCustomButtonOutBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="PressedCustomButtonInsideBorderThickness">0,0,0,1</Thickness>
-    <Thickness x:Key="DisabledCustomButtonOutBorderThickness">1,1,1,0</Thickness>
-    <Thickness x:Key="DisabledCustomButtonInsideBorderThickness">0,0,0,1</Thickness>
+    <Thickness x:Key="DisabledCustomButtonOutBorderThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="DisabledCustomButtonInsideBorderThickness">0,0,0,0</Thickness>
 
     <SolidColorBrush x:Key="CustomRadioBorder" Color="#858585" />
     <SolidColorBrush x:Key="CustomRadioBackground" Color="#ededed" />
@@ -64,8 +77,38 @@
     <SolidColorBrush x:Key="PressedCustomRadioBorder" Color="#b4b4b4" />
     <SolidColorBrush x:Key="PressedCustomRadioBackground" Color="#dcdcdc" />
 
+    <m:StaticResource x:Key="CustomComboOutline" ResourceKey="Color13B" />
+    <m:StaticResource x:Key="CustomComboInline" ResourceKey="Color21B" />
+    <m:StaticResource x:Key="PopUpBorderBG" ResourceKey="Color07B" />
+    <m:StaticResource x:Key="CustomComboHoverBG" ResourceKey="Color07B" />
+    <m:StaticResource x:Key="CustomComboPressedBG" ResourceKey="Color07B" />
+    <m:StaticResource x:Key="CustomComboPressedOutLine" ResourceKey="Color13B" />
+    <m:StaticResource x:Key="CustomComboPressedText" ResourceKey="Color08B" />
+    <m:StaticResource x:Key="CustomComboDisabledBG" ResourceKey="Color07B" />
+    <m:StaticResource x:Key="CustomComboDisabledOutLine" ResourceKey="Color13B" />
+    <m:StaticResource x:Key="CustomComboDisabledText" ResourceKey="Color08B" />
+    <m:StaticResource x:Key="CustomComboHighlightBG" ResourceKey="Color22B" />
+
+
+    <Thickness x:Key="CustomComboOutlineThickness">1,1,1,0</Thickness>
+    <Thickness x:Key="CustomComboInlineThickness">0,0,0,2</Thickness>
+    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="DisabledCustomComboOutlineThickness">1,1,1,1</Thickness>
+
+
+    <m:StaticResource x:Key="CustomTextBoxOutline" ResourceKey="Color03B" />
+    <m:StaticResource x:Key="CustomTextBoxBG" ResourceKey="Color00B" />
+    <m:StaticResource x:Key="CustomTextBoxInline" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="CustomTextBoxHoverBG" ResourceKey="Color16B" />
+
+    <Thickness x:Key="CustomTextBoxOutlineThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="CustomTextBoxInlineThickness">0,0,0,1</Thickness>
+
+
+
     <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>
+
 
     <SolidColorBrush x:Key="SystemAccentColorDark1Brush" Color="{m:DynamicColor SystemAccentColorDark1}" />
     <SolidColorBrush x:Key="SystemAccentColorDark2Brush" Color="{m:DynamicColor SystemAccentColorDark2}" />
@@ -504,8 +547,8 @@
     <m:StaticResource x:Key="CheckBoxBackgroundIndeterminatePressed" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxBackgroundIndeterminateDisabled" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxBorderBrushUnchecked" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="CheckBoxBorderBrushUncheckedPointerOver" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="CheckBoxBorderBrushUncheckedPressed" ResourceKey="SystemControlTransparentBrush" />
+    <m:StaticResource x:Key="CheckBoxBorderBrushUncheckedPointerOver" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="CheckBoxBorderBrushUncheckedPressed" ResourceKey="Colr18B" />
     <m:StaticResource x:Key="CheckBoxBorderBrushUncheckedDisabled" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxBorderBrushChecked" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxBorderBrushCheckedPointerOver" ResourceKey="SystemControlTransparentBrush" />
@@ -515,9 +558,9 @@
     <m:StaticResource x:Key="CheckBoxBorderBrushIndeterminatePointerOver" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxBorderBrushIndeterminatePressed" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxBorderBrushIndeterminateDisabled" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUnchecked" ResourceKey="SystemControlForegroundBaseMediumBrush" />
-    <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUncheckedPointerOver" ResourceKey="SystemControlHighlightBaseMediumHighBrush" />
-    <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUncheckedPressed" ResourceKey="SystemControlHighlightBaseHighBrush" />
+    <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUnchecked" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUncheckedPointerOver" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUncheckedPressed" ResourceKey="Color18B" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeUncheckedDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeChecked" ResourceKey="SystemControlHighlightTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeCheckedPointerOver" ResourceKey="SystemAccentColorLight1Brush" />
@@ -527,9 +570,9 @@
     <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePointerOver" ResourceKey="SystemAccentColorLight1Brush" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePressed" ResourceKey="SystemAccentColorDark1Brush" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundStrokeIndeterminateDisabled" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUnchecked" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" ResourceKey="SystemControlBackgroundBaseMediumLowBrush" />
+    <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUnchecked" ResourceKey="Color09B" />
+    <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" ResourceKey="Color13B" />
+    <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" ResourceKey="Color19B" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundFillChecked" ResourceKey="SystemControlHighlightAccentBrush" />
     <m:StaticResource x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" ResourceKey="SystemAccentColorLight1Brush" />
@@ -1395,13 +1438,13 @@
     <m:StaticResource x:Key="ToggleSwitchContainerBackgroundPointerOver" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="ToggleSwitchContainerBackgroundPressed" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="ToggleSwitchContainerBackgroundDisabled" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="ToggleSwitchFillOff" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="ToggleSwitchFillOffPointerOver" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="ToggleSwitchFillOffPressed" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
+    <m:StaticResource x:Key="ToggleSwitchFillOff" ResourceKey="Color09B" />
+    <m:StaticResource x:Key="ToggleSwitchFillOffPointerOver" ResourceKey="Color03B" />
+    <m:StaticResource x:Key="ToggleSwitchFillOffPressed" ResourceKey="Color19B" />
     <m:StaticResource x:Key="ToggleSwitchFillOffDisabled" ResourceKey="SystemControlTransparentBrush" />
-    <m:StaticResource x:Key="ToggleSwitchStrokeOff" ResourceKey="SystemControlForegroundBaseMediumBrush" />
-    <m:StaticResource x:Key="ToggleSwitchStrokeOffPointerOver" ResourceKey="SystemControlHighlightBaseMediumHighBrush" />
-    <m:StaticResource x:Key="ToggleSwitchStrokeOffPressed" ResourceKey="SystemControlForegroundBaseHighBrush" />
+    <m:StaticResource x:Key="ToggleSwitchStrokeOff" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="ToggleSwitchStrokeOffPointerOver" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="ToggleSwitchStrokeOffPressed" ResourceKey="Color20B" />
     <m:StaticResource x:Key="ToggleSwitchStrokeOffDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
     <m:StaticResource x:Key="ToggleSwitchFillOn" ResourceKey="SystemControlHighlightAccentBrush" />
     <m:StaticResource x:Key="ToggleSwitchFillOnPointerOver" ResourceKey="SystemAccentColorLight1Brush" />
@@ -1411,9 +1454,9 @@
     <m:StaticResource x:Key="ToggleSwitchStrokeOnPointerOver" ResourceKey="SystemControlHighlightListAccentHighBrush" />
     <m:StaticResource x:Key="ToggleSwitchStrokeOnPressed" ResourceKey="SystemControlHighlightBaseMediumBrush" />
     <m:StaticResource x:Key="ToggleSwitchStrokeOnDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-    <m:StaticResource x:Key="ToggleSwitchKnobFillOff" ResourceKey="SystemControlForegroundBaseHighBrush" />
-    <m:StaticResource x:Key="ToggleSwitchKnobFillOffPointerOver" ResourceKey="SystemControlHighlightBaseHighBrush" />
-    <m:StaticResource x:Key="ToggleSwitchKnobFillOffPressed" ResourceKey="SystemControlHighlightBaseHighBrush" />
+    <m:StaticResource x:Key="ToggleSwitchKnobFillOff" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="ToggleSwitchKnobFillOffPointerOver" ResourceKey="Color17B" />
+    <m:StaticResource x:Key="ToggleSwitchKnobFillOffPressed" ResourceKey="Color20B" />
     <m:StaticResource x:Key="ToggleSwitchKnobFillOffDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
     <m:StaticResource x:Key="ToggleSwitchKnobFillOn" ResourceKey="SystemControlHighlightAltChromeWhiteBrush" />
     <m:StaticResource x:Key="ToggleSwitchKnobFillOnPointerOver" ResourceKey="SystemControlHighlightChromeWhiteBrush" />
