@@ -32,6 +32,7 @@
     <SolidColorBrush x:Key="Color23B" Color="#272727" />
     <SolidColorBrush x:Key="Color24B" Color="#9a9a9a" />
     <SolidColorBrush x:Key="Color25B" Color="#323232" />
+    <SolidColorBrush x:Key="ThemeHoverButton" Color="#3c3c3c" />
     <Color x:Key="Color01">#202020</Color>
     <Color x:Key="Color02">#2b2b2b</Color>
     <Color x:Key="Color03">#1d1d1d</Color>

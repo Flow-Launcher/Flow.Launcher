@@ -29,6 +29,7 @@
     <SolidColorBrush x:Key="Color20B" Color="#5a5a5a" />
     <SolidColorBrush x:Key="Color21B" Color="#cccccc" />
     <SolidColorBrush x:Key="Color22B" Color="#f0f0f0" />
+    <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>
@@ -106,7 +107,7 @@
 
 
 
-    <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>
+    <CornerRadius x:Key="ControlCornerRadius">4,4,4,4</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>
 
 

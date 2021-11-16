@@ -181,7 +181,7 @@
                                         x:Name="Spacer"
                                         Width="Auto"
                                         Height="Auto"
-                                        Margin="8,4,8,0"
+                                        Margin="16,0,8,8"
                                         Padding="0,0,0,0"
                                         BorderBrush="Transparent"
                                         BorderThickness="0">
@@ -191,7 +191,7 @@
                                             CornerRadius="5">
                                             <ContentPresenter
                                                 x:Name="ContentSite"
-                                                Margin="12,12,0,12"
+                                                Margin="12,11,0,11"
                                                 HorizontalAlignment="LEFT"
                                                 VerticalAlignment="Center"
                                                 ContentSource="Header"
@@ -484,7 +484,6 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
                 Height="auto"
-                Background="#f3f3f3"
                 SelectedIndex="1"
                 TabStripPlacement="Left">
                 <TabItem Style="{DynamicResource logo}">
@@ -517,12 +516,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xe713;
                             </TextBlock>
                             <TextBlock
@@ -865,12 +859,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xea86;
                             </TextBlock>
                             <TextBlock
@@ -1239,12 +1228,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xe719;
                             </TextBlock>
                             <TextBlock
@@ -1496,12 +1480,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xe790;
                             </TextBlock>
                             <TextBlock
@@ -1697,12 +1676,12 @@
                                                                 </Border>
                                                                 <ControlTemplate.Triggers>
                                                                     <Trigger Property="IsMouseOver" Value="true">
-                                                                        <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
+                                                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ThemeHoverButton}" />
                                                                     </Trigger>
                                                                     <Trigger Property="IsSelected" Value="true">
                                                                         <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ToggleSwitchFillOn}" />
                                                                         <Setter TargetName="Bd2" Property="BorderThickness" Value="0" />
-                                                                        <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="#ffffff" />
+                                                                        <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="{DynamicResource Color02B}" />
                                                                     </Trigger>
                                                                 </ControlTemplate.Triggers>
                                                             </ControlTemplate>
@@ -1947,12 +1926,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xe92e;
                             </TextBlock>
                             <TextBlock
@@ -2145,12 +2119,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xec27;
                             </TextBlock>
                             <TextBlock
@@ -2321,12 +2290,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,12,0"
-                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                FontSize="20"
-                                Style="{StaticResource TabMenu}">
+                            <TextBlock Grid.Column="0" Style="{StaticResource TabMenuIcon}">
                                 &#xe946;
                             </TextBlock>
                             <TextBlock
