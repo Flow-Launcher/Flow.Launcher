@@ -40,6 +40,7 @@ namespace Flow.Launcher
         #region General
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            RefreshMaximizeRestoreButton();
             // Fix (workaround) for the window freezes after lock screen (Win+L)
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
