@@ -257,7 +257,7 @@
     <SolidColorBrush x:Key="SystemControlHighlightListLowBrush" Color="{m:StaticColor SystemListLowColor}" />
     <SolidColorBrush x:Key="SystemControlHighlightChromeWhiteBrush" Color="{m:StaticColor SystemChromeWhiteColor}" />
     <SolidColorBrush x:Key="SystemControlHighlightTransparentBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{m:DynamicColor SystemAccentColor}" />
+    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{m:DynamicColor SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="SystemControlHyperlinkBaseHighBrush" Color="{m:StaticColor SystemBaseHighColor}" />
     <SolidColorBrush x:Key="SystemControlHyperlinkBaseMediumBrush" Color="{m:StaticColor SystemBaseMediumColor}" />
     <SolidColorBrush x:Key="SystemControlHyperlinkBaseMediumHighBrush" Color="{m:StaticColor SystemBaseMediumHighColor}" />
@@ -1547,13 +1547,13 @@
     <SolidColorBrush x:Key="TitleBarButtonBackgroundInactive" Color="Transparent" />
 
     <!--  Resources for AccentButtonStyle  -->
-    <m:StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemControlBackgroundAccentBrush" />
+    <m:StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemAccentColorLight2Brush" />
     <m:StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemAccentColorLight1Brush" />
     <m:StaticResource x:Key="AccentButtonBackgroundPressed" ResourceKey="SystemAccentColorDark1Brush" />
     <m:StaticResource x:Key="AccentButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-    <m:StaticResource x:Key="AccentButtonForeground" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
-    <m:StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
-    <m:StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
+    <m:StaticResource x:Key="AccentButtonForeground" ResourceKey="Color01B" />
+    <m:StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="Color01B" />
+    <m:StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="Color23B" />
     <m:StaticResource x:Key="AccentButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
