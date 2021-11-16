@@ -82,6 +82,25 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        public int CustomBrowserIndex { get; set; } = 0;
+
+
+        public CustomBrowserViewModel CustomBrowser
+        {
+            get => CustomBrowserList[CustomBrowserIndex];
+            set => CustomBrowserList[CustomBrowserIndex] = value;
+        }
+
+        public List<CustomBrowserViewModel> CustomBrowserList { get; set; } = new()
+        {
+            new()
+            {
+                Name = "Default",
+                Path = "",
+                Editable = false
+            }
+        };
+
 
         /// <summary>
         /// when false Alphabet static service will always return empty results

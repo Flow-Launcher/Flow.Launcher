@@ -58,8 +58,8 @@
                             Margin="14,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            ItemsSource="{Binding CustomExplorers}"
-                            SelectedIndex="{Binding SelectedCustomExplorerIndex}">
+                            ItemsSource="{Binding CustomBrowsers}"
+                            SelectedIndex="{Binding SelectedCustomBrowserIndex}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />

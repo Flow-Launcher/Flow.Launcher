@@ -123,7 +123,7 @@ namespace Flow.Launcher
 
         private void OnSelectDefaultBrowserClick(object sender, RoutedEventArgs e)
         {
-            SelectBrowserWindow test = new SelectBrowserWindow();
+            SelectBrowserWindow test = new SelectBrowserWindow(settings);
             test.ShowDialog();
         }
 

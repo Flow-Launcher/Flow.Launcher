@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,29 +21,71 @@ namespace Flow.Launcher
     /// <summary>
     /// SelectBrowserWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SelectBrowserWindow : Window
+    public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
     {
-        public SelectBrowserWindow()
+        private int selectedCustomExplorerIndex;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Settings Settings { get; }
+
+        public int SelectedCustomBrowserIndex
         {
+            get => selectedCustomExplorerIndex; set
+            {
+                selectedCustomExplorerIndex = value;
+                PropertyChanged?.Invoke(this, new(nameof(CustomExplorer)));
+            }
+        }
+        public ObservableCollection<CustomBrowserViewModel> CustomBrowsers { get; set; }
+
+        public CustomBrowserViewModel CustomExplorer => CustomBrowsers[SelectedCustomBrowserIndex];
+        public SelectBrowserWindow(Settings settings)
+        {
+            Settings = settings;
+            CustomBrowsers = new ObservableCollection<CustomBrowserViewModel>(Settings.CustomBrowserList.Select(x => x.Copy()));
+            SelectedCustomBrowserIndex = Settings.CustomExplorerIndex;
             InitializeComponent();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            Close();
         }
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
+            Settings.CustomBrowserList = CustomBrowsers.ToList();
+            Settings.CustomBrowserIndex = SelectedCustomBrowserIndex;
+            Close();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            CustomBrowsers.Add(new()
+            {
+                Name = "New Profile"
+            });
+            SelectedCustomBrowserIndex = CustomBrowsers.Count - 1;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            CustomBrowsers.RemoveAt(SelectedCustomBrowserIndex--);
+        }
+
+        private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
+                path.Text = dlg.FileName;
+                path.Focus();
+                ((Button)sender).Focus();
+            }
         }
     }
-
-
 }
