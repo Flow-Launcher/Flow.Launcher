@@ -118,6 +118,12 @@
             <Setter Property="Margin" Value="0,4,0,4" />
         </Style>
 
+        <Style x:Key="SideTextAbout" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Margin" Value="0,0,-18,0" />
+        </Style>
+
         <Style x:Key="logo" TargetType="{x:Type TabItem}">
             <!--#region Logo Style-->
             <Setter Property="Margin" Value="0" />
@@ -565,13 +571,7 @@
                                         IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
                                         Style="{DynamicResource SideControlCheckBox}"
                                         Unchecked="OnAutoStartupUncheck" />
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
                                 </ItemsControl>
@@ -583,13 +583,7 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideOnStartup}" />
                                     </StackPanel>
                                     <CheckBox IsChecked="{Binding Settings.HideOnStartup}" Style="{DynamicResource SideControlCheckBox}" />
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xed1a;
                                     </TextBlock>
                                 </ItemsControl>
@@ -630,13 +624,7 @@
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreenToolTip}" />
                                     </StackPanel>
                                     <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}" Style="{DynamicResource SideControlCheckBox}" />
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7fc;
                                     </TextBlock>
                                 </ItemsControl>
@@ -652,13 +640,7 @@
                                         IsChecked="{Binding Settings.ShouldUsePinyin}"
                                         Style="{DynamicResource SideControlCheckBox}"
                                         ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xe98a;
                                     </TextBlock>
                                 </ItemsControl>
@@ -675,13 +657,7 @@
                                         FocusVisualMargin="5"
                                         IsOn="{Binding AutoUpdates}"
                                         Style="{DynamicResource SideToggleSwitch}" />
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xecc5;
                                     </TextBlock>
                                 </ItemsControl>
@@ -699,13 +675,7 @@
                                         FocusVisualMargin="5"
                                         IsOn="{Binding PortableMode}"
                                         Style="{DynamicResource SideToggleSwitch}" />
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xe88e;
                                     </TextBlock>
                                 </ItemsControl>
@@ -786,13 +756,7 @@
                                                 HorizontalContentAlignment="Center"
                                                 ItemsSource="{Binding MaxResultsRange}"
                                                 SelectedItem="{Binding Settings.MaxResultsToShow}" />
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                Margin="24,0,16,0"
-                                                VerticalAlignment="Center"
-                                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20"
-                                                Style="{StaticResource Glyph}">
+                                            <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe8fd;
                                             </TextBlock>
                                         </ItemsControl>
@@ -819,13 +783,7 @@
                                             Content="{Binding Settings.CustomExplorer.Name}" />
                                     </StackPanel>
 
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20"
-                                        Style="{StaticResource Glyph}">
+                                    <TextBlock Style="{StaticResource Glyph}">
                                         &#xe838;
                                     </TextBlock>
                                 </ItemsControl>
@@ -1597,13 +1555,7 @@
                                                 Width="100"
                                                 Margin="0,0,2,0"
                                                 IsOn="{Binding DropShadowEffect, Mode=TwoWay}" />
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                Margin="24,0,16,0"
-                                                VerticalAlignment="Center"
-                                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20"
-                                                Style="{StaticResource Glyph}">
+                                            <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeb91;
                                             </TextBlock>
                                         </ItemsControl>
@@ -1632,13 +1584,7 @@
                                                     TickFrequency="10"
                                                     Value="{Binding WindowWidthSize, Mode=TwoWay}" />
                                             </StackPanel>
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                Margin="24,0,16,0"
-                                                VerticalAlignment="Center"
-                                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20"
-                                                Style="{StaticResource Glyph}">
+                                            <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe740;
                                             </TextBlock>
                                         </ItemsControl>
@@ -1776,13 +1722,7 @@
                                                         Width="100"
                                                         Margin="0,0,2,0"
                                                         IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" />
-                                                    <TextBlock
-                                                        Grid.Column="0"
-                                                        Margin="24,0,16,0"
-                                                        VerticalAlignment="Center"
-                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20"
-                                                        Style="{StaticResource Glyph}">
+                                                    <TextBlock Style="{StaticResource Glyph}">
                                                         &#xf6b8;
                                                     </TextBlock>
                                                 </ItemsControl>
@@ -1832,13 +1772,7 @@
                                                             </ComboBox.ItemTemplate>
                                                         </ComboBox>
                                                     </StackPanel>
-                                                    <TextBlock
-                                                        Grid.Column="0"
-                                                        Margin="24,0,16,0"
-                                                        VerticalAlignment="Center"
-                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20"
-                                                        Style="{StaticResource Glyph}">
+                                                    <TextBlock Style="{StaticResource Glyph}">
                                                         &#xe990;
                                                     </TextBlock>
                                                 </ItemsControl>
@@ -1888,13 +1822,7 @@
                                                             </ComboBox.ItemTemplate>
                                                         </ComboBox>
                                                     </StackPanel>
-                                                    <TextBlock
-                                                        Grid.Column="0"
-                                                        Margin="24,0,16,0"
-                                                        VerticalAlignment="Center"
-                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20"
-                                                        Style="{StaticResource Glyph}">
+                                                    <TextBlock Style="{StaticResource Glyph}">
                                                         &#xe8fd;
                                                     </TextBlock>
                                                 </ItemsControl>
@@ -1916,13 +1844,7 @@
                                                     Click="OpenPluginFolder"
                                                     Content="{DynamicResource OpenThemeFolder}"
                                                     DockPanel.Dock="Top" />
-                                                <TextBlock
-                                                    Grid.Column="0"
-                                                    Margin="24,0,16,0"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="/Resources/#Segoe Fluent Icons"
-                                                    FontSize="20"
-                                                    Style="{StaticResource Glyph}">
+                                                <TextBlock Style="{StaticResource Glyph}">
                                                     &#xe838;
                                                 </TextBlock>
                                             </ItemsControl>
@@ -1992,13 +1914,7 @@
                                                 HotkeyChanged="OnHotkeyChanged"
                                                 Loaded="OnHotkeyControlLoaded" />
 
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                Margin="24,0,16,0"
-                                                VerticalAlignment="Center"
-                                                FontFamily="/Resources/#Segoe Fluent Icons"
-                                                FontSize="20"
-                                                Style="{StaticResource Glyph}">
+                                            <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
                                             </TextBlock>
                                         </ItemsControl>
@@ -2361,17 +2277,12 @@
                                         </StackPanel>
                                         <Button
                                             Grid.Column="1"
+                                            Margin="0,0,-20,0"
                                             HorizontalAlignment="Right"
                                             Click="OnCheckUpdates"
                                             Content="{DynamicResource checkUpdates}"
                                             Style="{StaticResource AccentButtonStyle}" />
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Margin="24,0,16,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="/Resources/#Segoe Fluent Icons"
-                                            FontSize="20"
-                                            Style="{StaticResource Glyph}">
+                                        <TextBlock Style="{StaticResource Glyph}">
                                             &#xe895;
                                         </TextBlock>
                                     </ItemsControl>
@@ -2383,18 +2294,12 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource website}" />
                                         </StackPanel>
-                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                                        <TextBlock Style="{StaticResource SideTextAbout}">
                                             <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
                                                 <Run Text="{Binding Website, Mode=OneWay}" />
                                             </Hyperlink>
                                         </TextBlock>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Margin="24,0,16,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="/Resources/#Segoe Fluent Icons"
-                                            FontSize="20"
-                                            Style="{StaticResource Glyph}">
+                                        <TextBlock Style="{StaticResource Glyph}">
                                             &#xeb41;
                                         </TextBlock>
                                     </ItemsControl>
@@ -2405,18 +2310,12 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
                                         </StackPanel>
-                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                                        <TextBlock Style="{StaticResource SideTextAbout}">
                                             <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
                                                 <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
                                             </Hyperlink>
                                         </TextBlock>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Margin="24,0,16,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="/Resources/#Segoe Fluent Icons"
-                                            FontSize="20"
-                                            Style="{StaticResource Glyph}">
+                                        <TextBlock Style="{StaticResource Glyph}">
                                             &#xe8fd;
                                         </TextBlock>
                                     </ItemsControl>
@@ -2427,18 +2326,12 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource documentation}" />
                                         </StackPanel>
-                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                                        <TextBlock Style="{StaticResource SideTextAbout}">
                                             <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
                                                 <Run Text="{Binding Documentation, Mode=OneWay}" />
                                             </Hyperlink>
                                         </TextBlock>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Margin="24,0,16,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="/Resources/#Segoe Fluent Icons"
-                                            FontSize="20"
-                                            Style="{StaticResource Glyph}">
+                                        <TextBlock Style="{StaticResource Glyph}">
                                             &#xe82f;
                                         </TextBlock>
                                     </ItemsControl>
@@ -2451,6 +2344,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="1"
+                                            Margin="0,0,-20,0"
                                             HorizontalAlignment="Right"
                                             Orientation="Horizontal">
                                             <Button
@@ -2459,13 +2353,7 @@
                                                 Content="Setting Folder" />
                                             <Button Click="OpenLogFolder" Content="Log Folder" />
                                         </StackPanel>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Margin="24,0,16,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="/Resources/#Segoe Fluent Icons"
-                                            FontSize="20"
-                                            Style="{StaticResource Glyph}">
+                                        <TextBlock Style="{StaticResource Glyph}">
                                             &#xec7a;
                                         </TextBlock>
                                     </ItemsControl>
