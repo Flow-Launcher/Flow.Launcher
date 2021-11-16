@@ -716,72 +716,41 @@
                             </TextBlock>
                         </ItemsControl>
                     </Border>
-
-
-                   <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                    <Separator
+                        Width="Auto"
+                        BorderBrush="#e5e5e5"
+                        BorderThickness="1" />
+                    <Border
+                        Margin="0,0,0,0"
+                        BorderThickness="0"
+                        Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
                                 <TextBlock
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Text="{DynamicResource defaultFileManager}" />
-                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
+                                    Text="{DynamicResource defaultBrowser}" />
+                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultBrowserToolTip}" />
                             </StackPanel>
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                 <Button
                                     Width="160"
                                     MaxWidth="250"
                                     Margin="10,0,18,0"
-                                    Click="OnSelectFileManagerClick"
-                                    Content="{Binding Settings.CustomExplorer.Name}" />
+                                    Click="OnSelectDefaultBrowserClick"
+                                    Content="Google Chrome" />
                             </StackPanel>
-
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="24,0,16,0"
                                 VerticalAlignment="Center"
                                 FontFamily="/Resources/#Segoe Fluent Icons"
                                 FontSize="20">
-                                &#xe838;
+                                &#xf6fa;
                             </TextBlock>
                         </ItemsControl>
                     </Border>
-                            <Separator
-                                Width="Auto"
-                                BorderBrush="#e5e5e5"
-                                BorderThickness="1" />
-                            <Border
-                                Margin="0,0,0,0"
-                                BorderThickness="0"
-                                Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Text="{DynamicResource defaultBrowser}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultBrowserToolTip}" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                        <Button
-                                            Width="160"
-                                            MaxWidth="250"
-                                            Margin="10,0,18,0"
-                                            Click="OnSelectDefaultBrowserClick"
-                                            Content="Google Chrome" />
-                                    </StackPanel>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
-                                        &#xf6fa;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
-                        </StackPanel>
-                    </Border>
+
 
                     <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
