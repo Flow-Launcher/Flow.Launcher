@@ -688,44 +688,64 @@
                         </StackPanel>
                     </Border>
 
+                    <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                        <ItemsControl Style="{StaticResource SettingGrid}">
+                            <StackPanel Style="{StaticResource TextPanel}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{DynamicResource defaultFileManager}" />
+                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button
+                                    Width="160"
+                                    MaxWidth="250"
+                                    Margin="10,0,18,0"
+                                    Click="OnSelectFileManagerClick"
+                                    Content="{Binding Settings.CustomExplorer.Name}" />
+                            </StackPanel>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="24,0,16,0"
+                                VerticalAlignment="Center"
+                                FontFamily="/Resources/#Segoe Fluent Icons"
+                                FontSize="20">
+                                &#xe838;
+                            </TextBlock>
+                        </ItemsControl>
+                    </Border>
 
 
-                    <Border
-                        Margin="0,30,0,0"
-                        Padding="0"
-                        CornerRadius="5"
-                        Style="{DynamicResource SettingGroupBox}">
-                        <StackPanel Orientation="Vertical">
-                            <Border
-                                Margin="0,0,0,0"
-                                BorderThickness="0"
-                                Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Text="{DynamicResource defaultFileManager}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                        <Button
-                                            Width="160"
-                                            MaxWidth="250"
-                                            Margin="10,0,18,0"
-                                            Click="OnSelectFileManagerClick"
-                                            Content="{Binding Settings.CustomExplorer.Name}" />
-                                    </StackPanel>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="24,0,16,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                        FontSize="20">
-                                        &#xe838;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
+                   <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                        <ItemsControl Style="{StaticResource SettingGrid}">
+                            <StackPanel Style="{StaticResource TextPanel}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{DynamicResource defaultFileManager}" />
+                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultFileManagerToolTip}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <Button
+                                    Width="160"
+                                    MaxWidth="250"
+                                    Margin="10,0,18,0"
+                                    Click="OnSelectFileManagerClick"
+                                    Content="{Binding Settings.CustomExplorer.Name}" />
+                            </StackPanel>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="24,0,16,0"
+                                VerticalAlignment="Center"
+                                FontFamily="/Resources/#Segoe Fluent Icons"
+                                FontSize="20">
+                                &#xe838;
+                            </TextBlock>
+                        </ItemsControl>
+                    </Border>
                             <Separator
                                 Width="Auto"
                                 BorderBrush="#e5e5e5"
@@ -892,7 +912,9 @@
                                                     Height="32"
                                                     Margin="32,0,0,0"
                                                     FlowDirection="LeftToRight"
-                                                    Source="{Binding Image, IsAsync=True}" />
+                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                    Source="{Binding Image, IsAsync=True}"
+                                                    Stretch="Uniform" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Margin="12,0,14,0">
                                                 <TextBlock
@@ -902,7 +924,7 @@
                                                 <TextBlock
                                                     Margin="0,2,0,0"
                                                     Foreground="#5f5f5f"
-                                                    TextWrapping="Wrap">
+                                                    TextWrapping="WrapWithOverflow">
                                                     <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
                                                 </TextBlock>
                                             </StackPanel>
@@ -913,10 +935,10 @@
                                                     VerticalAlignment="Center"
                                                     FontSize="12"
                                                     Text="{DynamicResource priority}" />
-                                                <Border CornerRadius="5">
+                                                <Border>
                                                     <Button
                                                         x:Name="PriorityButton"
-                                                        Margin="5,0,0,0"
+                                                        Margin="0,0,0,0"
                                                         VerticalAlignment="Center"
                                                         Click="OnPluginPriorityClick"
                                                         Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
@@ -929,7 +951,7 @@
                                                             </Style>
                                                         </Button.Resources>
                                                         <Button.Style>
-                                                            <Style TargetType="Button">
+                                                            <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
                                                                 <Setter Property="Padding" Value="12,8,12,8" />
                                                                 <Setter Property="BorderThickness" Value="0" />
                                                                 <Setter Property="FontWeight" Value="DemiBold" />
@@ -1299,12 +1321,17 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <Image
-                                                Width="32"
-                                                Height="32"
-                                                Margin="8,0,6,0"
-                                                VerticalAlignment="Center"
-                                                Source="{Binding IcoPath, IsAsync=True}" />
+
+                                            <Border Margin="8,0,0,0">
+                                                <Image
+                                                    Width="32"
+                                                    Height="32"
+                                                    Margin="0,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                    Source="{Binding IcoPath, IsAsync=True}"
+                                                    Stretch="Uniform" />
+                                            </Border>
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="1"
@@ -1472,7 +1499,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Orientation="Horizontal">
-                                <Border Width="500" Style="{DynamicResource WindowBorderStyle}">
+                                <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
                                     <Border Style="{DynamicResource WindowRadius}">
                                         <Border.Clip>
                                             <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -1543,7 +1570,7 @@
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
-                            <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
@@ -1585,7 +1612,7 @@
                                 HorizontalAlignment="Stretch"
                                 Style="{DynamicResource SettingGroupBox}">
                                 <ListBox
-                                    Padding="18"
+                                    Margin="12,12,12,12"
                                     HorizontalAlignment="Center"
                                     HorizontalContentAlignment="Center"
                                     ui:ScrollViewerHelper.AutoHideScrollBars="True"
@@ -1596,24 +1623,46 @@
                                     SelectedItem="{Binding SelectedTheme}">
                                     <ListBox.ItemContainerStyle>
                                         <Style TargetType="ListBoxItem">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                    <Setter Property="Background" Value="#cccccc" />
-                                                    <Setter Property="Foreground" Value="Black" />
-                                                    <Setter Property="Margin" Value="12,8,12,8" />
-                                                    <Setter Property="BorderBrush" Value="#cccccc" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Margin" Value="12,8,12,8" />
-                                                    <Setter Property="Foreground" Value="#3E99D1" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter Property="Background" Value="#f3f3f3" />
-                                                    <Setter Property="Foreground" Value="Black" />
-                                                    <Setter Property="Margin" Value="12,8,12,8" />
-                                                </Trigger>
-                                            </Style.Triggers>
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                            <Setter Property="Padding" Value="0,0,0,0" />
+                                            <Setter Property="Margin" Value="4" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                        <Border
+                                                            x:Name="Bd"
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="#fefefe"
+                                                            BorderBrush="#e5e5e5"
+                                                            BorderThickness="1,1,1,0"
+                                                            CornerRadius="4"
+                                                            SnapsToDevicePixels="true">
+                                                            <Border
+                                                                x:Name="Bd2"
+                                                                BorderBrush="#d3d3d3"
+                                                                BorderThickness="0,0,0,2"
+                                                                CornerRadius="4">
+                                                                <ContentPresenter
+                                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Border>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="Bd" Property="Background" Value="#f6f6f6" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="true">
+                                                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ToggleSwitchFillOn}" />
+                                                                <Setter TargetName="Bd2" Property="BorderThickness" Value="0" />
+                                                                <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="#ffffff" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
                                         </Style>
                                     </ListBox.ItemContainerStyle>
                                     <ListBox.Template>
@@ -1626,15 +1675,15 @@
                                         <DataTemplate>
                                             <Grid
                                                 Width="Auto"
-                                                Height="40"
+                                                Height="34"
                                                 Margin="0,0,0,0">
                                                 <TextBlock
                                                     Margin="0"
-                                                    Padding="10"
+                                                    Padding="14,12,14,12"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Focusable="True"
-                                                    FontSize="13"
+                                                    FontSize="12"
                                                     Text="{Binding}"
                                                     TextWrapping="Wrap" />
                                             </Grid>
@@ -1642,7 +1691,7 @@
                                     </ListBox.ItemTemplate>
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel HorizontalAlignment="Right" />
+                                            <WrapPanel />
                                         </ItemsPanelTemplate>
                                     </ListBox.ItemsPanel>
                                 </ListBox>
@@ -1867,7 +1916,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="43" />
                             <RowDefinition Height="80" />
-                            <RowDefinition Height="160" />
+                            <RowDefinition Height="146" />
                             <RowDefinition Height="50" />
                             <RowDefinition Height="250" />
                             <RowDefinition Height="70" />
@@ -1945,6 +1994,7 @@
                                     BorderThickness="1" />
                                 <Border
                                     Margin="0"
+                                    Padding="0,10,0,0"
                                     BorderThickness="0"
                                     Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">

@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace Flow.Launcher
 {
-    /// <summary>
-    /// SelectFileManagerWindow.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
     {
         private int selectedCustomExplorerIndex;
@@ -72,6 +69,20 @@ namespace Flow.Launcher
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             CustomExplorers.RemoveAt(SelectedCustomExplorerIndex--);
+        }
+
+        private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
+                path.Text = dlg.FileName;
+                path.Focus();
+                ((Button)sender).Focus();
+            }
         }
     }
 }
