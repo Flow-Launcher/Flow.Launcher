@@ -40,7 +40,7 @@ namespace Flow.Launcher.Core.Plugin
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
 
-        /// <summary>
+        /// <summary=
         /// The language this JsonRPCPlugin support
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
@@ -82,7 +82,7 @@ namespace Flow.Launcher.Core.Plugin
         };
         private Dictionary<string, object> Settings { get; set; }
 
-        private Dictionary<string, Control> _settingControls = new();
+        private Dictionary<string, FrameworkElement> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -337,6 +337,8 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var (type, attribute) in _settingsTemplate.Body)
             {
+                if (type == "textBlock")
+                    continue;
                 if (!Settings.ContainsKey(attribute.Name))
                 {
                     Settings[attribute.Name] = attribute.DefaultValue;
@@ -376,17 +378,29 @@ namespace Flow.Launcher.Core.Plugin
                     Margin = settingControlMargin
                 };
 
-                Control contentControl;
+                FrameworkElement contentControl;
 
                 switch (type)
                 {
+                    case "textBlock":
+                        {
+                            contentControl = new TextBlock
+                            {
+                                Text = attribute.Description.Replace("\\r\\n", "\r\n"),
+                                Margin = settingControlMargin,
+                                MaxWidth = 400,
+                                TextWrapping = TextWrapping.WrapWithOverflow
+                            };
+                            break;
+                        }
                     case "input":
                         {
                             var textBox = new TextBox()
                             {
                                 Width = 300,
                                 Text = Settings[attribute.Name] as string ?? string.Empty,
-                                Margin = settingControlMargin
+                                Margin = settingControlMargin,
+                                ToolTip = attribute.Description
                             };
                             textBox.TextChanged += (_, _) =>
                             {
@@ -404,7 +418,8 @@ namespace Flow.Launcher.Core.Plugin
                                 Margin = settingControlMargin,
                                 TextWrapping = TextWrapping.WrapWithOverflow,
                                 AcceptsReturn = true,
-                                Text = Settings[attribute.Name] as string ?? string.Empty
+                                Text = Settings[attribute.Name] as string ?? string.Empty,
+                                ToolTip = attribute.Description
                             };
                             textBox.TextChanged += (sender, _) =>
                             {
@@ -420,7 +435,8 @@ namespace Flow.Launcher.Core.Plugin
                                 Width = 300,
                                 Margin = settingControlMargin,
                                 Password = Settings[attribute.Name] as string ?? string.Empty,
-                                PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar
+                                PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
+                                ToolTip = attribute.Description
                             };
                             passwordBox.PasswordChanged += (sender, _) =>
                             {
@@ -435,7 +451,8 @@ namespace Flow.Launcher.Core.Plugin
                             {
                                 ItemsSource = attribute.Options,
                                 SelectedItem = Settings[attribute.Name],
-                                Margin = settingControlMargin
+                                Margin = settingControlMargin,
+                                ToolTip = attribute.Description
                             };
                             comboBox.SelectionChanged += (sender, _) =>
                             {
@@ -448,7 +465,8 @@ namespace Flow.Launcher.Core.Plugin
                         var checkBox = new CheckBox
                         {
                             IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
-                            Margin = settingControlMargin
+                            Margin = settingControlMargin,
+                            ToolTip = attribute.Description
                         };
                         checkBox.Click += (sender, _) =>
                         {
@@ -459,7 +477,8 @@ namespace Flow.Launcher.Core.Plugin
                     default:
                         continue;
                 }
-                _settingControls[attribute.Name] = contentControl;
+                if (type != "textBlock")
+                    _settingControls[attribute.Name] = contentControl;
                 panel.Children.Add(name);
                 panel.Children.Add(contentControl);
                 mainPanel.Children.Add(panel);
