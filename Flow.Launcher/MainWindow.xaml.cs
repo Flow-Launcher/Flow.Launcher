@@ -64,6 +64,7 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
             WindowsInteropHelper.DisableControlBox(this);
@@ -335,6 +336,8 @@ namespace Flow.Launcher
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+                _settings.WindowLeft = Left;
+                _settings.WindowTop = Top;
             }
         }
 
@@ -350,7 +353,27 @@ namespace Flow.Launcher
             }
         }
 
-        private double WindowLeft()
+        public void HideStartup()
+        {
+            if (_settings.HideOnStartup)
+            {
+                _viewModel.Hide();
+            }
+            else
+            {
+                if (!_settings.HideOnStartup && _settings.WindowLeft == 0 && _settings.WindowTop == 0) /* First Launch */
+                {
+                    Left = WindowLeft();
+                    Top = WindowTop();
+                    _settings.WindowLeft = Left;
+                    _settings.WindowTop = Top;
+                }
+                _viewModel.Show();
+            }
+
+        }
+
+        public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
@@ -359,7 +382,7 @@ namespace Flow.Launcher
             return left;
         }
 
-        private double WindowTop()
+        public double WindowTop()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);

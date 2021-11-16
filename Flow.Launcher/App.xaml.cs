@@ -100,16 +100,6 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-
-                if (_settings.HideOnStartup)
-                {
-                    _mainVM.Hide(); 
-                }
-                else
-                {
-                    window.WindowAnimator();
-                }
-
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
