@@ -440,18 +440,7 @@
                 VerticalAlignment="Center"
                 FontSize="12"
                 Foreground="{StaticResource Color05B}"
-                Text="{DynamicResource flowlauncher_settings}">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
-                                <Setter Property="Foreground" Value="{StaticResource Color07B}" />
-                                <!--  Not work. check  -->
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                Text="{DynamicResource flowlauncher_settings}" />
 
             <Button
                 Grid.Column="2"
@@ -463,7 +452,17 @@
                     Height="32"
                     Data="M 18,15 H 28"
                     Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1" />
+                    StrokeThickness="1">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
             </Button>
             <Button
                 Name="maximizeButton"
@@ -475,7 +474,17 @@
                     Height="32"
                     Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
                     Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1" />
+                    StrokeThickness="1">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
             </Button>
             <Button
                 Name="restoreButton"
@@ -487,7 +496,17 @@
                     Height="32"
                     Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
                     Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1" />
+                    StrokeThickness="1">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
             </Button>
             <Button
                 Grid.Column="4"
@@ -498,7 +517,17 @@
                     Height="32"
                     Data="M 18,11 27,20 M 18,20 27,11"
                     Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1" />
+                    StrokeThickness="1">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
             </Button>
 
             <TabControl
