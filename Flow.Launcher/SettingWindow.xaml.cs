@@ -273,6 +273,16 @@ namespace Flow.Launcher
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
 
+        private void OpenSettingFolder(object sender, RoutedEventArgs e)
+        {
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
+        }
+
+        private void OpenLogFolder(object sender, RoutedEventArgs e)
+        {
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs));
+        }
+
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
         {
             _ = viewModel.RefreshExternalPluginsAsync();

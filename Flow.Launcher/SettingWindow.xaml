@@ -181,21 +181,36 @@
                                         x:Name="Spacer"
                                         Width="Auto"
                                         Height="Auto"
-                                        Margin="16,0,8,8"
+                                        Margin="14,4,8,4"
                                         Padding="0,0,0,0"
                                         BorderBrush="Transparent"
                                         BorderThickness="0">
                                         <Border
                                             x:Name="border"
+                                            Height="40"
                                             Background="{StaticResource Color01B}"
                                             CornerRadius="5">
-                                            <ContentPresenter
-                                                x:Name="ContentSite"
-                                                Margin="12,11,0,11"
-                                                HorizontalAlignment="LEFT"
-                                                VerticalAlignment="Center"
-                                                ContentSource="Header"
-                                                TextBlock.Foreground="#000" />
+                                            <Grid>
+                                                <Canvas>
+                                                    <Rectangle
+                                                        x:Name="Bullet"
+                                                        Canvas.Left="0"
+                                                        Width="4"
+                                                        Height="18"
+                                                        Margin="0,11,0,11"
+                                                        Fill="{DynamicResource ToggleSwitchFillOn}"
+                                                        RadiusX="2"
+                                                        RadiusY="2"
+                                                        Visibility="Hidden" />
+                                                    <ContentPresenter
+                                                        x:Name="ContentSite"
+                                                        Margin="12,11,0,11"
+                                                        HorizontalAlignment="LEFT"
+                                                        VerticalAlignment="Center"
+                                                        ContentSource="Header"
+                                                        TextBlock.Foreground="#000" />
+                                                </Canvas>
+                                            </Grid>
                                         </Border>
                                     </Border>
                                 </Grid>
@@ -207,6 +222,7 @@
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
+                                <Setter TargetName="Bullet" Property="Visibility" Value="Visible" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -2300,78 +2316,172 @@
                         </Grid>
                     </TabItem.Header>
                     <Border>
-                        <Grid Height="400" Margin="65,0">
-                            <!--<TextBlock Text="{DynamicResource about}" Grid.Row="0" TextAlignment="left" FontSize="30" Margin="0 5 0 5"/>  -->
-                            <Grid.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Margin" Value="10,25,0,0" />
-                                    <Setter Property="FontSize" Value="14" />
-                                    <Setter Property="Foreground" Value="{StaticResource Color05B}" />
-                                </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.ColumnSpan="2"
-                                FontSize="12"
-                                Text="{Binding ActivatedTimes, Mode=OneWay}" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Text="{DynamicResource website}" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left">
-                                <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                    <Run Text="{Binding Website, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Text="Version" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Text="{Binding Version}" />
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Text="{DynamicResource releaseNotes}" />
-                            <TextBlock Grid.Row="3" Grid.Column="1">
-                                <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                    <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="0"
-                                Text="{DynamicResource documentation}" />
-                            <TextBlock Grid.Row="4" Grid.Column="1">
-                                <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                    <Run Text="{Binding Documentation, Mode=OneWay}" />
-                                </Hyperlink>
-                            </TextBlock>
-                            <Button
-                                Grid.Row="5"
-                                Grid.Column="0"
-                                Margin="10,30,10,10"
-                                HorizontalAlignment="Left"
-                                Click="OnCheckUpdates"
-                                Content="{DynamicResource checkUpdates}" />
-                        </Grid>
+                        <ScrollViewer
+                            Margin="0,0,0,0"
+                            Background="{StaticResource Color01B}"
+                            ScrollViewer.CanContentScroll="False">
+                            <StackPanel Margin="5,14,25,30" Orientation="Vertical">
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="0,5,0,5"
+                                    FontSize="30"
+                                    Style="{StaticResource PageTitle}"
+                                    Text="{DynamicResource about}"
+                                    TextAlignment="left" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Border
+                                        Width="200"
+                                        Height="120"
+                                        Margin="0,8,0,0"
+                                        Padding="24,24,24,24"
+                                        HorizontalAlignment="Left"
+                                        Style="{DynamicResource SettingGroupBox}">
+                                        <Grid>
+                                            <TextBlock
+                                                FontSize="14"
+                                                Foreground="{DynamicResource Color05B}"
+                                                Text="{DynamicResource version}"
+                                                TextWrapping="WrapWithOverflow" />
+                                            <TextBlock
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                DockPanel.Dock="Bottom"
+                                                FontSize="22"
+                                                Foreground="{DynamicResource Color05B}"
+                                                Text="{Binding Version}"
+                                                TextWrapping="WrapWithOverflow" />
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+
+                                <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource update}" />
+                                        </StackPanel>
+                                        <Button
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            Click="OnCheckUpdates"
+                                            Content="{DynamicResource checkUpdates}"
+                                            Style="{StaticResource AccentButtonStyle}" />
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="24,0,16,0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="/Resources/#Segoe Fluent Icons"
+                                            FontSize="20"
+                                            Style="{StaticResource Glyph}">
+                                            &#xe895;
+                                        </TextBlock>
+                                    </ItemsControl>
+                                </Border>
+
+
+                                <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource website}" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                                            <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                <Run Text="{Binding Website, Mode=OneWay}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="24,0,16,0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="/Resources/#Segoe Fluent Icons"
+                                            FontSize="20"
+                                            Style="{StaticResource Glyph}">
+                                            &#xeb41;
+                                        </TextBlock>
+                                    </ItemsControl>
+                                </Border>
+
+                                <Border Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                                            <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="24,0,16,0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="/Resources/#Segoe Fluent Icons"
+                                            FontSize="20"
+                                            Style="{StaticResource Glyph}">
+                                            &#xe8fd;
+                                        </TextBlock>
+                                    </ItemsControl>
+                                </Border>
+
+                                <Border Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource documentation}" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                                            <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                <Run Text="{Binding Documentation, Mode=OneWay}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="24,0,16,0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="/Resources/#Segoe Fluent Icons"
+                                            FontSize="20"
+                                            Style="{StaticResource Glyph}">
+                                            &#xe82f;
+                                        </TextBlock>
+                                    </ItemsControl>
+                                </Border>
+
+                                <Border Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Developer" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal">
+                                            <Button
+                                                Margin="0,0,12,0"
+                                                Click="OpenSettingFolder"
+                                                Content="Setting Folder" />
+                                            <Button Click="OpenLogFolder" Content="Log Folder" />
+                                        </StackPanel>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="24,0,16,0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="/Resources/#Segoe Fluent Icons"
+                                            FontSize="20"
+                                            Style="{StaticResource Glyph}">
+                                            &#xec7a;
+                                        </TextBlock>
+                                    </ItemsControl>
+                                </Border>
+                                <TextBlock
+                                    Margin="14,14,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    DockPanel.Dock="Bottom"
+                                    FontSize="12"
+                                    Foreground="{DynamicResource Color15B}"
+                                    Text="{Binding ActivatedTimes, Mode=OneWay}"
+                                    TextWrapping="WrapWithOverflow" />
+
+                            </StackPanel>
+                        </ScrollViewer>
                     </Border>
                 </TabItem>
             </TabControl>

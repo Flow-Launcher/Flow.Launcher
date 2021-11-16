@@ -36,6 +36,8 @@ namespace Flow.Launcher.Infrastructure
         public const string DefaultTheme = "Darker";
 
         public const string Themes = "Themes";
+        public const string Settings = "Settings";
+        public const string Logs = "Logs";
 
         public const string Website = "https://flow-launcher.github.io";
     }
