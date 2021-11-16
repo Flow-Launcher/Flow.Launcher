@@ -84,7 +84,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public int CustomBrowserIndex { get; set; } = 0;
 
-
+        [JsonIgnore]
         public CustomBrowserViewModel CustomBrowser
         {
             get => CustomBrowserList[CustomBrowserIndex];
@@ -96,7 +96,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Default",
-                Path = "",
+                Path = "*",
+                PrivateArg = "*",
+                EnablePrivate = false,
                 Editable = false
             }
         };
