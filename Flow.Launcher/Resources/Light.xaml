@@ -57,7 +57,12 @@
     <Thickness x:Key="DisabledCustomButtonOutBorderThickness">1,1,1,0</Thickness>
     <Thickness x:Key="DisabledCustomButtonInsideBorderThickness">0,0,0,1</Thickness>
 
-
+    <SolidColorBrush x:Key="CustomRadioBorder" Color="#858585" />
+    <SolidColorBrush x:Key="CustomRadioBackground" Color="#ededed" />
+    <SolidColorBrush x:Key="HoverCustomRadioBorder" Color="#858585" />
+    <SolidColorBrush x:Key="HoverCustomRadioBackground" Color="#e5e5e5" />
+    <SolidColorBrush x:Key="PressedCustomRadioBorder" Color="#b4b4b4" />
+    <SolidColorBrush x:Key="PressedCustomRadioBackground" Color="#dcdcdc" />
 
     <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>

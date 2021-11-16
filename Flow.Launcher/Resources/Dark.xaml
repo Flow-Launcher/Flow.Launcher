@@ -57,7 +57,12 @@
     <Thickness x:Key="DisabledCustomButtonOutBorderThickness">0,0,0,0</Thickness>
     <Thickness x:Key="DisabledCustomButtonInsideBorderThickness">1,1,1,1</Thickness>
 
-
+    <SolidColorBrush x:Key="CustomRadioBorder" Color="#999999" />
+    <SolidColorBrush x:Key="CustomRadioBackground" Color="#1d1d1d" />
+    <SolidColorBrush x:Key="HoverCustomRadioBorder" Color="#999999" />
+    <SolidColorBrush x:Key="HoverCustomRadioBackground" Color="#1d1d1d" />
+    <SolidColorBrush x:Key="PressedCustomRadioBorder" Color="#b4b4b4" />
+    <SolidColorBrush x:Key="PressedCustomRadioBackground" Color="#1d1d1d" />
 
     <CornerRadius x:Key="ControlCornerRadius">2,2,2,2</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>
@@ -1101,13 +1106,13 @@
     <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" ResourceKey="SystemAccentColorLight1Brush" />
     <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedStrokePressed" ResourceKey="SystemAccentColorDark1Brush" />
     <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-    <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedFill" ResourceKey="SystemControlHighlightAccentBrush" />
+    <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedFill" ResourceKey="SystemAccentColorLight1Brush" />
     <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" ResourceKey="SystemAccentColorLight1Brush" />
     <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedFillPressed" ResourceKey="SystemAccentColorDark1Brush" />
     <m:StaticResource x:Key="RadioButtonOuterEllipseCheckedFillDisabled" ResourceKey="SystemControlBackgroundBaseMediumLowBrush" />
-    <m:StaticResource x:Key="RadioButtonCheckGlyphFill" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
-    <m:StaticResource x:Key="RadioButtonCheckGlyphFillPointerOver" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
-    <m:StaticResource x:Key="RadioButtonCheckGlyphFillPressed" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
+    <m:StaticResource x:Key="RadioButtonCheckGlyphFill" ResourceKey="Color01B" />
+    <m:StaticResource x:Key="RadioButtonCheckGlyphFillPointerOver" ResourceKey="Color01B" />
+    <m:StaticResource x:Key="RadioButtonCheckGlyphFillPressed" ResourceKey="Color01B" />
     <m:StaticResource x:Key="RadioButtonCheckGlyphFillDisabled" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
     <m:StaticResource x:Key="RadioButtonCheckGlyphStroke" ResourceKey="SystemControlTransparentBrush" />
     <m:StaticResource x:Key="RadioButtonCheckGlyphStrokePointerOver" ResourceKey="SystemControlTransparentBrush" />

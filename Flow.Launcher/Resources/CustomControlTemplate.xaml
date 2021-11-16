@@ -665,8 +665,8 @@
                                     x:Name="OuterEllipse"
                                     Width="20"
                                     Height="20"
-                                    Fill="#ededed"
-                                    Stroke="#858585"
+                                    Fill="{DynamicResource CustomRadioBackground}"
+                                    Stroke="{DynamicResource CustomRadioBorder}"
                                     StrokeThickness="{DynamicResource RadioButtonBorderThemeThickness}"
                                     UseLayoutRounding="False" />
                                 <Ellipse
@@ -730,8 +730,8 @@
                             <Setter TargetName="ContentPresenter" Property="Foreground" Value="{DynamicResource RadioButtonForegroundPointerOver}" />
                             <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource RadioButtonBackgroundPointerOver}" />
                             <Setter TargetName="RootGrid" Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrushPointerOver}" />
-                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="#858585" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="#e5e5e5" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource HoverCustomRadioBorder}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource HoverCustomRadioBackground}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokePointerOver}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseCheckedFillPointerOver}" />
                             <Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource RadioButtonCheckGlyphFillPointerOver}" />
@@ -741,8 +741,8 @@
                             <Setter TargetName="ContentPresenter" Property="Foreground" Value="{DynamicResource RadioButtonForegroundPressed}" />
                             <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource RadioButtonBackgroundPressed}" />
                             <Setter TargetName="RootGrid" Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrushPressed}" />
-                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="#b4b4b4" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="#dcdcdc" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource PressedCustomRadioBorder}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource PressedCustomRadioBackground}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokePressed}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseCheckedFillPressed}" />
                             <Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource RadioButtonCheckGlyphFillPressed}" />
