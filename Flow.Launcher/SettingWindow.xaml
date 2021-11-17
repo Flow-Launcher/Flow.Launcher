@@ -244,7 +244,7 @@
         </Style>
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{StaticResource Color02B}" />
+            <Setter Property="Background" Value="{StaticResource Color00B}" />
             <Setter Property="Padding" Value="0,12,0,12" />
             <Setter Property="Margin" Value="0,0,18,5" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -284,7 +284,7 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color00B}" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
@@ -295,7 +295,7 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color00B}" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
