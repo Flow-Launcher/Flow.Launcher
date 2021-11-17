@@ -107,9 +107,9 @@ namespace Flow.Launcher
             });
         }
 
-        public void ShellRun(string cmd)
+        public void ShellRun(string cmd, string filename = "cmd.exe")
         {
-            var startInfo = ShellCommand.SetProcessStartInfo("cmd.exe", arguments: $"/C {cmd}", createNoWindow: true);
+            var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: $"/C {cmd}", createNoWindow: true);
             ShellCommand.Execute(startInfo);
         }
 
