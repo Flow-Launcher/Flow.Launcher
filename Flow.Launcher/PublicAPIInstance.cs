@@ -106,6 +106,7 @@ namespace Flow.Launcher
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
             });
         }
+
         public void ShellRun(string cmd)
         {
             var startInfo = ShellCommand.SetProcessStartInfo("cmd.exe", arguments: $"/C {cmd}", createNoWindow: true);
