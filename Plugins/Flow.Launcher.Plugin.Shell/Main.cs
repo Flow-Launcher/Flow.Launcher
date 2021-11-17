@@ -251,7 +251,7 @@ namespace Flow.Launcher.Plugin.Shell
         {
             try
             {
-                startProcess(info);
+                ShellCommand.Execute(startProcess, info);
             }
             catch (FileNotFoundException e)
             {

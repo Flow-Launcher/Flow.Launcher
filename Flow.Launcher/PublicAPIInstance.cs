@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +14,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
 using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
@@ -102,15 +103,10 @@ namespace Flow.Launcher
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
             });
         }
-
         public void ShellRun(string cmd)
         {
-            System.Diagnostics.Process process = new();
-            var startInfo = process.StartInfo;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = $"/C {cmd}";
-            startInfo.CreateNoWindow = true;
-            process.Start();
+            var startInfo = ShellCommand.SetProcessStartInfo("cmd.exe", arguments: $"/C {cmd}", createNoWindow: true);
+            ShellCommand.Execute(startInfo);
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
