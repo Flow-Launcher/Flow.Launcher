@@ -34,6 +34,7 @@
     <SolidColorBrush x:Key="NumberBoxColor25B" Color="#878787" />
     <SolidColorBrush x:Key="NumberBoxColor26B" Color="#1b1b1b" />
     <SolidColorBrush x:Key="CustomNumberBoxBG" Color="#fdfdfd" />
+    <SolidColorBrush x:Key="PluginInfoColor" Color="#8f8f8f" />
 
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
@@ -66,6 +67,7 @@
     <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
     <Color x:Key="NumberBoxColor25">#878787</Color>
     <Color x:Key="NumberBoxColor26">#1b1b1b</Color>
+    <Color x:Key="HoverStoreGrid">#f6f6f6</Color>
 
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
