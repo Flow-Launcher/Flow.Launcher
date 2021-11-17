@@ -30,9 +30,10 @@ namespace Flow.Launcher.Plugin
         void RestartApp();
 
         /// <summary>
-        /// Run a shell command or external program
+        /// Run a shell command
         /// </summary>
         /// <param name="cmd">The command or program to run</param>
+        /// <param name="filename">the shell type to run, e.g. powershell.exe</param>
         /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
         /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
         void ShellRun(string cmd, string filename = "cmd.exe");
