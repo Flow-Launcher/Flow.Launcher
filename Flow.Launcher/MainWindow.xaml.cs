@@ -11,6 +11,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
@@ -19,6 +20,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -30,6 +32,7 @@ namespace Flow.Launcher
         private bool isProgressBarStoryboardPaused;
         private Settings _settings;
         private NotifyIcon _notifyIcon;
+        private ContextMenu contextMenu;
         private MainViewModel _viewModel;
 
         #endregion
@@ -53,7 +56,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void OnInitialized(object sender, EventArgs e)
@@ -159,14 +162,10 @@ namespace Flow.Launcher
 
         private void UpdateNotifyIconText()
         {
-            var menu = _notifyIcon.ContextMenuStrip;
-            var open = menu.Items[0];
-            var setting = menu.Items[1];
-            var exit = menu.Items[2];
-
-            open.Text = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
-            setting.Text = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            exit.Text = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            var menu = contextMenu;
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -177,30 +176,46 @@ namespace Flow.Launcher
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
-            var menu = new ContextMenuStrip();
-            var items = menu.Items;
+            contextMenu = new ContextMenu();
 
-            var open = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayOpen"));
+            var header = new MenuItem
+            {
+                Header = "Flow Launcher", 
+                IsEnabled = false
+            };
+            var open = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen")
+            };
+            var settings = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
+            };
+            var exit = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
+            };
+
             open.Click += (o, e) => Visibility = Visibility.Visible;
-            var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
-            setting.Click += (o, e) => App.API.OpenSettingDialog();
-            var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
+            settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
+            contextMenu.Items.Add(header);
+            contextMenu.Items.Add(open);
+            contextMenu.Items.Add(settings);
+            contextMenu.Items.Add(exit);
 
-            _notifyIcon.ContextMenuStrip = menu;
+            _notifyIcon.ContextMenuStrip = new ContextMenuStrip(); // it need for close the context menu. if not, context menu can't close. 
             _notifyIcon.MouseClick += (o, e) =>
             {
-                if (e.Button == MouseButtons.Left)
+                switch (e.Button)
                 {
-                    if (menu.Visible)
-                    {
-                        menu.Close();
-                    }
-                    else
-                    {
-                        var p = System.Windows.Forms.Cursor.Position;
-                        menu.Show(p);
-                    }
+                    case MouseButtons.Left:
+                        _viewModel.ToggleFlowLauncher();
+                        break;
+
+                    case MouseButtons.Right:
+                        contextMenu.IsOpen = true;
+                        break;
                 }
             };
         }
@@ -262,7 +277,7 @@ namespace Flow.Launcher
         {
             if (_settings.HideWhenDeactive)
             {
-                Hide();
+                _viewModel.Hide();
             }
         }
 

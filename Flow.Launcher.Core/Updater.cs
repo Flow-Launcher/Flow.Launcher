@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
+using System.Threading;
 
 namespace Flow.Launcher.Core
 {
@@ -28,21 +29,21 @@ namespace Flow.Launcher.Core
             GitHubRepository = gitHubRepository;
         }
 
-        public async Task UpdateApp(IPublicAPI api, bool silentUpdate = true)
+        private SemaphoreSlim UpdateLock { get; } = new SemaphoreSlim(1);
+
+        public async Task UpdateAppAsync(IPublicAPI api, bool silentUpdate = true)
         {
+            await UpdateLock.WaitAsync();
             try
             {
-                UpdateInfo newUpdateInfo;
-
                 if (!silentUpdate)
                     api.ShowMsg(api.GetTranslation("pleaseWait"),
-                                api.GetTranslation("update_flowlauncher_update_check"));
+                        api.GetTranslation("update_flowlauncher_update_check"));
 
                 using var updateManager = await GitHubUpdateManager(GitHubRepository).ConfigureAwait(false);
 
-
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
-                newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
+                var newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
 
                 var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
                 var currentVersion = Version.Parse(Constant.Version);
@@ -58,7 +59,7 @@ namespace Flow.Launcher.Core
 
                 if (!silentUpdate)
                     api.ShowMsg(api.GetTranslation("update_flowlauncher_update_found"),
-                                api.GetTranslation("update_flowlauncher_updating"));
+                        api.GetTranslation("update_flowlauncher_updating"));
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -70,8 +71,8 @@ namespace Flow.Launcher.Core
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
                     if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
                         MessageBox.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
-                                                      DataLocation.PortableDataPath,
-                                                      targetDestination));
+                            DataLocation.PortableDataPath,
+                            targetDestination));
                 }
                 else
                 {
@@ -87,12 +88,15 @@ namespace Flow.Launcher.Core
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
             }
-            catch (Exception e) when (e is HttpRequestException || e is WebException || e is SocketException || e.InnerException is TimeoutException)
+            catch (Exception e) when (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
-                            api.GetTranslation("update_flowlauncher_check_connection"));
-                return;
+                    api.GetTranslation("update_flowlauncher_check_connection"));
+            }
+            finally
+            {
+                UpdateLock.Release();
             }
         }
 
@@ -115,13 +119,16 @@ namespace Flow.Launcher.Core
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
 
-            var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
+            await using var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
 
             var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
-
-            var client = new WebClient { Proxy = Http.WebProxy };
+            
+            var client = new WebClient
+            {
+                Proxy = Http.WebProxy
+            };
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);

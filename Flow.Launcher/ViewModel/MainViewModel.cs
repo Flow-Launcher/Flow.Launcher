@@ -21,6 +21,9 @@ using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.Windows.Threading;
+using NHotkey;
+using Windows.Web.Syndication;
+
 
 namespace Flow.Launcher.ViewModel
 {
@@ -61,6 +64,13 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = new Query();
 
             _settings = settings;
+            _settings.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(Settings.WindowSize))
+                {
+                    OnPropertyChanged(nameof(MainWindowWidth));
+                }
+            };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -108,7 +118,9 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
-            };
+            }
+
+            ;
 
             void continueAction(Task t)
             {
@@ -145,6 +157,24 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private void UpdateLastQUeryMode()
+        {
+            switch (_settings.LastQueryMode)
+            {
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    break;
+                case LastQueryMode.Preserved:
+                    LastQuerySelected = true;
+                    break;
+                case LastQueryMode.Selected:
+                    LastQuerySelected = false;
+                    break;
+                default:
+                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+
+            }
+        }
 
         private void InitializeKeyCommands()
         {
@@ -156,7 +186,18 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    MainWindowVisibility = Visibility.Collapsed;
+                    Hide();
+                }
+            });
+
+            ClearQueryCommand = new RelayCommand(_ =>
+            {
+                if (!string.IsNullOrEmpty(QueryText))
+                {
+                    ChangeQueryText(string.Empty);
+
+                    // Push Event to UI SystemQuery has changed
+                    //OnPropertyChanged(nameof(SystemQueryText));
                 }
             });
 
@@ -194,7 +235,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (hideWindow)
                     {
-                        MainWindowVisibility = Visibility.Collapsed;
+                        Hide();
                     }
 
                     if (SelectedIsFromQueryResults())
@@ -239,19 +280,14 @@ namespace Flow.Launcher.ViewModel
 
             ReloadPluginDataCommand = new RelayCommand(_ =>
             {
-                var msg = new Msg
-                {
-                    Owner = Application.Current.MainWindow
-                };
-
-                MainWindowVisibility = Visibility.Collapsed;
+                Hide();
 
                 PluginManager
                     .ReloadData()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            msg.Show(
+                            Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
                                 "");
@@ -287,7 +323,7 @@ namespace Flow.Launcher.ViewModel
         /// <param name="queryText"></param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            if (QueryText!=queryText) 
+            if (QueryText != queryText)
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
@@ -343,8 +379,9 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Visibility ProgressBarVisibility { get; set; }
-
         public Visibility MainWindowVisibility { get; set; }
+
+        public double MainWindowWidth => _settings.WindowSize;
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
@@ -357,6 +394,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
+        public ICommand ClearQueryCommand { get; private set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -668,7 +706,7 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        internal void ToggleFlowLauncher()
+        public void ToggleFlowLauncher()
         {
             if (MainWindowVisibility != Visibility.Visible)
             {
@@ -676,11 +714,44 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                MainWindowVisibility = Visibility.Collapsed;
+                Hide();
             }
         }
 
+        public async void Hide()
+        {
+            switch (_settings.LastQueryMode)
+            {
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    Application.Current.MainWindow.Opacity = 0; // Trick for no delay
+                    await Task.Delay(100);
+                    Application.Current.MainWindow.Opacity = 1;
+                    break;
+                case LastQueryMode.Preserved:
+                    LastQuerySelected = true;
+                    break;
+                case LastQueryMode.Selected:
+                    LastQuerySelected = false;
+                    break;
+                default:
+                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+            }
+            MainWindowVisibility = Visibility.Collapsed;
+        }
+
         #endregion
+
+
+        /// <summary>
+        /// Checks if Flow Launcher should ignore any hotkeys
+        /// </summary>
+        public bool ShouldIgnoreHotkeys()
+        {
+            return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+        }
+
+
 
         #region Public Methods
 

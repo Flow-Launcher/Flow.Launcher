@@ -15,7 +15,7 @@
         <core:LocalizationConverter x:Key="LocalizationConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="20 50 0 0">
+    <Grid Margin="20 14 0 14">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>

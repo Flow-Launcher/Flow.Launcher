@@ -13,55 +13,90 @@
     <system:String x:Key="iconTraySettings">설정</system:String>
     <system:String x:Key="iconTrayAbout">정보</system:String>
     <system:String x:Key="iconTrayExit">종료</system:String>
+    <system:String x:Key="closeWindow">닫기</system:String>
 
     <!--Setting General-->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 설정</system:String>
     <system:String x:Key="general">일반</system:String>
+    <system:String x:Key="portableMode">포터블 모드</system:String>
+    <system:String x:Key="portableModeToolTIp">모든 설정이 폴더안에 들어갑니다. USB 드라이브나 클라우드로 사용 가능합니다.</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">시스템 시작 시 Flow Launcher 실행</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
     <system:String x:Key="rememberLastLocation">마지막 실행 위치 기억</system:String>
     <system:String x:Key="language">언어</system:String>
     <system:String x:Key="lastQueryMode">마지막 쿼리 스타일</system:String>
+    <system:String x:Key="lastQueryModeToolTip">쿼리박스를 열었을 때 쿼리 처리 방식</system:String>
     <system:String x:Key="LastQueryPreserved">직전 쿼리에 계속 입력</system:String>
     <system:String x:Key="LastQuerySelected">직전 쿼리 내용 선택</system:String>
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 핫키 무시</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
+    <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
+    <system:String x:Key="querySearchPrecision">쿼리 검색 정확도</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">검색 결과가 좀 더 정확해집니다.</system:String>
+    <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin을 사용하여 검색할 수 있습니다. Pinyin(병음)은 로마자 중국어 입력 방식입니다.</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
 
     <!--Setting Plugin-->
     <system:String x:Key="plugin">플러그인</system:String>
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
-    <system:String x:Key="disable">비활성화</system:String>
+    <system:String x:Key="enable">On</system:String>
+    <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywords">액션 키워드</system:String>
+    <system:String x:Key="currentPriority">현재 중요도:</system:String>
+    <system:String x:Key="newPriority">새 중요도:</system:String>
+    <system:String x:Key="priority">중요도</system:String>
     <system:String x:Key="pluginDirectory">플러그인 디렉토리</system:String>
     <system:String x:Key="author">저자</system:String>
     <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
+    
+    
+    <!--Setting Plugin Store-->
+    <system:String x:Key="pluginStore">플러그인 스토어</system:String>
+    <system:String x:Key="refresh">새로고침</system:String>
+    <system:String x:Key="install">설치</system:String>
+
 
     <!--Setting Theme-->
     <system:String x:Key="theme">테마</system:String>
     <system:String x:Key="browserMoreThemes">테마 더 찾아보기</system:String>
+    <system:String x:Key="hiThere">Hi There</system:String>
     <system:String x:Key="queryBoxFont">쿼리 상자 글꼴</system:String>
     <system:String x:Key="resultItemFont">결과 항목 글꼴</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
     <system:String x:Key="opacity">투명도</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">{0} 테마가 존재하지 않습니다. 기본 테마로 변경합니다.</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">{0} 테마 로드에 실패했습니다. 기본 테마로 변경합니다.</system:String>
+    <system:String x:Key="ThemeFolder">테마 폴더</system:String>
+    <system:String x:Key="OpenThemeFolder">테마 폴더 열기</system:String>
 
     <!--Setting Hotkey-->
     <system:String x:Key="hotkey">핫키</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 핫키</system:String>
-    <system:String x:Key="openResultModifiers">결과 수정 자 열기</system:String>
-    <system:String x:Key="customQueryHotkey">사용자지정 쿼리 핫키</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력합니다.</system:String>
+    <system:String x:Key="openResultModifiers">결과 선택 단축키</system:String>
+    <system:String x:Key="openResultModifiersToolTip">결과 목록을 선택하는 단축키입니다.</system:String>
     <system:String x:Key="showOpenResultHotkey">단축키 표시</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">결과창에서 결과 선택 단축키를 표시합니다.</system:String>
+    <system:String x:Key="customQueryHotkey">사용자지정 쿼리 핫키</system:String>
+    <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">삭제</system:String>
     <system:String x:Key="edit">편집</system:String>
     <system:String x:Key="add">추가</system:String>
     <system:String x:Key="pleaseSelectAnItem">항목을 선택하세요.</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 핫키를 삭제하시겠습니까?</system:String>
+    <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
+    <system:String x:Key="useGlyphUI">플루언트 아이콘 사용</system:String>
+    <system:String x:Key="useGlyphUIEffect">결과 및 일부 메뉴에서 플루언트 아이콘을 사용합니다.</system:String>
 
     <!--Setting Proxy-->
     <system:String x:Key="proxy">HTTP 프록시</system:String>
@@ -86,8 +121,18 @@
     <system:String x:Key="about_activate_times">Flow Launcher를 {0}번 실행했습니다.</system:String>
     <system:String x:Key="checkUpdates">업데이트 확인</system:String>
     <system:String x:Key="newVersionTips">새 버전({0})이 있습니다. Flow Launcher를 재시작하세요.</system:String>
+    <system:String x:Key="checkUpdatesFailed">업데이트 확인을 실패했습니다. api.github.com로의 연결 또는 프록시 설정을 확인해주세요.</system:String>
+    <system:String x:Key="downloadUpdatesFailed">
+        업데이트 다운로드에 실패했습니다. github-cloud.s3.amazonaws.com의 연결 또는 프록시 설정을 확인해주세요. 
+        수동 다운로드를 하려면 https://github.com/Flow-Launcher/Flow.Launcher/releases 으로 방문하세요.
+    </system:String>
     <system:String x:Key="releaseNotes">릴리즈 노트:</system:String>
+    <system:String x:Key="documentation">사용 팁:</system:String>
 
+    <!--Priority Setting Dialog-->
+    <system:String x:Key="changePriorityWindow">중요도 변경</system:String>
+    <system:String x:Key="priority_tips">높은 수를 넣을수록 상위 결과에 표시됩니다. 5를 시도해보세요. 다른 플러그인 보다 결과를 낮추고 싶다면, 그보다 낮은 수를 입력하세요.</system:String>
+    <system:String x:Key="invalidPriority">중요도에 올바른 정수를 입력하세요.</system:String>
     <!--Action Keyword Setting Dialog-->
     <system:String x:Key="oldActionKeywords">예전 액션 키워드</system:String>
     <system:String x:Key="newActionKeywords">새 액션 키워드</system:String>
@@ -97,9 +142,11 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">새 액션 키워드를 입력하세요.</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">새 액션 키워드가 할당된 플러그인이 이미 있습니다. 다른 액션 키워드를 입력하세요.</system:String>
     <system:String x:Key="success">성공</system:String>
+    <system:String x:Key="completedSuccessfully">성공적으로 완료했습니다.</system:String>
     <system:String x:Key="actionkeyword_tips">액션 키워드를 지정하지 않으려면 *를 사용하세요.</system:String>
 
     <!--Custom Query Hotkey Dialog-->
+    <system:String x:Key="customeQueryHotkeyTitle">커스텀 플러그인 핫키</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">핫키를 사용할 수 없습니다. 다른 핫키를 입력하세요.</system:String>
     <system:String x:Key="invalidPluginHotkey">플러그인 핫키가 유효하지 않습니다.</system:String>
@@ -123,12 +170,23 @@
     <system:String x:Key="reportWindow_report_succeed">보고서를 정상적으로 보냈습니다.</system:String>
     <system:String x:Key="reportWindow_report_failed">보고서를 보내지 못했습니다.</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher에 문제가 발생했습니다.</system:String>
-
+    
+    <!--General Notice-->
+    <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>
     <!--update-->
+    <system:String x:Key="update_flowlauncher_update_check">새 업데이트 확인 중</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">새 Flow Launcher 버전({0})을 사용할 수 있습니다.</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">이미 가장 최신 버전의 Flow Launcher를 사용중입니다.</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">업데이트 발견</system:String>
+    <system:String x:Key="update_flowlauncher_updating">업데이트 중...</system:String>
+    <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">Flow Launcher가 유저 정보 데이터를 새버전으로 옮길 수 없습니다.
+        프로필 데이터 폴더를 수동으로 {0} 에서 {1}로 옮겨주세요. </system:String>
+    <system:String x:Key="update_flowlauncher_new_update">새 업데이트</system:String>
     <system:String x:Key="update_flowlauncher_update_error">소프트웨어 업데이트를 설치하는 중에 오류가 발생했습니다.</system:String>
     <system:String x:Key="update_flowlauncher_update">업데이트</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">취소</system:String>
+    <system:String x:Key="update_flowlauncher_fail">업데이트 실패</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">업데이트를 위해 Flow Launcher를 재시작합니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_files">업데이트 파일</system:String>

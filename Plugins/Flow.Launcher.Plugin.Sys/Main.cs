@@ -304,7 +304,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-                        FilesFolders.OpenPath(logPath);
+                        context.API.OpenDirectory(logPath);
                         return true;
                     }
                 },
@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        FilesFolders.OpenPath(DataLocation.DataDirectory());
+                        context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 }

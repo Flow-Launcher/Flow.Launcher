@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
 
     <!-- Further font customisations are dynamically loaded in Theme.cs -->
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
@@ -8,14 +9,13 @@
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Margin" Value="16 7 0 7" />
-        <Setter Property="Padding" Value="0 4 0 0" />
+        <Setter Property="Padding" Value="0 4 68 0" />
         <Setter Property="Background" Value="#2F2F2F" />
-        <Setter Property="Width" Value="664" />
         <Setter Property="Height" Value="48" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -42,10 +42,9 @@
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="Height" Value="48" />
         <Setter Property="Margin" Value="16 7 0 7" />
-        <Setter Property="Width" Value="664" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="0 4 0 0" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Padding" Value="0 4 68 0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
@@ -56,7 +55,7 @@
         <Setter Property="CornerRadius" Value="5" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Width" Value="750" />
+        <Setter Property="Width" Value="600" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 
@@ -224,31 +223,16 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
     <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
-        <Setter Property="Visibility" Value="Collapsed" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-        </Style.Triggers>
     </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
-    
     <Style x:Key="BaseItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
-
     <Style x:Key="BaseItemHotkeySelecetedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />

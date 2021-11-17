@@ -1,7 +1,6 @@
-﻿
-namespace Flow.Launcher.Plugin.PluginsManager.Models
+﻿namespace Flow.Launcher.Core.ExternalPlugins
 {
-    public class UserPlugin
+    public record UserPlugin
     {
         public string ID { get; set; }
         public string Name { get; set; }
@@ -12,5 +11,6 @@ namespace Flow.Launcher.Plugin.PluginsManager.Models
         public string Website { get; set; }
         public string UrlDownload { get; set; }
         public string UrlSourceCode { get; set; }
+        public string IcoPath { get; set; }
     }
 }

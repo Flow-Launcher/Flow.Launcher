@@ -1,9 +1,9 @@
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin.PluginsManager.Models;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -17,8 +17,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
-        private PluginsManifest pluginsManifest;
-
         private PluginInitContext Context { get; set; }
 
         private Settings Settings { get; set; }
@@ -43,7 +41,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal PluginsManager(PluginInitContext context, Settings settings)
         {
-            pluginsManifest = new PluginsManifest();
             Context = context;
             Settings = settings;
         }
@@ -51,7 +48,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private Task _downloadManifestTask = Task.CompletedTask;
 
 
-        internal Task UpdateManifest()
+        internal Task UpdateManifestAsync()
         {
             if (_downloadManifestTask.Status == TaskStatus.Running)
             {
@@ -59,7 +56,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             else
             {
-                _downloadManifestTask = pluginsManifest.DownloadManifest();
+                _downloadManifestTask = PluginsManifest.UpdateTask;
                 _downloadManifestTask.ContinueWith(_ =>
                         Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
                             Context.API.GetTranslation("plugin_pluginsmanager_update_failed_subtitle"), icoPath, false),
@@ -171,9 +168,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any())
+            if (!PluginsManifest.UserPlugins.Any())
             {
-                await UpdateManifest();
+                await UpdateManifestAsync();
             }
 
             token.ThrowIfCancellationRequested();
@@ -190,7 +187,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
-                join pluginFromManifest in pluginsManifest.UserPlugins
+                join pluginFromManifest in PluginsManifest.UserPlugins
                     on existingPlugin.Metadata.ID equals pluginFromManifest.ID
                 where existingPlugin.Metadata.Version.CompareTo(pluginFromManifest.Version) <
                       0 // if current version precedes manifest version
@@ -307,9 +304,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            if (!pluginsManifest.UserPlugins.Any())
+            if (!PluginsManifest.UserPlugins.Any())
             {
-                await UpdateManifest();
+                await UpdateManifestAsync();
             }
 
             token.ThrowIfCancellationRequested();
@@ -317,7 +314,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
 
             var results =
-                pluginsManifest
+                PluginsManifest
                     .UserPlugins
                     .Select(x =>
                         new Result

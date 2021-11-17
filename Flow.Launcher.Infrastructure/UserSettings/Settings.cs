@@ -1,22 +1,27 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel
     {
         private string language = "en";
-
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public bool ShowOpenResultHotkey { get; set; } = true;
+        public double WindowSize { get; set; } = 580;
+
         public string Language
         {
-            get => language; set
+            get => language;
+            set
             {
                 language = value;
                 OnPropertyChanged();
@@ -33,6 +38,49 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
+
+        public int CustomExplorerIndex { get; set; } = 0;
+
+        [JsonIgnore]
+        public CustomExplorerViewModel CustomExplorer
+        {
+            get => CustomExplorerList[CustomExplorerIndex < CustomExplorerList.Count ? CustomExplorerIndex : 0];
+            set => CustomExplorerList[CustomExplorerIndex] = value;
+        }
+
+        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = new()
+        {
+            new()
+            {
+                Name = "Explorer",
+                Path = "explorer",
+                DirectoryArgument = "\"%d\"",
+                FileArgument = "/select, \"%f\"",
+                Editable = false
+            },
+            new()
+            {
+                Name = "Total Commander",
+                Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
+                DirectoryArgument = "/O /A /S /T \"%d\"",
+                FileArgument = "/O /A /S /T \"%f\""
+            },
+            new()
+            {
+                Name = "Directory Opus",
+                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
+                DirectoryArgument = "/cmd Go \"%d\" NEW",
+                FileArgument = "/cmd Go \"%f\" NEW"
+
+            },
+            new()
+            {
+                Name = "Files",
+                Path = "Files",
+                DirectoryArgument = "-select \"%d\"",
+                FileArgument = "-select \"%f\""
+            }
+        };
 
 
         /// <summary>
@@ -52,7 +100,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 try
                 {
                     var precisionScore = (SearchPrecisionScore)Enum
-                                            .Parse(typeof(SearchPrecisionScore), value);
+                        .Parse(typeof(SearchPrecisionScore), value);
 
                     QuerySearchPrecision = precisionScore;
                     StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;
@@ -98,8 +146,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool HideWhenDeactive { get; set; } = true;
         public bool RememberLastLaunchLocation { get; set; }
         public bool IgnoreHotkeysOnFullscreen { get; set; }
-
-        public bool AutoHideScrollBar { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
 

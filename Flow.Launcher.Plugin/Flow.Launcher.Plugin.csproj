@@ -60,8 +60,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fody" Version="6.5.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 
 </Project>

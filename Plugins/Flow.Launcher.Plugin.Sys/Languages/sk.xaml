@@ -8,6 +8,7 @@
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Vypnúť počítač</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reštartovať počítač</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reštartovať počítač s rozšírenými možnosťami spúšťania pre núdzový režim a režim ladenia, ako aj s ďalšími možnosťami</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Odhlásiť</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Zamknúť počítač</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Zavrieť Flow Launcher</system:String>
@@ -29,6 +30,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Všetky dáta pluginov aktualizované</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Naozaj chcete počítač vypnúť?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Naozaj chcete počítač reštartovať?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Naozaj chcete počítač reštartovať s pokročilými možnosťami spúšťania?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systémové príkazy</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Poskytuje príkazy súvisiace so systémom ako je vypnutie, uzamknutie počítača atď.</system:String>

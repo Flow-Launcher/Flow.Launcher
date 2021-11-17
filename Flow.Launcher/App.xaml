@@ -9,7 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources RequestedTheme="Light" />
                 <ui:XamlControlsResources />
-                <ResourceDictionary Source="pack://application:,,,/Themes/Darker.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/CustomControlTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/Win11Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Languages/en.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

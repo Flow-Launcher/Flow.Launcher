@@ -9,11 +9,18 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="125" />
-            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="tbMsg" Visibility="Hidden" Margin="8 0 0 0" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Right"/>
-        <TextBox x:Name="tbHotkey" TabIndex="100" VerticalContentAlignment="Center" Grid.Column="1"
-                 PreviewKeyDown="TbHotkey_OnPreviewKeyDown" input:InputMethod.IsInputMethodEnabled="False" Margin="5 0 18 0"/>
+        <Popup x:Name="popup" AllowDrop="True" PopupAnimation="Fade" PlacementTarget="{Binding ElementName=tbHotkey}" IsOpen="{Binding IsKeyboardFocused, ElementName=tbHotkey, Mode=OneWay}" StaysOpen="True" AllowsTransparency="True" Placement="Top" VerticalOffset="-5">
+            <Border Background="#f6f6f6" BorderBrush="#cecece" BorderThickness="1" CornerRadius="6" Width="120" Height="30">
+                <TextBlock x:Name="tbMsg" FontSize="13" FontWeight="SemiBold" Visibility="Visible" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    press key
+                </TextBlock>
+            </Border>
+        </Popup>
+        
+        <TextBox x:Name="tbHotkey" TabIndex="100" VerticalContentAlignment="Center"
+                 PreviewKeyDown="TbHotkey_OnPreviewKeyDown" input:InputMethod.IsInputMethodEnabled="False" Margin="0 0 18 0">
+        </TextBox>
     </Grid>
 </UserControl>

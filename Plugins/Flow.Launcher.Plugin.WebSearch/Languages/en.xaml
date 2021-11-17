@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <system:String x:Key="flowlauncher_plugin_websearch_window_title">Search Source Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
@@ -14,9 +15,14 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Action Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Search suggestions</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from: </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you have a web search service you want to use, you can add it to Flow. For example, you can follow the url format in the address bar if you want to search 'casino' on Netflix: "https://www.netflix.com/search?q=Casino". To do this, change the search term 'Casino' as follows.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Add it to the URL section below. You can now search Netflix with Flow using any search terms.</system:String>
+   
 
     <!--web search edit-->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Title</system:String>

@@ -1,5 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin.PluginsManager.Models;
+﻿using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.Collections.Generic;
 using System.Text;

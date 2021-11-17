@@ -14,16 +14,14 @@
         <Setter Property="Foreground" Value="#FFFFFF" />
         <Setter Property="CaretBrush" Value="#FFFFFF" />
         <Setter Property="FontSize" Value="26" />
-        <Setter Property="Padding" Value="0 4 0 0" />
-        <Setter Property="Width" Value="490" />
+        <Setter Property="Padding" Value="0 4 66 0" />
         <Setter Property="Height" Value="42" />
     </Style>
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#202020" />
         <Setter Property="Foreground" Value="#7b7b7b" />
         <Setter Property="FontSize" Value="26" />
-        <Setter Property="Padding" Value="0 4 0 0" />
-        <Setter Property="Width" Value="490" />
+        <Setter Property="Padding" Value="0 4 66 0" />
         <Setter Property="Height" Value="42" />
     </Style>
     <Style x:Key="WindowBorderStyle" BasedOn="{StaticResource BaseWindowBorderStyle}" TargetType="{x:Type Border}">
