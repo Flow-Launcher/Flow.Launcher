@@ -30,6 +30,10 @@
     <SolidColorBrush x:Key="Color21B" Color="#cccccc" />
     <SolidColorBrush x:Key="Color22B" Color="#f0f0f0" />
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
+    <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="PopupTextColor" Color="#1b1b1b" />
+    <SolidColorBrush x:Key="PopupButtonAreaBGColor" Color="#f3f3f3" />
+    <SolidColorBrush x:Key="PopupButtonAreaBorderColor" Color="#e5e5e5" />
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>

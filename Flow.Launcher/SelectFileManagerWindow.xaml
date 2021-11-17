@@ -7,25 +7,63 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="{DynamicResource fileManagerWindow}"
-    Background="#f3f3f3"
+    Width="600"
+    Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
-    SizeToContent="WidthAndHeight"
+    SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Width="600">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <!--<Border
+        Padding="26,26,26,0"
+        Background="{DynamicResource PopupContentAreaBGColor}"
+        BorderBrush="{DynamicResource PopupContentAreaBorderColor}"
+        BorderThickness="0,0,0,1">-->
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <Border
-            Padding="26,26,26,0"
-            Background="#ffffff"
-            BorderBrush="#e5e5e5"
-            BorderThickness="0,0,0,1">
-            <Grid>
+        <Grid>
+            <StackPanel>
                 <StackPanel>
-                    <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="4"
+                            Click="btnCancel_Click"
+                            Style="{StaticResource TitleBarCloseButtonStyle}">
+                            <Path
+                                Width="46"
+                                Height="32"
+                                Data="M 18,11 27,20 M 18,20 27,11"
+                                Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                StrokeThickness="1">
+                                <Path.Style>
+                                    <Style TargetType="Path">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                <Setter Property="Opacity" Value="0.5" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Path.Style>
+                            </Path>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="26,12,26,0">
+                    <StackPanel Grid.Row="1" Margin="0,0,0,12">
                         <TextBlock
                             Grid.Column="0"
                             Margin="0,0,0,0"
@@ -38,14 +76,10 @@
                     <StackPanel>
                         <TextBlock
                             FontSize="14"
-                            Foreground="#1b1b1b"
                             Text="{DynamicResource fileManager_tips}"
                             TextAlignment="Left"
                             TextWrapping="WrapWithOverflow" />
-                        <TextBlock
-                            Margin="0,14,0,0"
-                            FontSize="14"
-                            Foreground="#1b1b1b">
+                        <TextBlock Margin="0,14,0,0" FontSize="14">
                             <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
                         </TextBlock>
                     </StackPanel>
@@ -86,7 +120,7 @@
                     <Rectangle
                         Height="1"
                         Margin="0,20,0,12"
-                        Fill="#cecece" />
+                        Fill="{StaticResource Color03B}" />
                     <StackPanel
                         Margin="0,0,0,0"
                         HorizontalAlignment="Stretch"
@@ -199,46 +233,50 @@
                         </Grid>
                     </StackPanel>
                 </StackPanel>
-            </Grid>
+            </StackPanel>
+        </Grid>
+
+        <Border
+            Grid.Row="2"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0,1,0,0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    x:Name="btnCancel"
+                    Width="100"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Click="btnCancel_Click"
+                    Content="{DynamicResource cancel}" />
+                <Button
+                    x:Name="btnDone"
+                    Width="100"
+                    Height="30"
+                    Margin="5,0,0,0"
+                    Click="btnDone_Click"
+                    Content="{DynamicResource done}"
+                    ForceCursor="True">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=directoryArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
         </Border>
-        <StackPanel
-            Grid.Row="1"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal">
-            <Button
-                x:Name="btnCancel"
-                Width="100"
-                Height="30"
-                Margin="0,0,5,0"
-                Click="btnCancel_Click"
-                Content="{DynamicResource cancel}" />
-            <Button
-                x:Name="btnDone"
-                Width="100"
-                Height="30"
-                Margin="5,0,0,0"
-                Click="btnDone_Click"
-                Content="{DynamicResource done}"
-                ForceCursor="True">
-                <Button.Style>
-                    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Text.Length, ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Text.Length, ElementName=directoryArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </StackPanel>
     </Grid>
 </Window>

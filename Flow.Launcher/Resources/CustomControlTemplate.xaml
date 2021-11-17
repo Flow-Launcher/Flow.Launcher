@@ -5,13 +5,19 @@
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
 
+    <!--  Popup Color  -->
+    <Style x:Key="PageBackgroundColor" TargetType="{x:Type Window}">
+        <Setter Property="Background" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+    </Style>
+
     <!--  Setting Window  -->
     <Style x:Key="PageTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{StaticResource Color05B}" />
     </Style>
     <Style x:Key="Glyph" TargetType="{x:Type TextBlock}">
         <Setter Property="Grid.Column" Value="0" />
-        <Setter Property="Margin" Value="24 0 16 0" />
+        <Setter Property="Margin" Value="24,0,16,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
@@ -20,13 +26,13 @@
     <Style x:Key="TabMenu" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{StaticResource Color05B}" />
     </Style>
     <Style x:Key="TabMenuIcon" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="0,0,12,0" />
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
         <Setter Property="Foreground" Value="{StaticResource Color05B}" />
     </Style>
