@@ -39,6 +39,10 @@
     <SolidColorBrush x:Key="CustomNumberBoxBG" Color="#292929" />
     <SolidColorBrush x:Key="PluginInfoColor" Color="#878787" />
 
+    <SolidColorBrush x:Key="BasicLabelColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="BasicSeparatorColor" Color="#cecece" />
+    <SolidColorBrush x:Key="BasicLineColor" Color="#cecece" />
+
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#3c3c3c" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#202020" />
     <SolidColorBrush x:Key="PopupTextColor" Color="#cfcfcf" />

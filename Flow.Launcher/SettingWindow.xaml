@@ -1354,9 +1354,9 @@
                                                         Height="32"
                                                         Margin="8,0,6,0"
                                                         VerticalAlignment="Center"
-                                                    RenderOptions.BitmapScalingMode="HighQuality"
-                                                    Source="{Binding IcoPath, IsAsync=True}"
-                                                    Stretch="Uniform" />
+                                                        RenderOptions.BitmapScalingMode="HighQuality"
+                                                        Source="{Binding IcoPath, IsAsync=True}"
+                                                        Stretch="Uniform" />
                                                 </StackPanel>
                                                 <StackPanel
                                                     Grid.Column="1"
@@ -1862,7 +1862,26 @@
                                     </Border>
 
                                     <StackPanel>
-                                        <Border Margin="0,12,0,18" Style="{DynamicResource SettingGroupBox}">
+                                        <Border Margin="0,12,0,12" Style="{DynamicResource SettingGroupBox}">
+                                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                                <StackPanel Style="{StaticResource TextPanel}">
+                                                    <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource DarkMode}" />
+                                                </StackPanel>
+                                                <ComboBox
+                                                    Grid.Column="2"
+                                                    MaxWidth="200"
+                                                    Margin="10,0,18,0"
+                                                    DisplayMemberPath="Display"
+                                                    ItemsSource="{Binding LastQueryModes}"
+                                                    SelectedValue="{Binding Settings.LastQueryMode}"
+                                                    SelectedValuePath="Value" />
+                                                <TextBlock Style="{StaticResource Glyph}">
+                                                    &#xe708;
+                                                </TextBlock>
+                                            </ItemsControl>
+                                        </Border>
+
+                                        <Border Margin="0,0,0,18" Style="{DynamicResource SettingGroupBox}">
                                             <ItemsControl Style="{StaticResource SettingGrid}">
                                                 <StackPanel Style="{StaticResource TextPanel}">
                                                     <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ThemeFolder}" />

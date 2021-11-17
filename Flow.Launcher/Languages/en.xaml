@@ -83,6 +83,10 @@
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
+    <system:String x:Key="DarkMode">Dark Mode</system:String>
+    <system:String x:Key="DarkModeDefault">System Default</system:String>
+    <system:String x:Key="DarkModeLight">Light</system:String>
+    <system:String x:Key="DarkModeDark">Dark</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>

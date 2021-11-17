@@ -35,6 +35,7 @@
     <SolidColorBrush x:Key="NumberBoxColor26B" Color="#1b1b1b" />
     <SolidColorBrush x:Key="CustomNumberBoxBG" Color="#fdfdfd" />
     <SolidColorBrush x:Key="PluginInfoColor" Color="#8f8f8f" />
+    <SolidColorBrush x:Key="BasicLabelColor" Color="#1b1b1b" />
 
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
