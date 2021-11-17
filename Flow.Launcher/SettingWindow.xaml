@@ -2369,7 +2369,7 @@
                                 <Border Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
-                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Developer" />
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Developer's Tool" />
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="1"

@@ -28,10 +28,16 @@
     <SolidColorBrush x:Key="Color19B" Color="#2a2a2a" />
     <SolidColorBrush x:Key="Color20B" Color="#303030" />
     <SolidColorBrush x:Key="Color21B" Color="#464646" />
-    <SolidColorBrush x:Key="Color22B" Color="#3c3c3c" />
+    <SolidColorBrush x:Key="Color22B" Color="#3C3C3C" />
     <SolidColorBrush x:Key="Color23B" Color="#272727" />
     <SolidColorBrush x:Key="Color24B" Color="#9a9a9a" />
     <SolidColorBrush x:Key="Color25B" Color="#323232" />
+    <SolidColorBrush x:Key="NumberBoxColor23B" Color="#3c3c3c" />
+    <SolidColorBrush x:Key="NumberBoxColor24B" Color="#272727" />
+    <SolidColorBrush x:Key="NumberBoxColor25B" Color="#5d5d5d" />
+    <SolidColorBrush x:Key="NumberBoxColor26B" Color="#ffffff" />
+    <SolidColorBrush x:Key="CustomNumberBoxBG" Color="#292929" />
+
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#3c3c3c" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#2b2b2b" />
     <SolidColorBrush x:Key="PopupTextColor" Color="#cfcfcf" />
@@ -62,6 +68,10 @@
     <Color x:Key="Color23">#272727</Color>
     <Color x:Key="Color24">#9a9a9a</Color>
     <Color x:Key="Color25">#323232</Color>
+    <Color x:Key="NumberBoxColor23">#f2f2f2</Color>
+    <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
+    <Color x:Key="NumberBoxColor25">#464646</Color>
+    <Color x:Key="NumberBoxColor26">#ffffff</Color>
 
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
@@ -1515,8 +1525,8 @@
     <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
     <Thickness x:Key="TextControlMarginThemeThickness">0,9.5,0,9.5</Thickness>
     <Thickness x:Key="HelperButtonThemePadding">0,0,-2,0</Thickness>
-    <m:StaticResource x:Key="TextControlForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
-    <m:StaticResource x:Key="TextControlForegroundPointerOver" ResourceKey="SystemControlForegroundBaseHighBrush" />
+    <m:StaticResource x:Key="TextControlForeground" ResourceKey="Color05B" />
+    <m:StaticResource x:Key="TextControlForegroundPointerOver" ResourceKey="Color05B" />
     <m:StaticResource x:Key="TextControlForegroundFocused" ResourceKey="SystemControlForegroundBaseHighBrush" />
     <m:StaticResource x:Key="TextControlForegroundDisabled" ResourceKey="SystemControlDisabledChromeDisabledLowBrush" />
     <m:StaticResource x:Key="TextControlBackground" ResourceKey="Color09B" />

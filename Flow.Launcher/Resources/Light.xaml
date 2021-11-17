@@ -29,6 +29,12 @@
     <SolidColorBrush x:Key="Color20B" Color="#5a5a5a" />
     <SolidColorBrush x:Key="Color21B" Color="#cccccc" />
     <SolidColorBrush x:Key="Color22B" Color="#f0f0f0" />
+    <SolidColorBrush x:Key="NumberBoxColor23B" Color="#f2f2f2" />
+    <SolidColorBrush x:Key="NumberBoxColor24B" Color="#f5f5f5" />
+    <SolidColorBrush x:Key="NumberBoxColor25B" Color="#878787" />
+    <SolidColorBrush x:Key="NumberBoxColor26B" Color="#1b1b1b" />
+    <SolidColorBrush x:Key="CustomNumberBoxBG" Color="#fdfdfd" />
+
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
     <SolidColorBrush x:Key="PopupTextColor" Color="#1b1b1b" />
@@ -56,6 +62,11 @@
     <Color x:Key="Color20">#5a5a5a</Color>
     <Color x:Key="Color21">#cccccc</Color>
     <Color x:Key="Color22">#f0f0f0</Color>
+    <Color x:Key="NumberBoxColor23">#f2f2f2</Color>
+    <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
+    <Color x:Key="NumberBoxColor25">#878787</Color>
+    <Color x:Key="NumberBoxColor26">#1b1b1b</Color>
+
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#d3d3d3" />
