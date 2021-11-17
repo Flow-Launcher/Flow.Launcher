@@ -1354,7 +1354,9 @@
                                                         Height="32"
                                                         Margin="8,0,6,0"
                                                         VerticalAlignment="Center"
-                                                        Source="{Binding IcoPath, IsAsync=True}" />
+                                                    RenderOptions.BitmapScalingMode="HighQuality"
+                                                    Source="{Binding IcoPath, IsAsync=True}"
+                                                    Stretch="Uniform" />
                                                 </StackPanel>
                                                 <StackPanel
                                                     Grid.Column="1"
