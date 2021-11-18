@@ -302,6 +302,37 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 .ToList();
         }
 
+        internal List<Result> InstallFromWeb(string url)
+        {
+            var fileName = url.Split("/").Last();
+            var filePath = Path.Combine(DataLocation.PluginsDirectory, fileName);
+            var plugin = new UserPlugin
+            {
+                ID = "",
+                Name = fileName.Split(".").First(),
+                Author = "N/A",
+                UrlDownload = url
+            };
+            var result = new Result
+            {
+                Title = $"{url}",
+                SubTitle = $"Download and Install from URL",
+                Action = e =>
+                {
+                    if (e.SpecialKeyState.CtrlPressed)
+                    {
+                        SearchWeb.NewTabInBrowser(url);
+                        return ShouldHideWindow;
+                    }
+
+                    Application.Current.MainWindow.Hide();
+                    _ = InstallOrUpdate(plugin);
+                    return ShouldHideWindow;
+                }
+            };
+            return new List<Result> { result };
+        }
+        
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
             if (!PluginsManifest.UserPlugins.Any())
@@ -337,6 +368,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             ContextData = x
                         });
 
+            if (Uri.IsWellFormedUriString(searchNameWithoutKeyword, UriKind.Absolute))
+            {
+                return InstallFromWeb(searchNameWithoutKeyword);
+            }
             return Search(results, searchNameWithoutKeyword);
         }
 
@@ -372,8 +407,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
                 return;
             }
-
-            string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}-{plugin.Version}");
+            var directory = String.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}" : $"{plugin.Name}-{plugin.Version}";
+            string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, directory);
 
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
 
