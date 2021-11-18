@@ -315,7 +315,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             };
             var result = new Result
             {
-                Title = $"{url}",
+                Title = fileName,
                 SubTitle = $"Download and Install from URL",
                 IcoPath = icoPath,
                 Action = e =>
