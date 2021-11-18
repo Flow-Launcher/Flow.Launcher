@@ -317,6 +317,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 Title = $"{url}",
                 SubTitle = $"Download and Install from URL",
+                IcoPath = icoPath,
                 Action = e =>
                 {
                     if (e.SpecialKeyState.CtrlPressed)
