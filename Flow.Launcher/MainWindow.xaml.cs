@@ -268,6 +268,8 @@ namespace Flow.Launcher
                 sb.Children.Add(da);
                 sb.Children.Add(da2);
                 sb.Completed += (_, _) => _animating = false;
+                _settings.WindowLeft = Left;
+                _settings.WindowTop = Top;
                 sb.Begin(FlowMainWindow);
             }
         }
@@ -336,8 +338,7 @@ namespace Flow.Launcher
             {
                 Left = WindowLeft();
                 Top = WindowTop();
-                _settings.WindowLeft = Left;
-                _settings.WindowTop = Top;
+
             }
         }
 
@@ -355,19 +356,13 @@ namespace Flow.Launcher
 
         public void HideStartup()
         {
+            UpdatePosition();
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
             }
             else
             {
-                if (!_settings.HideOnStartup && _settings.WindowLeft == 0 && _settings.WindowTop == 0) /* First Launch */
-                {
-                    Left = WindowLeft();
-                    Top = WindowTop();
-                    _settings.WindowLeft = Left;
-                    _settings.WindowTop = Top;
-                }
                 _viewModel.Show();
             }
 
