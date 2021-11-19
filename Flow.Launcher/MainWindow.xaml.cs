@@ -315,9 +315,10 @@ namespace Flow.Launcher
         }
 
 
-        private void OnDeactivated(object sender, EventArgs e)
+        private async void OnDeactivated(object sender, EventArgs e)
         {
             _viewModel.Save();
+            await Task.Delay(100);
             if (_settings.HideWhenDeactive)
             {
                 _viewModel.Hide();
