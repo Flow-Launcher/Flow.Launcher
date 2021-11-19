@@ -104,7 +104,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async Task InstallOrUpdate(UserPlugin plugin)
         {
-            if (PluginExists(plugin.ID))
+            if (PluginExists(plugin.ID) || Directory.Exists(Path.Combine(DataLocation.PluginsDirectory, plugin.Name)))
             {
                 if (Context.API.GetAllPlugins()
                     .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
