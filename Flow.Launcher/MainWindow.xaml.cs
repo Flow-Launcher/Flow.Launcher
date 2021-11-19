@@ -316,7 +316,6 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            _viewModel.Save();
             // need time to initialize the main query window animation
             if (_settings.UseAnimation)
                 await Task.Delay(100);
