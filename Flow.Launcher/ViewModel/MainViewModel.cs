@@ -758,9 +758,9 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
+
             WinToggleStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
-
         }
 
         #endregion

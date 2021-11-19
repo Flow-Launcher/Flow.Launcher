@@ -274,7 +274,6 @@ namespace Flow.Launcher
             }
         }
 
-
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
@@ -318,7 +317,9 @@ namespace Flow.Launcher
         private async void OnDeactivated(object sender, EventArgs e)
         {
             _viewModel.Save();
-            await Task.Delay(100);
+            // need time to initialize the main query window animation
+            if (_settings.UseAnimation)
+                await Task.Delay(100);
             if (_settings.HideWhenDeactive)
             {
                 _viewModel.Hide();
@@ -339,10 +340,8 @@ namespace Flow.Launcher
             {
                 Left = WindowLeft();
                 Top = WindowTop();
-
             }
         }
-
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
@@ -366,7 +365,6 @@ namespace Flow.Launcher
             {
                 _viewModel.Show();
             }
-
         }
 
         public double WindowLeft()

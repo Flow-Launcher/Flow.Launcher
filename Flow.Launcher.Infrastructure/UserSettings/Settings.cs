@@ -85,7 +85,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
 
-
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>

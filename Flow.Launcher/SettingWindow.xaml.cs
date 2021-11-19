@@ -44,7 +44,6 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
-
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
