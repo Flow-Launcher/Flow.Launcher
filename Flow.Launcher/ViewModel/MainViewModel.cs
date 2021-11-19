@@ -44,6 +44,7 @@ namespace Flow.Launcher.ViewModel
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
+        private MainWindow _mainWindow;
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
@@ -303,6 +304,8 @@ namespace Flow.Launcher.ViewModel
         public ResultsViewModel Results { get; private set; }
         public ResultsViewModel ContextMenu { get; private set; }
         public ResultsViewModel History { get; private set; }
+
+        public bool gameModeStatus = false;
 
         private string _queryText;
 
