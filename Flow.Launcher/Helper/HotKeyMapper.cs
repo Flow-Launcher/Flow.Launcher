@@ -6,13 +6,10 @@ using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
 using System.Windows;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Flow.Launcher.Helper
 {
-    internal class HotKeyMapper
+    internal static class HotKeyMapper
     {
         private static Settings settings;
         private static MainViewModel mainViewModel;
@@ -28,13 +25,8 @@ namespace Flow.Launcher.Helper
 
         internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            if (mainViewModel.gameModeStatus == true)
-            {
-            }
-            else
-            {
+            if (!mainViewModel.GameModeStatus)
                 mainViewModel.ToggleFlowLauncher();
-            }
         }
 
         private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
@@ -82,7 +74,7 @@ namespace Flow.Launcher.Helper
         {
             SetHotkey(hotkey.Hotkey, (s, e) =>
             {
-                if (mainViewModel.ShouldIgnoreHotkeys() || mainViewModel.gameModeStatus == true)
+                if (mainViewModel.ShouldIgnoreHotkeys() || mainViewModel.GameModeStatus)
                     return;
 
                 mainViewModel.MainWindowVisibility = Visibility.Visible;

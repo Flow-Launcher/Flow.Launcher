@@ -20,9 +20,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.Windows.Threading;
-using NHotkey;
-using Windows.Web.Syndication;
 
 
 namespace Flow.Launcher.ViewModel
@@ -44,7 +41,6 @@ namespace Flow.Launcher.ViewModel
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
-        private MainWindow _mainWindow;
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
@@ -302,10 +298,12 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public ResultsViewModel Results { get; private set; }
+        
         public ResultsViewModel ContextMenu { get; private set; }
+        
         public ResultsViewModel History { get; private set; }
 
-        public bool gameModeStatus = false;
+        public bool GameModeStatus { get; set; }
 
         private string _queryText;
 

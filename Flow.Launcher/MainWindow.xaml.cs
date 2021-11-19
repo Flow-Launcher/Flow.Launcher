@@ -202,7 +202,7 @@ namespace Flow.Launcher
             };
 
             open.Click += (o, e) => Visibility = Visibility.Visible;
-            gamemode.Click += (o, e) => GameMode();
+            gamemode.Click += (o, e) => ToggleGameMode();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
@@ -227,17 +227,17 @@ namespace Flow.Launcher
             };
         }
 
-        public void GameMode()
+        private void ToggleGameMode()
         {
-            if (_viewModel.gameModeStatus)
+            if (_viewModel.GameModeStatus)
             {
                 _notifyIcon.Icon = Properties.Resources.app;
-                _viewModel.gameModeStatus = false;
+                _viewModel.GameModeStatus = false;
             }
             else
             {
                 _notifyIcon.Icon = Properties.Resources.gamemode;
-                _viewModel.gameModeStatus = true;
+                _viewModel.GameModeStatus = true;
             }
         }
         private void InitProgressbarAnimation()
