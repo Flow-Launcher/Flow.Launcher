@@ -164,8 +164,9 @@ namespace Flow.Launcher
         {
             var menu = contextMenu;
             ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
-            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -187,6 +188,10 @@ namespace Flow.Launcher
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen")
             };
+            var gamemode = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode")
+            };
             var settings = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
@@ -197,10 +202,12 @@ namespace Flow.Launcher
             };
 
             open.Click += (o, e) => Visibility = Visibility.Visible;
+            gamemode.Click += (o, e) => ToggleGameMode();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
+            contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
@@ -220,6 +227,19 @@ namespace Flow.Launcher
             };
         }
 
+        private void ToggleGameMode()
+        {
+            if (_viewModel.GameModeStatus)
+            {
+                _notifyIcon.Icon = Properties.Resources.app;
+                _viewModel.GameModeStatus = false;
+            }
+            else
+            {
+                _notifyIcon.Icon = Properties.Resources.gamemode;
+                _viewModel.GameModeStatus = true;
+            }
+        }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
