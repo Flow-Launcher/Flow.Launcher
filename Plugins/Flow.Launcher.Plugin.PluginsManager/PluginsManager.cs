@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +18,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
+        const string zip = "zip";
+
         private PluginInitContext Context { get; set; }
 
         private Settings Settings { get; set; }
@@ -161,9 +164,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             catch (Exception e)
             {
-                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                if (e is HttpRequestException)
+                {
+                    MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_download_error"),
+                                        Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"));
+
+                }
+                else
+                {
+                    Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
+                }
 
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "InstallOrUpdate");
 
@@ -314,19 +326,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal List<Result> InstallFromWeb(string url)
         {
-            var fileName = url.Split("/").Last();
-            var filePath = Path.Combine(DataLocation.PluginsDirectory, fileName);
+            var filename = url.Split("/").Last();
+            var name = filename.Split(string.Format(".{0}", zip)).First();
+
             var plugin = new UserPlugin
             {
                 ID = "",
-                Name = fileName.Split(".").First(),
+                Name = name,
                 Version = string.Empty,
-                Author = "N/A",
+                Author = Context.API.GetTranslation("plugin_pluginsmanager_unknown_author"),
                 UrlDownload = url
             };
+
             var result = new Result
             {
-                Title = fileName,
+                Title = filename,
                 SubTitle = $"Download and Install from URL",
                 IcoPath = icoPath,
                 Action = e =>
@@ -342,6 +356,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     return ShouldHideWindow;
                 }
             };
+
             return new List<Result> { result };
         }
         
@@ -355,6 +370,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             token.ThrowIfCancellationRequested();
 
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
+
+            if (Uri.IsWellFormedUriString(searchNameWithoutKeyword, UriKind.Absolute) 
+                && searchNameWithoutKeyword.Split('.').Last() == zip)
+                return InstallFromWeb(searchNameWithoutKeyword);
 
             var results =
                 PluginsManifest
@@ -380,10 +399,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             ContextData = x
                         });
 
-            if (Uri.IsWellFormedUriString(searchNameWithoutKeyword, UriKind.Absolute))
-            {
-                return InstallFromWeb(searchNameWithoutKeyword);
-            }
             return Search(results, searchNameWithoutKeyword);
         }
 

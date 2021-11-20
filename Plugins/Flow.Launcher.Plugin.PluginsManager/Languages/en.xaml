@@ -6,6 +6,7 @@
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Downloading plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_please_wait">Please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
@@ -29,6 +30,7 @@
     <!--Plugin Infos-->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
 
     <!--Context menu items-->
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Open website</system:String>
