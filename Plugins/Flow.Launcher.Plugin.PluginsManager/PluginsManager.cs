@@ -103,7 +103,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async Task InstallOrUpdate(UserPlugin plugin)
         {
-            if (PluginExists(plugin.ID) || Directory.Exists(Path.Combine(DataLocation.PluginsDirectory, plugin.Name)))
+            if (PluginExists(plugin.ID))
             {
                 if (Context.API.GetAllPlugins()
                     .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
@@ -137,7 +137,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
-            var filePath = Path.Combine(DataLocation.PluginsDirectory, $"{plugin.Name}-{plugin.Version}.zip");
+            // at minimum should provide a name, but handle plugin that is not downloaded from plugins manifest and is a url download
+            var downloadFilename = string.IsNullOrEmpty(plugin.Version)
+                                    ? $"{plugin.Name}-{Guid.NewGuid()}.zip" 
+                                    : $"{plugin.Name}-{plugin.Version}.zip";
+
+            var filePath = Path.Combine(DataLocation.PluginsDirectory, downloadFilename);
 
             try
             {
@@ -153,11 +158,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Context.API.GetTranslation("plugin_pluginsmanager_install_in_progress"));
 
                 Install(plugin, filePath);
-
             }
             catch (Exception e)
             {
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
 
@@ -316,6 +320,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 ID = "",
                 Name = fileName.Split(".").First(),
+                Version = string.Empty,
                 Author = "N/A",
                 UrlDownload = url
             };
@@ -411,11 +416,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
-                return;
+                MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"),
+                Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
+                               
+                throw new FileNotFoundException (
+                    string.Format("Unable to find plugin.json from the extracted zip file, or this path {0} does not exist", pluginFolderPath));
             }
-            var directory = String.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}" : $"{plugin.Name}-{plugin.Version}";
-            string newPluginPath = Path.Combine(DataLocation.PluginsDirectory, directory);
+
+            var directory = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
+            var newPluginPath = Path.Combine(DataLocation.PluginsDirectory, directory);
 
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
 
