@@ -190,5 +190,12 @@ namespace Flow.Launcher.Plugin
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
         void SaveSettingJsonStorage<T>() where T : new();
+
+        /// <summary>
+        /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
+        /// </summary>
+        /// <param name="DirectoryPath">Directory Path to open</param>
+        /// <param name="FileName">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileName = null);
     }
 }

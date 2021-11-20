@@ -26,7 +26,6 @@ namespace Flow.Launcher
         private Settings settings;
         private readonly Internationalization translater = InternationalizationManager.Instance;
         private readonly PluginViewModel pluginViewModel;
-
         public PriorityChangeWindow(string pluginId, Settings settings, PluginViewModel pluginViewModel)
         {
             InitializeComponent();
@@ -62,8 +61,17 @@ namespace Flow.Launcher
 
         private void PriorityChangeWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            OldPriority.Text = pluginViewModel.Priority.ToString();
+            tbAction.Text = pluginViewModel.Priority.ToString();
             tbAction.Focus();
+        }
+        private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
+        {
+            TextBox textBox = Keyboard.FocusedElement as TextBox;
+            if (textBox != null)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                textBox.MoveFocus(tRequest);
+            }
         }
     }
 }

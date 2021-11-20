@@ -37,9 +37,11 @@ namespace Flow.Launcher.ViewModel
             Settings = _storage.Load();
             Settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(Settings.ActivateTimes))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(ActivatedTimes));
+                    case nameof(Settings.ActivateTimes):
+                        OnPropertyChanged(nameof(ActivatedTimes));
+                        break;
                 }
             };
         }
@@ -53,7 +55,7 @@ namespace Flow.Launcher.ViewModel
 
         public bool AutoUpdates
         {
-            get { return Settings.AutoUpdates; }
+            get => Settings.AutoUpdates;
             set
             {
                 Settings.AutoUpdates = value;
@@ -67,7 +69,7 @@ namespace Flow.Launcher.ViewModel
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
         {
-            get { return _portableMode; }
+            get => _portableMode;
             set
             {
                 if (!_portable.CanUpdatePortability())
@@ -314,10 +316,16 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public double WindowWidthSize
+        {
+            get => Settings.WindowSize;
+            set => Settings.WindowSize = value;
+        }
+
         public bool UseGlyphIcons
         {
-            get { return Settings.UseGlyphIcons; }
-            set { Settings.UseGlyphIcons = value; }
+            get => Settings.UseGlyphIcons;
+            set => Settings.UseGlyphIcons = value;
         }
 
         public Brush PreviewBackground

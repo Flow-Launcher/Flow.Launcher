@@ -20,6 +20,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -55,7 +56,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
-            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void OnInitialized(object sender, EventArgs e)
