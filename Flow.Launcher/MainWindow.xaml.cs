@@ -267,29 +267,42 @@ namespace Flow.Launcher
                 _animating = true;
                 UpdatePosition();
                 Storyboard sb = new Storyboard();
+                Storyboard iconsb = new Storyboard();
+                CircleEase easing = new CircleEase();  // or whatever easing class you want
+                easing.EasingMode = EasingMode.EaseInOut;
                 var da = new DoubleAnimation
                 {
                     From = 0,
                     To = 1,
-                    Duration = TimeSpan.FromSeconds(0.18),
+                    Duration = TimeSpan.FromSeconds(0.2),
                     FillBehavior = FillBehavior.Stop
                 };
-
                 var da2 = new DoubleAnimation
                 {
-                    From = Top + 8,
+                    From = Top + 10,
                     To = Top,
-                    Duration = TimeSpan.FromSeconds(0.18),
+                    Duration = TimeSpan.FromSeconds(0.2),
+                    FillBehavior = FillBehavior.Stop
+                };
+                var da3 = new DoubleAnimation
+                {
+                    From = 12,
+                    To = 0,
+                    EasingFunction = easing,
+                    Duration = TimeSpan.FromSeconds(0.36),
                     FillBehavior = FillBehavior.Stop
                 };
                 Storyboard.SetTarget(da, this);
                 Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
                 Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+                Storyboard.SetTargetProperty(da3, new PropertyPath(TopProperty));
                 sb.Children.Add(da);
                 sb.Children.Add(da2);
+                iconsb.Children.Add(da3);
                 sb.Completed += (_, _) => _animating = false;
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
+                iconsb.Begin(SearchIcon);
                 sb.Begin(FlowMainWindow);
             }
             if (_settings.UseSound)

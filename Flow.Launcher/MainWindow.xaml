@@ -183,6 +183,7 @@
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
                         <Path
+                            Name="SearchIcon"
                             Margin="0"
                             Data="{DynamicResource SearchIconImg}"
                             Stretch="Fill"
