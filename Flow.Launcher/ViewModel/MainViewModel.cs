@@ -20,9 +20,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.Windows.Threading;
-using NHotkey;
-using Windows.Web.Syndication;
 
 
 namespace Flow.Launcher.ViewModel
@@ -281,8 +278,12 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public ResultsViewModel Results { get; private set; }
+        
         public ResultsViewModel ContextMenu { get; private set; }
+        
         public ResultsViewModel History { get; private set; }
+
+        public bool GameModeStatus { get; set; }
 
         private string _queryText;
 
