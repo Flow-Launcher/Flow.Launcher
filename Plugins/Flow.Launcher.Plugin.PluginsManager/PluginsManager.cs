@@ -47,7 +47,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private Task _downloadManifestTask = Task.CompletedTask;
 
-
         internal Task UpdateManifestAsync()
         {
             if (_downloadManifestTask.Status == TaskStatus.Running)
@@ -150,7 +149,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
 
+                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
+                    Context.API.GetTranslation("plugin_pluginsmanager_install_in_progress"));
+
                 Install(plugin, filePath);
+
             }
             catch (Exception e)
             {
@@ -162,6 +165,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 return;
             }
+
+            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
+                    Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"));
 
             Context.API.RestartApp();
         }
