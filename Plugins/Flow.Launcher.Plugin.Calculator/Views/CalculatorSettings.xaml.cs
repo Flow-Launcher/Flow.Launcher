@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Flow.Launcher.Plugin.Caculator.ViewModels;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
 
-namespace Flow.Launcher.Plugin.Caculator.Views
+namespace Flow.Launcher.Plugin.Calculator.Views
 {
     /// <summary>
     /// Interaction logic for CalculatorSettings.xaml

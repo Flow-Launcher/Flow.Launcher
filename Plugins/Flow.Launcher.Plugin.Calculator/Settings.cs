@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {
     public class Settings
     {
