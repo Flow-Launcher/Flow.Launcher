@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -157,26 +156,6 @@ namespace Flow.Launcher.ViewModel
                 };
             }
         }
-
-        private void UpdateLastQUeryMode()
-        {
-            switch (_settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    ChangeQueryText(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                    LastQuerySelected = true;
-                    break;
-                case LastQueryMode.Selected:
-                    LastQuerySelected = false;
-                    break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
-
-            }
-        }
-
         private void InitializeKeyCommands()
         {
             EscCommand = new RelayCommand(_ =>
@@ -383,7 +362,6 @@ namespace Flow.Launcher.ViewModel
         public Visibility MainWindowVisibility { get; set; }
         public double MainWindowOpacity { get; set; } = 1;
         public bool WinToggleStatus { get; set; } = true;
-
         public double MainWindowWidth => _settings.WindowSize;
 
         public ICommand EscCommand { get; set; }
@@ -720,45 +698,42 @@ namespace Flow.Launcher.ViewModel
                 Hide();
             }
         }
-
         public void Show()
         {
-            if (_settings.UseSound)
-            {
-                MediaPlayer media = new MediaPlayer();
-                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                media.Play();
-            }
+            ((MainWindow)Application.Current.MainWindow).WindowAnimator();
             MainWindowVisibility = Visibility.Visible;
             WinToggleStatus = true;
-            ((MainWindow)Application.Current.MainWindow).WindowAnimator();
             MainWindowOpacity = 1;
         }
 
         public async void Hide()
         {
-            MainWindowOpacity = 0;
             switch (_settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
                     MainWindowOpacity = 0; // Trick for no delay
-                    await Task.Delay(100); //Time for change to opacity
+                    await Task.Delay(50); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
                     MainWindowOpacity = 0;
-                    await Task.Delay(100);
+                    if (_settings.UseAnimation)
+                    {
+                        await Task.Delay(30);
+                    }
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
                     MainWindowOpacity = 0;
-                    await Task.Delay(100);
+                    if (_settings.UseAnimation)
+                    {
+                        await Task.Delay(30);
+                    }
                     LastQuerySelected = false;
                     break;
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-
             WinToggleStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }

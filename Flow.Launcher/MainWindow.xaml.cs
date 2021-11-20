@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Flow.Launcher.Core.Plugin;
@@ -243,7 +244,6 @@ namespace Flow.Launcher
             { 
                 if (_animating)
                     return;
-                
                 _animating = true;
                 UpdatePosition();
                 Storyboard sb = new Storyboard();
@@ -271,6 +271,12 @@ namespace Flow.Launcher
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
                 sb.Begin(FlowMainWindow);
+            }
+            if (_settings.UseSound)
+            {
+                MediaPlayer media = new MediaPlayer();
+                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                media.Play();
             }
         }
 
@@ -309,7 +315,7 @@ namespace Flow.Launcher
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
             _viewModel.Hide();
-            await Task.Delay(100);
+            await Task.Delay(50);
             App.API.OpenSettingDialog();
         }
 
@@ -318,7 +324,7 @@ namespace Flow.Launcher
         {
             // need time to initialize the main query window animation
             if (_settings.UseAnimation)
-                await Task.Delay(100);
+                await Task.Delay(50);
             if (_settings.HideWhenDeactive)
             {
                 _viewModel.Hide();
