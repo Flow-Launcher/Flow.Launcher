@@ -14,6 +14,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_in_progress">Plugin installation in progress. Please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Unable to find the plugin.json metadata file from the extracted zip file.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occured while trying to install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No update available</system:String>

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -438,6 +439,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format("Unable to find plugin.json from the extracted zip file, or this path {0} does not exist", pluginFolderPath));
             }
 
+            if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
+            {
+                MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"), plugin.Name),
+                                Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
+
+                throw new InvalidOperationException(
+                    string.Format("A plugin with the same ID and version already exists, " +
+                                    "or the version is greater than this downloaded plugin {0}",
+                                    plugin.Name));
+            }
+
             var directory = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
             var newPluginPath = Path.Combine(DataLocation.PluginsDirectory, directory);
 
@@ -531,6 +543,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             return new List<Result>();
+        }
+
+        private bool SameOrLesserPluginVersionExists(string metadataPath)
+        {
+            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
+            return Context.API.GetAllPlugins()
+                                .Any(x => x.Metadata.ID == newMetadata.ID 
+                                    && (x.Metadata.Version == newMetadata.Version) 
+                                        || newMetadata.Version.CompareTo(x.Metadata.Version) < 0);
         }
     }
 }
