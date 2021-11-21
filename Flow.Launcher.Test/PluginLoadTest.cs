@@ -42,12 +42,12 @@ namespace Flow.Launcher.Test
                 },
                 new PluginMetadata
                 {
-                    ID = "CEA0TYUC6D3B7855823D60DC76F28855",
+                    ID = "ABC0TYUC6D3B7855823D60DC76F28855",
                     Version = "1.0.0"
                 },
                 new PluginMetadata
                 {
-                    ID = "CEA0TYUC6D3B7855823D60DC76F28855",
+                    ID = "ABC0TYUC6D3B7855823D60DC76F28855",
                     Version = "1.0.0"
                 }
             };
@@ -59,7 +59,8 @@ namespace Flow.Launcher.Test
             Assert.True(unique.FirstOrDefault().ID == "CEA0TYUC6D3B4085823D60DC76F28855" && unique.FirstOrDefault().Version == "1.0.2");
             Assert.True(unique.Count() == 1);
 
-            Assert.True(duplicates.Where(x => x.Version != "1.0.2" && x.ID == "CEA0TYUC6D3B4085823D60DC76F28855").Count() == 6);
+            Assert.False(duplicates.Any(x => x.Version == "1.0.2" && x.ID == "CEA0TYUC6D3B4085823D60DC76F28855"));
+            Assert.True(duplicates.Count() == 6);
         }
 
         [Test]
