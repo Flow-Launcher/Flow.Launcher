@@ -59,7 +59,7 @@ namespace Flow.Launcher.Core.Plugin
             return uniqueList;
         }
 
-        private static (List<PluginMetadata>, List<PluginMetadata>) GetUniqueLatestPluginMetadata(List<PluginMetadata> allPluginMetadata)
+        internal static (List<PluginMetadata>, List<PluginMetadata>) GetUniqueLatestPluginMetadata(List<PluginMetadata> allPluginMetadata)
         {
             var duplicate_list = new List<PluginMetadata>();
             var unique_list = new List<PluginMetadata>();
