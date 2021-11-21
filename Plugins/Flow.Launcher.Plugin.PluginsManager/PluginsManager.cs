@@ -166,17 +166,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (Exception e)
             {
                 if (e is HttpRequestException)
-                {
                     MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_download_error"),
                                         Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"));
 
-                }
-                else
-                {
-                    Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
-                }
 
                 Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "InstallOrUpdate");
 
@@ -206,7 +201,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (autocompletedResults.Any())
                 return autocompletedResults;
 
-            var uninstallSearch = search.Replace(Settings.HotkeyUpdate, string.Empty).TrimStart();
+            var uninstallSearch = search.Replace(Settings.HotkeyUpdate, string.Empty, StringComparison.OrdinalIgnoreCase).TrimStart();
 
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
@@ -341,26 +336,46 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var result = new Result
             {
-                Title = filename,
-                SubTitle = $"Download and Install from URL",
+                Title = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_from_web"), filename),
+                SubTitle = plugin.UrlDownload,
                 IcoPath = icoPath,
                 Action = e =>
                 {
                     if (e.SpecialKeyState.CtrlPressed)
                     {
-                        SearchWeb.NewTabInBrowser(url);
+                        SearchWeb.NewTabInBrowser(plugin.UrlDownload);
                         return ShouldHideWindow;
+                    }
+
+                    if (Settings.WarnFromUnknownSource)
+                    {
+                        if (!InstallSourceKnown(plugin.UrlDownload)
+                            && MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"), 
+                                                        Environment.NewLine), 
+                                                Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning_title"),
+                                                MessageBoxButton.YesNo) == MessageBoxResult.No)
+                            return false;
                     }
 
                     Application.Current.MainWindow.Hide();
                     _ = InstallOrUpdate(plugin);
+                    
                     return ShouldHideWindow;
                 }
             };
 
             return new List<Result> { result };
         }
-        
+
+        private bool InstallSourceKnown(string url)
+        {
+            var author = url.Split('/')[3];
+            var acceptedSource = "https://github.com";
+            var contructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
+
+            return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(contructedUrlPart));
+        }
+
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
             if (!PluginsManifest.UserPlugins.Any())
@@ -370,7 +385,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             token.ThrowIfCancellationRequested();
 
-            var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty).Trim();
+            var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty, StringComparison.OrdinalIgnoreCase).Trim();
 
             if (Uri.IsWellFormedUriString(searchNameWithoutKeyword, UriKind.Absolute) 
                 && searchNameWithoutKeyword.Split('.').Last() == zip)
@@ -468,7 +483,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (autocompletedResults.Any())
                 return autocompletedResults;
 
-            var uninstallSearch = search.Replace(Settings.HotkeyUninstall, string.Empty).TrimStart();
+            var uninstallSearch = search.Replace(Settings.HotkeyUninstall, string.Empty, StringComparison.OrdinalIgnoreCase).TrimStart();
 
             var results = Context.API
                 .GetAllPlugins()
