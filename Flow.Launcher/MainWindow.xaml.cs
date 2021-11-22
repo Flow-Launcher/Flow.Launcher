@@ -355,11 +355,9 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            // need time to initialize the main query window animation
-            if (_settings.UseAnimation)
-                await Task.Delay(50);
             if (_settings.HideWhenDeactive)
             {
+                await Task.Delay(50);
                 _viewModel.Hide();
             }
         }
