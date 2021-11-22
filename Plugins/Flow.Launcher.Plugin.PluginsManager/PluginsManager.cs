@@ -150,16 +150,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             try
             {
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
-
                 await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
-
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_install_in_progress"));
 
                 Install(plugin, filePath);
             }
@@ -257,10 +251,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 Task.Run(async delegate
                                 {
-                                    Context.API.ShowMsg(
-                                        Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                        Context.API.GetTranslation("plugin_pluginsmanager_please_wait"));
-
                                     await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
                                         .ConfigureAwait(false);
 
