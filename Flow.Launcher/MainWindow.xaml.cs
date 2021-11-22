@@ -348,16 +348,12 @@ namespace Flow.Launcher
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
             _viewModel.Hide();
-            await Task.Delay(50);
             App.API.OpenSettingDialog();
         }
 
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            // need time to initialize the main query window animation
-            if (_settings.UseAnimation)
-                await Task.Delay(50);
             if (_settings.HideWhenDeactive)
             {
                 _viewModel.Hide();
