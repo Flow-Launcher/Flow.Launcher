@@ -720,7 +720,7 @@ namespace Flow.Launcher.ViewModel
                     MainWindowOpacity = 0;
                     if (_settings.UseAnimation)
                     {
-                        await Task.Delay(30);
+                        await Task.Delay(50);
                     }
                     LastQuerySelected = true;
                     break;
@@ -728,7 +728,7 @@ namespace Flow.Launcher.ViewModel
                     MainWindowOpacity = 0;
                     if (_settings.UseAnimation)
                     {
-                        await Task.Delay(30);
+                        await Task.Delay(50);
                     }
                     LastQuerySelected = false;
                     break;
