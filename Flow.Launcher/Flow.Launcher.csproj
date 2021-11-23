@@ -96,6 +96,7 @@
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.7.6" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

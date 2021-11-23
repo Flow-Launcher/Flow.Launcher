@@ -7,13 +7,13 @@
 
     <!--  Popup Color  -->
     <Style x:Key="PageBackgroundColor" TargetType="{x:Type Window}">
-        <Setter Property="Background" Value="{StaticResource Color05B}" />
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Background" Value="{DynamicResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
 
     <!--  Setting Window  -->
     <Style x:Key="PageTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="Glyph" TargetType="{x:Type TextBlock}">
         <Setter Property="Grid.Column" Value="0" />
@@ -21,23 +21,23 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="TabMenu" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="TabMenuIcon" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="0,0,12,0" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="SettingSeparatorStyle" TargetType="{x:Type Separator}">
-        <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
     </Style>
 
     <!--  Title Bar  -->
@@ -53,7 +53,7 @@
     </Style>
 
     <Style x:Key="TitleBarButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
@@ -62,7 +62,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
                         x:Name="border"
-                        Background="{StaticResource Color01B}"
+                        Background="{DynamicResource Color01B}"
                         BorderThickness="0"
                         SnapsToDevicePixels="true">
                         <ContentPresenter
@@ -75,10 +75,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Color06B}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color09B}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Color09B}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -87,7 +87,7 @@
     </Style>
 
     <Style x:Key="TitleBarCloseButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
@@ -109,11 +109,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color10B}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Color10B}" />
                             <Setter Property="Foreground" Value="{DynamicResource MouseOverWindowCloseButtonForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource Color11B}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Color11B}" />
                             <Setter Property="Foreground" Value="{DynamicResource MouseOverWindowCloseButtonForegroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -1394,16 +1394,16 @@
                 <ControlTemplate TargetType="Button">
                     <Border
                         x:Name="Background"
-                        Background="{StaticResource ButtonBackgroundColor}"
-                        BorderBrush="{StaticResource ButtonOutBorder}"
-                        BorderThickness="{StaticResource CustomButtonOutBorderThickness}"
+                        Background="{DynamicResource ButtonBackgroundColor}"
+                        BorderBrush="{DynamicResource ButtonOutBorder}"
+                        BorderThickness="{DynamicResource CustomButtonOutBorderThickness}"
                         CornerRadius="4"
                         SnapsToDevicePixels="True">
                         <Border
                             x:Name="Border"
                             Padding="{TemplateBinding Padding}"
-                            BorderBrush="{StaticResource ButtonInsideBorder}"
-                            BorderThickness="{StaticResource CustomButtonInsideBorderThickness}"
+                            BorderBrush="{DynamicResource ButtonInsideBorder}"
+                            BorderThickness="{DynamicResource CustomButtonInsideBorderThickness}"
                             CornerRadius="4">
                             <ContentPresenter
                                 x:Name="ContentPresenter"
@@ -1416,27 +1416,27 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="{StaticResource ButtonMouseOver}" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="{StaticResource CustomButtonOutBorderThickness}" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="{StaticResource ButtonOutBorder}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonInsideBorder}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource CustomButtonInsideBorderThickness}" />
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ButtonMouseOver}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="{DynamicResource CustomButtonOutBorderThickness}" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ButtonOutBorder}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ButtonInsideBorder}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{DynamicResource CustomButtonInsideBorderThickness}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="{StaticResource ButtonMousePressed}" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="{StaticResource PressedCustomButtonOutBorderThickness}" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="{StaticResource ButtonMousePressedInsideBorder}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonInsideMouseOverBorder}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource PressedCustomButtonInsideBorderThickness}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonMousePressedText}" />
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="{DynamicResource PressedCustomButtonOutBorderThickness}" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ButtonInsideMouseOverBorder}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{DynamicResource PressedCustomButtonInsideBorderThickness}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonMousePressedText}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Background" Property="Background" Value="{StaticResource ButtonBackgroundDisabledColor}" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="{StaticResource DisabledCustomButtonOutBorderThickness}" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="{StaticResource ButtonOutBorder}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonInsideBorderDisabled}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource DisabledCustomButtonInsideBorderThickness}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonDisabledText}" />
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ButtonBackgroundDisabledColor}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="{DynamicResource DisabledCustomButtonOutBorderThickness}" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ButtonOutBorder}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ButtonInsideBorderDisabled}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{DynamicResource DisabledCustomButtonInsideBorderThickness}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonDisabledText}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -2606,7 +2606,7 @@
                             ui:ControlHelper.CornerRadius="4"
                             Content="{StaticResource ChevronUp}"
                             FontSize="{TemplateBinding FontSize}"
-                            Style="{StaticResource NumberBoxSpinButtonStyle}"
+                            Style="{DynamicResource NumberBoxSpinButtonStyle}"
                             Visibility="Collapsed" />
 
                         <RepeatButton
@@ -2616,7 +2616,7 @@
                             ui:ControlHelper.CornerRadius="4"
                             Content="{StaticResource ChevronDown}"
                             FontSize="{TemplateBinding FontSize}"
-                            Style="{StaticResource NumberBoxSpinButtonStyle}"
+                            Style="{DynamicResource NumberBoxSpinButtonStyle}"
                             Visibility="Collapsed" />
 
                         <ContentPresenter
@@ -2679,7 +2679,7 @@
                         </Trigger>
                         <!--  SpinButtonsPopup  -->
                         <Trigger Property="SpinButtonPlacementMode" Value="Compact">
-                            <Setter TargetName="InputBox" Property="Style" Value="{StaticResource NumberBoxTextBoxStyle}" />
+                            <Setter TargetName="InputBox" Property="Style" Value="{DynamicResource NumberBoxTextBoxStyle}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

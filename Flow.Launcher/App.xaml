@@ -8,7 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemeResources RequestedTheme="Dark">
+                <ui:ThemeResources>
                     <ui:ThemeResources.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
                             <ResourceDictionary.MergedDictionaries>
@@ -19,7 +19,6 @@
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
-                            <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="{StaticResource SystemBaseHighColor}" />
                         </ResourceDictionary>
                     </ui:ThemeResources.ThemeDictionaries>
                 </ui:ThemeResources>

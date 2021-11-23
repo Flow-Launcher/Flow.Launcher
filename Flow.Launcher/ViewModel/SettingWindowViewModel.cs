@@ -20,6 +20,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using ApplicationTheme = ModernWpf.ApplicationTheme;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -316,6 +317,23 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        enum DarkModes
+        {
+            System,
+            Light,
+            Dark
+        }
+        public List<string> DarkMode
+        {
+            get
+            {
+                var darkModeStrings = new List<string>();
+                var enumList = Enum.GetValues(typeof(DarkModes)).Cast<DarkModes>().ToList();
+                enumList.ForEach(x => darkModeStrings.Add(x.ToString()));
+                return darkModeStrings;
+            }
+        }
+
         public double WindowWidthSize
         {
             get => Settings.WindowSize;
@@ -351,6 +369,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
+
 
         public ResultsViewModel PreviewResults
         {

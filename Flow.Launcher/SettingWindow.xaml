@@ -68,8 +68,8 @@
             </Setter>
         </Style>
         <Style x:Key="SettingGroupBox" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="{StaticResource Color00B}" />
-            <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
+            <Setter Property="Background" Value="{DynamicResource Color00B}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="5" />
             <Setter Property="Margin" Value="0,5,0,0" />
@@ -78,12 +78,12 @@
 
         </Style>
         <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+            <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
             <Setter Property="Margin" Value="0,0,0,0" />
         </Style>
 
         <Style x:Key="SettingSubTitleLabel" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{StaticResource Color04B}" />
+            <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Padding" Value="0,0,24,0" />
@@ -194,7 +194,7 @@
                                         <Border
                                             x:Name="border"
                                             Height="40"
-                                            Background="{StaticResource Color01B}"
+                                            Background="{DynamicResource Color01B}"
                                             CornerRadius="5">
                                             <Grid>
                                                 <Canvas>
@@ -224,10 +224,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Color06B}" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource Color06B}" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Color06B}" />
                                 <Setter TargetName="Bullet" Property="Visibility" Value="Visible" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -244,11 +244,11 @@
         </Style>
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{StaticResource Color00B}" />
+            <Setter Property="Background" Value="{DynamicResource Color00B}" />
             <Setter Property="Padding" Value="0,12,0,12" />
             <Setter Property="Margin" Value="0,0,18,5" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -274,8 +274,8 @@
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color07B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
 
                             </MultiTrigger>
@@ -284,8 +284,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color00B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color00B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
 
@@ -295,8 +295,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color00B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color00B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
@@ -315,10 +315,10 @@
 
         <!--#region PluginStore Style-->
         <Style x:Key="StoreList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{StaticResource Color02B}" />
+            <Setter Property="Background" Value="{DynamicResource Color02B}" />
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
-            <Setter Property="BorderBrush" Value="{StaticResource Color03B}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <Setter Property="MinWidth" Value="330" />
             <Setter Property="Height" Value="98" />
             <!--#region Template for blue highlight win10-->
@@ -346,8 +346,8 @@
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color07B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
 
                             </MultiTrigger>
@@ -356,8 +356,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
 
@@ -367,8 +367,8 @@
                                     <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Color03B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
 
@@ -399,7 +399,7 @@
                                 Grid.Column="0"
                                 Margin="0,0,0,0"
                                 Panel.ZIndex="1"
-                                Background="{StaticResource Color01B}"
+                                Background="{DynamicResource Color01B}"
                                 IsItemsHost="True" />
                             <Border
                                 Grid.Column="1"
@@ -415,7 +415,7 @@
         </Style>
     </Window.Resources>
     <Border Style="{StaticResource WindowMainPanelStyle}">
-        <Grid Background="{StaticResource Color01B}">
+        <Grid Background="{DynamicResource Color01B}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -439,14 +439,14 @@
                 Margin="4,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="12"
-                Foreground="{StaticResource Color05B}"
+                Foreground="{DynamicResource Color05B}"
                 Text="{DynamicResource flowlauncher_settings}" />
 
             <Button
                 Grid.Column="2"
                 Click="OnMinimizeButtonClick"
                 RenderOptions.EdgeMode="Aliased"
-                Style="{StaticResource TitleBarButtonStyle}">
+                Style="{DynamicResource TitleBarButtonStyle}">
                 <Path
                     Width="46"
                     Height="32"
@@ -579,7 +579,7 @@
 
                     <ScrollViewer
                         Margin="0,0,0,0"
-                        Background="{StaticResource Color01B}"
+                        Background="{DynamicResource Color01B}"
                         ScrollViewer.CanContentScroll="False">
                         <StackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
@@ -892,13 +892,13 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Padding="0,0,0,0"
-                            Background="{StaticResource Color01B}">
+                            Background="{DynamicResource Color01B}">
                             <ListBox
                                 Width="Auto"
                                 Margin="5,0,0,0"
                                 Padding="0,0,7,0"
                                 HorizontalAlignment="Stretch"
-                                Background="{StaticResource Color01B}"
+                                Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
                                 ItemsSource="{Binding PluginViewModels}"
                                 ScrollViewer.CanContentScroll="False"
@@ -949,13 +949,13 @@
                                                     </StackPanel>
                                                     <StackPanel Grid.Column="1" Margin="12,0,14,0">
                                                         <TextBlock
-                                                            Foreground="{StaticResource Color05B}"
+                                                            Foreground="{DynamicResource Color05B}"
                                                             Text="{Binding PluginPair.Metadata.Name}"
                                                             TextWrapping="Wrap"
                                                             ToolTip="{Binding PluginPair.Metadata.Version}" />
                                                         <TextBlock
                                                             Margin="0,2,0,0"
-                                                            Foreground="{StaticResource Color04B}"
+                                                            Foreground="{DynamicResource Color04B}"
                                                             TextWrapping="WrapWithOverflow">
                                                             <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
                                                         </TextBlock>
@@ -966,7 +966,7 @@
                                                             Margin="0,0,8,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="12"
-                                                            Foreground="{StaticResource Color08B}"
+                                                            Foreground="{DynamicResource Color08B}"
                                                             Text="{DynamicResource priority}" />
                                                         <Border>
                                                             <Button
@@ -988,10 +988,10 @@
                                                                         <Setter Property="Padding" Value="12,8,12,8" />
                                                                         <Setter Property="BorderThickness" Value="0" />
                                                                         <Setter Property="FontWeight" Value="DemiBold" />
-                                                                        <Setter Property="Foreground" Value="{StaticResource Color05B}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
-                                                                                <Setter Property="Foreground" Value="{StaticResource Color08B}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource Color08B}" />
                                                                                 <Setter Property="FontWeight" Value="Normal" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
@@ -1070,8 +1070,8 @@
                                                             Padding="0"
                                                             HorizontalAlignment="Stretch"
                                                             VerticalAlignment="Center"
-                                                            Background="{StaticResource Color02B}"
-                                                            BorderBrush="{StaticResource Color03B}"
+                                                            Background="{DynamicResource Color02B}"
+                                                            BorderBrush="{DynamicResource Color03B}"
                                                             BorderThickness="0,1,0,0">
                                                             <!--#region SubInfo Styling-->
                                                             <Border.Style>
@@ -1286,7 +1286,7 @@
                                 Padding="0,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
-                                Background="{StaticResource Color01B}"
+                                Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource StoreList}"
                                 ItemsSource="{Binding ExternalPlugins}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -1375,18 +1375,18 @@
                                                     </StackPanel.Style>
                                                     <TextBlock
                                                         Padding="0,0,20,0"
-                                                        Foreground="{StaticResource Color05B}"
+                                                        Foreground="{DynamicResource Color05B}"
                                                         Text="{Binding Name}"
                                                         TextWrapping="WrapWithOverflow"
                                                         ToolTip="{Binding Version}" />
                                                     <TextBlock
                                                         Margin="0,2,0,0"
                                                         Padding="0,0,20,0"
-                                                        Foreground="{StaticResource Color04B}"
+                                                        Foreground="{DynamicResource Color04B}"
                                                         TextWrapping="WrapWithOverflow">
                                                         <Run
                                                             FontSize="12"
-                                                            Foreground="{StaticResource Color04B}"
+                                                            Foreground="{DynamicResource Color04B}"
                                                             Text="{Binding Description}" />
                                                     </TextBlock>
 
@@ -1414,7 +1414,7 @@
                                                         VerticalAlignment="Stretch"
                                                         Panel.ZIndex="1">
                                                         <Grid.Background>
-                                                            <SolidColorBrush Opacity=".95" Color="{StaticResource HoverStoreGrid}" />
+                                                            <SolidColorBrush Opacity=".95" Color="{DynamicResource HoverStoreGrid}" />
                                                         </Grid.Background>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
@@ -1429,14 +1429,14 @@
                                                                     Margin="20,0,0,0"
                                                                     Padding="0,0,0,0"
                                                                     FontWeight="Bold"
-                                                                    Foreground="{StaticResource Color05B}"
+                                                                    Foreground="{DynamicResource Color05B}"
                                                                     Text="{Binding Name}"
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Name}" />
                                                                 <TextBlock
                                                                     Margin="10,0,0,0"
                                                                     Padding="0,0,20,0"
-                                                                    Foreground="{StaticResource Color05B}"
+                                                                    Foreground="{DynamicResource Color05B}"
                                                                     Text="{Binding Version}"
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Version}" />
@@ -1444,7 +1444,7 @@
                                                             <StackPanel Margin="20,2,120,0" Orientation="Vertical">
                                                                 <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
                                                                     <Hyperlink
-                                                                        Foreground="{StaticResource Color04B}"
+                                                                        Foreground="{DynamicResource Color04B}"
                                                                         NavigateUri="{Binding Website}"
                                                                         RequestNavigate="OnRequestNavigate">
                                                                         <Run FontSize="12" Text="{Binding Author}" />
@@ -1601,7 +1601,7 @@
                                                     Width="100"
                                                     Margin="0,0,8,2"
                                                     VerticalAlignment="Center"
-                                                    Foreground="{StaticResource Color05B}"
+                                                    Foreground="{DynamicResource Color05B}"
                                                     Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                                                     TextAlignment="Right" />
                                                 <Slider
@@ -1651,14 +1651,14 @@
                                                                 <Border
                                                                     x:Name="Bd"
                                                                     Padding="{TemplateBinding Padding}"
-                                                                    Background="{StaticResource Color12B}"
-                                                                    BorderBrush="{StaticResource Color03B}"
+                                                                    Background="{DynamicResource Color12B}"
+                                                                    BorderBrush="{DynamicResource Color03B}"
                                                                     BorderThickness="1,1,1,0"
                                                                     CornerRadius="4"
                                                                     SnapsToDevicePixels="true">
                                                                     <Border
                                                                         x:Name="Bd2"
-                                                                        BorderBrush="{StaticResource Color14B}"
+                                                                        BorderBrush="{DynamicResource Color14B}"
                                                                         BorderThickness="0,0,0,2"
                                                                         CornerRadius="4">
                                                                         <ContentPresenter
@@ -1868,13 +1868,14 @@
                                                     <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource DarkMode}" />
                                                 </StackPanel>
                                                 <ComboBox
+                                                    x:Name="DarkModeComboBox"
                                                     Grid.Column="2"
-                                                    MaxWidth="200"
-                                                    Margin="10,0,18,0"
-                                                    DisplayMemberPath="Display"
-                                                    ItemsSource="{Binding LastQueryModes}"
-                                                    SelectedValue="{Binding Settings.LastQueryMode}"
-                                                    SelectedValuePath="Value" />
+                                                    Width="120"
+                                                    Margin="0,0,18,0"
+                                                    FontSize="14"
+                                                    ItemsSource="{Binding DarkMode}"
+                                                    SelectedItem="{Binding Settings.DarkMode}"
+                                                    SelectionChanged="DarkModeSelectedIndexChanged" />
                                                 <TextBlock Style="{StaticResource Glyph}">
                                                     &#xe708;
                                                 </TextBlock>
@@ -2035,12 +2036,12 @@
                                     Padding="0,12,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="14"
-                                    Foreground="{StaticResource Color05B}"
+                                    Foreground="{DynamicResource Color05B}"
                                     Text="{DynamicResource customQueryHotkey}" />
                                 <ListView
                                     Grid.Row="4"
                                     Margin="0,0,0,0"
-                                    Background="{StaticResource Color02B}"
+                                    Background="{DynamicResource Color02B}"
                                     BorderBrush="DarkGray"
                                     BorderThickness="1"
                                     ItemsSource="{Binding Settings.CustomPluginHotkeys}"
@@ -2284,14 +2285,14 @@
                     <Border>
                         <ScrollViewer
                             Margin="0,0,0,0"
-                            Background="{StaticResource Color01B}"
+                            Background="{DynamicResource Color01B}"
                             ScrollViewer.CanContentScroll="False">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
                                     Grid.Row="2"
                                     Margin="0,5,0,5"
                                     FontSize="30"
-                                    Style="{StaticResource PageTitle}"
+                                    Style="{DynamicResource PageTitle}"
                                     Text="{DynamicResource about}"
                                     TextAlignment="left" />
                                 <StackPanel Orientation="Horizontal">

@@ -15,6 +15,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private string language = "en";
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+        public string DarkMode { get; set; }
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
 
