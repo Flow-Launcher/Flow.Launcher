@@ -239,39 +239,36 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
-            if (_settings.UseAnimation)
-            { 
-                if (_animating)
-                    return;
-                
-                _animating = true;
-                UpdatePosition();
-                Storyboard sb = new Storyboard();
-                var da = new DoubleAnimation
-                {
-                    From = 0,
-                    To = 1,
-                    Duration = TimeSpan.FromSeconds(0.18),
-                    FillBehavior = FillBehavior.Stop
-                };
+            if (_animating)
+                return;
 
-                var da2 = new DoubleAnimation
-                {
-                    From = Top + 8,
-                    To = Top,
-                    Duration = TimeSpan.FromSeconds(0.18),
-                    FillBehavior = FillBehavior.Stop
-                };
-                Storyboard.SetTarget(da, this);
-                Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
-                Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-                sb.Children.Add(da);
-                sb.Children.Add(da2);
-                sb.Completed += (_, _) => _animating = false;
-                _settings.WindowLeft = Left;
-                _settings.WindowTop = Top;
-                sb.Begin(FlowMainWindow);
-            }
+            _animating = true;
+            UpdatePosition();
+            Storyboard sb = new Storyboard();
+            var da = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.18),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da2 = new DoubleAnimation
+            {
+                From = Top + 8,
+                To = Top,
+                Duration = TimeSpan.FromSeconds(0.18),
+                FillBehavior = FillBehavior.Stop
+            };
+            Storyboard.SetTarget(da, this);
+            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+            sb.Children.Add(da);
+            sb.Children.Add(da2);
+            sb.Completed += (_, _) => _animating = false;
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
+            sb.Begin(FlowMainWindow);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
