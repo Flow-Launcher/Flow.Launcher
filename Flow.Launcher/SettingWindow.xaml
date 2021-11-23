@@ -1866,15 +1866,18 @@
                                             <ItemsControl Style="{StaticResource SettingGrid}">
                                                 <StackPanel Style="{StaticResource TextPanel}">
                                                     <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource DarkMode}" />
+                                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource DarkModeTip}" />
                                                 </StackPanel>
                                                 <ComboBox
                                                     x:Name="DarkModeComboBox"
                                                     Grid.Column="2"
-                                                    Width="120"
+                                                    Width="180"
                                                     Margin="0,0,18,0"
+                                                    DisplayMemberPath="Display"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding DarkMode}"
-                                                    SelectedItem="{Binding Settings.DarkMode}"
+                                                    ItemsSource="{Binding DarkModes}"
+                                                    SelectedValue="{Binding Settings.DarkMode}"
+                                                    SelectedValuePath="Value"
                                                     SelectionChanged="DarkModeSelectedIndexChanged" />
                                                 <TextBlock Style="{StaticResource Glyph}">
                                                     &#xe708;

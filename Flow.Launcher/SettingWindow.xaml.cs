@@ -322,7 +322,6 @@ namespace Flow.Launcher
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
             }
-
         }
 
         /* Custom TitleBar */

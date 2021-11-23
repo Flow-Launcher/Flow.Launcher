@@ -317,20 +317,25 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        enum DarkModes
+        public class DarkMode
         {
-            System,
-            Light,
-            Dark
+            public string Display { get; set; }
+            public Infrastructure.UserSettings.DarkMode Value { get; set; }
         }
-        public List<string> DarkMode
+        public List<DarkMode> DarkModes
         {
             get
             {
-                var darkModeStrings = new List<string>();
-                var enumList = Enum.GetValues(typeof(DarkModes)).Cast<DarkModes>().ToList();
-                enumList.ForEach(x => darkModeStrings.Add(x.ToString()));
-                return darkModeStrings;
+                List<DarkMode> modes = new List<DarkMode>();
+                var enums = (Infrastructure.UserSettings.DarkMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.DarkMode));
+                foreach (var e in enums)
+                {
+                    var key = $"DarkMode{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new DarkMode { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
             }
         }
 
