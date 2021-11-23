@@ -747,12 +747,14 @@ namespace Flow.Launcher.ViewModel
                     break;
                 case LastQueryMode.Preserved:
                     MainWindowOpacity = 0;
-                    await Task.Delay(100);
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
                     MainWindowOpacity = 0;
-                    await Task.Delay(100);
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
