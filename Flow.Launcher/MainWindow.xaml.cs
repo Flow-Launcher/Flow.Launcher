@@ -355,7 +355,7 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_settings.HideWhenDeactive)
+            if (_settings.HideWhenDeactive && _viewModel.MainWindowVisibility != Visibility.Collapsed)
             {
                 await Task.Delay(50);
                 _viewModel.Hide();
