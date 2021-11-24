@@ -2343,7 +2343,10 @@
                                 </Border>
 
 
-                                <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <Border
+                                    Height="62"
+                                    Margin="0,4,0,0"
+                                    Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource website}" />
@@ -2351,6 +2354,7 @@
                                         <StackPanel
                                             Grid.Column="2"
                                             Margin="0,0,18,0"
+                                            VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
                                                 <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
@@ -2369,12 +2373,12 @@
                                     </ItemsControl>
                                 </Border>
 
-                                <Border Style="{DynamicResource SettingGroupBox}">
+                                <Border Height="62" Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource SideTextAbout}">
+                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource SideTextAbout}">
                                             <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
                                                 <Run Text="{DynamicResource releaseNotes}" />
                                             </Hyperlink>
@@ -2385,7 +2389,7 @@
                                     </ItemsControl>
                                 </Border>
 
-                                <Border Style="{DynamicResource SettingGroupBox}">
+                                <Border Height="62" Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource documentation}" />
@@ -2393,6 +2397,7 @@
                                         <StackPanel
                                             Grid.Column="2"
                                             Margin="0,0,18,0"
+                                            VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
                                                 <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
