@@ -16,7 +16,7 @@
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
-    <system:String x:Key="general">Všeobecn</system:String>
+    <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vyberateľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
@@ -114,7 +114,7 @@
     <system:String x:Key="serverCantBeEmpty">Pole Server nemôže byť prázdne</system:String>
     <system:String x:Key="portCantBeEmpty">Pole Port nemôže byť prázdne</system:String>
     <system:String x:Key="invalidPortFormat">Neplatný formát portu</system:String>
-    <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložen</system:String>
+    <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložené</system:String>
     <system:String x:Key="proxyIsCorrect">Nastavenie proxy je v poriadku</system:String>
     <system:String x:Key="proxyConnectFailed">Pripojenie proxy zlyhalo</system:String>
 
@@ -156,8 +156,8 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
-    <system:String x:Key="success">Úspešn</system:String>
-    <system:String x:Key="completedSuccessfully">Úspešne dokončen</system:String>
+    <system:String x:Key="success">Úspešné</system:String>
+    <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
     <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov. </system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -177,13 +177,13 @@
     <system:String x:Key="reportWindow_reproduce">Prosím, napíšte nám, ako došlo k pádu aplikácie, aby sme to mohli opraviť</system:String>
     <system:String x:Key="reportWindow_send_report">Odoslať hlásenie</system:String>
     <system:String x:Key="reportWindow_cancel">Zrušiť</system:String>
-    <system:String x:Key="reportWindow_general">Všeobecn</system:String>
+    <system:String x:Key="reportWindow_general">Všeobecné</system:String>
     <system:String x:Key="reportWindow_exceptions">Výnimky</system:String>
     <system:String x:Key="reportWindow_exception_type">Typ výnimky</system:String>
     <system:String x:Key="reportWindow_source">Zdroj</system:String>
     <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
     <system:String x:Key="reportWindow_sending">Odosiela sa</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslan</system:String>
+    <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
@@ -207,7 +207,7 @@
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy na github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizovan</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualizovať popis</system:String>
 
