@@ -15,6 +15,7 @@
     <system:String x:Key="iconTrayAbout">About</system:String>
     <system:String x:Key="iconTrayExit">Exit</system:String>
     <system:String x:Key="closeWindow">Close</system:String>
+    <system:String x:Key="GameMode">Game Mode</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Settings</system:String>
