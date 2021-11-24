@@ -2348,11 +2348,21 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource website}" />
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource SideTextAbout}">
-                                            <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                                <Run Text="{Binding Website, Mode=OneWay}" />
-                                            </Hyperlink>
-                                        </TextBlock>
+                                        <StackPanel
+                                            Grid.Column="2"
+                                            Margin="0,0,18,0"
+                                            Orientation="Horizontal">
+                                            <TextBlock Margin="0,0,12,0">
+                                                <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                    <Run Text="{DynamicResource website}" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock>
+                                                <Hyperlink NavigateUri="{Binding Github, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                    <Run Text="{DynamicResource github}" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xeb41;
                                         </TextBlock>
@@ -2366,7 +2376,7 @@
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource SideTextAbout}">
                                             <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                                <Run Text="{Binding ReleaseNotes, Mode=OneWay}" />
+                                                <Run Text="{DynamicResource releaseNotes}" />
                                             </Hyperlink>
                                         </TextBlock>
                                         <TextBlock Style="{StaticResource Glyph}">
@@ -2380,11 +2390,21 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource documentation}" />
                                         </StackPanel>
-                                        <TextBlock Style="{StaticResource SideTextAbout}">
-                                            <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                                <Run Text="{Binding Documentation, Mode=OneWay}" />
-                                            </Hyperlink>
-                                        </TextBlock>
+                                        <StackPanel
+                                            Grid.Column="2"
+                                            Margin="0,0,18,0"
+                                            Orientation="Horizontal">
+                                            <TextBlock Margin="0,0,12,0">
+                                                <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                    <Run Text="{DynamicResource documentation}" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock>
+                                                <Hyperlink NavigateUri="{Binding Docs, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                    <Run Text="{DynamicResource docs}" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xe82f;
                                         </TextBlock>
@@ -2394,7 +2414,7 @@
                                 <Border Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
-                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Developer's Tool" />
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource devtool}" />
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="1"
@@ -2404,8 +2424,8 @@
                                             <Button
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
-                                                Content="Setting Folder" />
-                                            <Button Click="OpenLogFolder" Content="Log Folder" />
+                                                Content="{DynamicResource settingfolder}" />
+                                            <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xec7a;

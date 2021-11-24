@@ -130,6 +130,8 @@
     <!--  Setting About  -->
     <system:String x:Key="about">About</system:String>
     <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
@@ -141,6 +143,9 @@
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
+    <system:String x:Key="devtool">DevTools</system:String>
+    <system:String x:Key="settingfolder">Setting Folder</system:String>
+    <system:String x:Key="logfolder">Log Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
