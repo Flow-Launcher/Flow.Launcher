@@ -6,6 +6,20 @@
     xmlns:primitives="http://schemas.modernwpf.com/2019"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <SolidColorBrush x:Key="SystemThemeBorder" Color="#3f3f3f" />
+    <SolidColorBrush x:Key="QuerySuggestionBoxForeground" Color="#7b7b7b" />
+    <SolidColorBrush x:Key="QuerySelectionBrush" Color="#4a5459" />
+    <SolidColorBrush x:Key="SubTitleForeground" Color="#7b7b7b" />
+    <SolidColorBrush x:Key="SubTitleSelectedForeground" Color="#7b7b7b" />
+    <SolidColorBrush x:Key="SearchIconForeground" Color="#4d4d4d" />
+    <SolidColorBrush x:Key="SeparatorForeground" Color="#4d4d4d" />
+    <SolidColorBrush x:Key="ThumbColor" Color="#9a9a9a" />
+    <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
+    <SolidColorBrush x:Key="HotkeyForeground" Color="#7b7b7b" />
+    <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#7b7b7b" />
+    <Color x:Key="ItemSelectedBackgroundColorBrush">#198F8F8F</Color>
+
+
     <SolidColorBrush x:Key="Color00B" Color="#2b2b2b" />
     <SolidColorBrush x:Key="Color01B" Color="#202020" />
     <SolidColorBrush x:Key="Color02B" Color="#2b2b2b" />

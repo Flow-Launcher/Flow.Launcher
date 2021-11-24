@@ -84,7 +84,7 @@
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
     <system:String x:Key="DarkMode">Dark Mode</system:String>
-    <system:String x:Key="DarkModeTip">System settings will take effect from the next run.</system:String>
+    <system:String x:Key="DarkModeTip">System settings will take effect from the next run</system:String>
     <system:String x:Key="DarkModeSystem">System Default</system:String>
     <system:String x:Key="DarkModeLight">Light</system:String>
     <system:String x:Key="DarkModeDark">Dark</system:String>
