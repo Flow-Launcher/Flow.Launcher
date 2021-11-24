@@ -555,8 +555,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
             return Context.API.GetAllPlugins()
                                 .Any(x => x.Metadata.ID == newMetadata.ID 
-                                    && (x.Metadata.Version == newMetadata.Version) 
-                                        || newMetadata.Version.CompareTo(x.Metadata.Version) < 0);
+                                    && (x.Metadata.Version == newMetadata.Version 
+                                        || newMetadata.Version.CompareTo(x.Metadata.Version) < 0));
         }
     }
 }
