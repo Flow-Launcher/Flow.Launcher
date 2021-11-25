@@ -59,8 +59,8 @@
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
     <system:String x:Key="author">作</system:String>
-    <system:String x:Key="plugin_init_time">載入耗時</system:String>
-    <system:String x:Key="plugin_query_time">查詢耗時</system:String>
+    <system:String x:Key="plugin_init_time">載入耗</system:String>
+    <system:String x:Key="plugin_query_time">查詢耗</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -93,9 +93,9 @@
     <system:String x:Key="customQueryHotkey">自定義熱鍵查詢</system:String>
     <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">刪除</system:String>
-    <system:String x:Key="edit">編</system:String>
+    <system:String x:Key="edit"></system:String>
     <system:String x:Key="add">新增</system:String>
-    <system:String x:Key="pleaseSelectAnItem">請選擇一</system:String>
+    <system:String x:Key="pleaseSelectAnItem">請選擇</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的熱鍵嗎</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
@@ -108,7 +108,7 @@
     <system:String x:Key="enableProxy">啟用 HTTP 代</system:String>
     <system:String x:Key="server">HTTP 伺服</system:String>
     <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">使用</system:String>
+    <system:String x:Key="userName">使</system:String>
     <system:String x:Key="password">密碼</system:String>
     <system:String x:Key="testProxy">測試代</system:String>
     <system:String x:Key="save">儲存</system:String>
@@ -128,7 +128,7 @@
     <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">更新說明:</system:String>
@@ -178,11 +178,11 @@
     <system:String x:Key="reportWindow_reproduce">請告訴我們如何重現此問題，以便我們進行修</system:String>
     <system:String x:Key="reportWindow_send_report">發送報</system:String>
     <system:String x:Key="reportWindow_cancel">取</system:String>
-    <system:String x:Key="reportWindow_general">基本訊</system:String>
-    <system:String x:Key="reportWindow_exceptions">例外訊</system:String>
+    <system:String x:Key="reportWindow_general">基本</system:String>
+    <system:String x:Key="reportWindow_exceptions">例外</system:String>
     <system:String x:Key="reportWindow_exception_type">例外類型</system:String>
     <system:String x:Key="reportWindow_source">例外來源</system:String>
-    <system:String x:Key="reportWindow_stack_trace">堆疊資</system:String>
+    <system:String x:Key="reportWindow_stack_trace">堆疊</system:String>
     <system:String x:Key="reportWindow_sending">傳送中</system:String>
     <system:String x:Key="reportWindow_report_succeed">傳送成</system:String>
     <system:String x:Key="reportWindow_report_failed">傳送失敗</system:String>
