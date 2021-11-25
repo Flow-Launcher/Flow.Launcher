@@ -59,18 +59,5 @@ namespace Flow.Launcher.Plugin.SharedCommands
             GetWindowText(hwnd, sb, sb.Capacity);
             return sb.ToString();
         }
-
-        public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "", string arguments = "", string verb = "")
-        {
-            var info = new ProcessStartInfo
-            {
-                FileName = fileName,
-                WorkingDirectory = workingDirectory,
-                Arguments = arguments,
-                Verb = verb
-            };
-
-            return info;
-        }
     }
 }
