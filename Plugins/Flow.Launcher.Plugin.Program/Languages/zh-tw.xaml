@@ -3,7 +3,7 @@
 
     <!--Program setting-->
     <system:String x:Key="flowlauncher_plugin_program_delete">刪除</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">編</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit"></system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">新增</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">路徑</system:String>
@@ -23,13 +23,13 @@
     <system:String x:Key="flowlauncher_plugin_program_directory">目</system:String>
     <system:String x:Key="flowlauncher_plugin_program_browse">瀏覽</system:String>
     <system:String x:Key="flowlauncher_plugin_program_file_suffixes">副檔名</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">最大搜尋深度（-1是無限的）</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">最大搜尋深度（-1是無限的</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">請先選擇一</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">請先選擇</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher 僅索引下列副檔名的檔案</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher 僅索引下列副檔名的檔</system:String>
     <system:String x:Key="flowlauncher_plugin_program_split_by_tip">（每個副檔名以英文的分號分隔</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">成功更新索引副檔名清單</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">副檔名不能為空</system:String>
