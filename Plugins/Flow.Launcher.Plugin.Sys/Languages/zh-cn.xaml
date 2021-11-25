@@ -8,7 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">关闭电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">重启这台电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Restart the computer with Advanced Boot Options for Safe and Debugging modes, as well as other options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off">注</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off"></system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">锁定这台电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">退出Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">重启Flow Launcher</system:String>
