@@ -20,7 +20,7 @@
     <system:String x:Key="portableMode">Portable Mode</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускати Flow Launcher при запуску системи</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher якщо втрачено фоку</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher якщо втрачено фок</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не повідомляти про доступні нові версії</system:String>
     <system:String x:Key="rememberLastLocation">Запам'ятати останнє місце запуск</system:String>
     <system:String x:Key="language">Мова</system:String>
@@ -107,14 +107,14 @@
     <system:String x:Key="proxy">HTTP Proxy</system:String>
     <system:String x:Key="enableProxy">Включити HTTP Proxy</system:String>
     <system:String x:Key="server">HTTP Серве</system:String>
-    <system:String x:Key="port">Пор</system:String>
+    <system:String x:Key="port">По</system:String>
     <system:String x:Key="userName">Логін</system:String>
     <system:String x:Key="password">Пароль</system:String>
     <system:String x:Key="testProxy">Перевірити Proxy</system:String>
     <system:String x:Key="save">Зберегти</system:String>
     <system:String x:Key="serverCantBeEmpty">Необхідно вказати &quot;HTTP Сервер&quot;</system:String>
     <system:String x:Key="portCantBeEmpty">Необхідно вказати &quot;Порт&quot;</system:String>
-    <system:String x:Key="invalidPortFormat">Невірний формат порт</system:String>
+    <system:String x:Key="invalidPortFormat">Невірний формат пор</system:String>
     <system:String x:Key="saveProxySuccessfully">Налаштування Proxy успішно збережено</system:String>
     <system:String x:Key="proxyIsCorrect">Proxy успішно налаштований</system:String>
     <system:String x:Key="proxyConnectFailed">Невдале підключення Proxy</system:String>
@@ -128,7 +128,7 @@
     <system:String x:Key="newVersionTips">Доступна нова версія {0}, будь ласка, перезавантажте Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Примітки до поточного релізу:</system:String>
@@ -159,7 +159,7 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Нова гаряча клавіша вже використовується іншим плагіном. Будь ласка, вкажіть нов</system:String>
     <system:String x:Key="success">Збережено</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Використовуйте * у разі, якщо ви не хочете ставити конкретну гарячу клавіш</system:String>
+    <system:String x:Key="actionkeyword_tips">Використовуйте * у разі, якщо ви не хочете ставити конкретну гарячу клаві</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Задані гарячі клавіші для запитів</system:String>
