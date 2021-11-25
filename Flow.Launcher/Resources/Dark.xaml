@@ -168,6 +168,7 @@
     <Color x:Key="SystemBaseMediumColor">#99FFFFFF</Color>
     <Color x:Key="SystemBaseMediumHighColor">#CCFFFFFF</Color>
     <Color x:Key="SystemBaseMediumLowColor">#66FFFFFF</Color>
+    <Color x:Key="SystemBaseMediumLowColor2">#45FFFFFF</Color>
     <Color x:Key="SystemChromeAltLowColor">#FFF2F2F2</Color>
     <Color x:Key="SystemChromeBlackHighColor">#FF000000</Color>
     <Color x:Key="SystemChromeBlackLowColor">#33000000</Color>
@@ -208,7 +209,7 @@
     <SolidColorBrush x:Key="SystemControlDisabledAccentBrush" Color="{m:DynamicColor SystemAccentColor}" />
     <SolidColorBrush x:Key="SystemControlDisabledBaseHighBrush" Color="{m:StaticColor SystemBaseHighColor}" />
     <SolidColorBrush x:Key="SystemControlDisabledBaseLowBrush" Color="{m:StaticColor SystemBaseLowColor}" />
-    <SolidColorBrush x:Key="SystemControlDisabledBaseMediumLowBrush" Color="{m:StaticColor SystemBaseMediumLowColor}" />
+    <SolidColorBrush x:Key="SystemControlDisabledBaseMediumLowBrush" Color="{m:StaticColor SystemBaseMediumLowColor2}" />
     <SolidColorBrush x:Key="SystemControlDisabledChromeDisabledHighBrush" Color="{m:StaticColor SystemChromeDisabledHighColor}" />
     <SolidColorBrush x:Key="SystemControlDisabledChromeDisabledLowBrush" Color="{m:StaticColor SystemChromeDisabledLowColor}" />
     <SolidColorBrush x:Key="SystemControlDisabledChromeHighBrush" Color="{m:StaticColor SystemChromeHighColor}" />

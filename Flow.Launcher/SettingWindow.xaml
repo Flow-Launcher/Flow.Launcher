@@ -2354,7 +2354,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
-                                            Margin="0,0,18,0"
+                                            Margin="0,0,30,0"
                                             VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
@@ -2379,7 +2379,10 @@
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
                                         </StackPanel>
-                                        <TextBlock VerticalAlignment="Center" Style="{StaticResource SideTextAbout}">
+                                        <TextBlock
+                                            Margin="0,0,-12,0"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource SideTextAbout}">
                                             <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
                                                 <Run Text="{DynamicResource releaseNotes}" />
                                             </Hyperlink>
@@ -2397,7 +2400,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
-                                            Margin="0,0,18,0"
+                                            Margin="0,0,30,0"
                                             VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
