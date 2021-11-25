@@ -128,8 +128,8 @@
     <system:String x:Key="newVersionTips">Ny versjon {0} er tilgjengelig, vennligst start Flow Launcher på nytt.</system:String>
     <system:String x:Key="checkUpdatesFailed">Oppdateringssjekk feilet, vennligst sjekk tilkoblingen og proxy-innstillene for api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Nedlastning av oppdateringer feilet, vennligst sjekk tilkoblingen og proxy-innstillene for github-cloud.s3.amazonaws.com, 
+        eller gå til https://github.com/Flow-Launcher/Flow.Launcher/releases for å laste ned oppdateringer manuelt.
     </system:String>
     <system:String x:Key="releaseNotes">Versjonsmerknader:</system:String>
     <system:String x:Key="documentation">Usage Tips:</system:String>
