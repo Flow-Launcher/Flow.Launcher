@@ -2693,67 +2693,84 @@
     </Style>
     <!--#endregion-->
 
-    <Thickness x:Key="MenuFlyoutScrollerMargin">0,4,0,4</Thickness>
-
-    <Style x:Key="ContextMenuStyleBase" TargetType="ContextMenu">
-        <Setter Property="Background" Value="{DynamicResource MenuFlyoutPresenterBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MenuFlyoutPresenterBorderBrush}" />
-        <Setter Property="BorderThickness" Value="{DynamicResource MenuFlyoutPresenterBorderThemeThickness}" />
-        <Setter Property="Padding" Value="{DynamicResource MenuFlyoutPresenterThemePadding}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-        <Setter Property="FontStyle" Value="Normal" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Grid.IsSharedSizeScope" Value="true" />
-        <Setter Property="HasDropShadow" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
-        <!--<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />-->
-        <!--<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />-->
-        <!--<Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly" />-->
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
-        <Setter Property="MaxWidth" Value="{DynamicResource FlyoutThemeMaxWidth}" />
-        <Setter Property="MinHeight" Value="{DynamicResource MenuFlyoutThemeMinHeight}" />
-        <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ContextMenu">
-                    <ui:ThemeShadowChrome
-                        x:Name="Shdw"
-                        IsShadowEnabled="{TemplateBinding HasDropShadow}"
-                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                        SnapsToDevicePixels="True">
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-                            <Grid>
-                                <ScrollViewer
-                                    x:Name="ContextMenuScrollViewer"
-                                    Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,
-                                                                                  TypeInTargetAssembly={x:Type FrameworkElement}}}"
-                                    Margin="{TemplateBinding Padding}"
-                                    MinWidth="{DynamicResource FlyoutThemeMinWidth}">
-                                    <ItemsPresenter
-                                        RenderOptions.ClearTypeHint="Enabled"
-                                        Margin="{StaticResource MenuFlyoutScrollerMargin}"
-                                        KeyboardNavigation.DirectionalNavigation="Cycle"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </ScrollViewer>
-                                <Border
-                                    x:Name="ContextMenuBorder"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
-                            </Grid>
-                        </Border>
-                    </ui:ThemeShadowChrome>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border
+                        Name="bdr"
+                        Padding="24,6,24,6"
+                        Background="Transparent">
+                        <TextBlock
+                            Name="Menu"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="{DynamicResource Color05B}"
+                            Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsVisible" Value="True">
+                            <Setter TargetName="bdr" Property="Background" Value="{DynamicResource CustomContextBackground}" />
+                            <Setter TargetName="Menu" Property="Foreground" Value="{DynamicResource Color05B}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bdr" Property="Background" Value="{DynamicResource CustomContextHover}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Menu" Property="Foreground" Value="{DynamicResource CustomContextDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultContextMenuStyle" TargetType="ContextMenu" BasedOn="{StaticResource ContextMenuStyleBase}">
+    <Style TargetType="{x:Type ContextMenu}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border
+                        x:Name="Border"
+                        Margin="5,4,5,12"
+                        Padding="0,4,0,4"
+                        Background="{DynamicResource CustomContextBackground}"
+                        BorderBrush="{DynamicResource CustomContextBorder}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="12"
+                                Direction="-90"
+                                Opacity=".2"
+                                ShadowDepth="6"
+                                Color="#8F8F8F" />
+                        </Border.Effect>
+                        <StackPanel
+                            x:Name="Panel"
+                            ClipToBounds="True"
+                            IsItemsHost="True"
+                            Orientation="Vertical" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsVisible" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource CustomContextBackground}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource CustomContextBorder}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource CustomContextBackground}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource CustomContextBorder}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-
-    <Style TargetType="ContextMenu" BasedOn="{StaticResource DefaultContextMenuStyle}" />
-
 </ResourceDictionary>

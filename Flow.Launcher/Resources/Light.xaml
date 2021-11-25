@@ -55,6 +55,13 @@
     <SolidColorBrush x:Key="PopupTextColor" Color="#1b1b1b" />
     <SolidColorBrush x:Key="PopupButtonAreaBGColor" Color="#f3f3f3" />
     <SolidColorBrush x:Key="PopupButtonAreaBorderColor" Color="#e5e5e5" />
+
+    <SolidColorBrush x:Key="CustomContextBorder" Color="#dadada" />
+    <SolidColorBrush x:Key="CustomContextBackground" Color="#f2f2f2" />
+    <SolidColorBrush x:Key="CustomContextHover" Color="#DBDBDB" />
+    <SolidColorBrush x:Key="CustomContextDisabled" Color="#868686" />
+    <SolidColorBrush x:Key="ContextSeparator" Color="#dadada" />
+
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>
