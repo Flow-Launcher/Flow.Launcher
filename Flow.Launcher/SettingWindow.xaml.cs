@@ -1,23 +1,26 @@
-using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Navigation;
-using Microsoft.Win32;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Helper;
-using System.Windows.Controls;
-using Flow.Launcher.Core.ExternalPlugins;
-using System.Runtime.InteropServices;
+using Microsoft.Win32;
+using ModernWpf;
+using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Navigation;
+using Button = System.Windows.Controls.Button;
+using Control = System.Windows.Controls.Control;
+using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
-using ApplicationTheme = ModernWpf.ApplicationTheme;
 
 namespace Flow.Launcher
 {
@@ -62,39 +65,30 @@ namespace Flow.Launcher
 
         public static void SetStartup()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
-            {
-                key?.SetValue(Infrastructure.Constant.FlowLauncher, Infrastructure.Constant.ExecutablePath);
-            }
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
         }
 
         private void RemoveStartup()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
-            {
-                key?.DeleteValue(Infrastructure.Constant.FlowLauncher, false);
-            }
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            key?.DeleteValue(Constant.FlowLauncher, false);
         }
 
         public static bool StartupSet()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            var path = key?.GetValue(Constant.FlowLauncher) as string;
+            if (path != null)
             {
-                var path = key?.GetValue(Infrastructure.Constant.FlowLauncher) as string;
-                if (path != null)
-                {
-                    return path == Infrastructure.Constant.ExecutablePath;
-                }
-                else
-                {
-                    return false;
-                }
+                return path == Constant.ExecutablePath;
             }
+            return false;
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new System.Windows.Forms.FolderBrowserDialog
+            var dlg = new FolderBrowserDialog
             {
                 SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
             };
@@ -223,7 +217,7 @@ namespace Flow.Launcher
                     var uri = new Uri(website);
                     if (Uri.CheckSchemeName(uri.Scheme))
                     {
-                        SearchWeb.NewTabInBrowser(website);
+                        website.NewTabInBrowser();
                     }
                 }
             }
@@ -257,7 +251,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            SearchWeb.NewTabInBrowser(e.Uri.AbsoluteUri);
+            e.Uri.AbsoluteUri.NewTabInBrowser();
             e.Handled = true;
         }
 
@@ -296,74 +290,63 @@ namespace Flow.Launcher
             if(sender is Button { DataContext: UserPlugin plugin })
             {
                 var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeywrod = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeywrod} install {plugin.Name}");
+                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeyword} install {plugin.Name}");
                 API.ShowMainWindow();
             }
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
         {
-            TextBox textBox = Keyboard.FocusedElement as TextBox;
-            if (textBox != null)
+            if (Keyboard.FocusedElement is not TextBox textBox)
             {
-                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-                textBox.MoveFocus(tRequest);
+                return;
             }
+            var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+            textBox.MoveFocus(tRequest);
         }
 
-        private void DarkModeSelectedIndexChanged(object sender, EventArgs e)
+        private void DarkModeSelectedIndexChanged(object sender, EventArgs e) => ThemeManager.Current.ApplicationTheme = settings.DarkMode switch
         {
-            if (settings.DarkMode == "Light")
-            {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
-            }
-            else if (settings.DarkMode == "Dark")
-            {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
-            }
-        }
+            "Light" => ApplicationTheme.Light,
+            "Dark" => ApplicationTheme.Dark,
+            "System" => null,
+            _ => ThemeManager.Current.ApplicationTheme
+        };
 
         /* Custom TitleBar */
 
         private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void OnMaximizeRestoreButtonClick(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-            }
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void RefreshMaximizeRestoreButton()
         {
-            if (this.WindowState == WindowState.Maximized)
+            if (WindowState == WindowState.Maximized)
             {
-                this.maximizeButton.Visibility = Visibility.Collapsed;
-                this.restoreButton.Visibility = Visibility.Visible;
+                maximizeButton.Visibility = Visibility.Collapsed;
+                restoreButton.Visibility = Visibility.Visible;
             }
             else
             {
-                this.maximizeButton.Visibility = Visibility.Visible;
-                this.restoreButton.Visibility = Visibility.Collapsed;
+                maximizeButton.Visibility = Visibility.Visible;
+                restoreButton.Visibility = Visibility.Collapsed;
             }
         }
         private void Window_StateChanged(object sender, EventArgs e)
         {
-            this.RefreshMaximizeRestoreButton();
+            RefreshMaximizeRestoreButton();
         }
 
     }
