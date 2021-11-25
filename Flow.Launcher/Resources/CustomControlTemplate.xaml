@@ -5,7 +5,7 @@
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
 
-    <Style TargetType="{x:Type TextBlock}">
+    <Style TargetType="{x:Type ContentControl}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
 
@@ -1449,6 +1449,7 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button" />
+
 
     <!--  - Custom Toggle Switch from modern wpf for left label  -->
     <system:TimeSpan x:Key="RepositionDelay">0:0:0.033</system:TimeSpan>
