@@ -51,7 +51,7 @@
             <TextBox
                 x:Name="BrowserPathBox"
                 Width="240"
-                Height="30"
+                Height="34"
                 Margin="10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
