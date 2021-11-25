@@ -3,7 +3,7 @@
 
     <!--Program setting-->
     <system:String x:Key="flowlauncher_plugin_program_delete">削除</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">編</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit"></system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">追</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
