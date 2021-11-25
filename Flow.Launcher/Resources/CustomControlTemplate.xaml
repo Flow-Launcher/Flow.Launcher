@@ -2749,9 +2749,9 @@
                             <DropShadowEffect
                                 BlurRadius="12"
                                 Direction="-90"
-                                Opacity=".2"
+                                Opacity=".15"
                                 ShadowDepth="6"
-                                Color="#8F8F8F" />
+                                Color="Black" />
                         </Border.Effect>
                         <StackPanel
                             x:Name="Panel"
