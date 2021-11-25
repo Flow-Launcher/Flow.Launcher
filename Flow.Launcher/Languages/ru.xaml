@@ -20,7 +20,7 @@
     <system:String x:Key="portableMode">Portable Mode</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускать Flow Launcher при запуске системы</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Скрывать Flow Launcher если потерян фоку</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Скрывать Flow Launcher если потерян фок</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не отображать сообщение об обновлении когда доступна новая версия</system:String>
     <system:String x:Key="rememberLastLocation">Запомнить последнее место запуска</system:String>
     <system:String x:Key="language">Язык</system:String>
@@ -107,13 +107,13 @@
     <system:String x:Key="proxy">HTTP Прокси</system:String>
     <system:String x:Key="enableProxy">Включить HTTP прокси</system:String>
     <system:String x:Key="server">HTTP Серве</system:String>
-    <system:String x:Key="port">Пор</system:String>
+    <system:String x:Key="port">По</system:String>
     <system:String x:Key="userName">Логин</system:String>
     <system:String x:Key="password">Пароль</system:String>
     <system:String x:Key="testProxy">Проверить</system:String>
     <system:String x:Key="save">Сохранить</system:String>
     <system:String x:Key="serverCantBeEmpty">Необходимо задать серве</system:String>
-    <system:String x:Key="portCantBeEmpty">Необходимо задать пор</system:String>
+    <system:String x:Key="portCantBeEmpty">Необходимо задать по</system:String>
     <system:String x:Key="invalidPortFormat">Неверный формат порта</system:String>
     <system:String x:Key="saveProxySuccessfully">Прокси успешно сохранён</system:String>
     <system:String x:Key="proxyIsCorrect">Прокси сервер задан правильно</system:String>
@@ -128,7 +128,7 @@
     <system:String x:Key="newVersionTips">New version {0} avaiable, please restart flowlauncher</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes:</system:String>
@@ -159,7 +159,7 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Новая горячая клавиша уже используется другим плагином. Пожалуйста, задайте новую</system:String>
     <system:String x:Key="success">Сохранено</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Используйте * в случае, если вы не хотите задавать конкретную горячую клавиш</system:String>
+    <system:String x:Key="actionkeyword_tips">Используйте * в случае, если вы не хотите задавать конкретную горячую клави</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Задаваемые горячие клавиши для запросов</system:String>
