@@ -5,6 +5,10 @@
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
 
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+    </Style>
+
     <!--  Popup Color  -->
     <Style x:Key="PageBackgroundColor" TargetType="{x:Type Window}">
         <Setter Property="Background" Value="{DynamicResource Color05B}" />
