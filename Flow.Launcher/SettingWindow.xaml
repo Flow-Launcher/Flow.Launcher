@@ -1674,7 +1674,6 @@
                                                                     <Trigger Property="IsSelected" Value="true">
                                                                         <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ToggleSwitchFillOn}" />
                                                                         <Setter TargetName="Bd2" Property="BorderThickness" Value="0" />
-                                                                        <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="{DynamicResource Color02B}" />
                                                                     </Trigger>
                                                                 </ControlTemplate.Triggers>
                                                             </ControlTemplate>
@@ -1695,6 +1694,7 @@
                                                         Height="34"
                                                         Margin="0,0,0,0">
                                                         <TextBlock
+                                                            x:Name="ThemeName"
                                                             Margin="0"
                                                             Padding="14,12,14,12"
                                                             HorizontalAlignment="Center"
@@ -1704,6 +1704,11 @@
                                                             Text="{Binding}"
                                                             TextWrapping="Wrap" />
                                                     </Grid>
+                                                    <DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+                                                            <Setter TargetName="ThemeName" Property="Foreground" Value="{DynamicResource Color02B}" />
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                             <ListBox.ItemsPanel>
