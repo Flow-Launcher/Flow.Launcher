@@ -128,8 +128,8 @@
     <system:String x:Key="newVersionTips">Nove verzija {0} je dostupna, molim Vas ponovo pokrenite Flow Launcher.</system:String>
     <system:String x:Key="checkUpdatesFailed">Neuspešna provera ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Neuspešno preuzimanje ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema github-cloud.s3.amazonaws.com, 
-        ili posetite https://github.com/Flow-Launcher/Flow.Launcher/releases da preuzmete ažuriranja ručno.
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">U novoj verziji:</system:String>
     <system:String x:Key="documentation">Usage Tips:</system:String>
