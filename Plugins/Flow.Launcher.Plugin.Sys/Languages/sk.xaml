@@ -25,8 +25,8 @@
 
     <!--Dialogs-->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešn</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Všetky nastavenia Flow Launchera uložen</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Všetky dáta pluginov aktualizovan</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Všetky nastavenia Flow Launchera uložené</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Všetky dáta pluginov aktualizované</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Naozaj chcete počítač vypnúť?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Naozaj chcete počítač reštartovať?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Naozaj chcete počítač reštartovať s pokročilými možnosťami spúšťania?</system:String>
