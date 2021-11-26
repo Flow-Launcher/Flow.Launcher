@@ -382,7 +382,10 @@ namespace Flow.Launcher.ViewModel
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
         public double MainWindowOpacity { get; set; } = 1;
-        public bool WinToggleStatus { get; set; } = true;
+
+        // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
+        // because it is more accurate and reliable representation than using Visibility as a condition check
+        public bool MainWindowVisibilityStatus { get; set; } = true;
 
         public double MainWindowWidth => _settings.WindowSize;
 
@@ -711,7 +714,7 @@ namespace Flow.Launcher.ViewModel
 
         public void ToggleFlowLauncher()
         {
-            if (WinToggleStatus != true)
+            if (!MainWindowVisibilityStatus)
             {
                 Show();
             }
@@ -731,8 +734,8 @@ namespace Flow.Launcher.ViewModel
             }
 
             MainWindowVisibility = Visibility.Visible;
-            
-            WinToggleStatus = true;
+
+            MainWindowVisibilityStatus = true;
             
             if(_settings.UseAnimation)
                 ((MainWindow)Application.Current.MainWindow).WindowAnimator();
@@ -765,7 +768,7 @@ namespace Flow.Launcher.ViewModel
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
 
-            WinToggleStatus = false;
+            MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }
 

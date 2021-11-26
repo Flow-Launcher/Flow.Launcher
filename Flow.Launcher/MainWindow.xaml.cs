@@ -77,9 +77,9 @@ namespace Flow.Launcher
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(MainViewModel.WinToggleStatus):
+                    case nameof(MainViewModel.MainWindowVisibilityStatus):
                         {
-                            if (_viewModel.WinToggleStatus == true)
+                            if (_viewModel.MainWindowVisibilityStatus)
                             {
                                 UpdatePosition();
                                 Activate();
