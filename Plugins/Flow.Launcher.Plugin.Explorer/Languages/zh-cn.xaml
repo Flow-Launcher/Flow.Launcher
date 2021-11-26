@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Dialogues-->
-    <system:String x:Key="plugin_explorer_make_selection_warning">请先</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">请先选</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">您确定要永久删除此 {0} 吗?</system:String>
@@ -21,7 +21,7 @@
     <system:String x:Key="plugin_explorer_add">添</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
-    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索激活</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路径搜索激活:</system:String>
@@ -38,16 +38,16 @@
     <system:String x:Key="plugin_explorer_plugin_description">利用Windows索引来搜索和管理文件和文件夹</system:String>
 
     <!--Context menu items-->
-    <system:String x:Key="plugin_explorer_copypath">复制</system:String>
+    <system:String x:Key="plugin_explorer_copypath">复制路</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">复制</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">删除</system:String>
     <system:String x:Key="plugin_explorer_path">路径:</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开文件或文件夹所在目录</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">从索引搜索中排除当前目录和子目录</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">从索引搜索中排除</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">打开Windows索引选项</system:String>
