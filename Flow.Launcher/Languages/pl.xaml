@@ -128,7 +128,7 @@
     <system:String x:Key="newVersionTips">Nowa wersja {0} jest dostępna, uruchom ponownie Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com, 
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Zmiany:</system:String>
