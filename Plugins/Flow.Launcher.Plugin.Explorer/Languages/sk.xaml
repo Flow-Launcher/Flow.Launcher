@@ -7,7 +7,6 @@
     <system:String x:Key="plugin_explorer_delete_folder_link">Naozaj chcete odstrániť {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Naozaj chcete natrvalo odstrániť túto položku {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Odstránenie bolo úspešné</system:String>
-
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Úspešne odstránené {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Priradenie globálnej skratky akcie by mohlo počas vyhľadávania poskytnúť príliš veľa výsledkov. Vyberte si konkrétne kľúčové slovo akcie</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
@@ -45,7 +44,6 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Odstrániť</system:String>
     <system:String x:Key="plugin_explorer_path">Umiestnenie:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybrané</system:String>
-
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
