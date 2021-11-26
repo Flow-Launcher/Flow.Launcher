@@ -742,22 +742,21 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            // Trick for no delay
             MainWindowOpacity = 0;
+
             switch (_settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
-                    MainWindowOpacity = 0; // Trick for no delay
                     await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
-                    MainWindowOpacity = 0;
                     if (_settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
-                    MainWindowOpacity = 0;
                     if (_settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = false;
