@@ -32,6 +32,6 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">系統命令</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">系統相關的命令。例如，關機，鎖定，設</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">系統相關的命令。例如，關機，鎖定，設定</system:String>
 
 </ResourceDictionary>
