@@ -11,7 +11,7 @@
     <system:String x:Key="iconTrayOpen">開く</system:String>
     <system:String x:Key="iconTraySettings">設</system:String>
     <system:String x:Key="iconTrayAbout">Flow Launcherについて</system:String>
-    <system:String x:Key="iconTrayExit"></system:String>
+    <system:String x:Key="iconTrayExit">終</system:String>
     <system:String x:Key="closeWindow">Close</system:String>
 
     <!--  Setting General  -->
@@ -93,7 +93,7 @@
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
     <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="delete">削除</system:String>
-    <system:String x:Key="edit"></system:String>
+    <system:String x:Key="edit">編</system:String>
     <system:String x:Key="add">追</system:String>
     <system:String x:Key="pleaseSelectAnItem">項目選択してくださ</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} プラグインのホットキーを本当に削除しますか</system:String>
@@ -128,8 +128,8 @@
     <system:String x:Key="newVersionTips">新しいバージョン {0} が利用可能です。Flow Launcherを再起動してくださ</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        更新のダウンロードに失敗しました、github-cloud.s3.amazonaws.com への接続とプロキシ設定を確認するか、
-        https://github.com/Flow-Launcher/Flow.Launcher/releases から手動でアップデートをダウンロードしてくださ
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
     <system:String x:Key="documentation">Usage Tips:</system:String>
