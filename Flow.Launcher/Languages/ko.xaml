@@ -20,7 +20,7 @@
     <system:String x:Key="portableMode">포터블 모드</system:String>
     <system:String x:Key="portableModeToolTIp">모든 설정이 폴더안에 들어갑니다. USB 드라이브나 클라우드로 사용 가능합니다.</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">시스템 시작 시 Flow Launcher 실</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher </system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
     <system:String x:Key="rememberLastLocation">마지막 실행 위치 기억</system:String>
     <system:String x:Key="language">언어</system:String>
@@ -37,7 +37,7 @@
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
-    <system:String x:Key="hideOnStartup">시작 시 Flow Launcher </system:String>
+    <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정확</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">검색 결과가 좀 더 정확해집니다.</system:String>
@@ -65,7 +65,7 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
-    <system:String x:Key="refresh">새로</system:String>
+    <system:String x:Key="refresh">새로고</system:String>
     <system:String x:Key="install">설치</system:String>
 
     <!--  Setting Theme  -->
@@ -76,7 +76,7 @@
     <system:String x:Key="queryBoxFont">쿼리 상자 글꼴</system:String>
     <system:String x:Key="resultItemFont">결과 항목 글꼴</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
-    <system:String x:Key="opacity">투</system:String>
+    <system:String x:Key="opacity">투명</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">{0} 테마가 존재하지 않습니다. 기본 테마로 변경합니다.</system:String>
     <system:String x:Key="theme_load_failure_parse_error">{0} 테마 로드에 실패했습니다. 기본 테마로 변경합니다.</system:String>
     <system:String x:Key="ThemeFolder">테마 폴더</system:String>
@@ -122,14 +122,14 @@
     <!--  Setting About  -->
     <system:String x:Key="about">정보</system:String>
     <system:String x:Key="website">웹사이트</system:String>
-    <system:String x:Key="version"></system:String>
+    <system:String x:Key="version">버</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher를 {0}번 실행했습니다.</system:String>
     <system:String x:Key="checkUpdates">업데이트 확인</system:String>
     <system:String x:Key="newVersionTips">새 버전({0})이 있습니다. Flow Launcher를 재시작하세요.</system:String>
     <system:String x:Key="checkUpdatesFailed">업데이트 확인을 실패했습니다. api.github.com로의 연결 또는 프록시 설정을 확인해주세요.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        업데이트 다운로드에 실패했습니다. github-cloud.s3.amazonaws.com의 연결 또는 프록시 설정을 확인해주세요. 
-        수동 다운로드를 하려면 https://github.com/Flow-Launcher/Flow.Launcher/releases 으로 방문하세요.
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">릴리즈 노트:</system:String>
     <system:String x:Key="documentation">사용 팁:</system:String>
@@ -173,7 +173,7 @@
     <system:String x:Key="hotkeyUnavailable">핫키를 사용할 수 없습니다.</system:String>
 
     <!--  Crash Reporter  -->
-    <system:String x:Key="reportWindow_version"></system:String>
+    <system:String x:Key="reportWindow_version">버</system:String>
     <system:String x:Key="reportWindow_time">시</system:String>
     <system:String x:Key="reportWindow_reproduce">수정을 위해 애플리케이션이 어떻게 충돌했는지 알려주세요.</system:String>
     <system:String x:Key="reportWindow_send_report">보고서 보내기</system:String>
