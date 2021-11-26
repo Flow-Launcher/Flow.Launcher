@@ -274,14 +274,14 @@ namespace Flow.Launcher
                 {
                     From = 0,
                     To = 1,
-                    Duration = TimeSpan.FromSeconds(0.18),
+                    Duration = TimeSpan.FromSeconds(0.25),
                     FillBehavior = FillBehavior.Stop
                 };
                 var da2 = new DoubleAnimation
                 {
                     From = Top + 10,
                     To = Top,
-                    Duration = TimeSpan.FromSeconds(0.18),
+                    Duration = TimeSpan.FromSeconds(0.25),
                     FillBehavior = FillBehavior.Stop
                 };
                 var da3 = new DoubleAnimation
