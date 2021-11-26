@@ -17,7 +17,7 @@
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">刪除</system:String>
-    <system:String x:Key="plugin_explorer_edit"></system:String>
+    <system:String x:Key="plugin_explorer_edit">編</system:String>
     <system:String x:Key="plugin_explorer_add">新增</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
