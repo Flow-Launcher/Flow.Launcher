@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_new_window">新窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">新标签页</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">设置浏览器路径:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_choose"></system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_choose">选</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">删除</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">编辑</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">添</system:String>
@@ -25,7 +25,7 @@
 
     <!--web search edit-->
     <system:String x:Key="flowlauncher_plugin_websearch_title">标题</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable"></system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">启</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">选择图</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">图</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">取</system:String>
