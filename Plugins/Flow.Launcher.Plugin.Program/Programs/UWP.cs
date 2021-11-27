@@ -314,7 +314,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var result = new Result
                 {
                     Title = title,
-                    SubTitle = Package.Location,
+                    SubTitle = HideLnkPath(),
                     Icon = Logo,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
@@ -350,6 +350,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
 
                 return result;
+            }
+            public string HideLnkPath()
+            {
+                bool lnkSetting = Main._settings.EnableHideLnkPath;
+                if (lnkSetting)
+                {
+                    return "";
+                }
+                else
+                {
+                    return Package.Location;
+                }
             }
 
             public List<Result> ContextMenus(IPublicAPI api)

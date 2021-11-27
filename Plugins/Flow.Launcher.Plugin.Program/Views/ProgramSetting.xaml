@@ -12,7 +12,7 @@
     mc:Ignorable="d">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="120" />
+            <RowDefinition Height="165" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
@@ -33,6 +33,12 @@
                     Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
                     IsChecked="{Binding EnableRegistrySource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
+                <CheckBox
+                    Name="HideLnkEnabled"
+                    Margin="5"
+                    Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
+                    IsChecked="{Binding EnableHideLnkPath}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                 <CheckBox
                     Name="DescriptionEnabled"
                     Margin="5"
