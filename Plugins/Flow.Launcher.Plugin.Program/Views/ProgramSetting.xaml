@@ -119,6 +119,7 @@
             SelectionMode="Extended"
             Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
             <ListView.ItemContainerStyle>
+                <!--<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem"> for Darkmode Style -->
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

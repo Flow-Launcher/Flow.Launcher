@@ -94,7 +94,7 @@
 
                 <Button
                     Width="100"
-                    Margin="10"
+                    Margin="5,0,0,0"
                     HorizontalAlignment="Right"
                     Click="ButtonAdd_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_update}" />
