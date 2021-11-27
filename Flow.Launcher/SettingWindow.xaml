@@ -1090,8 +1090,6 @@
                                                         <!--#endregion-->
                                                         <ContentControl
                                                             x:Name="PluginSettingControl"
-                                                            MaxWidth="750"
-                                                            MaxHeight="550"
                                                             Margin="0"
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
