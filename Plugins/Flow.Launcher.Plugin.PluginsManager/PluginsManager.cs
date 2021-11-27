@@ -118,7 +118,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.HotkeyUpdate} {plugin.Name}");
 
                     var mainWindow = Application.Current.MainWindow;
-                    mainWindow.Visibility = Visibility.Visible;
+                    mainWindow.Show();
                     mainWindow.Focus();
 
                     shouldHideWindow = false;

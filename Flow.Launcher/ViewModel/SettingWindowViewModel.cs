@@ -351,6 +351,18 @@ namespace Flow.Launcher.ViewModel
             set => Settings.UseGlyphIcons = value;
         }
 
+        public bool UseAnimation
+        {
+            get => Settings.UseAnimation;
+            set => Settings.UseAnimation = value;
+        }
+
+        public bool UseSound
+        {
+            get => Settings.UseSound;
+            set => Settings.UseSound = value;
+        }
+
         public Brush PreviewBackground
         {
             get

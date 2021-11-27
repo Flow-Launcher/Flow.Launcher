@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    Name="FlowMainWindow"
     Title="Flow Launcher"
     MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
     MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
@@ -21,6 +22,7 @@
     Initialized="OnInitialized"
     Loaded="OnLoaded"
     LocationChanged="OnLocationChanged"
+    Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
@@ -184,6 +186,7 @@
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
                         <Path
+                            Name="SearchIcon"
                             Margin="0"
                             Data="{DynamicResource SearchIconImg}"
                             Stretch="Fill"
