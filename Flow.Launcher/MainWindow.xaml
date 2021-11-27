@@ -47,6 +47,10 @@
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="Shift" />
         <KeyBinding
+            Key="I"
+            Command="{Binding OpenSettingCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
             Key="N"
             Command="{Binding SelectNextItemCommand}"
             Modifiers="Ctrl" />

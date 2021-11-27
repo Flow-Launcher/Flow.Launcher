@@ -154,25 +154,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void UpdateLastQUeryMode()
-        {
-            switch (_settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    ChangeQueryText(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                    LastQuerySelected = true;
-                    break;
-                case LastQueryMode.Selected:
-                    LastQuerySelected = false;
-                    break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
-
-            }
-        }
-
         private void InitializeKeyCommands()
         {
             EscCommand = new RelayCommand(_ =>
@@ -212,7 +193,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
-
+            OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
             OpenResultCommand = new RelayCommand(index =>
             {
                 var results = SelectedResults;
@@ -399,6 +380,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadContextMenuCommand { get; set; }
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
+        public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
 
