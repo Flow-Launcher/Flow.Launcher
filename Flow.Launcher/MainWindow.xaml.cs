@@ -115,7 +115,7 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
-                                else if (_viewModel.MainWindowVisibility == Visibility.Visible &&
+                                else if (_viewModel.MainWindowVisibilityStatus &&
                                          isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
@@ -249,7 +249,7 @@ namespace Flow.Launcher
             {
                 From = 0,
                 To = 1,
-                Duration = TimeSpan.FromSeconds(0.18),
+                Duration = TimeSpan.FromSeconds(0.25),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -257,7 +257,7 @@ namespace Flow.Launcher
             {
                 From = Top + 8,
                 To = Top,
-                Duration = TimeSpan.FromSeconds(0.18),
+                Duration = TimeSpan.FromSeconds(0.25),
                 FillBehavior = FillBehavior.Stop
             };
             Storyboard.SetTarget(da, this);
@@ -316,7 +316,7 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_viewModel.MainWindowVisibility != Visibility.Collapsed)
+            if (_viewModel.MainWindowVisibilityStatus)
             {
                 // need time to initialize the main query window animation
                 if (_settings.UseAnimation)
