@@ -300,7 +300,7 @@ namespace Flow.Launcher.Plugin.Shell
         {
             this.context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
-            context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
+            context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)

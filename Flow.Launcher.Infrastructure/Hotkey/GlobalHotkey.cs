@@ -79,7 +79,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             {
                 return InterceptKeys.CallNextHookEx(hookId, nCode, wParam, lParam);
             }
-            return (IntPtr)1;
+            return (IntPtr)(-1);
         }
 
         public static void Dispose()

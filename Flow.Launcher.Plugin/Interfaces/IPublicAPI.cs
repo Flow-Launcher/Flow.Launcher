@@ -104,7 +104,21 @@ namespace Flow.Launcher.Plugin
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
+        [Obsolete("Unable to Retrieve correct return value")]
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        
+        /// <summary>
+        /// Register a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+        
+        /// <summary>
+        /// Remove a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+
 
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
