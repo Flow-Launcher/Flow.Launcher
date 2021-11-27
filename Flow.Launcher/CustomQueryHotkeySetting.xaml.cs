@@ -1,8 +1,6 @@
 ﻿using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -91,10 +89,9 @@ namespace Flow.Launcher
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbAction.Text);
-            Application.Current.MainWindow.Visibility = Visibility.Visible;
+            Application.Current.MainWindow.Show();
             Application.Current.MainWindow.Opacity = 1;
             Application.Current.MainWindow.Focus();
-
         }
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
@@ -21,9 +20,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.Windows.Threading;
-using NHotkey;
-using Windows.Web.Syndication;
 
 
 namespace Flow.Launcher.ViewModel

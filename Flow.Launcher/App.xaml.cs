@@ -176,7 +176,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Visibility = Visibility.Visible;
+            Current.MainWindow.Show();
         }
     }
 }
