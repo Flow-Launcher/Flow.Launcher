@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
-    internal static class InterceptKeys
+    internal static unsafe class InterceptKeys
     {
         public delegate IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam);
 
         private const int WH_KEYBOARD_LL = 13;
 
-        public static IntPtr SetHook(LowLevelKeyboardProc proc)
+        public static IntPtr SetHook(delegate*<int, UIntPtr, IntPtr, IntPtr> proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
@@ -20,7 +20,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        public static extern IntPtr SetWindowsHookEx(int idHook, delegate*<int, UIntPtr, IntPtr, IntPtr> lpfn, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

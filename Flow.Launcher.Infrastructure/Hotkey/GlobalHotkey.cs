@@ -9,13 +9,14 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     /// Listens keyboard globally.
     /// <remarks>Uses WH_KEYBOARD_LL.</remarks>
     /// </summary>
-    public class GlobalHotkey : IDisposable
+    public unsafe static class GlobalHotkey
     {
-        private static GlobalHotkey instance;
-        private InterceptKeys.LowLevelKeyboardProc hookedLowLevelKeyboardProc;
-        private IntPtr hookId = IntPtr.Zero;
+        private static readonly IntPtr hookId;
+        
+        
+        
         public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
-        public event KeyboardCallback hookedKeyboardCallback;
+        internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
 
         //Modifier key constants
         private const int VK_SHIFT = 0x10;
@@ -23,27 +24,14 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         private const int VK_ALT = 0x12;
         private const int VK_WIN = 91;
 
-        public static GlobalHotkey Instance
+        static GlobalHotkey()
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new GlobalHotkey();
-                }
-                return instance;
-            }
-        }
-
-        private GlobalHotkey()
-        {
-            // We have to store the LowLevelKeyboardProc, so that it is not garbage collected runtime
-            hookedLowLevelKeyboardProc = LowLevelKeyboardProc;
             // Set the hook
-            hookId = InterceptKeys.SetHook(hookedLowLevelKeyboardProc);
+            hookId = InterceptKeys.SetHook(& LowLevelKeyboardProc);
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => Dispose();
         }
 
-        public SpecialKeyState CheckModifiers()
+        public static SpecialKeyState CheckModifiers()
         {
             SpecialKeyState state = new SpecialKeyState();
             if ((InterceptKeys.GetKeyState(VK_SHIFT) & 0x8000) != 0)
@@ -71,7 +59,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam)
+        private static IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam)
         {
             bool continues = true;
 
@@ -94,12 +82,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return (IntPtr)1;
         }
 
-        ~GlobalHotkey()
-        {
-            Dispose();
-        }
-
-        public void Dispose()
+        public static void Dispose()
         {
             InterceptKeys.UnhookWindowsHookEx(hookId);
         }

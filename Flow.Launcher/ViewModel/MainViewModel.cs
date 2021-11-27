@@ -227,7 +227,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     bool hideWindow = result.Action != null && result.Action(new ActionContext
                     {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
+                        SpecialKeyState = GlobalHotkey.CheckModifiers()
                     });
 
                     if (hideWindow)
