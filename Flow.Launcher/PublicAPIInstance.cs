@@ -55,7 +55,7 @@ namespace Flow.Launcher
 
         public void RestartApp()
         {
-            _mainVM.MainWindowVisibility = Visibility.Hidden;
+            _mainVM.Hide();
 
             // we must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)

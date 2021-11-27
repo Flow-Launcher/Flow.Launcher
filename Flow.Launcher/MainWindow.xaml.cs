@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Flow.Launcher.Core.Plugin;
@@ -78,9 +77,9 @@ namespace Flow.Launcher
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(MainViewModel.WinToggleStatus):
+                    case nameof(MainViewModel.MainWindowVisibilityStatus):
                         {
-                            if (_viewModel.WinToggleStatus == true)
+                            if (_viewModel.MainWindowVisibilityStatus)
                             {
                                 UpdatePosition();
                                 Activate();
@@ -116,7 +115,7 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
-                                else if (_viewModel.MainWindowVisibility == Visibility.Visible &&
+                                else if (_viewModel.MainWindowVisibilityStatus &&
                                          isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
@@ -260,30 +259,30 @@ namespace Flow.Launcher
 
         public void WindowAnimator()
         {
-            if (_settings.UseAnimation)
-            { 
-                if (_animating)
-                    return;
-                _animating = true;
-                UpdatePosition();
-                Storyboard sb = new Storyboard();
-                Storyboard iconsb = new Storyboard();
-                CircleEase easing = new CircleEase();  // or whatever easing class you want
-                easing.EasingMode = EasingMode.EaseInOut;
-                var da = new DoubleAnimation
-                {
-                    From = 0,
-                    To = 1,
-                    Duration = TimeSpan.FromSeconds(0.25),
-                    FillBehavior = FillBehavior.Stop
-                };
-                var da2 = new DoubleAnimation
-                {
-                    From = Top + 10,
-                    To = Top,
-                    Duration = TimeSpan.FromSeconds(0.25),
-                    FillBehavior = FillBehavior.Stop
-                };
+            if (_animating)
+                return;
+
+            _animating = true;
+            UpdatePosition();
+            Storyboard sb = new Storyboard();
+            Storyboard iconsb = new Storyboard();
+            CircleEase easing = new CircleEase();  // or whatever easing class you want
+            easing.EasingMode = EasingMode.EaseInOut;
+            var da = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.25),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da2 = new DoubleAnimation
+            {
+                From = Top + 10,
+                To = Top,
+                Duration = TimeSpan.FromSeconds(0.25),
+                FillBehavior = FillBehavior.Stop
+            };
                 var da3 = new DoubleAnimation
                 {
                     From = 12,
@@ -292,25 +291,18 @@ namespace Flow.Launcher
                     Duration = TimeSpan.FromSeconds(0.36),
                     FillBehavior = FillBehavior.Stop
                 };
-                Storyboard.SetTarget(da, this);
-                Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
-                Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-                Storyboard.SetTargetProperty(da3, new PropertyPath(TopProperty));
-                sb.Children.Add(da);
-                sb.Children.Add(da2);
-                iconsb.Children.Add(da3);
-                sb.Completed += (_, _) => _animating = false;
-                _settings.WindowLeft = Left;
-                _settings.WindowTop = Top;
-                iconsb.Begin(SearchIcon);
-                sb.Begin(FlowMainWindow);
-            }
-            if (_settings.UseSound)
-            {
-                MediaPlayer media = new MediaPlayer();
-                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                media.Play();
-            }
+            Storyboard.SetTarget(da, this);
+            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(da3, new PropertyPath(TopProperty));
+            sb.Children.Add(da);
+            sb.Children.Add(da2);
+            iconsb.Children.Add(da3);
+            sb.Completed += (_, _) => _animating = false;
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
+            iconsb.Begin(SearchIcon);
+            sb.Begin(FlowMainWindow);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -348,17 +340,30 @@ namespace Flow.Launcher
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
             _viewModel.Hide();
-            await Task.Delay(50);
+            
+            if(_settings.UseAnimation)
+                await Task.Delay(100);
+            
             App.API.OpenSettingDialog();
         }
 
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_settings.HideWhenDeactive && _viewModel.MainWindowVisibility != Visibility.Collapsed)
+            //This condition stops extra hide call when animator is on, 
+            // which causes the toggling to occasional hide instead of show.
+            if (_viewModel.MainWindowVisibilityStatus)
             {
-                await Task.Delay(50);
-                _viewModel.Hide();
+                // Need time to initialize the main query window animation. 
+                // This also stops the mainwindow from flickering occasionally after Settings window is opened
+                // and always after Settings window is closed.
+                if (_settings.UseAnimation)
+                    await Task.Delay(100);
+                
+                if (_settings.HideWhenDeactive)
+                {
+                    _viewModel.Hide();
+                }
             }
         }
 
