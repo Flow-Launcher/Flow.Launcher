@@ -19,12 +19,12 @@
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide Apps path</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description">Enable Program Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Disabling this will also stop Flow from searching via the program desciption</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_directory">Directory:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_directory">Directory</system:String>
     <system:String x:Key="flowlauncher_plugin_program_browse">Browse</system:String>
     <system:String x:Key="flowlauncher_plugin_program_file_suffixes">File Suffixes:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Maximum Search Depth (-1 is unlimited):</system:String>
@@ -33,8 +33,7 @@
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">OK</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher will only index files that end with the following suffixes:</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_split_by_tip">(Each suffix should split by ';' )</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher will only index files that end with the following suffixes. (Each suffix should split by ';' )</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">File suffixes can't be empty</system:String>
 
