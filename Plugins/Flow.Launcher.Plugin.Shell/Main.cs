@@ -193,51 +193,63 @@ namespace Flow.Launcher.Plugin.Shell
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
 
-            ProcessStartInfo info;
-            if (_settings.Shell == Shell.Cmd)
+            ProcessStartInfo info = new()
             {
-                var arguments = _settings.LeaveShellOpen ? $"/k \"{command}\"" : $"/c \"{command}\" & pause";
-
-                info = ShellCommand.SetProcessStartInfo("cmd.exe", workingDirectory, arguments, runAsAdministratorArg);
-            }
-            else if (_settings.Shell == Shell.Powershell)
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
+            };
+            switch (_settings.Shell)
             {
-                string arguments;
-                if (_settings.LeaveShellOpen)
-                {
-                    arguments = $"-NoExit \"{command}\"";
-                }
-                else
-                {
-                    arguments = $"\"{command} ; Read-Host -Prompt \\\"Press Enter to continue\\\"\"";
-                }
-
-                info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
-            }
-            else if (_settings.Shell == Shell.RunCommand)
-            {
-                var parts = command.Split(new[] { ' ' }, 2);
-                if (parts.Length == 2)
-                {
-                    var filename = parts[0];
-                    if (ExistInPath(filename))
+                case Shell.Cmd:
                     {
-                        var arguments = parts[1];
-                        info = ShellCommand.SetProcessStartInfo(filename, workingDirectory, arguments, runAsAdministratorArg);
+                        info.FileName = "cmd.exe";
+                        info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                        info.ArgumentList.Add(command);
+                        break;
                     }
-                    else
+
+                case Shell.Powershell:
                     {
-                        info = ShellCommand.SetProcessStartInfo(command, verb: runAsAdministratorArg);
+                        info.FileName = "powershell.exe";
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                            info.ArgumentList.Add(command);
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("-Command");
+                            info.ArgumentList.Add(command);
+                        }
+                        break;
                     }
-                }
-                else
-                {
-                    info = ShellCommand.SetProcessStartInfo(command, verb: runAsAdministratorArg);
-                }
-            }
-            else
-            {
-                throw new NotImplementedException();
+
+                case Shell.RunCommand:
+                    {
+                        var parts = command.Split(new[] { ' ' }, 2);
+                        if (parts.Length == 2)
+                        {
+                            var filename = parts[0];
+                            if (ExistInPath(filename))
+                            {
+                                var arguments = parts[1];
+                                info.FileName = filename;
+                                info.ArgumentList.Add(arguments);
+                            }
+                            else
+                            {
+                                info.FileName = command;
+                            }
+                        }
+                        else
+                        {
+                            info.FileName = command;
+                        }
+
+                        break;
+                    }
+                default:
+                    throw new NotImplementedException();
             }
 
             info.UseShellExecute = true;
