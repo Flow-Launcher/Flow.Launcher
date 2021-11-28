@@ -10,7 +10,6 @@ namespace Flow.Launcher.Helper
         {
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.GetType() == typeof(T))
                          ?? (T)Activator.CreateInstance(typeof(T), args);
-            Application.Current.MainWindow.Hide();
             
             // Fix UI bug
             // Add `window.WindowState = WindowState.Normal`
