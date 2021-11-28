@@ -47,6 +47,10 @@
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="Shift" />
         <KeyBinding
+            Key="I"
+            Command="{Binding OpenSettingCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
             Key="N"
             Command="{Binding SelectNextItemCommand}"
             Modifiers="Ctrl" />
@@ -175,7 +179,10 @@
                                 <MenuItem Command="ApplicationCommands.Cut" />
                                 <MenuItem Command="ApplicationCommands.Copy" />
                                 <MenuItem Command="ApplicationCommands.Paste" />
-                                <Separator />
+                                <Separator
+                                    Margin="0"
+                                    Padding="0,4,0,4"
+                                    Background="{DynamicResource ContextSeparator}" />
                                 <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}" />
                                 <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}" />
                             </ContextMenu>

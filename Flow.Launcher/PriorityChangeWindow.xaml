@@ -7,84 +7,117 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="{DynamicResource changePriorityWindow}"
-    Background="#F3F3F3"
-    BorderBrush="#cecece"
+    Width="350"
+    Background="{DynamicResource PopuBGColor}"
+    Foreground="{DynamicResource PopupTextColor}"
     Loaded="PriorityChangeWindow_Loaded"
     MouseDown="window_MouseDown"
     ResizeMode="NoResize"
-    SizeToContent="WidthAndHeight"
+    SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Width="350">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <Border
-            Padding="26,26,26,0"
-            Background="#ffffff"
-            BorderBrush="#e5e5e5"
-            BorderThickness="0,0,0,1">
-            <Grid>
-                <StackPanel>
-                    <StackPanel Grid.Row="0" Margin="0,0,0,12">
-                        <TextBlock
-                            Grid.Column="0"
-                            Margin="0,0,0,0"
-                            FontFamily="Segoe UI"
-                            FontSize="20"
-                            FontWeight="SemiBold"
-                            Text="{DynamicResource changePriorityWindow}"
-                            TextAlignment="Left" />
-                    </StackPanel>
-                    <StackPanel>
-                        <TextBlock
-                            FontSize="14"
-                            Foreground="#1b1b1b"
-                            Text="{DynamicResource priority_tips}"
-                            TextAlignment="Left"
-                            TextWrapping="WrapWithOverflow" />
-                    </StackPanel>
 
-                    <StackPanel Margin="0,24,0,24" Orientation="Horizontal">
-                        <TextBlock
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource priority}" />
-                        <ui:NumberBox
-                            x:Name="tbAction"
-                            Width="190"
-                            Height="34"
-                            Margin="10,0,15,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Minimum="0"
-                            SmallChange="1"
-                            SpinButtonPlacementMode="Inline" />
-                    </StackPanel>
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="4"
+                        Click="BtnCancel_OnClick"
+                        Style="{StaticResource TitleBarCloseButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="26,12,26,0">
+                <StackPanel Margin="0,0,0,12">
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,0,0"
+                        FontFamily="Segoe UI"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="{DynamicResource changePriorityWindow}"
+                        TextAlignment="Left" />
                 </StackPanel>
-            </Grid>
-        </Border>
-        <StackPanel
-            Grid.Row="1"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal">
-            <Button
-                x:Name="btnCancel"
-                Width="100"
-                Height="30"
-                Margin="0,0,5,0"
-                Click="BtnCancel_OnClick"
-                Content="{DynamicResource cancel}" />
-            <Button
-                x:Name="btnDone"
-                Width="100"
-                Height="30"
-                Margin="5,0,0,0"
-                Click="btnDone_OnClick">
-                <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
-            </Button>
+                <StackPanel>
+                    <TextBlock
+                        FontSize="14"
+                        Text="{DynamicResource priority_tips}"
+                        TextAlignment="Left"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+
+                <StackPanel Margin="0,24,0,24" Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource priority}" />
+                    <ui:NumberBox
+                        x:Name="tbAction"
+                        Width="200"
+                        Margin="10,0,15,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        CornerRadius="4"
+                        Minimum="0"
+                        SmallChange="1"
+                        SpinButtonPlacementMode="Inline" />
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
+        <Border
+            Grid.Row="1"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0,1,0,0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    x:Name="btnCancel"
+                    Width="100"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Click="BtnCancel_OnClick"
+                    Content="{DynamicResource cancel}" />
+                <Button
+                    x:Name="btnDone"
+                    Width="100"
+                    Height="30"
+                    Margin="5,0,0,0"
+                    Click="btnDone_OnClick">
+                    <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
