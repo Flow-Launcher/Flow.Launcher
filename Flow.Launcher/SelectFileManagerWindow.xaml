@@ -18,11 +18,6 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
-    <!--<Border
-        Padding="26,26,26,0"
-        Background="{DynamicResource PopupContentAreaBGColor}"
-        BorderBrush="{DynamicResource PopupContentAreaBorderColor}"
-        BorderThickness="0,0,0,1">-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
