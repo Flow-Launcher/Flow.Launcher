@@ -1949,7 +1949,7 @@
                                                     Width="180"
                                                     Margin="0,0,18,0"
                                                     HorizontalAlignment="Center"
-                                                    Click="OpenPluginFolder"
+                                                    Click="OpenThemeFolder"
                                                     Content="{DynamicResource OpenThemeFolder}"
                                                     DockPanel.Dock="Top" />
                                                 <TextBlock Style="{StaticResource Glyph}">

@@ -15,12 +15,10 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using ApplicationTheme = ModernWpf.ApplicationTheme;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -386,7 +384,6 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
-
 
         public ResultsViewModel PreviewResults
         {

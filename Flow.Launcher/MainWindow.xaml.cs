@@ -16,6 +16,7 @@ using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher
 {
@@ -480,16 +481,14 @@ namespace Flow.Launcher
 
         public void InitializeDarkMode()
         {
-            if (_settings.DarkMode == "Light")
+            if (_settings.DarkMode == Constant.Light)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
             }
-            else if (_settings.DarkMode == "Dark")
+            else if (_settings.DarkMode == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
             }
-            else
-            { }
         }
     }
 }
