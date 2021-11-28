@@ -3,7 +3,6 @@
 
     <!--Dialogues-->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">下载插件</system:String>
-    <system:String x:Key="plugin_pluginsmanager_please_wait">请稍等...</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">下载完成</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3} 您要卸载此插件吗？ 卸载后，Flow Launcher 将自动重</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3} 您要安装此插件吗？ 安装后，Flow Launcher 将自动重</system:String>
