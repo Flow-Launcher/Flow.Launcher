@@ -68,7 +68,7 @@ namespace Flow.Launcher
             HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
-            InitializeDarkMode();
+            InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             // since the default main window visibility is visible
@@ -480,13 +480,13 @@ namespace Flow.Launcher
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
 
-        public void InitializeDarkMode()
+        public void InitializeColorScheme()
         {
-            if (_settings.DarkMode == Constant.Light)
+            if (_settings.ColorScheme == Constant.Light)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
             }
-            else if (_settings.DarkMode == Constant.Dark)
+            else if (_settings.ColorScheme == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
             }
