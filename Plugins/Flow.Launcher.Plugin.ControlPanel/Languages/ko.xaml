@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_controlpanel_plugin_name">Control Panel</system:String>
-    <system:String x:Key="flowlauncher_plugin_controlpanel_plugin_description">Search within the Control Panel</system:String>
+    <system:String x:Key="flowlauncher_plugin_controlpanel_plugin_name">제어판</system:String>
+    <system:String x:Key="flowlauncher_plugin_controlpanel_plugin_description">제어판 항목을 검색합니다.</system:String>
     
 </ResourceDictionary>
