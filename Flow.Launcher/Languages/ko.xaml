@@ -87,8 +87,7 @@
     <system:String x:Key="theme_load_failure_parse_error">{0} 테마 로드에 실패했습니다. 기본 테마로 변경합니다.</system:String>
     <system:String x:Key="ThemeFolder">테마 폴더</system:String>
     <system:String x:Key="OpenThemeFolder">테마 폴더 열기</system:String>
-    <system:String x:Key="DarkMode">다크 모드</system:String>
-    <system:String x:Key="DarkModeTip">System settings will take effect from the next run</system:String>
+    <system:String x:Key="DarkMode">앱 색상</system:String>
     <system:String x:Key="DarkModeSystem">시스템 기본</system:String>
     <system:String x:Key="DarkModeLight">밝게</system:String>
     <system:String x:Key="DarkModeDark">어둡게</system:String>
