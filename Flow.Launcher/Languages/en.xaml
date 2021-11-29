@@ -87,10 +87,10 @@
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
-    <system:String x:Key="DarkMode">Dark Mode</system:String>
-    <system:String x:Key="DarkModeSystem">System Default</system:String>
-    <system:String x:Key="DarkModeLight">Light</system:String>
-    <system:String x:Key="DarkModeDark">Dark</system:String>
+    <system:String x:Key="ColorScheme">Color Scheme</system:String>
+    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
+    <system:String x:Key="ColorSchemeLight">Light</system:String>
+    <system:String x:Key="ColorSchemeDark">Dark</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="Animation">Animation</system:String>
