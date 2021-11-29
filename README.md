@@ -1,9 +1,8 @@
 <p align="center">
   <a href="https://flow-launcher.github.io">
-	<img width="500px" src="https://github.com/Flow-Launcher/Flow.Launcher/blob/5ba4514f31e624c679628d4dfe89036c0e24006c/Doc/Logo/resources/flow-header-square-transparent.png">
+	<img width="500px" src="../docs/assets/1_flow.png">
   </a>
 </p>
-
 ![Maintenance](https://img.shields.io/maintenance/yes/3000)
 [![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
 [![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
@@ -16,21 +15,69 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 <sub>Remember to star it, flow will love you more :)</sub>
 
----
+## 🚗 Getting Started
 
-<h4 align="center">
-  <a href="#Features">Features</a> •
-  <a href="#Getting-Started">Getting Started</a> •
-  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
-  <a href="#Development">Development</a> •
-  <a href="https://flow-launcher.github.io/docs">Documentation</a>
-</h4>
+### Installation
 
----
+| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `WinGet install "Flow Launcher"` |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: |
+
+> Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
+
+## 🎉 New Features in 1.9
+
+- All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
+- New Plugins - Window Setting, Visual Studio Code, Favorites, Window Services, Window Startup
+- Plugin Store, Game Mode
+- Global 3rd Party File Manager & Default Web Browser Setting
+- New Result Order rank, Reduce Program Size
+- ......More
 
 ## Features
 
-![The Flow](https://user-images.githubusercontent.com/26427004/82151677-fa9c7100-989f-11ea-9143-81de60aaf07d.gif)
+### Applications & Files
+
+### Web Search & Open URL
+
+### Browser Bookmarks
+
+### System Commands
+
+### Calculator
+
+### Shell Command
+
+### Window Setting & Control Panel
+
+### Priority
+
+Prioritise the order of each plugin's results.
+
+### Customization
+
+## Plugins
+
+### Plugin Install & Plugin Store
+
+### Plugin - Everything
+
+### Plugin - Ha Commander
+
+## Hotkeys
+
+| Hotkey                                                       | Description                                  |
+| ------------------------------------------------------------ | -------------------------------------------- |
+| <kbd>Alt</kbd>+ <kbd>Space</kbd> (Default and Configurable)  | Open Search Box                              |
+| <kbd>Enter</kbd>                                             | Execute                                      |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run As Admin                                 |
+| <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & Down                             |
+| <kbd>←</kbd><kbd>→</kbd>                                     | Back to Result / Open Context Menu           |
+| <kbd>Ctrl</kbd> +<kbd>o</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                            |
+| <kbd>Esc</kbd>                                               | Back to Result & Close                       |
+| <kbd>Ctrl</kbd> +<kbd>i</kbd>                                | Open Setting Window                          |
+| <kbd>F5</kbd>                                                | Reload All Plugin Data & Window Search Index |
+
+
 
 - Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
 - Search for file contents.
@@ -45,26 +92,7 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
 
-## Getting Started
 
-### Installation
-
-| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `WinGet install "Flow Launcher"` |
-| --------------------------------- | --------------------------------- | --------------------------------- |
-
-Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
-
-### Usage
-- Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
-- Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
-- Cancel/Return to previous screen: <kbd>Esc</kbd>.
-- Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
-- Type `flow user data` to open your saved user settings folder. They are located at:
-  - If using roaming: `%APPDATA%\FlowLauncher`
-  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
-- Type `open log location` to open your logs folder, they are saved along with your user settings folder.
-
-[More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
 ### Plugins
 
@@ -76,11 +104,37 @@ Vist [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portf
 
 If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
 
+
+
+---
+
+<h4 align="center">
+  <a href="#Features">Features</a> •
+  <a href="#Getting-Started">Getting Started</a> •
+  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
+  <a href="#Development">Development</a> •
+  <a href="https://flow-launcher.github.io/docs">Documentation</a>
+</h4>
+
+
+---
+
+### Usage
+
+- Open flow's search window: <kbd>Alt</kbd>+<kbd>Space</kbd> is the default hotkey.
+- Open context menu: on the selected result, press <kbd>Ctrl</kbd>+<kbd>O</kbd>/<kbd>Shift</kbd>+<kbd>Enter</kbd>.
+- Cancel/Return to previous screen: <kbd>Esc</kbd>.
+- Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
+- Type `flow user data` to open your saved user settings folder. They are located at:
+  - If using roaming: `%APPDATA%\FlowLauncher`
+  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
+- Type `open log location` to open your logs folder, they are saved along with your user settings folder.
+
+[More tips](https://flow-launcher.github.io/docs/#/usage-tips)
+
 ## Questions/Suggestions
 
-Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section.
-
-**Join our community on [Discord](https://discord.gg/AvgAQgh)!**
+Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
 ## Development
 
@@ -99,7 +153,5 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 ### Developing/Debugging
 
 Flow Launcher's target framework is .Net 5
-
 Install Visual Studio 2019
-
 Install .Net 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
