@@ -16,6 +16,7 @@
     <system:String x:Key="iconTrayExit">종료</system:String>
     <system:String x:Key="closeWindow">닫기</system:String>
     <system:String x:Key="GameMode">게임 모드</system:String>
+    <system:String x:Key="GameModeToolTip">핫키 사용을 일시중단합니다.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 설정</system:String>

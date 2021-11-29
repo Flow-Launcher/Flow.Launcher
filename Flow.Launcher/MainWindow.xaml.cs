@@ -211,6 +211,7 @@ namespace Flow.Launcher
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
+            gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
