@@ -1,0 +1,4 @@
+files:
+  - source: Languages/en.xaml
+    translation: /%original_path%/%two_letters_code%.xaml
+commit_message: '[ci skip]'
