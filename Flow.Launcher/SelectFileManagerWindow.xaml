@@ -239,21 +239,19 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="100"
-                    Height="30"
+                    Width="145"
                     Margin="0,0,5,0"
                     Click="btnCancel_Click"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
-                    Width="100"
-                    Height="30"
+                    Width="145"
                     Margin="5,0,0,0"
                     Click="btnDone_Click"
                     Content="{DynamicResource done}"
                     ForceCursor="True">
                     <Button.Style>
-                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                        <Style BasedOn="{StaticResource AccentButtonStyle}" TargetType="{x:Type Button}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
                                     <Setter Property="IsEnabled" Value="False" />

@@ -4,12 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="{DynamicResource actionKeywordsTitle}"
     Width="450"
-    Height="345"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     Loaded="ActionKeyword_OnLoaded"
     ResizeMode="NoResize"
+    SizeToContent="Height"
     WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
@@ -91,7 +91,7 @@
                             FontWeight="SemiBold"
                             Foreground="{DynamicResource Color05B}" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
@@ -117,17 +117,18 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="100"
+                    Width="145"
                     Height="30"
                     Margin="10,0,5,0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
-                    Width="100"
+                    Width="145"
                     Height="30"
                     Margin="5,0,10,0"
-                    Click="btnDone_OnClick">
+                    Click="btnDone_OnClick"
+                    Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>
             </StackPanel>
