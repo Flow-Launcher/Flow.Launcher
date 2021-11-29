@@ -314,7 +314,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var result = new Result
                 {
                     Title = title,
-                    SubTitle = Main._settings.EnableHideLnkPath ? string.Empty : Package.Location,
+                    SubTitle = Main._settings.EnableHideAppsPath ? string.Empty : Package.Location,
                     Icon = Logo,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
