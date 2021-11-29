@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var result = new Result
             {
                 Title = title,
-                SubTitle = HideLnkPath(),
+                SubTitle = Main._settings.EnableHideLnkPath ? string.Empty : LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
@@ -544,18 +544,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return false;
 
             return UniqueIdentifier == other.UniqueIdentifier;
-        }
-
-        public string HideLnkPath()
-        {
-            bool lnkSetting = Main._settings.EnableHideLnkPath;
-            if (lnkSetting) { 
-                return "";
-            }
-            else
-            {
-                return LnkResolvedPath ?? FullPath;
-            }
         }
     }
 }
