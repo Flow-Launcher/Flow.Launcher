@@ -205,7 +205,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                         }
 
                         var mainWindow = Application.Current.MainWindow;
-                        mainWindow.Visibility = Visibility.Visible;
+                        mainWindow.Show();
                         mainWindow.Focus();
 
                         return false;

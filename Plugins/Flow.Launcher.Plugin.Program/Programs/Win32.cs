@@ -177,20 +177,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
                     {
-                        var args = !string.IsNullOrWhiteSpace(Main._settings.CustomizedArgs)
-                            ? Main._settings.CustomizedArgs
-                                .Replace("%s", $"\"{ParentDirectory}\"")
-                                .Replace("%f", $"\"{FullPath}\"")
-                            : Main._settings.CustomizedExplorer == Settings.Explorer
-                                ? $"/select,\"{FullPath}\""
-                                : Settings.ExplorerArgs;
-
-                        Main.StartProcess(Process.Start,
-                            new ProcessStartInfo(
-                                !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer)
-                                    ? Main._settings.CustomizedExplorer
-                                    : Settings.Explorer,
-                                args));
+                        Main.Context.API.OpenDirectory(ParentDirectory, FullPath);
 
                         return true;
                     },

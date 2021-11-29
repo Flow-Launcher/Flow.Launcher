@@ -30,6 +30,15 @@ namespace Flow.Launcher.Plugin
         void RestartApp();
 
         /// <summary>
+        /// Run a shell command
+        /// </summary>
+        /// <param name="cmd">The command or program to run</param>
+        /// <param name="filename">the shell type to run, e.g. powershell.exe</param>
+        /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
+        /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
+        void ShellRun(string cmd, string filename = "cmd.exe");
+
+        /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings
         /// </summary>
         void SaveAppAllSettings();
@@ -190,5 +199,12 @@ namespace Flow.Launcher.Plugin
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
         void SaveSettingJsonStorage<T>() where T : new();
+
+        /// <summary>
+        /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
+        /// </summary>
+        /// <param name="DirectoryPath">Directory Path to open</param>
+        /// <param name="FileName">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileName = null);
     }
 }

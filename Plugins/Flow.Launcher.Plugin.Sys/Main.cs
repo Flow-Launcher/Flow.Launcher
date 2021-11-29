@@ -190,8 +190,8 @@ namespace Flow.Launcher.Plugin.Sys
                         var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
                         info.WindowStyle = ProcessWindowStyle.Hidden;
                         info.UseShellExecute = true;
-                        
-                        Process.Start(info);
+
+                        ShellCommand.Execute(info);
                         
                         return true;
                     }
@@ -304,7 +304,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-                        FilesFolders.OpenPath(logPath);
+                        context.API.OpenDirectory(logPath);
                         return true;
                     }
                 },
@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        FilesFolders.OpenPath(DataLocation.DataDirectory());
+                        context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 }

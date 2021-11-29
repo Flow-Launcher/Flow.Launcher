@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +14,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
 using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
@@ -22,6 +23,8 @@ using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
+using Flow.Launcher.Plugin.SharedCommands;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -53,7 +56,7 @@ namespace Flow.Launcher
 
         public void RestartApp()
         {
-            _mainVM.MainWindowVisibility = Visibility.Hidden;
+            _mainVM.Hide();
 
             // we must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
@@ -68,7 +71,7 @@ namespace Flow.Launcher
 
         public void RestarApp() => RestartApp();
 
-        public void ShowMainWindow() => _mainVM.MainWindowVisibility = Visibility.Visible;
+        public void ShowMainWindow() => _mainVM.Show();
 
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
@@ -102,6 +105,14 @@ namespace Flow.Launcher
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
             });
+        }
+
+        public void ShellRun(string cmd, string filename = "cmd.exe")
+        {
+            var args = filename == "cmd.exe" ? $"/C {cmd}" : $"{cmd}";
+
+            var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
+            ShellCommand.Execute(startInfo);
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
@@ -158,7 +169,7 @@ namespace Flow.Launcher
             if (!_pluginJsonStorages.ContainsKey(type))
                 _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            return ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Load();
+            return ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Load();
         }
 
         public void SaveSettingJsonStorage<T>() where T : new()
@@ -167,7 +178,7 @@ namespace Flow.Launcher
             if (!_pluginJsonStorages.ContainsKey(type))
                 _pluginJsonStorages[type] = new PluginJsonStorage<T>();
 
-            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
+            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
         public void SaveJsonStorage<T>(T settings) where T : new()
@@ -175,7 +186,22 @@ namespace Flow.Launcher
             var type = typeof(T);
             _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
-            ((PluginJsonStorage<T>) _pluginJsonStorages[type]).Save();
+            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
+        }
+
+        public void OpenDirectory(string DirectoryPath, string FileName = null)
+        {
+            using Process explorer = new Process();
+            var explorerInfo = _settingsVM.Settings.CustomExplorer;
+            explorer.StartInfo = new ProcessStartInfo
+            {
+                FileName = explorerInfo.Path,
+                Arguments = FileName is null ?
+                    explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath) :
+                    explorerInfo.FileArgument.Replace("%d", DirectoryPath).Replace("%f",
+                    Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
+            };
+            explorer.Start();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
@@ -188,7 +214,7 @@ namespace Flow.Launcher
         {
             if (GlobalKeyboardEvent != null)
             {
-                return GlobalKeyboardEvent((int) keyevent, vkcode, state);
+                return GlobalKeyboardEvent((int)keyevent, vkcode, state);
             }
 
             return true;
