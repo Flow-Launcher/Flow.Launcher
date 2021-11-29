@@ -45,7 +45,7 @@
                         Width="200"
                         Margin="70,8,10,8"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
-                        IsChecked="{Binding EnableHideLnkPath}"
+                        IsChecked="{Binding EnableHideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
                         Name="DescriptionEnabled"

@@ -32,10 +32,10 @@ namespace Flow.Launcher.Plugin.Program.Views
             get => _settings.EnableDescription;
             set => _settings.EnableDescription = value;
         }
-        public bool EnableHideLnkPath
+        public bool EnableHideAppsPath
         {
-            get => _settings.EnableHideLnkPath;
-            set => _settings.EnableHideLnkPath = value;
+            get => _settings.EnableHideAppsPath;
+            set => _settings.EnableHideAppsPath = value;
         }
 
         public bool EnableRegistrySource
