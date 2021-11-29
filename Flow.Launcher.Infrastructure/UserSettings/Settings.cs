@@ -133,7 +133,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
 
-        public bool StartFlowLauncherOnSystemStartup { get; set; } = true;
+        public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool HideOnStartup { get; set; }
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
