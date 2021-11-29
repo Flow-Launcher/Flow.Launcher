@@ -87,10 +87,10 @@
     <system:String x:Key="theme_load_failure_parse_error">{0} 테마 로드에 실패했습니다. 기본 테마로 변경합니다.</system:String>
     <system:String x:Key="ThemeFolder">테마 폴더</system:String>
     <system:String x:Key="OpenThemeFolder">테마 폴더 열기</system:String>
-    <system:String x:Key="DarkMode">앱 색상</system:String>
-    <system:String x:Key="DarkModeSystem">시스템 기본</system:String>
-    <system:String x:Key="DarkModeLight">밝게</system:String>
-    <system:String x:Key="DarkModeDark">어둡게</system:String>
+    <system:String x:Key="ColorScheme">앱 색상</system:String>
+    <system:String x:Key="ColorSchemeSystem">시스템 기본</system:String>
+    <system:String x:Key="ColorSchemeLight">밝게</system:String>
+    <system:String x:Key="ColorSchemeDark">어둡게</system:String>
     <system:String x:Key="SoundEffect">소리 효과</system:String>
     <system:String x:Key="SoundEffectTip">검색창을 열 때 작은 소리를 재생합니다.</system:String>
     <system:String x:Key="Animation">애니메이션</system:String>

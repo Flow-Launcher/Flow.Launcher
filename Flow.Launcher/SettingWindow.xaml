@@ -1919,19 +1919,19 @@
                                         <Border Margin="0,12,0,12" Style="{DynamicResource SettingGroupBox}">
                                             <ItemsControl Style="{StaticResource SettingGrid}">
                                                 <StackPanel Style="{StaticResource TextPanel}">
-                                                    <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource DarkMode}" />
+                                                    <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ColorScheme}" />
                                                 </StackPanel>
                                                 <ComboBox
-                                                    x:Name="DarkModeComboBox"
+                                                    x:Name="ColorSchemeComboBox"
                                                     Grid.Column="2"
                                                     Width="180"
                                                     Margin="0,0,18,0"
                                                     DisplayMemberPath="Display"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding DarkModes}"
-                                                    SelectedValue="{Binding Settings.DarkMode}"
+                                                    ItemsSource="{Binding ColorSchemes}"
+                                                    SelectedValue="{Binding Settings.ColorScheme}"
                                                     SelectedValuePath="Value"
-                                                    SelectionChanged="DarkModeSelectedIndexChanged" />
+                                                    SelectionChanged="ColorSchemeSelectedIndexChanged" />
                                                 <TextBlock Style="{StaticResource Glyph}">
                                                     &#xe793;
                                                 </TextBlock>
