@@ -35,6 +35,10 @@ namespace Flow.Launcher.Infrastructure
 
         public const string DefaultTheme = "Win11Light";
 
+        public const string Light = "Light";
+        public const string Dark = "Dark";
+        public const string System = "System";
+
         public const string Themes = "Themes";
         public const string Settings = "Settings";
         public const string Logs = "Logs";

@@ -190,8 +190,8 @@ namespace Flow.Launcher.Plugin.Sys
                         var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
                         info.WindowStyle = ProcessWindowStyle.Hidden;
                         info.UseShellExecute = true;
-                        
-                        Process.Start(info);
+
+                        ShellCommand.Execute(info);
                         
                         return true;
                     }

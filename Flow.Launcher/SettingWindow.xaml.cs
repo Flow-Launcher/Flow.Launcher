@@ -265,7 +265,7 @@ namespace Flow.Launcher
             Close();
         }
 
-        private void OpenPluginFolder(object sender, RoutedEventArgs e)
+        private void OpenThemeFolder(object sender, RoutedEventArgs e)
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
         }
@@ -277,7 +277,7 @@ namespace Flow.Launcher
 
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
-            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs));
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
         }
 
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
@@ -308,9 +308,9 @@ namespace Flow.Launcher
 
         private void DarkModeSelectedIndexChanged(object sender, EventArgs e) => ThemeManager.Current.ApplicationTheme = settings.DarkMode switch
         {
-            "Light" => ApplicationTheme.Light,
-            "Dark" => ApplicationTheme.Dark,
-            "System" => null,
+            Constant.Light => ApplicationTheme.Light,
+            Constant.Dark => ApplicationTheme.Dark,
+            Constant.System => null,
             _ => ThemeManager.Current.ApplicationTheme
         };
 

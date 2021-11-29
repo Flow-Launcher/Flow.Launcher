@@ -14,5 +14,11 @@ namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
             Context = context;
             Settings = settings;
         }
+
+        public bool WarnFromUnknownSource 
+        {
+            get => Settings.WarnFromUnknownSource;
+            set => Settings.WarnFromUnknownSource = value;
+        }
     }
 }

@@ -4,7 +4,6 @@
 
     <!--Dialogues-->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Sťahovanie pluginu</system:String>
-    <system:String x:Key="plugin_pluginsmanager_please_wait">Čakajte, prosím…</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Úspešne stiahnuté</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} od {1} {2}{3}Chcete odinštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>

@@ -1169,7 +1169,7 @@
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="| version" />
+                                                                        Text="{DynamicResource plugin_query_version}" />
                                                                     <TextBlock
                                                                         MaxWidth="100"
                                                                         Margin="5,0,0,0"
@@ -1189,7 +1189,7 @@
                                                                             Foreground="{DynamicResource PluginInfoColor}"
                                                                             NavigateUri="{Binding PluginPair.Metadata.Website}"
                                                                             RequestNavigate="OnRequestNavigate">
-                                                                            <Run Text="Website" />
+                                                                            <Run Text="{DynamicResource plugin_query_web}" />
                                                                         </Hyperlink>
                                                                     </TextBlock>
 
@@ -1920,7 +1920,6 @@
                                             <ItemsControl Style="{StaticResource SettingGrid}">
                                                 <StackPanel Style="{StaticResource TextPanel}">
                                                     <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource DarkMode}" />
-                                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource DarkModeTip}" />
                                                 </StackPanel>
                                                 <ComboBox
                                                     x:Name="DarkModeComboBox"
@@ -1949,7 +1948,7 @@
                                                     Width="180"
                                                     Margin="0,0,18,0"
                                                     HorizontalAlignment="Center"
-                                                    Click="OpenPluginFolder"
+                                                    Click="OpenThemeFolder"
                                                     Content="{DynamicResource OpenThemeFolder}"
                                                     DockPanel.Dock="Top" />
                                                 <TextBlock Style="{StaticResource Glyph}">
