@@ -1933,7 +1933,7 @@
                                                     SelectedValuePath="Value"
                                                     SelectionChanged="DarkModeSelectedIndexChanged" />
                                                 <TextBlock Style="{StaticResource Glyph}">
-                                                    &#xe708;
+                                                    &#xe793;
                                                 </TextBlock>
                                             </ItemsControl>
                                         </Border>
