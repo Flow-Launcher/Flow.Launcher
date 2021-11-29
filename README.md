@@ -15,6 +15,8 @@ Flow Launcher. Dedicated to make your workflow flow more seamlessly. Aimed at be
 
 <sub>Remember to star it, flow will love you more :)</sub>
 
+[<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
+
 ## 🚗 Getting Started
 
 ### Installation
@@ -67,7 +69,7 @@ Prioritise the order of each plugin's results.
 
 | Hotkey                                                       | Description                                  |
 | ------------------------------------------------------------ | -------------------------------------------- |
-| <kbd>Alt</kbd>+ <kbd>Space</kbd> (Default and Configurable)  | Open Search Box                              |
+| <kbd>Alt</kbd>+ <kbd>Space</kbd>                             | Open Search Box (Default and Configurable)   |
 | <kbd>Enter</kbd>                                             | Execute                                      |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run As Admin                                 |
 | <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & Down                             |
