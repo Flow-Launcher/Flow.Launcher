@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -45,8 +45,56 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
- 
-            return allPluginMetadata;
+
+            (List<PluginMetadata> uniqueList, List<PluginMetadata> duplicateList) = GetUniqueLatestPluginMetadata(allPluginMetadata);
+
+            duplicateList
+                .ForEach(
+                    x => Log.Warn("PluginConfig",
+                                    string.Format("Duplicate plugin name: {0}, id: {1}, version: {2} " +
+                                                    "not loaded due to version not the highest of the duplicates",
+                                                    x.Name, x.ID, x.Version),
+                                                    "GetUniqueLatestPluginMetadata"));
+
+            return uniqueList;
+        }
+
+        internal static (List<PluginMetadata>, List<PluginMetadata>) GetUniqueLatestPluginMetadata(List<PluginMetadata> allPluginMetadata)
+        {
+            var duplicate_list = new List<PluginMetadata>();
+            var unique_list = new List<PluginMetadata>();
+
+            var duplicateGroups = allPluginMetadata.GroupBy(x => x.ID).Where(g => g.Count() > 1).Select(y => y).ToList();
+
+            foreach (var metadata in allPluginMetadata)
+            {
+                var duplicatesExist = false;
+                foreach (var group in duplicateGroups)
+                {
+                    if (metadata.ID == group.Key)
+                    {
+                        duplicatesExist = true;
+
+                        // If metadata's version greater than each duplicate's version, CompareTo > 0
+                        var count = group.Where(x => metadata.Version.CompareTo(x.Version) > 0).Count();
+                        
+                        // Only add if the meatadata's version is the highest of all duplicates in the group
+                        if (count == group.Count() - 1)
+                        {
+                            unique_list.Add(metadata);
+                        }
+                        else
+                        {
+                            duplicate_list.Add(metadata);
+                        }
+                    }
+                }
+                
+                if (!duplicatesExist)
+                    unique_list.Add(metadata);
+            }
+
+            return (unique_list, duplicate_list);
         }
 
         private static PluginMetadata GetPluginMetadata(string pluginDirectory)

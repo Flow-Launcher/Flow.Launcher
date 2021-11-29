@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -154,25 +154,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void UpdateLastQUeryMode()
-        {
-            switch (_settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    ChangeQueryText(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                    LastQuerySelected = true;
-                    break;
-                case LastQueryMode.Selected:
-                    LastQuerySelected = false;
-                    break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
-
-            }
-        }
-
         private void InitializeKeyCommands()
         {
             EscCommand = new RelayCommand(_ =>
@@ -212,7 +193,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
-
+            OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
             OpenResultCommand = new RelayCommand(index =>
             {
                 var results = SelectedResults;
@@ -381,6 +362,11 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
+        public double MainWindowOpacity { get; set; } = 1;
+
+        // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
+        // because it is more accurate and reliable representation than using Visibility as a condition check
+        public bool MainWindowVisibilityStatus { get; set; } = true;
 
         public double MainWindowWidth => _settings.WindowSize;
 
@@ -394,6 +380,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadContextMenuCommand { get; set; }
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
+        public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
 
@@ -709,9 +696,9 @@ namespace Flow.Launcher.ViewModel
 
         public void ToggleFlowLauncher()
         {
-            if (MainWindowVisibility != Visibility.Visible)
+            if (!MainWindowVisibilityStatus)
             {
-                MainWindowVisibility = Visibility.Visible;
+                Show();
             }
             else
             {
@@ -719,25 +706,51 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void Show()
+        {
+            if (_settings.UseSound)
+            {
+                MediaPlayer media = new MediaPlayer();
+                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                media.Play();
+            }
+
+            MainWindowVisibility = Visibility.Visible;
+
+            MainWindowVisibilityStatus = true;
+            
+            if(_settings.UseAnimation)
+                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
+            
+            MainWindowOpacity = 1;
+        }
+
         public async void Hide()
         {
+            // Trick for no delay
+            MainWindowOpacity = 0;
+
             switch (_settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
-                    Application.Current.MainWindow.Opacity = 0; // Trick for no delay
-                    await Task.Delay(100);
-                    Application.Current.MainWindow.Opacity = 1;
+                    await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
+
+            MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }
 

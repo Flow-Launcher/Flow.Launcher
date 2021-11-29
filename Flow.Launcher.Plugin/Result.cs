@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Delegate to Get Image Source
         /// </summary>
-        public IconDelegate Icon { get; set; }
+        public IconDelegate Icon;
 
         /// <summary>
         /// Information for Glyph Icon

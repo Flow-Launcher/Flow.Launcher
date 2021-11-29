@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -60,17 +60,39 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return sb.ToString();
         }
 
-        public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "", string arguments = "", string verb = "")
+        public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "", string arguments = "", string verb = "", bool createNoWindow = false)
         {
             var info = new ProcessStartInfo
             {
                 FileName = fileName,
                 WorkingDirectory = workingDirectory,
                 Arguments = arguments,
-                Verb = verb
+                Verb = verb,
+                CreateNoWindow = createNoWindow
             };
 
             return info;
+        }
+
+        /// <summary>
+        /// Runs a windows command using the provided ProcessStartInfo
+        /// </summary>
+        /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
+        /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
+        public static void Execute(ProcessStartInfo info)
+        {
+            Execute(Process.Start, info);
+        }
+
+        /// <summary>
+        /// Runs a windows command using the provided ProcessStartInfo using a custom execute command function
+        /// </summary>
+        /// <param name="Func startProcess">allows you to pass in a custom command execution function</param>
+        /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
+        /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
+        public static void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
+        {
+            startProcess(info);
         }
     }
 }

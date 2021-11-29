@@ -15,6 +15,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private string language = "en";
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+        public string DarkMode { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
 
@@ -82,6 +83,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        public bool UseAnimation { get; set; } = true;
+        public bool UseSound { get; set; } = true;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
@@ -162,5 +165,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Selected,
         Empty,
         Preserved
+    }
+
+    public enum DarkMode
+    {
+        System,
+        Light,
+        Dark
     }
 }
