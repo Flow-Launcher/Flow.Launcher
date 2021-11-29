@@ -16,6 +16,7 @@
     <system:String x:Key="iconTrayExit">Exit</system:String>
     <system:String x:Key="closeWindow">Close</system:String>
     <system:String x:Key="GameMode">Game Mode</system:String>
+    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher Settings</system:String>
@@ -55,15 +56,17 @@
     <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
     <system:String x:Key="actionKeywords">Action keyword</system:String>
-    <system:String x:Key="currentActionKeywords">Current action keyword:</system:String>
-    <system:String x:Key="newActionKeyword">New action keyword:</system:String>
-    <system:String x:Key="currentPriority">Current Priority:</system:String>
-    <system:String x:Key="newPriority">New Priority:</system:String>
+    <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
+    <system:String x:Key="newActionKeyword">New action keyword</system:String>
+    <system:String x:Key="currentPriority">Current Priority</system:String>
+    <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
     <system:String x:Key="author">Author:</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
+    <system:String x:Key="plugin_query_version">| Version</system:String>
+    <system:String x:Key="plugin_query_web">Website</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -84,6 +87,10 @@
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
+    <system:String x:Key="DarkMode">Dark Mode</system:String>
+    <system:String x:Key="DarkModeSystem">System Default</system:String>
+    <system:String x:Key="DarkModeLight">Light</system:String>
+    <system:String x:Key="DarkModeDark">Dark</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="Animation">Animation</system:String>
@@ -129,6 +136,8 @@
     <!--  Setting About  -->
     <system:String x:Key="about">About</system:String>
     <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
@@ -139,7 +148,10 @@
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
     <system:String x:Key="releaseNotes">Release Notes</system:String>
-    <system:String x:Key="documentation">Usage Tips:</system:String>
+    <system:String x:Key="documentation">Usage Tips</system:String>
+    <system:String x:Key="devtool">DevTools</system:String>
+    <system:String x:Key="settingfolder">Setting Folder</system:String>
+    <system:String x:Key="logfolder">Log Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>

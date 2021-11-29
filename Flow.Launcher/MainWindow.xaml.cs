@@ -16,6 +16,7 @@ using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher
 {
@@ -67,6 +68,7 @@ namespace Flow.Launcher
             HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
+            InitializeDarkMode();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             // since the default main window visibility is visible
@@ -209,6 +211,7 @@ namespace Flow.Launcher
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
+            gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
@@ -475,6 +478,18 @@ namespace Flow.Launcher
         private void MoveQueryTextToEnd()
         {
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
+        }
+
+        public void InitializeDarkMode()
+        {
+            if (_settings.DarkMode == Constant.Light)
+            {
+                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+            }
+            else if (_settings.DarkMode == Constant.Dark)
+            {
+                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+            }
         }
     }
 }
