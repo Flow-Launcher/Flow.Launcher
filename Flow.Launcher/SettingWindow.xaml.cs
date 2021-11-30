@@ -306,13 +306,14 @@ namespace Flow.Launcher
             textBox.MoveFocus(tRequest);
         }
 
-        private void DarkModeSelectedIndexChanged(object sender, EventArgs e) => ThemeManager.Current.ApplicationTheme = settings.DarkMode switch
-        {
-            Constant.Light => ApplicationTheme.Light,
-            Constant.Dark => ApplicationTheme.Dark,
-            Constant.System => null,
-            _ => ThemeManager.Current.ApplicationTheme
-        };
+        private void ColorSchemeSelectedIndexChanged(object sender, EventArgs e) 
+            => ThemeManager.Current.ApplicationTheme = settings.ColorScheme switch
+            {
+                Constant.Light => ApplicationTheme.Light,
+                Constant.Dark => ApplicationTheme.Dark,
+                Constant.System => null,
+                _ => ThemeManager.Current.ApplicationTheme
+            };
 
         /* Custom TitleBar */
 
