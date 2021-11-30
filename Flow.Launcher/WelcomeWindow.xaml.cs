@@ -24,6 +24,7 @@ namespace Flow.Launcher
         public WelcomeWindow()
         {
             InitializeComponent();
+            ContentFrame.Navigate(typeof(SamplePages.SamplePage1));
         }
 
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
