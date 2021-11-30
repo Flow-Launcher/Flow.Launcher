@@ -99,7 +99,6 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                     ContextData = entry,
                     Score = score
                 };
-
             }
 
 

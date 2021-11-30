@@ -103,8 +103,6 @@ namespace Flow.Launcher.Plugin.WindowsSettings
          {
             var newList = ResultHelper.GetResultList(_translatedSettingList, query, _defaultIconPath);
             return newList;
-
-            
         }
 
         public void OnCultureInfoChanged(CultureInfo newCulture)
