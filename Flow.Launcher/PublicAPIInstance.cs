@@ -117,7 +117,7 @@ namespace Flow.Launcher
         
         public void CopyToClipboard(string text)
         {
-            Clipboard.SetText(text);
+            Clipboard.SetDataObject(text);
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
