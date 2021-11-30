@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">十进制分隔符</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">在输出中使用的十进制分隔符。</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">使用系统区域设置</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">逗号（，）</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">逗号（,）</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">点（.）</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">小数点后最大位数</system:String>
 </ResourceDictionary>
