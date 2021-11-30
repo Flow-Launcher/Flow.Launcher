@@ -231,4 +231,17 @@
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Update description</system:String>
 
+    <!--  Welcome Window  -->
+    <system:String x:Key="Skip">Skip</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Hello, It's your first time to run a Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Before starting, proceed with a simple setting. Surely, You can skip. Please choose the language you use.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Search and run everything in everywhere</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">To start Flow, start with the hotkey below. To change, select input and press the wanted hotkey in keyboard.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Hotkeys and Commands</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Action Keyword</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Type &quot;youtube bts&quot; in querybox.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+
 </ResourceDictionary>

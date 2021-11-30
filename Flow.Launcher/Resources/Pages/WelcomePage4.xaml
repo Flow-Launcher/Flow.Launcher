@@ -31,20 +31,22 @@
                         Name="Logo"
                         Width="450"
                         Height="300"
-                        Margin="0,20,0,0"
+                        Margin="0,22,0,0"
                         Source="../../images/page_img01.png" />
                 </StackPanel>
             </Border>
 
             <StackPanel Grid.Row="1" Margin="24,20,24,20">
                 <StackPanel>
-                    <TextBlock FontSize="20" FontWeight="SemiBold">Action Keyword</TextBlock>
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="{DynamicResource Welcome_Page4_Title}" />
                     <TextBlock
                         Margin="0,10,0,0"
                         FontSize="14"
-                        TextWrapping="WrapWithOverflow">
-                        You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Type &quot;youtube bts&quot; in querybox.
-                    </TextBlock>
+                        Text="{DynamicResource Welcome_Page4_Text01}"
+                        TextWrapping="WrapWithOverflow" />
                     <TextBlock
                         Margin="0,10,0,0"
                         FontSize="14"

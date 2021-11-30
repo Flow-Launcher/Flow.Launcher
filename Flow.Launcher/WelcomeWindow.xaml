@@ -119,7 +119,7 @@
                     Height="40"
                     Margin="20,5,0,5"
                     Click="BtnCancel_OnClick"
-                    Content="Skip"
+                    Content="{DynamicResource Skip}"
                     DockPanel.Dock="Right"
                     FontSize="14" />
                 <DockPanel

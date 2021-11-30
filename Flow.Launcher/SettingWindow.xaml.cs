@@ -275,6 +275,11 @@ namespace Flow.Launcher
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
         }
 
+        private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
+        {
+            Flow.Launcher.WelcomeWindow WelcomeWindow = new Flow.Launcher.WelcomeWindow();
+            WelcomeWindow.Show();
+        }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
@@ -313,6 +318,7 @@ namespace Flow.Launcher
             Constant.System => null,
             _ => ThemeManager.Current.ApplicationTheme
         };
+
 
         /* Custom TitleBar */
 
