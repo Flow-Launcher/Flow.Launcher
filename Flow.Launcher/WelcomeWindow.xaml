@@ -73,7 +73,7 @@
                 </Grid>
             </StackPanel>
             <!--#endregion-->
-            <StackPanel Margin="26,12,26,0">
+            <StackPanel Margin="0">
                 <ui:Frame
                     x:Name="ContentFrame"
                     MinHeight="600"
@@ -93,18 +93,20 @@
             BorderThickness="0,1,0,0">
             <DockPanel>
                 <Button
+                    x:Name="NextButton"
                     Width="50"
                     Height="50"
                     Margin="10,5,28,5"
-                    Click="BackwardButton_Click"
+                    Click="ForwardButton_Click"
                     Content="&#xe76c;"
                     DockPanel.Dock="Right"
                     FontFamily="/Resources/#Segoe Fluent Icons"
                     FontSize="22" />
                 <Button
+                    x:Name="BackButton"
                     Width="50"
                     Height="50"
-                    Click="ForwardButton_Click"
+                    Click="BackwardButton_Click"
                     Content="&#xe76b;"
                     DockPanel.Dock="Right"
                     FontFamily="/Resources/#Segoe Fluent Icons"

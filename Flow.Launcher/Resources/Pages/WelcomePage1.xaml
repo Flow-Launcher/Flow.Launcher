@@ -8,6 +8,7 @@
     Title="WelcomePage1"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Background="#cecece"
     mc:Ignorable="d">
 
     <ScrollViewer>
