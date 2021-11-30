@@ -37,6 +37,12 @@ namespace Flow.Launcher.Plugin
         /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
         /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
         void ShellRun(string cmd, string filename = "cmd.exe");
+        
+        /// <summary>
+        /// Copy Text to clipboard
+        /// </summary>
+        /// <param name="Text">Text to save on clipboard</param>
+        public void CopyToClipboard(string text);
 
         /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings
