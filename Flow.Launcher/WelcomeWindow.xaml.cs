@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ModernWpf.Media.Animation;
+using Page = ModernWpf.Controls.Page;
 
 namespace Flow.Launcher
 {
@@ -24,6 +26,32 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            var pageToNavigateTo = ContentFrame.BackStackDepth % 2 == 1 ? typeof(SamplePages.SamplePage1) : typeof(SamplePages.SamplePage2);
+
+            if (_transitionInfo == null)
+            {
+                // Default behavior, no transition set or used.
+                ContentFrame.Navigate(pageToNavigateTo, null);
+            }
+            else
+            {
+                // Explicit transition info used.
+                ContentFrame.Navigate(pageToNavigateTo, null, _transitionInfo);
+            }
+            */
+        }
+
+        private void BackwardButton_Click(object sender, RoutedEventArgs e)
+        {/*
+            if (ContentFrame.BackStackDepth > 0)
+            {
+                ContentFrame.GoBack();
+            }
+            */
+        }
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
             Close();

@@ -5,15 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     Name="FlowWelcomeWindow"
     Title="Welcome to Flow Launcher"
     Width="550"
     Height="650"
-    Background="{DynamicResource PopuBGColor}"
+    Background="{DynamicResource Color00B}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <!--#region TitleBar-->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
@@ -70,14 +72,45 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,12,26,0" />
+            <!--#endregion-->
+            <StackPanel Margin="26,12,26,0">
+                <ui:Frame
+                    x:Name="ContentFrame"
+                    MinHeight="600"
+                    HorizontalAlignment="Stretch">
+                    <ui:Frame.ContentTransitions>
+                        <ui:TransitionCollection>
+                            <ui:NavigationThemeTransition />
+                        </ui:TransitionCollection>
+                    </ui:Frame.ContentTransitions>
+                </ui:Frame>
+            </StackPanel>
         </StackPanel>
         <Border
             Grid.Row="1"
-            Background="{DynamicResource PopupButtonAreaBGColor}"
+            Background="{DynamicResource Color00B}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0,1,0,0">
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+            <DockPanel>
+                <Button
+                    Width="50"
+                    Height="50"
+                    Margin="10,5,28,5"
+                    Click="BackwardButton_Click"
+                    Content="&#xe76c;"
+                    DockPanel.Dock="Right"
+                    FontFamily="/Resources/#Segoe Fluent Icons"
+                    FontSize="22" />
+                <Button
+                    Width="50"
+                    Height="50"
+                    Click="ForwardButton_Click"
+                    Content="&#xe76b;"
+                    DockPanel.Dock="Right"
+                    FontFamily="/Resources/#Segoe Fluent Icons"
+                    FontSize="22" />
+                <StackPanel />
+            </DockPanel>
         </Border>
     </Grid>
 </Window>
