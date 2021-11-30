@@ -9,7 +9,75 @@
     Title="Welcome to Flow Launcher"
     Width="550"
     Height="650"
+    Background="{DynamicResource PopuBGColor}"
+    Foreground="{DynamicResource PopupTextColor}"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid />
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image
+                        Grid.Column="0"
+                        Width="16"
+                        Height="16"
+                        Margin="10,4,4,4"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Source="/Images/app.png" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{DynamicResource Color05B}"
+                        Text="Welcome to Flow Launcher" />
+
+                    <Button
+                        Grid.Column="4"
+                        Click="BtnCancel_OnClick"
+                        Style="{StaticResource TitleBarCloseButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="26,12,26,0" />
+        </StackPanel>
+        <Border
+            Grid.Row="1"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0,1,0,0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+        </Border>
+    </Grid>
 </Window>

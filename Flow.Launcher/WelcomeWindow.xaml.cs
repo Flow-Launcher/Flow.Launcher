@@ -23,5 +23,10 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
