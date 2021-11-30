@@ -94,15 +94,7 @@
                   Drop="programSourceView_Drop"
                   GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
                   PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
-                  SelectionMode="Extended"
-                  Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
-            <ListView.ItemContainerStyle>
-                <!--<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem"> for Darkmode Style -->
-                <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
+                  SelectionMode="Extended">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150" Header="Name">
