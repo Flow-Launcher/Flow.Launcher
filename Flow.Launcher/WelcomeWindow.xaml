@@ -1,0 +1,15 @@
+﻿<Window
+    x:Class="Flow.Launcher.WelcomeWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Name="FlowWelcomeWindow"
+    Title="Welcome to Flow Launcher"
+    Width="550"
+    Height="650"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid />
+</Window>
