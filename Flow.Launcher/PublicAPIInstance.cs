@@ -114,6 +114,11 @@ namespace Flow.Launcher
             var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
             ShellCommand.Execute(startInfo);
         }
+        
+        public void CopyToClipboard(string text)
+        {
+            Clipboard.SetDataObject(text);
+        }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
 
