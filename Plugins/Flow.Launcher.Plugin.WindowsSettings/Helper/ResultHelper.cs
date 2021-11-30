@@ -27,12 +27,13 @@ namespace Flow.Plugin.WindowsSettings.Helper
         /// </summary>
         /// <param name="list">The original result list to convert.</param>
         /// <param name="query">Query for specific result List</param>
-        /// <param name="iconPath">The path to the icon of each entry.</param>
+        /// <param name="windowsSettingIconPath">The path to the icon of each entry.</param>
         /// <returns>A list with <see cref="Result"/>.</returns>
         internal static List<Result> GetResultList(
             in IEnumerable<WindowsSetting> list,
             Query query,
-            string iconPath)
+            string windowsSettingIconPath,
+            string controlPanelIconPath)
         {
             var resultList = new List<Result>();
             foreach (var entry in list)
@@ -47,7 +48,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
 
                 if (nameMatch.IsSearchPrecisionScoreMet())
                 {
-                    var settingResult = NewSettingResult(nameMatch.Score + highScore);
+                    var settingResult = NewSettingResult(nameMatch.Score + highScore, entry.Type);
                     settingResult.TitleHighlightData = nameMatch.MatchData;
                     result = settingResult;
                 }
@@ -56,7 +57,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                     var areaMatch = _api.FuzzySearch(query.Search, entry.Area);
                     if (areaMatch.IsSearchPrecisionScoreMet())
                     {
-                        var settingResult = NewSettingResult(areaMatch.Score + midScore);
+                        var settingResult = NewSettingResult(areaMatch.Score + midScore, entry.Type);
                         settingResult.SubTitleHighlightData = areaMatch.MatchData.Select(x => x + 6).ToList();
                         result = settingResult;
                     }
@@ -65,7 +66,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                         result = entry.AltNames?
                             .Select(altName => _api.FuzzySearch(query.Search, altName))
                             .Where(match => match.IsSearchPrecisionScoreMet())
-                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score + midScore))
+                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score + midScore, entry.Type))
                             .FirstOrDefault();
                     }
 
@@ -79,7 +80,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                                 .SelectMany(x => x)
                                 .Contains(x, StringComparer.CurrentCultureIgnoreCase))
                         )
-                            result = NewSettingResult(midScore);
+                            result = NewSettingResult(midScore, entry.Type);
                     }
                 }
 
@@ -90,10 +91,10 @@ namespace Flow.Plugin.WindowsSettings.Helper
 
                 resultList.Add(result);
 
-                Result NewSettingResult(int score) => new()
+                Result NewSettingResult(int score, string type) => new()
                 {
                     Action = _ => DoOpenSettingsAction(entry),
-                    IcoPath = iconPath,
+                    IcoPath = type == "AppSettingsApp" ? windowsSettingIconPath : controlPanelIconPath,
                     SubTitle = $"{Resources.Area} \"{entry.Area}\" {Resources.SubtitlePreposition} {entry.Type}",
                     Title = entry.Name + entry.glyph,
                     ContextData = entry,
@@ -150,7 +151,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
             ProcessStartInfo processStartInfo;
 
             var command = entry.Command;
-            
+
             command = Environment.ExpandEnvironmentVariables(command);
 
             if (command.Contains(' '))

@@ -19,16 +19,6 @@ namespace Flow.Plugin.WindowsSettings
     public sealed class Main : IPlugin, IContextMenu, IPluginI18n, IDisposable
     {
         /// <summary>
-        /// The path to the symbol for a light theme.
-        /// </summary>
-        private const string _lightSymbol = "Images/WindowsSettings.light.png";
-
-        /// <summary>
-        /// The path to the symbol for a dark theme.
-        /// </summary>
-        private const string _darkSymbol = "Images/WindowsSettings.dark.png";
-
-        /// <summary>
         /// The name of this assembly.
         /// </summary>
         private readonly string _assemblyName;
@@ -39,9 +29,14 @@ namespace Flow.Plugin.WindowsSettings
         private PluginInitContext? _context;
 
         /// <summary>
-        /// The path to the icon for each result.
+        /// The path to the icon for windows setting result.
         /// </summary>
-        private string _defaultIconPath;
+        private const string windowSettingsIconPath = "Images/WindowsSettings.light.png";
+
+        /// <summary>
+        /// The path to the icon for control panel result.
+        /// </summary>
+        private const string controlPanelIconPath = "Images/ControlPanel_Small.png";
 
         /// <summary>
         /// Indicate that the plugin is disposed.
@@ -64,7 +59,6 @@ namespace Flow.Plugin.WindowsSettings
         public Main()
         {
             _assemblyName = Assembly.GetExecutingAssembly().GetName().Name ?? Name;
-            _defaultIconPath = _lightSymbol;
         }
 
         /// <summary>
@@ -101,7 +95,7 @@ namespace Flow.Plugin.WindowsSettings
         /// <returns>A filtered list, can be empty when nothing was found.</returns>
         public List<Result> Query(Query query)
          {
-            var newList = ResultHelper.GetResultList(_translatedSettingList, query, _defaultIconPath);
+            var newList = ResultHelper.GetResultList(_translatedSettingList, query, windowSettingsIconPath, controlPanelIconPath);
             return newList;
 
             

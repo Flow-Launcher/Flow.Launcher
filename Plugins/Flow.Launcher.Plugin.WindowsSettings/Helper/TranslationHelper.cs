@@ -84,7 +84,7 @@ namespace Flow.Plugin.WindowsSettings.Helper
                 {
                     Area = area ?? settings.Area,
                     Name = name ?? settings.Name,
-                    Type = type ?? settings.Type,
+                    DisplayType = type ?? settings.Type,
                     AltNames = translatedAltNames
                 };
 

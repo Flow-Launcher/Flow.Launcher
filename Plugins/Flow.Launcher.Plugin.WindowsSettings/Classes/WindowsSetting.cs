@@ -37,10 +37,16 @@ namespace Flow.Plugin.WindowsSettings.Classes
         /// </summary>
         public string Command { get; set; }
 
+        private string type = string.Empty;
+
         /// <summary>
         /// Gets or sets the type of the windows setting.
         /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// Gets or sets the type display name of this setting.
+        /// </summary>
+        public string? DisplayType { get; set; }
 
         /// <summary>
         /// Gets or sets the alternative names of this setting.
