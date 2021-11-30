@@ -9,6 +9,70 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
+            <Setter Property="Opacity" Value="0" />
+            <Style.Triggers>
+                <!--  Fades-in the image when it becomes visible  -->
+                <Trigger Property="IsVisible" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <BeginStoryboard.Storyboard>
+                                <Storyboard x:Name="FadeIn">
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:2" />
+                                </Storyboard>
+                            </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-    <Grid />
+            <Border Grid.Row="0" HorizontalAlignment="Stretch">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#16af7b" />
+                            <GradientStop Offset="1.0" Color="#34c191" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Image
+                        Width="500"
+                        Height="300"
+                        Margin="0,30,0,0"
+                        Source="../../images/page_img02.png" />
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="1" Margin="24,20,24,20">
+                <StackPanel>
+                    <TextBlock FontSize="20" FontWeight="SemiBold">Hotkeys and Commands</TextBlock>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        TextWrapping="WrapWithOverflow">
+                        You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Type &quot;youtube bts&quot; in querybox.
+                    </TextBlock>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

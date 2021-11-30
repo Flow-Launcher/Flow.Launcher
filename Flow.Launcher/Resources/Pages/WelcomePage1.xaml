@@ -6,14 +6,93 @@
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="WelcomePage1"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    Background="#cecece"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
+            <Setter Property="Opacity" Value="0" />
+            <Style.Triggers>
+                <!--  Fades-in the image when it becomes visible  -->
+                <Trigger Property="IsVisible" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <BeginStoryboard.Storyboard>
+                                <Storyboard x:Name="FadeIn">
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:2" />
+                                </Storyboard>
+                            </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
     <ScrollViewer>
         <Grid>
-            <TextBlock>Page1</TextBlock>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" HorizontalAlignment="Stretch">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#1494df" />
+                            <GradientStop Offset="1.0" Color="#1073bd" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Image
+                        Name="Logo"
+                        Width="60"
+                        Height="60"
+                        Source="../../images/app.png"
+                        Style="{DynamicResource StyleImageFadeIn}" />
+                    <TextBlock
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Foreground="White">
+                        Flow Launcher
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="1" Margin="24,20,24,20">
+                <StackPanel>
+                    <TextBlock FontSize="20" FontWeight="SemiBold">Welcome to Flow Launcher</TextBlock>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        TextWrapping="WrapWithOverflow">
+                        Hello, It's your first time to run a Flow Launcher!
+                    </TextBlock>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        TextWrapping="WrapWithOverflow">
+                        Before starting, proceed with a simple setting. Surely, You can skip. Please choose the language you use.
+                    </TextBlock>
+                    <TextBlock
+                        Margin="0,30,0,0"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Text="{DynamicResource language}" />
+                    <ComboBox
+                        Width="200"
+                        Margin="0,10,0,0"
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding Languages}"
+                        SelectedValue="{Binding Language}"
+                        SelectedValuePath="LanguageCode" />
+                </StackPanel>
+
+            </StackPanel>
         </Grid>
     </ScrollViewer>
 </Page>

@@ -91,28 +91,64 @@
             Background="{DynamicResource Color00B}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0,1,0,0">
-            <DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="130" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Name="PageNavigation"
+                        Margin="0,2,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="1/5"
+                        TextAlignment="Center" />
+                </StackPanel>
+
                 <Button
-                    x:Name="NextButton"
-                    Width="50"
-                    Height="50"
-                    Margin="10,5,28,5"
-                    Click="ForwardButton_Click"
-                    Content="&#xe76c;"
+                    x:Name="SkipButton"
+                    Grid.Column="0"
+                    Width="100"
+                    Height="40"
+                    Margin="20,5,0,5"
+                    Click="BtnCancel_OnClick"
+                    Content="Skip"
                     DockPanel.Dock="Right"
-                    FontFamily="/Resources/#Segoe Fluent Icons"
-                    FontSize="22" />
-                <Button
-                    x:Name="BackButton"
-                    Width="50"
-                    Height="50"
-                    Click="BackwardButton_Click"
-                    Content="&#xe76b;"
-                    DockPanel.Dock="Right"
-                    FontFamily="/Resources/#Segoe Fluent Icons"
-                    FontSize="22" />
-                <StackPanel />
-            </DockPanel>
+                    FontSize="14" />
+                <DockPanel
+                    Grid.Column="2"
+                    Margin="0,0,20,0"
+                    VerticalAlignment="Stretch">
+                    <Button
+                        x:Name="NextButton"
+                        Width="40"
+                        Height="40"
+                        Margin="8,5,0,5"
+                        Click="ForwardButton_Click"
+                        Content="&#xe76c;"
+                        DockPanel.Dock="Right"
+                        FontFamily="/Resources/#Segoe Fluent Icons"
+                        FontSize="18" />
+                    <Button
+                        x:Name="BackButton"
+                        Width="40"
+                        Height="40"
+                        Click="BackwardButton_Click"
+                        Content="&#xe76b;"
+                        DockPanel.Dock="Right"
+                        FontFamily="/Resources/#Segoe Fluent Icons"
+                        FontSize="18" />
+                    <StackPanel />
+                </DockPanel>
+
+            </Grid>
         </Border>
     </Grid>
 </Window>

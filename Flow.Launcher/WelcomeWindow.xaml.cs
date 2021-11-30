@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ModernWpf.Media.Animation;
@@ -17,38 +18,16 @@ using WelcomePages = Flow.Launcher.Resources.Pages;
 
 namespace Flow.Launcher
 {
-    /// <summary>
-    /// WelcomeWindow.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class WelcomeWindow : Window
     {
         public WelcomeWindow()
         {
             InitializeComponent();
-            //ContentFrame.Navigate(typeof(SamplePages.SamplePage1));
             ContentFrame.Navigate(typeof(WelcomePages.WelcomePage1));
             BackButton.IsEnabled = false;
         }
         private int page;
         private int MaxPage = 5;
-        
-        /*public int Page
-        {
-            get { return this.page; }
-            set
-            {
-                this.page = value;
-                if (this.page == 1)
-                {
-                    this.BackButton.IsEnabled = false; 
-                }
-                else 
-                {
-                    this.BackButton.IsEnabled = true;
-                };
-            }
-        }
-        */
 
         private void ButtonDisabler()
         {
@@ -69,9 +48,11 @@ namespace Flow.Launcher
             }
         }
         private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
+        Storyboard sb = new Storyboard();
 
         private static Type PageSelector(int a)
         {
+
             switch (a)
             {
                 case 0:

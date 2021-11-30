@@ -1,14 +1,57 @@
-﻿<Page x:Class="Flow.Launcher.Resources.Pages.WelcomePage4"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="WelcomePage4">
+﻿<Page
+    x:Class="Flow.Launcher.Resources.Pages.WelcomePage4"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WelcomePage4"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-    <Grid>
-        
-    </Grid>
+            <Border Grid.Row="0" HorizontalAlignment="Stretch">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#e8457c" />
+                            <GradientStop Offset="1.0" Color="#bc1948" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Image
+                        Name="Logo"
+                        Width="450"
+                        Height="300"
+                        Margin="0,20,0,0"
+                        Source="../../images/page_img01.png" />
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="1" Margin="24,20,24,20">
+                <StackPanel>
+                    <TextBlock FontSize="20" FontWeight="SemiBold">Action Keyword</TextBlock>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        TextWrapping="WrapWithOverflow">
+                        You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Type &quot;youtube bts&quot; in querybox.
+                    </TextBlock>
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

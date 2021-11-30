@@ -9,9 +9,16 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Flow.Launcher.Infrastructure.UserSettings;
+using System.Windows.Interop;
+using Microsoft.Win32;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.ViewModel;
+
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -22,6 +29,7 @@ namespace Flow.Launcher.Resources.Pages
     {
         public WelcomePage1()
         {
+
             InitializeComponent();
         }
     }
