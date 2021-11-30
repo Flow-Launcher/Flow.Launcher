@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Flow.Plugin.WindowsSettings.Classes
+namespace Flow.Launcher.Plugin.WindowsSettings.Classes
 {
     /// <summary>
     /// A windows setting
