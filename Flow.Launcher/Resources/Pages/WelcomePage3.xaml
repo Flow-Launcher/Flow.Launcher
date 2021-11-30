@@ -10,6 +10,43 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Page.Resources>
+
+        <Style x:Key="HotKeyPopupListStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Padding="14,8,4,8">
+                            <DockPanel LastChildFill="True">
+                                <TextBlock
+                                    Margin="0,0,12,0"
+                                    DockPanel.Dock="Left"
+                                    FontSize="13"
+                                    FontWeight="SemiBold"
+                                    Style="{DynamicResource ItemTitleStyle}"
+                                    Text="{Binding Path=strHotkey}"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Margin="0,0,12,0"
+                                    FontSize="13"
+                                    Style="{DynamicResource ItemSubTitleStyle}"
+                                    Text="{Binding Path=strHotkeyAction}" />
+                            </DockPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#10828282" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
             <Setter Property="Opacity" Value="0" />
             <Style.Triggers>
@@ -63,12 +100,13 @@
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource Welcome_Page3_Title}" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="14"
-                        TextWrapping="WrapWithOverflow">
-                        You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Type &quot;youtube bts&quot; in querybox.
-                    </TextBlock>
+                    <ListBox
+                        x:Name="HotkeyList"
+                        Padding="0,0,0,0"
+                        AlternationCount="2"
+                        Background="Transparent"
+                        DockPanel.Dock="Right"
+                        ItemContainerStyle="{DynamicResource HotKeyPopupListStyle}" />
                     <TextBlock
                         Margin="0,10,0,0"
                         FontSize="14"
