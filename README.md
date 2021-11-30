@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://flow-launcher.github.io">
-	<img width="500px" src="../docs/assets/1_flow.png">
+	<img width="700px" src="../docs/assets/1_flow.png">
   </a>
 </p>
 ![Maintenance](https://img.shields.io/maintenance/yes/3000)
@@ -15,6 +15,26 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
 
+## 🎉 New Features in 1.9
+
+- All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
+- New Plugins - Window Setting, Visual Studio Code, Favorites, Window Services, Window Startup
+- Plugin Store, Game Mode
+- Global 3rd Party File Manager & Default Web Browser Setting
+- New Result Order rank, Reduce Program Size.
+- Do you want more? Check the changelogs.
+
+---
+
+<h4 align="center">
+  <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
+  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
+  <a href="#Development">Development</a> •
+  <a href="https://flow-launcher.github.io/docs">Documentation</a>
+</h4>
+
+---
+
 ## 🚗 Getting Started
 
 ### Installation
@@ -24,21 +44,13 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 > Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
-## 🎉 New Features in 1.9
-
-- All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
-- New Plugins - Window Setting, Visual Studio Code, Favorites, Window Services, Window Startup
-- Plugin Store, Game Mode
-- Global 3rd Party File Manager & Default Web Browser Setting
-- New Result Order rank, Reduce Program Size
-- ......More
+And You can download [Early Access Version]: https://github.com/Flow-Launcher/Flow.Launcher/discussions/640
 
 ## Features
 
 ### Applications & Files
 
 - Flow searches files and contents via Windows Index Search
--  to use **Everything**: `pm install everything`.
 - Search for file contents.
 - Support search using environment variable paths.
 
@@ -66,12 +78,16 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 - Run batch and PowerShell commands as Administrator or a different user.
 - Ctrl+Enter to Run as Administrator.
 
+### Explorer
+
+
+
 ### Window Setting & Control Panel
 
 ![7_ControlPanelandsettings](C:\DEV\docs\assets\7_ControlPanelandsettings.png)
 
 - Search within Window Settings. (Default Action Keyword is "$")
-- Also Search within Control Panel
+- Also Search within Control Panel.
 
 ### Explorer
 
@@ -81,9 +97,16 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 ### Customization
 
+![darkmode](C:\DEV\docs\assets\darkmode.png)
+
+- Window size adjustment, animation, and sound setting are possible.
+- There are various themes and you can make it yourself.
+- Color Scheme (aka Dark Mode) is available.
+
 ### Language
 
 - Support languages from Chinese to Italian and more.
+- Support PinYin 
 - You can translation support this project in [Crowdin](https://crowdin.com/project/flow-launcher)
 
 ### Portable
@@ -92,6 +115,14 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 - Type `flow user data` to open your saved user settings folder. They are located at:
   - If using roaming: `%APPDATA%\FlowLauncher`
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
+  - Type `open log location` to open your logs folder, they are saved along with your user settings folder.
+
+### Game Mode
+![gamemode](C:\DEV\docs\assets\gamemode.png)
+- Suspend Hotkey when you playing game.
+- Surely, You can ignore hotkeys in fullscreen game in settings.
+
+----
 
 ## Plugins
 
@@ -101,20 +132,25 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 ### Plugin Install
 
-### ![pm_install](C:\DEV\docs\assets\pm_install.png)
+![pm_install](C:\DEV\docs\assets\pm_install.png)
 
 - Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
-- You can download plugin by direct URL. `pm install https://github.com/Garulf/HA-Commander/archive/refs/heads/main.zip` 
+
+- If you developer, You can download plugin by direct URL. `pm install <URL>`
 
 ### Plugin Store
 
 ![pluginstore](C:\DEV\docs\assets\pluginstore.png)
 
-- You can see the full plugin list in plugin store menu and Quick installing.
+- Simply you can check the full plugin list and Quick install in plugin store menu in setting.
 
 ### Plugin - Everything
 
+- to use **Everything**: `pm install everything`.
+
 ### Plugin - Ha Commander
+
+----
 
 ## Hotkeys
 
@@ -129,56 +165,47 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 | <kbd>Esc</kbd>                                               | Back to Result & Close                       |
 | <kbd>Ctrl</kbd> +<kbd>i</kbd>                                | Open Setting Window                          |
 | <kbd>F5</kbd>                                                | Reload All Plugin Data & Window Search Index |
+| <kbd>Ctrl</kbd> + <kbd>h</kbd>                               | Open Query History                           |
+
+
 ## System Command List
 
-## Hotkeys
+| Command                | Description                                                  |
+| ---------------------- | ------------------------------------------------------------ |
+| Shutdown               | Shutdown computer                                            |
+| Restart                | Restart computer                                             |
+| Restart with advance   | Restart the computer with Advanced Boot option for safe and debugging modes |
+| Log off                | Log off                                                      |
+| Lock                   | Lock computer                                                |
+| Sleep                  | Put computer to sleep                                        |
+| Hibernate              | Hibernate computer                                           |
+| Empty Recycle Bin      | Empty recycle bin                                            |
+| Exit                   | Close Flow Launcher                                          |
+| Save Settings          | Save all Flow Launcher settings                              |
+| Restart Flow Launcher  | Restart Flow Launcher                                        |
+| Settings               | Tweak this app                                               |
+| Reload Plugin Data     | Refreshes plugin data with new content                       |
+| Check For Update       | Check for new Flow Launcher update                           |
+| Open Log Location      | Open Flow Launcher's log location                            |
+| Flow Launcher Tip      | Visit Flow Launcher's documentation for more help and how to use tips |
+| Flow Launcher UserData | Open the location where Flow Launcher's settings are stored  |
 
-| Command                       | Description                                                  |
-| ----------------------------- | ------------------------------------------------------------ |
-| Shutdown                      | Shutdown computer                                            |
-| Restart                       | Restart computer                                             |
-| Restart with advance          | Restart the computer with Advanced Boot option for safe and debugging modes |
-| Log off                       | Log off                                                      |
-| Lock                          | Lock computer                                                |
-| Sleep                         | Put computer to sleep                                        |
-| <kbd>Esc</kbd>                | Back to Result & Close                                       |
-| <kbd>Ctrl</kbd> +<kbd>i</kbd> | Open Setting Window                                          |
-| <kbd>F5</kbd>                 | Reload All Plugin Data & Window Search Index                 |
+----
 
 
-- 
-- 
-- 
-- 
-- 
-- 
+
+
+
+
 - Save file or folder locations for quick access.
-- 
-
-[<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
-
-
-
----
-
-<h4 align="center">
-  <a href="#Features">Features</a> •
-  <a href="#Getting-Started">Getting Started</a> •
-  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
-  <a href="#Development">Development</a> •
-  <a href="https://flow-launcher.github.io/docs">Documentation</a>
-</h4>
-
-
----
-
-### Usage
 
 - 
-- - 
-- Type `open log location` to open your logs folder, they are saved along with your user settings folder.
 
 [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
+
+
+
+----
 
 ## Questions/Suggestions
 
