@@ -147,10 +147,15 @@ namespace Flow.Launcher.Plugin.Program
             var t1 = Task.Run(IndexWin32Programs);
             var t2 = Task.Run(IndexUwpPrograms);
             await Task.WhenAll(t1, t2).ConfigureAwait(false);
+            ResetCache();
+            _settings.LastIndexTime = DateTime.Today;
+        }
+
+        internal static void ResetCache()
+        {
             var oldCache = cache;
             cache = new MemoryCache(cacheOptions);
             oldCache.Dispose();
-            _settings.LastIndexTime = DateTime.Today;
         }
 
         public Control CreateSettingPanel()
