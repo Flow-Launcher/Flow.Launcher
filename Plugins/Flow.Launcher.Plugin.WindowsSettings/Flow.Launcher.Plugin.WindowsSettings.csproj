@@ -3,8 +3,8 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <ProjectGuid>{5043CECE-E6A7-4867-9CBE-02D27D83747A}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Flow.Plugin.WindowsSettings</RootNamespace>
-    <AssemblyName>Flow.Plugin.WindowsSettings</AssemblyName>
+    <RootNamespace>Flow.Launcher.Plugin.WindowsSettings</RootNamespace>
+    <AssemblyName>Flow.Launcher.Plugin.WindowsSettings</AssemblyName>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <Platforms>x64</Platforms>

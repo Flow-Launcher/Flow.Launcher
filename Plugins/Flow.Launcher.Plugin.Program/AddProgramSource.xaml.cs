@@ -42,6 +42,11 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             string s = Directory.Text;

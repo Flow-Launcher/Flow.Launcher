@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Flow.Plugin.WindowsSettings.Classes;
+using Flow.Launcher.Plugin.WindowsSettings.Classes;
 
-namespace Flow.Plugin.WindowsSettings.Helper
+namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with the version of the Windows OS

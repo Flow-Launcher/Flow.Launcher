@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using Flow.Launcher.Plugin;
-using Flow.Plugin.WindowsSettings.Classes;
-using Flow.Plugin.WindowsSettings.Helper;
-using Flow.Plugin.WindowsSettings.Properties;
+using Flow.Launcher.Plugin.WindowsSettings.Classes;
+using Flow.Launcher.Plugin.WindowsSettings.Helper;
+using Flow.Launcher.Plugin.WindowsSettings.Properties;
 
-namespace Flow.Plugin.WindowsSettings
+namespace Flow.Launcher.Plugin.WindowsSettings
 {
     /// <summary>
     /// Main class of this plugin that implement all used interfaces.
@@ -97,8 +97,6 @@ namespace Flow.Plugin.WindowsSettings
          {
             var newList = ResultHelper.GetResultList(_translatedSettingList, query, windowSettingsIconPath, controlPanelIconPath);
             return newList;
-
-            
         }
 
         public void OnCultureInfoChanged(CultureInfo newCulture)

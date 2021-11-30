@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Flow.Launcher.Plugin;
 
-namespace Flow.Plugin.WindowsSettings
+namespace Flow.Launcher.Plugin.WindowsSettings
 {
     public static class Log
     {

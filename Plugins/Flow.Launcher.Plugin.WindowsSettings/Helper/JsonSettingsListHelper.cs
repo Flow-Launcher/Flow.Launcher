@@ -9,9 +9,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Flow.Plugin.WindowsSettings.Classes;
+using Flow.Launcher.Plugin.WindowsSettings.Classes;
 
-namespace Flow.Plugin.WindowsSettings.Helper
+namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with the JSON file that contains all Windows settings

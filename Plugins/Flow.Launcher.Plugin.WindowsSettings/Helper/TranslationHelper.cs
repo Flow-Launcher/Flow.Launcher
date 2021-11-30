@@ -5,10 +5,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Flow.Plugin.WindowsSettings.Classes;
-using Flow.Plugin.WindowsSettings.Properties;
+using Flow.Launcher.Plugin.WindowsSettings.Classes;
+using Flow.Launcher.Plugin.WindowsSettings.Properties;
 
-namespace Flow.Plugin.WindowsSettings.Helper
+namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 {
     /// <summary>
     /// Helper class to easier work with translations.
