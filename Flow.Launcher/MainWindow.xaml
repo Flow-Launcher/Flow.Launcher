@@ -47,6 +47,10 @@
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="Shift" />
         <KeyBinding
+            Key="C"
+            Command="{Binding CopyToClipboard}"
+            Modifiers="Ctrl" />       
+        <KeyBinding
             Key="I"
             Command="{Binding OpenSettingCommand}"
             Modifiers="Ctrl" />
