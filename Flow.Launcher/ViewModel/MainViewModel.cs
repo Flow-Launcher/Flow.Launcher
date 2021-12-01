@@ -228,6 +228,22 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
+            ReplaceQueryWithResult = new RelayCommand(index =>
+            {
+                var results = SelectedResults;
+
+                if (index != null)
+                {
+                    results.SelectedIndex = int.Parse(index.ToString());
+                }
+
+                var result = results.SelectedItem?.Result;
+                if (result != null) // SelectedItem returns null if selection is empty.
+                {
+                    ChangeQueryText(result.Title, true);
+                }
+            });
+
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -383,6 +399,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
+        public ICommand ReplaceQueryWithResult { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
