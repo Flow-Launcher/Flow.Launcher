@@ -706,6 +706,15 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void CycleHistory()
+        {
+            if (!HistorySelected())
+            {
+                ChangeQueryText(_history.Items.Last().Query.ToString());
+            }
+            
+        }
+
         public void Show()
         {
             if (_settings.UseSound)

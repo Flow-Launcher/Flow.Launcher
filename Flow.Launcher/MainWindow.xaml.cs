@@ -442,7 +442,14 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Up:
-                    _viewModel.SelectPrevItemCommand.Execute(null);
+                    if (string.IsNullOrEmpty(QueryTextBox.Text))
+                    {
+                        _viewModel.CycleHistory();
+                    }
+                    else
+                    {
+                        _viewModel.SelectPrevItemCommand.Execute(null);
+                    }
                     e.Handled = true;
                     break;
                 case Key.PageDown:
