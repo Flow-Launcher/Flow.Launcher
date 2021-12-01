@@ -240,7 +240,7 @@ namespace Flow.Launcher.ViewModel
                 var result = results.SelectedItem?.Result;
                 if (result != null) // SelectedItem returns null if selection is empty.
                 {
-                    ChangeQueryText(result.Title, true);
+                    ChangeQueryText(result.Title);
                 }
             });
 
