@@ -12,7 +12,6 @@
     Height="650"
     Background="{DynamicResource Color00B}"
     Foreground="{DynamicResource PopupTextColor}"
-    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <!--#region TitleBar-->
@@ -76,8 +75,10 @@
             <StackPanel Margin="0">
                 <ui:Frame
                     x:Name="ContentFrame"
-                    MinHeight="600"
-                    HorizontalAlignment="Stretch">
+                    HorizontalAlignment="Stretch"
+                    ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ui:Frame.ContentTransitions>
                         <ui:TransitionCollection>
                             <ui:NavigationThemeTransition />

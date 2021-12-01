@@ -23,6 +23,13 @@
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         </Style>
+        <Style x:Key="ResultText" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Margin" Value="0,4,0,0" />
+            <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+        </Style>
     </Page.Resources>
     <ScrollViewer>
         <Grid>
@@ -64,34 +71,31 @@
                         TextWrapping="WrapWithOverflow" />
                     <UniformGrid
                         Margin="0,14,0,0"
-                        Columns="3"
-                        Rows="4">
+                        Columns="2"
+                        Rows="2">
                         <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="g Weather" />
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource QueryText}" Text="g Weather" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="Weather in Google Result " />
+                            </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="42+3*8" />
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource QueryText}" Text="&gt; ping 8.8.8.8" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="Shell Command" />
+                            </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="Bluetooth" />
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource QueryText}" Text="Bluetooth" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="Bluetooth in Windows Setting" />
+                            </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="pm install" />
-                        </Border>
-                        <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="Shutdown" />
-                        </Border>
-                        <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="Settings" />
-                        </Border>
-                        <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="youtube BTS" />
-                        </Border>
-                        <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="&gt; ping 8.8.8.8" />
-                        </Border>
-                        <Border Style="{DynamicResource RecommendQuery}">
-                            <TextBlock Style="{DynamicResource QueryText}" Text="mail" />
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource QueryText}" Text="vs" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="Visual Studio" />
+                            </StackPanel>
                         </Border>
                     </UniformGrid>
                 </StackPanel>
