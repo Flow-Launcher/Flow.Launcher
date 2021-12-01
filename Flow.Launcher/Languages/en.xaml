@@ -238,28 +238,22 @@
     <system:String x:Key="Welcome_Page1_Text02">Before starting, proceed with a simple setting. Surely, You can skip. Please choose the language you use.</system:String>
     <system:String x:Key="Welcome_Page2_Title">Search and run everything in everywhere</system:String>
     <system:String x:Key="Welcome_Page2_Text01">To start Flow, start with the hotkey below. To change, select input and press the wanted hotkey in keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Type &quot;youtube bts&quot; in querybox.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">You can search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Try these queries in Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
 
     <!--  General Guide & Hotkey  -->
-    <system:String x:Key="Hotkey01">U+2B60, U+2B62</system:String>
-    <system:String x:Key="Hotkey01Action">Back / Context Menu</system:String>
-    <system:String x:Key="Hotkey02">U+2B61, U+2B63</system:String>
-    <system:String x:Key="Hotkey02Action">Item Navigation</system:String>
-    <system:String x:Key="Hotkey03">Shift+Enter</system:String>
-    <system:String x:Key="Hotkey03Action">Open Context Menu</system:String>
-    <system:String x:Key="Hotkey04">Ctrl+Enter</system:String>
-    <system:String x:Key="Hotkey04Action">Open Contaning Folder</system:String>
-    <system:String x:Key="Hotkey05">Ctrl+Shift+Enter</system:String>
-    <system:String x:Key="Hotkey05Action">Run as Admin</system:String>
-    <system:String x:Key="Hotkey06">Ctrl+C</system:String>
-    <system:String x:Key="Hotkey06Action">Copy File Path</system:String>
-    <system:String x:Key="Hotkey07">Ctrl+H</system:String>
-    <system:String x:Key="Hotkey07Action">Query History</system:String>
-    <system:String x:Key="Hotkey08">ESC</system:String>
-    <system:String x:Key="Hotkey08Action">Back to Result in Context Menu</system:String>
+
+    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
+    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
+    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
 
 </ResourceDictionary>

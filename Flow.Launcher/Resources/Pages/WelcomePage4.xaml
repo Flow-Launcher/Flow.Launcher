@@ -9,6 +9,21 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="RecommendQuery" TargetType="Border">
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Width" Value="600" />
+            <Setter Property="Padding" Value="20,7,12,7" />
+            <Setter Property="Margin" Value="4,4,4,4" />
+            <Setter Property="Background" Value="{DynamicResource Color01B}" />
+        </Style>
+        <Style x:Key="QueryText" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+        </Style>
+    </Page.Resources>
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
@@ -43,14 +58,42 @@
                         FontWeight="SemiBold"
                         Text="{DynamicResource Welcome_Page4_Title}" />
                     <TextBlock
-                        Margin="0,10,0,0"
+                        Margin="0,10,0,10"
                         FontSize="14"
                         Text="{DynamicResource Welcome_Page4_Text01}"
                         TextWrapping="WrapWithOverflow" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="14"
-                        TextWrapping="WrapWithOverflow" />
+                    <UniformGrid
+                        Margin="0,14,0,0"
+                        Columns="3"
+                        Rows="4">
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="g Weather" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="42+3*8" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="Bluetooth" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="pm install" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="Shutdown" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="Settings" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="youtube BTS" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="&gt; ping 8.8.8.8" />
+                        </Border>
+                        <Border Style="{DynamicResource RecommendQuery}">
+                            <TextBlock Style="{DynamicResource QueryText}" Text="mail" />
+                        </Border>
+                    </UniformGrid>
                 </StackPanel>
 
             </StackPanel>
