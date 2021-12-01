@@ -1,8 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation
-// The Microsoft Corporation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -102,11 +98,8 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                 };
             }
 
-
             return resultList;
         }
-
-
 
         /// <summary>
         /// Add a tool-tip to the given <see cref="Result"/>, based o the given <see cref="IWindowsSetting"/>.

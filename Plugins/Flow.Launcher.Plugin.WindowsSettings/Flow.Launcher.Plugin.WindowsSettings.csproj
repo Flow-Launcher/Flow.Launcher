@@ -1,20 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <ProjectGuid>{5043CECE-E6A7-4867-9CBE-02D27D83747A}</ProjectGuid>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Flow.Launcher.Plugin.WindowsSettings</RootNamespace>
-    <AssemblyName>Flow.Launcher.Plugin.WindowsSettings</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <Platforms>x64</Platforms>
     <ErrorReport>prompt</ErrorReport>
-    <UseWindowsForms>true</UseWindowsForms>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\Output\Debug\Plugins\Flow.Launcher.Plugin.WindowsSettings</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <Optimize>false</Optimize>
@@ -26,7 +24,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Output\Release\Plugins\Flow.Launcher.Plugin.WindowsSettings</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
