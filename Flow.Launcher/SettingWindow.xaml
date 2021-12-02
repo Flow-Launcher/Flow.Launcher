@@ -2485,7 +2485,7 @@
                                             <Button
                                                 Margin="0,0,12,0"
                                                 Click="OpenWelcomeWindow"
-                                                Content="Welcome Window" />
+                                                Content="{DynamicResource welcomewindow}" />
                                             <Button
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
