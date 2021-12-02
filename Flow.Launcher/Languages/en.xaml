@@ -258,4 +258,13 @@
     <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
     <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
 
+    <system:String x:Key="RecommendWeather">g Weather</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
+    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Setting</system:String>
+    <system:String x:Key="RecommendAcronyms">vs</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Visual Studio</system:String>
+
 </ResourceDictionary>

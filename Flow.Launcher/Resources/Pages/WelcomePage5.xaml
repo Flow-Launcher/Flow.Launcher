@@ -21,10 +21,21 @@
                         <BeginStoryboard>
                             <BeginStoryboard.Storyboard>
                                 <Storyboard x:Name="FadeIn">
+
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Canvas.Top)"
+                                        From="110"
+                                        To="75"
+                                        Duration="0:0:1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <QuadraticEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
                                     <DoubleAnimation
                                         Storyboard.TargetProperty="Opacity"
+                                        From="0"
                                         To="1"
-                                        Duration="0:0:2">
+                                        Duration="0:0:1">
                                         <DoubleAnimation.EasingFunction>
                                             <QuadraticEase EasingMode="EaseOut" />
                                         </DoubleAnimation.EasingFunction>
@@ -55,12 +66,15 @@
                 </Border.Background>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Image
-                        Name="Logo"
-                        Width="90"
-                        Height="90"
-                        Source="../../images/app.png"
-                        Style="{DynamicResource StyleImageFadeIn}" />
+                    <Canvas Width="550" Height="250">
+                        <Image
+                            Name="Logo"
+                            Canvas.Left="225"
+                            Width="100"
+                            Height="100"
+                            Source="../../images/app.png"
+                            Style="{DynamicResource StyleImageFadeIn}" />
+                    </Canvas>
                 </StackPanel>
             </Border>
 

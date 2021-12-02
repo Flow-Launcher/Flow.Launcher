@@ -40,6 +40,8 @@ namespace Flow.Launcher
             ContentFrame.Navigate(pages[0]);
         }
 
+        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
+        Storyboard sb = new Storyboard();
         private int page;
         private int pageNum = 1;
         private int MaxPage = 5;
@@ -65,8 +67,7 @@ namespace Flow.Launcher
                 NextButton.IsEnabled = true;
             }
         }
-        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
-        Storyboard sb = new Storyboard();
+
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
             page = page + 1;

@@ -10,9 +10,31 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Page.Resources>
+        <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
+            <Style.Triggers>
+                <Trigger Property="IsVisible" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <BeginStoryboard.Storyboard>
+                                <Storyboard x:Name="Move">
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Canvas.Left)"
+                                        From="0"
+                                        To="100"
+                                        Duration="0:0:20">
+                                        <DoubleAnimation.EasingFunction>
+                                            <QuadraticEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="RecommendQuery" TargetType="Border">
             <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Width" Value="600" />
             <Setter Property="Padding" Value="20,7,12,7" />
             <Setter Property="Margin" Value="4,4,4,4" />
             <Setter Property="Background" Value="{DynamicResource Color01B}" />
@@ -49,12 +71,19 @@
                 </Border.Background>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Image
-                        Name="Logo"
-                        Width="450"
-                        Height="300"
-                        Margin="0,22,0,0"
-                        Source="../../images/page_img01.png" />
+                    <Canvas
+                        Width="600"
+                        Height="301"
+                        ClipToBounds="True">
+                        <Image
+                            Name="Logo"
+                            Canvas.Left="0"
+                            Width="450"
+                            Height="280"
+                            Margin="0,0,0,0"
+                            Source="../../images/page_img01.png"
+                            Style="{DynamicResource StyleImageFadeIn}" />
+                    </Canvas>
                 </StackPanel>
             </Border>
 
@@ -75,26 +104,26 @@
                         Rows="2">
                         <Border Style="{DynamicResource RecommendQuery}">
                             <StackPanel>
-                                <TextBlock Style="{DynamicResource QueryText}" Text="g Weather" />
-                                <TextBlock Style="{DynamicResource ResultText}" Text="Weather in Google Result " />
+                                <TextBlock Style="{DynamicResource QueryText}" Text="{DynamicResource RecommendWeather}" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="{DynamicResource RecommendWeatherDesc}" />
                             </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource RecommendQuery}">
                             <StackPanel>
-                                <TextBlock Style="{DynamicResource QueryText}" Text="&gt; ping 8.8.8.8" />
-                                <TextBlock Style="{DynamicResource ResultText}" Text="Shell Command" />
+                                <TextBlock Style="{DynamicResource QueryText}" Text="{DynamicResource RecommendShell}" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="{DynamicResource RecommendShellDesc}" />
                             </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource RecommendQuery}">
                             <StackPanel>
-                                <TextBlock Style="{DynamicResource QueryText}" Text="Bluetooth" />
-                                <TextBlock Style="{DynamicResource ResultText}" Text="Bluetooth in Windows Setting" />
+                                <TextBlock Style="{DynamicResource QueryText}" Text="{DynamicResource RecommendBluetooth}" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="{DynamicResource RecommendBluetoothDesc}" />
                             </StackPanel>
                         </Border>
                         <Border Style="{DynamicResource RecommendQuery}">
                             <StackPanel>
-                                <TextBlock Style="{DynamicResource QueryText}" Text="vs" />
-                                <TextBlock Style="{DynamicResource ResultText}" Text="Visual Studio" />
+                                <TextBlock Style="{DynamicResource QueryText}" Text="{DynamicResource RecommendAcronyms}" />
+                                <TextBlock Style="{DynamicResource ResultText}" Text="{DynamicResource RecommendAcronymsDesc}" />
                             </StackPanel>
                         </Border>
                     </UniformGrid>
