@@ -95,7 +95,7 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 <img src="https://user-images.githubusercontent.com/6903107/144517603-7bfbf868-476a-41d1-bd1b-1ebde7ab2539.png" width="400">
 
 - Save file or folder locations for quick access.
-- 
+
 ### Window Setting & Control Panel
 
 <img src="https://user-images.githubusercontent.com/6903107/144517620-00e58b93-b06c-4260-b7be-4f23edfdd633.png" width="400">
