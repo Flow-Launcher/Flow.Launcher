@@ -109,7 +109,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="1/5"
+                        Text="{Binding PageDisplay, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                         TextAlignment="Center" />
                 </StackPanel>
 

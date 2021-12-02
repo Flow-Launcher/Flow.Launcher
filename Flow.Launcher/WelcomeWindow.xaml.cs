@@ -28,6 +28,7 @@ namespace Flow.Launcher
             InitializeComponent();
             BackButton.IsEnabled = false;
             this.settings = settings;
+
             pages = new()
             {
                 new WelcomePage1(settings),
@@ -38,11 +39,16 @@ namespace Flow.Launcher
             };
             ContentFrame.Navigate(pages[0]);
         }
+
         private int page;
+        private int pageNum = 1;
         private int MaxPage = 5;
+        public string PageDisplay => $"{pageNum}/5";
 
         private void UpdateView()
         {
+            pageNum = page + 1;
+            PageNavigation.Text = PageDisplay;
             if (page == 0)
             {
                 BackButton.IsEnabled = false;
@@ -84,7 +90,6 @@ namespace Flow.Launcher
             }
         }
 
-        public string PageDisplay => $"{page}/5";
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
