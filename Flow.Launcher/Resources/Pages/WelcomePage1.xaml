@@ -1,12 +1,12 @@
-﻿<Page
-    x:Class="Flow.Launcher.Resources.Pages.WelcomePage1"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="WelcomePage1"
-    mc:Ignorable="d">
+﻿<Page x:Class="Flow.Launcher.Resources.Pages.WelcomePage1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="WelcomePage1"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      mc:Ignorable="d">
     <Page.Resources>
         <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
             <Setter Property="Opacity" Value="0" />
@@ -17,10 +17,7 @@
                         <BeginStoryboard>
                             <BeginStoryboard.Storyboard>
                                 <Storyboard x:Name="FadeIn">
-                                    <DoubleAnimation
-                                        Storyboard.TargetProperty="Opacity"
-                                        To="1"
-                                        Duration="0:0:2" />
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:2" />
                                 </Storyboard>
                             </BeginStoryboard.Storyboard>
                         </BeginStoryboard>
@@ -47,17 +44,15 @@
                 </Border.Background>
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Image
-                        Name="Logo"
-                        Width="60"
-                        Height="60"
-                        Source="../../images/app.png"
-                        Style="{DynamicResource StyleImageFadeIn}" />
-                    <TextBlock
-                        Margin="12,0,0,0"
-                        VerticalAlignment="Center"
-                        FontSize="30"
-                        Foreground="White">
+                    <Image Name="Logo"
+                           Width="60"
+                           Height="60"
+                           Source="../../images/app.png"
+                           Style="{DynamicResource StyleImageFadeIn}" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="30"
+                               Foreground="White">
                         Flow Launcher
                     </TextBlock>
                 </StackPanel>
@@ -65,32 +60,25 @@
 
             <StackPanel Grid.Row="1" Margin="24,20,24,20">
                 <StackPanel>
-                    <TextBlock
-                        FontSize="20"
-                        FontWeight="SemiBold"
-                        Text="{DynamicResource Welcome_Page1_Title}" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="14"
-                        Text="{DynamicResource Welcome_Page1_Text01}"
-                        TextWrapping="WrapWithOverflow" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="14"
-                        Text="{DynamicResource Welcome_Page1_Text02}"
-                        TextWrapping="WrapWithOverflow" />
-                    <TextBlock
-                        Margin="0,30,0,0"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Text="{DynamicResource language}" />
-                    <ComboBox
-                        Width="200"
-                        Margin="0,10,0,0"
-                        DisplayMemberPath="Display"
-                        ItemsSource="{Binding Languages}"
-                        SelectedValue="{Binding Language}"
-                        SelectedValuePath="LanguageCode" />
+                    <TextBlock FontSize="20" FontWeight="SemiBold" Text="{DynamicResource Welcome_Page1_Title}" />
+                    <TextBlock Margin="0,10,0,0"
+                               FontSize="14"
+                               Text="{DynamicResource Welcome_Page1_Text01}"
+                               TextWrapping="WrapWithOverflow" />
+                    <TextBlock Margin="0,10,0,0"
+                               FontSize="14"
+                               Text="{DynamicResource Welcome_Page1_Text02}"
+                               TextWrapping="WrapWithOverflow" />
+                    <TextBlock Margin="0,30,0,0"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Text="{DynamicResource language}" />
+                    <ComboBox Width="200"
+                              Margin="0,10,0,0"
+                              DisplayMemberPath="Display"
+                              ItemsSource="{Binding Languages}"
+                              SelectedValue="{Binding CustomLanguage, Mode=TwoWay}"
+                              SelectedValuePath="LanguageCode" />
                 </StackPanel>
 
             </StackPanel>

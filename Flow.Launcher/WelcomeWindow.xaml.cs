@@ -12,19 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Resources.Pages;
 using ModernWpf.Media.Animation;
-using Page = ModernWpf.Controls.Page;
-using WelcomePages = Flow.Launcher.Resources.Pages;
 
 namespace Flow.Launcher
 {
     public partial class WelcomeWindow : Window
     {
-        public WelcomeWindow()
+        private readonly List<Page> pages;
+        private readonly Settings settings;
+
+        public WelcomeWindow(Settings settings)
         {
             InitializeComponent();
-            ContentFrame.Navigate(typeof(WelcomePages.WelcomePage1));
             BackButton.IsEnabled = false;
+            this.settings = settings;
+            pages = new()
+            {
+                new WelcomePage1(settings),
+                new WelcomePage2(settings),
+                new WelcomePage3(),
+                new WelcomePage4(),
+                new WelcomePage5(settings),
+            };
+            ContentFrame.Navigate(pages[0]);
         }
         private int page;
         private int MaxPage = 5;
@@ -41,7 +53,7 @@ namespace Flow.Launcher
                 BackButton.IsEnabled = true;
                 NextButton.IsEnabled = false;
             }
-            else 
+            else
             {
                 BackButton.IsEnabled = true;
                 NextButton.IsEnabled = true;
@@ -49,39 +61,20 @@ namespace Flow.Launcher
         }
         private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
         Storyboard sb = new Storyboard();
-
-        private static Type PageSelector(int a)
-        {
-
-            switch (a)
-            {
-                case 0:
-                    return typeof(WelcomePages.WelcomePage1);
-                case 1:
-                    return typeof(WelcomePages.WelcomePage2);
-                case 2:
-                    return typeof(WelcomePages.WelcomePage3);
-                case 3:
-                    return typeof(WelcomePages.WelcomePage4);
-                case 4:
-                    return typeof(WelcomePages.WelcomePage5);
-                default:
-                    return typeof(WelcomePages.WelcomePage1);
-            }
-        }
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
             page = page + 1;
             ButtonDisabler();
-            var pageToNavigateTo = PageSelector(page);
-                ContentFrame.Navigate(pageToNavigateTo, null, _transitionInfo);
+            var pageToNavigateTo = pages[page];
+
+            ContentFrame.Navigate(pageToNavigateTo, _transitionInfo);
         }
 
         private void BackwardButton_Click(object sender, RoutedEventArgs e)
         {
             if (page > 0)
             {
-                page = page - 1;
+                page--;
                 ButtonDisabler();
                 ContentFrame.GoBack();
             }

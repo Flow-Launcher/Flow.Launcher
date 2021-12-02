@@ -9,7 +9,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePage2"
-    d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />

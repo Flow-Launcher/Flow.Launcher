@@ -132,7 +132,6 @@ namespace Flow.Launcher
         {
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
-
                 HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
                 HotKeyMapper.RemoveHotkey(settings.Hotkey);
                 settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
@@ -277,7 +276,7 @@ namespace Flow.Launcher
 
         private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
         {
-            Flow.Launcher.WelcomeWindow WelcomeWindow = new Flow.Launcher.WelcomeWindow();
+            Flow.Launcher.WelcomeWindow WelcomeWindow = new Flow.Launcher.WelcomeWindow(settings);
             WelcomeWindow.Show();
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)

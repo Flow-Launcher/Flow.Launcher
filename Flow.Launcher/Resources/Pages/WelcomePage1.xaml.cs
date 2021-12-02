@@ -18,7 +18,7 @@ using System.Windows.Interop;
 using Microsoft.Win32;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.ViewModel;
-
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -27,10 +27,31 @@ namespace Flow.Launcher.Resources.Pages
     /// </summary>
     public partial class WelcomePage1 : Page
     {
-        public WelcomePage1()
-        {
 
+        public WelcomePage1(Settings settings)
+        {
+            Settings = settings;
             InitializeComponent();
         }
+        private Internationalization _translater => InternationalizationManager.Instance;
+        public List<Language> Languages => _translater.LoadAvailableLanguages();
+
+        public Settings Settings { get; }
+
+        public string CustomLanguage
+        {
+            get
+            {
+                return Settings.Language;
+            }
+            set
+            {
+                InternationalizationManager.Instance.ChangeLanguage(value);
+
+                if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+                    Settings.ShouldUsePinyin = true;
+            }
+        }
+
     }
 }

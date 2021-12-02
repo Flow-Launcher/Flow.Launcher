@@ -31,7 +31,7 @@ namespace Flow.Launcher
             tbMsg.Visibility = Visibility.Hidden;
 
             //when alt is pressed, the real key should be e.SystemKey
-            Key key = (e.Key == Key.System ? e.SystemKey : e.Key);
+            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
 
             SpecialKeyState specialKeyState = GlobalHotkey.Instance.CheckModifiers();
 

@@ -27,9 +27,12 @@ namespace Flow.Launcher.Resources.Pages
     public partial class WelcomePage5 : Page
     {
         private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-        public WelcomePage5()
+        private readonly Settings settings;
+
+        public WelcomePage5(Settings settings)
         {
             InitializeComponent();
+            this.settings = settings;
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
@@ -46,11 +49,13 @@ namespace Flow.Launcher.Resources.Pages
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
             key?.DeleteValue(Constant.FlowLauncher, false);
+            settings.StartFlowLauncherOnSystemStartup = false;
         }
-        public static void SetStartup()
+        public void SetStartup()
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
             key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
+            settings.StartFlowLauncherOnSystemStartup = true;
         }
 
 

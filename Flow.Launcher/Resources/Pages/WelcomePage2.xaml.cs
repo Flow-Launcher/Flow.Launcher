@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure.UserSettings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,21 @@ namespace Flow.Launcher.Resources.Pages
     /// </summary>
     public partial class WelcomePage2 : Page
     {
-        public WelcomePage2()
+        private readonly Settings settings;
+
+        public WelcomePage2(Settings settings)
         {
             InitializeComponent();
+            this.settings = settings;
+            HotkeyControl.HotkeyChanged += (_, _) =>
+            {
+                if (HotkeyControl.CurrentHotkeyAvailable)
+                {
+                    HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
+                    HotKeyMapper.RemoveHotkey(settings.Hotkey);
+                    settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+                }
+            };
         }
     }
 }
