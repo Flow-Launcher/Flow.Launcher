@@ -60,9 +60,9 @@ namespace Flow.Launcher
                 }
 
             }
-            else
+            else if (!String.IsNullOrEmpty(QueryTextBox.Text))
             {
-                System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText;);
+                System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
             }
             e.Handled = true;
         }
