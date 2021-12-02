@@ -65,5 +65,11 @@ namespace Flow.Launcher.Resources.Pages
             settings.HideOnStartup = false;
         }
 
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            window.Close();
+        }
+
     }
 }

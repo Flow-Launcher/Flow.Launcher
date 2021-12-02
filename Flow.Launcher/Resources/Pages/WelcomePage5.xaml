@@ -96,6 +96,7 @@
                         Height="40"
                         Margin="0,60,0,0"
                         HorizontalAlignment="Right"
+                        Click="BtnCancel_OnClick"
                         Content="{DynamicResource done}"
                         Style="{DynamicResource AccentButtonStyle}" />
                 </StackPanel>
