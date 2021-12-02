@@ -21,14 +21,11 @@ using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
-    /// <summary>
-    /// WelcomePage5.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class WelcomePage5 : Page
     {
         private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
         private readonly Settings settings;
-
+        public bool HideOnStartup { get; set; }
         public WelcomePage5(Settings settings)
         {
             InitializeComponent();
@@ -58,6 +55,15 @@ namespace Flow.Launcher.Resources.Pages
             settings.StartFlowLauncherOnSystemStartup = true;
         }
 
+        private void OnHideOnStartupChecked(object sender, RoutedEventArgs e)
+        {
+            settings.HideOnStartup = true;
+
+        }
+        private void OnHideOnStartupUnchecked(object sender, RoutedEventArgs e)
+        {
+            settings.HideOnStartup = false;
+        }
 
     }
 }
