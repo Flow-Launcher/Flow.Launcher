@@ -1,6 +1,7 @@
 <p align="center">
   <a href="https://flow-launcher.github.io">
-	<img width="700px" src="../docs/assets/1_flow.png">
+	<img src="https://user-images.githubusercontent.com/6903107/144517044-6c804af0-f331-4ffc-95f7-c3bcb4cc71e0.png" width="600">
+
   </a>
 </p>
 ![Maintenance](https://img.shields.io/maintenance/yes/3000)
@@ -52,9 +53,8 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Applications & Files
 
-![app_file](C:\DEV\docs\assets\app_file.png)
-
-![directorysearch](C:\DEV\docs\assets\directorysearch.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517107-efd83586-9084-46e0-b7dc-79a6748ea936.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144517293-622844c8-fe4b-4ca6-82b0-4aa6feca4ddd.png" width="400">
 
 - Flow searches files and contents via Windows Index Search
 - Search for file contents.
@@ -62,64 +62,59 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Web Search & Open URL
 
-![websearch1](C:\DEV\docs\assets\websearch1.png)
-
-![websearch2](C:\DEV\docs\assets\websearch2.png)
-
-![openurl](C:\DEV\docs\assets\openurl.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/144517508-b2b78aaa-9bdb-4e65-85fd-d659f4157c80.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/144517519-79ee8a81-083c-42be-b2d7-4990d1cb53e5.png" width="400">
 
 ### Browser Bookmarks
 
-![bookmark](C:\DEV\docs\assets\bookmark.png)
-
-
+<img src="https://user-images.githubusercontent.com/6903107/144517534-5e27547b-77f8-4718-941c-5bc542eed931.png" width="400">
 
 ### System Commands
 
-![4_SystemCommand](C:\DEV\docs\assets\4_SystemCommand.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517557-9b5b82fc-6408-48a0-af59-69b385a0782e.png" width="400">
 
 - Provides System related commands. shutdown, lock, settings, etc.
 - System command list
 
 ### Calculator
 
-![2_Search_App_File](C:\DEV\docs\assets\2_Search_App_File.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517570-f0e62716-3fdf-4f2a-8986-385a3fcd0663.png" width="400">
 
 - Do mathematical calculations and copy the result to clipboard. 
 
 ### Shell Command
 
-![3_Shell](C:\DEV\docs\assets\3_Shell.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517582-83da8414-e03d-402c-863d-22d116d20c31.png" width="400">
 
 - Run batch and PowerShell commands as Administrator or a different user.
 - Ctrl+Enter to Run as Administrator.
 
 ### Explorer
 
-![explorer](C:\DEV\docs\assets\explorer.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517603-7bfbf868-476a-41d1-bd1b-1ebde7ab2539.png" width="400">
 
+- Save file or folder locations for quick access.
+- 
 ### Window Setting & Control Panel
 
-![7_ControlPanelandsettings](C:\DEV\docs\assets\7_ControlPanelandsettings.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517620-00e58b93-b06c-4260-b7be-4f23edfdd633.png" width="400">
 
 - Search within Window Settings. (Default Action Keyword is "$")
 - Also Search within Control Panel.
 
-### Explorer
 
-![explorer](C:\DEV\docs\assets\explorer.png)
-
-- Save file or folder locations for quick access.
 
 ### Priority
 
-![priority](C:\DEV\docs\assets\priority.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="500">
+
 
 - Prioritise the order of each plugin's results.
 
 ### Customization
 
-![darkmode](C:\DEV\docs\assets\darkmode.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517694-43f44590-9a45-428e-b73e-f142fe862bb7.png">
 
 - Window size adjustment, animation, and sound setting are possible.
 - There are various themes and you can make it yourself.
@@ -140,7 +135,9 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
   - Type `open log location` to open your logs folder, they are saved along with your user settings folder.
 
 ### Game Mode
-![gamemode](C:\DEV\docs\assets\gamemode.png)
+
+<img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
+
 - Suspend Hotkey when you playing game.
 - Surely, You can ignore hotkeys in fullscreen game in settings.
 
@@ -154,7 +151,8 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Plugin Install
 
-![pm_install](C:\DEV\docs\assets\pm_install.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517723-dcde0518-d884-4ee4-81d1-c862b1cf83b0.png" width="400">
+
 
 - Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
 
@@ -162,15 +160,9 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Plugin Store
 
-![pluginstore](C:\DEV\docs\assets\pluginstore.png)
+<img src="https://user-images.githubusercontent.com/6903107/144517733-f03bc038-8f7d-4523-917d-1b4d7e9ad3ac.png" width="600">
 
 - Simply you can check the full plugin list and Quick install in plugin store menu in setting.
-
-### Plugin - Everything
-
-- to use **Everything**: `pm install everything`.
-
-### Plugin - Ha Commander
 
 ----
 
