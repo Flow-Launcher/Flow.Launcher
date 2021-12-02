@@ -172,7 +172,6 @@ namespace Flow.Launcher
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
             ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
             ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
-            ((MenuItem)menu.Items[5]).Header = "Welcome Window"; /*Temp*/
         }
 
         private void InitializeNotifyIcon()
@@ -206,23 +205,17 @@ namespace Flow.Launcher
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
             };
-            var WelcomeWindow = new MenuItem /*Temp*/
-            {
-                Header = "Welcome Window"
-            };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             gamemode.Click += (o, e) => ToggleGameMode();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
-            WelcomeWindow.Click += (o, e) => OpenWelcomeWindow(); /*Temp*/
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
-            contextMenu.Items.Add(WelcomeWindow); /*Temp*/
 
             _notifyIcon.ContextMenuStrip = new ContextMenuStrip(); // it need for close the context menu. if not, context menu can't close. 
             _notifyIcon.MouseClick += (o, e) =>
