@@ -22,16 +22,18 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 - Plugin Store, Game Mode
 - Global 3rd Party File Manager & Default Web Browser Setting
 - New Result Order rank, Reduce Program Size.
-- Do you want more? Check the changelogs.
+- More changelogs
 
 ---
 
 <h4 align="center">
   <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
+       <a href="#Hotkeys">Hotkeys</a> •
   <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
   <a href="#Development">Development</a> •
-  <a href="https://flow-launcher.github.io/docs">Documentation</a>
+  <a href="https://flow-launcher.github.io/docs">Docs</a>
 </h4>
+
 
 ---
 
@@ -50,13 +52,27 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Applications & Files
 
+![app_file](C:\DEV\docs\assets\app_file.png)
+
+![directorysearch](C:\DEV\docs\assets\directorysearch.png)
+
 - Flow searches files and contents via Windows Index Search
 - Search for file contents.
 - Support search using environment variable paths.
 
 ### Web Search & Open URL
 
+![websearch1](C:\DEV\docs\assets\websearch1.png)
+
+![websearch2](C:\DEV\docs\assets\websearch2.png)
+
+![openurl](C:\DEV\docs\assets\openurl.png)
+
 ### Browser Bookmarks
+
+![bookmark](C:\DEV\docs\assets\bookmark.png)
+
+
 
 ### System Commands
 
@@ -80,7 +96,7 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Explorer
 
-
+![explorer](C:\DEV\docs\assets\explorer.png)
 
 ### Window Setting & Control Panel
 
@@ -91,7 +107,13 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 
 ### Explorer
 
+![explorer](C:\DEV\docs\assets\explorer.png)
+
+- Save file or folder locations for quick access.
+
 ### Priority
+
+![priority](C:\DEV\docs\assets\priority.png)
 
 - Prioritise the order of each plugin's results.
 
@@ -106,7 +128,7 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 ### Language
 
 - Support languages from Chinese to Italian and more.
-- Support PinYin 
+- Support Pinyin.
 - You can translation support this project in [Crowdin](https://crowdin.com/project/flow-launcher)
 
 ### Portable
@@ -190,20 +212,9 @@ And You can download [Early Access Version]: https://github.com/Flow-Launcher/Fl
 | Flow Launcher Tip      | Visit Flow Launcher's documentation for more help and how to use tips |
 | Flow Launcher UserData | Open the location where Flow Launcher's settings are stored  |
 
-----
+### Tips
 
-
-
-
-
-
-- Save file or folder locations for quick access.
-
-- 
-
-[More tips](https://flow-launcher.github.io/docs/#/usage-tips)
-
-
+- [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
 ----
 
