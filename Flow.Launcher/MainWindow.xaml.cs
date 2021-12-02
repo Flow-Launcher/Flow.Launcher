@@ -65,6 +65,7 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
@@ -239,6 +240,15 @@ namespace Flow.Launcher
             };
         }
 
+        private void CheckFirstLaunch()
+        {
+            if (_settings.FirstLaunch)
+            {
+                _settings.FirstLaunch = false;
+                _viewModel.Save();
+                OpenWelcomeWindow();
+            }
+        }
         private void OpenWelcomeWindow()
         {
             Flow.Launcher.WelcomeWindow WelcomeWindow = new WelcomeWindow(_settings);
