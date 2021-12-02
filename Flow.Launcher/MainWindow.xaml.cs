@@ -49,13 +49,18 @@ namespace Flow.Launcher
         }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
-            var results = _viewModel.Results;
-            var result = results.SelectedItem?.Result;
-            if (result != null) // SelectedItem returns null if selection is empty.
+            var _NewClipboard = QueryTextBox.SelectedText;
+            if (QueryTextBox.SelectionLength == 0)
             {
-
-                System.Windows.Clipboard.SetDataObject(result.Title.ToString());
+                var results = _viewModel.Results;
+                var result = results.SelectedItem?.Result;
+                if (result != null) // SelectedItem returns null if selection is empty.
+                {
+                    _NewClipboard = result.Title.ToString();
+                }
+                
             }
+            System.Windows.Clipboard.SetDataObject(_NewClipboard);
             e.Handled = true;
         }
         private async void OnClosing(object sender, CancelEventArgs e)
