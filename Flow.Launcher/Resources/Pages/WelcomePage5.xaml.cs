@@ -21,15 +21,19 @@ using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
-    public partial class WelcomePage5 : Page
+    public partial class WelcomePage5
     {
         private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-        private readonly Settings settings;
+        public Settings Settings { get; set; }
         public bool HideOnStartup { get; set; }
-        public WelcomePage5(Settings settings)
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (e.ExtraData is Settings settings)
+                Settings = settings;
+            else
+                throw new ArgumentException("Unexpected Navigation Parameter for Settings");
             InitializeComponent();
-            this.settings = settings;
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
@@ -46,23 +50,23 @@ namespace Flow.Launcher.Resources.Pages
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
             key?.DeleteValue(Constant.FlowLauncher, false);
-            settings.StartFlowLauncherOnSystemStartup = false;
+            Settings.StartFlowLauncherOnSystemStartup = false;
         }
-        public void SetStartup()
+        private void SetStartup()
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
             key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
-            settings.StartFlowLauncherOnSystemStartup = true;
+            Settings.StartFlowLauncherOnSystemStartup = true;
         }
 
         private void OnHideOnStartupChecked(object sender, RoutedEventArgs e)
         {
-            settings.HideOnStartup = true;
+            Settings.HideOnStartup = true;
 
         }
         private void OnHideOnStartupUnchecked(object sender, RoutedEventArgs e)
         {
-            settings.HideOnStartup = false;
+            Settings.HideOnStartup = false;
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)

@@ -19,6 +19,8 @@ using Microsoft.Win32;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Core.Resource;
+using ModernWpf.Navigation;
+using Page = ModernWpf.Controls.Page;
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -27,16 +29,21 @@ namespace Flow.Launcher.Resources.Pages
     /// </summary>
     public partial class WelcomePage1 : Page
     {
-
-        public WelcomePage1(Settings settings)
+        private bool initialize = false;
+        
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Settings = settings;
+
+            if (e.ExtraData is Settings settings)
+                Settings = settings;
+            else
+                throw new ArgumentException("Unexpected Navigation Parameter for Settings");
             InitializeComponent();
         }
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
 
-        public Settings Settings { get; }
+        public Settings Settings { get; set; }
 
         public string CustomLanguage
         {

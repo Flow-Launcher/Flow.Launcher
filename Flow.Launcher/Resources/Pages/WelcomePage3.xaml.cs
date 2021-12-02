@@ -13,18 +13,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Resources.Pages
 {
 
-    public partial class WelcomePage3 : Page
+    public partial class WelcomePage3
     {
-        public WelcomePage3()
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (e.ExtraData is Settings settings)
+                Settings = settings;
+            else if(Settings is null)
+                throw new ArgumentException("Unexpected Navigation Parameter for Settings");
             InitializeComponent();
-            
         }
 
-        
+        public Settings Settings { get; set; }
     }
 }

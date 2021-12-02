@@ -20,7 +20,6 @@ namespace Flow.Launcher
 {
     public partial class WelcomeWindow : Window
     {
-        private readonly List<Page> pages;
         private readonly Settings settings;
 
         public WelcomeWindow(Settings settings)
@@ -28,35 +27,31 @@ namespace Flow.Launcher
             InitializeComponent();
             BackButton.IsEnabled = false;
             this.settings = settings;
-
-            pages = new()
-            {
-                new WelcomePage1(settings),
-                new WelcomePage2(settings),
-                new WelcomePage3(),
-                new WelcomePage4(),
-                new WelcomePage5(settings),
-            };
-            ContentFrame.Navigate(pages[0]);
+            ContentFrame.Navigate(PageTypeSelector(1), settings);
         }
 
-        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
+        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
+        {
+            Effect = SlideNavigationTransitionEffect.FromRight
+        };
+        private NavigationTransitionInfo _backTransitionInfo = new SlideNavigationTransitionInfo()
+        {
+            Effect = SlideNavigationTransitionEffect.FromLeft
+        };
         Storyboard sb = new Storyboard();
-        private int page;
         private int pageNum = 1;
         private int MaxPage = 5;
         public string PageDisplay => $"{pageNum}/5";
 
         private void UpdateView()
         {
-            pageNum = page + 1;
             PageNavigation.Text = PageDisplay;
-            if (page == 0)
+            if (pageNum == 1)
             {
                 BackButton.IsEnabled = false;
                 NextButton.IsEnabled = true;
             }
-            else if (page == MaxPage - 1)
+            else if (pageNum == MaxPage)
             {
                 BackButton.IsEnabled = true;
                 NextButton.IsEnabled = false;
@@ -70,20 +65,19 @@ namespace Flow.Launcher
 
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            page = page + 1;
+            pageNum++;
             UpdateView();
-            var pageToNavigateTo = pages[page];
 
-            ContentFrame.Navigate(pageToNavigateTo, _transitionInfo);
+            ContentFrame.Navigate(PageTypeSelector(pageNum), settings, _transitionInfo);
         }
 
         private void BackwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (page > 0)
+            if (pageNum > 1)
             {
-                page--;
+                pageNum--;
                 UpdateView();
-                ContentFrame.GoBack();
+                ContentFrame.Navigate(PageTypeSelector(pageNum), settings, _backTransitionInfo);
             }
             else
             {
@@ -95,6 +89,18 @@ namespace Flow.Launcher
         {
             Close();
         }
+
+        private static Type PageTypeSelector(int pageNumber)
+        {
+            return pageNumber switch
+            {
+                1 => typeof(WelcomePage1),
+                2 => typeof(WelcomePage2),
+                3 => typeof(WelcomePage3),
+                4 => typeof(WelcomePage4),
+                5 => typeof(WelcomePage5),
+                _ => throw new ArgumentOutOfRangeException(nameof(pageNumber), pageNumber, "Unexpected Page Number")
+            };
+        }
     }
 }
-
