@@ -189,32 +189,6 @@ namespace Flow.Launcher.ViewModel
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
-            CopyToClipboard = new RelayCommand(index =>
-            {
-                var results = SelectedResults;
-
-                if (index != null)
-                {
-                    results.SelectedIndex = int.Parse(index.ToString());
-                }
-
-                var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
-                {
-                    bool hideWindow = result.Action != null && result.Action(new ActionContext
-                    {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
-                    });
-                    Clipboard.SetText(result.Title.ToString());
-                    if (hideWindow)
-                    {
-                        Hide();
-                    }
-
-                    
-                }
-            });
-
             StartHelpCommand = new RelayCommand(_ =>
             {
                 SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");

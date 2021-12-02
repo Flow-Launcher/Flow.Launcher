@@ -178,6 +178,9 @@
                         Style="{DynamicResource QueryBoxStyle}"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Visibility="Visible">
+                        <TextBox.CommandBindings>
+                            <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
+                        </TextBox.CommandBindings>
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut" />

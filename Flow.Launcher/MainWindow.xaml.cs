@@ -47,7 +47,17 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+        private void OnCopy(object sender, ExecutedRoutedEventArgs e)
+        {
+            var results = _viewModel.Results;
+            var result = results.SelectedItem?.Result;
+            if (result != null) // SelectedItem returns null if selection is empty.
+            {
 
+                System.Windows.Clipboard.SetDataObject(result.Title.ToString());
+            }
+            e.Handled = true;
+        }
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _settings.WindowTop = Top;
