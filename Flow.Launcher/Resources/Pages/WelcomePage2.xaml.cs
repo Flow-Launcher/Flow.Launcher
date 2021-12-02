@@ -28,6 +28,7 @@ namespace Flow.Launcher.Resources.Pages
         {
             InitializeComponent();
             this.settings = settings;
+            HotkeyControl.SetHotkey(new Infrastructure.Hotkey.HotkeyModel(settings.Hotkey));
             HotkeyControl.HotkeyChanged += (_, _) =>
             {
                 if (HotkeyControl.CurrentHotkeyAvailable)
