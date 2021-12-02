@@ -1409,16 +1409,6 @@
     }
   },
   {
-    "Name": "Taskbar",
-    "Area": "System",
-    "Type": "AppSettingsApp",
-    "Command": "ms-settings:taskbar",
-    "IconGlyph": {
-      "Glyph": "\ue90e",
-      "FontFamily": "Segoe MDL2 Assets"
-    }
-  },
-  {
     "Name": "NotificationsAndActions",
     "Area": "System",
     "Type": "AppSettingsApp",
@@ -11118,8 +11108,8 @@
   },
   {
     "Name": "Auto-hide the taskbar",
-    "Area": null,
-    "Type": "TaskLink",
+    "Area": "Personalization",
+    "Type": "AppSettingsApp",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Taskbar",
     "Keywords": [
       [
@@ -11226,47 +11216,6 @@
         "charms",
         "powershell",
         "command prompt"
-      ]
-    ]
-  },
-  {
-    "Name": "Customise the taskbar",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Taskbar",
-    "Keywords": [
-      [
-        "customising",
-        "customisation",
-        "customises",
-        "customization",
-        "customizes",
-        "customizing",
-        "personalisation",
-        "personalise",
-        "personalization",
-        "personalize"
-      ],
-      [
-        "icons",
-        "area",
-        "sgtray.exe",
-        "start",
-        "tray",
-        "systemtray",
-        "systray",
-        "task",
-        "toolbar",
-        "tray",
-        "taskbar",
-        "task-bar",
-        "bars",
-        "toolbars"
-      ],
-      [
-        "notifications",
-        "notifying",
-        "notified"
       ]
     ]
   },
