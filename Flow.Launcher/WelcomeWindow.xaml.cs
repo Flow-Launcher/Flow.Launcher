@@ -41,7 +41,7 @@ namespace Flow.Launcher
         private int page;
         private int MaxPage = 5;
 
-        private void ButtonDisabler()
+        private void UpdateView()
         {
             if (page == 0)
             {
@@ -64,7 +64,7 @@ namespace Flow.Launcher
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
             page = page + 1;
-            ButtonDisabler();
+            UpdateView();
             var pageToNavigateTo = pages[page];
 
             ContentFrame.Navigate(pageToNavigateTo, _transitionInfo);
@@ -75,7 +75,7 @@ namespace Flow.Launcher
             if (page > 0)
             {
                 page--;
-                ButtonDisabler();
+                UpdateView();
                 ContentFrame.GoBack();
             }
             else
@@ -83,6 +83,8 @@ namespace Flow.Launcher
                 BackButton.IsEnabled = false;
             }
         }
+
+        public string PageDisplay => $"{page}/5";
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
