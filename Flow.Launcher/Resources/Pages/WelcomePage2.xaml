@@ -1,4 +1,4 @@
-﻿<Page
+﻿<ui:Page
     x:Class="Flow.Launcher.Resources.Pages.WelcomePage2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -119,4 +119,4 @@
             </StackPanel>
         </Grid>
     </ScrollViewer>
-</Page>
+</ui:Page>

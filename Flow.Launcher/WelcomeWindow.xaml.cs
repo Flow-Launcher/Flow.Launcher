@@ -83,7 +83,8 @@ namespace Flow.Launcher
             {
                 page--;
                 UpdateView();
-                ContentFrame.GoBack();
+                var pageToNavigateTo = pages[page];
+                ContentFrame.Navigate(pageToNavigateTo, _transitionInfo);
             }
             else
             {

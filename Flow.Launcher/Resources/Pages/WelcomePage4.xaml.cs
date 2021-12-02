@@ -18,7 +18,7 @@ namespace Flow.Launcher.Resources.Pages
     /// <summary>
     /// WelcomePage4.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class WelcomePage4 : Page
+    public partial class WelcomePage4
     {
         public WelcomePage4()
         {

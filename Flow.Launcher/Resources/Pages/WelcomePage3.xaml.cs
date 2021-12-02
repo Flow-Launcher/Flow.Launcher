@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace Flow.Launcher.Resources.Pages
 {
 
-    public partial class WelcomePage3 : Page
+    public partial class WelcomePage3
     {
         public WelcomePage3()
         {

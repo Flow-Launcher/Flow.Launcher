@@ -21,7 +21,7 @@ using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
-    public partial class WelcomePage5 : Page
+    public partial class WelcomePage5
     {
         private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
         private readonly Settings settings;
