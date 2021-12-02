@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Névjegy</value>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>Munkahelyi vagy iskolai hozzáférés</value>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>Akadálymentességi lehetőségek</value>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>Kiegészítő alkalmazások</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Fiókadatok</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Fiókok</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>Műveletközpont</value>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>Aktiválás</value>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>Tevékenységelőzmények</value>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>Hardver hozzáadása</value>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>Programok telepítése és törlése</value>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>Telefon hozzáadása</value>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>Adminisztratív eszközök</value>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>Speciális megjelenítési beállítások</value>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>Speciális grafikus beállítások</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>Hirdetésazonosító</value>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>Repülési üzemmód</value>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tab</value>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>Alternatív nevek</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animációk</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>Alkalmazás színe</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>Vezérlőpult</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>Alkalmazásdiagnosztika</value>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>Alkalmazásfunkciók</value>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>Rendszerbeállítások</value>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>Alkalmazás-hangerő és eszköz beállításai</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Alkalmazás</value>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>Alkalmazások és szolgáltatások</value>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>Webhelyek alkalmazásai</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Terület</value>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>Fiókok</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>Adminisztratív eszközök</value>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>Megjelenés és személyre szabás</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>Alkalmazások</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>Óra és régió</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>Eszközök</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>Könnyű kezelés</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>Extrák</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>Játék</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>Hardver és hang</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>Kezdőlap</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>Vegyes valóság</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>Hálózat és internet</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>Személyre szabás</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>Adatvédelem</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>Programok</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>Rendszer</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>Rendszer és biztonság</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>Idő és nyelv</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>Frissítés és biztonság</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>Felhasználói fiókok</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>Dedikált hozzáférés</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Hang</value>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>Hangriasztások</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>Hang és beszéd</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>Automatikus lejátszás</value>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>Automatikus fájlletöltések</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Háttér</value>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>Háttéralkalmazások</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Biztonsági mentés</value>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>Biztonsági mentés és visszaállítás</value>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>Takarékos üzemmód</value>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>Takarékos üzemmód beállításai</value>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>Takarékos üzemmód használati adatai</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>Akkumulátorhasználat</value>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>Biometrikus eszközök</value>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>BitLocker meghajtótitkosítás</value>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>Kék fény</value>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>Kék-sárga</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>Bluetooth-eszközök</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo írásjegybevivő</value>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>Közvetítés</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Naptár</value>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>Híváselőzmények</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Kamera</value>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie írásjegybevivő</value>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>Mobil és SIM</value>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>A Start menüben megjelenő mappák kiválasztása</value>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>NetWare-ügyfélszolgáltatás</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Vágólap</value>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>Feliratok</value>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>Színszűrők</value>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>Színkezelés</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Színek</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Parancs</value>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>Csatlakoztatott eszközök</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Névjegyek</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Másolás parancs</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>Magelkülönítés</value>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>Cortana több eszközön</value>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana – nyelv</value>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>Hitelesítőadat-kezelő</value>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>Többeszközös</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>Egyéni eszközök</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>Sötét szín</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Sötét mód</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>Adathasználat</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Dátum és idő</value>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>Alapértelmezett alkalmazások</value>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>Alapértelmezett kamera</value>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>Alapértelmezett hely</value>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>Alapértelmezett programok</value>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>Alapértelmezett mentési helyek</value>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>Kézbesítésoptimalizálás</value>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>Asztali témák</value>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>Eszközkezelő</value>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>Eszközök és nyomtatók</value>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>Telefonos</value>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>Közvetlen hozzáférés</value>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>Telefon közvetlen megnyitása</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Megjelenítés</value>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>Megjelenítési tulajdonságok</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Dokumentumok</value>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>Saját kijelző másolása</value>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>Ezekben az órákban</value>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>Kezeléstechnikai központ</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Kiadás</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail-cím</value>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>E-mail- és alkalmazásfiókok</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Titkosítás</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Környezet</value>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Biztonsági rés kiaknázása elleni védelem</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Extrák</value>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>Szemvezérlés</value>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>Szemkövető</value>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>Család és más személyek</value>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>Visszajelzés és diagnosztika</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>Fájlrendszer</value>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>Saját eszköz keresése</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Tűzfal</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>Fókuszsegéd – csendes órák</value>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>Fókuszsegéd – csendes pillanatok</value>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>Mappa beállításai</value>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>Betűtípusok</value>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>Fejlesztőknek</value>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>Játéksáv</value>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>Játékvezérlők</value>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>Játékvideó-rögzítő</value>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>Játék mód</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Átjáró</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Általános</value>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>Programok beszerzése</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>Első lépések</value>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>Gyorsnézet</value>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>Grafikus beállítások</value>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>Szürkeárnyalatos</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>Zöld hét</value>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>Headset kijelzője</value>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>Kontrasztos</value>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>Holografikus hang</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>Holografikus környezet</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>Holografikus headset</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>Holografikus kezelés</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>Otthoni csoport</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Azonosító</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Kép</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>Indexelési beállítások</value>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>Infravörös</value>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>Szabadkézi műveletek és gépelés</value>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>Internetbeállítások</value>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>Inverz színek</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP-cím</value>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>Elszigetelt böngészés</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>Japán írásjegybevivő beállításai</value>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>Botkormány tulajdonságai</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Billentyűzet</value>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>Számbillentyűzet</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Kulcsok</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Nyelv</value>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>Világos szín</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Világos mód</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Hely</value>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>Zárolási képernyő</value>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>Nagyító</value>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>Levelezés – Microsoft Exchange vagy Windows Üzenetek</value>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>Ismert hálózatok kezelése</value>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>Választható funkciók kezelése</value>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>Üzenetküldés</value>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>Forgalmi díjas kapcsolat</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>Mikrofon</value>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>Mobileszközök</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>Mobil hotspot</value>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>További részletek</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>Mozgás</value>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>Egér</value>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>Egér és érintőpad</value>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>Egér, betűtípusok, billentyűzet és nyomtatók tulajdonságai</value>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>Egérmutató</value>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>Multimédia tulajdonságai</value>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>Párhuzamos feladatvégzés</value>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>NFC-tranzakció</value>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>Narrátor</value>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>Navigációs sáv</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Hálózat</value>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>Hálózati és megosztási központ</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Hálózati kapcsolat</value>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>Hálózat tulajdonságai</value>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>Hálózatbeállítási varázsló</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Hálózat állapota</value>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>Éjszakai fény</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>Éjszakai fény beállításai</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Megjegyzés</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>Csak akkor érhető el, ha csatlakoztatott egy mobileszközt az eszközéhez.</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>Csak a speciális grafikai beállításokat támogató eszközökön érhető el.</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>Csak akkumulátorral rendelkező eszközökön, például táblaszámítógépen érhető el.</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>Elavult a Windows 10 1809-es verziója (build: 17763) óta.</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>Csak akkor érhető el, ha a tárcsázás párosítva van.</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>Csak akkor érhető el, ha a DirectAccess engedélyezve van.</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>Csak a speciális megjelenítési beállításokat támogató eszközökön érhető el.</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>Csak akkor jelen van, ha a felhasználó regisztrálva van a WIP rendszerben.</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>Szemkövető hardvert igényel.</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>Akkor érhető el, ha telepítve van a Microsoft japán írásjegybevivő.</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>Akkor érhető el, ha telepítve van a Microsoft pinjin írásjegybevivő.</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>Akkor érhető el, ha telepítve van a Microsoft wubi írásjegybevivő.</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>Csak akkor érhető el, ha a Mixed Reality Portal alkalmazás telepítve van.</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>Kizárólag mobilon érhető el, és csak akkor, ha a vállalat üzembe helyezett egy kiépítési csomagot.</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>Hozzáadva a Windows 10 1903-as verziójában (build: 18362).</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>Hozzáadva a Windows 10 2004-es verziójában (build: 19041).</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>Csak akkor érhető el, ha a „beállítási alkalmazások” telepítve van, például egy külső fél által.</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>Csak akkor érhető el, ha rendelkezésre áll érintőpad hardverelem.</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>Csak akkor érhető el, ha az eszköz rendelkezik Wi-Fi-adapterrel.</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>Az eszköznek a Windows Anywhere-kompatibilisnek kell lennie.</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>Csak akkor érhető el, ha a vállalat üzembe helyezett egy kiépítési csomagot.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Értesítések</value>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>Értesítések és műveletek</value>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>ODBC-adatforrási rendszergazda (32 bit)</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>ODBC-adatforrási rendszergazda (64 bit)</value>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>Offline fájlok</value>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>Offline térképek</value>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>Offline térképek – térképek letöltése</value>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>Képernyőn megjelenő</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>Operációs rendszer</value>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>Egyéb eszközök</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>Egyéb beállítások</value>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>Más felhasználók</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>Szülői felügyelet</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>Jelszó tulajdonságai</value>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>Toll és beviteli eszközök</value>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>Toll és érintés</value>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>Toll és Windows Ink</value>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>Közeli emberek</value>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>Teljesítményadatok és eszközök</value>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>Engedélyek és előzmények</value>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>Megszemélyesítés (kategória)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>Telefon és modem</value>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>Telefon és modem – beállítások</value>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>Telefonhívások</value>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>Telefon – alapértelmezett alkalmazások</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Kép</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Képek</value>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Pinjin írásjegybevivői beállítások</value>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Pinjin írásjegybevivői beállítások – tartománylexikon</value>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Pinjin írásjegybevivői beállítások – billentyűkonfiguráció</value>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Pinjin írásjegybevivői beállítások – UDP</value>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>Játék teljes képernyős futtatása</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>A Windows-beállítások keresésére szolgáló beépülő modul</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Windows-beállítások</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>Energiagazdálkodás és alvó állapot</value>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>Energiabeállítások</value>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Bemutató</value>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>Képernyőkép</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Nyomtatók</value>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>Nyomtatók és szkennerek</value>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>Problémajelentések és megoldások</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processzor</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>Programok és szolgáltatások</value>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>Kivetítés erre a számítógépre</value>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>Kiépítés</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Közelség</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>Csendes pillanatok játék</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Rádiók</value>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>Felismerés</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Helyreállítás</value>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>Vörös szem</value>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>Vörös-zöld</value>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>Vörös hét</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Régió</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Régió és nyelv</value>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>Regionális formázás</value>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>Regionális nyelv</value>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>Területi beállítások tulajdonságai</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>RemoteApp- és asztali kapcsolatok</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Távoli asztal</value>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>Szkennerek és kamerák</value>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>Ütemezett</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>Ütemezett feladatok</value>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>Képernyő elforgatása</value>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>Görgetősávok</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>Scroll Lock</value>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>Keresés a Windowsban</value>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Security Center</value>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>Biztonsági processzor</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>Munkamenet-karbantartás</value>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>Kioszk beállítása</value>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>Beállítások kezdőlapja</value>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>Megosztott funkciók</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>wifi</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Billentyűparancsok</value>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>Bejelentkezési beállítások</value>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>Bejelentkezési beállítások – dinamikus zárolás</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Méret</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Hang</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Beszéd</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Beszédfelismerés</value>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>Diktálás</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Indítás</value>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>Kiindulási helyek</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>Automatikusan induló alkalmazások</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Tárterület</value>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>Tárolási szabályzatok</value>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>Tárterületsegéd</value>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>Szinkronizáló központ</value>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>Saját beállítások szinkronizálása</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Rendszer</value>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>Rendszer-tulajdonságok és Új hardver hozzáadása varázsló</value>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>Lap</value>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>Táblagép mód</value>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>Táblagép beállításai</value>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>Beszéd</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>Csevegés Cortanával</value>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>Tálca</value>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>Tálca színe</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tevékenységek</value>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>Csoportkonferencia</value>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>Csapat eszközkezelése</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Szövegfelolvasás</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Témák</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>Idővonal</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>Érintés</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>Érintéses visszajelzés</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>Érintőpad</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Átlátszóság</value>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>Hibaelhárítás</value>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>Gépelés</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Eltávolítás</value>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>Felhasználói fiókok</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verzió</value>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>Videólejátszás</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videók</value>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>Virtuális asztalok</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>Vírus</value>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>Hangaktiválás</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Hangerő</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Háttérkép</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>Melegebb szín</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>Kezdőpont</value>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>Üdvözlőképernyő</value>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>Kerék</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Wi-Fi-hívás</value>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Wi-Fi-beállítások</value>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>Ablak szegélye</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Windows tűzfal</value>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Windows Hello-beállítás – arcfelismerés</value>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Windows Hello-beállítás – ujjlenyomat</value>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Windows Insider Program</value>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Windows mobilközpont</value>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows Search</value>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Windows biztonság</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update – speciális beállítások</value>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update – frissítések keresése</value>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update – újraindítás beállításai</value>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update – választható frissítések megtekintése</value>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update – frissítési előzmények megtekintése</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>Vezeték nélküli</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>Munkahely</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>Munkahelyi kiépítés</value>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>Wubi írásjegybevivő beállításai</value>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>Wubi írásjegybevivő beállításai – UDP</value>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Xbox hálózat</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>Saját adatok</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Nagyítás</value>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>hívás</value>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>deuteranópia</value>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>protanópia</value>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>tritanópia</value>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+</root>
