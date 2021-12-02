@@ -6,7 +6,6 @@
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePage4"
     d:DesignHeight="450"
     d:DesignWidth="800"
