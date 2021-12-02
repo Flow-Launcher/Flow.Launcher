@@ -91,7 +91,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                 {
                     Action = _ => DoOpenSettingsAction(entry),
                     IcoPath = type == "AppSettingsApp" ? windowsSettingIconPath : controlPanelIconPath,
-                    SubTitle = $"{Resources.Area} \"{entry.Area}\" {Resources.SubtitlePreposition} {entry.Type}",
+                    SubTitle = GetSubtitle(entry.Area, type),
                     Title = entry.Name + entry.glyph,
                     ContextData = entry,
                     Score = score
@@ -99,6 +99,13 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             }
 
             return resultList;
+        }
+
+        private static string GetSubtitle(string section, string entryType)
+        {
+            var settingType = entryType == "AppSettingsApp" ? "System settings" : "Control Panel";
+
+            return $"{settingType} > {section}";
         }
 
         /// <summary>
@@ -109,8 +116,10 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         private static void AddOptionalToolTip(WindowsSetting entry, Result result)
         {
             var toolTipText = new StringBuilder();
+            
+            var settingType = entry.Type == "AppSettingsApp" ? "System settings" : "Control Panel";
 
-            toolTipText.AppendLine($"{Resources.Application}: {entry.Type}");
+            toolTipText.AppendLine($"{Resources.Application}: {settingType}");
             toolTipText.AppendLine($"{Resources.Area}: {entry.Area}");
 
             if (entry.AltNames != null && entry.AltNames.Any())
