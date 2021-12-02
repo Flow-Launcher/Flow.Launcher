@@ -87,10 +87,10 @@
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
-    <system:String x:Key="DarkMode">Dark Mode</system:String>
-    <system:String x:Key="DarkModeSystem">System Default</system:String>
-    <system:String x:Key="DarkModeLight">Light</system:String>
-    <system:String x:Key="DarkModeDark">Dark</system:String>
+    <system:String x:Key="ColorScheme">Color Scheme</system:String>
+    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
+    <system:String x:Key="ColorSchemeLight">Light</system:String>
+    <system:String x:Key="ColorSchemeDark">Dark</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="Animation">Animation</system:String>
@@ -178,7 +178,7 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
     <system:String x:Key="success">Success</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keyword you need to start the plug-in. Use * if you don't want to specify an action keyword. In the case, The plug-in works without keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
