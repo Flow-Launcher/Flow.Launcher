@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin.WindowsSettings.Classes
 {
@@ -55,7 +55,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Classes
         public IEnumerable<IEnumerable<string>>? Keywords { get; set; }
 
         /// <summary>
-        /// Gets or sets the Ghyph of this setting
+        /// Gets or sets the Glyph of this setting
         /// </summary>
         public string? glyph { get; set; }
 
