@@ -40,7 +40,7 @@ namespace Flow.Launcher.Converters
                 var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
                 var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
 
-                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase) || queryText == selectedResultPossibleSuggestion)
                     return string.Empty;
 
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
