@@ -156,6 +156,40 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 - If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
 - If you are keen to write your own plugin for flow, please take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins) or [Python](
 
+<img src="https://user-images.githubusercontent.com/6903107/144533510-6880ecf4-5f93-4b6a-9c1f-4fcdb99110c3.png" width="400">
+
+- Everything
+
+<img src="https://user-images.githubusercontent.com/6903107/144533469-da920295-8c36-46e8-89eb-a9cdd94b74ef.png" width="400">
+
+- SpotiyPrimeum
+
+<img src="https://user-images.githubusercontent.com/6903107/144533523-afd79dca-a444-40e5-b2d9-6d3fe3aaece1.png" width="400">
+
+- Steam Search
+
+<img src="https://user-images.githubusercontent.com/6903107/144533481-58e473fd-38d9-4604-861f-ad870770967d.png" width="400">
+
+- Clipboard History
+
+<img src="https://user-images.githubusercontent.com/6903107/144533538-3caa2944-3037-4755-87b9-70fa918d2efa.png" width="400">
+
+- Home Assistant Commander
+
+<img src="https://user-images.githubusercontent.com/6903107/144533487-2caff162-a8f6-4577-af3f-d1b05d423ee4.png" width="400">
+
+- Colors
+
+<img src="https://user-images.githubusercontent.com/6903107/144533497-8677f800-95c5-4758-8ca3-c96333ee1943.png" width="400">
+
+- Github
+
+<img src="https://user-images.githubusercontent.com/6903107/144533517-07bf011f-726c-4221-8657-0e442eca8a82.png" width="400">
+
+- Windows Walker
+
+
+
 ### Plugin Install
 
 <img src="https://user-images.githubusercontent.com/6903107/144517723-dcde0518-d884-4ee4-81d1-c862b1cf83b0.png" width="400">
@@ -171,7 +205,6 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 
 - Simply you can check the full plugin list and Quick install in plugin store menu in setting.
-
 ----
 
 ## Hotkeys
