@@ -17,6 +17,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Hotkey;
 
 namespace Flow.Launcher
 {
@@ -470,12 +471,17 @@ namespace Flow.Launcher
                     }
                     break;
                 case Key.Back:
-                    if (_viewModel.SelectedIsFromQueryResults()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                        && !string.IsNullOrEmpty(QueryTextBox.Text) && QueryTextBox.Text.Contains(":\\"))
+                    var specialKeyState = GlobalHotkey.Instance.CheckModifiers();
+                    if (specialKeyState.CtrlPressed)
                     {
-                        _viewModel.BackspaceCommand.Execute(null);
-                        e.Handled = true;
+                        if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                            && !string.IsNullOrEmpty(QueryTextBox.Text) && QueryTextBox.Text.Contains(":\\"))
+                        {
+
+                            _viewModel.BackspaceCommand.Execute(null);
+                            e.Handled = true;
+                        }
                     }
                     break;
                 default:
