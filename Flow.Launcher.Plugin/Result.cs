@@ -13,6 +13,8 @@ namespace Flow.Launcher.Plugin
         
         private string _icoPath;
 
+        private string _insertText;
+
         /// <summary>
         /// Provides the title of the result. This is always required.
         /// </summary>
@@ -28,6 +30,15 @@ namespace Flow.Launcher.Plugin
         /// If result is triggered by global keyword: *, this should be empty.
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
+
+        public string InsertText
+        {
+            get { return string.IsNullOrEmpty(_insertText) ? Title : _insertText; }
+            set
+            {
+                _insertText = value;
+            }
+        }
 
         public string IcoPath
         {
