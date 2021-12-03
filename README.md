@@ -131,7 +131,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Support languages from Chinese to Italian and more.
 - Support Pinyin.
-- You can translation support this project in [Crowdin](https://crowdin.com/project/flow-launcher)
+- Translation support this project in [Crowdin](https://crowdin.com/project/flow-launcher)
 
 ### Portable
 
