@@ -20,6 +20,9 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
+using System.IO;
+using System.Security.Principal;
+using System.IO.Pipes;
 
 
 namespace Flow.Launcher.ViewModel
@@ -186,6 +189,30 @@ namespace Flow.Launcher.ViewModel
             SelectNextPageCommand = new RelayCommand(_ => { SelectedResults.SelectNextPage(); });
 
             SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
+
+            OpenQuickLook = new RelayCommand(_ =>
+            {
+                var results = SelectedResults;
+                var result = results.SelectedItem?.Result;
+                string PipeName = "QuickLook.App.Pipe." + WindowsIdentity.GetCurrent().User?.Value;
+                try
+                {
+                    using (var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out))
+                    {
+                        client.Connect();
+
+                        using (var writer = new StreamWriter(client))
+                        {
+                            writer.WriteLine($"QuickLook.App.PipeMessages.Toggle|{result.SubTitle}");
+                            writer.Flush();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Exception("Test", "fail to convert text for suggestion box", ex);
+                }
+            });
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
@@ -383,6 +410,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
+        public ICommand OpenQuickLook { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 

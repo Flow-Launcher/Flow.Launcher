@@ -469,6 +469,10 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.F1:
+                    _viewModel.OpenQuickLook.Execute(null);
+                    e.Handled = true;
+                    break;
                 default:
                     break;
 
