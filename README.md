@@ -147,7 +147,6 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
 
 - Suspend Hotkey when you playing game.
-- Surely, You can ignore hotkeys in fullscreen game in settings.
 
 ----
 
