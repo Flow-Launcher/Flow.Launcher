@@ -28,7 +28,7 @@ namespace Flow.Launcher
 
         private CancellationTokenSource hotkeyUpdateSource;
 
-        void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        private void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             hotkeyUpdateSource?.Cancel();
             hotkeyUpdateSource?.Dispose();
@@ -56,15 +56,15 @@ namespace Flow.Launcher
                 return;
             }
 
-            Dispatcher.InvokeAsync(async () =>
+            _ = Dispatcher.InvokeAsync(async () =>
             {
-                await Task.Delay(500);
+                await Task.Delay(500, token);
                 if (!token.IsCancellationRequested)
-                    SetHotkey(hotkeyModel);
+                    await SetHotkey(hotkeyModel);
             });
         }
 
-        public void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
+        public async Task SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
             CurrentHotkey = keyModel;
 
@@ -86,6 +86,13 @@ namespace Flow.Launcher
                 }
                 tbMsg.Visibility = Visibility.Visible;
                 OnHotkeyChanged();
+
+                var token = hotkeyUpdateSource.Token;
+                await Task.Delay(500, token);
+                if (token.IsCancellationRequested)
+                    return;
+                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
+                Keyboard.ClearFocus();
             }
         }
 
