@@ -319,7 +319,6 @@ namespace Flow.Launcher
                 _ => ThemeManager.Current.ApplicationTheme
             };
 
-
         /* Custom TitleBar */
 
         private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)

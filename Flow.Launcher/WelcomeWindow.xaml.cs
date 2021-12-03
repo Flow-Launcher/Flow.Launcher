@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Resources.Pages;
 using ModernWpf.Media.Animation;
@@ -38,7 +26,7 @@ namespace Flow.Launcher
         {
             Effect = SlideNavigationTransitionEffect.FromLeft
         };
-        Storyboard sb = new Storyboard();
+
         private int pageNum = 1;
         private int MaxPage = 5;
         public string PageDisplay => $"{pageNum}/5";

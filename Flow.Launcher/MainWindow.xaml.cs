@@ -244,7 +244,7 @@ namespace Flow.Launcher
         }
         private void OpenWelcomeWindow()
         {
-            Flow.Launcher.WelcomeWindow WelcomeWindow = new WelcomeWindow(_settings);
+            var WelcomeWindow = new WelcomeWindow(_settings);
             WelcomeWindow.Show();
         }
         private void ToggleGameMode()

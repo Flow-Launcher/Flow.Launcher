@@ -5,9 +5,6 @@ using System.Windows.Navigation;
 
 namespace Flow.Launcher.Resources.Pages
 {
-    /// <summary>
-    /// WelcomePage2.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class WelcomePage2
     {
         private Settings Settings { get; set; }
