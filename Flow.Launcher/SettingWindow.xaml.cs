@@ -115,8 +115,8 @@ namespace Flow.Launcher
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
         {
-                SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
-                fileManagerChangeWindow.ShowDialog();
+            SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
+            fileManagerChangeWindow.ShowDialog();
         }
 
         #endregion
@@ -276,7 +276,7 @@ namespace Flow.Launcher
 
         private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
         {
-            Flow.Launcher.WelcomeWindow WelcomeWindow = new Flow.Launcher.WelcomeWindow(settings);
+            var WelcomeWindow = new WelcomeWindow(settings);
             WelcomeWindow.Show();
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
