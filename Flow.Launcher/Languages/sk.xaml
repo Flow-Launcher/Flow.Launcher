@@ -85,10 +85,10 @@
     <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, návrat na predvolený motív</system:String>
     <system:String x:Key="ThemeFolder">Priečinok s motívmi</system:String>
     <system:String x:Key="OpenThemeFolder">Otvoriť priečinok s motívmi</system:String>
-    <system:String x:Key="DarkMode">Tmavý režim</system:String>
-    <system:String x:Key="DarkModeSystem">Predvolené systémom</system:String>
-    <system:String x:Key="DarkModeLight">Svetlý</system:String>
-    <system:String x:Key="DarkModeDark">Tmavý</system:String>
+    <system:String x:Key="ColorScheme">Farebná schéma</system:String>
+    <system:String x:Key="ColorSchemeSystem">Predvolené systémom</system:String>
+    <system:String x:Key="ColorSchemeLight">Svetlý</system:String>
+    <system:String x:Key="ColorSchemeDark">Tmavý</system:String>
     <system:String x:Key="SoundEffect">Zvukový efekt</system:String>
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
