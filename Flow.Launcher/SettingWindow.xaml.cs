@@ -129,12 +129,12 @@ namespace Flow.Launcher
             HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
         }
 
-        private void OnHotkeyControlFocused(object sender, EventArgs e)
+        private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
         {
             HotKeyMapper.RemoveHotkey(settings.Hotkey);
         }
 
-        private void OnHotkeyControlFocusLost(object sender, EventArgs e)
+        private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
         {
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
