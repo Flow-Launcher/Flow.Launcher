@@ -44,7 +44,7 @@
         <KeyBinding Key="Tab" Command="{Binding ReplaceQueryWithResult}" />
         <KeyBinding
             Key="Tab"
-            Command="{Binding SelectPrevItemCommand}"
+            Command="{Binding ReplaceQueryWithResult}"
             Modifiers="Shift" />
         <KeyBinding
             Key="I"
