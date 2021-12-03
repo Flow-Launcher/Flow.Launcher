@@ -31,14 +31,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
-        public string InsertText
-        {
-            get { return string.IsNullOrEmpty(_insertText) ? Title : _insertText; }
-            set
-            {
-                _insertText = value;
-            }
-        }
+        public string SuggestionText { get; set; } = string.Empty;
 
         public string IcoPath
         {

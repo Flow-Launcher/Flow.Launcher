@@ -41,11 +41,6 @@
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding Key="Tab" Command="{Binding ReplaceQueryWithResult}" />
-        <KeyBinding
-            Key="Tab"
-            Command="{Binding ReplaceQueryWithResult}"
-            Modifiers="Shift" />
         <KeyBinding
             Key="I"
             Command="{Binding OpenSettingCommand}"

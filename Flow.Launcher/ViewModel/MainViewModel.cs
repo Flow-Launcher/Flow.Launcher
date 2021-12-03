@@ -228,29 +228,6 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
-            ReplaceQueryWithResult = new RelayCommand(index =>
-            {
-                var results = SelectedResults;
-
-                if (index != null)
-                {
-                    results.SelectedIndex = int.Parse(index.ToString());
-                }
-
-                var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
-                {
-                    string _newText = String.Empty;
-                    _newText = result.Title;
-                    var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
-                    if (SpecialKeyState.ShiftPressed)
-                    {
-                        _newText = result.SubTitle;
-                    }
-                    ChangeQueryText(_newText);
-                }
-            });
-
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -310,7 +287,6 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; }
 
         private string _queryText;
-
         public string QueryText
         {
             get => _queryText;
@@ -339,7 +315,24 @@ namespace Flow.Launcher.ViewModel
             }
             QueryTextCursorMovedToEnd = true;
         }
+        public void InsertSuggestion(string suggestion)
+        {
+            var results = SelectedResults;
 
+            var result = results.SelectedItem?.Result;
+            if (result != null) // SelectedItem returns null if selection is empty.
+            {
+                suggestion = String.IsNullOrEmpty(suggestion) ? result.Title : suggestion;
+                string _newText = String.IsNullOrEmpty(result.SuggestionText) ? suggestion : result.SuggestionText;
+
+                var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
+                if (SpecialKeyState.ShiftPressed)
+                {
+                    _newText = result.SubTitle;
+                }
+                ChangeQueryText(_newText);
+            }
+        }
         public bool LastQuerySelected { get; set; }
 
         // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
