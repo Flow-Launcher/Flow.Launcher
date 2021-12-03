@@ -20,10 +20,10 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 ## 🎉 New Features in 1.9
 
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
-- New Plugins - Window Setting, Visual Studio Code, Favorites, Window Services, Window Startup
+- New Plugins
 - Plugin Store, Game Mode
 - Global 3rd Party File Manager & Default Web Browser Setting
-- New Result Order rank, Reduce Program Size.
+- Reduce Program Size.
 - More changelogs
 
 ---
@@ -56,10 +56,12 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 ### Applications & Files
 
 <img src="https://user-images.githubusercontent.com/6903107/144517107-efd83586-9084-46e0-b7dc-79a6748ea936.png" width="500">
-<img src="https://user-images.githubusercontent.com/6903107/144517293-622844c8-fe4b-4ca6-82b0-4aa6feca4ddd.png" width="400">
 
 - Flow searches files and contents via Windows Index Search
 - Search for file contents.
+
+<img src="https://user-images.githubusercontent.com/6903107/144517293-622844c8-fe4b-4ca6-82b0-4aa6feca4ddd.png" width="400">
+
 - Support search using environment variable paths.
 
 ### Web Search & Open URL
