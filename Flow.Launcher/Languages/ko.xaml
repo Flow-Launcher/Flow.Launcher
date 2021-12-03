@@ -235,7 +235,7 @@
     <system:String x:Key="Skip">건너뛰기</system:String>
     <system:String x:Key="Welcome_Page1_Title">Flow Launcher에 오신 것을 환영합니다</system:String>
     <system:String x:Key="Welcome_Page1_Text01">안녕하세요, Flow Launcher를 처음 실행하시네요!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">시작하기전에 이 마법사가 간단한 설정을 도와드릴겁니다.물론 건너 뛰셔도 됩니다. 사용하시는 언어를 선택해주세요.</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">시작하기전에 이 마법사가 간단한 설정을 도와드릴겁니다. 물론 건너 뛰셔도 됩니다. 사용하시는 언어를 선택해주세요.</system:String>
     <system:String x:Key="Welcome_Page2_Title">PC에서 모든 파일과 프로그램을 검색하고 실행합니다</system:String>
     <system:String x:Key="Welcome_Page2_Text01">프로그램, 파일, 즐겨찾기, YouTube, Twitter 등 모든 것을 검색하세요. 마우스에 손대지 않고 키보드만으로 모든 것을 얻을 수 있습니다.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow는 아래의 단축키로 실행합니다. 변경하려면 입력창을 선택하고 키보드에서 원하는 단축키를 누릅니다.</system:String>
@@ -247,13 +247,13 @@
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">뒤로/ 컨텍스트 메뉴</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">뒤로/ 콘텍스트 메뉴</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">아이템 이동</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">컨텍스트 메뉴 열기</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">콘텍스트 메뉴 열기</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">포함된 폴더 열기</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">관리자 권한으로 실행</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">검색 기록</system:String>
-    <system:String x:Key="HotkeyESCDesc">컨텍스트 메뉴에서 뒤로 가기</system:String>
+    <system:String x:Key="HotkeyESCDesc">콘텍스트 메뉴에서 뒤로 가기</system:String>
     <system:String x:Key="HotkeyRunDesc">선택한 아이템 열기</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">설정창 열기</system:String>
     <system:String x:Key="HotkeyF5Desc">플러그인 데이터 새로고침</system:String>
