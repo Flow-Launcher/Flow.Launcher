@@ -235,14 +235,14 @@
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
     <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, It's your first time to run a Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, proceed with a simple setting. Surely, You can skip. Please choose the language you use.</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run everything in everywhere</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, start with the hotkey below. To change, select input and press the wanted hotkey in keyboard.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
     <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web or run various functions. Certain functions start with the expression action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
 
