@@ -44,6 +44,12 @@ namespace Flow.Launcher.Converters
                     return string.Empty;
 
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
+
+                string _suggestion = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
+                if (String.IsNullOrEmpty(selectedResult.SuggestionText))
+                {
+                    selectedItem.Result.SuggestionText = _suggestion;
+                }
                 return queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
             }
             catch (Exception e)

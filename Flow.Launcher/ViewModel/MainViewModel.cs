@@ -228,6 +228,24 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
+            InsertSuggestion = new RelayCommand(_ =>
+            {
+                var results = SelectedResults;
+
+                var result = results.SelectedItem?.Result;
+                if (result != null) // SelectedItem returns null if selection is empty.
+                {
+                    string _newText = String.IsNullOrEmpty(result.SuggestionText) ? result.Title : result.SuggestionText;
+
+                    var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
+                    if (SpecialKeyState.ShiftPressed)
+                    {
+                        _newText = result.SubTitle;
+                    }
+                    ChangeQueryText(_newText);
+                }
+            });
+
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -315,24 +333,7 @@ namespace Flow.Launcher.ViewModel
             }
             QueryTextCursorMovedToEnd = true;
         }
-        public void InsertSuggestion(string suggestion)
-        {
-            var results = SelectedResults;
 
-            var result = results.SelectedItem?.Result;
-            if (result != null) // SelectedItem returns null if selection is empty.
-            {
-                suggestion = String.IsNullOrEmpty(suggestion) ? result.Title : suggestion;
-                string _newText = String.IsNullOrEmpty(result.SuggestionText) ? suggestion : result.SuggestionText;
-
-                var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
-                if (SpecialKeyState.ShiftPressed)
-                {
-                    _newText = result.SubTitle;
-                }
-                ChangeQueryText(_newText);
-            }
-        }
         public bool LastQuerySelected { get; set; }
 
         // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
@@ -399,7 +400,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
-        public ICommand ReplaceQueryWithResult { get; set; }
+        public ICommand InsertSuggestion { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 

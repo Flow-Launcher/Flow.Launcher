@@ -469,10 +469,6 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
-                case Key.Tab:
-                    _viewModel.InsertSuggestion(QueryTextSuggestionBox.Text);
-                    e.Handled = true;
-                    break;
                 default:
                     break;
 
