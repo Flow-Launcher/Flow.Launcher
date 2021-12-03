@@ -77,7 +77,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/144517557-9b5b82fc-6408-48a0-af59-69b385a0782e.png" width="400">
 
 - Provides System related commands. shutdown, lock, settings, etc.
-- System command list
+- <a href="#system-command-list">System command list</a>
 
 ### Calculator
 
