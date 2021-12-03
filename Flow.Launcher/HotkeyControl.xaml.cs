@@ -8,6 +8,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
+using System.Threading;
 
 namespace Flow.Launcher
 {
@@ -25,8 +26,14 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
+        private CancellationTokenSource hotkeyUpdateSource;
+
         void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
+            hotkeyUpdateSource?.Cancel();
+            hotkeyUpdateSource?.Dispose();
+            hotkeyUpdateSource = new();
+            var token = hotkeyUpdateSource.Token;
             e.Handled = true;
             tbMsg.Visibility = Visibility.Hidden;
 
@@ -52,7 +59,8 @@ namespace Flow.Launcher
             Dispatcher.InvokeAsync(async () =>
             {
                 await Task.Delay(500);
-                SetHotkey(hotkeyModel);
+                if (!token.IsCancellationRequested)
+                    SetHotkey(hotkeyModel);
             });
         }
 
@@ -78,7 +86,6 @@ namespace Flow.Launcher
                 }
                 tbMsg.Visibility = Visibility.Visible;
                 OnHotkeyChanged();
-                Keyboard.ClearFocus();
             }
         }
 
@@ -89,9 +96,6 @@ namespace Flow.Launcher
 
         private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
 
-        public new bool IsFocused
-        {
-            get { return tbHotkey.IsFocused; }
-        }
+        public new bool IsFocused => tbHotkey.IsFocused;
     }
 }

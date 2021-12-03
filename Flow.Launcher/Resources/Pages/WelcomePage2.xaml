@@ -113,7 +113,9 @@
                         x:Name="HotkeyControl"
                         Width="300"
                         Height="35"
-                        Margin="-206,10,0,0" />
+                        Margin="-206,10,0,0"
+                        GotFocus="HotkeyControl_OnGotFocus"
+                        LostFocus="HotkeyControl_OnLostFocus"/>
                 </StackPanel>
 
             </StackPanel>
