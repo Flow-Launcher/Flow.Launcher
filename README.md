@@ -23,7 +23,6 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 - New Plugins
 - Plugin Store, Game Mode
 - Integrate file manager and browser settings into basic setting
-- Reducing the size of program
 
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full changelogs</a>
 
