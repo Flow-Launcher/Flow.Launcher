@@ -17,14 +17,15 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
 
-## 🎉 New Features in 1.9
+## 🎉 New Features in 1.9 
 
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
 - New Plugins
 - Plugin Store, Game Mode
-- Global 3rd Party File Manager & Default Web Browser Setting
-- Reduce Program Size.
-- More changelogs
+- Integrate file manager and browser settings into basic setting
+- Reducing the size of program
+
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full changelogs</a>
 
 ---
 
