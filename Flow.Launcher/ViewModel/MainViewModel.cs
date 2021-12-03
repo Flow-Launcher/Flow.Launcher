@@ -20,7 +20,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-
+using System.IO;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -228,6 +228,11 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
+            BackspaceCommand = new RelayCommand(index =>
+            {
+                ChangeQueryText(Path.GetDirectoryName(QueryText));
+            });
+
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -371,6 +376,7 @@ namespace Flow.Launcher.ViewModel
         public double MainWindowWidth => _settings.WindowSize;
 
         public ICommand EscCommand { get; set; }
+        public ICommand BackspaceCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
         public ICommand SelectPrevItemCommand { get; set; }
         public ICommand SelectNextPageCommand { get; set; }

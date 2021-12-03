@@ -469,6 +469,15 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.Back:
+                    if (_viewModel.SelectedIsFromQueryResults()
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                        && !string.IsNullOrEmpty(QueryTextBox.Text) && QueryTextBox.Text.Contains(":\\"))
+                    {
+                        _viewModel.BackspaceCommand.Execute(null);
+                        e.Handled = true;
+                    }
+                    break;
                 default:
                     break;
 
