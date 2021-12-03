@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Controls;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Resources.Pages;
 using ModernWpf.Media.Animation;
@@ -89,6 +91,20 @@ namespace Flow.Launcher
                 5 => typeof(WelcomePage5),
                 _ => throw new ArgumentOutOfRangeException(nameof(pageNumber), pageNumber, "Unexpected Page Number")
             };
+        }
+
+        private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
+        {
+            if (Keyboard.FocusedElement is not TextBox textBox)
+            {
+                return;
+            }
+            var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+            textBox.MoveFocus(tRequest);
+        }
+        private void OnActivated(object sender, EventArgs e)
+        {
+            Keyboard.ClearFocus();
         }
     }
 }

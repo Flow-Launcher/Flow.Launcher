@@ -78,6 +78,7 @@ namespace Flow.Launcher
                 }
                 tbMsg.Visibility = Visibility.Visible;
                 OnHotkeyChanged();
+                Keyboard.ClearFocus();
             }
         }
 

@@ -265,7 +265,7 @@
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Setting</system:String>
-    <system:String x:Key="RecommendAcronyms">vs</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Visual Studio</system:String>
+    <system:String x:Key="RecommendAcronyms">sn</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
 </ResourceDictionary>
