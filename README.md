@@ -118,9 +118,12 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517694-43f44590-9a45-428e-b73e-f142fe862bb7.png">
 
-- Window size adjustment, animation, and sound setting are possible.
+- Window size adjustment, animation, and sound
+- Color Scheme (aka Dark Mode)
+
+![themes](https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png)
+
 - There are various themes and you can make it yourself.
-- Color Scheme (aka Dark Mode) is available.
 
 ### Language
 
@@ -162,7 +165,8 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Plugin Store
 
-<img src="https://user-images.githubusercontent.com/6903107/144517733-f03bc038-8f7d-4523-917d-1b4d7e9ad3ac.png" width="600">
+![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
+
 
 - Simply you can check the full plugin list and Quick install in plugin store menu in setting.
 
