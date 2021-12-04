@@ -11,7 +11,7 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 2)
+            if (values.Length != 3)
             {
                 return string.Empty;
             }
@@ -19,7 +19,7 @@ namespace Flow.Launcher.Converters
 
             
             // first prop is the current query string
-            var queryText = QueryText.Text;
+            var queryText = (string)values[2];
 
             if (string.IsNullOrEmpty(queryText))
                 return string.Empty;

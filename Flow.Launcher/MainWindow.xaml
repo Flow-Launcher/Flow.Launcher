@@ -163,6 +163,7 @@
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
                                 <Binding ElementName="QueryTextBox" Mode="OneTime" />
                                 <Binding ElementName="ResultListBox" Path="SelectedItem" />
+                                <Binding ElementName="QueryTextBox" Path="Text" />
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
