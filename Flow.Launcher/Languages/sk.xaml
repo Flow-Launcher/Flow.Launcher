@@ -146,7 +146,7 @@
         alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
-    <system:String x:Key="documentation">Tipy na používanie:</system:String>
+    <system:String x:Key="documentation">Tipy na používanie</system:String>
     <system:String x:Key="devtool">Nástroje pre vývojárov</system:String>
     <system:String x:Key="settingfolder">Priečinok s nastaveniami</system:String>
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
