@@ -259,17 +259,6 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
-
-        private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-
-            // QueryTextSuggestionBox.ScrollToCaret();
-            QueryTextSuggestionBox.CaretIndex = QueryTextBox.CaretIndex;
-            QueryTextSuggestionBox.ScrollToHorizontalOffset(QueryTextBox.HorizontalOffset);
-
-            
-        }
-
         public void WindowAnimator()
         {
             if (_animating)
