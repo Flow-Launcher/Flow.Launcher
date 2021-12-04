@@ -896,7 +896,7 @@
                             <ListBox
                                 Width="Auto"
                                 Margin="5,0,0,0"
-                                Padding="0,0,7,0"
+                                Padding="0,0,7,10"
                                 HorizontalAlignment="Stretch"
                                 Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
