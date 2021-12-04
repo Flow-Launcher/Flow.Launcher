@@ -161,7 +161,8 @@
                         Style="{DynamicResource QuerySuggestionBoxStyle}">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                <Binding ElementName="QueryTextBox" Path="Text" />
+                                <Binding RelativeSource="{RelativeSource self}" Mode="OneTime" />
+                                <Binding ElementName="QueryTextBox" Mode="OneTime" />
                                 <Binding ElementName="ResultListBox" Path="SelectedItem" />
                             </MultiBinding>
                         </TextBox.Text>
@@ -171,10 +172,9 @@
                         AllowDrop="True"
                         Background="Transparent"
                         PreviewDragOver="OnPreviewDragOver"
-                        Style="{DynamicResource QueryBoxStyle}"
-                        SelectionChanged="TextBox_SelectionChanged"
+                        Style="{DynamicResource QueryBoxStyle }"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Visibility="Visible">
+                        Visibility="Visible" Margin="16,7,0,7">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut" />

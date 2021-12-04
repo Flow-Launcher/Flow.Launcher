@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.ViewModel;
@@ -10,19 +11,21 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 2)
+            if (values.Length != 3)
             {
                 return string.Empty;
             }
-
+            var QueryText = values[1] as TextBox;
+            var Suggestion = values[0] as TextBox;
+            Suggestion.ScrollToHorizontalOffset(QueryText.HorizontalOffset);
             // first prop is the current query string
-            var queryText = (string)values[0];
+            var queryText = QueryText.Text;
 
             if (string.IsNullOrEmpty(queryText))
                 return string.Empty;
 
             // second prop is the current selected item result
-            var val = values[1];
+            var val = values[2];
             if (val == null)
             {
                 return string.Empty;

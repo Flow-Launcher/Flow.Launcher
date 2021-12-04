@@ -262,10 +262,12 @@ namespace Flow.Launcher
 
         private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            
+
             // QueryTextSuggestionBox.ScrollToCaret();
-            QueryTextSuggestionBox.ScrollToLine(QueryTextBox.GetLineIndexFromCharacterIndex(QueryTextBox.SelectionStart));
             QueryTextSuggestionBox.CaretIndex = QueryTextBox.CaretIndex;
+            QueryTextSuggestionBox.ScrollToHorizontalOffset(QueryTextBox.HorizontalOffset);
+
+            
         }
 
         public void WindowAnimator()
