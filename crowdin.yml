@@ -1,6 +1,6 @@
 files:
   - source: Languages/en.xaml
     translation: /%original_path%/%two_letters_code%.xaml
-  - source: Flow.Launcher.Plugin.WindowsSettings/Properties/Resources.resx
+  - source: Properties/Resources.resx
     translation: /%original_path%/Resources.%locale%.resx
 commit_message: '[ci skip]'
