@@ -116,7 +116,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Customization
 
-<img src="https://user-images.githubusercontent.com/6903107/144517694-43f44590-9a45-428e-b73e-f142fe862bb7.png">
+![Animation5](https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif)
 
 - Window size adjustment, animation, and sound
 - Color Scheme (aka Dark Mode)
