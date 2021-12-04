@@ -13,8 +13,6 @@ namespace Flow.Launcher.Plugin
         
         private string _icoPath;
 
-        private string _insertText;
-
         /// <summary>
         /// Provides the title of the result. This is always required.
         /// </summary>
