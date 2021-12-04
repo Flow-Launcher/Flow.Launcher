@@ -56,15 +56,17 @@ namespace Flow.Launcher
                 var result = results.SelectedItem?.Result;
                 if (result != null) // SelectedItem returns null if selection is empty.
                 {
-                    System.Windows.Clipboard.SetDataObject(result.Title.ToString());
+                    string _copyText = String.IsNullOrEmpty(result.CopyText) ? result.Title : result.CopyText;
+                    System.Windows.Clipboard.SetDataObject(_copyText.ToString());
+                    e.Handled = true;
                 }
 
             }
-            else if (!String.IsNullOrEmpty(QueryTextBox.Text))
-            {
-                System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
-            }
-            e.Handled = true;
+            //else if (!String.IsNullOrEmpty(QueryTextBox.Text))
+            //{
+            //    System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
+            //}
+            e.Handled = false;
         }
         private async void OnClosing(object sender, CancelEventArgs e)
         {

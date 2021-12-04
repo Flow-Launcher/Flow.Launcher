@@ -29,6 +29,8 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
+        public string CopyText { get; set; } = String.Empty;
+
         public string IcoPath
         {
             get { return _icoPath; }
