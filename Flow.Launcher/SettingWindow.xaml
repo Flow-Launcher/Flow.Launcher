@@ -895,8 +895,8 @@
                             Background="{DynamicResource Color01B}">
                             <ListBox
                                 Width="Auto"
-                                Margin="5,0,0,0"
-                                Padding="0,0,7,10"
+                                Margin="5,0,0,15"
+                                Padding="0,0,7,0"
                                 HorizontalAlignment="Stretch"
                                 Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
