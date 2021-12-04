@@ -172,9 +172,9 @@
                         AllowDrop="True"
                         Background="Transparent"
                         PreviewDragOver="OnPreviewDragOver"
-                        Style="{DynamicResource QueryBoxStyle }"
+                        Style="{DynamicResource QueryBoxStyle}"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Visibility="Visible" Margin="16,7,0,7">
+                        Visibility="Visible">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut" />
