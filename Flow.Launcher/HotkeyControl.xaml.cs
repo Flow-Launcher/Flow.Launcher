@@ -14,6 +14,10 @@ namespace Flow.Launcher
 {
     public partial class HotkeyControl : UserControl
     {
+        private Brush tbMsgForegroundColorOriginal;
+
+        private string tbMsgTextOriginal;
+
         public HotkeyModel CurrentHotkey { get; private set; }
         public bool CurrentHotkeyAvailable { get; private set; }
 
@@ -24,6 +28,8 @@ namespace Flow.Launcher
         public HotkeyControl()
         {
             InitializeComponent();
+            tbMsgTextOriginal = tbMsg.Text;
+            tbMsgForegroundColorOriginal = tbMsg.Foreground;
         }
 
         private CancellationTokenSource hotkeyUpdateSource;
@@ -35,7 +41,6 @@ namespace Flow.Launcher
             hotkeyUpdateSource = new();
             var token = hotkeyUpdateSource.Token;
             e.Handled = true;
-            tbMsg.Visibility = Visibility.Hidden;
 
             //when alt is pressed, the real key should be e.SystemKey
             Key key = e.Key == Key.System ? e.SystemKey : e.Key;
@@ -104,5 +109,11 @@ namespace Flow.Launcher
         private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
 
         public new bool IsFocused => tbHotkey.IsFocused;
+
+        private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
+        {
+            tbMsg.Text = tbMsgTextOriginal;
+            tbMsg.Foreground = tbMsgForegroundColorOriginal;
+        }
     }
 }

@@ -3,6 +3,7 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Navigation;
 
 namespace Flow.Launcher.Resources.Pages
@@ -11,13 +12,20 @@ namespace Flow.Launcher.Resources.Pages
     {
         private Settings Settings { get; set; }
 
+        private Brush tbMsgForegroundColorOriginal;
+
+        private string tbMsgTextOriginal;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.ExtraData is Settings settings)
                 Settings = settings;
             else
                 throw new ArgumentException("Unexpected Parameter setting.");
+            
             InitializeComponent();
+            tbMsgTextOriginal = HotkeyControl.tbMsg.Text;
+            tbMsgForegroundColorOriginal = HotkeyControl.tbMsg.Foreground;
 
             HotkeyControl.SetHotkey(new Infrastructure.Hotkey.HotkeyModel(Settings.Hotkey), false);
         }
@@ -36,6 +44,9 @@ namespace Flow.Launcher.Resources.Pages
             {
                 HotKeyMapper.SetHotkey(new HotkeyModel(Settings.Hotkey), HotKeyMapper.OnToggleHotkey);
             }
+
+            HotkeyControl.tbMsg.Text = tbMsgTextOriginal;
+            HotkeyControl.tbMsg.Foreground = tbMsgForegroundColorOriginal;
         }
     }
 }
