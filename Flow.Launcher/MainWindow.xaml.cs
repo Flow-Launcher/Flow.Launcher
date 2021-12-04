@@ -260,6 +260,14 @@ namespace Flow.Launcher
             isProgressBarStoryboardPaused = true;
         }
 
+        private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            
+            // QueryTextSuggestionBox.ScrollToCaret();
+            QueryTextSuggestionBox.ScrollToLine(QueryTextBox.GetLineIndexFromCharacterIndex(QueryTextBox.SelectionStart));
+            QueryTextSuggestionBox.CaretIndex = QueryTextBox.CaretIndex;
+        }
+
         public void WindowAnimator()
         {
             if (_animating)

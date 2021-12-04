@@ -172,6 +172,7 @@
                         Background="Transparent"
                         PreviewDragOver="OnPreviewDragOver"
                         Style="{DynamicResource QueryBoxStyle}"
+                        SelectionChanged="TextBox_SelectionChanged"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Visibility="Visible">
                         <TextBox.ContextMenu>
