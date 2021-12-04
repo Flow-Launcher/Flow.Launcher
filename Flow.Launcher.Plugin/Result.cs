@@ -30,6 +30,7 @@ namespace Flow.Launcher.Plugin
         public string ActionKeywordAssigned { get; set; }
 
         public string CopyText { get; set; } = String.Empty;
+        public string FileCopy { get; set; } = String.Empty;
 
         public string IcoPath
         {
