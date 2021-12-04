@@ -21,7 +21,7 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
 - New Plugins, Plugin Store, Game Mode
-- New wizard window appears at the first run for beginner. (It also appears to existing pro users once. 😊)
+- New wizard window appears at the first run for beginner. (It also appears to existing pro users once.🧙‍♂️)
 
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full changelogs</a>
 
