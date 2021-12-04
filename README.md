@@ -20,9 +20,7 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 ## 🎉 New Features in 1.9 
 
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
-- New Plugins
-- Plugin Store, Game Mode
-- Integrate file manager and browser settings into basic setting
+- New Plugins, Plugin Store, Game Mode
 
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full changelogs</a>
 
