@@ -1991,8 +1991,8 @@
                                     <RowDefinition Height="80" />
                                     <RowDefinition Height="146" />
                                     <RowDefinition Height="50" />
-                                    <RowDefinition Height="250" />
-                                    <RowDefinition Height="70" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="50" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
@@ -2018,9 +2018,9 @@
                                                 Margin="0,0,0,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
-                                                LostFocus="OnHotkeyControlFocusLost"
                                                 GotFocus="OnHotkeyControlFocused"
-                                                Loaded="OnHotkeyControlLoaded" />
+                                                Loaded="OnHotkeyControlLoaded"
+                                                LostFocus="OnHotkeyControlFocusLost" />
 
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
