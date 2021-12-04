@@ -153,8 +153,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
-    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorého používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg. pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
