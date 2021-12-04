@@ -708,11 +708,8 @@ namespace Flow.Launcher.ViewModel
 
         public void CycleHistory()
         {
-            if (!HistorySelected())
-            {
+            if (!HistorySelected() && _history.Items.Count > 0)
                 ChangeQueryText(_history.Items.Last().Query.ToString());
-            }
-            
         }
 
         public void Show()
