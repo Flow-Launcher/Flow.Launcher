@@ -17,7 +17,9 @@ namespace Flow.Launcher.Converters
             }
             var QueryText = values[1] as TextBox;
             var Suggestion = values[0] as TextBox;
+            Suggestion.CaretIndex = QueryText.CaretIndex;
             Suggestion.ScrollToHorizontalOffset(QueryText.HorizontalOffset);
+            
             // first prop is the current query string
             var queryText = QueryText.Text;
 
