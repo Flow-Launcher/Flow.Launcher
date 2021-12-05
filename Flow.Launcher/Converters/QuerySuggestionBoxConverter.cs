@@ -46,7 +46,7 @@ namespace Flow.Launcher.Converters
                 // construct autocomplete with suggestion
                 string _suggestion = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
                 if (string.IsNullOrEmpty(selectedResult.AutoCompleteText))
-                    selectedItem.Result.AutoCompleteText = _suggestion;
+                    selectedItem.QuerySuggestionText = _suggestion;
 
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
                 return queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);

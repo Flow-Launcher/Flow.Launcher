@@ -233,14 +233,24 @@ namespace Flow.Launcher.ViewModel
                 var result = SelectedResults.SelectedItem?.Result;
                 if (result != null) // SelectedItem returns null if selection is empty.
                 {
-                    string _newText = String.IsNullOrEmpty(result.AutoCompleteText) ? result.Title : result.AutoCompleteText;
+                    var autoCompleteText = result.Title;
+
+                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
+                    {
+                        autoCompleteText = result.AutoCompleteText;
+                    }
+                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                    {
+                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
+                    }
 
                     var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
                     if (SpecialKeyState.ShiftPressed)
                     {
-                        _newText = result.SubTitle;
+                        autoCompleteText = result.SubTitle;
                     }
-                    ChangeQueryText(_newText);
+
+                    ChangeQueryText(autoCompleteText);
                 }
             });
 
