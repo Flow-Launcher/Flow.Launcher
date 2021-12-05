@@ -44,8 +44,11 @@ namespace Flow.Launcher.Converters
                 if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase) || QueryTextBox.HorizontalOffset != 0)
                     return string.Empty;
 
+                // For AutocompleteQueryCommand.
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
-                return queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
+                selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
+                
+                return selectedItem.QuerySuggestionText;
             }
             catch (Exception e)
             {
