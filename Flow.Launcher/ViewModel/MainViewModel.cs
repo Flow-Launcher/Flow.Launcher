@@ -228,7 +228,7 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
-            InsertSuggestion = new RelayCommand(_ =>
+            AutocompleteQueryCommand = new RelayCommand(_ =>
             {
                 var result = SelectedResults.SelectedItem?.Result;
                 if (result != null) // SelectedItem returns null if selection is empty.
@@ -408,7 +408,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
-        public ICommand InsertSuggestion { get; set; }
+        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 

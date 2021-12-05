@@ -43,10 +43,10 @@
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
         <KeyBinding
             Key="Tab"
-            Command="{Binding InsertSuggestion}"/>
+            Command="{Binding AutocompleteQueryCommand}"/>
         <KeyBinding
             Key="Tab"
-            Command="{Binding InsertSuggestion}"
+            Command="{Binding AutocompleteQueryCommand}"
             Modifiers="Shift" />
         <KeyBinding
             Key="I"
