@@ -30,9 +30,7 @@ namespace Flow.Launcher.Plugin.Url
             InitializeComponent();
             _settings = settings;
             _flowlauncherAPI = flowlauncherAPI;
-            browserPathBox.Text = _settings.BrowserPath;
-            NewWindowBrowser.IsChecked = _settings.OpenInNewBrowserWindow;
-            NewTabInBrowser.IsChecked = !_settings.OpenInNewBrowserWindow;
+
         }
 
         private void OnChooseClick(object sender, RoutedEventArgs e)
@@ -43,7 +41,6 @@ namespace Flow.Launcher.Plugin.Url
             fileBrowserDialog.CheckPathExists = true;
             if (fileBrowserDialog.ShowDialog() == true)
             {
-                browserPathBox.Text = fileBrowserDialog.FileName;
                 _settings.BrowserPath = fileBrowserDialog.FileName;
             }
         }
@@ -60,7 +57,6 @@ namespace Flow.Launcher.Plugin.Url
 
         private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
         {
-            _settings.BrowserPath = browserPathBox.Text;
         }
     }
 }
