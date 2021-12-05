@@ -65,10 +65,11 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
-            InitializeDarkMode();
+            InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             // since the default main window visibility is visible
@@ -232,6 +233,20 @@ namespace Flow.Launcher
             };
         }
 
+        private void CheckFirstLaunch()
+        {
+            if (_settings.FirstLaunch)
+            {
+                _settings.FirstLaunch = false;
+                PluginManager.API.SaveAppAllSettings();
+                OpenWelcomeWindow();
+            }
+        }
+        private void OpenWelcomeWindow()
+        {
+            var WelcomeWindow = new WelcomeWindow(_settings);
+            WelcomeWindow.Show();
+        }
         private void ToggleGameMode()
         {
             if (_viewModel.GameModeStatus)
@@ -259,7 +274,6 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
-
         public void WindowAnimator()
         {
             if (_animating)
@@ -480,13 +494,13 @@ namespace Flow.Launcher
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
         }
 
-        public void InitializeDarkMode()
+        public void InitializeColorScheme()
         {
-            if (_settings.DarkMode == Constant.Light)
+            if (_settings.ColorScheme == Constant.Light)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
             }
-            else if (_settings.DarkMode == Constant.Dark)
+            else if (_settings.ColorScheme == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
             }

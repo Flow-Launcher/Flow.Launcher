@@ -50,6 +50,7 @@
             VerticalContentAlignment="Center"
             input:InputMethod.IsInputMethodEnabled="False"
             PreviewKeyDown="TbHotkey_OnPreviewKeyDown"
-            TabIndex="100" />
+            TabIndex="100"
+            LostFocus="tbHotkey_LostFocus"/>
     </Grid>
 </UserControl>

@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private string language = "en";
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
-        public string DarkMode { get; set; } = "System";
+        public string ColorScheme { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
 
@@ -39,6 +39,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
+        public bool FirstLaunch { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -133,8 +134,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
 
-        public bool StartFlowLauncherOnSystemStartup { get; set; } = true;
-        public bool HideOnStartup { get; set; }
+        public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
+        public bool HideOnStartup { get; set; } = true;
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
         {
@@ -167,7 +168,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Preserved
     }
 
-    public enum DarkMode
+    public enum ColorSchemes
     {
         System,
         Light,
