@@ -235,7 +235,7 @@ namespace Flow.Launcher.ViewModel
                 var result = results.SelectedItem?.Result;
                 if (result != null) // SelectedItem returns null if selection is empty.
                 {
-                    string _newText = String.IsNullOrEmpty(result.SuggestionText) ? result.Title : result.SuggestionText;
+                    string _newText = String.IsNullOrEmpty(result.AutoCompleteText) ? result.Title : result.AutoCompleteText;
 
                     var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
                     if (SpecialKeyState.ShiftPressed)

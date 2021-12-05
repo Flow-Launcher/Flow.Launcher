@@ -43,13 +43,12 @@ namespace Flow.Launcher.Converters
                 if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
                     return string.Empty;
 
-                // When user typed lower case and result title is uppercase, we still want to display suggestion
-
+                // construct autocomplete with suggestion
                 string _suggestion = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
-                if (String.IsNullOrEmpty(selectedResult.SuggestionText))
-                {
-                    selectedItem.Result.SuggestionText = _suggestion;
-                }
+                if (string.IsNullOrEmpty(selectedResult.AutoCompleteText))
+                    selectedItem.Result.AutoCompleteText = _suggestion;
+
+                // When user typed lower case and result title is uppercase, we still want to display suggestion
                 return queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
             }
             catch (Exception e)

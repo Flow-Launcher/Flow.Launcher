@@ -29,7 +29,12 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
-        public string SuggestionText { get; set; } = string.Empty;
+        /// <summary>
+        /// This holds the text which can be provided by plugin to help Flow autocomplete text
+        /// for user on the plugin result. If autocomplete action for example is tab, pressing tab will have 
+        /// the default constructed autocomplete text (result's Title), or the text provided here if not empty.
+        /// </summary>
+        public string AutoCompleteText { get; set; }
 
         public string IcoPath
         {
