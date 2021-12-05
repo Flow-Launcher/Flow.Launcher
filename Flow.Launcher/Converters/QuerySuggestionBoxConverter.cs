@@ -11,15 +11,15 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 3)
+            if (values.Length != 2)
             {
                 return string.Empty;
             }
             var QueryText = values[0] as TextBox;
 
             
-            // first prop is the current query string
-            var queryText = (string)values[2];
+ 
+            var queryText = QueryText.Text;
 
             if (string.IsNullOrEmpty(queryText))
                 return string.Empty;

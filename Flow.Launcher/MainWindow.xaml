@@ -161,7 +161,7 @@
                         Style="{DynamicResource QuerySuggestionBoxStyle}">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                <Binding ElementName="QueryTextBox" Mode="OneTime" />
+                                <Binding ElementName="QueryTextBox" Mode="OneWay" />
                                 <Binding ElementName="ResultListBox" Path="SelectedItem" />
                                 <Binding ElementName="QueryTextBox" Path="Text" />
                             </MultiBinding>
