@@ -42,7 +42,7 @@ namespace Flow.Launcher.Converters
                 var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
                 var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
 
-                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase) || QueryTextBox.HorizontalOffset != 0)
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
                     return string.Empty;
 
 
@@ -50,9 +50,10 @@ namespace Flow.Launcher.Converters
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
                 selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
 
+                // Check if Text will be larger then our QueryTextBox
                 System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
                 System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
-                if (ft.Width > QueryTextBox.ActualWidth)
+                if (ft.Width > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
                 {
                     return string.Empty;
                 };
