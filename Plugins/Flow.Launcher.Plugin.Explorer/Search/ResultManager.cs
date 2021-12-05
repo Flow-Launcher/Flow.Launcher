@@ -27,6 +27,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
+                AutoCompleteText = $"{subtitle}\\",
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
@@ -123,6 +124,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = Path.GetFileName(filePath),
                 SubTitle = filePath,
                 IcoPath = filePath,
+                AutoCompleteText = filePath,
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
                 Action = c =>
