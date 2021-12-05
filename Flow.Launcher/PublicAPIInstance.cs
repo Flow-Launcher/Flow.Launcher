@@ -216,23 +216,14 @@ namespace Flow.Launcher
 
             var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
-            if (browserInfo.Path == "Default")
+            if (browserInfo.OpenInTab)
             {
-                if (browserInfo.OpenInTab)
-                    SearchWeb.NewTabInBrowser(url);
-                else
-                    SearchWeb.NewBrowserWindow(url);
-                return;
+                SearchWeb.NewTabInBrowser(url, path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
+            }else
+            {
+                SearchWeb.NewBrowserWindow(url, path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
             }
 
-            var browserStartInfo = new ProcessStartInfo()
-            {
-                FileName = browserInfo.Path
-            };
-            browserStartInfo.ArgumentList.Add(url);
-            
-            if(browserInfo.EnablePrivate)
-                browserStartInfo.ArgumentList.Add(browserInfo.PrivateArg);
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

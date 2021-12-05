@@ -257,7 +257,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            e.Uri.AbsoluteUri.NewTabInBrowser();
+            API.OpenUrl(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
