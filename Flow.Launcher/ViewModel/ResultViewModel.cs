@@ -142,6 +142,8 @@ namespace Flow.Launcher.ViewModel
 
         public Result Result { get; }
 
+        public string QuerySuggestionText { get; set; }
+
         public override bool Equals(object obj)
         {
             return obj is ResultViewModel r && Result.Equals(r.Result);
