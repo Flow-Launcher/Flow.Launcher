@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.ViewModel;
 
@@ -41,13 +42,21 @@ namespace Flow.Launcher.Converters
                 var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
                 var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
 
-                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase) || QueryTextBox.HorizontalOffset != 0)
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
                     return string.Empty;
+
 
                 // For AutocompleteQueryCommand.
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
                 selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
-                
+
+                System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
+                System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
+                if (ft.Width > QueryTextBox.ActualWidth)
+                {
+                    return string.Empty;
+                };
+
                 return selectedItem.QuerySuggestionText;
             }
             catch (Exception e)
