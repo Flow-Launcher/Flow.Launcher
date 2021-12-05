@@ -11,15 +11,13 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 2)
+            if (values.Length != 3)
             {
                 return string.Empty;
             }
-            var QueryText = values[0] as TextBox;
+            var QueryTextBox = values[0] as TextBox;
 
-            
- 
-            var queryText = QueryText.Text;
+            var queryText = (string)values[2];
 
             if (string.IsNullOrEmpty(queryText))
                 return string.Empty;
@@ -43,7 +41,7 @@ namespace Flow.Launcher.Converters
                 var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
                 var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
 
-                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase) || QueryText.HorizontalOffset != 0)
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase) || QueryTextBox.HorizontalOffset != 0)
                     return string.Empty;
 
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
