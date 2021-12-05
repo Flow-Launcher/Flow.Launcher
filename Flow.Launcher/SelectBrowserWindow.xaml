@@ -157,7 +157,6 @@
                                     x:Name="fileArgTextBox"
                                     Width="180"
                                     Margin="10,0,0,0"
-                                    IsEnabled="{Binding Editable}"
                                     Text="{Binding PrivateArg}" />
                                 <CheckBox
                                     Margin="12,0,0,0"
