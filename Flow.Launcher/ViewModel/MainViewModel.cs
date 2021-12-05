@@ -230,9 +230,7 @@ namespace Flow.Launcher.ViewModel
 
             InsertSuggestion = new RelayCommand(_ =>
             {
-                var results = SelectedResults;
-
-                var result = results.SelectedItem?.Result;
+                var result = SelectedResults.SelectedItem?.Result;
                 if (result != null) // SelectedItem returns null if selection is empty.
                 {
                     string _newText = String.IsNullOrEmpty(result.AutoCompleteText) ? result.Title : result.AutoCompleteText;
