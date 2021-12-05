@@ -22,7 +22,7 @@
     Icon="Images\app.ico"
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
-    ResizeMode="CanResizeWithGrip"
+    ResizeMode="CanResize"
     StateChanged="Window_StateChanged"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -895,7 +895,7 @@
                             Background="{DynamicResource Color01B}">
                             <ListBox
                                 Width="Auto"
-                                Margin="5,0,0,15"
+                                Margin="5,0,0,0"
                                 Padding="0,0,7,0"
                                 HorizontalAlignment="Stretch"
                                 Background="{DynamicResource Color01B}"
