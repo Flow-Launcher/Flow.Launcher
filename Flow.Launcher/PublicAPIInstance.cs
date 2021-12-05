@@ -214,7 +214,7 @@ namespace Flow.Launcher
             using var process = new Process();
             var browserInfo = _settingsVM.Settings.CustomBrowser;
 
-            var path = browserInfo.Path == "Default" ? "" : browserInfo.Path;
+            var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
             if (browserInfo.Path == "Default")
             {

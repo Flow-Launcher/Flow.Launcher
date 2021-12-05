@@ -100,7 +100,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 Name = "Default",
                 Path = "*",
-                PrivateArg = "*",
+                PrivateArg = "",
                 EnablePrivate = false,
                 Editable = false
             }
