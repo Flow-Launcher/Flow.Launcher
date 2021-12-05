@@ -15,7 +15,6 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -316,6 +315,29 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public class ColorScheme
+        {
+            public string Display { get; set; }
+            public ColorSchemes Value { get; set; }
+        }
+
+        public List<ColorScheme> ColorSchemes
+        {
+            get
+            {
+                List<ColorScheme> modes = new List<ColorScheme>();
+                var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
+                foreach (var e in enums)
+                {
+                    var key = $"ColorScheme{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new ColorScheme { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
         public double WindowWidthSize
         {
             get => Settings.WindowSize;
@@ -326,6 +348,18 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.UseGlyphIcons;
             set => Settings.UseGlyphIcons = value;
+        }
+
+        public bool UseAnimation
+        {
+            get => Settings.UseAnimation;
+            set => Settings.UseAnimation = value;
+        }
+
+        public bool UseSound
+        {
+            get => Settings.UseSound;
+            set => Settings.UseSound = value;
         }
 
         public Brush PreviewBackground
@@ -494,6 +528,8 @@ namespace Flow.Launcher.ViewModel
         public string Website => Constant.Website;
         public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
         public string Documentation => Constant.Documentation;
+        public string Docs => Constant.Docs;
+        public string Github => Constant.GitHub;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
         #endregion

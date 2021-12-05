@@ -57,7 +57,7 @@
         <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="Foreground" Value="#72767d" />
     </Style>
-    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#eaeaea</SolidColorBrush>
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#198F8F8F</SolidColorBrush>
     <Style x:Key="ItemImageSelectedStyle" BasedOn="{StaticResource BaseItemImageSelectedStyle}" TargetType="{x:Type Image}" >
         <Setter Property="Cursor" Value="Arrow" />
     </Style>

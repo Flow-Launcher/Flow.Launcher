@@ -18,7 +18,10 @@ namespace Flow.Launcher.Plugin.Program
             _settings = settings;
             tbSuffixes.Text = string.Join(Settings.SuffixSeperator.ToString(), _settings.ProgramSuffixes);
         }
-
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
