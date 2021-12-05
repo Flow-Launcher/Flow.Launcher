@@ -9,7 +9,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     /// Listens keyboard globally.
     /// <remarks>Uses WH_KEYBOARD_LL.</remarks>
     /// </summary>
-    public unsafe static class GlobalHotkey
+    public static unsafe class GlobalHotkey
     {
         private static readonly IntPtr hookId;
         
