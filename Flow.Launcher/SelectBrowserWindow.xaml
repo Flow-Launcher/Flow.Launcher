@@ -121,8 +121,8 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
-                                <RadioButton GroupName="browser" IsChecked="True">New Tab</RadioButton>
-                                <RadioButton GroupName="browser">New Window</RadioButton>
+                                <RadioButton GroupName="browser" IsChecked="{Binding OpenInTab}">New Tab</RadioButton>
+                                <RadioButton GroupName="browser" IsChecked="{Binding OpenInNewWindow, Mode=OneWay}">New Window</RadioButton>
                             </StackPanel>
                             <TextBlock Grid.Row="3"
                                        Grid.Column="0"

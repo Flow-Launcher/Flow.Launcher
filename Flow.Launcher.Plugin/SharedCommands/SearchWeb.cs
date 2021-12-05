@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Opens search in a new browser. If no browser path is passed in then Chrome is used. 
         /// Leave browser path blank to use Chrome.
         /// </summary>
-		public static void NewBrowserWindow(this string url, string browserPath = "")
+		public static void NewBrowserWindow(this string url, string browserPath = "", bool inPrivate = false)
         {
             browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
 
@@ -68,7 +68,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <summary> 
         /// Opens search as a tab in the default browser chosen in Windows settings.
         /// </summary>
-        public static void NewTabInBrowser(this string url, string browserPath = "")
+        public static void NewTabInBrowser(this string url, string browserPath = "", bool inPrivate = false)
         {
             browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
 
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (!string.IsNullOrEmpty(browserPath))
                 {
                     psi.FileName = browserPath;
-                    psi.Arguments = url;
+                    psi.Arguments = url + (inPrivate ? "" : "-inprivate");
                 }
                 else
                 {

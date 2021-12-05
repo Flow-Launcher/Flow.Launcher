@@ -44,7 +44,7 @@ namespace Flow.Launcher
         {
             Settings = settings;
             CustomBrowsers = new ObservableCollection<CustomBrowserViewModel>(Settings.CustomBrowserList.Select(x => x.Copy()));
-            SelectedCustomBrowserIndex = Settings.CustomExplorerIndex;
+            SelectedCustomBrowserIndex = Settings.CustomBrowserIndex;
             InitializeComponent();
         }
 
