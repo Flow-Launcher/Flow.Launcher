@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Hakkında</value>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>İş veya okula erişme</value>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>Erişilebilirlik Seçenekleri</value>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>Aksesuar uygulamaları</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Hesap bilgileri</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Hesaplar</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>İşlem Merkezi</value>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>Etkinleştirme</value>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>Etkinlik geçmişi</value>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>Donanım Ekle</value>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>Program Ekle/Kaldır</value>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>Telefonunuzu ekleyin</value>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>Yönetim Araçları</value>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>Gelişmiş görüntü ayarları</value>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>Gelişmiş grafikler</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>Reklam Kimliği</value>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>Uçak modu</value>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Sekme</value>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>Alternatif adlar</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animasyonlar</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>Uygulama rengi</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>Denetim Masası</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>Uygulama tanılama</value>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>Uygulama özellikleri</value>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>Sistem ayarları</value>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>Uygulama ses ve cihaz tercihleri</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Uygulama</value>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>Uygulamalar ve Özellikler</value>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>Web siteleri için uygulamalar</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Alan</value>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>Hesaplar</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>Yönetim Araçları</value>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>Görünüm ve Kişiselleştirme</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>Uygulamalar</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>Saat ve Bölge</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>Cihazlar</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>Erişim kolaylığı</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>Ek Özellikler</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>Oyun</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>Donanım ve Ses</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>Giriş sayfası</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>Karma gerçeklik</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>Ağ ve İnternet</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>Kişiselleştirme</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>Gizlilik</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>Programlar</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>Sistem</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>Sistem ve Güvenlik</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>Saat ve dil</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>Güncelleştirme ve güvenlik</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>Kullanıcı hesapları</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>Atanan erişim</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Ses</value>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>Sesli uyarılar</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>Ses ve konuşma</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>Otomatik Yürüt</value>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>Otomatik dosya indirme</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Arka plan</value>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>Arka Plan Uygulamaları</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Yedekleme</value>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>Yedekleme ve Geri Yükleme</value>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>Pil Tasarrufu</value>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>Pil Tasarrufu ayarları</value>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>Pil tasarrufu kullanım ayrıntıları</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>Pil kullanımı</value>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>Biyometrik Cihazlar</value>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>BitLocker Sürücü Şifrelemesi</value>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>Mavi ışık</value>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>Mavi sarı</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>Bluetooth cihazları</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>Yayın</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Takvim</value>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>Arama geçmişi</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Kamera</value>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie IME</value>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>Hücresel ve SIM</value>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>Başlangıç ekranında hangi klasörlerin görüneceğini seçin</value>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>NetWare istemci hizmeti</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Pano</value>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>Kapalı açıklamalı alt yazı</value>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>Renk filtreleri</value>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>Renk yönetimi</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Renkler</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Komut</value>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>Bağlı Cihazlar</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kişiler</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Kopyalama komutu</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>Çekirdek Yalıtımı</value>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>Tüm cihazlarımda Cortana</value>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana - Dil</value>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>Kimlik bilgileri yöneticisi</value>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>Cihazlar arası</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>Özel cihazlar</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>Koyu renk</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Karanlık mod</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>Veri kullanımı</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Tarih ve saat</value>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>Varsayılan uygulamalar</value>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>Varsayılan kamera</value>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>Varsayılan konum</value>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>Varsayılan programlar</value>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>Varsayılan Kaydetme Konumları</value>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>Teslim İyileştirme</value>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>Masaüstü temaları</value>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>Cihaz yöneticisi</value>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>Cihazlar ve yazıcılar</value>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>Çevirmeli</value>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>Doğrudan erişim</value>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>Telefonunuzu doğrudan açın</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Görüntü</value>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>Görüntü özellikleri</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Belgeler</value>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>Ekranımı çoğaltma</value>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>Bu saatlerde</value>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>Erişim kolaylığı merkezi</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Sürüm</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-posta</value>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>E-posta ve uygulama hesapları</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Şifreleme</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Ortam</value>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Exploit Protection</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Ek Özellikler</value>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>Gözle denetim</value>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>Göz izleyici</value>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>Aile ve diğer kişiler</value>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>Geri bildirim ve tanılama</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>Dosya sistemi</value>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>Hızlı Bul</value>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>Cihazımı Bul</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Güvenlik Duvarı</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>Odaklanma yardımı - Sessiz saatler</value>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>Odaklanma yardımı - Sessiz anlar</value>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>Klasör seçenekleri</value>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>Yazı tipleri</value>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>Geliştiriciler için</value>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>Oyun çubuğu</value>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>Oyun kumandaları</value>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>Oyun DVR</value>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>Oyun Modu</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Ağ geçidi</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Genel</value>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>Programları al</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>Kullanmaya başlayın</value>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>Göz Atma</value>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>Grafik ayarları</value>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>Gri tonlama</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>Yeşil hafta</value>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>Kulaklık ekranı</value>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>Yüksek karşıtlık</value>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>Holografik ses</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>Holografik Ortam</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>Holografik Başlık</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>Holografik Yönetim</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>Ev grubu</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Kimlik</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Resim</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>Dizin oluşturma seçenekleri</value>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>Kızılötesi</value>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>Mürekkep oluşturma ve yazma</value>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>İnternet seçenekleri</value>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>Ters renkler</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>Yalıtılmış Gözatma</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>Japonya IME ayarları</value>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>Oyun çubuğu özellikleri</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Klavye</value>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>Tuş takımı</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Anahtarlar</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>Açık renk</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Açık mod</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Konum</value>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>Kilit ekranı</value>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>Büyüteç</value>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>Posta - Microsoft Exchange veya Windows Mesajlaşma</value>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>Bilinen ağları yönet</value>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>İsteğe bağlı özellikleri yönet</value>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>Mesajlaşma</value>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>Tarifeli bağlantı</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>Mikrofon</value>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>Mobil cihazlar</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>Mobil etkin nokta</value>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>Diğer ayrıntılar</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>Hareket</value>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>Fare</value>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>Fare ve dokunmatik yüzey</value>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>Fare, Yazı tipleri, Klavye ve Yazıcı özellikleri</value>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>Fare işaretçisi</value>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>Medya özellikleri</value>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>Çoklu görev</value>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>NFC İşlemleri</value>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>Ekran okuyucusu</value>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>Gezinti çubuğu</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Ağ</value>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>Ağ ve paylaşım merkezi</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Ağ bağlantısı</value>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>Ağ özellikleri</value>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>Ağ Kurulum Sihirbazı</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Ağ durumu</value>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>Gece ışığı</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>Gece ışığı ayarları</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Not</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>Yalnızca cihazınıza bir mobil cihaz bağlı olduğunda kullanılabilir.</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>Yalnızca gelişmiş grafik seçeneklerini destekleyen cihazlarda kullanılabilir.</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>Yalnızca pil bulunan (örneğin tablet) cihazlarda kullanılabilir.</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>Windows 10, sürüm 1809 (derleme 17763) ve sonraki sürümlerde kullanım dışı bırakıldı.</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>Yalnızca Arama eşleştirilmişse kullanılabilir.</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>Yalnızca DirectAccess etkinleştirilmişse kullanılabilir.</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>Yalnızca gelişmiş görüntüleme seçeneklerini destekleyen cihazlarda kullanılabilir.</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>Yalnızca kullanıcı WIP'ye kayıtlı ise mevcuttur.</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>Eyetracker donanımı gerektirir.</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>Microsoft Japonya giriş yöntemi düzenleyicisi yüklüyse kullanılabilir.</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>Microsoft Pinyin giriş yöntemi düzenleyicisi yüklüyse kullanılabilir.</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>Microsoft Wubi giriş yöntemi düzenleyicisi yüklüyse kullanılabilir.</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>Yalnızca Karma Gerçeklik Portal uygulaması yüklüyse kullanılabilir.</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>Yalnızca mobil cihazlarda ve kuruluş bir sağlama paketi dağıttıysa kullanılabilir.</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>Windows 10, sürüm 1903 (derleme 18362)‘de eklendi.</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>Windows 10, sürüm 2004 (derleme 19041)‘de eklendi.</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>Yalnızca "ayarlar uygulamaları" yüklüyse kullanılabilir. (örneğin 3. bir taraf tarafından) </value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>Yalnızca dokunmatik yüzey donanımı varsa kullanılabilir.</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>Yalnızca cihazda bir Wi-Fi bağdaştırıcısı varsa kullanılabilir.</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>Cihazın Windows Anywhere özelliğine sahip olması gerekir.</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>Yalnızca kuruluş bir sağlama paketi dağıttıysa kullanılabilir.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Bildirimler</value>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>Bildirimler ve eylemler</value>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>ODBC Veri Kaynağı Yöneticisi (32-bit)</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>ODBC Veri Kaynağı Yöneticisi (64-bit)</value>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>Çevrimdışı dosyalar</value>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>Çevrimdışı Haritalar</value>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>Çevrimdışı Haritalar - Haritaları indirme</value>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>Ekranda</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>İşletim Sistemi</value>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>Diğer cihazlar</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>Diğer seçenekler</value>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>Diğer kullanıcılar</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>Ebeveyn denetimleri</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Parola</value>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>Parola özellikleri</value>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>Kalem ve giriş aygıtları</value>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>Kalem ve dokunmatik</value>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>Kalem ve Windows Ink</value>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>Yakınımdaki Kişiler</value>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>Performans bilgileri ve araçları</value>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>İzinler ve geçmiş</value>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>Kişiselleştirme (kategori)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>Telefon ve modem</value>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>Telefon ve modem - Seçenekler</value>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>Telefon çağrıları</value>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>Telefon - Varsayılan uygulamalar</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Resim</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Resimler</value>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Pinyin IME ayarları</value>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Pinyin IME ayarları - etki alanı sözlüğü</value>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Pinyin IME ayarları - Anahtar yapılandırması</value>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Pinyin IME ayarları - UDP</value>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>Tam ekranda oyun oynama</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Windows ayarlarını aramak için eklenti</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Windows ayarları</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>Güç ve uyku</value>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>Güç seçenekleri</value>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Sunum</value>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>Yazdırma ekranı</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Yazıcılar</value>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>Yazıcılar ve tarayıcılar</value>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>Sorun raporları ve çözümleri</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>İşlemci</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>Programlar ve özellikler</value>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>Bu bilgisayara yansıtma</value>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>Sağlama</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Yakınlık</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Ara sunucu</value>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>Sessiz anlar oyunu</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Radyolar</value>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>Tanıma</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Kurtarma</value>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>Kırmızı göz</value>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>Kırmızı-yeşil</value>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>Kırmızı hafta</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Bölge</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Bölge ve dil</value>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>Bölge biçimlendirme</value>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>Bölgesel dil</value>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>Bölgesel ayarlar özellikleri</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>RemoteApp ve masaüstü bağlantıları</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Uzak Masaüstü</value>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>Tarayıcılar ve kameralar</value>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>Planlanan</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>Zamanlanmış görevler</value>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>Ekran döndürme</value>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>Kaydırma çubukları</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>Kaydırma Kilidi</value>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>Windows aranıyor</value>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Güvenlik Merkezi</value>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>Güvenlik İşlemcisi</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>Oturum temizleme</value>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>Kiosk ayarlama</value>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>Ayarlar giriş sayfası</value>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>Paylaşılan deneyimler</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>wifi</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Kısayollar</value>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>Oturum açma seçenekleri</value>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>Oturum açma seçenekleri - Dinamik kilit</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Boyut</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Ses</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Konuşma</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Konuşma tanıma</value>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>Konuşma yazma</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>Başlangıç yerleri</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>Başlangıç uygulamaları</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Depolama</value>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>Depolama ilkeleri</value>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>Akıllı Depolama</value>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>Eşitleme merkezi</value>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>Ayarlarınızı eşitleyin</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Sistem</value>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>Sistem özellikleri ve Yeni Donanım Ekleme sihirbazı</value>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>Sekme</value>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>Tablet modu</value>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>Tablet PC ayarları</value>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>Konuşma</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>Cortana ile konuşun</value>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>Görev çubuğu</value>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>Görev çubuğu rengi</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Görevler</value>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>Ekip Konferansı</value>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>Takım cihazı yönetimi</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Metin okuma</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Temalar</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>Zaman çizelgesi</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>Dokunun</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>Dokunma geri bildirimi</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>Dokunmatik yüzey</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Saydamlık</value>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>Sorun Giderme</value>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>Yazıyor</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Kaldır</value>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>Kullanıcı hesapları</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Sürüm</value>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>Video kayıttan yürütme</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videolar</value>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>Sanal Masaüstleri</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>Virüs</value>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>Ses etkinleştirme</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Ses düzeyi</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Duvar kağıdı</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>Daha sıcak renk</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>Karşılama merkezi</value>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>Giriş Ekranı</value>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>Tekerlek</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Wi-Fi Araması</value>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Wi-Fi ayarları</value>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>Pencere kenarlığı</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Windows Güvenlik Duvarı</value>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Windows Hello kurulumu - Yüz Tanıma</value>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Windows Hello kurulumu - Parmak izi</value>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Windows Insider Programı</value>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Windows Mobility Center</value>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows arama</value>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Windows Güvenlik</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update - Gelişmiş Seçenekler</value>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update - Güncelleştirmeleri denetle</value>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update - Yeniden başlatma seçenekleri</value>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update - isteğe bağlı güncelleştirmeleri görüntüle</value>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update - Güncelleştirme geçmişini görüntüle</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>Kablosuz</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>Çalışma alanı</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>Çalışma alanı sağlama</value>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>Wubi IME ayarları</value>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>Wubi IME ayarları - UDP</value>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Xbox Ağı</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>Bilgileriniz</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Yakınlaştır</value>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>arama</value>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>deuteranopia</value>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>protanopia</value>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>tritanopia</value>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+</root>

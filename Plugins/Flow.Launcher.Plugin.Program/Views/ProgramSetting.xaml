@@ -45,7 +45,7 @@
                         Width="200"
                         Margin="70,8,10,8"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
-                        IsChecked="{Binding EnableHideAppsPath}"
+                        IsChecked="{Binding HideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
                         Name="DescriptionEnabled"
@@ -66,22 +66,22 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnLoadAllProgramSource"
-                    Width="100"
-                    Margin="10"
+                    Width="120"
+                    Margin="10,10,5,10"
                     HorizontalAlignment="Right"
                     Click="btnLoadAllProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
                 <Button
                     x:Name="btnProgramSuffixes"
-                    Width="100"
-                    Margin="10"
+                    Width="120"
+                    Margin="5,10,5,10"
                     HorizontalAlignment="Right"
                     Click="BtnProgramSuffixes_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
                 <Button
                     x:Name="btnReindex"
-                    Width="100"
-                    Margin="10"
+                    Width="120"
+                    Margin="5,10,5,10"
                     HorizontalAlignment="Right"
                     Click="btnReindex_Click"
                     Content="{DynamicResource flowlauncher_plugin_program_reindex}" />
@@ -116,15 +116,7 @@
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
-            SelectionMode="Extended"
-            Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
-            <ListView.ItemContainerStyle>
-                <!--<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem"> for Darkmode Style -->
-                <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
+            SelectionMode="Extended">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150" Header="Name">

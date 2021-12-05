@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var result = new Result
             {
                 Title = title,
-                SubTitle = Main._settings.EnableHideAppsPath ? string.Empty : LnkResolvedPath ?? FullPath,
+                SubTitle = Main._settings.HideAppsPath ? string.Empty : LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,

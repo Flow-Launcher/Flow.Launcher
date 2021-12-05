@@ -3,6 +3,7 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -115,8 +116,8 @@ namespace Flow.Launcher
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
         {
-                SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
-                fileManagerChangeWindow.ShowDialog();
+            SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
+            fileManagerChangeWindow.ShowDialog();
         }
 
         #endregion
@@ -128,14 +129,22 @@ namespace Flow.Launcher
             HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
         }
 
-        void OnHotkeyChanged(object sender, EventArgs e)
+        private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
+        {
+            HotKeyMapper.RemoveHotkey(settings.Hotkey);
+        }
+
+        private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
         {
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
-
                 HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
                 HotKeyMapper.RemoveHotkey(settings.Hotkey);
                 settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+            }
+            else
+            {
+                HotKeyMapper.SetHotkey(new HotkeyModel(settings.Hotkey), HotKeyMapper.OnToggleHotkey);
             }
         }
 
@@ -275,6 +284,11 @@ namespace Flow.Launcher
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
         }
 
+        private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
+        {
+            var WelcomeWindow = new WelcomeWindow(settings);
+            WelcomeWindow.Show();
+        }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
