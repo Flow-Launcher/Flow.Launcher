@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +14,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
 using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
@@ -55,7 +56,7 @@ namespace Flow.Launcher
 
         public void RestartApp()
         {
-            _mainVM.MainWindowVisibility = Visibility.Hidden;
+            _mainVM.Hide();
 
             // we must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
@@ -70,7 +71,7 @@ namespace Flow.Launcher
 
         public void RestarApp() => RestartApp();
 
-        public void ShowMainWindow() => _mainVM.MainWindowVisibility = Visibility.Visible;
+        public void ShowMainWindow() => _mainVM.Show();
 
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
@@ -104,6 +105,19 @@ namespace Flow.Launcher
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
             });
+        }
+
+        public void ShellRun(string cmd, string filename = "cmd.exe")
+        {
+            var args = filename == "cmd.exe" ? $"/C {cmd}" : $"{cmd}";
+
+            var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
+            ShellCommand.Execute(startInfo);
+        }
+        
+        public void CopyToClipboard(string text)
+        {
+            Clipboard.SetDataObject(text);
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
