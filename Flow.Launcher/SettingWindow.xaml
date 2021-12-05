@@ -22,7 +22,7 @@
     Icon="Images\app.ico"
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
-    ResizeMode="CanResizeWithGrip"
+    ResizeMode="CanResize"
     StateChanged="Window_StateChanged"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
