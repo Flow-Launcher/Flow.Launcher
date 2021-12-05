@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Falha ao registrar tecla de atalho: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">Falha ao registar tecla de atalho: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Não foi possível iniciar {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato do ficheiro inválido como plugin</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Definir como principal para esta consulta</system:String>
