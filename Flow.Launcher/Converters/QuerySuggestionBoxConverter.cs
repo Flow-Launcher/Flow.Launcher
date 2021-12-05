@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.ViewModel;
 
@@ -10,13 +12,13 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 2)
+            if (values.Length != 3)
             {
                 return string.Empty;
             }
+            var QueryTextBox = values[0] as TextBox;
 
-            // first prop is the current query string
-            var queryText = (string)values[0];
+            var queryText = (string)values[2];
 
             if (string.IsNullOrEmpty(queryText))
                 return string.Empty;
@@ -43,10 +45,19 @@ namespace Flow.Launcher.Converters
                 if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
                     return string.Empty;
 
+
                 // For AutocompleteQueryCommand.
                 // When user typed lower case and result title is uppercase, we still want to display suggestion
                 selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
-                
+
+                // Check if Text will be larger then our QueryTextBox
+                System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
+                System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
+                if (ft.Width > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
+                {
+                    return string.Empty;
+                };
+
                 return selectedItem.QuerySuggestionText;
             }
             catch (Exception e)

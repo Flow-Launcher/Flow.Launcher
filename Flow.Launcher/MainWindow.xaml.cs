@@ -274,7 +274,6 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
-
         public void WindowAnimator()
         {
             if (_animating)
