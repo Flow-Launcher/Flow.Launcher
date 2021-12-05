@@ -244,8 +244,8 @@ namespace Flow.Launcher.ViewModel
                         autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                     }
 
-                    var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
-                    if (SpecialKeyState.ShiftPressed)
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.ShiftPressed)
                     {
                         autoCompleteText = result.SubTitle;
                     }
