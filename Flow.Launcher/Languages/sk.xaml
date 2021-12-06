@@ -85,10 +85,10 @@
     <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, návrat na predvolený motív</system:String>
     <system:String x:Key="ThemeFolder">Priečinok s motívmi</system:String>
     <system:String x:Key="OpenThemeFolder">Otvoriť priečinok s motívmi</system:String>
-    <system:String x:Key="DarkMode">Tmavý režim</system:String>
-    <system:String x:Key="DarkModeSystem">Predvolené systémom</system:String>
-    <system:String x:Key="DarkModeLight">Svetlý</system:String>
-    <system:String x:Key="DarkModeDark">Tmavý</system:String>
+    <system:String x:Key="ColorScheme">Farebná schéma</system:String>
+    <system:String x:Key="ColorSchemeSystem">Predvolené systémom</system:String>
+    <system:String x:Key="ColorSchemeLight">Svetlý</system:String>
+    <system:String x:Key="ColorSchemeDark">Tmavý</system:String>
     <system:String x:Key="SoundEffect">Zvukový efekt</system:String>
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
@@ -113,8 +113,7 @@
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
     <system:String x:Key="windowWidthSize">Veľkosť šírky okna</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
-
+    <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporovan</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -147,15 +146,15 @@
         alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
-    <system:String x:Key="documentation">Tipy na používanie:</system:String>
+    <system:String x:Key="documentation">Tipy na používanie</system:String>
     <system:String x:Key="devtool">Nástroje pre vývojárov</system:String>
     <system:String x:Key="settingfolder">Priečinok s nastaveniami</system:String>
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
-    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorého používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg. pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
@@ -177,7 +176,6 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-
     <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -204,7 +202,6 @@
     <system:String x:Key="reportWindow_stack_trace">Trasovanie zásobníka</system:String>
     <system:String x:Key="reportWindow_sending">Odosiela sa</system:String>
     <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
-
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
