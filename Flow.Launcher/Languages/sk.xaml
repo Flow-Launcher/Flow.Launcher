@@ -175,7 +175,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
     <system:String x:Key="success">Úspešné</system:String>
-    <system:String x:Key="completedSuccessfully">Úspešne dokončen</system:String>
+    <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
     <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -201,7 +201,7 @@
     <system:String x:Key="reportWindow_source">Zdroj</system:String>
     <system:String x:Key="reportWindow_stack_trace">Trasovanie zásobníka</system:String>
     <system:String x:Key="reportWindow_sending">Odosiela sa</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslan</system:String>
+    <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
