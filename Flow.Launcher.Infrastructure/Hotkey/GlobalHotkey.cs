@@ -57,7 +57,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return state;
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        [UnmanagedCallersOnly]
         private static IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam)
         {
             bool continues = true;
