@@ -195,7 +195,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
 
-- Simply you can check the full plugin list and Quick install in plugin store menu in setting.
+- You can view the full plugin list or quickly install a plugin via the Plugin Store menu in Settings
 
 - or type `pm` `install`/`uninstall`/`update` + the plugin name in the search window,
 
