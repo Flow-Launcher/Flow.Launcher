@@ -13,11 +13,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
+        public static object Keyword { get; private set; }
 
         public static void Init(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
+            Keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
+            Keyword = Keyword.ToString() == Query.GlobalPluginWildcardSign ? string.Empty : Keyword + " ";
+        }
+
+        public static string ChangeToPath(string path)
+        {
+            return path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
         }
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
@@ -27,7 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
-                AutoCompleteText = $"{path}\\",
+                AutoCompleteText = $"{Keyword}{ChangeToPath(path)}",
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
@@ -44,13 +52,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
-                    // one of it is enabled
-                    var keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
-
-                    keyword = keyword == Query.GlobalPluginWildcardSign ? string.Empty : keyword + " ";
-
-                    string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
-                    Context.API.ChangeQuery($"{keyword}{changeTo}");
+                    Context.API.ChangeQuery($"{Keyword}{ChangeToPath(path)}");
                     return false;
                 },
                 Score = score,
