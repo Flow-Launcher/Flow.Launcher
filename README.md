@@ -23,7 +23,7 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
 - New Plugins, Plugin Store, Game Mode, Wizard window
 
-<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full changelogs</a>
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
 
 ---
 
