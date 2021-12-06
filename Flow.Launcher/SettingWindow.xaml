@@ -2497,6 +2497,18 @@
                                     Margin="14,14,0,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
+                                    FontSize="12"
+                                    Foreground="{DynamicResource Color15B}"
+                                    TextWrapping="WrapWithOverflow">
+                                    <Hyperlink NavigateUri="https://icons8.com" RequestNavigate="OnRequestNavigate">
+                                        <Run Text="Icons by icons8.com" />
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <TextBlock
+                                    Margin="14,4,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
                                     DockPanel.Dock="Bottom"
                                     FontSize="12"
                                     Foreground="{DynamicResource Color15B}"
