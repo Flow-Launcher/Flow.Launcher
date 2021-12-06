@@ -1,8 +1,10 @@
 <p align="center">
+	<img src="https://user-images.githubusercontent.com/6903107/144854670-d624d717-d86a-49e5-a5e5-e782f91ed12a.png" width="300"><br />
   <a href="https://flow-launcher.github.io">
-	<img src="https://user-images.githubusercontent.com/6903107/144517044-6c804af0-f331-4ffc-95f7-c3bcb4cc71e0.png" width="650">
+	<img src="https://user-images.githubusercontent.com/6903107/144854052-969f5e60-a0ec-44b8-8968-620467496f10.gif" width="500">
   </a>
 </p>
+<br />
 
 ![Maintenance](https://img.shields.io/maintenance/yes/3000)
 [![Crowdin](https://badges.crowdin.net/flow-launcher/localized.svg)](https://crowdin.com/project/flow-launcher)
@@ -22,6 +24,8 @@ Dedicated to make your workflow flow more seamlessly. Search everything from app
 
 ## 🎉 New Features in 1.9 
 
+![screenshot](https://user-images.githubusercontent.com/6903107/144855345-45535bc7-7777-4c5a-b8d9-d6ce8adc5e84.png)
+
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
 - New Plugins, Plugin Store, Game Mode, Wizard window
 - <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
@@ -35,7 +39,6 @@ Dedicated to make your workflow flow more seamlessly. Search everything from app
   <a href="#Development">Development</a> •
   <a href="https://flow-launcher.github.io/docs">Docs</a>
 </h4>
-
 
 ---
 
