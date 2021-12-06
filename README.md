@@ -16,14 +16,15 @@
 
 Dedicated to make your workflow flow more seamlessly. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
 
+<sub>Remember to star it, flow will love you more :)</sub>
+
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
 
 ## 🎉 New Features in 1.9 
 
 - All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
 - New Plugins, Plugin Store, Game Mode, Wizard window
-
-<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
+- <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
 
 ---
 
