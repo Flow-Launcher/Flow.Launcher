@@ -67,7 +67,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Search for files or their contents.
 
-<img src="https://user-images.githubusercontent.com/6903107/144517293-622844c8-fe4b-4ca6-82b0-4aa6feca4ddd.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/144862511-bb5a28c6-6aa8-4298-9b63-9306d5e8dcda.png" width="400">
 
 - Support search using environment variable paths.
 
