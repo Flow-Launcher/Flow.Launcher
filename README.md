@@ -12,8 +12,8 @@
 <a href="https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev"><img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true"></a>
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases"><img src="https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg"></a><br />
 <img src="https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher">
-<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)"></a>
-<a href="https://flow-launcher.github.io/docs"><img src="https://img.shields.io/badge/Documentation-7389D8)"></a>
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher"></a>
+<a href="https://flow-launcher.github.io/docs"><img src="https://img.shields.io/badge/Documentation-7389D8"></a>
 <a href="https://discord.gg/AvgAQgh"><img src="https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white"></a>
 </p>
 
