@@ -14,7 +14,7 @@
 [![Discord](https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white)](https://discord.gg/AvgAQgh)
 
 
-Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.
+Dedicated to make your workflow flow more seamlessly. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
 
 [<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
 
@@ -47,7 +47,7 @@ Search everything from applications, files, bookmarks, YouTube, Twitter and more
 
 > Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
-And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/discussions/640" target="_blank">early access version</a>.
+And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/discussions" target="_blank">early access version</a>.
 
 
 ## Features
@@ -56,7 +56,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517107-efd83586-9084-46e0-b7dc-79a6748ea936.png" width="500">
 
-- Flow searches files and contents via Windows Index Search
+- Flow searches files and contents.
 - Search for file contents.
 
 <img src="https://user-images.githubusercontent.com/6903107/144517293-622844c8-fe4b-4ca6-82b0-4aa6feca4ddd.png" width="400">
@@ -103,7 +103,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517620-00e58b93-b06c-4260-b7be-4f23edfdd633.png" width="400">
 
-- Search within Window Settings. (Default Action Keyword is "$")
+- Search within Window Settings.
 - Also Search within Control Panel.
 
 
@@ -190,19 +190,15 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Plugin Install
 
-<img src="https://user-images.githubusercontent.com/6903107/144517723-dcde0518-d884-4ee4-81d1-c862b1cf83b0.png" width="400">
-
-
-- Install/Uninstall/Update plugins: in the search window, type `pm` `install`/`uninstall`/`update` + the plugin name.
-
-- If you developer, You can download plugin by direct URL. `pm install <URL>`
-
 ### Plugin Store
 
 ![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
 
-
 - Simply you can check the full plugin list and Quick install in plugin store menu in setting.
+
+- or type `pm` `install`/`uninstall`/`update` + the plugin name in the search window,
+
+
 ----
 
 ## Hotkeys
@@ -215,6 +211,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & Down                             |
 | <kbd>←</kbd><kbd>→</kbd>                                     | Back to Result / Open Context Menu           |
 | <kbd>Ctrl</kbd> +<kbd>o</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                            |
+| <kbd>Tab</kbd>                                               | Autocomplete                    |
 | <kbd>Esc</kbd>                                               | Back to Result & Close                       |
 | <kbd>Ctrl</kbd> +<kbd>i</kbd>                                | Open Setting Window                          |
 | <kbd>F5</kbd>                                                | Reload All Plugin Data & Window Search Index |
