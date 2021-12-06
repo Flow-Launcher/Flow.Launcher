@@ -6,14 +6,16 @@
 </p>
 <br />
 
-![Maintenance](https://img.shields.io/maintenance/yes/3000)
-[![Crowdin](https://badges.crowdin.net/flow-launcher/localized.svg)](https://crowdin.com/project/flow-launcher)
-[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
-[![Github All Releases](https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg)](https://github.com/Flow-Launcher/Flow.Launcher/releases)
-![GitHub Release Date](https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
-[![Documentation](https://img.shields.io/badge/Documentation-7389D8)](https://flow-launcher.github.io/docs)
-[![Discord](https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white)](https://discord.gg/AvgAQgh)
+<p align="center">
+<img src="https://img.shields.io/maintenance/yes/3000">
+<a href="https://crowdin.com/project/flow-launcher"><img src="https://badges.crowdin.net/flow-launcher/localized.svg"></a>
+<a href="https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev"><img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true"></a>
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases"><img src="https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg"></a><br />
+<img src="https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher">
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher)"></a>
+<a href="https://flow-launcher.github.io/docs"><img src="https://img.shields.io/badge/Documentation-7389D8)"></a>
+<a href="https://discord.gg/AvgAQgh"><img src="https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white"></a>
+</p>
 
 <p align="center">
 Dedicated to make your workflow flow more seamlessly. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
