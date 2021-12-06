@@ -9,7 +9,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     /// Listens keyboard globally.
     /// <remarks>Uses WH_KEYBOARD_LL.</remarks>
     /// </summary>
-    public static unsafe class GlobalHotkey
+    public unsafe class GlobalHotkey : IDisposable
     {
         private static readonly IntPtr hookId;
         
@@ -28,7 +28,6 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         {
             // Set the hook
             hookId = InterceptKeys.SetHook(& LowLevelKeyboardProc);
-            AppDomain.CurrentDomain.ProcessExit += (_, _) => Dispose();
         }
 
         public static SpecialKeyState CheckModifiers()
@@ -82,9 +81,14 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return (IntPtr)(-1);
         }
 
-        public static void Dispose()
+        public void Dispose()
         {
             InterceptKeys.UnhookWindowsHookEx(hookId);
+        }
+
+        ~GlobalHotkey()
+        {
+            Dispose();
         }
     }
 }
