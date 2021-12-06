@@ -340,9 +340,7 @@ namespace Flow.Launcher.Plugin.Shell
             context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
 
             // show the main window and set focus to the query box
-            Window mainWindow = Application.Current.MainWindow;
-            mainWindow.Show();
-            mainWindow.Focus();
+            context.API.ShowMainWindow();
         }
 
         public Control CreateSettingPanel()
