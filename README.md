@@ -15,12 +15,15 @@
 [![Documentation](https://img.shields.io/badge/Documentation-7389D8)](https://flow-launcher.github.io/docs)
 [![Discord](https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white)](https://discord.gg/AvgAQgh)
 
-
+<p align="center">
 Dedicated to make your workflow flow more seamlessly. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
 
-<sub>Remember to star it, flow will love you more :)</sub>
+<p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
 
-[<img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> **SOFTPEDIA EDITOR'S PICK**](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
+<p align="center"><img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"><a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a></p>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 
 ## 🎉 New Features in 1.9 
 
@@ -30,7 +33,7 @@ Dedicated to make your workflow flow more seamlessly. Search everything from app
 - New Plugins, Plugin Store, Game Mode, Wizard window
 - <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
 
----
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 <h4 align="center">
   <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
@@ -40,7 +43,7 @@ Dedicated to make your workflow flow more seamlessly. Search everything from app
   <a href="https://flow-launcher.github.io/docs">Docs</a>
 </h4>
 
----
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## 🚗 Getting Started
 
@@ -53,6 +56,7 @@ Dedicated to make your workflow flow more seamlessly. Search everything from app
 
 And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/discussions" target="_blank">early access version</a>.
 
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Features
 
@@ -150,7 +154,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Suspend Hotkey when you playing game.
 
-----
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Plugins
 
@@ -203,7 +207,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 - or type `pm` `install`/`uninstall`/`update` + the plugin name in the search window,
 
 
-----
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Hotkeys
 
@@ -248,7 +252,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
-----
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Questions/Suggestions
 
