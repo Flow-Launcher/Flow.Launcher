@@ -52,9 +52,15 @@
                     <ItemsPanelTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" MinWidth="20" MaxWidth="60" />
+                                <ColumnDefinition
+                                    Width="auto"
+                                    MinWidth="20"
+                                    MaxWidth="60" />
                                 <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="Auto" MinWidth="40" MaxWidth="550" />
+                                <ColumnDefinition
+                                    Width="Auto"
+                                    MinWidth="40"
+                                    MaxWidth="550" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -90,7 +96,10 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
-        <Style x:Key="SideControlCheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="{x:Type CheckBox}">
+        <Style
+            x:Key="SideControlCheckBox"
+            BasedOn="{StaticResource DefaultCheckBoxStyle}"
+            TargetType="{x:Type CheckBox}">
             <Setter Property="Width" Value="24" />
             <Setter Property="Grid.Column" Value="2" />
             <Setter Property="Margin" Value="0,4,0,4" />
@@ -101,7 +110,10 @@
             </Setter>
         </Style>
 
-        <Style x:Key="SideToggleSwitch" BasedOn="{StaticResource DefaultToggleSwitch}" TargetType="{x:Type ui:ToggleSwitch}">
+        <Style
+            x:Key="SideToggleSwitch"
+            BasedOn="{StaticResource DefaultToggleSwitch}"
+            TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
             <Setter Property="Margin" Value="0,4,0,4" />
         </Style>
@@ -241,19 +253,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="Bd"
-                                Padding="{TemplateBinding Padding}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5"
-                                SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border
+                            x:Name="Bd"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5"
+                            SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <MultiTrigger>
@@ -311,19 +325,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="Bd"
-                                Padding="{TemplateBinding Padding}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5"
-                                SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border
+                            x:Name="Bd"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5"
+                            SnapsToDevicePixels="True">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <MultiTrigger>
@@ -796,38 +812,35 @@
                                             Content="{Binding Settings.CustomExplorer.Name}" />
                                     </StackPanel>
 
-                            <TextBlock Grid.Column="0"
-                                       Margin="24,0,16,0"
-                                       VerticalAlignment="Center"
-                                       FontFamily="/Resources/#Segoe Fluent Icons"
-                                       FontSize="20">
-                                &#xe838;
-                            </TextBlock>
-                        </ItemsControl>
-                    </Border>
-                    <Separator Width="Auto" BorderBrush="#e5e5e5" BorderThickness="1" />
-                    <Border Margin="0,0,0,0" BorderThickness="0" Style="{DynamicResource SettingGroupBox}">
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{DynamicResource defaultBrowser}" />
-                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultBrowserToolTip}" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                <Button Width="160"
-                                        MaxWidth="250"
-                                        Margin="10,0,18,0"
-                                        Click="OnSelectDefaultBrowserClick"
-                                        Content="{Binding Settings.CustomBrowser.Name}" />
-                            </StackPanel>
-                            <TextBlock Grid.Column="0"
-                                       Margin="24,0,16,0"
-                                       VerticalAlignment="Center"
-                                       FontFamily="/Resources/#Segoe Fluent Icons"
-                                       FontSize="20">
-                                &#xf6fa;
-                            </TextBlock>
-                        </ItemsControl>
-                    </Border>
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe838;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Style="{DynamicResource SettingTitleLabel}"
+                                            Text="{DynamicResource defaultBrowser}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultBrowserToolTip}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <Button
+                                            Width="160"
+                                            MaxWidth="250"
+                                            Margin="10,0,18,0"
+                                            Click="OnSelectDefaultBrowserClick"
+                                            Content="{Binding Settings.CustomBrowser.Name}" />
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xf6fa;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
 
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
