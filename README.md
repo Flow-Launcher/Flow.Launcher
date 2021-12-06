@@ -58,7 +58,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-## Features
+## 🎁 Features
 
 ### Applications & Files
 
@@ -134,7 +134,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - There are various themes and you can make it yourself.
 
-### Language
+### 💬 Language
 
 - Support languages from Chinese to Italian and more.
 - Support Pinyin.
@@ -148,7 +148,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
   - Type `open log location` to open your logs folder, they are saved along with your user settings folder.
 
-### Game Mode
+### 🎮 Game Mode
 
 <img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
 
@@ -156,7 +156,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-## Plugins
+## 📦 Plugins
 
 - Support wide range of plugins. Visit [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
 - If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
@@ -196,9 +196,9 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ......and <a href="https://flow-launcher.github.io/docs/#/plugins">more!</a>
 
-### Plugin Install
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-### Plugin Store
+### 🛒 Plugin Store
 
 ![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
 
@@ -209,7 +209,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-## Hotkeys
+## ⌨️ Hotkeys
 
 | Hotkey                                                       | Description                                  |
 | ------------------------------------------------------------ | -------------------------------------------- |
@@ -248,13 +248,13 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | Flow Launcher Tip      | Visit Flow Launcher's documentation for more help and how to use tips |
 | Flow Launcher UserData | Open the location where Flow Launcher's settings are stored  |
 
-### Tips
+### 💁‍♂️ Tips
 
 - [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-## Questions/Suggestions
+## 🙋‍ ♂️Questions/Suggestions
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
