@@ -337,10 +337,9 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
-
             // show the main window and set focus to the query box
             context.API.ShowMainWindow();
+            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
         }
 
         public Control CreateSettingPanel()
