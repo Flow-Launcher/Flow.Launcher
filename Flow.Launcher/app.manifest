@@ -22,7 +22,11 @@
   </trustInfo>
 
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
-    <application>
+    <application xmlns="urn:schemas-microsoft-com:asm.v3">
+      <windowsSettings>
+        <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2</dpiAwareness>
+      </windowsSettings>
+    
       <!-- A list of the Windows versions that this application has been tested on and is
            is designed to work with. Uncomment the appropriate elements and Windows will 
            automatically selected the most compatible environment. -->
