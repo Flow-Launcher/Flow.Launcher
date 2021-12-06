@@ -41,6 +41,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
+        public bool FirstLaunch { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -155,7 +156,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool EnableUpdateLog { get; set; }
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
-        public bool HideOnStartup { get; set; }
+        public bool HideOnStartup { get; set; } = true;
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
         {
