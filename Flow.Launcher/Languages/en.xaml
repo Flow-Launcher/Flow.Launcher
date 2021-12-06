@@ -64,7 +64,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
-    <system:String x:Key="author">Author:</system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -158,7 +158,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments is &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">File Manager</system:String>
     <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
