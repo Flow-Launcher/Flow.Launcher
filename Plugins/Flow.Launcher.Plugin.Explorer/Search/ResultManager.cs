@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
-                AutoCompleteText = $"{subtitle}\\",
+                AutoCompleteText = $"{path}\\",
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
