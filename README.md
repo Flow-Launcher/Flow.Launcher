@@ -3,6 +3,7 @@
 	<img src="https://user-images.githubusercontent.com/6903107/144517044-6c804af0-f331-4ffc-95f7-c3bcb4cc71e0.png" width="650">
   </a>
 </p>
+
 ![Maintenance](https://img.shields.io/maintenance/yes/3000)
 [![Crowdin](https://badges.crowdin.net/flow-launcher/localized.svg)](https://crowdin.com/project/flow-launcher)
 [![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true)](https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev)
