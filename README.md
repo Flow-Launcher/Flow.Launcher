@@ -190,7 +190,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Windows Walker
 
-
+......and <a href="https://flow-launcher.github.io/docs/#/plugins">more!</a>
 
 ### Plugin Install
 
