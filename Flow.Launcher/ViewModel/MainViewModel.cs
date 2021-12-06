@@ -228,6 +228,32 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
+            AutocompleteQueryCommand = new RelayCommand(_ =>
+            {
+                var result = SelectedResults.SelectedItem?.Result;
+                if (result != null) // SelectedItem returns null if selection is empty.
+                {
+                    var autoCompleteText = result.Title;
+
+                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
+                    {
+                        autoCompleteText = result.AutoCompleteText;
+                    }
+                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                    {
+                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
+                    }
+
+                    var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
+                    if (SpecialKeyState.ShiftPressed)
+                    {
+                        autoCompleteText = result.SubTitle;
+                    }
+
+                    ChangeQueryText(autoCompleteText);
+                }
+            });
+
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -287,7 +313,6 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; }
 
         private string _queryText;
-
         public string QueryText
         {
             get => _queryText;
@@ -383,6 +408,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
+        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -656,7 +682,7 @@ namespace Flow.Launcher.ViewModel
             var plugin = translator.GetTranslation("plugin");
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
-            var subtitle = $"{author}: {metadata.Author}, {website}: {metadata.Website} {version}: {metadata.Version}";
+            var subtitle = $"{author} {metadata.Author}";
 
             var menu = new Result
             {
