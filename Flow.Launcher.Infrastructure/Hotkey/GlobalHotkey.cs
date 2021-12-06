@@ -12,8 +12,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     public unsafe class GlobalHotkey : IDisposable
     {
         private static readonly IntPtr hookId;
-        
-        
+
+        private static InterceptKeys.LowLevelKeyboardProc _hookedKeyboardProc;
         
         public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
         internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
@@ -26,8 +26,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         static GlobalHotkey()
         {
+            _hookedKeyboardProc = LowLevelKeyboardProc;
             // Set the hook
-            hookId = InterceptKeys.SetHook(& LowLevelKeyboardProc);
+            hookId = InterceptKeys.SetHook(_hookedKeyboardProc);
         }
 
         public static SpecialKeyState CheckModifiers()
