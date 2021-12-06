@@ -57,8 +57,8 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517107-efd83586-9084-46e0-b7dc-79a6748ea936.png" width="500">
 
-- Flow searches files and contents.
--  Search for files or their contents.
+
+- Search for files or their contents.
 
 <img src="https://user-images.githubusercontent.com/6903107/144517293-622844c8-fe4b-4ca6-82b0-4aa6feca4ddd.png" width="400">
 
