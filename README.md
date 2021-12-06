@@ -20,7 +20,7 @@ Dedicated to make your workflow flow more seamlessly. Search everything from app
 
 <p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
 
-<p align="center"><img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"><a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a></p>
+<p align="center"><img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a></p>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
