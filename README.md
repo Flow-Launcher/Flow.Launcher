@@ -66,7 +66,7 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 ### Web Search & Open URL
 
 <img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
-<img src="https://user-images.githubusercontent.com/6903107/144517508-b2b78aaa-9bdb-4e65-85fd-d659f4157c80.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/144831031-0e01e8ea-3247-4ba4-a7b4-48b0db620bc1.png" width="400">
 <img src="https://user-images.githubusercontent.com/6903107/144517519-79ee8a81-083c-42be-b2d7-4990d1cb53e5.png" width="400">
 
 ### Browser Bookmarks
