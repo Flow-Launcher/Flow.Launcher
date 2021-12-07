@@ -42,7 +42,7 @@
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopírovať</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Odstrániť</system:String>
     <system:String x:Key="plugin_explorer_path">Umiestnenie:</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybran</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybrané</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
