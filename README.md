@@ -111,11 +111,9 @@ And You can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Window Setting & Control Panel
 
-<img src="https://user-images.githubusercontent.com/6903107/144517620-00e58b93-b06c-4260-b7be-4f23edfdd633.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/144982305-42a2f63e-0066-4557-9791-0a1c57495ea7.png" width="400">
 
-- Search within Window Settings.
-- Also Search within Control Panel.
-
+- Search within Window Settings & Control Panel.
 
 
 ### Priority
