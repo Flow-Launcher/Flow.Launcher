@@ -104,6 +104,31 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 PrivateArg = "",
                 EnablePrivate = false,
                 Editable = false
+            },
+            new()
+            {
+                Name = "Google Chrome",
+                Path = "chrome",
+                PrivateArg = "-incognito",
+                EnablePrivate = false,
+                Editable = false
+            },
+            new()
+            {
+                Name = "Mozilla Firefox",
+                Path = "firefox",
+                PrivateArg = "-private",
+                EnablePrivate = false,
+                Editable = false
+            }
+            ,
+            new()
+            {
+                Name = "MS Edge",
+                Path = "msedge",
+                PrivateArg = "-inprivate",
+                EnablePrivate = false,
+                Editable = false
             }
         };
 
