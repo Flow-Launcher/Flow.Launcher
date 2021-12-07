@@ -51,7 +51,7 @@
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadajte argumenty, ktoré chcete pridať pre správcu súborov. %s pre rodičovský priečinok, %f pre celú cestu (funguje iba pre win32). Pre podrobnosti pozrite webovú stránku správcu súborov.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspešné</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspešn</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Úspešne zakázané zobrazovanie tohto programu vo výsledkoch vyhľadávania</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Táto aplikácia nie je určená na spustenie ako správca</system:String>
 
