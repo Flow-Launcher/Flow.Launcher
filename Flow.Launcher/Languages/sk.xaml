@@ -18,7 +18,7 @@
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
-    <system:String x:Key="general">Všeobecné</system:String>
+    <system:String x:Key="general">Všeobecn</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vyberateľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
@@ -60,7 +60,7 @@
     <system:String x:Key="newPriority">Nová priorita:</system:String>
     <system:String x:Key="priority">Priorita</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
-    <system:String x:Key="author">Autor:</system:String>
+    <system:String x:Key="author">od</system:String>
     <system:String x:Key="plugin_init_time">Príprava:</system:String>
     <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
     <system:String x:Key="plugin_query_version">| Verzia</system:String>
@@ -113,7 +113,7 @@
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
     <system:String x:Key="windowWidthSize">Veľkosť šírky okna</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporovan</system:String>
+    <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -127,7 +127,7 @@
     <system:String x:Key="serverCantBeEmpty">Pole Server nemôže byť prázdne</system:String>
     <system:String x:Key="portCantBeEmpty">Pole Port nemôže byť prázdne</system:String>
     <system:String x:Key="invalidPortFormat">Neplatný formát portu</system:String>
-    <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložené</system:String>
+    <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložen</system:String>
     <system:String x:Key="proxyIsCorrect">Nastavenie proxy je v poriadku</system:String>
     <system:String x:Key="proxyConnectFailed">Pripojenie proxy zlyhalo</system:String>
 
@@ -150,6 +150,7 @@
     <system:String x:Key="devtool">Nástroje pre vývojárov</system:String>
     <system:String x:Key="settingfolder">Priečinok s nastaveniami</system:String>
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
+    <system:String x:Key="welcomewindow">Sprievodca</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
@@ -174,7 +175,7 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
-    <system:String x:Key="success">Úspešné</system:String>
+    <system:String x:Key="success">Úspešn</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončen</system:String>
     <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov.</system:String>
 
@@ -195,7 +196,7 @@
     <system:String x:Key="reportWindow_reproduce">Prosím, napíšte nám, ako došlo k pádu aplikácie, aby sme to mohli opraviť</system:String>
     <system:String x:Key="reportWindow_send_report">Odoslať hlásenie</system:String>
     <system:String x:Key="reportWindow_cancel">Zrušiť</system:String>
-    <system:String x:Key="reportWindow_general">Všeobecné</system:String>
+    <system:String x:Key="reportWindow_general">Všeobecn</system:String>
     <system:String x:Key="reportWindow_exceptions">Výnimky</system:String>
     <system:String x:Key="reportWindow_exception_type">Typ výnimky</system:String>
     <system:String x:Key="reportWindow_source">Zdroj</system:String>
@@ -225,8 +226,44 @@
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy na github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizovan</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualizovať popis</system:String>
+
+    <!--  Welcome Window  -->
+    <system:String x:Key="Skip">Preskočiť</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Vitajte vo Flow Launcheri</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Dobrý deň, toto je prvýkrát, čo spúšťate Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Pred spustením vám tento sprievodca pomôže s nastavením aplikácie Flow Launcher. Ak chcete, môžete ho preskočiť. Vyberte si jazyk</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Vyhľadávajte a spúšťajte všetky súbory a aplikácie v počítači</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Vyhľadávajte vo všetkých aplikáciách, súboroch, záložkách, YouTube, Twitteri a ďalších. Všetko z pohodlia klávesnice bez toho, aby ste sa dotkli myši.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher sa spúšťa pomocou dole uvedenej klávesovej skratky, poďte si to vyskúšať. Ak ju chcete zmeniť, kliknite na vstupné pole a stlačte požadovanú klávesovú skratku na klávesnici.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Klávesové skratky</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Kľúčové slovo akcie a príkazy</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Vyhľadávajte na webe, spúšťajte aplikácie alebo spúšťajte rôzne funkcie pomocou pluginov Flow Launchera. Niektoré funkcie sa začínajú kľúčovým slovom akcie a v prípade potreby ich možno použiť aj bez kľúčových slov akcie. Vyskúšajte nižšie uvedené dopyty v aplikácii Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Spustite Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Hotovo. Užite si Flow Launcher. Nezabudnite na klávesovú skratku na spustenie :)</system:String>
+
+    <!--  General Guide & Hotkey  -->
+
+    <system:String x:Key="HotkeyUpDownDesc">Späť/kontextová ponuka</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navigácia medzi položkami</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Otvoriť kontextovú ponuku</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Otvoriť umiestnenie priečinka</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Spustiť ako správca</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">História dopytov</system:String>
+    <system:String x:Key="HotkeyESCDesc">Návrat na výsledky z kontextovej ponuky</system:String>
+    <system:String x:Key="HotkeyRunDesc">Otvoriť/spustiť vybranú položku</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Otvoriť okno s nastaveniami</system:String>
+    <system:String x:Key="HotkeyF5Desc">Znova načítať údaje pluginov</system:String>
+
+    <system:String x:Key="RecommendWeather">Počasie</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Počasie na Googli</system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
+    <system:String x:Key="RecommendShellDesc">Príkazový riadok</system:String>
+    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth v nastaveniach Windowsu</system:String>
+    <system:String x:Key="RecommendAcronyms">sn</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
 </ResourceDictionary>
