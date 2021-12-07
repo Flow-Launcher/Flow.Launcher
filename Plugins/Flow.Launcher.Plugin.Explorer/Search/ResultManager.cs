@@ -13,19 +13,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
-        public static object Keyword { get; private set; }
 
         public static void Init(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
-            Keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
-            Keyword = Keyword.ToString() == Query.GlobalPluginWildcardSign ? string.Empty : Keyword + " ";
         }
 
-        public static string ChangeToPath(string path)
+        private static string GetPathWithActionKeyword(string path, ResultType type)
         {
-            return path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
+            // one of it is enabled
+            var keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
+
+            keyword = keyword == Query.GlobalPluginWildcardSign ? string.Empty : keyword + " ";
+
+            var formatted_path = path;
+
+            if (type == ResultType.Folder)
+                formatted_path = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
+
+            return $"{keyword}{formatted_path}";
         }
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
@@ -35,7 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
-                AutoCompleteText = $"{Keyword}{ChangeToPath(path)}",
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
@@ -52,7 +59,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
-                    Context.API.ChangeQuery($"{Keyword}{ChangeToPath(path)}");
+
+                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder));
+                    
                     return false;
                 },
                 Score = score,
@@ -100,6 +109,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
+                AutoCompleteText = GetPathWithActionKeyword(retrievedDirectoryPath, ResultType.Folder),
                 IcoPath = retrievedDirectoryPath,
                 Score = 500,
                 Action = c =>
@@ -126,7 +136,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = Path.GetFileName(filePath),
                 SubTitle = filePath,
                 IcoPath = filePath,
-                AutoCompleteText = filePath,
+                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
                 Action = c =>
