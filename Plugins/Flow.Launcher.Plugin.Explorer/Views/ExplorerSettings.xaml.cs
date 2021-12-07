@@ -327,7 +327,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
         public string Description { get; private init; }
-        public string Color => Enabled ? "Black" : "Gray";
 
         internal Settings.ActionKeyword KeywordProperty { get; }
 
