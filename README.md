@@ -152,7 +152,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
 
-- Suspend Hotkey when you playing game.
+- Suspend the hotkey when you are playing games.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
