@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
-    internal static class InterceptKeys
+    internal static unsafe class InterceptKeys
     {
         public delegate IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam);
 
