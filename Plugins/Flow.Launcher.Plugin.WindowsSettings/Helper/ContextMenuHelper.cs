@@ -21,21 +21,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         /// <returns>A list with context menu entries</returns>
         internal static List<Result> GetContextMenu(in Result result, in string assemblyName)
         {
-            if (result?.ContextData is not WindowsSetting entry)
-            {
-                return new List<Result>(0);
-            }
-
-            var list = new List<Result>(1)
-            {
-                new()
-                {
-                    Action = _ => TryToCopyToClipBoard(entry.Command),
-                    Title = $"{Resources.CopyCommand} (Ctrl+C)",
-                },
-            };
-
-            return list;
+            return new List<Result>(0);
         }
 
         /// <summary>
