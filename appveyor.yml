@@ -73,6 +73,7 @@ deploy:
 environment:
   winget_token:
     secure: HKfVT2FYZITAG0qqMCePYhIem5a/gzvAgYDSlr6RlXfGmeBUOANUtgJ9X6fNroxN
+  Unsafe: /unsafe
 
 on_success:
   - ps: |
