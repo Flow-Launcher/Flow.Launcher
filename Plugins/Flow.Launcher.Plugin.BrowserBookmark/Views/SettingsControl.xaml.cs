@@ -1,19 +1,16 @@
-using Microsoft.Win32;
 using System.Windows;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows.Input;
 using System.ComponentModel;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
-    /// <summary>
-    /// Interaction logic for BrowserBookmark.xaml
-    /// </summary>
     public partial class SettingsControl : INotifyPropertyChanged
     {
         public Settings Settings { get; }
+        
         public CustomBrowser SelectedCustomBrowser { get; set; }
+        
         public bool OpenInNewBrowserWindow
         {
             get => Settings.OpenInNewBrowserWindow;
@@ -23,10 +20,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenInNewBrowserWindow)));
             }
         }
-        public bool OpenInNewTab
-        {
-            get => !OpenInNewBrowserWindow;
-        }
 
         public SettingsControl(Settings settings)
         {
@@ -35,18 +28,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnChooseClick(object sender, RoutedEventArgs e)
-        {
-            var fileBrowserDialog = new OpenFileDialog();
-            fileBrowserDialog.Filter = "Application(*.exe)|*.exe|All files|*.*";
-            fileBrowserDialog.CheckFileExists = true;
-            fileBrowserDialog.CheckPathExists = true;
-            if (fileBrowserDialog.ShowDialog() == true)
-            {
-                Settings.BrowserPath = fileBrowserDialog.FileName;
-            }
-        }
 
         private void NewCustomBrowser(object sender, RoutedEventArgs e)
         {
