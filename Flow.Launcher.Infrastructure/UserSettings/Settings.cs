@@ -126,7 +126,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 Name = "MS Edge",
                 Path = "msedge",
-                PrivateArg = "-inprivate",
+                PrivateArg = "-inPrivate",
                 EnablePrivate = false,
                 Editable = false
             }
