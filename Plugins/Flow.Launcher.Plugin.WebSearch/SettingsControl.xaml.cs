@@ -61,32 +61,6 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
-        private void OnNewBrowserWindowClick(object sender, RoutedEventArgs e)
-        {
-            _settings.OpenInNewBrowser = true;
-        }
-
-        private void OnNewTabClick(object sender, RoutedEventArgs e)
-        {
-            _settings.OpenInNewBrowser = false;
-        }
-
-        private void OnChooseClick(object sender, RoutedEventArgs e)
-        {
-            var fileBrowserDialog = new OpenFileDialog();
-            fileBrowserDialog.Filter = "Application(*.exe)|*.exe|All files|*.*";
-            fileBrowserDialog.CheckFileExists = true;
-            fileBrowserDialog.CheckPathExists = true;
-            if (fileBrowserDialog.ShowDialog() == true)
-            {
-                _settings.BrowserPath = fileBrowserDialog.FileName;
-            }
-        }
-
-        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
         GridViewColumnHeader _lastHeaderClicked = null;
         ListSortDirection _lastDirection = ListSortDirection.Ascending;
 
