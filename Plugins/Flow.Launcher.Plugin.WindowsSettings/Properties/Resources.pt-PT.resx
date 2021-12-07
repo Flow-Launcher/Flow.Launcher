@@ -344,7 +344,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
+    <value>Cópia de segurança</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="BackupAndRestore" xml:space="preserve">
@@ -721,7 +721,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Glance</value>
+    <value>Reprodução Automática</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
@@ -1063,7 +1063,7 @@
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
-    <value>Num Lock</value>
+    <value>Bloqueio Numérico</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
   <data name="nwc.cpl" xml:space="preserve">
@@ -1267,7 +1267,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Quickime" xml:space="preserve">
-    <value>Quickime</value>
+    <value>QuickTime</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
@@ -1350,7 +1350,7 @@
     <value>Barras de deslocamento</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
-    <value>Scroll Lock</value>
+    <value>Bloqueio de deslocamento</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
   <data name="Sdns" xml:space="preserve">
@@ -1392,7 +1392,7 @@
     <value>Atalhos</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
-    <value>wifi</value>
+    <value>Wi-Fi</value>
     <comment>dont translate this, is a short term to find entries</comment>
   </data>
   <data name="SignInOptions" xml:space="preserve">
@@ -1450,7 +1450,7 @@
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
-    <value>in</value>
+    <value>nas</value>
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
@@ -1474,7 +1474,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Tab" xml:space="preserve">
-    <value>Tab</value>
+    <value>Separador</value>
     <comment>Means the key "Tabulator" on the keyboard</comment>
   </data>
   <data name="TabletMode" xml:space="preserve">
@@ -1655,7 +1655,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsFirewall" xml:space="preserve">
-    <value>Windows Firewall</value>
+    <value>Firewall do Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
