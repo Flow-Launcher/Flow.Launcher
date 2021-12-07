@@ -246,26 +246,8 @@
                     Margin="5,0,0,0"
                     Click="btnDone_Click"
                     Content="{DynamicResource done}"
-                    ForceCursor="True">
-                    <Button.Style>
-                        <Style BasedOn="{StaticResource AccentButtonStyle}" TargetType="{x:Type Button}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Text.Length, ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Text.Length, ElementName=directoryArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                    ForceCursor="True"
+                    Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
     </Grid>
