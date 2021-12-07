@@ -18,6 +18,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
         internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
 
+        private static InterceptKeys.LowLevelKeyboardProc hookedKeyboardProc;
+        
         //Modifier key constants
         private const int VK_SHIFT = 0x10;
         private const int VK_CONTROL = 0x11;
@@ -26,8 +28,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         static GlobalHotkey()
         {
+            hookedKeyboardProc = LowLevelKeyboardProc;
             // Set the hook
-            hookId = InterceptKeys.SetHook(& LowLevelKeyboardProc);
+            hookId = InterceptKeys.SetHook(hookedKeyboardProc);
         }
 
         public static SpecialKeyState CheckModifiers()
@@ -57,7 +60,6 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return state;
         }
 
-        [UnmanagedCallersOnly]
         private static IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam)
         {
             bool continues = true;
