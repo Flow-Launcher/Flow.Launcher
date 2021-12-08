@@ -1,4 +1,5 @@
 using Flow.Launcher.Plugin;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -9,6 +10,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string PrivateArg { get; set; }
         public bool EnablePrivate { get; set; }
         public bool OpenInTab { get; set; } = true;
+        [JsonIgnore]
         public bool OpenInNewWindow => !OpenInTab;
         public bool Editable { get; set; } = true;
 
