@@ -122,8 +122,8 @@ namespace Flow.Launcher
 
         private void OnSelectDefaultBrowserClick(object sender, RoutedEventArgs e)
         {
-            SelectBrowserWindow test = new SelectBrowserWindow(settings);
-            test.ShowDialog();
+            var browserWindow = new SelectBrowserWindow(settings);
+            browserWindow.ShowDialog();
         }
 
         #endregion
