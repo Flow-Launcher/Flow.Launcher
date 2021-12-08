@@ -118,10 +118,10 @@
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
     <system:String x:Key="enableProxy">启用 HTTP 代理</system:String>
-    <system:String x:Key="server">HTTP 服务</system:String>
+    <system:String x:Key="server">HTTP 服务器</system:String>
     <system:String x:Key="port">端口</system:String>
     <system:String x:Key="userName">用户名</system:String>
-    <system:String x:Key="password">密</system:String>
+    <system:String x:Key="password">密码</system:String>
     <system:String x:Key="testProxy">测试代理</system:String>
     <system:String x:Key="save">保存</system:String>
     <system:String x:Key="serverCantBeEmpty">服务器不能为空</system:String>
