@@ -211,7 +211,6 @@ namespace Flow.Launcher
 
         public void OpenUrl(string url)
         {
-            using var process = new Process();
             var browserInfo = _settingsVM.Settings.CustomBrowser;
 
             var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
