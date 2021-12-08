@@ -208,7 +208,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     bool hideWindow = result.Action != null && result.Action(new ActionContext
                     {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
+                        SpecialKeyState = GlobalHotkey.CheckModifiers()
                     });
 
                     if (hideWindow)
@@ -244,8 +244,8 @@ namespace Flow.Launcher.ViewModel
                         autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                     }
 
-                    var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
-                    if (SpecialKeyState.ShiftPressed)
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.ShiftPressed)
                     {
                         autoCompleteText = result.SubTitle;
                     }
