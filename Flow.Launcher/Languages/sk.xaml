@@ -18,7 +18,7 @@
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
-    <system:String x:Key="general">Všeobecn</system:String>
+    <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vyberateľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
@@ -196,7 +196,7 @@
     <system:String x:Key="reportWindow_reproduce">Prosím, napíšte nám, ako došlo k pádu aplikácie, aby sme to mohli opraviť</system:String>
     <system:String x:Key="reportWindow_send_report">Odoslať hlásenie</system:String>
     <system:String x:Key="reportWindow_cancel">Zrušiť</system:String>
-    <system:String x:Key="reportWindow_general">Všeobecn</system:String>
+    <system:String x:Key="reportWindow_general">Všeobecné</system:String>
     <system:String x:Key="reportWindow_exceptions">Výnimky</system:String>
     <system:String x:Key="reportWindow_exception_type">Typ výnimky</system:String>
     <system:String x:Key="reportWindow_source">Zdroj</system:String>
@@ -226,7 +226,7 @@
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy na github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizovan</system:String>
+    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualizovať popis</system:String>
 
