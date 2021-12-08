@@ -40,7 +40,7 @@ namespace Flow.Launcher.Core.Plugin
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
 
-        /// <summary=
+        /// <summary>
         /// The language this JsonRPCPlugin support
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
