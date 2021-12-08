@@ -166,7 +166,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 ### Everything
 <img src="https://user-images.githubusercontent.com/6903107/144533510-6880ecf4-5f93-4b6a-9c1f-4fcdb99110c3.png" width="400">
 
-### SpotiyPrimeum
+### SpotifyPremium
 <img src="https://user-images.githubusercontent.com/6903107/144533469-da920295-8c36-46e8-89eb-a9cdd94b74ef.png" width="400">
 
 
