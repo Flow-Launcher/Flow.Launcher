@@ -217,10 +217,10 @@ namespace Flow.Launcher
 
             if (browserInfo.OpenInTab)
             {
-                url.NewTabInBrowser(path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                url.OpenInBrowserTab(path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
             }else
             {
-                url.NewBrowserWindow(path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                url.OpenInBrowserWindow(path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
             }
 
         }
