@@ -222,7 +222,17 @@
                             <CheckBox
                                 Margin="12,0,0,0"
                                 VerticalAlignment="Center"
-                                IsChecked="{Binding EnablePrivate}" />
+                                IsChecked="{Binding EnablePrivate}">
+                                <CheckBox.Style>
+                                    <Style BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="{x:Type CheckBox}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </CheckBox.Style>
+                            </CheckBox>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
