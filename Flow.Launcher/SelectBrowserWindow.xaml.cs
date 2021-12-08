@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace Flow.Launcher
 {
-    /// <summary>
-    /// SelectBrowserWindow.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
     {
         private int selectedCustomExplorerIndex;
