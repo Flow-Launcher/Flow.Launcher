@@ -3,12 +3,12 @@
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">注册热键：{0} 失败</system:String>
     <system:String x:Key="couldnotStartCmd">启动命令 {0} 失败</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher插件格式错</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">无效的 Flow Launcher 插件文件格式</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">在当前查询中置顶</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">取消置顶</system:String>
     <system:String x:Key="executeQuery">执行查询：{0}</system:String>
     <system:String x:Key="lastExecuteTime">上次执行时间：{0}</system:String>
-    <system:String x:Key="iconTrayOpen">打</system:String>
+    <system:String x:Key="iconTrayOpen">打开</system:String>
     <system:String x:Key="iconTraySettings">设置</system:String>
     <system:String x:Key="iconTrayAbout">关于</system:String>
     <system:String x:Key="iconTrayExit">退出</system:String>
@@ -18,10 +18,10 @@
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher设置</system:String>
-    <system:String x:Key="general">通</system:String>
+    <system:String x:Key="general">通用</system:String>
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">开机自动启</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">开机自启</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
@@ -50,7 +50,7 @@
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">插件</system:String>
     <system:String x:Key="browserMorePlugins">浏览更多插件</system:String>
-    <system:String x:Key="enable">启动</system:String>
+    <system:String x:Key="enable">启用</system:String>
     <system:String x:Key="disable">禁用</system:String>
     <system:String x:Key="actionKeywordsTitle">动作关键字设置</system:String>
     <system:String x:Key="actionKeywords">触发关键字</system:String>
@@ -106,28 +106,28 @@
     <system:String x:Key="customQuery">查询</system:String>
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
-    <system:String x:Key="add">增</system:String>
+    <system:String x:Key="add">增加</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口宽度</system:String>
     <system:String x:Key="useGlyphUI">使用Segoe Fluent图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
 
     <!--  Setting Proxy  -->
-    <system:String x:Key="proxy">HTTP 代</system:String>
-    <system:String x:Key="enableProxy">启用 HTTP 代</system:String>
+    <system:String x:Key="proxy">HTTP 代理</system:String>
+    <system:String x:Key="enableProxy">启用 HTTP 代理</system:String>
     <system:String x:Key="server">HTTP 服务</system:String>
     <system:String x:Key="port">端口</system:String>
     <system:String x:Key="userName">用户名</system:String>
     <system:String x:Key="password">密</system:String>
-    <system:String x:Key="testProxy">测试代</system:String>
+    <system:String x:Key="testProxy">测试代理</system:String>
     <system:String x:Key="save">保存</system:String>
     <system:String x:Key="serverCantBeEmpty">服务器不能为空</system:String>
     <system:String x:Key="portCantBeEmpty">端口不能为空</system:String>
     <system:String x:Key="invalidPortFormat">非法的端口格式</system:String>
-    <system:String x:Key="saveProxySuccessfully">保存代理设置成</system:String>
+    <system:String x:Key="saveProxySuccessfully">保存代理设置成功</system:String>
     <system:String x:Key="proxyIsCorrect">代理设置正确</system:String>
     <system:String x:Key="proxyConnectFailed">代理连接失败</system:String>
 
@@ -202,7 +202,7 @@
     <system:String x:Key="reportWindow_source">异常源</system:String>
     <system:String x:Key="reportWindow_stack_trace">堆栈信息</system:String>
     <system:String x:Key="reportWindow_sending">发送中</system:String>
-    <system:String x:Key="reportWindow_report_succeed">发送成</system:String>
+    <system:String x:Key="reportWindow_report_succeed">发送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher出错啦</system:String>
 
@@ -220,10 +220,10 @@
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">新的更新</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">发现Flow Launcher新版本 V{0}</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">尝试安装软件更新时发生错</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">尝试安装软件更新时发生错误</system:String>
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">取</system:String>
-    <system:String x:Key="update_flowlauncher_fail">更新错</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
+    <system:String x:Key="update_flowlauncher_fail">更新失败</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">检查网络是否可以连接至github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此次更新需要重启Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">下列文件会被更新</system:String>
