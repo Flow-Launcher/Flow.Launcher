@@ -24,7 +24,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otvoriť umiestnenie, kde sú uložené nastavenia Flow Launchera</system:String>
 
     <!--Dialogs-->
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešn</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešné</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Všetky nastavenia Flow Launchera uložen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Všetky dáta pluginov aktualizovan</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Naozaj chcete počítač vypnúť?</system:String>
