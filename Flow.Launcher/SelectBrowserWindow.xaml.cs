@@ -54,7 +54,7 @@ namespace Flow.Launcher
         {
             Settings.CustomBrowserList = CustomBrowsers.ToList();
             Settings.CustomBrowserIndex = SelectedCustomBrowserIndex;
-            Cl ose();
+            Close();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
