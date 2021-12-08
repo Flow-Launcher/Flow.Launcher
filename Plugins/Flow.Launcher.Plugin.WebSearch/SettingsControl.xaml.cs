@@ -21,7 +21,6 @@ namespace Flow.Launcher.Plugin.WebSearch
             _context = context;
             _settings = viewModel.Settings;
             DataContext = viewModel;
-
         }
 
         private void OnAddSearchSearchClick(object sender, RoutedEventArgs e)
