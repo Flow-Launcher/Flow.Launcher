@@ -32,7 +32,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_update">Aktualizovať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher bude indexovať iba súbory s nasledujúcimi príponami:</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Prípony boli úspešne aktualizovan</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Prípony boli úspešne aktualizované</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Súbor s príponami nemôže byť prázdny</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustiť ako iný používateľ</system:String>
@@ -51,7 +51,7 @@
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadajte argumenty, ktoré chcete pridať pre správcu súborov. %s pre rodičovský priečinok, %f pre celú cestu (funguje iba pre win32). Pre podrobnosti pozrite webovú stránku správcu súborov.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspešn</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspešné</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Úspešne zakázané zobrazovanie tohto programu vo výsledkoch vyhľadávania</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Táto aplikácia nie je určená na spustenie ako správca</system:String>
 
