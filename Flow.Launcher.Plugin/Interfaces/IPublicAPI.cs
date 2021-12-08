@@ -213,7 +213,6 @@ namespace Flow.Launcher.Plugin
         /// <param name="FileName">Extra FileName Info</param>
         public void OpenDirectory(string DirectoryPath, string FileName = null);
 
-
         public void OpenUrl(string url);
     }
 }
