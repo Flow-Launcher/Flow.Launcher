@@ -107,7 +107,7 @@
                         Margin="10,0,0,0"
                         Click="btnDelete_Click"
                         Content="{DynamicResource delete}"
-                        IsEnabled="{Binding CustomExplorer.Editable}" />
+                        IsEnabled="{Binding CustomBrowser.Editable}" />
 
                 </StackPanel>
                 <Rectangle
@@ -117,7 +117,7 @@
                 <StackPanel
                     Margin="0,0,0,0"
                     HorizontalAlignment="Stretch"
-                    DataContext="{Binding CustomExplorer}"
+                    DataContext="{Binding CustomBrowser}"
                     Orientation="Horizontal">
                     <Grid Width="480">
                         <Grid.ColumnDefinitions>
@@ -197,7 +197,7 @@
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
                             <RadioButton GroupName="browser" IsChecked="{Binding OpenInTab}">New Tab</RadioButton>
-                            <RadioButton GroupName="browser" IsChecked="{Binding OpenInNewWindow, Mode=OneWay}">New Window</RadioButton>
+                            <RadioButton GroupName="browser" IsChecked="{Binding OpenInNewWindow, Mode=OneTime}">New Window</RadioButton>
                         </StackPanel>
                         <TextBlock
                             Grid.Row="3"

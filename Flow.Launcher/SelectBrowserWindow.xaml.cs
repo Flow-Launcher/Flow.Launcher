@@ -20,7 +20,7 @@ namespace Flow.Launcher
 {
     public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
     {
-        private int selectedCustomExplorerIndex;
+        private int selectedCustomBrowserIndex;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,15 +28,15 @@ namespace Flow.Launcher
 
         public int SelectedCustomBrowserIndex
         {
-            get => selectedCustomExplorerIndex; set
+            get => selectedCustomBrowserIndex; set
             {
-                selectedCustomExplorerIndex = value;
-                PropertyChanged?.Invoke(this, new(nameof(CustomExplorer)));
+                selectedCustomBrowserIndex = value;
+                PropertyChanged?.Invoke(this, new(nameof(CustomBrowser)));
             }
         }
         public ObservableCollection<CustomBrowserViewModel> CustomBrowsers { get; set; }
 
-        public CustomBrowserViewModel CustomExplorer => CustomBrowsers[SelectedCustomBrowserIndex];
+        public CustomBrowserViewModel CustomBrowser => CustomBrowsers[SelectedCustomBrowserIndex];
         public SelectBrowserWindow(Settings settings)
         {
             Settings = settings;
@@ -54,7 +54,7 @@ namespace Flow.Launcher
         {
             Settings.CustomBrowserList = CustomBrowsers.ToList();
             Settings.CustomBrowserIndex = SelectedCustomBrowserIndex;
-            Close();
+            Cl ose();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)

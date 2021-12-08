@@ -18,6 +18,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 Name = Name,
                 Path = Path,
+                OpenInTab = OpenInTab,
                 PrivateArg = PrivateArg,
                 EnablePrivate = EnablePrivate,
                 Editable = Editable
