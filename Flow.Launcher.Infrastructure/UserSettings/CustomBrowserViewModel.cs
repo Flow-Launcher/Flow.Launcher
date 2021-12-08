@@ -23,7 +23,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Editable = Editable
             };
         }
-
     }
 }
 
