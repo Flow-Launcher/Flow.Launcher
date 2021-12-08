@@ -25,7 +25,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
     }
-
 }
 
 
