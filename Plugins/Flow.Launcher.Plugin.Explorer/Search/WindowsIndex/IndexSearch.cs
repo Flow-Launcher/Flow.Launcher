@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
     {
 
         // Reserved keywords in oleDB
-        private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
+        private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
 
         internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
@@ -205,7 +205,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                         }
 
                         var mainWindow = Application.Current.MainWindow;
-                        mainWindow.Visibility = Visibility.Visible;
+                        mainWindow.Show();
                         mainWindow.Focus();
 
                         return false;

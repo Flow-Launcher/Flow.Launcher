@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public List<Result> Query(Query query)
@@ -45,17 +45,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     Title = c.Name,
                     SubTitle = c.Url,
                     IcoPath = @"Images\bookmark.png",
-                    Score = Bookmarks.MatchProgram(c, param).Score,
+                    Score = BookmarkLoader.MatchProgram(c, param).Score,
                     Action = _ =>
                     {
-                        if (_settings.OpenInNewBrowserWindow)
-                        {
-                            c.Url.NewBrowserWindow(_settings.BrowserPath);
-                        }
-                        else
-                        {
-                            c.Url.NewTabInBrowser(_settings.BrowserPath);
-                        }
+                        context.API.OpenUrl(c.Url);
 
                         return true;
                     },
@@ -73,15 +66,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     Score = 5,
                     Action = _ =>
                     {
-                        if (_settings.OpenInNewBrowserWindow)
-                        {
-                            c.Url.NewBrowserWindow(_settings.BrowserPath);
-                        }
-                        else
-                        {
-                            c.Url.NewTabInBrowser(_settings.BrowserPath);
-                        }
-
+                        context.API.OpenUrl(c.Url);
                         return true;
                     },
                     ContextData = new BookmarkAttributes { Url = c.Url }
@@ -93,7 +78,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             cachedBookmarks.Clear();
 
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public string GetTranslatedPluginTitle()

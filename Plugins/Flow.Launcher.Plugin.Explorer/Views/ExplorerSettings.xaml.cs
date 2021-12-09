@@ -42,7 +42,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 new(Settings.ActionKeyword.PathSearchActionKeyword,
                     viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_pathsearch")),
                 new(Settings.ActionKeyword.IndexSearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexsearch"))
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexsearch")),
+                new(Settings.ActionKeyword.QuickAccessActionKeyword,
+                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_quickaccess"))
             };
 
             lbxActionKeywords.ItemsSource = actionKeywordsListView;
@@ -325,7 +327,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
         public string Description { get; private init; }
-        public string Color => Enabled ? "Black" : "Gray";
 
         internal Settings.ActionKeyword KeywordProperty { get; }
 

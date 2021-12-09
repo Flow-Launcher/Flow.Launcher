@@ -145,11 +145,9 @@ namespace Flow.Launcher.Core.Resource
         public ResourceDictionary GetResourceDictionary()
         {
             var dict = CurrentThemeResourceDictionary();
-
-            Style queryBoxStyle = dict["QueryBoxStyle"] as Style;
-            Style querySuggestionBoxStyle = dict["QuerySuggestionBoxStyle"] as Style;
-
-            if (queryBoxStyle != null && querySuggestionBoxStyle != null)
+           
+            if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
+                dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
                 var fontFamily = new FontFamily(Settings.QueryBoxFont);
                 var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.QueryBoxFontStyle);
@@ -174,11 +172,12 @@ namespace Flow.Launcher.Core.Resource
                 querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
             }
 
-            Style resultItemStyle = dict["ItemTitleStyle"] as Style;
-            Style resultSubItemStyle = dict["ItemSubTitleStyle"] as Style;
-            Style resultItemSelectedStyle = dict["ItemTitleSelectedStyle"] as Style;
-            Style resultSubItemSelectedStyle = dict["ItemSubTitleSelectedStyle"] as Style;
-            if (resultItemStyle != null && resultSubItemStyle != null && resultSubItemSelectedStyle != null && resultItemSelectedStyle != null)
+            if (dict["ItemTitleStyle"] is Style resultItemStyle &&
+                dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
+                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle &&
+                dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
+                dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
+                dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
             {
                 Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultFont));
                 Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.ResultFontStyle));
@@ -186,24 +185,15 @@ namespace Flow.Launcher.Core.Resource
                 Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
-                Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
+                Array.ForEach(
+                    new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
+                    => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
-
+            /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
-
-            var width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
-                .Select(x => x.Value).FirstOrDefault();
-
-            if (width == null)
-            {
-                windowStyle = dict["BaseWindowStyle"] as Style;
-
-                width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
-                .Select(x => x.Value).FirstOrDefault();
-            }
-
+            var width = Settings.WindowSize;
+            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
             mainWindowWidth = (double)width;
-
             return dict;
         }
 
@@ -236,17 +226,19 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-            var dict = CurrentThemeResourceDictionary();
+            var dict = GetResourceDictionary();
 
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            var effectSetter = new Setter();
-            effectSetter.Property = Border.EffectProperty;
-            effectSetter.Value = new DropShadowEffect
+            var effectSetter = new Setter
             {
-                Opacity = 0.9,
-                ShadowDepth = 2,
-                BlurRadius = 15
+                Property = Border.EffectProperty,
+                Value = new DropShadowEffect
+                {
+                    Opacity = 0.4,
+                    ShadowDepth = 2,
+                    BlurRadius = 15
+                }
             };
 
             var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
@@ -261,7 +253,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                var baseMargin = (Thickness) marginSetter.Value;
+                var baseMargin = (Thickness)marginSetter.Value;
                 var newMargin = new Thickness(
                     baseMargin.Left + ShadowExtraMargin,
                     baseMargin.Top + ShadowExtraMargin,
@@ -282,8 +274,8 @@ namespace Flow.Launcher.Core.Resource
 
             var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
             var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-            
-            if(effectSetter != null)
+
+            if (effectSetter != null)
             {
                 windowBorderStyle.Setters.Remove(effectSetter);
             }
@@ -371,11 +363,9 @@ namespace Flow.Launcher.Core.Resource
         private void SetWindowAccent(Window w, AccentState state)
         {
             var windowHelper = new WindowInteropHelper(w);
-            
-            // this determines the width of the main query window
-            w.Width = mainWindowWidth;
+
             windowHelper.EnsureHandle();
-            
+
             var accent = new AccentPolicy { AccentState = state };
             var accentStructSize = Marshal.SizeOf(accent);
 

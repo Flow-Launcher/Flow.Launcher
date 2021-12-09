@@ -1,18 +1,27 @@
-using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Navigation;
-using Microsoft.Win32;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Helper;
+using Microsoft.Win32;
+using ModernWpf;
+using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Navigation;
+using Button = System.Windows.Controls.Button;
+using Control = System.Windows.Controls.Control;
+using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
+using ThemeManager = ModernWpf.ThemeManager;
 
 namespace Flow.Launcher
 {
@@ -23,6 +32,7 @@ namespace Flow.Launcher
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
+        private static MainViewModel mainViewModel;
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
@@ -36,6 +46,7 @@ namespace Flow.Launcher
         #region General
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            RefreshMaximizeRestoreButton();
             // Fix (workaround) for the window freezes after lock screen (Win+L)
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
@@ -55,39 +66,30 @@ namespace Flow.Launcher
 
         public static void SetStartup()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
-            {
-                key?.SetValue(Infrastructure.Constant.FlowLauncher, Infrastructure.Constant.ExecutablePath);
-            }
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
         }
 
         private void RemoveStartup()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
-            {
-                key?.DeleteValue(Infrastructure.Constant.FlowLauncher, false);
-            }
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            key?.DeleteValue(Constant.FlowLauncher, false);
         }
 
         public static bool StartupSet()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(StartupPath, true))
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            var path = key?.GetValue(Constant.FlowLauncher) as string;
+            if (path != null)
             {
-                var path = key?.GetValue(Infrastructure.Constant.FlowLauncher) as string;
-                if (path != null)
-                {
-                    return path == Infrastructure.Constant.ExecutablePath;
-                }
-                else
-                {
-                    return false;
-                }
+                return path == Constant.ExecutablePath;
             }
+            return false;
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new System.Windows.Forms.FolderBrowserDialog
+            var dlg = new FolderBrowserDialog
             {
                 SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
             };
@@ -112,6 +114,18 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
+        {
+            SelectFileManagerWindow fileManagerChangeWindow = new SelectFileManagerWindow(settings);
+            fileManagerChangeWindow.ShowDialog();
+        }
+
+        private void OnSelectDefaultBrowserClick(object sender, RoutedEventArgs e)
+        {
+            var browserWindow = new SelectBrowserWindow(settings);
+            browserWindow.ShowDialog();
+        }
+
         #endregion
 
         #region Hotkey
@@ -121,14 +135,22 @@ namespace Flow.Launcher
             HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
         }
 
-        void OnHotkeyChanged(object sender, EventArgs e)
+        private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
+        {
+            HotKeyMapper.RemoveHotkey(settings.Hotkey);
+        }
+
+        private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
         {
             if (HotkeyControl.CurrentHotkeyAvailable)
             {
-
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnHotkey);
+                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
                 HotKeyMapper.RemoveHotkey(settings.Hotkey);
                 settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+            }
+            else
+            {
+                HotKeyMapper.SetHotkey(new HotkeyModel(settings.Hotkey), HotKeyMapper.OnToggleHotkey);
             }
         }
 
@@ -184,23 +206,20 @@ namespace Flow.Launcher
             settings.PluginSettings.Plugins[id].Disabled = viewModel.SelectedPlugin.PluginPair.Metadata.Disabled;
         }
 
-        private void OnPluginPriorityClick(object sender, MouseButtonEventArgs e)
+        private void OnPluginPriorityClick(object sender, RoutedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (sender is Control { DataContext: PluginViewModel pluginViewModel })
             {
-                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(viewModel.SelectedPlugin.PluginPair.Metadata.ID, settings, viewModel.SelectedPlugin);
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, settings, pluginViewModel);
                 priorityChangeWindow.ShowDialog();
             }
         }
 
-        private void OnPluginActionKeywordsClick(object sender, MouseButtonEventArgs e)
+        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-                ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
-                changeKeywordsWindow.ShowDialog();
-            }
+            var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
+            ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
+            changeKeywordsWindow.ShowDialog();
         }
 
         private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
@@ -213,7 +232,7 @@ namespace Flow.Launcher
                     var uri = new Uri(website);
                     if (Uri.CheckSchemeName(uri.Scheme))
                     {
-                        SearchWeb.NewTabInBrowser(website);
+                        website.NewTabInBrowser();
                     }
                 }
             }
@@ -225,7 +244,7 @@ namespace Flow.Launcher
             {
                 var directory = viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
                 if (!string.IsNullOrEmpty(directory))
-                    FilesFolders.OpenPath(directory);
+                    PluginManager.API.OpenDirectory(directory);
             }
         }
         #endregion
@@ -247,7 +266,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            SearchWeb.NewTabInBrowser(e.Uri.AbsoluteUri);
+            API.OpenUrl(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
@@ -261,9 +280,94 @@ namespace Flow.Launcher
             Close();
         }
 
-        private void OpenPluginFolder(object sender, RoutedEventArgs e)
+        private void OpenThemeFolder(object sender, RoutedEventArgs e)
         {
-            FilesFolders.OpenPath(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+        }
+
+        private void OpenSettingFolder(object sender, RoutedEventArgs e)
+        {
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
+        }
+
+        private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
+        {
+            var WelcomeWindow = new WelcomeWindow(settings);
+            WelcomeWindow.Show();
+        }
+        private void OpenLogFolder(object sender, RoutedEventArgs e)
+        {
+            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+        }
+
+        private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
+        {
+            _ = viewModel.RefreshExternalPluginsAsync();
+        }
+
+        private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button { DataContext: UserPlugin plugin })
+            {
+                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeyword} install {plugin.Name}");
+                API.ShowMainWindow();
+            }
+        }
+
+        private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
+        {
+            if (Keyboard.FocusedElement is not TextBox textBox)
+            {
+                return;
+            }
+            var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+            textBox.MoveFocus(tRequest);
+        }
+
+        private void ColorSchemeSelectedIndexChanged(object sender, EventArgs e) 
+            => ThemeManager.Current.ApplicationTheme = settings.ColorScheme switch
+            {
+                Constant.Light => ApplicationTheme.Light,
+                Constant.Dark => ApplicationTheme.Dark,
+                Constant.System => null,
+                _ => ThemeManager.Current.ApplicationTheme
+            };
+
+        /* Custom TitleBar */
+
+        private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void OnMaximizeRestoreButtonClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void RefreshMaximizeRestoreButton()
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                maximizeButton.Visibility = Visibility.Collapsed;
+                restoreButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                maximizeButton.Visibility = Visibility.Visible;
+                restoreButton.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            RefreshMaximizeRestoreButton();
         }
 
     }

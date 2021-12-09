@@ -29,6 +29,13 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
+        /// <summary>
+        /// This holds the text which can be provided by plugin to help Flow autocomplete text
+        /// for user on the plugin result. If autocomplete action for example is tab, pressing tab will have 
+        /// the default constructed autocomplete text (result's Title), or the text provided here if not empty.
+        /// </summary>
+        public string AutoCompleteText { get; set; }
+
         public string IcoPath
         {
             get { return _icoPath; }
@@ -47,7 +54,15 @@ namespace Flow.Launcher.Plugin
 
         public delegate ImageSource IconDelegate();
 
+        /// <summary>
+        /// Delegate to Get Image Source
+        /// </summary>
         public IconDelegate Icon;
+
+        /// <summary>
+        /// Information for Glyph Icon
+        /// </summary>
+        public GlyphInfo Glyph { get; init; } 
 
 
         /// <summary>

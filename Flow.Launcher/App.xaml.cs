@@ -100,8 +100,6 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-
-                _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
@@ -129,12 +127,12 @@ namespace Flow.Launcher
                     var timer = new Timer(1000 * 60 * 60 * 5);
                     timer.Elapsed += async (s, e) =>
                     {
-                        await _updater.UpdateApp(API);
+                        await _updater.UpdateAppAsync(API);
                     };
                     timer.Start();
 
                     // check updates on startup
-                    await _updater.UpdateApp(API);
+                    await _updater.UpdateAppAsync(API);
                 }
             });
         }
@@ -178,7 +176,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Visibility = Visibility.Visible;
+            Current.MainWindow.Show();
         }
     }
 }

@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -35,9 +36,11 @@ namespace Flow.Launcher.ViewModel
             Settings = _storage.Load();
             Settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(Settings.ActivateTimes))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(ActivatedTimes));
+                    case nameof(Settings.ActivateTimes):
+                        OnPropertyChanged(nameof(ActivatedTimes));
+                        break;
                 }
             };
         }
@@ -46,12 +49,12 @@ namespace Flow.Launcher.ViewModel
 
         public async void UpdateApp()
         {
-            await _updater.UpdateApp(App.API, false);
+            await _updater.UpdateAppAsync(App.API, false);
         }
 
         public bool AutoUpdates
         {
-            get { return Settings.AutoUpdates; }
+            get => Settings.AutoUpdates;
             set
             {
                 Settings.AutoUpdates = value;
@@ -61,17 +64,11 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public bool AutoHideScrollBar
-        {
-            get => Settings.AutoHideScrollBar;
-            set => Settings.AutoHideScrollBar = value;
-        }
-
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
         {
-            get { return _portableMode; }
+            get => _portableMode;
             set
             {
                 if (!_portable.CanUpdatePortability())
@@ -237,6 +234,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public IList<UserPlugin> ExternalPlugins
+        {
+            get
+            {
+                return PluginsManifest.UserPlugins;
+            }
+        }
+
         public Control SettingProvider
         {
             get
@@ -256,13 +261,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public async Task RefreshExternalPluginsAsync()
+        {
+            await PluginsManifest.UpdateManifestAsync();
+            OnPropertyChanged(nameof(ExternalPlugins));
+        }
+
 
 
         #endregion
 
         #region theme
 
-        public static string Theme => @"http://www.wox.one/theme/builder";
+        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
 
         public string SelectedTheme
         {
@@ -302,6 +313,53 @@ namespace Flow.Launcher.ViewModel
 
                 Settings.UseDropShadowEffect = value;
             }
+        }
+
+        public class ColorScheme
+        {
+            public string Display { get; set; }
+            public ColorSchemes Value { get; set; }
+        }
+
+        public List<ColorScheme> ColorSchemes
+        {
+            get
+            {
+                List<ColorScheme> modes = new List<ColorScheme>();
+                var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
+                foreach (var e in enums)
+                {
+                    var key = $"ColorScheme{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new ColorScheme { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+        public double WindowWidthSize
+        {
+            get => Settings.WindowSize;
+            set => Settings.WindowSize = value;
+        }
+
+        public bool UseGlyphIcons
+        {
+            get => Settings.UseGlyphIcons;
+            set => Settings.UseGlyphIcons = value;
+        }
+
+        public bool UseAnimation
+        {
+            get => Settings.UseAnimation;
+            set => Settings.UseAnimation = value;
+        }
+
+        public bool UseSound
+        {
+            get => Settings.UseSound;
+            set => Settings.UseSound = value;
         }
 
         public Brush PreviewBackground
@@ -470,6 +528,8 @@ namespace Flow.Launcher.ViewModel
         public string Website => Constant.Website;
         public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
         public string Documentation => Constant.Documentation;
+        public string Docs => Constant.Docs;
+        public string Github => Constant.GitHub;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
         #endregion

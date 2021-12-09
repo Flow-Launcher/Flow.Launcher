@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -20,7 +20,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.Windows.Threading;
+
 
 namespace Flow.Launcher.ViewModel
 {
@@ -61,6 +61,13 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = new Query();
 
             _settings = settings;
+            _settings.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(Settings.WindowSize))
+                {
+                    OnPropertyChanged(nameof(MainWindowWidth));
+                }
+            };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -108,7 +115,9 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
-            };
+            }
+
+            ;
 
             void continueAction(Task t)
             {
@@ -145,7 +154,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-
         private void InitializeKeyCommands()
         {
             EscCommand = new RelayCommand(_ =>
@@ -156,7 +164,18 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    MainWindowVisibility = Visibility.Collapsed;
+                    Hide();
+                }
+            });
+
+            ClearQueryCommand = new RelayCommand(_ =>
+            {
+                if (!string.IsNullOrEmpty(QueryText))
+                {
+                    ChangeQueryText(string.Empty);
+
+                    // Push Event to UI SystemQuery has changed
+                    //OnPropertyChanged(nameof(SystemQueryText));
                 }
             });
 
@@ -172,9 +191,9 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
-
+            OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
             OpenResultCommand = new RelayCommand(index =>
             {
                 var results = SelectedResults;
@@ -189,12 +208,12 @@ namespace Flow.Launcher.ViewModel
                 {
                     bool hideWindow = result.Action != null && result.Action(new ActionContext
                     {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
+                        SpecialKeyState = GlobalHotkey.CheckModifiers()
                     });
 
                     if (hideWindow)
                     {
-                        MainWindowVisibility = Visibility.Collapsed;
+                        Hide();
                     }
 
                     if (SelectedIsFromQueryResults())
@@ -206,6 +225,32 @@ namespace Flow.Launcher.ViewModel
                     {
                         SelectedResults = Results;
                     }
+                }
+            });
+
+            AutocompleteQueryCommand = new RelayCommand(_ =>
+            {
+                var result = SelectedResults.SelectedItem?.Result;
+                if (result != null) // SelectedItem returns null if selection is empty.
+                {
+                    var autoCompleteText = result.Title;
+
+                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
+                    {
+                        autoCompleteText = result.AutoCompleteText;
+                    }
+                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                    {
+                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
+                    }
+
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.ShiftPressed)
+                    {
+                        autoCompleteText = result.SubTitle;
+                    }
+
+                    ChangeQueryText(autoCompleteText);
                 }
             });
 
@@ -239,19 +284,14 @@ namespace Flow.Launcher.ViewModel
 
             ReloadPluginDataCommand = new RelayCommand(_ =>
             {
-                var msg = new Msg
-                {
-                    Owner = Application.Current.MainWindow
-                };
-
-                MainWindowVisibility = Visibility.Collapsed;
+                Hide();
 
                 PluginManager
                     .ReloadData()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            msg.Show(
+                            Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
                                 "");
@@ -265,11 +305,14 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public ResultsViewModel Results { get; private set; }
+        
         public ResultsViewModel ContextMenu { get; private set; }
+        
         public ResultsViewModel History { get; private set; }
 
-        private string _queryText;
+        public bool GameModeStatus { get; set; }
 
+        private string _queryText;
         public string QueryText
         {
             get => _queryText;
@@ -285,13 +328,23 @@ namespace Flow.Launcher.ViewModel
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
-        public void ChangeQueryText(string queryText)
+        public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            QueryText = queryText;
+            if (QueryText != queryText)
+            {
+                // re-query is done in QueryText's setter method
+                QueryText = queryText;
+            }
+            else if (reQuery)
+            {
+                Query();
+            }
             QueryTextCursorMovedToEnd = true;
         }
 
         public bool LastQuerySelected { get; set; }
+
+        // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
@@ -333,8 +386,14 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Visibility ProgressBarVisibility { get; set; }
-
         public Visibility MainWindowVisibility { get; set; }
+        public double MainWindowOpacity { get; set; } = 1;
+
+        // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
+        // because it is more accurate and reliable representation than using Visibility as a condition check
+        public bool MainWindowVisibilityStatus { get; set; } = true;
+
+        public double MainWindowWidth => _settings.WindowSize;
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
@@ -346,7 +405,10 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadContextMenuCommand { get; set; }
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
+        public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
+        public ICommand ClearQueryCommand { get; private set; }
+        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -595,6 +657,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
@@ -619,7 +682,7 @@ namespace Flow.Launcher.ViewModel
             var plugin = translator.GetTranslation("plugin");
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
-            var subtitle = $"{author}: {metadata.Author}, {website}: {metadata.Website} {version}: {metadata.Version}";
+            var subtitle = $"{author} {metadata.Author}";
 
             var menu = new Result
             {
@@ -632,7 +695,7 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        private bool SelectedIsFromQueryResults()
+        internal bool SelectedIsFromQueryResults()
         {
             var selected = SelectedResults == Results;
             return selected;
@@ -657,19 +720,78 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        internal void ToggleFlowLauncher()
+        public void ToggleFlowLauncher()
         {
-            if (MainWindowVisibility != Visibility.Visible)
+            if (!MainWindowVisibilityStatus)
             {
-                MainWindowVisibility = Visibility.Visible;
+                Show();
             }
             else
             {
-                MainWindowVisibility = Visibility.Collapsed;
+                Hide();
             }
         }
 
+        public void Show()
+        {
+            if (_settings.UseSound)
+            {
+                MediaPlayer media = new MediaPlayer();
+                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                media.Play();
+            }
+
+            MainWindowVisibility = Visibility.Visible;
+
+            MainWindowVisibilityStatus = true;
+            
+            if(_settings.UseAnimation)
+                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
+            
+            MainWindowOpacity = 1;
+        }
+
+        public async void Hide()
+        {
+            // Trick for no delay
+            MainWindowOpacity = 0;
+
+            switch (_settings.LastQueryMode)
+            {
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    await Task.Delay(100); //Time for change to opacity
+                    break;
+                case LastQueryMode.Preserved:
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
+                    LastQuerySelected = true;
+                    break;
+                case LastQueryMode.Selected:
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
+                    LastQuerySelected = false;
+                    break;
+                default:
+                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+            }
+
+            MainWindowVisibilityStatus = false;
+            MainWindowVisibility = Visibility.Collapsed;
+        }
+
         #endregion
+
+
+        /// <summary>
+        /// Checks if Flow Launcher should ignore any hotkeys
+        /// </summary>
+        public bool ShouldIgnoreHotkeys()
+        {
+            return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+        }
+
+
 
         #region Public Methods
 

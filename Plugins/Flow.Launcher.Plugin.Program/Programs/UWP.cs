@@ -267,6 +267,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string Location => Package.Location;
 
             public bool Enabled { get; set; }
+            public bool CanRunElevated { get; set; }
 
             public string LogoUri { get; set; }
             public string LogoPath { get; set; }
@@ -313,14 +314,36 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var result = new Result
                 {
                     Title = title,
-                    SubTitle = Package.Location,
+                    SubTitle = Main._settings.HideAppsPath ? string.Empty : Package.Location,
                     Icon = Logo,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
                     ContextData = this,
                     Action = e =>
                     {
-                        Launch(api);
+                        var elevated = (
+                            e.SpecialKeyState.CtrlPressed &&
+                            e.SpecialKeyState.ShiftPressed &&
+                            !e.SpecialKeyState.AltPressed &&
+                            !e.SpecialKeyState.WinPressed
+                        );
+
+                        if (elevated && CanRunElevated)
+                        {
+                            LaunchElevated();
+                        }
+                        else
+                        {
+                            Launch(api);
+
+                            if (elevated)
+                            {
+                                var title = "Plugin: Program";
+                                var message = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator_not_supported_message");
+                                api.ShowMsg(title, message, string.Empty);
+                            }
+                        }
+
                         return true;
                     }
                 };
@@ -339,14 +362,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         Action = _ =>
                         {
-                            Main.StartProcess(Process.Start,
-                                                new ProcessStartInfo(
-                                                    !string.IsNullOrEmpty(Main._settings.CustomizedExplorer)
-                                                    ? Main._settings.CustomizedExplorer
-                                                    : Settings.Explorer,
-                                                    Main._settings.CustomizedArgs
-                                                        .Replace("%s",$"\"{Package.Location}\"")
-                                                        .Trim()));
+                            Main.Context.API.OpenDirectory(Package.Location);
 
                             return true;
                         },
@@ -354,6 +370,21 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         IcoPath = "Images/folder.png"
                     }
                 };
+
+                if (CanRunElevated)
+                {
+                    contextMenus.Add(new Result
+                    {
+                        Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
+                        Action = _ =>
+                        {
+                            LaunchElevated();
+                            return true;
+                        },
+                        IcoPath = "Images/cmd.png"
+                    });
+                }
+
                 return contextMenus;
             }
 
@@ -375,6 +406,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         api.ShowMsg(name, message, string.Empty);
                     }
                 });
+            }
+
+            private async void LaunchElevated()
+            {
+                string command = "shell:AppsFolder\\" + UniqueIdentifier;
+                command = Environment.ExpandEnvironmentVariables(command.Trim());
+
+                var info = new ProcessStartInfo(command)
+                {
+                    UseShellExecute = true,
+                    Verb = "runas",
+                };
+
+                Main.StartProcess(Process.Start, info);
             }
 
             public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
@@ -403,6 +448,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 LogoPath = LogoPathFromUri(LogoUri);
 
                 Enabled = true;
+                CanRunElevated = CanApplicationRunElevated();
+            }
+
+            private bool CanApplicationRunElevated()
+            {
+                if (EntryPoint == "Windows.FullTrustApplication")
+                {
+                    return true;
+                }
+
+                var manifest = Package.Location + "\\AppxManifest.xml";
+                if (File.Exists(manifest))
+                {
+                    var file = File.ReadAllText(manifest);
+
+                    if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
 
             internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)

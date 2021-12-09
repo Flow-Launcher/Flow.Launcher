@@ -30,6 +30,21 @@ namespace Flow.Launcher.Plugin
         void RestartApp();
 
         /// <summary>
+        /// Run a shell command
+        /// </summary>
+        /// <param name="cmd">The command or program to run</param>
+        /// <param name="filename">the shell type to run, e.g. powershell.exe</param>
+        /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
+        /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
+        void ShellRun(string cmd, string filename = "cmd.exe");
+        
+        /// <summary>
+        /// Copy Text to clipboard
+        /// </summary>
+        /// <param name="Text">Text to save on clipboard</param>
+        public void CopyToClipboard(string text);
+
+        /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings
         /// </summary>
         void SaveAppAllSettings();
@@ -58,6 +73,11 @@ namespace Flow.Launcher.Plugin
         /// <param name="title">Message title</param>
         /// <param name="subTitle">Optional message subtitle</param>
         void ShowMsgError(string title, string subTitle = "");
+
+        /// <summary>
+        /// Show the MainWindow when hiding
+        /// </summary>
+        void ShowMainWindow();
 
         /// <summary>
         /// Show message box
@@ -99,7 +119,21 @@ namespace Flow.Launcher.Plugin
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
+        [Obsolete("Unable to Retrieve correct return value")]
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        
+        /// <summary>
+        /// Register a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+        
+        /// <summary>
+        /// Remove a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+
 
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
@@ -185,5 +219,17 @@ namespace Flow.Launcher.Plugin
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
         void SaveSettingJsonStorage<T>() where T : new();
+
+        /// <summary>
+        /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
+        /// </summary>
+        /// <param name="DirectoryPath">Directory Path to open</param>
+        /// <param name="FileName">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileName = null);
+
+        /// <summary>
+        /// Opens the url. The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// </summary>
+        public void OpenUrl(string url, bool? inPrivate = null);
     }
 }

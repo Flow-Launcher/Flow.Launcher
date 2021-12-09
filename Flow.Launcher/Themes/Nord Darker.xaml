@@ -3,6 +3,9 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="ItemGlyph"  BasedOn="{StaticResource BaseGlyphStyle}" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
     <Style x:Key="QueryBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#2e3440" />
         <Setter Property="Foreground" Value="#eceff4" />
@@ -11,7 +14,7 @@
 
     <Style x:Key="QuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#2e3440" />
-        <Setter Property="Foreground" Value="#eceff4" />
+        <Setter Property="Foreground" Value="#50596b" />
         <Setter Property="FontSize" Value="30" />
     </Style>
 
@@ -22,29 +25,31 @@
     </Style>
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource BaseWindowStyle}" >
     </Style>
-    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}" />
+    <Style x:Key="PendingLineStyle" BasedOn="{StaticResource BasePendingLineStyle}" TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="White" />
+    </Style>
     <Style x:Key="ItemTitleStyle" BasedOn="{StaticResource BaseItemTitleStyle}" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#e5e9f0" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
     <Style x:Key="ItemNumberStyle" BasedOn="{StaticResource BaseItemNumberStyle}" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#A6A6A6" />
+        <Setter Property="Foreground" Value="#6F7C95" />
     </Style>
     <Style x:Key="ItemSubTitleStyle" BasedOn="{StaticResource BaseItemSubTitleStyle}" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#d8dee9" />
+        <Setter Property="Foreground" Value="#606c83" />
     </Style>
     <Style x:Key="ItemTitleSelectedStyle" BasedOn="{StaticResource BaseItemTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#2e3440" />
+        <Setter Property="Foreground" Value="#e5e9f0" />
     </Style>
     <Style x:Key="ItemSubTitleSelectedStyle" BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#4c566a" />
+        <Setter Property="Foreground" Value="#8391AB" />
     </Style>
-    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#5e81ac</SolidColorBrush>
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#4e586b</SolidColorBrush>
     <Style x:Key="ThumbStyle" BasedOn="{StaticResource BaseThumbStyle}" TargetType="{x:Type Thumb}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#4c566a" BorderBrush="Transparent" BorderThickness="0" />
+                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#B2B6BE" BorderBrush="Transparent" BorderThickness="0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -52,5 +57,18 @@
 
     <Style x:Key="ScrollBarStyle" BasedOn="{StaticResource BaseScrollBarStyle}" TargetType="{x:Type ScrollBar}" >
         <Setter Property="Width" Value="3"/>
+    </Style>
+    <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}" BasedOn="{StaticResource BaseSearchIconStyle}">
+        <Setter Property="Fill" Value="#50596b" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#8391AB" />
+    </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#8391AB" />
     </Style>
 </ResourceDictionary>

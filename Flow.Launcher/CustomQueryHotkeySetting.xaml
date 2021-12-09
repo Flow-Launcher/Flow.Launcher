@@ -1,45 +1,160 @@
-<Window x:Class="Flow.Launcher.CustomQueryHotkeySetting"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:flowlauncher="clr-namespace:Flow.Launcher"
-        Icon="Images\app.png"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        Title="{DynamicResource customeQueryHotkeyTitle}" Height="200" Width="674.766">
+<Window
+    x:Class="Flow.Launcher.CustomQueryHotkeySetting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    Title="{DynamicResource customeQueryHotkeyTitle}"
+    Width="500"
+    Background="{DynamicResource PopuBGColor}"
+    Foreground="{DynamicResource PopupTextColor}"
+    Icon="Images\app.png"
+    MouseDown="window_MouseDown"
+    ResizeMode="NoResize"
+    SizeToContent="Height"
+    WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
     <Window.InputBindings>
-        <KeyBinding Key="Escape" Command="Close"/>
+        <KeyBinding Key="Escape" Command="Close" />
     </Window.InputBindings>
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="cmdEsc_OnPress"/>
+        <CommandBinding Command="Close" Executed="cmdEsc_OnPress" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock Margin="10" FontSize="14" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource hotkey}" />
-        <flowlauncher:HotkeyControl x:Name="ctlHotkey" Margin="10,0,10,0" Grid.Column="1" VerticalAlignment="Center" Height="32" />
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="4"
+                        Click="BtnCancel_OnClick"
+                        Style="{StaticResource TitleBarCloseButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="26,0,26,0">
+                <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,0,0"
+                        FontFamily="Segoe UI"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="{DynamicResource customeQueryHotkeyTitle}"
+                        TextAlignment="Left" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock
+                        FontSize="14"
+                        Text="{DynamicResource customeQueryHotkeyTips}"
+                        TextAlignment="Left"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
 
-        <TextBlock Margin="10" FontSize="14" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Text="{DynamicResource actionKeyword}" />
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.Column="1">
-            <TextBox x:Name="tbAction" Margin="10" Width="400" VerticalAlignment="Center" HorizontalAlignment="Left" />
-            <Button x:Name="btnTestActionKeyword" Padding="10 5 10 5" Height="30" Click="BtnTestActionKeyword_OnClick"
-                    Content="{DynamicResource preview}" />
+                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Width="60"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource hotkey}" />
+                    <flowlauncher:HotkeyControl
+                        x:Name="ctlHotkey"
+                        Grid.Column="1"
+                        Width="200"
+                        Height="34"
+                        Margin="10,0,10,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Left" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource actionKeyword}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Width="60"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource customQuery}" />
+                    <TextBox
+                        x:Name="tbAction"
+                        Width="250"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center" />
+                    <Button
+                        x:Name="btnTestActionKeyword"
+                        Height="30"
+                        Padding="10,5,10,5"
+                        Click="BtnTestActionKeyword_OnClick"
+                        Content="{DynamicResource preview}" />
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1">
-            <Button x:Name="btnCancel" Click="BtnCancel_OnClick" Margin="10 0 10 0" Width="80" Height="32"
+        <Border
+            Grid.Row="1"
+            Margin="0,14,0,0"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0,1,0,0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    x:Name="btnCancel"
+                    Width="100"
+                    Height="32"
+                    Margin="10,0,5,0"
+                    Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
-            <Button x:Name="btnAdd" Margin="10 0 10 0" Width="80" Height="32" Click="btnAdd_OnClick">
-                <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
-            </Button>
-        </StackPanel>
+                <Button
+                    x:Name="btnAdd"
+                    Width="100"
+                    Height="32"
+                    Margin="5,0,10,0"
+                    Click="btnAdd_OnClick">
+                    <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

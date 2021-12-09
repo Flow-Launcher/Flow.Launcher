@@ -42,7 +42,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public int MaxHeight => MaxResults * 50;
+        public int MaxHeight => MaxResults * 52;
 
         public int SelectedIndex { get; set; }
 
@@ -166,7 +166,7 @@ namespace Flow.Launcher.ViewModel
             switch (Visbility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    Margin = new Thickness { Top = 8 };
+                    Margin = new Thickness { Top = 0 };
                     SelectedIndex = 0;
                     Visbility = Visibility.Visible;
                     break;

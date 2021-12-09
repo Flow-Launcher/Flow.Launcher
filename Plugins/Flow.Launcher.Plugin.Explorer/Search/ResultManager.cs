@@ -1,8 +1,10 @@
 ﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
@@ -18,6 +20,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
+        private static string GetPathWithActionKeyword(string path, ResultType type)
+        {
+            // one of it is enabled
+            var keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
+
+            keyword = keyword == Query.GlobalPluginWildcardSign ? string.Empty : keyword + " ";
+
+            var formatted_path = path;
+
+            if (type == ResultType.Folder)
+                formatted_path = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
+
+            return $"{keyword}{formatted_path}";
+        }
+
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
         {
             return new Result
@@ -25,6 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
                 {
@@ -32,7 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         try
                         {
-                            FilesFolders.OpenPath(path);
+                            Context.API.OpenDirectory(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -41,13 +59,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
-                    // one of it is enabled
-                    var keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
 
-                    keyword = keyword == Query.GlobalPluginWildcardSign ? string.Empty : keyword + " ";
-
-                    string changeTo = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
-                    Context.API.ChangeQuery($"{keyword}{changeTo}");
+                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder));
+                    
                     return false;
                 },
                 Score = score,
@@ -95,11 +109,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
+                AutoCompleteText = GetPathWithActionKeyword(retrievedDirectoryPath, ResultType.Folder),
                 IcoPath = retrievedDirectoryPath,
                 Score = 500,
                 Action = c =>
                 {
-                    FilesFolders.OpenPath(retrievedDirectoryPath);
+                    Context.API.OpenDirectory(retrievedDirectoryPath);
                     return true;
                 },
                 TitleToolTip = retrievedDirectoryPath,
@@ -121,15 +136,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = Path.GetFileName(filePath),
                 SubTitle = filePath,
                 IcoPath = filePath,
+                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
                 Action = c =>
                 {
                     try
                     {
-                        if (c.SpecialKeyState.CtrlPressed)
+                        if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            FilesFolders.OpenContainingFolder(filePath);
+                            Task.Run(() =>
+                            {
+                                try
+                                {
+                                    Process.Start(new ProcessStartInfo
+                                    {
+                                        FileName = filePath,
+                                        UseShellExecute = true,
+                                        Verb = "runas",
+                                    });
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.Message, "Could not start " + filePath);
+                                }
+                            });
+                        }
+                        else if (c.SpecialKeyState.CtrlPressed)
+                        {
+                            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
                         }
                         else
                         {

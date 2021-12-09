@@ -8,6 +8,7 @@
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Shutdown Computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Restart Computer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Restart the computer with Advanced Boot Options for Safe and Debugging modes, as well as other options</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Log off</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Lock this computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Close Flow Launcher</system:String>
@@ -29,6 +30,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Are you sure you want to shut the computer down?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Are you sure you want to restart the computer?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">System Commands</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Provides System related commands. e.g. shutdown, lock, settings etc.</system:String>

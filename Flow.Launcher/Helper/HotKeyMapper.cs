@@ -19,8 +19,14 @@ namespace Flow.Launcher.Helper
             mainViewModel = mainVM;
             settings = mainViewModel._settings;
 
-            SetHotkey(settings.Hotkey, OnHotkey);
+            SetHotkey(settings.Hotkey, OnToggleHotkey);
             LoadCustomPluginHotkey();
+        }
+
+        internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        {
+            if (!mainViewModel.GameModeStatus)
+                mainViewModel.ToggleFlowLauncher();
         }
 
         private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
@@ -53,44 +59,6 @@ namespace Flow.Launcher.Helper
             }
         }
 
-        internal static void OnHotkey(object sender, HotkeyEventArgs e)
-        {
-            if (!ShouldIgnoreHotkeys())
-            {
-                UpdateLastQUeryMode();
-
-                mainViewModel.ToggleFlowLauncher();
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// Checks if Flow Launcher should ignore any hotkeys
-        /// </summary>
-        private static bool ShouldIgnoreHotkeys()
-        {
-            return settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
-        }
-
-        private static void UpdateLastQUeryMode()
-        {
-            switch(settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    mainViewModel.ChangeQueryText(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                    mainViewModel.LastQuerySelected = true;
-                    break;
-                case LastQueryMode.Selected:
-                    mainViewModel.LastQuerySelected = false;
-                    break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{settings.LastQueryMode}>");
-
-            }
-        }
-
         internal static void LoadCustomPluginHotkey()
         {
             if (settings.CustomPluginHotkeys == null)
@@ -106,11 +74,11 @@ namespace Flow.Launcher.Helper
         {
             SetHotkey(hotkey.Hotkey, (s, e) =>
             {
-                if (ShouldIgnoreHotkeys())
+                if (mainViewModel.ShouldIgnoreHotkeys() || mainViewModel.GameModeStatus)
                     return;
 
-                mainViewModel.MainWindowVisibility = Visibility.Visible;
-                mainViewModel.ChangeQueryText(hotkey.ActionKeyword);
+                mainViewModel.Show();
+                mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
             });
         }
 

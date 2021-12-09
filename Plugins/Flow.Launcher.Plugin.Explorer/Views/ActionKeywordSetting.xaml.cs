@@ -59,14 +59,16 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
 
-            if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword 
-                && ActionKeyword == Query.GlobalPluginWildcardSign)
-            {
-                MessageBox.Show(
-                    settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
-
-                return;
-            }
+            if (ActionKeyword == Query.GlobalPluginWildcardSign)
+                switch (CurrentActionKeyword.KeywordProperty)
+                {
+                    case Settings.ActionKeyword.FileContentSearchActionKeyword:
+                        MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                        return;
+                    case Settings.ActionKeyword.QuickAccessActionKeyword:
+                        MessageBox.Show(settingsViewModel.Context.API.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
+                        return;
+                }
 
             var oldActionKeyword = CurrentActionKeyword.Keyword;
 
@@ -98,6 +100,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             MessageBox.Show(settingsViewModel.Context.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
         }
 
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

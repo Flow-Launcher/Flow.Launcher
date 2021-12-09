@@ -73,7 +73,14 @@ namespace Flow.Launcher.Plugin.Shell
                             IcoPath = Image,
                             Action = c =>
                             {
-                                Execute(Process.Start, PrepareProcessStartInfo(m, c.SpecialKeyState.CtrlPressed));
+                                var runAsAdministrator = (
+                                    c.SpecialKeyState.CtrlPressed &&
+                                    c.SpecialKeyState.ShiftPressed &&
+                                    !c.SpecialKeyState.AltPressed &&
+                                    !c.SpecialKeyState.WinPressed
+                                );
+
+                                Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
                             }
                         }));
@@ -106,7 +113,14 @@ namespace Flow.Launcher.Plugin.Shell
                         IcoPath = Image,
                         Action = c =>
                         {
-                            Execute(Process.Start, PrepareProcessStartInfo(m.Key));
+                            var runAsAdministrator = (
+                                c.SpecialKeyState.CtrlPressed &&
+                                c.SpecialKeyState.ShiftPressed &&
+                                !c.SpecialKeyState.AltPressed &&
+                                !c.SpecialKeyState.WinPressed
+                            );
+
+                            Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
                         }
                     };
@@ -129,7 +143,14 @@ namespace Flow.Launcher.Plugin.Shell
                 IcoPath = Image,
                 Action = c =>
                 {
-                    Execute(Process.Start, PrepareProcessStartInfo(cmd));
+                    var runAsAdministrator = (
+                        c.SpecialKeyState.CtrlPressed &&
+                        c.SpecialKeyState.ShiftPressed &&
+                        !c.SpecialKeyState.AltPressed &&
+                        !c.SpecialKeyState.WinPressed
+                    );
+
+                    Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
                 }
             };
@@ -147,7 +168,14 @@ namespace Flow.Launcher.Plugin.Shell
                     IcoPath = Image,
                     Action = c =>
                     {
-                        Execute(Process.Start, PrepareProcessStartInfo(m.Key));
+                        var runAsAdministrator = (
+                            c.SpecialKeyState.CtrlPressed &&
+                            c.SpecialKeyState.ShiftPressed &&
+                            !c.SpecialKeyState.AltPressed &&
+                            !c.SpecialKeyState.WinPressed
+                        );
+
+                        Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
                     }
                 });
@@ -165,51 +193,63 @@ namespace Flow.Launcher.Plugin.Shell
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
 
-            ProcessStartInfo info;
-            if (_settings.Shell == Shell.Cmd)
+            ProcessStartInfo info = new()
             {
-                var arguments = _settings.LeaveShellOpen ? $"/k \"{command}\"" : $"/c \"{command}\" & pause";
-
-                info = ShellCommand.SetProcessStartInfo("cmd.exe", workingDirectory, arguments, runAsAdministratorArg);
-            }
-            else if (_settings.Shell == Shell.Powershell)
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
+            };
+            switch (_settings.Shell)
             {
-                string arguments;
-                if (_settings.LeaveShellOpen)
-                {
-                    arguments = $"-NoExit \"{command}\"";
-                }
-                else
-                {
-                    arguments = $"\"{command} ; Read-Host -Prompt \\\"Press Enter to continue\\\"\"";
-                }
-
-                info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
-            }
-            else if (_settings.Shell == Shell.RunCommand)
-            {
-                var parts = command.Split(new[] { ' ' }, 2);
-                if (parts.Length == 2)
-                {
-                    var filename = parts[0];
-                    if (ExistInPath(filename))
+                case Shell.Cmd:
                     {
-                        var arguments = parts[1];
-                        info = ShellCommand.SetProcessStartInfo(filename, workingDirectory, arguments, runAsAdministratorArg);
+                        info.FileName = "cmd.exe";
+                        info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                        info.ArgumentList.Add(command);
+                        break;
                     }
-                    else
+
+                case Shell.Powershell:
                     {
-                        info = ShellCommand.SetProcessStartInfo(command, verb: runAsAdministratorArg);
+                        info.FileName = "powershell.exe";
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                            info.ArgumentList.Add(command);
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("-Command");
+                            info.ArgumentList.Add(command);
+                        }
+                        break;
                     }
-                }
-                else
-                {
-                    info = ShellCommand.SetProcessStartInfo(command, verb: runAsAdministratorArg);
-                }
-            }
-            else
-            {
-                throw new NotImplementedException();
+
+                case Shell.RunCommand:
+                    {
+                        var parts = command.Split(new[] { ' ' }, 2);
+                        if (parts.Length == 2)
+                        {
+                            var filename = parts[0];
+                            if (ExistInPath(filename))
+                            {
+                                var arguments = parts[1];
+                                info.FileName = filename;
+                                info.ArgumentList.Add(arguments);
+                            }
+                            else
+                            {
+                                info.FileName = command;
+                            }
+                        }
+                        else
+                        {
+                            info.FileName = command;
+                        }
+
+                        break;
+                    }
+                default:
+                    throw new NotImplementedException();
             }
 
             info.UseShellExecute = true;
@@ -223,7 +263,7 @@ namespace Flow.Launcher.Plugin.Shell
         {
             try
             {
-                startProcess(info);
+                ShellCommand.Execute(startProcess, info);
             }
             catch (FileNotFoundException e)
             {
@@ -272,7 +312,7 @@ namespace Flow.Launcher.Plugin.Shell
         {
             this.context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
-            context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
+            context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
@@ -297,12 +337,9 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeperater}");
-
             // show the main window and set focus to the query box
-            Window mainWindow = Application.Current.MainWindow;
-            mainWindow.Visibility = Visibility.Visible;
-            mainWindow.Focus();
+            context.API.ShowMainWindow();
+            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
         }
 
         public Control CreateSettingPanel()
