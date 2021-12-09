@@ -35,18 +35,21 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Opens search in a new browser. If no browser path is passed in then Chrome is used. 
         /// Leave browser path blank to use Chrome.
         /// </summary>
-		public static void NewBrowserWindow(this string url, string browserPath = "")
+        public static void OpenInBrowserWindow(this string url, string browserPath = "", bool inPrivate = false, string privateArg = "")
         {
             browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
 
             var browserExecutableName = browserPath?
-                                        .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
-                                        .Last();
+                .Split(new[]
+                {
+                    Path.DirectorySeparatorChar
+                }, StringSplitOptions.None)
+                .Last();
 
             var browser = string.IsNullOrEmpty(browserExecutableName) ? "chrome" : browserPath;
 
             // Internet Explorer will open url in new browser window, and does not take the --new-window parameter
-            var browserArguements = browserExecutableName == "iexplore.exe" ? url : "--new-window " + url;
+            var browserArguements = (browserExecutableName == "iexplore.exe" ? "" : "--new-window ") + (inPrivate ? $"{privateArg} " : "") + url;
 
             var psi = new ProcessStartInfo
             {
@@ -61,24 +64,36 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = url, UseShellExecute = true
+                });
             }
+        }
+
+        [Obsolete("This is provided for backwards compatibility after 1.9.0 release, e.g. GitHub plugin. Use the new method instead")]
+        public static void NewBrowserWindow(this string url, string browserPath = "")
+        {
+            OpenInBrowserWindow(url, browserPath);
         }
 
         /// <summary> 
         /// Opens search as a tab in the default browser chosen in Windows settings.
         /// </summary>
-        public static void NewTabInBrowser(this string url, string browserPath = "")
+        public static void OpenInBrowserTab(this string url, string browserPath = "", bool inPrivate = false, string privateArg = "")
         {
             browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
 
-            var psi = new ProcessStartInfo() { UseShellExecute = true };
+            var psi = new ProcessStartInfo()
+            {
+                UseShellExecute = true
+            };
             try
             {
                 if (!string.IsNullOrEmpty(browserPath))
                 {
                     psi.FileName = browserPath;
-                    psi.Arguments = url;
+                    psi.Arguments = (inPrivate ? $"{privateArg} " : "") + url;
                 }
                 else
                 {
@@ -90,8 +105,17 @@ namespace Flow.Launcher.Plugin.SharedCommands
             // This error may be thrown if browser path is incorrect
             catch (System.ComponentModel.Win32Exception)
             {
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = url, UseShellExecute = true
+                });
             }
+        }
+
+        [Obsolete("This is provided for backwards compatibility after 1.9.0 release, e.g. GitHub plugin. Use the new method instead")]
+        public static void NewTabInBrowser(this string url, string browserPath = "")
+        {
+            OpenInBrowserTab(url, browserPath);
         }
     }
 }

@@ -74,14 +74,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                         Score = score,
                         Action = c =>
                         {
-                            if (_settings.OpenInNewBrowser)
-                            {
-                                searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewBrowserWindow(_settings.BrowserPath);
-                            }
-                            else
-                            {
-                                searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewTabInBrowser(_settings.BrowserPath);
-                            }
+                            _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
 
                             return true;
                         }
@@ -143,14 +136,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                     ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                     Action = c =>
                     {
-                        if (_settings.OpenInNewBrowser)
-                        {
-                            searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)).NewBrowserWindow(_settings.BrowserPath);
-                        }
-                        else
-                        {
-                            searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)).NewTabInBrowser(_settings.BrowserPath);
-                        }
+                        _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
 
                         return true;
                     }
@@ -170,7 +156,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 _settings = _context.API.LoadSettingJsonStorage<Settings>();
                 _viewModel = new SettingsViewModel(_settings);
-                
+
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
                 var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
 
