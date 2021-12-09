@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -27,6 +27,11 @@ namespace Flow.Launcher.Core.Plugin
             // temp fix for issue #667
             var path = Path.Combine(Constant.ProgramDirectory, JsonRPC);
             _startInfo.EnvironmentVariables["PYTHONPATH"] = path;
+
+            _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
+            _startInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;
+            _startInfo.EnvironmentVariables["FLOW_APPLICATION_DIRECTORY"] = Constant.ApplicationDirectory;
+
 
             //Add -B flag to tell python don't write .py[co] files. Because .pyc contains location infos which will prevent python portable
             _startInfo.ArgumentList.Add("-B");

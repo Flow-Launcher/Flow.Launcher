@@ -8,11 +8,16 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
+using System.Threading;
 
 namespace Flow.Launcher
 {
     public partial class HotkeyControl : UserControl
     {
+        private Brush tbMsgForegroundColorOriginal;
+
+        private string tbMsgTextOriginal;
+
         public HotkeyModel CurrentHotkey { get; private set; }
         public bool CurrentHotkeyAvailable { get; private set; }
 
@@ -23,17 +28,24 @@ namespace Flow.Launcher
         public HotkeyControl()
         {
             InitializeComponent();
+            tbMsgTextOriginal = tbMsg.Text;
+            tbMsgForegroundColorOriginal = tbMsg.Foreground;
         }
 
-        void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        private CancellationTokenSource hotkeyUpdateSource;
+
+        private void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
+            hotkeyUpdateSource?.Cancel();
+            hotkeyUpdateSource?.Dispose();
+            hotkeyUpdateSource = new();
+            var token = hotkeyUpdateSource.Token;
             e.Handled = true;
-            tbMsg.Visibility = Visibility.Hidden;
 
             //when alt is pressed, the real key should be e.SystemKey
-            Key key = (e.Key == Key.System ? e.SystemKey : e.Key);
+            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
 
-            SpecialKeyState specialKeyState = GlobalHotkey.Instance.CheckModifiers();
+            SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
 
             var hotkeyModel = new HotkeyModel(
                 specialKeyState.AltPressed,
@@ -49,14 +61,15 @@ namespace Flow.Launcher
                 return;
             }
 
-            Dispatcher.InvokeAsync(async () =>
+            _ = Dispatcher.InvokeAsync(async () =>
             {
-                await Task.Delay(500);
-                SetHotkey(hotkeyModel);
+                await Task.Delay(500, token);
+                if (!token.IsCancellationRequested)
+                    await SetHotkey(hotkeyModel);
             });
         }
 
-        public void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
+        public async Task SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
             CurrentHotkey = keyModel;
 
@@ -78,6 +91,13 @@ namespace Flow.Launcher
                 }
                 tbMsg.Visibility = Visibility.Visible;
                 OnHotkeyChanged();
+
+                var token = hotkeyUpdateSource.Token;
+                await Task.Delay(500, token);
+                if (token.IsCancellationRequested)
+                    return;
+                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
+                Keyboard.ClearFocus();
             }
         }
 
@@ -88,9 +108,12 @@ namespace Flow.Launcher
 
         private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
 
-        public new bool IsFocused
+        public new bool IsFocused => tbHotkey.IsFocused;
+
+        private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
-            get { return tbHotkey.IsFocused; }
+            tbMsg.Text = tbMsgTextOriginal;
+            tbMsg.Foreground = tbMsgForegroundColorOriginal;
         }
     }
 }

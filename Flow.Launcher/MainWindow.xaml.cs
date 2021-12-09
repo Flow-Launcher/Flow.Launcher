@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,16 +11,12 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
-using Microsoft.AspNetCore.Authorization;
-using Application = System.Windows.Application;
 using Screen = System.Windows.Forms.Screen;
 using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
-using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MessageBox = System.Windows.MessageBox;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
-using System.Windows.Interop;
+using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher
 {
@@ -34,6 +30,7 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
+        private bool _animating;
 
         #endregion
 
@@ -43,6 +40,7 @@ namespace Flow.Launcher
             _viewModel = mainVM;
             _settings = settings;
             InitializeComponent();
+            InitializePosition();
         }
 
         public MainWindow()
@@ -52,6 +50,8 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
+            _settings.WindowTop = Top;
+            _settings.WindowLeft = Left;
             _notifyIcon.Visible = false;
             _viewModel.Save();
             e.Cancel = true;
@@ -65,12 +65,13 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            CheckFirstLaunch();
+            HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
-
+            InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
-            InitializePosition();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
@@ -79,13 +80,13 @@ namespace Flow.Launcher
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(MainViewModel.MainWindowVisibility):
+                    case nameof(MainViewModel.MainWindowVisibilityStatus):
                         {
-                            if (_viewModel.MainWindowVisibility == Visibility.Visible)
+                            if (_viewModel.MainWindowVisibilityStatus)
                             {
+                                UpdatePosition();
                                 Activate();
                                 QueryTextBox.Focus();
-                                UpdatePosition();
                                 _settings.ActivateTimes++;
                                 if (!_viewModel.LastQuerySelected)
                                 {
@@ -117,7 +118,7 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
-                                else if (_viewModel.MainWindowVisibility == Visibility.Visible &&
+                                else if (_viewModel.MainWindowVisibilityStatus &&
                                          isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
@@ -148,24 +149,29 @@ namespace Flow.Launcher
                         break;
                 }
             };
-
-            InitializePosition();
         }
 
         private void InitializePosition()
         {
-            Top = WindowTop();
-            Left = WindowLeft();
-            _settings.WindowTop = Top;
-            _settings.WindowLeft = Left;
+            if (_settings.RememberLastLaunchLocation)
+            {
+                Top = _settings.WindowTop;
+                Left = _settings.WindowLeft;
+            }
+            else
+            {
+                Left = WindowLeft();
+                Top = WindowTop();
+            }
         }
 
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
             ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
-            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -180,12 +186,16 @@ namespace Flow.Launcher
 
             var header = new MenuItem
             {
-                Header = "Flow Launcher", 
+                Header = "Flow Launcher",
                 IsEnabled = false
             };
             var open = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen")
+            };
+            var gamemode = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode")
             };
             var settings = new MenuItem
             {
@@ -196,11 +206,14 @@ namespace Flow.Launcher
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
             };
 
-            open.Click += (o, e) => Visibility = Visibility.Visible;
+            open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
+            gamemode.Click += (o, e) => ToggleGameMode();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
+            gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
+            contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
@@ -220,6 +233,33 @@ namespace Flow.Launcher
             };
         }
 
+        private void CheckFirstLaunch()
+        {
+            if (_settings.FirstLaunch)
+            {
+                _settings.FirstLaunch = false;
+                PluginManager.API.SaveAppAllSettings();
+                OpenWelcomeWindow();
+            }
+        }
+        private void OpenWelcomeWindow()
+        {
+            var WelcomeWindow = new WelcomeWindow(_settings);
+            WelcomeWindow.Show();
+        }
+        private void ToggleGameMode()
+        {
+            if (_viewModel.GameModeStatus)
+            {
+                _notifyIcon.Icon = Properties.Resources.app;
+                _viewModel.GameModeStatus = false;
+            }
+            else
+            {
+                _notifyIcon.Icon = Properties.Resources.gamemode;
+                _viewModel.GameModeStatus = true;
+            }
+        }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
@@ -233,6 +273,53 @@ namespace Flow.Launcher
 
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
+        }
+        public void WindowAnimator()
+        {
+            if (_animating)
+                return;
+
+            _animating = true;
+            UpdatePosition();
+            Storyboard sb = new Storyboard();
+            Storyboard iconsb = new Storyboard();
+            CircleEase easing = new CircleEase();  // or whatever easing class you want
+            easing.EasingMode = EasingMode.EaseInOut;
+            var da = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromSeconds(0.25),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            var da2 = new DoubleAnimation
+            {
+                From = Top + 10,
+                To = Top,
+                Duration = TimeSpan.FromSeconds(0.25),
+                FillBehavior = FillBehavior.Stop
+            };
+                var da3 = new DoubleAnimation
+                {
+                    From = 12,
+                    To = 0,
+                    EasingFunction = easing,
+                    Duration = TimeSpan.FromSeconds(0.36),
+                    FillBehavior = FillBehavior.Stop
+                };
+            Storyboard.SetTarget(da, this);
+            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(da3, new PropertyPath(TopProperty));
+            sb.Children.Add(da);
+            sb.Children.Add(da2);
+            iconsb.Children.Add(da3);
+            sb.Completed += (_, _) => _animating = false;
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
+            iconsb.Begin(SearchIcon);
+            sb.Begin(FlowMainWindow);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -267,22 +354,41 @@ namespace Flow.Launcher
             e.Handled = true;
         }
 
-        private void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
+        private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
+            _viewModel.Hide();
+            
+            if(_settings.UseAnimation)
+                await Task.Delay(100);
+            
             App.API.OpenSettingDialog();
         }
 
 
-        private void OnDeactivated(object sender, EventArgs e)
+        private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_settings.HideWhenDeactive)
+            //This condition stops extra hide call when animator is on, 
+            // which causes the toggling to occasional hide instead of show.
+            if (_viewModel.MainWindowVisibilityStatus)
             {
-                _viewModel.Hide();
+                // Need time to initialize the main query window animation. 
+                // This also stops the mainwindow from flickering occasionally after Settings window is opened
+                // and always after Settings window is closed.
+                if (_settings.UseAnimation)
+                    await Task.Delay(100);
+                
+                if (_settings.HideWhenDeactive)
+                {
+                    _viewModel.Hide();
+                }
             }
         }
 
         private void UpdatePosition()
         {
+            if (_animating)
+                return;
+
             if (_settings.RememberLastLaunchLocation)
             {
                 Left = _settings.WindowLeft;
@@ -297,6 +403,8 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
+            if (_animating)
+                return;
             if (_settings.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
@@ -304,7 +412,20 @@ namespace Flow.Launcher
             }
         }
 
-        private double WindowLeft()
+        public void HideStartup()
+        {
+            UpdatePosition();
+            if (_settings.HideOnStartup)
+            {
+                _viewModel.Hide();
+            }
+            else
+            {
+                _viewModel.Show();
+            }
+        }
+
+        public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
@@ -313,7 +434,7 @@ namespace Flow.Launcher
             return left;
         }
 
-        private double WindowTop()
+        public double WindowTop()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
@@ -371,6 +492,18 @@ namespace Flow.Launcher
         private void MoveQueryTextToEnd()
         {
             QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
+        }
+
+        public void InitializeColorScheme()
+        {
+            if (_settings.ColorScheme == Constant.Light)
+            {
+                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+            }
+            else if (_settings.ColorScheme == Constant.Dark)
+            {
+                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+            }
         }
     }
 }

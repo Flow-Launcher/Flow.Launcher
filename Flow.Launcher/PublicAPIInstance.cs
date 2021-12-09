@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +14,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
 using System.Threading;
 using System.IO;
 using Flow.Launcher.Infrastructure.Http;
@@ -40,7 +41,7 @@ namespace Flow.Launcher
             _settingsVM = settingsVM;
             _mainVM = mainVM;
             _alphabet = alphabet;
-            GlobalHotkey.Instance.hookedKeyboardCallback += KListener_hookedKeyboardCallback;
+            GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
 
@@ -55,7 +56,7 @@ namespace Flow.Launcher
 
         public void RestartApp()
         {
-            _mainVM.MainWindowVisibility = Visibility.Hidden;
+            _mainVM.Hide();
 
             // we must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
@@ -70,7 +71,7 @@ namespace Flow.Launcher
 
         public void RestarApp() => RestartApp();
 
-        public void ShowMainWindow() => _mainVM.MainWindowVisibility = Visibility.Visible;
+        public void ShowMainWindow() => _mainVM.Show();
 
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
@@ -104,6 +105,19 @@ namespace Flow.Launcher
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
             });
+        }
+
+        public void ShellRun(string cmd, string filename = "cmd.exe")
+        {
+            var args = filename == "cmd.exe" ? $"/C {cmd}" : $"{cmd}";
+
+            var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
+            ShellCommand.Execute(startInfo);
+        }
+        
+        public void CopyToClipboard(string text)
+        {
+            Clipboard.SetDataObject(text);
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
@@ -190,12 +204,17 @@ namespace Flow.Launcher
                 Arguments = FileName is null ?
                     explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath) :
                     explorerInfo.FileArgument.Replace("%d", DirectoryPath).Replace("%f",
-                    Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
+                        Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
             };
             explorer.Start();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+
+        private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
+
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
 
         #endregion
 
@@ -203,12 +222,17 @@ namespace Flow.Launcher
 
         private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
         {
+            var continueHook = true;
             if (GlobalKeyboardEvent != null)
             {
-                return GlobalKeyboardEvent((int)keyevent, vkcode, state);
+                continueHook = GlobalKeyboardEvent((int)keyevent, vkcode, state);
+            }
+            foreach (var x in _globalKeyboardHandlers)
+            {
+                continueHook &= x((int)keyevent, vkcode, state);
             }
 
-            return true;
+            return continueHook;
         }
 
         #endregion

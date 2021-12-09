@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.PluginsManager.Views
 
             this.viewModel = viewModel;
 
-            //RefreshView();
+            this.DataContext = viewModel;
         }
     }
 }
