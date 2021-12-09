@@ -20,7 +20,7 @@
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
-    <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vyberateľných diskoch a cloudových službách).</system:String>
+    <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
@@ -54,10 +54,10 @@
     <system:String x:Key="disable">Vyp.</system:String>
     <system:String x:Key="actionKeywordsTitle">Nastavenie kľúčového slova akcie</system:String>
     <system:String x:Key="actionKeywords">Skratka akcie</system:String>
-    <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky:</system:String>
-    <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
-    <system:String x:Key="currentPriority">Aktuálna priorita:</system:String>
-    <system:String x:Key="newPriority">Nová priorita:</system:String>
+    <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky</system:String>
+    <system:String x:Key="newActionKeyword">Nová akcia skratky</system:String>
+    <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
+    <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">od</system:String>
