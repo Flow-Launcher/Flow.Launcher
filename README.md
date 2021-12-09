@@ -64,7 +64,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Applications & Files
 
-<img src="https://user-images.githubusercontent.com/6903107/144517107-efd83586-9084-46e0-b7dc-79a6748ea936.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/145332614-74909973-f6eb-47c2-8235-289931e30718.png" width="400">
 
 
 - Search for files or their contents.
