@@ -218,7 +218,7 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
             OpenResultCommand = new RelayCommand(index =>
@@ -235,7 +235,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     bool hideWindow = result.Action != null && result.Action(new ActionContext
                     {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
+                        SpecialKeyState = GlobalHotkey.CheckModifiers()
                     });
 
                     if (hideWindow)
@@ -271,8 +271,8 @@ namespace Flow.Launcher.ViewModel
                         autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                     }
 
-                    var SpecialKeyState = GlobalHotkey.Instance.CheckModifiers();
-                    if (SpecialKeyState.ShiftPressed)
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.ShiftPressed)
                     {
                         autoCompleteText = result.SubTitle;
                     }
@@ -710,7 +710,7 @@ namespace Flow.Launcher.ViewModel
             var plugin = translator.GetTranslation("plugin");
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
-            var subtitle = $"{author}: {metadata.Author}, {website}: {metadata.Website} {version}: {metadata.Version}";
+            var subtitle = $"{author} {metadata.Author}";
 
             var menu = new Result
             {

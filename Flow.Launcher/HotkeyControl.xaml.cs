@@ -45,7 +45,7 @@ namespace Flow.Launcher
             //when alt is pressed, the real key should be e.SystemKey
             Key key = e.Key == Key.System ? e.SystemKey : e.Key;
 
-            SpecialKeyState specialKeyState = GlobalHotkey.Instance.CheckModifiers();
+            SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
 
             var hotkeyModel = new HotkeyModel(
                 specialKeyState.AltPressed,
