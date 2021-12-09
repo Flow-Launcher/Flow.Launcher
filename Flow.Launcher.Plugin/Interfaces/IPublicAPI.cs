@@ -214,7 +214,7 @@ namespace Flow.Launcher.Plugin
         public void OpenDirectory(string DirectoryPath, string FileName = null);
 
         /// <summary>
-        /// Open Url in the configured default browser for Flow's Settings.
+        /// Opens the url. The browser and mode used is based on what's configured in Flow's default browser settings.
         /// </summary>
         public void OpenUrl(string url, bool? inPrivate = null);
     }
