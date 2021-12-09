@@ -114,7 +114,7 @@ namespace Flow.Launcher
             var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
             ShellCommand.Execute(startInfo);
         }
-        
+
         public void CopyToClipboard(string text)
         {
             Clipboard.SetDataObject(text);
@@ -209,7 +209,7 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
-        public void OpenUrl(string url)
+        public void OpenUrl(string url, bool? inPrivate = null)
         {
             var browserInfo = _settingsVM.Settings.CustomBrowser;
 
@@ -217,10 +217,11 @@ namespace Flow.Launcher
 
             if (browserInfo.OpenInTab)
             {
-                url.OpenInBrowserTab(path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
-            }else
+                url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+            }
+            else
             {
-                url.OpenInBrowserWindow(path, browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
             }
 
         }
