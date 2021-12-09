@@ -328,7 +328,10 @@ namespace Flow.Launcher.Core.Plugin
                 return;
 
             if (File.Exists(SettingPath))
-                Settings = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(File.OpenRead(SettingPath), options);
+            {
+                await using var fileStream = File.OpenRead(SettingPath);
+                Settings = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(fileStream, options);
+            }
 
             var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
             _settingsTemplate = deserializer.Deserialize<JsonRpcConfigurationModel>(await File.ReadAllTextAsync(SettingConfigurationPath));
