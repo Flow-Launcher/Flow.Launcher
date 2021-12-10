@@ -60,7 +60,7 @@
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
     <system:String x:Key="pluginDirectory">Diretório de plugins</system:String>
-    <system:String x:Key="author">Autor:</system:String>
+    <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de inicialização:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
     <system:String x:Key="plugin_query_version">| Versão</system:String>
@@ -149,6 +149,7 @@
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Pasta de definições</system:String>
     <system:String x:Key="logfolder">Pasta de registos</system:String>
+    <system:String x:Key="welcomewindow">Assistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
@@ -227,5 +228,41 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="update_flowlauncher_update_upadte_files">Os seguintes ficheiros serão atualizados</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Atualizar ficheiros</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_description">Atualizar descrição</system:String>
+
+    <!--  Welcome Window  -->
+    <system:String x:Key="Skip">Ignorar</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Obrigado por utilizar Flow launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Esta é a primeira vez que está a utilizar Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Antes de utilizar a aplicação, este assistente ajuda a configurar Flow Launcher. Caso pretenda, pode ignorar este passo. Por favor escolha um idioma.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Pesquise ficheiros/ pastas e execute aplicações no seu computador</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Pode pesquisar aplicações, ficheiros, marcadores, YouTube, Twitter e muito mais. Tuso isto é efetuado através do teclado, dispensando a utilização do rato.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher é iniciado com a tecla de atalho abaixo. Experimente. Para alterar esta tecla de atalho, clique no valor e escolha a combinação de teclas a utilizar.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Teclas de atalho</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Palavras-chave a comandos</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Pesquise na Web, inicie aplicações e execute funções através dos nossos plugins. Algumas ações são invocadas com palavras-chave mas, se quiser, podem ser invocadas sem essas palavras-chave. Teste as consultas abaixo para experimentar.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Vamos iniciar Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Terminado. Desfrute de Flow Launcher. Não se esqueça d tecla de atalho :-)</system:String>
+
+    <!--  General Guide & Hotkey  -->
+
+    <system:String x:Key="HotkeyUpDownDesc">Recuar/Menu de contexto</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navegação nos itens</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Abrir menu de contexto</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir pasta</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Executar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Histórico de consultas</system:String>
+    <system:String x:Key="HotkeyESCDesc">Voltar aos resultados no menu de contexto</system:String>
+    <system:String x:Key="HotkeyRunDesc">Abrir/Executar item selecionado</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Abrir janela de definições</system:String>
+    <system:String x:Key="HotkeyF5Desc">Recarregar dados do plugin</system:String>
+
+    <system:String x:Key="RecommendWeather">Meteorologia</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Meteorologia no Google</system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
+    <system:String x:Key="RecommendShellDesc">Comando de consola</system:String>
+    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth nas definições do Windows</system:String>
+    <system:String x:Key="RecommendAcronyms">sn</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
 </ResourceDictionary>
