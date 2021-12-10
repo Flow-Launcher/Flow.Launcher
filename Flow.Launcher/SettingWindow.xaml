@@ -818,6 +818,30 @@
                                 </ItemsControl>
                             </Border>
 
+                            <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Style="{DynamicResource SettingTitleLabel}"
+                                            Text="{DynamicResource defaultBrowser}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource defaultBrowserToolTip}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <Button
+                                            Width="160"
+                                            MaxWidth="250"
+                                            Margin="10,0,18,0"
+                                            Click="OnSelectDefaultBrowserClick"
+                                            Content="{Binding Settings.CustomBrowser.Name}" />
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xf6fa;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
