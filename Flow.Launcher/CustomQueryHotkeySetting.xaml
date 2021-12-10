@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     Title="{DynamicResource customeQueryHotkeyTitle}"
-    Width="500"
+    Width="530"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
@@ -79,56 +79,74 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Width="100"
-                        Margin="10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource hotkey}" />
-                    <flowlauncher:HotkeyControl
-                        x:Name="ctlHotkey"
-                        Grid.Column="1"
-                        Width="200"
-                        Height="34"
-                        Margin="10,0,10,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Left" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource actionKeyword}" />
-                </StackPanel>
-
-                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Width="100"
-                        Margin="10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource customQuery}" />
-                    <TextBox
-                        x:Name="tbAction"
-                        Width="220"
-                        Margin="10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center" />
-                    <Button
-                        x:Name="btnTestActionKeyword"
-                        Height="30"
-                        Padding="10,5,10,5"
-                        Click="BtnTestActionKeyword_OnClick"
-                        Content="{DynamicResource preview}" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Width="Auto"
+                            MinWidth="110"
+                            Margin="10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource hotkey}" />
+                        <StackPanel
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <flowlauncher:HotkeyControl
+                                x:Name="ctlHotkey"
+                                Grid.Column="1"
+                                Width="200"
+                                Height="34"
+                                Margin="10,0,10,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Left" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="10"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{DynamicResource actionKeyword}" />
+                        </StackPanel>
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Width="Auto"
+                            MinWidth="110"
+                            Margin="10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource customQuery}" />
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <TextBox
+                                x:Name="tbAction"
+                                MinWidth="220"
+                                Margin="10"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center" />
+                            <Button
+                                x:Name="btnTestActionKeyword"
+                                Padding="10,5,10,5"
+                                Click="BtnTestActionKeyword_OnClick"
+                                Content="{DynamicResource preview}" />
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
