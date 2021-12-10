@@ -8,11 +8,15 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Documents;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Converters
 {
     public class HighlightTextConverter : IMultiValueConverter
     {
+        public Settings Settings { get;}
+        Settings settings = new Settings();
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo cultureInfo)
         {
             var text = value[0] as string;
@@ -31,8 +35,14 @@ namespace Flow.Launcher.Converters
                 var currentCharacter = text.Substring(i, 1);
                 if (this.ShouldHighlight(highlightData, i))
                 {
-
+                    System.Diagnostics.Debug.WriteLine(settings.SubtitleHighlight);
+                    if (settings.SubtitleHighlight == true)
+                    { 
                     textBlock.Inlines.Add(new Run(currentCharacter) { Style = (Style)Application.Current.FindResource("HighlightStyle") });
+                    }
+                    else
+                    {
+                    }
 
                 }
                 else
@@ -52,5 +62,6 @@ namespace Flow.Launcher.Converters
         {
             return highlightData.Contains(index);
         }
+
     }
 }

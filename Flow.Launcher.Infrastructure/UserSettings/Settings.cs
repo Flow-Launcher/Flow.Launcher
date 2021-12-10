@@ -40,6 +40,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
+        public bool SubtitleHighlight { get; set; } = false;
         public bool UseSound { get; set; } = true;
         public bool FirstLaunch { get; set; } = true;
 
