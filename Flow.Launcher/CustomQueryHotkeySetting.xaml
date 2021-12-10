@@ -82,7 +82,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
-                        Width="60"
+                        Width="100"
                         Margin="10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -111,7 +111,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
-                        Width="60"
+                        Width="100"
                         Margin="10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -119,7 +119,7 @@
                         Text="{DynamicResource customQuery}" />
                     <TextBox
                         x:Name="tbAction"
-                        Width="250"
+                        Width="220"
                         Margin="10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center" />
@@ -151,7 +151,8 @@
                     Width="100"
                     Height="32"
                     Margin="5,0,10,0"
-                    Click="btnAdd_OnClick">
+                    Click="btnAdd_OnClick"
+                    Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>
             </StackPanel>
