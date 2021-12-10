@@ -90,7 +90,6 @@
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
     <system:String x:Key="ColorScheme">Color Scheme</system:String>
-    <system:String x:Key="SubtitleHihglight">Subtitle Highlight</system:String>
     <system:String x:Key="ColorSchemeSystem">System Default</system:String>
     <system:String x:Key="ColorSchemeLight">Light</system:String>
     <system:String x:Key="ColorSchemeDark">Dark</system:String>

@@ -356,18 +356,12 @@ namespace Flow.Launcher.ViewModel
             set => Settings.UseAnimation = value;
         }
 
-
         public bool UseSound
         {
             get => Settings.UseSound;
             set => Settings.UseSound = value;
         }
 
-        public bool SubtitleHighlight
-        {
-            get => Settings.SubtitleHighlight;
-            set => Settings.SubtitleHighlight = value;
-        }
         public Brush PreviewBackground
         {
             get

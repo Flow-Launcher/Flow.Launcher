@@ -1937,29 +1937,6 @@
                                                         </TextBlock>
                                                     </ItemsControl>
                                                 </Border>
-                                                <Separator
-                                                    Width="Auto"
-                                                    BorderThickness="1"
-                                                    Style="{StaticResource SettingSeparatorStyle}" />
-                                                <Border
-                                                    Margin="0,0,0,0"
-                                                    BorderThickness="0"
-                                                    Style="{DynamicResource SettingGroupBox}">
-                                                    <ItemsControl Style="{StaticResource SettingGrid}">
-                                                        <StackPanel Style="{StaticResource TextPanel}">
-                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SubtitleHihglight}" />
-                                                        </StackPanel>
-                                                        <ui:ToggleSwitch
-                                                            Grid.Row="0"
-                                                            Grid.Column="2"
-                                                            Width="100"
-                                                            Margin="0,0,2,0"
-                                                            IsOn="{Binding SubtitleHighlight, Mode=TwoWay}" />
-                                                        <TextBlock Style="{StaticResource Glyph}">
-                                                            &#xea80;
-                                                        </TextBlock>
-                                                    </ItemsControl>
-                                                </Border>
                                             </StackPanel>
                                         </Border>
 
