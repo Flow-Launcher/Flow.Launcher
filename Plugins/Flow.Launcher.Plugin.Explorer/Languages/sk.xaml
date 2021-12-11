@@ -1,6 +1,5 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Dialogues-->
     <system:String x:Key="plugin_explorer_make_selection_warning">Najprv vyberte položku</system:String>
@@ -10,6 +9,7 @@
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Odstránenie bolo úspešné</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Úspešne odstránené {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Priradenie globálnej skratky akcie by mohlo počas vyhľadávania poskytnúť príliš veľa výsledkov. Vyberte si konkrétne kľúčové slovo akcie</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Ak je rýchly prístup povolený, nemôže byť nastavená globálna skratka akcie. Prosím, vyberte konkrétnu skratku akcie</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Zdá sa, že požadovaná služba Windows Index Search nie je spustená</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Ak to chcete opraviť, spustite službu Windows Search. Ak chcete odstrániť toto upozornenie, kliknite sem</system:String>
     <system:String x:Key="plugin_explorer_alternative">Upozornenie bolo vypnuté. Chceli by ste ako alternatívu na vyhľadávanie súborov a priečinkov nainštalovať plugin Everything?{0}{0}Ak chcete nainštalovať plugin Everything, zvoľte 'Áno', pre návrat zvoľte 'Nie'</system:String>
@@ -27,13 +27,14 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Vyhľadávanie umiestnenia:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Vyhľadávanie obsahu súborov:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Vyhľadávanie v indexe:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Rýchly prístup:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuálna skratka:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Hotovo</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Povolené</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Ak je vypnuté, Flow túto možnosť vyhľadávania nevykoná a následne sa vráti späť na "*", aby sa uvoľnila skratka akcie.</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Ak je vypnuté, Flow túto možnosť vyhľadávania nevykoná a následne sa vráti späť na &quot;*&quot;, aby sa uvoľnila skratka akcie.</system:String>
 
     <!--Plugin Infos-->
-    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
+    <system:String x:Key="plugin_explorer_plugin_name">Prieskumník</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva a spravuje súbory a priečinky. Explorer používa indexovanie vyhľadávania vo Windowse</system:String>
 
     <!--Context menu items-->
