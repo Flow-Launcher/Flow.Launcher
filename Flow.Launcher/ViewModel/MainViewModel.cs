@@ -737,7 +737,7 @@ namespace Flow.Launcher.ViewModel
         {
             var results = SelectedResults;
 
-            if (SelectedIsFromQueryResults() && _history.Items.Count > 0 && (results.SelectedIndex == 0 || results == null))
+            if (!HistorySelected() && !ContextMenuSelected() && _history.Items.Count > 0 && (results.SelectedIndex <= 0 || results == null ))
             {   
                 ChangeQueryText(_history.Items[_history.Items.Count - _lastHistory].Query.ToString());
                 _lastHistory++;
