@@ -90,7 +90,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings
         /// <param name="query">The query to filter the list.</param>
         /// <returns>A filtered list, can be empty when nothing was found.</returns>
         public List<Result> Query(Query query)
-         {
+        {
             var newList = ResultHelper.GetResultList(_translatedSettingList, query, windowSettingsIconPath, controlPanelIconPath);
             return newList;
         }

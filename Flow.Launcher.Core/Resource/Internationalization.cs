@@ -176,12 +176,12 @@ namespace Flow.Launcher.Core.Resource
         {
             foreach (var p in PluginManager.GetPluginsForInterface<IPluginI18n>())
             {
-                var pluginI18N = p.Plugin as IPluginI18n;
-                if (pluginI18N == null) return;
+                if (p.Plugin is not IPluginI18n pluginI18N) continue;
                 try
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
                 {
