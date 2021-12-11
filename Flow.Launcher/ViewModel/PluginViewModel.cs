@@ -30,9 +30,20 @@ namespace Flow.Launcher.ViewModel
             get => !PluginPair.Metadata.Disabled;
             set => PluginPair.Metadata.Disabled = !value;
         }
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set
+            {
+                _isExpanded = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SettingControl));
+            }
+        }
 
         private Control _settingControl;
-        public Control SettingControl => _settingControl ??= PluginPair.Plugin is not ISettingProvider settingProvider ? new Control() : settingProvider.CreateSettingPanel();
+        private bool _isExpanded;
+        public Control SettingControl => IsExpanded ? _settingControl ??= PluginPair.Plugin is not ISettingProvider settingProvider ? new Control() : settingProvider.CreateSettingPanel() : null;
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
