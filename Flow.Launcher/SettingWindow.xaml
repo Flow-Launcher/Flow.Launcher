@@ -902,29 +902,37 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="73" />
-                            <RowDefinition Height="73" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Padding="5,18,0,0">
-                            <TextBlock
-                                Margin="0,5,0,0"
-                                FontSize="30"
-                                Style="{StaticResource PageTitle}"
-                                Text="{DynamicResource plugin}"
-                                TextAlignment="left" />
-                        </Border>
-                        <Border Grid.Row="1" Padding="5,18,0,0">
-                            <TextBox
-                                Name="pluginFilterTxb"
-                                Margin="0,5,0,0"
-                                FontSize="30"
-                                Text=""
-                                TextAlignment="left"
-                                TextChanged="OnPluginSearchTextChanged"
-                                />
+                        <Border
+                            Grid.Row="0"
+                            Padding="5,18,0,0"
+                            HorizontalAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    DockPanel.Dock="Left"
+                                    FontSize="30"
+                                    Style="{StaticResource PageTitle}"
+                                    Text="{DynamicResource plugin}"
+                                    TextAlignment="Left" />
+                                <DockPanel DockPanel.Dock="Right">
+                                    <TextBox
+                                        Name="pluginFilterTxb"
+                                        Width="150"
+                                        Height="34"
+                                        Margin="0,5,26,0"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Right"
+                                        FontSize="14"
+                                        Text=""
+                                        TextAlignment="Left"
+                                        TextChanged="OnPluginSearchTextChanged" />
+                                </DockPanel>
+                            </DockPanel>
                         </Border>
                         <Border
-                            Grid.Row="2"
+                            Grid.Row="1"
                             Grid.Column="0"
                             Padding="0,0,0,0"
                             Background="{DynamicResource Color01B}">
@@ -1296,19 +1304,31 @@
                                 Text="{DynamicResource pluginStore}"
                                 TextAlignment="left" />
                         </Border>
-                        <Border
+                        <DockPanel
                             Grid.Row="0"
                             Grid.Column="1"
-                            Padding="5,18,32,0">
+                            Margin="5,18,0,0">
                             <Button
                                 Height="34"
-                                Margin="0,5,0,5"
+                                Margin="0,5,16,5"
                                 Padding="12,4,12,4"
                                 HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
                                 Click="OnPluginStoreRefreshClick"
                                 Content="{DynamicResource refresh}"
+                                DockPanel.Dock="Right"
                                 FontSize="13" />
-                        </Border>
+                            <TextBox
+                                Width="150"
+                                Height="34"
+                                Margin="0,0,6,0"
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Right"
+                                FontSize="14"
+                                Text=""
+                                TextAlignment="Left" />
+
+                        </DockPanel>
                         <Border
                             Grid.Row="1"
                             Grid.Column="0"
