@@ -793,7 +793,7 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-
+            _lastHistory = 1;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }
