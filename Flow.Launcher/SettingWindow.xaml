@@ -110,12 +110,12 @@
             </Setter>
         </Style>
 
-        <Style
-            x:Key="SideToggleSwitch"
-            BasedOn="{StaticResource DefaultToggleSwitch}"
-            TargetType="{x:Type ui:ToggleSwitch}">
+        <Style x:Key="SideToggleSwitch" TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="OffContent" Value="Off" />
+            <Setter Property="OnContent" Value="On" />
+            <Setter Property="FlowDirection" Value="RightToLeft" />
+            <Setter Property="Margin" Value="0,4,22,4" />
         </Style>
 
         <Style x:Key="SideTextAbout" TargetType="{x:Type TextBlock}">
@@ -951,13 +951,9 @@
                                                     FlowDirection="LeftToRight">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" MinWidth="100" />
-                                                        <ColumnDefinition
-                                                            Width="*"
-                                                            MinWidth="350"
-                                                            MaxWidth="700" />
-                                                        <ColumnDefinition MaxWidth="1400" />
+                                                        <ColumnDefinition Width="2.8*" />
                                                         <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="100" MaxWidth="140" />
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel
                                                         Grid.Column="0"
@@ -984,9 +980,11 @@
                                                             <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
                                                         </TextBlock>
                                                     </StackPanel>
-                                                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                                    <StackPanel
+                                                        Grid.Column="2"
+                                                        HorizontalAlignment="Right"
+                                                        Orientation="Horizontal">
                                                         <TextBlock
-                                                            MaxWidth="100"
                                                             Margin="0,0,8,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="12"
@@ -995,7 +993,7 @@
                                                         <Border>
                                                             <Button
                                                                 x:Name="PriorityButton"
-                                                                Margin="0,0,0,0"
+                                                                Margin="0,0,12,0"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
@@ -1025,13 +1023,14 @@
                                                             </Button>
                                                         </Border>
                                                     </StackPanel>
-                                                    <ui:ToggleSwitch
-                                                        Grid.Column="4"
-                                                        MaxWidth="110"
-                                                        HorizontalAlignment="Right"
-                                                        IsOn="{Binding PluginState}"
-                                                        OffContent="{DynamicResource disable}"
-                                                        OnContent="{DynamicResource enable}" />
+                                                    <DockPanel Grid.Column="3">
+                                                        <ui:ToggleSwitch
+                                                            Margin="4"
+                                                            HorizontalAlignment="Right"
+                                                            DockPanel.Dock="Right"
+                                                            FlowDirection="RightToLeft"
+                                                            IsOn="{Binding PluginState}" />
+                                                    </DockPanel>
                                                 </Grid>
 
                                             </Expander.Header>
@@ -1607,7 +1606,8 @@
                                                 Grid.Row="0"
                                                 Grid.Column="2"
                                                 Width="100"
-                                                Margin="0,0,2,0"
+                                                Margin="0,0,22,0"
+                                                FlowDirection="RightToLeft"
                                                 IsOn="{Binding DropShadowEffect, Mode=TwoWay}" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeb91;
@@ -1775,8 +1775,8 @@
                                                         Grid.Row="0"
                                                         Grid.Column="2"
                                                         Width="100"
-                                                        Margin="0,0,2,0"
-                                                        IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" />
+                                                        IsOn="{Binding UseGlyphIcons, Mode=TwoWay}"
+                                                        Style="{DynamicResource SideToggleSwitch}" />
                                                     <TextBlock Style="{StaticResource Glyph}">
                                                         &#xf6b8;
                                                     </TextBlock>
@@ -1906,7 +1906,8 @@
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             Width="100"
-                                                            Margin="0,0,2,0"
+                                                            Margin="0,0,22,0"
+                                                            FlowDirection="RightToLeft"
                                                             IsOn="{Binding UseAnimation, Mode=TwoWay}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xedb5;
@@ -1930,8 +1931,8 @@
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             Width="100"
-                                                            Margin="0,0,2,0"
-                                                            IsOn="{Binding UseSound, Mode=TwoWay}" />
+                                                            IsOn="{Binding UseSound, Mode=TwoWay}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
                                                         </TextBlock>
