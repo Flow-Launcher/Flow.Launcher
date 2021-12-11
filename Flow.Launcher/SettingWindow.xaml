@@ -112,8 +112,8 @@
 
         <Style x:Key="SideToggleSwitch" TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="OffContent" Value="Off" />
-            <Setter Property="OnContent" Value="On" />
+            <Setter Property="OffContent" Value="{DynamicResource disable}" />
+            <Setter Property="OnContent" Value="{DynamicResource enable}" />
             <Setter Property="FlowDirection" Value="RightToLeft" />
             <Setter Property="Margin" Value="0,4,22,4" />
         </Style>
