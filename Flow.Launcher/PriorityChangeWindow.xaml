@@ -90,6 +90,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         CornerRadius="4"
+                        Minimum="0"
                         SmallChange="1"
                         SpinButtonPlacementMode="Inline" />
                 </StackPanel>
