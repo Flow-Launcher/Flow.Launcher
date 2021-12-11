@@ -33,6 +33,7 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
+        private int _lastHistory = 1;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -708,8 +709,19 @@ namespace Flow.Launcher.ViewModel
 
         public void CycleHistory()
         {
-            if (!HistorySelected() && _history.Items.Count > 0)
-                ChangeQueryText(_history.Items.Last().Query.ToString());
+            var results = SelectedResults;
+
+            if (SelectedIsFromQueryResults() && _history.Items.Count > 0 && (results.SelectedIndex == 0 || results != null))
+            {   
+                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistory].Query.ToString());
+                _lastHistory++;
+            }
+            else
+            {
+                _lastHistory = 1;
+                SelectPrevItemCommand.Execute(null);
+            }
+                
         }
 
         public void Show()
