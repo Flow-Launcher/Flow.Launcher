@@ -682,7 +682,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        Width="100"
                                         FocusVisualMargin="5"
                                         IsOn="{Binding AutoUpdates}"
                                         Style="{DynamicResource SideToggleSwitch}" />
@@ -700,7 +699,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        Width="100"
                                         FocusVisualMargin="5"
                                         IsOn="{Binding PortableMode}"
                                         Style="{DynamicResource SideToggleSwitch}" />
@@ -951,9 +949,9 @@
                                                     FlowDirection="LeftToRight">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" MinWidth="100" />
-                                                        <ColumnDefinition Width="2.8*" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" MaxWidth="140" />
+                                                        <ColumnDefinition Width="3*" />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel
                                                         Grid.Column="0"
@@ -1025,11 +1023,10 @@
                                                     </StackPanel>
                                                     <DockPanel Grid.Column="3">
                                                         <ui:ToggleSwitch
-                                                            Margin="4"
-                                                            HorizontalAlignment="Right"
+                                                            Margin="0"
                                                             DockPanel.Dock="Right"
-                                                            FlowDirection="RightToLeft"
-                                                            IsOn="{Binding PluginState}" />
+                                                            IsOn="{Binding PluginState}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
                                                     </DockPanel>
                                                 </Grid>
 
@@ -1605,10 +1602,10 @@
                                             <ui:ToggleSwitch
                                                 Grid.Row="0"
                                                 Grid.Column="2"
-                                                Width="100"
-                                                Margin="0,0,22,0"
-                                                FlowDirection="RightToLeft"
-                                                IsOn="{Binding DropShadowEffect, Mode=TwoWay}" />
+                                                IsOn="{Binding DropShadowEffect, Mode=TwoWay}"
+                                                OffContent="{DynamicResource disable}"
+                                                OnContent="{DynamicResource enable}"
+                                                Style="{DynamicResource SideToggleSwitch}" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeb91;
                                             </TextBlock>
@@ -1774,7 +1771,6 @@
                                                     <ui:ToggleSwitch
                                                         Grid.Row="0"
                                                         Grid.Column="2"
-                                                        Width="100"
                                                         IsOn="{Binding UseGlyphIcons, Mode=TwoWay}"
                                                         Style="{DynamicResource SideToggleSwitch}" />
                                                     <TextBlock Style="{StaticResource Glyph}">
@@ -1905,10 +1901,10 @@
                                                         <ui:ToggleSwitch
                                                             Grid.Row="0"
                                                             Grid.Column="2"
-                                                            Width="100"
-                                                            Margin="0,0,22,0"
-                                                            FlowDirection="RightToLeft"
-                                                            IsOn="{Binding UseAnimation, Mode=TwoWay}" />
+                                                            IsOn="{Binding UseAnimation, Mode=TwoWay}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xedb5;
                                                         </TextBlock>
@@ -1930,8 +1926,9 @@
                                                         <ui:ToggleSwitch
                                                             Grid.Row="0"
                                                             Grid.Column="2"
-                                                            Width="100"
                                                             IsOn="{Binding UseSound, Mode=TwoWay}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}"
                                                             Style="{DynamicResource SideToggleSwitch}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
