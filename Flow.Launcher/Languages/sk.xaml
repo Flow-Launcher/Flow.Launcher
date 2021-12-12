@@ -7,7 +7,7 @@
     <system:String x:Key="setAsTopMostInThisQuery">Pri tomto zadaní umiestniť navrchu</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto zadaní</system:String>
     <system:String x:Key="executeQuery">Spustiť dopyt: {0}</system:String>
-    <system:String x:Key="lastExecuteTime">Posledný čas realizácie: {0}</system:String>
+    <system:String x:Key="lastExecuteTime">Posledný čas spustenia: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Otvoriť</system:String>
     <system:String x:Key="iconTraySettings">Nastavenia</system:String>
     <system:String x:Key="iconTrayAbout">O aplikácii</system:String>
@@ -21,7 +21,7 @@
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher pri spustení systému</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
