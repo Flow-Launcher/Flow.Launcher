@@ -293,7 +293,7 @@ namespace Flow.Launcher
         private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
         {
             var WelcomeWindow = new WelcomeWindow(settings);
-            WelcomeWindow.Show();
+            WelcomeWindow.ShowDialog();
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {

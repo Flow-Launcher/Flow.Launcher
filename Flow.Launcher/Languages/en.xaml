@@ -267,6 +267,7 @@
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
+    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
     <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
     <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>

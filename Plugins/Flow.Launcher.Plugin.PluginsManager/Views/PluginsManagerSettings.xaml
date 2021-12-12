@@ -1,20 +1,21 @@
-﻿<UserControl x:Class="Flow.Launcher.Plugin.PluginsManager.Views.PluginsManagerSettings"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="70 15 0 15">
+﻿<UserControl
+    x:Class="Flow.Launcher.Plugin.PluginsManager.Views.PluginsManagerSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid Margin="70,15,0,15">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
-        <TextBlock Grid.Column="0" 
-                   Text="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}" 
-                   VerticalAlignment="Center" 
-                   FontSize="14"/>
-        <CheckBox Grid.Column="1" IsChecked="{Binding WarnFromUnknownSource}" />
+        <CheckBox
+            Grid.Column="0"
+            Padding="8,0,0,0"
+            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}"
+            IsChecked="{Binding WarnFromUnknownSource}" />
     </Grid>
 </UserControl>
