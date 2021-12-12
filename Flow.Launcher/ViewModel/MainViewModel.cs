@@ -33,7 +33,7 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
-        private int _lastHistory = 1;
+        private int _lastHistoryIndex = 1;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -739,12 +739,12 @@ namespace Flow.Launcher.ViewModel
 
             if (!HistorySelected() && !ContextMenuSelected() && _history.Items.Count > 0 && (results.SelectedIndex <= 0 || results == null ))
             {   
-                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistory].Query.ToString());
-                _lastHistory++;
+                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+                _lastHistoryIndex++;
             }
             else
             {
-                _lastHistory = 1;
+                _lastHistoryIndex = 1;
                 SelectPrevItemCommand.Execute(null);
             }
                 
@@ -793,7 +793,7 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-            _lastHistory = 1;
+            _lastHistoryIndex = 1;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }
