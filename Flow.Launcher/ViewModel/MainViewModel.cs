@@ -744,7 +744,6 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                _lastHistoryIndex = 1;
                 SelectPrevItemCommand.Execute(null);
             }
                 
