@@ -182,6 +182,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
+
+        public bool HideSearchIcon { get; set; } = false;
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
         {

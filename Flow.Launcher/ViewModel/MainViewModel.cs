@@ -387,6 +387,8 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
+
+        public Visibility SearchIconVisibility { get; set; }
         public double MainWindowOpacity { get; set; } = 1;
 
         // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
@@ -739,6 +741,10 @@ namespace Flow.Launcher.ViewModel
                 MediaPlayer media = new MediaPlayer();
                 media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
                 media.Play();
+            }
+            if (_settings.HideSearchIcon)
+            {
+                SearchIconVisibility = Visibility.Hidden;
             }
 
             MainWindowVisibility = Visibility.Visible;
