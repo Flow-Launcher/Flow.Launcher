@@ -218,7 +218,7 @@ namespace Flow.Launcher.ViewModel
                 if (_queryText == String.Empty && !HistorySelected() && !ContextMenuSelected())
                 {
                     ChangeQueryText(_history.Items[_history.Items.Count - 1].Query.ToString());
-                    _lastHistoryIndex++;
+                    _lastHistoryIndex = 1;
                 }
                 else
                 {
