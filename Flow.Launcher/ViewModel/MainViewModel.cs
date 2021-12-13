@@ -212,7 +212,7 @@ namespace Flow.Launcher.ViewModel
             InsertLastQuery = new RelayCommand(_ => {
                 var results = SelectedResults;
 
-                if (_queryText == String.Empty)
+                if (_queryText == String.Empty && !HistorySelected() && !ContextMenuSelected())
                 {
                     ChangeQueryText(_history.Items[_history.Items.Count - 1].Query.ToString());
                     _lastHistoryIndex++;
