@@ -29,6 +29,7 @@ namespace Flow.Launcher.ViewModel
         #region Private Fields
 
         private const string DefaultOpenResultModifiers = "Alt";
+        private const string DefaultCycleHistoryModifiers = "Alt";
 
         private bool _isQueryRunning;
         private Query _lastQuery;
@@ -88,6 +89,7 @@ namespace Flow.Launcher.ViewModel
             RegisterResultsUpdatedEvent();
 
             SetOpenResultModifiers();
+            SetCycleHistoryModifiers();
         }
 
         private void RegisterViewUpdate()
@@ -452,6 +454,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand InsertLastQuery { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
+        public string CycleHistoryModifiers { get; private set; }
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -759,6 +762,11 @@ namespace Flow.Launcher.ViewModel
         private void SetOpenResultModifiers()
         {
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
+        }
+
+        private void SetCycleHistoryModifiers()
+        {
+            CycleHistoryModifiers = _settings.CycleHistoryModifiers ?? DefaultCycleHistoryModifiers;
         }
 
         public void ToggleFlowLauncher()

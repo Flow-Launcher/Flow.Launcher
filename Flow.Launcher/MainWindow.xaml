@@ -86,8 +86,8 @@
             Modifiers="Ctrl" />
         <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
         <KeyBinding Key="Left" Command="{Binding EscCommand}" />
-        <KeyBinding Key="Up" Command="{Binding ReverseHistory}" Modifiers="Alt" />
-        <KeyBinding Key="Down" Command="{Binding ForwardHistory}" Modifiers="Alt" />
+        <KeyBinding Key="Up" Command="{Binding ReverseHistory}" Modifiers="{Binding CycleHistoryModifiers}" />
+        <KeyBinding Key="Down" Command="{Binding ForwardHistory}" Modifiers="{Binding CycleHistoryModifiers}" />
         <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
