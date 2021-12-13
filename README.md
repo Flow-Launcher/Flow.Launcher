@@ -275,3 +275,10 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 - Install Visual Studio 2019
 
 - Install .Net 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
+
+## A history of the flow
+Flow's roots came from a rebrand of the [JJW24/Wox fork](https://github.com/jjw24/Wox/issues/156) and WoX.
+
+A big thank you and all credits to [Bao](https://github.com/bao-qian), the author of WoX, and its contrbutors for all the amazing work.
+
+The JJW24/Wox fork started adding new changes on top of main WoX repo's code base from release v1.3.524. Flow is a continuation of the work from JJW24/Wox
