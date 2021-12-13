@@ -773,19 +773,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public void CycleHistoryIndex()
-        {
-            if (!HistorySelected() && !ContextMenuSelected() && _history.Items.Count > 0)
-            {
-
-                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
-            }
-            else
-            {
-                SelectPrevItemCommand.Execute(null);
-            }
-        }
-
         public void Show()
         {
             if (_settings.UseSound)
