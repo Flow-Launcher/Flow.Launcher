@@ -33,13 +33,14 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
-        private int _lastHistoryIndex = 1;
+
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         internal readonly Settings _settings;
         private readonly History _history;
+        private int _lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -189,6 +190,39 @@ namespace Flow.Launcher.ViewModel
             SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
+
+            ReverseHistory = new RelayCommand(_ => {
+                CycleHistoryIndex();
+                if (_lastHistoryIndex < _history.Items.Count)
+                {
+                    _lastHistoryIndex++;
+                }
+                
+            });
+
+            ForwardHistory = new RelayCommand(_ => {
+                CycleHistoryIndex();
+                if (_lastHistoryIndex > 1)
+                {
+                    _lastHistoryIndex--;
+                }
+                
+            });
+
+            InsertLastQuery = new RelayCommand(_ => {
+                var results = SelectedResults;
+
+                if (_queryText == String.Empty)
+                {
+                    ChangeQueryText(_history.Items[_history.Items.Count - 1].Query.ToString());
+                    _lastHistoryIndex++;
+                }
+                else
+                {
+                    SelectPrevItemCommand.Execute(null);
+                }
+
+            });
 
             StartHelpCommand = new RelayCommand(_ =>
             {
@@ -410,6 +444,9 @@ namespace Flow.Launcher.ViewModel
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
         public ICommand AutocompleteQueryCommand { get; set; }
+        public ICommand ReverseHistory { get; set; }
+        public ICommand ForwardHistory { get; set; }
+        public ICommand InsertLastQuery { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -733,20 +770,17 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public void CycleHistory()
+        public void CycleHistoryIndex()
         {
-            var results = SelectedResults;
+            if (!HistorySelected() && !ContextMenuSelected() && _history.Items.Count > 0)
+            {
 
-            if (!HistorySelected() && !ContextMenuSelected() && _history.Items.Count > 0 && (results.SelectedIndex <= 0 || results == null ))
-            {   
                 ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
-                _lastHistoryIndex++;
             }
             else
             {
                 SelectPrevItemCommand.Execute(null);
             }
-                
         }
 
         public void Show()
