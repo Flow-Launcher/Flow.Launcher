@@ -192,16 +192,19 @@ namespace Flow.Launcher.ViewModel
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
             ReverseHistory = new RelayCommand(_ => {
-                CycleHistoryIndex();
+
+                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+
                 if (_lastHistoryIndex < _history.Items.Count)
                 {
                     _lastHistoryIndex++;
                 }
-                
             });
 
             ForwardHistory = new RelayCommand(_ => {
-                CycleHistoryIndex();
+
+                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+
                 if (_lastHistoryIndex > 1)
                 {
                     _lastHistoryIndex--;
