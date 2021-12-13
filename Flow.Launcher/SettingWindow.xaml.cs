@@ -120,6 +120,12 @@ namespace Flow.Launcher
             fileManagerChangeWindow.ShowDialog();
         }
 
+        private void OnSelectDefaultBrowserClick(object sender, RoutedEventArgs e)
+        {
+            var browserWindow = new SelectBrowserWindow(settings);
+            browserWindow.ShowDialog();
+        }
+
         #endregion
 
         #region Hotkey
@@ -260,7 +266,7 @@ namespace Flow.Launcher
 
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            e.Uri.AbsoluteUri.NewTabInBrowser();
+            API.OpenUrl(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
@@ -287,7 +293,7 @@ namespace Flow.Launcher
         private void OpenWelcomeWindow(object sender, RoutedEventArgs e)
         {
             var WelcomeWindow = new WelcomeWindow(settings);
-            WelcomeWindow.Show();
+            WelcomeWindow.ShowDialog();
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
