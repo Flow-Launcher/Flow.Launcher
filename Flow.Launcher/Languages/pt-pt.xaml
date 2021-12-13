@@ -17,11 +17,11 @@
     <system:String x:Key="GameModeToolTip">Suspender utilização de teclas de atalho</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Definições Flow launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Definições Flow Launcher</system:String>
     <system:String x:Key="general">Geral</system:String>
     <system:String x:Key="portableMode">Modo portátil</system:String>
     <system:String x:Key="portableModeToolTIp">Guardar todas as definições e dados do utilizador numa pasta (indicado se utilizar discos amovíveis ou serviços cloud)</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">Iniciar Flow launcher ao arrancar o sistema</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Iniciar Flow Launcher ao arrancar o sistema</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
     <system:String x:Key="rememberLastLocation">Memorizar localização anterior</system:String>
@@ -39,7 +39,7 @@
     <system:String x:Key="pythonDirectory">Diretório Python</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
-    <system:String x:Key="hideOnStartup">Ocultar Flow Launcher no arranque</system:String>
+    <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
     <system:String x:Key="querySearchPrecision">Precisão da pesquisa</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
@@ -97,7 +97,7 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow launcher</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para os resultados</system:String>
     <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado através do teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
@@ -231,7 +231,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Ignorar</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Obrigado por utilizar Flow launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Obrigado por utilizar Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Esta é a primeira vez que está a utilizar Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Antes de utilizar a aplicação, este assistente ajuda a configurar Flow Launcher. Caso pretenda, pode ignorar este passo. Por favor escolha um idioma.</system:String>
     <system:String x:Key="Welcome_Page2_Title">Pesquise ficheiros/pastas e execute aplicações no seu computador
