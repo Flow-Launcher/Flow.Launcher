@@ -754,7 +754,6 @@
                                             </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
-                                                MaxWidth="200"
                                                 Margin="10,0,18,0"
                                                 DisplayMemberPath="Display"
                                                 ItemsSource="{Binding LastQueryModes}"
