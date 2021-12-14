@@ -1074,7 +1074,7 @@
                                                                         Cursor="Hand"
                                                                         DockPanel.Dock="Right"
                                                                         FontWeight="Bold"
-                                                                        ToolTip="Change Action Keywords"
+                                                                        ToolTip="{DynamicResource actionKeywordsTooltip}"
                                                                         Visibility="{Binding ActionKeywordsVisibility}" />
                                                                 </DockPanel>
 
