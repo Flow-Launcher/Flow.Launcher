@@ -627,29 +627,6 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border
-                                Margin="0, 30, 0, 0"
-                                BorderThickness="0"
-                                Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                        Text="Cycle History Modifiers" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource openResultModifiersToolTip}" />
-                                    </StackPanel>
-                                    <ComboBox
-                                                    Grid.Column="2"
-                                                    Width="120"
-                                                    Margin="0,0,18,0"
-                                                    FontSize="14"
-                                                    ItemsSource="{Binding CycleHistoryModifiersList}"
-                                                    SelectedItem="{Binding Settings.CycleHistoryModifiers}" />
-                                </ItemsControl>
-                            </Border>
-
                             <Border Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
