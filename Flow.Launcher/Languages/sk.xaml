@@ -31,7 +31,7 @@
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
-    <system:String x:Key="maxShowResults">Max. výsledkov</system:String>
+    <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Zakázať aktiváciu Flow Launchera, keď je aktívna aplikácia na celú obrazovku (odporúčané pre hry).</system:String>
     <system:String x:Key="defaultFileManager">Predvolený správca súborov</system:String>
