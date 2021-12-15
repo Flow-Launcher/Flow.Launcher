@@ -793,8 +793,11 @@ namespace Flow.Launcher.ViewModel
         public void Show()
         {
             string _explorerPath = GetActiveExplorerPath();
-
-            ChangeQueryText($"{_explorerPath}\\>");
+            if (_explorerPath != null)
+            {
+                ChangeQueryText($"{_explorerPath}\\>");
+            }
+            
             if (_settings.UseSound)
             {
                 MediaPlayer media = new MediaPlayer();
