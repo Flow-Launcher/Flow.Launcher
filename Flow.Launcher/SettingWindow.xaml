@@ -1133,7 +1133,6 @@
                                                                     Orientation="Horizontal"
                                                                     Style="{StaticResource TextPanel}">
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="10,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
@@ -1144,14 +1143,12 @@
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding PluginPair.Metadata.Author}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="|" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
@@ -1163,33 +1160,28 @@
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding InitilizaTime}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="|" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{DynamicResource plugin_query_time}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding QueryTime}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{DynamicResource plugin_query_version}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
@@ -1197,12 +1189,11 @@
                                                                         Text="{Binding PluginPair.Metadata.Version}" />
 
                                                                     <TextBlock
-                                                                        MaxWidth="120"
                                                                         Margin="10,0,0,0"
                                                                         HorizontalAlignment="Right"
                                                                         VerticalAlignment="Center"
                                                                         Cursor="Hand"
-                                                                        FontSize="12">
+                                                                        FontSize="11">
                                                                         <Hyperlink
                                                                             Foreground="{DynamicResource PluginInfoColor}"
                                                                             NavigateUri="{Binding PluginPair.Metadata.Website}"
@@ -1212,12 +1203,11 @@
                                                                     </TextBlock>
 
                                                                     <TextBlock
-                                                                        MaxWidth="120"
                                                                         Margin="10,0,0,0"
                                                                         HorizontalAlignment="Right"
                                                                         VerticalAlignment="Center"
                                                                         Cursor="Hand"
-                                                                        FontSize="12"
+                                                                        FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnPluginDirecotyClick"
                                                                         Text="{DynamicResource pluginDirectory}"
