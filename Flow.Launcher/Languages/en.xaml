@@ -15,6 +15,9 @@
     <system:String x:Key="iconTrayAbout">About</system:String>
     <system:String x:Key="iconTrayExit">Exit</system:String>
     <system:String x:Key="closeWindow">Close</system:String>
+    <system:String x:Key="copy">Copy</system:String>
+    <system:String x:Key="cut">Cut</system:String>
+    <system:String x:Key="paste">Paste</system:String>
     <system:String x:Key="GameMode">Game Mode</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 

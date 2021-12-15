@@ -15,6 +15,9 @@
     <system:String x:Key="iconTrayAbout">정보</system:String>
     <system:String x:Key="iconTrayExit">종료</system:String>
     <system:String x:Key="closeWindow">닫기</system:String>
+    <system:String x:Key="copy">복사</system:String>
+    <system:String x:Key="cut">잘라내기</system:String>
+    <system:String x:Key="paste">붙여넣기</system:String>
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
 
