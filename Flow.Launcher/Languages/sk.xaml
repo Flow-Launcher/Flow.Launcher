@@ -61,8 +61,8 @@
     <system:String x:Key="priority">Priorita</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">od</system:String>
-    <system:String x:Key="plugin_init_time">Príprava:</system:String>
-    <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
+    <system:String x:Key="plugin_init_time">Inicializácia:</system:String>
+    <system:String x:Key="plugin_query_time">Trvanie dopytu:</system:String>
     <system:String x:Key="plugin_query_version">| Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
 
@@ -81,8 +81,8 @@
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, návrat na predvolený motív</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, návrat na predvolený motív</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, použije sa predvolený motív</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, použije sa predvolený motív</system:String>
     <system:String x:Key="ThemeFolder">Priečinok s motívmi</system:String>
     <system:String x:Key="OpenThemeFolder">Otvoriť priečinok s motívmi</system:String>
     <system:String x:Key="ColorScheme">Farebná schéma</system:String>
