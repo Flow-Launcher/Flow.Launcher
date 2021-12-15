@@ -731,7 +731,7 @@ namespace Flow.Launcher.ViewModel
             ShellWindows shellWindows = new SHDocVw.ShellWindows();
 
             // loop through all windows
-            foreach (InternetExplorer window in shellWindows)
+            foreach (SHDocVw.InternetExplorer window in shellWindows)
             {
                 // match active window
                 if (window.HWND == (int)handle)
@@ -793,10 +793,7 @@ namespace Flow.Launcher.ViewModel
         public void Show()
         {
             string _explorerPath = GetActiveExplorerPath();
-            if (_explorerPath != null)
-            {
-                ChangeQueryText($"{_explorerPath}\\>");
-            }
+
             
             if (_settings.UseSound)
             {
@@ -813,7 +810,10 @@ namespace Flow.Launcher.ViewModel
                 ((MainWindow)Application.Current.MainWindow).WindowAnimator();
             
             MainWindowOpacity = 1;
-
+            if (_explorerPath != null && _explorerPath != "File Explorer")
+            {
+                ChangeQueryText($"{_explorerPath}\\>");
+            }
 
         }
 
