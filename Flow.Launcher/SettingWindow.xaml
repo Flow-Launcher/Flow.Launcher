@@ -1463,9 +1463,9 @@
                                                             <Button
                                                                 Name="ShortCutButtonPrev"
                                                                 Grid.Column="1"
-                                                                Width="90"
                                                                 MinHeight="40"
                                                                 Margin="0,0,0,0"
+                                                                Padding="15,5,15,5"
                                                                 HorizontalAlignment="Right"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnExternalPluginInstallClick"
@@ -2135,23 +2135,22 @@
                                 </ListView>
                                 <StackPanel
                                     Grid.Row="5"
-                                    Width="350"
                                     Margin="0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
                                     Orientation="Horizontal">
                                     <Button
-                                        Width="100"
+                                        MinWidth="100"
                                         Margin="10"
                                         Click="OnDeleteCustomHotkeyClick"
                                         Content="{DynamicResource delete}" />
                                     <Button
-                                        Width="100"
+                                        MinWidth="100"
                                         Margin="10"
                                         Click="OnnEditCustomHotkeyClick"
                                         Content="{DynamicResource edit}" />
                                     <Button
-                                        Width="100"
+                                        MinWidth="100"
                                         Margin="10,10,0,10"
                                         Click="OnAddCustomeHotkeyClick"
                                         Content="{DynamicResource add}" />
