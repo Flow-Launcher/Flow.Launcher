@@ -1934,7 +1934,7 @@
                                                 <ComboBox
                                                     x:Name="ColorSchemeComboBox"
                                                     Grid.Column="2"
-                                                    Width="180"
+                                                    MinWidth="180"
                                                     Margin="0,0,18,0"
                                                     DisplayMemberPath="Display"
                                                     FontSize="14"
