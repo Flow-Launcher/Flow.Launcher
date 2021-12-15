@@ -20,7 +20,9 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-
+using System.Runtime.InteropServices;
+using System.Text;
+using SHDocVw;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -720,6 +722,62 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
+        private static string GetActiveExplorerPath()
+        {
+            // get the active window
+            IntPtr handle = GetForegroundWindow();
+
+            // Required ref: SHDocVw (Microsoft Internet Controls COM Object) - C:\Windows\system32\ShDocVw.dll
+            ShellWindows shellWindows = new SHDocVw.ShellWindows();
+
+            // loop through all windows
+            foreach (InternetExplorer window in shellWindows)
+            {
+                // match active window
+                if (window.HWND == (int)handle)
+                {
+                    // Required ref: Shell32 - C:\Windows\system32\Shell32.dll
+                    var shellWindow = window.Document as Shell32.IShellFolderViewDual2;
+
+                    // will be null if you are in Internet Explorer for example
+                    if (shellWindow != null)
+                    {
+                        // Item without an index returns the current object
+                        var currentFolder = shellWindow.Folder.Items().Item();
+
+                        // special folder - use window title
+                        // for some reason on "Desktop" gives null
+                        if (currentFolder == null || currentFolder.Path.StartsWith("::"))
+                        {
+                            // Get window title instead
+                            const int nChars = 256;
+                            StringBuilder Buff = new StringBuilder(nChars);
+                            if (GetWindowText(handle, Buff, nChars) > 0)
+                            {
+                                return Buff.ToString();
+                            }
+                        }
+                        else
+                        {
+                            return currentFolder.Path;
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            return null;
+        }
+
+        // COM Imports
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
         public void ToggleFlowLauncher()
         {
             if (!MainWindowVisibilityStatus)
@@ -734,6 +792,9 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
+            string _explorerPath = GetActiveExplorerPath();
+
+            ChangeQueryText($"{_explorerPath}\\>");
             if (_settings.UseSound)
             {
                 MediaPlayer media = new MediaPlayer();
@@ -749,6 +810,8 @@ namespace Flow.Launcher.ViewModel
                 ((MainWindow)Application.Current.MainWindow).WindowAnimator();
             
             MainWindowOpacity = 1;
+
+
         }
 
         public async void Hide()
