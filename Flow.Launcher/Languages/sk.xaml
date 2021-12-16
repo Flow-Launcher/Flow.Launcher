@@ -111,7 +111,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Tieňový efekt v poli vyhľadávania</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
-    <system:String x:Key="windowWidthSize">Veľkosť šírky okna</system:String>
+    <system:String x:Key="windowWidthSize">Šírka okna</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
 
@@ -129,7 +129,7 @@
     <system:String x:Key="invalidPortFormat">Neplatný formát portu</system:String>
     <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložené</system:String>
     <system:String x:Key="proxyIsCorrect">Nastavenie proxy je v poriadku</system:String>
-    <system:String x:Key="proxyConnectFailed">Pripojenie proxy zlyhalo</system:String>
+    <system:String x:Key="proxyConnectFailed">Pripojenie proxy servera zlyhalo</system:String>
 
     <!--  Setting About  -->
     <system:String x:Key="about">O aplikácii</system:String>
@@ -138,7 +138,7 @@
     <system:String x:Key="docs">Dokumentácia</system:String>
     <system:String x:Key="version">Verzia</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
-    <system:String x:Key="checkUpdates">Skontrolovať aktualizácie</system:String>
+    <system:String x:Key="checkUpdates">Vyhľadať aktualizácie</system:String>
     <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
     <system:String x:Key="checkUpdatesFailed">Kontrola aktualizácií zlyhala, prosím, skontrolujte pripojenie na internet a nastavenie proxy k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
