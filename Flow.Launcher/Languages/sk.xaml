@@ -140,9 +140,9 @@
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
     <system:String x:Key="checkUpdates">Vyhľadať aktualizácie</system:String>
     <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Kontrola aktualizácií zlyhala, prosím, skontrolujte pripojenie na internet a nastavenie proxy k api.github.com.</system:String>
+    <system:String x:Key="checkUpdatesFailed">Vyhľadávanie aktualizácií zlyhalo, prosím, skontrolujte pripojenie na internet a nastavenie proxy server k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Sťahovanie aktualizácií zlyhalo, skontrolujte pripojenie na internet a nastavenie proxy k github-cloud.s3.amazonaws.com,
+        Sťahovanie aktualizácií zlyhalo, skontrolujte pripojenie na internet a nastavenie proxy servera k github-cloud.s3.amazonaws.com,
         alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
@@ -164,7 +164,7 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmena priority</system:String>
-    <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné doplnky, zadajte záporné číslo</system:String>
+    <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné pluginy, zadajte záporné číslo</system:String>
     <system:String x:Key="invalidPriority">Prosím, zadajte platné číslo pre prioritu!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
@@ -207,13 +207,13 @@
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Čakajte, prosím…</system:String>
+    <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>
 
     <!--  update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Kontrolujú sa aktualizácie</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Vyhľadávajú sa aktualizácie</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">Už máte najnovšiu verziu Flow Launchera</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Bola nájdená aktualizácia</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa…</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher nedokázal presunúť používateľské údaje do aktualizovanej verzie.
             Prosím, presuňte profilový priečinok data z {0} do {1}
@@ -224,7 +224,7 @@
     <system:String x:Key="update_flowlauncher_update">Aktualizovať</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Zrušiť</system:String>
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy na github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy k github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
