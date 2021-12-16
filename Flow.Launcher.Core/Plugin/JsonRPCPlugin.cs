@@ -354,7 +354,8 @@ namespace Flow.Launcher.Core.Plugin
             this.context = context;
             await InitSettingAsync();
         }
-        private static readonly Thickness settingControlMargin = new(10);
+        private static readonly Thickness settingControlMargin = new(10, 3, 10, 3);
+        private static readonly Thickness settingPanelMargin = new(15, 20, 15, 20);
         private JsonRpcConfigurationModel _settingsTemplate;
         public Control CreateSettingPanel()
         {
@@ -363,7 +364,7 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new StackPanel
             {
-                Margin = settingControlMargin,
+                Margin = settingPanelMargin,
                 Orientation = Orientation.Vertical
             };
             settingWindow.Content = mainPanel;
@@ -378,6 +379,7 @@ namespace Flow.Launcher.Core.Plugin
                 var name = new Label()
                 {
                     Content = attribute.Label,
+                    VerticalAlignment = VerticalAlignment.Center,
                     Margin = settingControlMargin
                 };
 
@@ -391,7 +393,7 @@ namespace Flow.Launcher.Core.Plugin
                             {
                                 Text = attribute.Description.Replace("\\r\\n", "\r\n"),
                                 Margin = settingControlMargin,
-                                MaxWidth = 400,
+                                MaxWidth = 500,
                                 TextWrapping = TextWrapping.WrapWithOverflow
                             };
                             break;
