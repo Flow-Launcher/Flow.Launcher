@@ -69,7 +69,6 @@ namespace Flow.Launcher
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
-                HotKeyMapper.Initialize(_mainVM);
 
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
@@ -78,6 +77,8 @@ namespace Flow.Launcher
 
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
+
+                HotKeyMapper.Initialize(_mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 

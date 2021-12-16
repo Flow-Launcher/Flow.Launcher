@@ -736,7 +736,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_settings.UseSound)
             {
-                MediaPlayer media = new MediaPlayer();
+                var media = new MediaPlayer();
                 media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
                 media.Play();
             }
@@ -746,7 +746,7 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibilityStatus = true;
             
             if(_settings.UseAnimation)
-                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
+                ((MainWindow)Application.Current.MainWindow)?.WindowAnimator();
             
             MainWindowOpacity = 1;
         }
