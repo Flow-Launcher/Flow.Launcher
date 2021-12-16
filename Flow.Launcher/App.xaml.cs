@@ -78,12 +78,13 @@ namespace Flow.Launcher
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
 
-                HotKeyMapper.Initialize(_mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
+                
+                HotKeyMapper.Initialize(_mainVM);
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
