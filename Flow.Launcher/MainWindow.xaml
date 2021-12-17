@@ -197,7 +197,8 @@
                             Margin="0"
                             Data="{DynamicResource SearchIconImg}"
                             Stretch="Fill"
-                            Style="{DynamicResource SearchIconStyle}" />
+                            Style="{DynamicResource SearchIconStyle}"
+                            Visibility="{Binding SearchIconVisibility}" />
                     </Canvas>
                 </Grid>
 
