@@ -395,6 +395,8 @@ namespace Flow.Launcher.ViewModel
 
         public double MainWindowWidth => _settings.WindowSize;
 
+        public string PluginIconPath { get; set; } = null;
+
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
         public ICommand SelectPrevItemCommand { get; set; }
@@ -555,6 +557,11 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            if (plugins.Count == 1)
+            {
+                PluginIconPath = plugins.Single().Metadata.IcoPath;
+            }
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
