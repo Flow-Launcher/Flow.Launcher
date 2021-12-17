@@ -41,9 +41,7 @@
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding
-            Key="Tab"
-            Command="{Binding AutocompleteQueryCommand}"/>
+        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
         <KeyBinding
             Key="Tab"
             Command="{Binding AutocompleteQueryCommand}"
@@ -192,6 +190,17 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
+                        <Image
+                            x:Name="PluginActivationIcon"
+                            Width="32"
+                            Height="32"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="2"
+                            Source="{Binding PluginIconPath}"
+                            Stretch="Uniform"
+                            Style="{DynamicResource PluginActivationIcon}" />
                         <Path
                             Name="SearchIcon"
                             Margin="0"
