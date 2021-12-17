@@ -558,10 +558,9 @@ namespace Flow.Launcher.ViewModel
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
 
-            if (plugins.Count == 1)
-            {
-                PluginIconPath = plugins.Single().Metadata.IcoPath;
-            }
+
+            PluginIconPath = plugins.Count == 1 ? plugins.Single().Metadata.IcoPath : PluginIconPath = null;
+
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
