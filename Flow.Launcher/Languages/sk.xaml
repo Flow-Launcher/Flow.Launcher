@@ -52,10 +52,10 @@
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zap.</system:String>
     <system:String x:Key="disable">Vyp.</system:String>
-    <system:String x:Key="actionKeywordsTitle">Nastavenie kľúčového slova akcie</system:String>
-    <system:String x:Key="actionKeywords">Skratka akcie</system:String>
-    <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky</system:String>
-    <system:String x:Key="newActionKeyword">Nová akcia skratky</system:String>
+    <system:String x:Key="actionKeywordsTitle">Nastavenie akčného príkazu</system:String>
+    <system:String x:Key="actionKeywords">Aktivačný príkaz</system:String>
+    <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
+    <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
