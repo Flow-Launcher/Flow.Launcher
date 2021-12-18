@@ -4,8 +4,8 @@
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launchera</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Pri tomto zadaní umiestniť navrchu</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto zadaní</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Pri tomto výraze umiestniť navrchu</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto výraze</system:String>
     <system:String x:Key="executeQuery">Spustiť dopyt: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Posledný čas spustenia: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Otvoriť</system:String>
@@ -102,7 +102,7 @@
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
-    <system:String x:Key="customQueryHotkey">Vlastná klávesová skratka na vyhľadávanie</system:String>
+    <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
@@ -164,31 +164,31 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmena priority</system:String>
-    <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné pluginy, zadajte záporné číslo</system:String>
+    <system:String x:Key="priority_tips">Väčšie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné pluginy, zadajte záporné číslo</system:String>
     <system:String x:Key="invalidPriority">Prosím, zadajte platné číslo pre prioritu!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Stará skratka akcie</system:String>
-    <system:String x:Key="newActionKeywords">Nová skratka akcie</system:String>
+    <system:String x:Key="oldActionKeywords">Starý aktivačný príkaz</system:String>
+    <system:String x:Key="newActionKeywords">Nový aktivačný príkaz</system:String>
     <system:String x:Key="cancel">Zrušiť</system:String>
     <system:String x:Key="done">Hotovo</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivačný príkaz nemôže byť prázdny</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivačný príkaz už bol priradený inému pluginu, prosím, zvoľte iný aktivačný príkaz</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov.</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadajte aktivačný príkaz, ktorý je potrebný na spustenie pluginu. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka pre vlastné vyhľadávanie</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Stlačením klávesovej skratky sa automaticky vloží zadaný výraz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Klávesová skratka nedostupná</system:String>
+    <system:String x:Key="hotkeyUnavailable">Klávesová skratka je nedostupná</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verzia</system:String>
@@ -239,8 +239,8 @@
     <system:String x:Key="Welcome_Page2_Text01">Vyhľadávajte vo všetkých aplikáciách, súboroch, záložkách, YouTube, Twitteri a ďalších. Všetko z pohodlia klávesnice bez toho, aby ste sa dotkli myši.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher sa spúšťa pomocou dole uvedenej klávesovej skratky, poďte si to vyskúšať. Ak ju chcete zmeniť, kliknite na vstupné pole a stlačte požadovanú klávesovú skratku na klávesnici.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Klávesové skratky</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Kľúčové slovo akcie a príkazy</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Vyhľadávajte na webe, spúšťajte aplikácie alebo spúšťajte rôzne funkcie pomocou pluginov Flow Launchera. Niektoré funkcie sa začínajú kľúčovým slovom akcie a v prípade potreby ich možno použiť aj bez kľúčových slov akcie. Vyskúšajte nižšie uvedené dopyty v aplikácii Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Aktivačné príkazy a príkazy</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Vyhľadávajte na webe, spúšťajte aplikácie alebo spúšťajte rôzne funkcie pomocou pluginov Flow Launchera. Niektoré funkcie sa začínajú aktivačným príkazom a v prípade potreby ich možno použiť aj bez aktivačných príkazov. Vyskúšajte nižšie uvedené výrazy v aplikácii Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Spustite Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Hotovo. Užite si Flow Launcher. Nezabudnite na klávesovú skratku na spustenie :)</system:String>
 
