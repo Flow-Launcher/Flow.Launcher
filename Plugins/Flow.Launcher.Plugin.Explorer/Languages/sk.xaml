@@ -5,7 +5,7 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Najprv vyberte položku</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na priečinok</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Naozaj chcete odstrániť {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Naozaj chcete natrvalo odstrániť túto položku {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Naozaj chcete natrvalo odstrániť {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Odstránenie bolo úspešné</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Úspešne odstránené {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Priradenie globálnej skratky akcie by mohlo počas vyhľadávania poskytnúť príliš veľa výsledkov. Vyberte si konkrétne kľúčové slovo akcie</system:String>
