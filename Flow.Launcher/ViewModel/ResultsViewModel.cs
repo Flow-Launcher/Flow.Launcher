@@ -236,8 +236,6 @@ namespace Flow.Launcher.ViewModel
 
         public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
         {
-            private long editTime = 0;
-
             private CancellationToken _token;
 
             public event NotifyCollectionChangedEventHandler CollectionChanged;
@@ -294,7 +292,6 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (Count != 0) RemoveAll(newItems.Count);
                     AddAll(newItems);
-                    editTime++;
                     return;
                 }
                 else
@@ -305,7 +302,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         Capacity = newItems.Count;
                     }
-                    editTime++;
                 }
             }
         }

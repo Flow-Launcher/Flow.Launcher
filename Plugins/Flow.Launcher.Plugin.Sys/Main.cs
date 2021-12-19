@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.Sys
 
         [DllImport("user32")]
         private static extern void LockWorkStation();
-
+        
         [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
         private static extern uint SHEmptyRecycleBin(IntPtr hWnd, uint dwFlags);
 
