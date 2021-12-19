@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Pesquisar nos marcadores do navegador</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmmark Data</system:String>
+    <system:String x:Key="BookmarkDataSetting">Dados do marcador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir marcadores em:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nova janela</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Novo separador</system:String>
