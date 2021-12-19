@@ -28,7 +28,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Pesquisa no conteúdo dos ficheiros:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Pesquisa no índice:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Acesso rápido:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_current">Palavra-chave atual:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Palavra-chave atual</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Feito</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Ativo</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Se desativar a opção, o Flow Launcher não irá executar esta opção de pesquisa e utilizará '*' para libertar a palavra-chave</system:String>
