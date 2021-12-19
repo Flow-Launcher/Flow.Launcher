@@ -28,7 +28,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Vyhľadávanie v obsahu súborov:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Vyhľadávanie v indexe:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Rýchly prístup:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuálny aktivačný príkaz:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Hotovo</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Povolené</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Ak je vypnuté, Flow túto možnosť vyhľadávania nevykoná a následne sa vráti späť na &quot;*&quot;, aby sa uvoľnila skratka akcie</system:String>
