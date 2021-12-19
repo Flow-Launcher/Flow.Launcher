@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{DynamicResource BookmarkDataSetting}"
+    Title="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
     Width="520"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
@@ -67,7 +67,7 @@
                         FontFamily="Segoe UI"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{DynamicResource BookmarkDataSetting}"
+                        Text="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
                         TextAlignment="Left" />
                 </StackPanel>
 
