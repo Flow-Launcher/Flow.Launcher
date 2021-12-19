@@ -303,16 +303,17 @@ namespace Flow.Launcher.Core.Resource
             ACCENT_ENABLE_GRADIENT = 1,
             ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
             ACCENT_ENABLE_BLURBEHIND = 3,
-            ACCENT_INVALID_STATE = 4
+            ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
+            ACCENT_INVALID_STATE = 5
         }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct AccentPolicy
         {
             public AccentState AccentState;
-            public int AccentFlags;
-            public int GradientColor;
-            public int AnimationId;
+            public uint AccentFlags;
+            public uint GradientColor;
+            public uint AnimationId;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -359,9 +360,16 @@ namespace Flow.Launcher.Core.Resource
 
             return false;
         }
-
+        private uint _blurBackgroundColor = 0x990000;
+        private uint _blurOpacity;
+        public double BlurOpacity
+        {
+            get { return _blurOpacity; }
+            set { _blurOpacity = (uint)value; /*SetWindowAccent(MainW);*/ }
+        }
         private void SetWindowAccent(Window w, AccentState state)
         {
+            /*
             var windowHelper = new WindowInteropHelper(w);
 
             windowHelper.EnsureHandle();
@@ -378,6 +386,26 @@ namespace Flow.Launcher.Core.Resource
                 SizeOfData = accentStructSize,
                 Data = accentPtr
             };
+
+            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+            */
+            var windowHelper = new WindowInteropHelper(w);
+
+            var accent = new AccentPolicy();
+            accent.AccentState = AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND;
+            accent.GradientColor = (_blurOpacity << 24) | (_blurBackgroundColor & 0xFFFFFF);
+
+            var accentStructSize = Marshal.SizeOf(accent);
+
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new WindowCompositionAttributeData();
+            data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
+            data.SizeOfData = accentStructSize;
+            data.Data = accentPtr;
 
             SetWindowCompositionAttribute(windowHelper.Handle, ref data);
 
