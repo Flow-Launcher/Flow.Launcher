@@ -734,20 +734,10 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            if (_settings.UseSound)
-            {
-                var media = new MediaPlayer();
-                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                media.Play();
-            }
-
             MainWindowVisibility = Visibility.Visible;
 
             MainWindowVisibilityStatus = true;
-            
-            if(_settings.UseAnimation)
-               ((MainWindow)Application.Current.MainWindow).WindowAnimator();
-            
+
             MainWindowOpacity = 1;
         }
 
