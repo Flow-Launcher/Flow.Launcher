@@ -36,6 +36,8 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desativar ativação do Flow Launcher se alguma aplicação estiver em ecrã completo (recomendado para jogos)</system:String>
     <system:String x:Key="defaultFileManager">Gestor de ficheiros padrão</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecione o gestor de ficheiros utilizado para abrir a página</system:String>
+    <system:String x:Key="defaultBrowser">Navegador web padrão</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Definições para Novo separador, Nova Janela e Modo privado</system:String>
     <system:String x:Key="pythonDirectory">Diretório Python</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
@@ -161,6 +163,16 @@
     <system:String x:Key="fileManager_directory_arg">Argumento para pasta</system:String>
     <system:String x:Key="fileManager_file_arg">Argumento para ficheiro</system:String>
 
+    <!--  DefaultBrowser Setting Dialog  -->
+    <system:String x:Key="defaultBrowserTitle">Navegador web padrão</system:String>
+    <system:String x:Key="defaultBrowser_tips">A definição padrão é a que for definida pelo sistema operativo. Se especificado outro, Flow Launcher utiliza esse navegador.</system:String>
+    <system:String x:Key="defaultBrowser_name">Navegador</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nome do navegador</system:String>
+    <system:String x:Key="defaultBrowser_path">Caminho do navegador</system:String>
+    <system:String x:Key="defaultBrowser_newtab">Nova janela</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Novo separador</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
+
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Alterar prioridade</system:String>
     <system:String x:Key="priority_tips">Quanto maior for o número, melhor avaliação terá o resultado. Experimente com o número 5. Se quiser que os resultados sejam inferiores aos dos outros plugins, indique um número negativo.</system:String>
@@ -254,6 +266,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Executar como administrador</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Histórico de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Voltar aos resultados no menu de contexto</system:String>
+    <system:String x:Key="HotkeyTabDesc">Conclusão automática</system:String>
     <system:String x:Key="HotkeyRunDesc">Abrir/Executar item selecionado</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Abrir janela de definições</system:String>
     <system:String x:Key="HotkeyF5Desc">Recarregar dados do plugin</system:String>
