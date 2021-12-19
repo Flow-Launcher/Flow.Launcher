@@ -11,5 +11,5 @@
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">executar comando através de uma consola</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Executar como administrador</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copiar comando</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_history">Mostrar apenas o número dos comandos mais usados:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">Mostrar este número dos comandos mais usados:</system:String>
 </ResourceDictionary>

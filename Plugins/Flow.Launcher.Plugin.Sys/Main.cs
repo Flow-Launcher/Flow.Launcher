@@ -315,7 +315,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        SearchWeb.NewTabInBrowser(Constant.Documentation);
+                        context.API.OpenUrl(Constant.Documentation);
                         return true;
                     }
                 },

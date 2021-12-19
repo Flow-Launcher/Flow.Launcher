@@ -4,10 +4,10 @@
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launchera</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Pri tomto zadaní umiestniť navrchu</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto zadaní</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Pri tomto výraze umiestniť navrchu</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">Zrušiť umiestnenie navrchu pri tomto výraze</system:String>
     <system:String x:Key="executeQuery">Spustiť dopyt: {0}</system:String>
-    <system:String x:Key="lastExecuteTime">Posledný čas realizácie: {0}</system:String>
+    <system:String x:Key="lastExecuteTime">Posledný čas spustenia: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Otvoriť</system:String>
     <system:String x:Key="iconTraySettings">Nastavenia</system:String>
     <system:String x:Key="iconTrayAbout">O aplikácii</system:String>
@@ -20,8 +20,8 @@
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
-    <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vyberateľných diskoch a cloudových službách).</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher po štarte systému</system:String>
+    <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher pri spustení systému</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
@@ -31,7 +31,7 @@
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
-    <system:String x:Key="maxShowResults">Max. výsledkov</system:String>
+    <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Zakázať aktiváciu Flow Launchera, keď je aktívna aplikácia na celú obrazovku (odporúčané pre hry).</system:String>
     <system:String x:Key="defaultFileManager">Predvolený správca súborov</system:String>
@@ -52,17 +52,17 @@
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zap.</system:String>
     <system:String x:Key="disable">Vyp.</system:String>
-    <system:String x:Key="actionKeywordsTitle">Nastavenie kľúčového slova akcie</system:String>
-    <system:String x:Key="actionKeywords">Skratka akcie</system:String>
-    <system:String x:Key="currentActionKeywords">Aktuálna akcia skratky:</system:String>
-    <system:String x:Key="newActionKeyword">Nová akcia skratky:</system:String>
-    <system:String x:Key="currentPriority">Aktuálna priorita:</system:String>
-    <system:String x:Key="newPriority">Nová priorita:</system:String>
+    <system:String x:Key="actionKeywordsTitle">Nastavenie akčného príkazu</system:String>
+    <system:String x:Key="actionKeywords">Aktivačný príkaz</system:String>
+    <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
+    <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
+    <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
+    <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">od</system:String>
-    <system:String x:Key="plugin_init_time">Príprava:</system:String>
-    <system:String x:Key="plugin_query_time">Čas dopytu:</system:String>
+    <system:String x:Key="plugin_init_time">Inicializácia:</system:String>
+    <system:String x:Key="plugin_query_time">Trvanie dopytu:</system:String>
     <system:String x:Key="plugin_query_version">| Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
 
@@ -81,8 +81,8 @@
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, návrat na predvolený motív</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, návrat na predvolený motív</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, použije sa predvolený motív</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Nepodarilo sa nečítať motív {0}, použije sa predvolený motív</system:String>
     <system:String x:Key="ThemeFolder">Priečinok s motívmi</system:String>
     <system:String x:Key="OpenThemeFolder">Otvoriť priečinok s motívmi</system:String>
     <system:String x:Key="ColorScheme">Farebná schéma</system:String>
@@ -102,7 +102,7 @@
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
-    <system:String x:Key="customQueryHotkey">Vlastná klávesová skratka na vyhľadávanie</system:String>
+    <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
@@ -111,7 +111,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Tieňový efekt v poli vyhľadávania</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
-    <system:String x:Key="windowWidthSize">Veľkosť šírky okna</system:String>
+    <system:String x:Key="windowWidthSize">Šírka okna</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
 
@@ -129,7 +129,7 @@
     <system:String x:Key="invalidPortFormat">Neplatný formát portu</system:String>
     <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložené</system:String>
     <system:String x:Key="proxyIsCorrect">Nastavenie proxy je v poriadku</system:String>
-    <system:String x:Key="proxyConnectFailed">Pripojenie proxy zlyhalo</system:String>
+    <system:String x:Key="proxyConnectFailed">Pripojenie proxy servera zlyhalo</system:String>
 
     <!--  Setting About  -->
     <system:String x:Key="about">O aplikácii</system:String>
@@ -138,11 +138,11 @@
     <system:String x:Key="docs">Dokumentácia</system:String>
     <system:String x:Key="version">Verzia</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
-    <system:String x:Key="checkUpdates">Skontrolovať aktualizácie</system:String>
+    <system:String x:Key="checkUpdates">Vyhľadať aktualizácie</system:String>
     <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Kontrola aktualizácií zlyhala, prosím, skontrolujte pripojenie na internet a nastavenie proxy k api.github.com.</system:String>
+    <system:String x:Key="checkUpdatesFailed">Vyhľadávanie aktualizácií zlyhalo, prosím, skontrolujte pripojenie na internet a nastavenie proxy server k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Sťahovanie aktualizácií zlyhalo, skontrolujte pripojenie na internet a nastavenie proxy k github-cloud.s3.amazonaws.com,
+        Sťahovanie aktualizácií zlyhalo, skontrolujte pripojenie na internet a nastavenie proxy servera k github-cloud.s3.amazonaws.com,
         alebo prejdite na https://github.com/Flow-Launcher/Flow.Launcher/releases pre manuálne stiahnutie aktualizácie.
     </system:String>
     <system:String x:Key="releaseNotes">Poznámky k vydaniu</system:String>
@@ -164,31 +164,31 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmena priority</system:String>
-    <system:String x:Key="priority_tips">Vyššie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné doplnky, zadajte záporné číslo</system:String>
+    <system:String x:Key="priority_tips">Väčšie číslo znamená, že výsledok bude vyššie. Skúste nastaviť napr. 5. Ak chcete, aby boli výsledky nižšie ako ktorékoľvek iné pluginy, zadajte záporné číslo</system:String>
     <system:String x:Key="invalidPriority">Prosím, zadajte platné číslo pre prioritu!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Stará skratka akcie</system:String>
-    <system:String x:Key="newActionKeywords">Nová skratka akcie</system:String>
+    <system:String x:Key="oldActionKeywords">Starý aktivačný príkaz</system:String>
+    <system:String x:Key="newActionKeywords">Nový aktivačný príkaz</system:String>
     <system:String x:Key="cancel">Zrušiť</system:String>
     <system:String x:Key="done">Hotovo</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">Nová skratka pre akciu nemôže byť prázdna</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">Nová skratka pre akciu bola priradená pre iný plugin, prosím, zvoľte inú skratku</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivačný príkaz nemôže byť prázdny</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivačný príkaz už bol priradený inému pluginu, prosím, zvoľte iný aktivačný príkaz</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="actionkeyword_tips">Zadajte skratku akcie, ktorá je potrebná na spustenie pluginu. Ak nechcete zadať skratku akcie, použite *. V tom prípade plugin funguje bez kľúčových slov.</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadajte aktivačný príkaz, ktorý je potrebný na spustenie pluginu. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka pre vlastné vyhľadávanie</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Stlačením klávesovej skratky sa automaticky vloží zadaný výraz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Klávesová skratka nedostupná</system:String>
+    <system:String x:Key="hotkeyUnavailable">Klávesová skratka je nedostupná</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verzia</system:String>
@@ -207,13 +207,13 @@
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Čakajte, prosím…</system:String>
+    <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>
 
     <!--  update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Kontrolujú sa aktualizácie</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Vyhľadávajú sa aktualizácie</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">Už máte najnovšiu verziu Flow Launchera</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Bola nájdená aktualizácia</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa…</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher nedokázal presunúť používateľské údaje do aktualizovanej verzie.
             Prosím, presuňte profilový priečinok data z {0} do {1}
@@ -224,7 +224,7 @@
     <system:String x:Key="update_flowlauncher_update">Aktualizovať</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Zrušiť</system:String>
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy na github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy k github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
@@ -239,8 +239,8 @@
     <system:String x:Key="Welcome_Page2_Text01">Vyhľadávajte vo všetkých aplikáciách, súboroch, záložkách, YouTube, Twitteri a ďalších. Všetko z pohodlia klávesnice bez toho, aby ste sa dotkli myši.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher sa spúšťa pomocou dole uvedenej klávesovej skratky, poďte si to vyskúšať. Ak ju chcete zmeniť, kliknite na vstupné pole a stlačte požadovanú klávesovú skratku na klávesnici.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Klávesové skratky</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Kľúčové slovo akcie a príkazy</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Vyhľadávajte na webe, spúšťajte aplikácie alebo spúšťajte rôzne funkcie pomocou pluginov Flow Launchera. Niektoré funkcie sa začínajú kľúčovým slovom akcie a v prípade potreby ich možno použiť aj bez kľúčových slov akcie. Vyskúšajte nižšie uvedené dopyty v aplikácii Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Aktivačné príkazy a príkazy</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Vyhľadávajte na webe, spúšťajte aplikácie alebo spúšťajte rôzne funkcie pomocou pluginov Flow Launchera. Niektoré funkcie sa začínajú aktivačným príkazom a v prípade potreby ich možno použiť aj bez aktivačných príkazov. Vyskúšajte nižšie uvedené výrazy v aplikácii Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Spustite Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Hotovo. Užite si Flow Launcher. Nezabudnite na klávesovú skratku na spustenie :)</system:String>
 

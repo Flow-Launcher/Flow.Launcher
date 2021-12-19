@@ -41,7 +41,7 @@ namespace Flow.Launcher
             _settingsVM = settingsVM;
             _mainVM = mainVM;
             _alphabet = alphabet;
-            GlobalHotkey.Instance.hookedKeyboardCallback += KListener_hookedKeyboardCallback;
+            GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
 
@@ -114,7 +114,7 @@ namespace Flow.Launcher
             var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
             ShellCommand.Execute(startInfo);
         }
-        
+
         public void CopyToClipboard(string text)
         {
             Clipboard.SetDataObject(text);
@@ -196,7 +196,7 @@ namespace Flow.Launcher
 
         public void OpenDirectory(string DirectoryPath, string FileName = null)
         {
-            using Process explorer = new Process();
+            using var explorer = new Process();
             var explorerInfo = _settingsVM.Settings.CustomExplorer;
             explorer.StartInfo = new ProcessStartInfo
             {
@@ -204,12 +204,34 @@ namespace Flow.Launcher
                 Arguments = FileName is null ?
                     explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath) :
                     explorerInfo.FileArgument.Replace("%d", DirectoryPath).Replace("%f",
-                    Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
+                        Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
             };
             explorer.Start();
         }
 
+        public void OpenUrl(string url, bool? inPrivate = null)
+        {
+            var browserInfo = _settingsVM.Settings.CustomBrowser;
+
+            var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
+
+            if (browserInfo.OpenInTab)
+            {
+                url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+            }
+            else
+            {
+                url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+            }
+
+        }
+
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+
+        private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
+
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
 
         #endregion
 
@@ -217,12 +239,17 @@ namespace Flow.Launcher
 
         private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
         {
+            var continueHook = true;
             if (GlobalKeyboardEvent != null)
             {
-                return GlobalKeyboardEvent((int)keyevent, vkcode, state);
+                continueHook = GlobalKeyboardEvent((int)keyevent, vkcode, state);
+            }
+            foreach (var x in _globalKeyboardHandlers)
+            {
+                continueHook &= x((int)keyevent, vkcode, state);
             }
 
-            return true;
+            return continueHook;
         }
 
         #endregion
