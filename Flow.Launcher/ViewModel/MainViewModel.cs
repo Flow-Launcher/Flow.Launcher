@@ -746,7 +746,7 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibilityStatus = true;
             
             if(_settings.UseAnimation)
-                ((MainWindow)Application.Current.MainWindow)?.WindowAnimator();
+               ((MainWindow)Application.Current.MainWindow).WindowAnimator();
             
             MainWindowOpacity = 1;
         }
