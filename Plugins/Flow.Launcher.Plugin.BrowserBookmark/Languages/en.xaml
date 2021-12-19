@@ -8,7 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Search your browser bookmarks</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="BookmarkDataSetting">Bookmmark Data</system:String>
+    <system:String x:Key="BookmarkDataSetting">Bookmark Data</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">New window</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
