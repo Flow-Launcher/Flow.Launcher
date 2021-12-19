@@ -53,7 +53,7 @@ namespace Flow.Launcher.Converters
                 // Check if Text will be larger then our QueryTextBox
                 System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
                 System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
-                if (ft.Width > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
+                if ((ft.Width + 30) > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
                 {
                     return string.Empty;
                 };
