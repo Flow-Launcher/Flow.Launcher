@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{DynamicResource BookmarkDataSetting}"
-    Width="500"
+    Width="520"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     KeyDown="WindowKeyDown"
+    ResizeMode="NoResize"
     SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -70,35 +71,50 @@
                         TextAlignment="Left" />
                 </StackPanel>
 
-                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                    <TextBlock
-                        Width="140"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
-                    <TextBox
-                        Width="120"
-                        Height="30"
-                        Margin="50,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{Binding Name}" />
-                </StackPanel>
-                <StackPanel Margin="0,14,0,24" Orientation="Horizontal">
-                    <TextBlock
-                        Width="140"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
-                    <TextBox
-                        Width="250"
-                        Height="30"
-                        Margin="50,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="{Binding DataDirectoryPath}" />
+                <StackPanel Margin="0,10,0,20" Orientation="Horizontal">
+                    <Grid Width="444" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="5,0,20,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Width="120"
+                            Height="34"
+                            Margin="5,0,10,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="{Binding Name}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="5,10,20,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Height="34"
+                            Margin="5,10,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Text="{Binding DataDirectoryPath}" />
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -110,15 +126,13 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="145"
-                    Height="30"
+                    MinWidth="145"
                     Margin="0,0,5,0"
                     Click="ConfirmCancelEditCustomBrowser"
                     Content="{DynamicResource cancel}" />
                 <Button
                     Name="btnConfirm"
-                    Width="145"
-                    Height="30"
+                    MinWidth="145"
                     Margin="5,0,0,0"
                     Click="ConfirmCancelEditCustomBrowser"
                     Style="{StaticResource AccentButtonStyle}">

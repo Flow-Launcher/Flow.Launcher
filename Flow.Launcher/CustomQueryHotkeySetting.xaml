@@ -79,20 +79,18 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                    <Grid>
+                    <Grid Width="470">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            Width="Auto"
-                            MinWidth="110"
                             Margin="10"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -106,7 +104,7 @@
                                 x:Name="ctlHotkey"
                                 Grid.Column="1"
                                 Width="200"
-                                Height="34"
+                                Height="36"
                                 Margin="10,0,10,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
@@ -123,29 +121,27 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Width="Auto"
-                            MinWidth="110"
                             Margin="10"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource customQuery}" />
-                        <StackPanel
+                        <DockPanel
                             Grid.Row="1"
                             Grid.Column="1"
-                            Orientation="Horizontal">
-                            <TextBox
-                                x:Name="tbAction"
-                                MinWidth="220"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center" />
+                            LastChildFill="True">
                             <Button
                                 x:Name="btnTestActionKeyword"
                                 Padding="10,5,10,5"
                                 Click="BtnTestActionKeyword_OnClick"
-                                Content="{DynamicResource preview}" />
-                        </StackPanel>
+                                Content="{DynamicResource preview}"
+                                DockPanel.Dock="Right" />
+                            <TextBox
+                                x:Name="tbAction"
+                                Margin="10"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" />
+                        </DockPanel>
                     </Grid>
                 </StackPanel>
             </StackPanel>
@@ -159,15 +155,13 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="100"
-                    Height="32"
+                    MinWidth="140"
                     Margin="10,0,5,0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnAdd"
-                    Width="100"
-                    Height="32"
+                    MinWidth="140"
                     Margin="5,0,10,0"
                     Click="btnAdd_OnClick"
                     Style="{StaticResource AccentButtonStyle}">

@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha ao registar tecla de atalho: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Não foi possível iniciar {0}</system:String>
@@ -36,6 +39,8 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desativar ativação do Flow Launcher se alguma aplicação estiver em ecrã completo (recomendado para jogos)</system:String>
     <system:String x:Key="defaultFileManager">Gestor de ficheiros padrão</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecione o gestor de ficheiros utilizado para abrir a página</system:String>
+    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonDirectory">Diretório Python</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
@@ -160,6 +165,16 @@
     <system:String x:Key="fileManager_directory_arg">Argumento para pasta</system:String>
     <system:String x:Key="fileManager_file_arg">Argumento para ficheiro</system:String>
 
+    <!--  DefaultBrowser Setting Dialog  -->
+    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_newtab">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Priviate Mode</system:String>
+
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Alterar prioridade</system:String>
     <system:String x:Key="priority_tips">Quanto maior for o número, melhor avaliação terá o resultado. Experimente com o número 5. Se quiser que os resultados sejam inferiores aos dos outros plugins, indique um número negativo.</system:String>
@@ -214,7 +229,7 @@
     <system:String x:Key="update_flowlauncher_updating">A atualizar...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher não conseguiu mover o seu perfil de dados para a nova versão.
-Queira por favor mover a pasta do seu perfil de {0} para {1}
+        Queira por favor mover a pasta do seu perfil de {0} para {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nova atualização</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Está disponível a versão {0} do Flow Launcher</system:String>

@@ -1830,7 +1830,6 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultToggleSwitch}" TargetType="{x:Type ui:ToggleSwitch}" />
-
     <!--#region Expander for Setting Window-->
     <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
