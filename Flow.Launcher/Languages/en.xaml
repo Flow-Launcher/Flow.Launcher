@@ -53,6 +53,7 @@
 
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Plugins</system:String>
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Off</system:String>

@@ -919,7 +919,7 @@
                                 <DockPanel DockPanel.Dock="Right">
                                     <TextBox
                                         Name="pluginFilterTxb"
-                                        Width="150"
+                                        Width="250"
                                         Height="34"
                                         Margin="0,5,26,0"
                                         HorizontalAlignment="Right"
@@ -927,7 +927,37 @@
                                         FontSize="14"
                                         Text=""
                                         TextAlignment="Left"
-                                        TextChanged="OnPluginSearchTextChanged" />
+                                        TextChanged="OnPluginSearchTextChanged">
+                                        <TextBox.Style>
+                                            <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                                <Style.Resources>
+                                                    <VisualBrush
+                                                        x:Key="CueBannerBrush"
+                                                        AlignmentX="Left"
+                                                        AlignmentY="Center"
+                                                        Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <Label
+                                                                Padding="10,0,0,0"
+                                                                Content="{DynamicResource searchplugin}"
+                                                                Foreground="{DynamicResource CustomContextDisabled}" />
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="Text" Value="{x:Null}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
                                 </DockPanel>
                             </DockPanel>
                         </Border>
@@ -1319,14 +1349,44 @@
                                 DockPanel.Dock="Right"
                                 FontSize="13" />
                             <TextBox
-                                Width="150"
+                                Width="250"
                                 Height="34"
                                 Margin="0,0,6,0"
                                 HorizontalAlignment="Right"
                                 DockPanel.Dock="Right"
                                 FontSize="14"
                                 Text=""
-                                TextAlignment="Left" />
+                                TextAlignment="Left">
+                                <TextBox.Style>
+                                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                        <Style.Resources>
+                                            <VisualBrush
+                                                x:Key="CueBannerBrush"
+                                                AlignmentX="Left"
+                                                AlignmentY="Center"
+                                                Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label
+                                                        Padding="10,0,0,0"
+                                                        Content="{DynamicResource searchplugin}"
+                                                        Foreground="{DynamicResource CustomContextDisabled}" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
 
                         </DockPanel>
                         <Border
