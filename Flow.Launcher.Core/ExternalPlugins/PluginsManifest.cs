@@ -31,7 +31,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
             return UpdateTask = DownloadManifestAsync();
         }
 
-        private async static Task DownloadManifestAsync()
+        private static async Task DownloadManifestAsync()
         {
             try
             {
