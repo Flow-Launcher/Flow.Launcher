@@ -54,9 +54,9 @@ namespace Flow.Launcher.Converters
                 System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
                 System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
 
-                var Offset = QueryTextBox.Padding.Right;
+                var offset = QueryTextBox.Padding.Right;
 
-                if ((ft.Width + Offset) > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
+                if ((ft.Width + offset) > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
                 {
                     return string.Empty;
                 };
