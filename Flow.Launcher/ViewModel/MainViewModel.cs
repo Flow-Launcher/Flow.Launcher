@@ -731,13 +731,19 @@ namespace Flow.Launcher.ViewModel
             ShellWindows shellWindows = new SHDocVw.ShellWindows();
 
             // loop through all windows
-            foreach (SHDocVw.InternetExplorer window in shellWindows)
+            foreach (var window in shellWindows)
             {
+                if (window is not SHDocVw.InternetExplorer)
+                {
+                    continue;
+                }
+
+                var explorerWindow = (SHDocVw.InternetExplorer)window;
                 // match active window
-                if (window.HWND == (int)handle)
+                if (explorerWindow.HWND == (int)handle)
                 {
                     // Required ref: Shell32 - C:\Windows\system32\Shell32.dll
-                    var shellWindow = window.Document as Shell32.IShellFolderViewDual2;
+                    var shellWindow = explorerWindow.Document as Shell32.IShellFolderViewDual2;
 
                     // will be null if you are in Internet Explorer for example
                     if (shellWindow != null)
