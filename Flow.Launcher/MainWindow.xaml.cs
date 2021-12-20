@@ -17,6 +17,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
+using System.Windows.Media;
 
 namespace Flow.Launcher
 {
@@ -30,6 +31,7 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
+        private readonly MediaPlayer animationSound = new();
         private bool _animating;
 
         #endregion
@@ -41,6 +43,7 @@ namespace Flow.Launcher
             _settings = settings;
             InitializeComponent();
             InitializePosition();
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
         public MainWindow()
@@ -84,6 +87,12 @@ namespace Flow.Launcher
                         {
                             if (_viewModel.MainWindowVisibilityStatus)
                             {
+                                if (_settings.UseSound)
+                                {
+                                    animationSound.Position = TimeSpan.Zero;
+                                    animationSound.Play();
+                                }
+                                
                                 UpdatePosition();
                                 Activate();
                                 QueryTextBox.Focus();
@@ -99,6 +108,9 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
+
+                                if(_settings.UseAnimation)
+                                    WindowAnimator();
                             }
                             else if (!isProgressBarStoryboardPaused)
                             {
