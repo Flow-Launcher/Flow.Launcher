@@ -84,7 +84,6 @@ namespace Flow.Launcher.ViewModel
             InitializeKeyCommands();
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
-            SetSuggestionTextOffset();
 
             SetOpenResultModifiers();
         }
@@ -395,8 +394,6 @@ namespace Flow.Launcher.ViewModel
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
         public double MainWindowWidth => _settings.WindowSize;
-
-        public int SuggestionTextOffset { get; set; }
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
@@ -721,11 +718,6 @@ namespace Flow.Launcher.ViewModel
         private void SetOpenResultModifiers()
         {
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
-        }
-
-        private void SetSuggestionTextOffset()
-        {
-            SuggestionTextOffset = _settings.SuggestionTextOffset;
         }
 
         public void ToggleFlowLauncher()

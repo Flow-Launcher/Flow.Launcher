@@ -164,7 +164,6 @@
                                 <Binding ElementName="QueryTextBox" Mode="OneTime" />
                                 <Binding ElementName="ResultListBox" Path="SelectedItem" />
                                 <Binding ElementName="QueryTextBox" Path="Text" />
-                                <Binding Path="SuggestionTextOffset" />
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>

@@ -12,8 +12,7 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            
-            if (values.Length != 4)
+            if (values.Length != 3)
             {
                 return string.Empty;
             }
@@ -54,10 +53,7 @@ namespace Flow.Launcher.Converters
                 // Check if Text will be larger then our QueryTextBox
                 System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
                 System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
-
-                var FormatOffset = (int)values[3];
-
-                if ((ft.Width + FormatOffset) > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
+                if ((ft.Width + 40) > QueryTextBox.ActualWidth || QueryTextBox.HorizontalOffset != 0)
                 {
                     return string.Empty;
                 };
