@@ -69,7 +69,6 @@ namespace Flow.Launcher
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
-
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;
@@ -77,7 +76,6 @@ namespace Flow.Launcher
 
                 await PluginManager.InitializePlugins(API);
                 var window = new MainWindow(_settings, _mainVM);
-
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 

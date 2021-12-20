@@ -31,7 +31,7 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
-        private readonly MediaPlayer showSound = new();
+        private readonly MediaPlayer animationSound = new();
         private bool _animating;
 
         #endregion
@@ -43,7 +43,7 @@ namespace Flow.Launcher
             _settings = settings;
             InitializeComponent();
             InitializePosition();
-            showSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
         public MainWindow()
@@ -89,8 +89,8 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    showSound.Position = TimeSpan.Zero;
-                                    showSound.Play();
+                                    animationSound.Position = TimeSpan.Zero;
+                                    animationSound.Play();
                                 }
                                 
                                 UpdatePosition();
@@ -108,6 +108,7 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
+
                                 if(_settings.UseAnimation)
                                     WindowAnimator();
                             }
