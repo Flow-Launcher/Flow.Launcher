@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media;
@@ -77,9 +77,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public IList<int> TitleHighlightData { get; set; }
 
-        /// <summary>
-        /// A list of indexes for the characters to be highlighted in SubTitle
-        /// </summary>
+        [Obsolete("Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered")]
         public IList<int> SubTitleHighlightData { get; set; }
 
         /// <summary>
@@ -110,8 +108,7 @@ namespace Flow.Launcher.Plugin
             var equality = string.Equals(r?.Title, Title) &&
                            string.Equals(r?.SubTitle, SubTitle) &&
                            string.Equals(r?.IcoPath, IcoPath) &&
-                           TitleHighlightData == r.TitleHighlightData &&
-                           SubTitleHighlightData == r.SubTitleHighlightData;
+                           TitleHighlightData == r.TitleHighlightData;
 
             return equality;
         }
