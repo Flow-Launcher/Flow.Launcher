@@ -38,10 +38,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            _manifestUpdateTask = pluginManager.UpdateManifestAsync().ContinueWith(_ =>
-             {
-                 lastUpdateTime = DateTime.Now;
-             }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            _manifestUpdateTask = pluginManager
+                .UpdateManifestAsync(true)
+                .ContinueWith(_ =>
+                {
+                    lastUpdateTime = DateTime.Now;
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return Task.CompletedTask;
         }
@@ -50,7 +52,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             return contextMenu.LoadContextMenus(selectedResult);
         }
-        
+
         private Task _manifestUpdateTask = Task.CompletedTask;
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
@@ -72,11 +74,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 //search could be url, no need ToLower() when passed in
                 var s when s.StartsWith(Settings.HotKeyInstall, StringComparison.OrdinalIgnoreCase)
-                                => await pluginManager.RequestInstallOrUpdate(search, token),
+                    => await pluginManager.RequestInstallOrUpdate(search, token),
                 var s when s.StartsWith(Settings.HotkeyUninstall, StringComparison.OrdinalIgnoreCase)
-                                => pluginManager.RequestUninstall(search),
-                var s when s.StartsWith(Settings.HotkeyUpdate, StringComparison.OrdinalIgnoreCase) 
-                                => await pluginManager.RequestUpdate(search, token),
+                    => pluginManager.RequestUninstall(search),
+                var s when s.StartsWith(Settings.HotkeyUpdate, StringComparison.OrdinalIgnoreCase)
+                    => await pluginManager.RequestUpdate(search, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
