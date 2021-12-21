@@ -35,7 +35,6 @@ namespace Flow.Launcher.ViewModel
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
 
-
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
