@@ -195,21 +195,27 @@ namespace Flow.Launcher.ViewModel
 
             ReverseHistory = new RelayCommand(_ => {
 
-                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
-
-                if (_lastHistoryIndex < _history.Items.Count)
+                if (_history.Items.Count > 0)
                 {
-                    _lastHistoryIndex++;
+                    ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+
+                    if (_lastHistoryIndex < _history.Items.Count)
+                    {
+                        _lastHistoryIndex++;
+                    }
                 }
             });
 
             ForwardHistory = new RelayCommand(_ => {
 
-                ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
-
-                if (_lastHistoryIndex > 1)
+                if (_history.Items.Count > 0)
                 {
-                    _lastHistoryIndex--;
+                    ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+
+                    if (_lastHistoryIndex > 1)
+                    {
+                        _lastHistoryIndex--;
+                    }
                 }
                 
             });
@@ -217,7 +223,10 @@ namespace Flow.Launcher.ViewModel
             InsertLastQuery = new RelayCommand(_ => {
                 var results = SelectedResults;
 
-                if (_queryText == String.Empty && !HistorySelected() && !ContextMenuSelected())
+                if (_history.Items.Count > 0 
+                    && _queryText == String.Empty
+                    && !HistorySelected() 
+                    && !ContextMenuSelected())
                 {
                     ChangeQueryText(_history.Items[_history.Items.Count - 1].Query.ToString());
                     _lastHistoryIndex = 2;
