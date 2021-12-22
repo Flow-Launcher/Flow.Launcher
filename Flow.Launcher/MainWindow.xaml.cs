@@ -18,6 +18,8 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
+using Clipboard = System.Windows.Forms.Clipboard;
+
 
 namespace Flow.Launcher
 {
@@ -44,11 +46,14 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            CommandManager.AddPreviewExecutedHandler(QueryTextBox, onPreviewExecuted);
+            CommandManager.AddPreviewCanExecuteHandler(QueryTextBox, onPreviewCanExecute);
         }
 
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
@@ -61,6 +66,30 @@ namespace Flow.Launcher
             await PluginManager.DisposePluginsAsync();
             Environment.Exit(0);
         }
+
+        private void onPreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Allow paste command to accept non-text items
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                e.CanExecute = true;
+                e.Handled = true;
+            }
+        }
+
+        private void onPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                if (Clipboard.ContainsFileDropList())
+                {
+                    QueryTextBox.Text = Clipboard.GetFileDropList()[0];
+                    e.Handled = true;
+                }
+
+            }
+        }
+
 
         private void OnInitialized(object sender, EventArgs e)
         {
