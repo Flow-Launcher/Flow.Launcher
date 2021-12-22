@@ -13,6 +13,9 @@
     <system:String x:Key="iconTrayAbout">O aplikácii</system:String>
     <system:String x:Key="iconTrayExit">Ukončiť</system:String>
     <system:String x:Key="closeWindow">Zavrieť</system:String>
+    <system:String x:Key="copy">Kopírovať</system:String>
+    <system:String x:Key="cut">Vystrihnúť</system:String>
+    <system:String x:Key="paste">Prilepiť</system:String>
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
 
@@ -58,6 +61,7 @@
     <system:String x:Key="actionKeywords">Aktivačný príkaz</system:String>
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
