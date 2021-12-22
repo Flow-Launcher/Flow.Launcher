@@ -456,7 +456,7 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Up:
-                    _viewModel.InsertLastQuery.Execute(null);
+                    _viewModel.ReverseHistoryOnEmptyQuery.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.PageDown:
