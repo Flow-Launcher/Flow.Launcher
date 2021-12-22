@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Vyhľadáva záložky prehliadača</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="BookmarkDataSetting">Nastavenia pluginu</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Nastavenia pluginu</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Otvoriť záložky v:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nové okno</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nová karta</system:String>
