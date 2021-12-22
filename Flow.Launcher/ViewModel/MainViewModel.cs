@@ -40,7 +40,7 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         internal readonly Settings _settings;
         private readonly History _history;
-        private int _lastHistoryIndex = 1;
+        private int lasthistoryindex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -196,11 +196,11 @@ namespace Flow.Launcher.ViewModel
 
                 if (_history.Items.Count > 0)
                 {
-                    ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+                    ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
 
-                    if (_lastHistoryIndex < _history.Items.Count)
+                    if (lasthistoryindex < _history.Items.Count)
                     {
-                        _lastHistoryIndex++;
+                        lasthistoryindex++;
                     }
                 }
             });
@@ -209,11 +209,11 @@ namespace Flow.Launcher.ViewModel
 
                 if (_history.Items.Count > 0)
                 {
-                    ChangeQueryText(_history.Items[_history.Items.Count - _lastHistoryIndex].Query.ToString());
+                    ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
 
-                    if (_lastHistoryIndex > 1)
+                    if (lasthistoryindex > 1)
                     {
-                        _lastHistoryIndex--;
+                        lasthistoryindex--;
                     }
                 }
                 
@@ -228,7 +228,7 @@ namespace Flow.Launcher.ViewModel
                     && !ContextMenuSelected())
                 {
                     ChangeQueryText(_history.Items[_history.Items.Count - 1].Query.ToString());
-                    _lastHistoryIndex = 2;
+                    lasthistoryindex = 2;
                 }
                 else
                 {
@@ -832,7 +832,7 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-            _lastHistoryIndex = 1;
+            lasthistoryindex = 1;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }
