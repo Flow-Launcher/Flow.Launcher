@@ -83,7 +83,7 @@ namespace Flow.Launcher
             {
                 if (Clipboard.ContainsFileDropList())
                 {
-                    QueryTextBox.Text = Clipboard.GetFileDropList()[0];
+                    _viewModel.ChangeQueryText(Clipboard.GetFileDropList()[0]);
                     e.Handled = true;
                 }
 
