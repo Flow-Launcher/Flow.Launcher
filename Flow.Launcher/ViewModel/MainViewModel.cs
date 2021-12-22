@@ -219,7 +219,7 @@ namespace Flow.Launcher.ViewModel
                 
             });
 
-            InsertLastQuery = new RelayCommand(_ => {
+            ReverseHistoryOnEmptyQuery = new RelayCommand(_ => {
                 var results = SelectedResults;
 
                 if (_history.Items.Count > 0 
@@ -459,7 +459,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand AutocompleteQueryCommand { get; set; }
         public ICommand ReverseHistory { get; set; }
         public ICommand ForwardHistory { get; set; }
-        public ICommand InsertLastQuery { get; set; }
+        public ICommand ReverseHistoryOnEmptyQuery { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
         public string CycleHistoryModifiers { get; private set; }
