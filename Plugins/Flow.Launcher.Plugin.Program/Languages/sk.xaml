@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_program_delete">Odstrániť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">Upraviť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Pridať</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">Názov</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable">Povoliť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Zakázať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Umiestnenie</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Všetky programy</system:String>
