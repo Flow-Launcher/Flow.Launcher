@@ -585,6 +585,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
+                lasthistoryindex = 1;
                 return;
             }
 
