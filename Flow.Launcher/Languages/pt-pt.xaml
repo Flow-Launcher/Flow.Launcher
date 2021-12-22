@@ -16,6 +16,9 @@
     <system:String x:Key="iconTrayAbout">Acerca</system:String>
     <system:String x:Key="iconTrayExit">Sair</system:String>
     <system:String x:Key="closeWindow">Fechar</system:String>
+    <system:String x:Key="copy">Copiar</system:String>
+    <system:String x:Key="cut">Cortar</system:String>
+    <system:String x:Key="paste">Colar</system:String>
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização de teclas de atalho</system:String>
 
@@ -61,6 +64,7 @@
     <system:String x:Key="actionKeywords">Palavra-chave da ação</system:String>
     <system:String x:Key="currentActionKeywords">Palavra-chave atual</system:String>
     <system:String x:Key="newActionKeyword">Nova palavra-chave</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Alterar palavras-chave</system:String>
     <system:String x:Key="currentPriority">Prioridade atual</system:String>
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
