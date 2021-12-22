@@ -231,7 +231,7 @@ namespace Flow.Launcher.ViewModel
                     // Set index to next item if user attempts to continue cycling history
                     if (_history.Items.Count > 1)
                     {
-                        lasthistoryindex = 2;
+                        lasthistoryindex++;
                     }
                     
                 }
