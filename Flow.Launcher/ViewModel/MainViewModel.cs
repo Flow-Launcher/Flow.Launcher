@@ -227,13 +227,7 @@ namespace Flow.Launcher.ViewModel
                     && !HistorySelected() 
                     && !ContextMenuSelected())
                 {
-                    ChangeQueryText(_history.Items[_history.Items.Count - 1].Query.ToString());
-                    // Set index to next item if user attempts to continue cycling history
-                    if (_history.Items.Count > 1)
-                    {
-                        lasthistoryindex++;
-                    }
-                    
+                    ReverseHistory.Execute(null);
                 }
                 else
                 {
