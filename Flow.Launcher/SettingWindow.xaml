@@ -873,6 +873,31 @@
                                         SelectedValuePath="LanguageCode" />
                                 </ItemsControl>
                             </Border>
+                            <Border Style="{DynamicResource SettingGroupBox}">
+                                <StackPanel Margin="10" Orientation="Vertical">
+                                    <TextBlock Margin="10" Text="ShortCut" />
+                                    <ListView ItemsSource="{Binding ShortCuts}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Key">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Key}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn Header="Mapped Value">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Value}" />
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </StackPanel>
+                            </Border>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>

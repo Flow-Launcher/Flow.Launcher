@@ -170,6 +170,8 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
+        public List<ShortCutModel> ShortCuts => Settings.ShortCuts;
+
         public string TestProxy()
         {
             var proxyServer = Settings.Proxy.Server;
