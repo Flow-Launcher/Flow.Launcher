@@ -205,6 +205,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
+        internal List<ShortCutModel> ShortCuts { get; set; } = new List<ShortCutModel>();
     }
 
     public enum LastQueryMode

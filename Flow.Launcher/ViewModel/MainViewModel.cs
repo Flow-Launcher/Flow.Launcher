@@ -529,6 +529,16 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            string query = QueryText;
+
+            foreach (var shortcut in _settings.ShortCuts)
+            {
+                if (QueryText == shortcut.Key)
+                {
+                    query = shortcut.Value;
+                }
+            }
+
             _updateSource?.Dispose();
 
             var currentUpdateSource = new CancellationTokenSource();
@@ -545,7 +555,7 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(query.Trim(), PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
