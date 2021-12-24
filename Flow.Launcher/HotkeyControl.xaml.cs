@@ -44,12 +44,16 @@ namespace Flow.Launcher
             LostFocus += (_, _) =>
             {
                 PluginManager.API.RemoveGlobalKeyboardCallback(callback);
+                state.AltPressed = false;
+                state.CtrlPressed = false;
+                state.ShiftPressed = false;
+                state.WinPressed = false;
             };
         }
 
         private CancellationTokenSource hotkeyUpdateSource;
 
-        private SpecialKeyState state = new SpecialKeyState();
+        private SpecialKeyState state = new();
 
         private bool TbHotkey_OnPreviewKeyDown(int keyevent, int vkcode, SpecialKeyState dummy)
         {
