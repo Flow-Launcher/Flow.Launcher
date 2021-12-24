@@ -9,6 +9,8 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher
 {
@@ -25,41 +27,93 @@ namespace Flow.Launcher
 
         protected virtual void OnHotkeyChanged() => HotkeyChanged?.Invoke(this, EventArgs.Empty);
 
+        private Func<int, int, SpecialKeyState, bool> callback { get; set; }
+
         public HotkeyControl()
         {
             InitializeComponent();
             tbMsgTextOriginal = tbMsg.Text;
             tbMsgForegroundColorOriginal = tbMsg.Foreground;
+
+            callback = TbHotkey_OnPreviewKeyDown;
+
+            GotFocus += (_, _) =>
+            {
+                PluginManager.API.RegisterGlobalKeyboardCallback(callback);
+            };
+            LostFocus += (_, _) =>
+            {
+                PluginManager.API.RemoveGlobalKeyboardCallback(callback);
+            };
         }
 
         private CancellationTokenSource hotkeyUpdateSource;
 
-        private void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        private SpecialKeyState state = new SpecialKeyState();
+
+        private bool TbHotkey_OnPreviewKeyDown(int keyevent, int vkcode, SpecialKeyState dummy)
         {
+            var key = KeyInterop.KeyFromVirtualKey(vkcode);
+
+            if ((KeyEvent)keyevent is not (KeyEvent.WM_KEYDOWN or KeyEvent.WM_SYSKEYDOWN))
+            {
+                switch (key)
+                {
+                    case Key.LeftAlt or Key.RightAlt:
+                        state.AltPressed = false;
+                        break;
+                    case Key.LeftCtrl or Key.RightCtrl:
+                        state.CtrlPressed = false;
+                        break;
+                    case Key.LeftShift or Key.RightShift:
+                        state.ShiftPressed = false;
+                        break;
+                    case Key.LWin or Key.LWin:
+                        state.WinPressed = false;
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+
+            switch (key)
+            {
+                case Key.LeftAlt or Key.RightAlt:
+                    state.AltPressed = true;
+                    break;
+                case Key.LeftCtrl or Key.RightCtrl:
+                    state.CtrlPressed = true;
+                    break;
+                case Key.LeftShift or Key.RightShift:
+                    state.ShiftPressed = true;
+                    break;
+                case Key.LWin or Key.LWin:
+                    state.WinPressed = true;
+                    break;
+            }
+
+
             hotkeyUpdateSource?.Cancel();
             hotkeyUpdateSource?.Dispose();
             hotkeyUpdateSource = new();
             var token = hotkeyUpdateSource.Token;
-            e.Handled = true;
 
-            //when alt is pressed, the real key should be e.SystemKey
-            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
-
-            SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
 
             var hotkeyModel = new HotkeyModel(
-                specialKeyState.AltPressed,
-                specialKeyState.ShiftPressed,
-                specialKeyState.WinPressed,
-                specialKeyState.CtrlPressed,
+                state.AltPressed,
+                state.ShiftPressed,
+                state.WinPressed,
+                state.CtrlPressed,
                 key);
 
             var hotkeyString = hotkeyModel.ToString();
 
             if (hotkeyString == tbHotkey.Text)
             {
-                return;
+                return false;
             }
+            Log.Debug("test hotkey" + hotkeyString);
 
             _ = Dispatcher.InvokeAsync(async () =>
             {
@@ -67,6 +121,8 @@ namespace Flow.Launcher
                 if (!token.IsCancellationRequested)
                     await SetHotkey(hotkeyModel);
             });
+
+            return false;
         }
 
         public async Task SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)

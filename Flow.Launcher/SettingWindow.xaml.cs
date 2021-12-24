@@ -137,7 +137,7 @@ namespace Flow.Launcher
 
         private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
         {
-            HotKeyMapper.RemoveHotkey(settings.Hotkey);
+            //HotKeyMapper.RemoveHotkey(settings.Hotkey);
         }
 
         private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
