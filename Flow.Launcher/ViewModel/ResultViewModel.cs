@@ -7,11 +7,16 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.IO;
+using System.Drawing.Text;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
+        private static PrivateFontCollection fontCollection = new();
+        private static Dictionary<string, string> fonts = new(); 
+
         public ResultViewModel(Result result, Settings settings)
         {
             if (result != null)
@@ -23,13 +28,29 @@ namespace Flow.Launcher.ViewModel
                     // Checks if it's a system installed font, which does not require path to be provided. 
                     if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
                     {
-                        var fontPath = Result.Glyph.FontFamily;
-                        Glyph = Path.IsPathRooted(fontPath)
-                            ? Result.Glyph
-                            : Result.Glyph with
+                        string fontFamilyPath = glyph.FontFamily;
+
+                        if (!Path.IsPathRooted(fontFamilyPath))
+                        {
+                            fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
+                        }
+
+                        if (fonts.ContainsKey(fontFamilyPath))
+                        {
+                            Glyph = glyph with
                             {
-                                FontFamily = Path.Combine(Result.PluginDirectory, fontPath)
+                                FontFamily = fonts[fontFamilyPath]
                             };
+                        }
+                        else
+                        {
+                            fontCollection.AddFontFile(fontFamilyPath);
+                            fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                            Glyph = glyph with
+                            {
+                                FontFamily = fonts[fontFamilyPath]
+                            };
+                        }
                     }
                     else
                     {
@@ -40,6 +61,8 @@ namespace Flow.Launcher.ViewModel
 
             Settings = settings;
         }
+
+        
 
         private Settings Settings { get; }
 
