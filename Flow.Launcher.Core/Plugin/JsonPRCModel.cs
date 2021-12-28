@@ -30,26 +30,36 @@ namespace Flow.Launcher.Core.Plugin
         public string Data { get; set; }
     }
 
-
-    public class JsonRPCResponseModel
+    public record JsonRPCBase
     {
-        public string Result { get; set; }
-
-        public JsonRPCErrorModel Error { get; set; }
+        public int Id { get; set; }
+        public JsonRPCErrorModel Error { get; init; }
+        public string Message { get; init; }
     }
 
-    public class JsonRPCQueryResponseModel : JsonRPCResponseModel
-    {
-        [JsonPropertyName("result")]
-        public new List<JsonRPCResult> Result { get; set; }
 
-        public Dictionary<string, object> SettingsChange { get; set; }
+    public record JsonRPCResponseModel : JsonRPCBase
+    {
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public JsonRPCResopnseActionType ActionType { get; init; }
+
+        public JsonRPCErrorModel Error { get; set; }
 
         public string DebugMessage { get; set; }
     }
 
-    public class JsonRPCRequestModel
+    public record JsonRPCQueryResponseModel : JsonRPCResponseModel
     {
+        public Query Query { get; init; }
+        public new List<JsonRPCResult> Result { get; set; }
+
+        public Dictionary<string, object> SettingsChange { get; set; }
+
+    }
+
+    public record JsonRPCRequestModel : JsonRPCBase
+    {
+        public Query Query { get; set; }
         public string Method { get; set; }
 
         public object[] Parameters { get; set; }
@@ -67,17 +77,9 @@ namespace Flow.Launcher.Core.Plugin
     }
 
     /// <summary>
-    /// Json RPC Request that Flow Launcher sent to client
-    /// </summary>
-    public class JsonRPCServerRequestModel : JsonRPCRequestModel
-    {
-
-    }
-
-    /// <summary>
     /// Json RPC Request(in query response) that client sent to Flow Launcher
     /// </summary>
-    public class JsonRPCClientRequestModel : JsonRPCRequestModel
+    public record JsonRPCClientRequestModel : JsonRPCRequestModel
     {
         public bool DontHideAfterAction { get; set; }
     }

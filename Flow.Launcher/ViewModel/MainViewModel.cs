@@ -136,7 +136,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
+                    if (e.Query.RawQuery != QueryText.Trim() || e.Token.IsCancellationRequested)
                     {
                         return;
                     }

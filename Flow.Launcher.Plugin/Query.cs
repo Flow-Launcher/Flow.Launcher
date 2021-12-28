@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -25,6 +26,7 @@ namespace Flow.Launcher.Plugin
         /// Raw query, this includes action keyword if it has
         /// We didn't recommend use this property directly. You should always use Search property.
         /// </summary>
+        [JsonInclude]
         public string RawQuery { get; internal init; }
 
         /// <summary>
@@ -51,6 +53,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public const string TermSeparator = " ";
 
+        [JsonIgnore]
         [Obsolete("Typo")]
         public const string TermSeperater = TermSeparator;
         /// <summary>
@@ -58,6 +61,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public const string ActionKeywordSeparator = ";";
 
+        [JsonIgnore]
         [Obsolete("Typo")]
         public const string ActionKeywordSeperater = ActionKeywordSeparator;
 
@@ -72,23 +76,27 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Return first search split by space if it has
         /// </summary>
+        [JsonIgnore]
         public string FirstSearch => SplitSearch(0);
-
+        
         private string _secondToEndSearch;
 
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
+        [JsonIgnore]
         public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
         /// Return second search split by space if it has
         /// </summary>
+        [JsonIgnore]
         public string SecondSearch => SplitSearch(1);
 
         /// <summary>
         /// Return third search split by space if it has
         /// </summary>
+        [JsonIgnore]
         public string ThirdSearch => SplitSearch(2);
 
         private string SplitSearch(int index)

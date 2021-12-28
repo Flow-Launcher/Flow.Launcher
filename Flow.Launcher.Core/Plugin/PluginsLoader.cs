@@ -85,7 +85,10 @@ namespace Flow.Launcher.Core.Plugin
                             return;
                         }
 
-                        plugins.Add(new PluginPair {Plugin = plugin, Metadata = metadata});
+                        plugins.Add(new PluginPair
+                        {
+                            Plugin = plugin, Metadata = metadata
+                        });
                     });
                 metadata.InitTime += milliseconds;
             }
@@ -119,7 +122,7 @@ namespace Flow.Launcher.Core.Plugin
                 return SetPythonPathForPluginPairs(source, Path.Combine(settings.PythonDirectory, PythonExecutable));
 
             var pythonPath = string.Empty;
-            
+
             if (MessageBox.Show("Flow detected you have installed Python plugins, which " +
                                 "will need Python to run. Would you like to download Python? " +
                                 Environment.NewLine + Environment.NewLine +
@@ -188,16 +191,21 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(List<PluginMetadata> source, string pythonPath)
-            =>  source
-                .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
+            => source
+                .Where(o => AllowedLanguage.IsPython(o.Language))
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new PythonPlugin(pythonPath), 
+                    Plugin = metadata.Language.ToUpper() switch
+                    {
+                        AllowedLanguage.Python => new PythonPlugin(pythonPath),
+                        AllowedLanguage.PythonV2 => new PythonPluginV2(pythonPath),
+                        _ => throw new ArgumentOutOfRangeException()
+                    },
                     Metadata = metadata
                 })
                 .ToList();
 
-    public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)

@@ -1,26 +1,17 @@
-﻿namespace Flow.Launcher.Plugin
+﻿using System;
+
+namespace Flow.Launcher.Plugin
 {
     public static class AllowedLanguage
     {
-        public static string Python
-        {
-            get { return "PYTHON"; }
-        }
+        public const string Python = "PYTHON";
+        public const string PythonV2 = "PYTHON_V2";
 
-        public static string CSharp
-        {
-            get { return "CSHARP"; }
-        }
+        public const string CSharp = "CSHARP";
 
-        public static string FSharp
-        {
-            get { return "FSHARP"; }
-        }
+        public const string FSharp = "FSHARP";
 
-        public static string Executable
-        {
-            get { return "EXECUTABLE"; }
-        }
+        public const string Executable = "EXECUTABLE";
 
         public static bool IsDotNet(string language)
         {
@@ -31,8 +22,13 @@
         public static bool IsAllowed(string language)
         {
             return IsDotNet(language)
-                || language.ToUpper() == Python.ToUpper()
-                || language.ToUpper() == Executable.ToUpper();
+                || IsPython(language)
+                || string.Equals(language, Executable, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool IsPython(string language)
+        {
+            return language.ToUpper() is Python or PythonV2;
         }
     }
 }
