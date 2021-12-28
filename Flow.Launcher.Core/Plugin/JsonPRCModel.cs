@@ -48,6 +48,12 @@ namespace Flow.Launcher.Core.Plugin
         public string DebugMessage { get; set; }
     }
 
+    public enum JsonRPCResopnseActionType
+    {
+        Result,
+        RequestAPI
+    }
+
     public record JsonRPCQueryResponseModel : JsonRPCResponseModel
     {
         public Query Query { get; init; }
