@@ -78,6 +78,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Priority of the current result
+        /// <value>default: 0</value>
         /// </summary>
         public int Score { get; set; }
 
