@@ -10,11 +10,11 @@ namespace Flow.Launcher.Plugin
     {
 
         private string _pluginDirectory;
-        
+
         private string _icoPath;
 
         /// <summary>
-        /// Provides the title of the result. This is always required.
+        /// The title of the result. This is always required.
         /// </summary>
         public string Title { get; set; }
 
@@ -36,6 +36,9 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string AutoCompleteText { get; set; }
 
+        /// <summary>
+        /// Image Displayed on the result
+        /// </summary>
         public string IcoPath
         {
             get { return _icoPath; }
@@ -60,16 +63,22 @@ namespace Flow.Launcher.Plugin
         public IconDelegate Icon;
 
         /// <summary>
-        /// Information for Glyph Icon
+        /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
-        public GlyphInfo Glyph { get; init; } 
+        public GlyphInfo Glyph { get; init; }
 
 
         /// <summary>
-        /// return true to hide flowlauncher after select result
+        /// Delegate activated when result is been selected
+        /// <returns>
+        /// true to hide flowlauncher after select result
+        /// </returns>
         /// </summary>
         public Func<ActionContext, bool> Action { get; set; }
 
+        /// <summary>
+        /// Priority of the current result
+        /// </summary>
         public int Score { get; set; }
 
         /// <summary>
@@ -83,9 +92,9 @@ namespace Flow.Launcher.Plugin
         public IList<int> SubTitleHighlightData { get; set; }
 
         /// <summary>
-        /// Only results that originQuery match with current query will be displayed in the panel
+        /// Query information associated with the result
         /// </summary>
-        internal Query OriginQuery { get; set; }
+        public Query OriginQuery { get; set; }
 
         /// <summary>
         /// Plugin directory
@@ -103,6 +112,7 @@ namespace Flow.Launcher.Plugin
             }
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             var r = obj as Result;
@@ -116,6 +126,7 @@ namespace Flow.Launcher.Plugin
             return equality;
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             var hashcode = (Title?.GetHashCode() ?? 0) ^
@@ -123,15 +134,17 @@ namespace Flow.Launcher.Plugin
             return hashcode;
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return Title + SubTitle;
         }
 
-        public Result() { }
-
         /// <summary>
         /// Additional data associate with this result
+        /// <example>
+        /// As external information for ContextMenu
+        /// </example>
         /// </summary>
         public object ContextData { get; set; }
 
