@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Image Displayed on the result
-        /// <value>Relative Path toward the Image File</value>
+        /// <value>Relative Path to the Image File</value>
         /// <remarks>GlyphInfo is prioritized if not null</remarks>
         /// </summary>
         public string IcoPath
