@@ -142,7 +142,7 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
-        /// Additional data associate with this result
+        /// Additional data associated with this result
         /// <example>
         /// As external information for ContextMenu
         /// </example>
