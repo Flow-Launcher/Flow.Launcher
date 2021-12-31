@@ -195,8 +195,10 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-                            <RadioButton IsChecked="{Binding OpenInTab}">New Tab</RadioButton>
-                            <RadioButton IsChecked="{Binding OpenInNewWindow, Mode=OneTime}">New Window</RadioButton>
+                            <RadioButton IsChecked="{Binding OpenInTab}" 
+                                         Content="{DynamicResource defaultBrowser_newWindow}"></RadioButton>
+                            <RadioButton IsChecked="{Binding OpenInNewWindow, Mode=OneTime}"
+                                         Content="{DynamicResource defaultBrowser_newWindow}"></RadioButton>
                         </StackPanel>
                         <TextBlock
                             Grid.Row="3"
