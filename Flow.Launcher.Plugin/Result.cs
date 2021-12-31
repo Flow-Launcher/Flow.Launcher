@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin
 
 
         /// <summary>
-        /// Delegate activated when the result has been selected
+        /// Delegate. An action to take in the form of a function call when the result has been selected
         /// <returns>
         /// true to hide flowlauncher after select result
         /// </returns>
