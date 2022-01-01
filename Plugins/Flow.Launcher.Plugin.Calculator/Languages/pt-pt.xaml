@@ -11,5 +11,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Utilizar definições do sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Vírgula (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Ponto (.)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">N.º máximo de casas decimais</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Número máximo de casas decimais</system:String>
 </ResourceDictionary>

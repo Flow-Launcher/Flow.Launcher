@@ -41,9 +41,7 @@
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding
-            Key="Tab"
-            Command="{Binding AutocompleteQueryCommand}"/>
+        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
         <KeyBinding
             Key="Tab"
             Command="{Binding AutocompleteQueryCommand}"
@@ -179,9 +177,9 @@
                         Visibility="Visible">
                         <TextBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Command="ApplicationCommands.Cut" />
-                                <MenuItem Command="ApplicationCommands.Copy" />
-                                <MenuItem Command="ApplicationCommands.Paste" />
+                                <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}" />
+                                <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}" />
+                                <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}" />
                                 <Separator
                                     Margin="0"
                                     Padding="0,4,0,4"

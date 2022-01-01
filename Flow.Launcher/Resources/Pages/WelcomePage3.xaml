@@ -4,14 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePage3"
     mc:Ignorable="d">
     <Page.Resources>
         <Style x:Key="KbdLine" TargetType="Border">
             <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="Margin" Value="0,3,0,3" />
             <Setter Property="Background" Value="{DynamicResource Color01B}" />
         </Style>
         <Style x:Key="Kbd" TargetType="Border">
@@ -60,7 +60,7 @@
                 VerticalScrollBarVisibility="Auto">
                 <Grid>
                     <StackPanel Margin="24,20,24,20">
-                        <StackPanel Margin="0,0,0,20">
+                        <StackPanel Margin="0,0,0,10">
                             <TextBlock
                                 FontSize="20"
                                 FontWeight="SemiBold"
@@ -151,6 +151,26 @@
                                         VerticalAlignment="Center"
                                         FontSize="13"
                                         Text="{DynamicResource HotkeyESCDesc}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{DynamicResource KbdLine}">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel
+                                    Width="210"
+                                    Margin="20,5,4,5"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
+                                        <TextBlock Style="{DynamicResource KbdText}" Text="Tab" />
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="13"
+                                        Text="{DynamicResource HotkeyTabDesc}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>

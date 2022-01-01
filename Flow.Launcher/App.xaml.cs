@@ -69,8 +69,6 @@ namespace Flow.Launcher
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
-                HotKeyMapper.Initialize(_mainVM);
-
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;
@@ -83,6 +81,8 @@ namespace Flow.Launcher
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
+                
+                HotKeyMapper.Initialize(_mainVM);
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed

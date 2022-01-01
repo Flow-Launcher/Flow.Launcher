@@ -11,16 +11,16 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Upraviť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Pridať</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Potvrdiť</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Skratka akcie</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Adresa URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Hľadať</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Povoliť návrhy vyhľadávania </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Automatické dopĺňanie údajov z: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Použiť automatické dokončovanie výrazov vyhľadávania: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Automatické dokončovanie údajov z: </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vyberte webové vyhľadávanie</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Naozaj chcete odstrániť {0}?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Ak máte službu vyhľadávania na webe, ktorú chcete použiť, môžete ju pridať do programu Flow. Ak napríklad chcete na Netflixe hľadať „cestovatelia“, môžete postupovať podľa formátu adresy URL v paneli s adresou: „https://www.netflix.com/search?q=cestovatelia“. Ak to chcete urobiť, zmeňte hľadaný výraz „cestovatelia“ takto.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Pridajte ju do sekcie URL nižšie. Teraz môžete pomocou Flowu vyhľadávať na Netflixe pomocou ľubovoľných vyhľadávacích výrazov.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Pridajte ju do sekcie URL nižšie. Teraz môžete s Flowom vyhľadávať na Netflixe pomocou ľubovoľných vyhľadávacích výrazov.</system:String>
    
 
     <!--web search edit-->
@@ -31,13 +31,13 @@
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Zrušiť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Neplatné webové vyhľadávanie</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_title">Zadajte názov</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Zadajte skratku akcie</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Zadajte aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Zadajte URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Zadaná skratka akcie už existuje, zadajte inú</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Zadaný aktivačný príkaz už existuje, zadajte iný aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Úspešné</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Poznámka: Do tohto priečinka nemusíte vkladať obrázky, ak sa Flow Launcher aktualizuje, zmiznú. Flow Launcher bude automaticky kopírovať obrázky mimo tohto priečinka naprieč vlastnému umiestneniu obrázkov pluginu.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Webové vyhľadávanie</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Umožňuje vyhľadávanie webov</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Umožňuje vyhľadávanie na webe</system:String>
 
 </ResourceDictionary>

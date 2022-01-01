@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -14,7 +13,6 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
@@ -734,20 +732,10 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            if (_settings.UseSound)
-            {
-                MediaPlayer media = new MediaPlayer();
-                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                media.Play();
-            }
-
             MainWindowVisibility = Visibility.Visible;
 
             MainWindowVisibilityStatus = true;
-            
-            if(_settings.UseAnimation)
-                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
-            
+
             MainWindowOpacity = 1;
         }
 

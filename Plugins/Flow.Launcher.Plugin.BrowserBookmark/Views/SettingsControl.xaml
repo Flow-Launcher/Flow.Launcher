@@ -33,12 +33,12 @@
             </ListView>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
-                    Width="110"
+                    MinWidth="120"
                     Margin="10"
                     Click="NewCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" />
                 <Button
-                    Width="110"
+                    MinWidth="120"
                     Margin="10"
                     Click="DeleteCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" />
