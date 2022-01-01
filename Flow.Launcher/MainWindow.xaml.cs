@@ -503,7 +503,7 @@ namespace Flow.Launcher
 
         private void MoveQueryTextToEnd()
         {
-            QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
+            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
         }
 
         public void InitializeColorScheme()
