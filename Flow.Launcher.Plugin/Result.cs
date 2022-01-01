@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Query information associated with the result
         /// </summary>
-        public Query OriginQuery { get; set; }
+        internal Query OriginQuery { get; set; }
 
         /// <summary>
         /// Plugin directory
