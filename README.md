@@ -161,7 +161,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Support wide range of plugins. Visit [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
 - If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
-- Create and publish your own plugin to flow! Take a look at our plugin development documentation for [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins) or [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins)
+- Publish your own plugin to flow! Create plugins in [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins), [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins), [JavaScript](https://flow-launcher.github.io/docs/#/nodejs-develop-plugins) or [TypeScript](https://flow-launcher.github.io/docs/#/nodejs-develop-plugins)
 
 ### Everything
 <img src="https://user-images.githubusercontent.com/6903107/144533510-6880ecf4-5f93-4b6a-9c1f-4fcdb99110c3.png" width="400">
