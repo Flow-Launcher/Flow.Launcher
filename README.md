@@ -161,6 +161,16 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Support wide range of plugins. Visit [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
 - If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
+
+<p align="center">
+<a href="https://flow-launcher.github.io/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
+<a href="https://flow-launcher.github.io/docs/#/develop-py-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
+<a href="https://flow-launcher.github.io/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870071-d67c736b-0748-428f-a283-14587696dfa3.png" width="64"></a>
+<a href="https://flow-launcher.github.io/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
+</p>
+
+
+
 - Publish your own plugin to flow! Create plugins in [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins), [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins), [JavaScript](https://flow-launcher.github.io/docs/#/nodejs-develop-plugins) or [TypeScript](https://flow-launcher.github.io/docs/#/nodejs-develop-plugins)
 
 ### Everything
