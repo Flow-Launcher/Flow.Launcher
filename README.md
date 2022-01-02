@@ -160,7 +160,6 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 ## 📦 Plugins
 
 - Support wide range of plugins. Visit [here](https://flowlauncher.com/docs/#/plugins) for our plugin portfolio.
-- If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
 - Publish your own plugin to flow! Create plugins in:
 
 <p align="center">
