@@ -193,7 +193,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 ### Github
 <img src="https://user-images.githubusercontent.com/6903107/144533497-8677f800-95c5-4758-8ca3-c96333ee1943.png" width="400">
  
-### Windows Walker
+### Window Walker
 <img src="https://user-images.githubusercontent.com/6903107/144533517-07bf011f-726c-4221-8657-0e442eca8a82.png" width="400">
 
 ......and <a href="https://flowlauncher.com/docs/#/plugins">more!</a>
