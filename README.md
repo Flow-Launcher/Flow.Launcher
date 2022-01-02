@@ -1,6 +1,6 @@
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/6903107/144854670-d624d717-d86a-49e5-a5e5-e782f91ed12a.png" width="300"><br />
-  <a href="https://flow-launcher.github.io">
+  <a href="https://flowlauncher.com">
 	<img src="https://user-images.githubusercontent.com/6903107/144854052-969f5e60-a0ec-44b8-8968-620467496f10.gif" width="500">
   </a>
 </p>
@@ -13,7 +13,7 @@
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases"><img src="https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg"></a><br />
 <img src="https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher">
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher"></a>
-<a href="https://flow-launcher.github.io/docs"><img src="https://img.shields.io/badge/Documentation-7389D8"></a>
+<a href="https://flowlauncher.com/docs"><img src="https://img.shields.io/badge/Documentation-7389D8"></a>
 <a href="https://discord.gg/AvgAQgh"><img src="https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white"></a>
 </p>
 
@@ -42,7 +42,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
        <a href="#Hotkeys">Hotkeys</a> •
   <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
   <a href="#Development">Development</a> •
-  <a href="https://flow-launcher.github.io/docs">Docs</a>
+  <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -159,19 +159,19 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ## 📦 Plugins
 
-- Support wide range of plugins. Visit [here](https://flow-launcher.github.io/docs/#/plugins) for our plugin portfolio.
+- Support wide range of plugins. Visit [here](https://flowlauncher.com/docs/#/plugins) for our plugin portfolio.
 - If you are using Python plugins, flow will prompt to either select the location or allow Python (Embeddable) to be automatic downloaded for use.
 
 <p align="center">
-<a href="https://flow-launcher.github.io/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
-<a href="https://flow-launcher.github.io/docs/#/develop-py-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
-<a href="https://flow-launcher.github.io/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870071-d67c736b-0748-428f-a283-14587696dfa3.png" width="64"></a>
-<a href="https://flow-launcher.github.io/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
+<a href="https://flowlauncher.com/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
+<a href="https://flowlauncher.com/docs/#/develop-py-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
+<a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870071-d67c736b-0748-428f-a283-14587696dfa3.png" width="64"></a>
+<a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
 </p>
 
 
 
-- Publish your own plugin to flow! Create plugins in [C#](https://flow-launcher.github.io/docs/#/develop-dotnet-plugins), [Python](https://flow-launcher.github.io/docs/#/develop-py-plugins), [JavaScript](https://flow-launcher.github.io/docs/#/nodejs-develop-plugins) or [TypeScript](https://flow-launcher.github.io/docs/#/nodejs-develop-plugins)
+- Publish your own plugin to flow! Create plugins in [C#](https://flowlauncher.com/docs/#/develop-dotnet-plugins), [Python](https://flowlauncher.com/docs/#/develop-py-plugins), [JavaScript](https://flowlauncher.com/docs/#/nodejs-develop-plugins) or [TypeScript](https://flowlauncher.com/docs/#/nodejs-develop-plugins)
 
 ### Everything
 <img src="https://user-images.githubusercontent.com/6903107/144533510-6880ecf4-5f93-4b6a-9c1f-4fcdb99110c3.png" width="400">
@@ -200,7 +200,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 ### Windows Walker
 <img src="https://user-images.githubusercontent.com/6903107/144533517-07bf011f-726c-4221-8657-0e442eca8a82.png" width="400">
 
-......and <a href="https://flow-launcher.github.io/docs/#/plugins">more!</a>
+......and <a href="https://flowlauncher.com/docs/#/plugins">more!</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -256,7 +256,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### 💁‍♂️ Tips
 
-- [More tips](https://flow-launcher.github.io/docs/#/usage-tips)
+- [More tips](https://flowlauncher.com/docs/#/usage-tips)
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
