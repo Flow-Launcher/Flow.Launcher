@@ -121,7 +121,10 @@
     <value>Flow Launcherについて</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="access.cpl" xml:space="preserve">
+    <value>access.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="AccessibilityOptions" xml:space="preserve">
     <value>アクセシビリティ オプション</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -226,7 +229,10 @@
     <value>アプリのボリュームとデバイスの設定</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
-  
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value>appwiz.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>領域</value>
     <comment>Mean the settings area or settings category</comment>
@@ -247,8 +253,12 @@
   <data name="AreaClockAndRegion" xml:space="preserve">
     <value>クロックとリージョン</value>
   </data>
-  
-  
+  <data name="AreaControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
   <data name="AreaDevices" xml:space="preserve">
     <value>デバイス</value>
   </data>
@@ -285,7 +295,9 @@
   <data name="AreaPrograms" xml:space="preserve">
     <value>プログラム</value>
   </data>
-  
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
   <data name="AreaSystem" xml:space="preserve">
     <value>システム</value>
   </data>
@@ -365,7 +377,10 @@
   <data name="BlueLight" xml:space="preserve">
     <value>薄い青</value>
   </data>
-  
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="BluetoothDevices" xml:space="preserve">
     <value>Bluetooth デバイス</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -373,8 +388,14 @@
   <data name="BlueYellow" xml:space="preserve">
     <value>青と黄</value>
   </data>
-  
-  
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Broadcasting" xml:space="preserve">
     <value>配信中</value>
     <comment>Area Gaming</comment>
@@ -394,8 +415,14 @@
     <value>カメラ</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie IME</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+    <comment>Mean the "Caps Lock" key</comment>
+  </data>
   <data name="CellularAndSim" xml:space="preserve">
     <value>携帯ネットワークと SIM</value>
     <comment>Area NetworkAndInternet</comment>
@@ -440,7 +467,10 @@
     <value>連絡先</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="ControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+    <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
+  </data>
   <data name="CopyCommand" xml:space="preserve">
     <value>Copy コマンド</value>
   </data>
@@ -448,7 +478,10 @@
     <value>コア分離</value>
     <comment>Means the protection of the system core</comment>
   </data>
-  
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Area Cortana</comment>
+  </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
     <value>デバイス間の Cortana</value>
     <comment>Area Cortana</comment>
@@ -505,7 +538,10 @@
     <value>配信の最適化</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="desk.cpl" xml:space="preserve">
+    <value>desk.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="DesktopThemes" xml:space="preserve">
     <value>デスクトップのテーマ</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -522,7 +558,10 @@
     <value>デバイスとプリンター</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="DialUp" xml:space="preserve">
     <value>ダイヤルアップ</value>
     <comment>Area NetworkAndInternet</comment>
@@ -543,7 +582,10 @@
     <value>表示プロパティ</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Documents" xml:space="preserve">
     <value>ドキュメント</value>
     <comment>Area Privacy</comment>
@@ -584,7 +626,9 @@
     <value>イーサネット</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Exploit Protection</value>
+  </data>
   <data name="Extras" xml:space="preserve">
     <value>追加</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
@@ -609,8 +653,14 @@
     <value>ファイル システム</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value>findfast.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="FindMyDevice" xml:space="preserve">
     <value>デバイスの検索</value>
     <comment>Area UpdateAndSecurity</comment>
@@ -709,7 +759,10 @@
     <value>ホーム グループ</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="Id" xml:space="preserve">
+    <value>ID</value>
+    <comment>MEans The "Windows Identifier"</comment>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>イメージ</value>
   </data>
@@ -717,7 +770,10 @@
     <value>インデックス作成オプション</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value>inetcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Infrared" xml:space="preserve">
     <value>赤外線</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -730,11 +786,17 @@
     <value>インターネット オプション</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="intl.cpl" xml:space="preserve">
+    <value>intl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="InvertedColors" xml:space="preserve">
     <value>反転色</value>
   </data>
-  
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
     <value>分離閲覧</value>
   </data>
@@ -742,12 +804,18 @@
     <value>日本語入力システムの設定</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
-  
+  <data name="joy.cpl" xml:space="preserve">
+    <value>joy.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="JoystickProperties" xml:space="preserve">
     <value>ジョイスティックのプロパティ</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Keyboard" xml:space="preserve">
     <value>キーボード</value>
     <comment>Area EaseOfAccess</comment>
@@ -768,7 +836,10 @@
   <data name="LightMode" xml:space="preserve">
     <value>ライト モード</value>
   </data>
-  
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>Area Privacy</comment>
+  </data>
   <data name="LockScreen" xml:space="preserve">
     <value>ロック画面</value>
     <comment>Area Personalization</comment>
@@ -781,7 +852,10 @@
     <value>メール - Microsoft Exchange または Windows メッセージング</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="main.cpl" xml:space="preserve">
+    <value>main.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
     <value>既知のネットワークを管理</value>
     <comment>Area NetworkAndInternet</comment>
@@ -801,9 +875,18 @@
     <value>マイク</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
-  
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value>mlcfg32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value>mmsys.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="MobileDevices" xml:space="preserve">
     <value>モバイル デバイス</value>
   </data>
@@ -811,8 +894,13 @@
     <value>モバイル ホットスポット</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
-  
+  <data name="modem.cpl" xml:space="preserve">
+    <value>modem.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>詳細</value>
     <comment>Area Cortana</comment>
@@ -853,8 +941,14 @@
     <value>ナビゲーション バー</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value>netcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value>netsetup.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Network" xml:space="preserve">
     <value>ネットワーク</value>
     <comment>Area NetworkAndInternet</comment>
@@ -879,7 +973,10 @@
     <value>ネットワークの状態</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="NFCTransactions" xml:space="preserve">
     <value>NFC トランザクション</value>
     <comment>"NFC should not translated"</comment>
@@ -969,8 +1066,14 @@
     <value>NumLock</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
-  
-  
+  <data name="nwc.cpl" xml:space="preserve">
+    <value>nwc.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value>odbccp32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
     <value>ODBC データ ソース管理者 (32 ビット)</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -994,7 +1097,10 @@
   <data name="OnScreen" xml:space="preserve">
     <value>オンスクリーン</value>
   </data>
-  
+  <data name="Os" xml:space="preserve">
+    <value>OS</value>
+    <comment>Means the "Operating System"</comment>
+  </data>
   <data name="OtherDevices" xml:space="preserve">
     <value>その他のデバイス</value>
     <comment>Area Privacy</comment>
@@ -1013,7 +1119,10 @@
   <data name="Password" xml:space="preserve">
     <value></value>
   </data>
-  
+  <data name="password.cpl" xml:space="preserve">
+    <value>password.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PasswordProperties" xml:space="preserve">
     <value>パスワードのプロパティ</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1103,7 +1212,10 @@
     <value>電源とスリープ</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value>powercfg.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PowerOptions" xml:space="preserve">
     <value>電源オプション</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1154,7 +1266,10 @@
     <value>プロキシ</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
   <data name="QuietMomentsGame" xml:space="preserve">
     <value>サイレント ゲーム</value>
   </data>
@@ -1162,7 +1277,10 @@
     <value>無線</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+    <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
+  </data>
   <data name="Recognition" xml:space="preserve">
     <value>認識</value>
   </data>
@@ -1213,7 +1331,10 @@
     <value>スキャナーとカメラ</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Scheduled" xml:space="preserve">
     <value>スケジュール済み</value>
   </data>
@@ -1232,13 +1353,22 @@
     <value>スクロール ロック</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
-  
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SearchingWindows" xml:space="preserve">
     <value>Windows の検索</value>
     <comment>Area Cortana</comment>
   </data>
-  
-  
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Security Center</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
   <data name="SecurityProcessor" xml:space="preserve">
     <value>セキュリティ プロセッサ</value>
   </data>
@@ -1303,7 +1433,10 @@
     <value>スタートアップ アプリ</value>
     <comment>Area Apps</comment>
   </data>
-  
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value>sticpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Storage" xml:space="preserve">
     <value>ストレージ</value>
     <comment>Area System</comment>
@@ -1316,7 +1449,10 @@
     <value>ストレージ センサー</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="SubtitlePreposition" xml:space="preserve">
+    <value>in</value>
+    <comment>Example: Area "System" in System settings</comment>
+  </data>
   <data name="SyncCenter" xml:space="preserve">
     <value>同期センター</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1325,7 +1461,10 @@
     <value>設定の同期</value>
     <comment>Area UserAccounts</comment>
   </data>
-  
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value>sysdm.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="System" xml:space="preserve">
     <value>システム</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1380,8 +1519,14 @@
     <value>テーマ</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="themes.cpl" xml:space="preserve">
+    <value>themes.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value>timedate.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Timeline" xml:space="preserve">
     <value>タイムライン</value>
   </data>
@@ -1406,7 +1551,10 @@
     <value>トラブルシューティング</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+    <comment>Area Gaming</comment>
+  </data>
   <data name="Typing" xml:space="preserve">
     <value>入力</value>
     <comment>Area Device</comment>
@@ -1415,7 +1563,10 @@
     <value>アンインストール</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
-  
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="UserAccounts" xml:space="preserve">
     <value>ユーザー アカウント</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1446,7 +1597,10 @@
   <data name="Volume" xml:space="preserve">
     <value>音量</value>
   </data>
-  
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="Wallpaper" xml:space="preserve">
     <value>壁紙</value>
   </data>
@@ -1461,12 +1615,18 @@
     <value>ようこそ画面</value>
     <comment>Area SurfaceHub</comment>
   </data>
-  
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value>wgpocpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Wheel" xml:space="preserve">
     <value>ホイール</value>
     <comment>Area Device</comment>
   </data>
-  
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
   <data name="WiFiCalling" xml:space="preserve">
     <value>Wi-Fi 通話</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
@@ -1478,10 +1638,22 @@
   <data name="WindowBorder" xml:space="preserve">
     <value>ウィンドウの境界線</value>
   </data>
-  
-  
-  
-  
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+    <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
   <data name="WindowsFirewall" xml:space="preserve">
     <value>Windows ファイアウォール</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1494,7 +1666,10 @@
     <value>Windows Hello の設定 - 指紋</value>
     <comment>Area UserAccounts</comment>
   </data>
-  
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Windows Insider Program</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
     <value>Windows モビリティ センター</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1507,7 +1682,10 @@
     <value>Windows セキュリティ</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
     <value>Windows Update - 詳細オプション</value>
     <comment>Area UpdateAndSecurity</comment>
@@ -1554,5 +1732,8 @@
     <value>ユーザー情報</value>
     <comment>Area UserAccounts</comment>
   </data>
-  
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
+    <comment>Mean zooming of things via a magnifier</comment>
+  </data>
 </root>
