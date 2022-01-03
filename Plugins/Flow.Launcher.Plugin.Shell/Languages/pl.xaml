@@ -3,13 +3,13 @@
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Zastąp Win+R</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Nie zamykaj wiersza poleceń po wykonaniu polecenia</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator"></system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Always run as administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Run as different user</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Wiersz polece</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Pozwala wykonywać komend wiersza polecania z Flow Launchera. Polecania zaczynają się od &gt;</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">to polecenie zostało wykonane {0} razy</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">wykonaj to polecenie w wierszu polece</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Uruchom jako administrator</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_copy"></system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_history"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy">Copy the command</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">Only show number of most used commands:</system:String>
 </ResourceDictionary>
