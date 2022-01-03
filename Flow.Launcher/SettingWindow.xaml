@@ -992,7 +992,7 @@
                                                         <Border>
                                                             <Button
                                                                 x:Name="PriorityButton"
-                                                                Margin="0,0,0,0"
+                                                                Margin="0,0,18,0"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
@@ -1023,7 +1023,12 @@
                                                         </Border>
                                                     </StackPanel>
                                                     <DockPanel Grid.Column="3">
-                                                        <ui:ToggleSwitch HorizontalAlignment="Right" IsOn="{Binding PluginState}" />
+                                                        <ui:ToggleSwitch
+                                                            Margin="0,0,6,0"
+                                                            HorizontalAlignment="Right"
+                                                            IsOn="{Binding PluginState}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}" />
                                                     </DockPanel>
                                                 </Grid>
 

@@ -1469,6 +1469,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ui:ToggleSwitch">
                     <Border
+                        Width="Auto"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -1498,7 +1499,7 @@
                                 Visibility="Collapsed" />
                             <Grid
                                 Grid.Row="1"
-                                MinWidth="{DynamicResource ToggleSwitchThemeMinWidth}"
+                                MinWidth="10"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top">
 
@@ -1509,7 +1510,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="12" MaxWidth="12" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
