@@ -121,7 +121,10 @@
     <value>О Flow Launcher</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="access.cpl" xml:space="preserve">
+    <value>access.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="AccessibilityOptions" xml:space="preserve">
     <value>Специальные возможности</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -226,7 +229,10 @@
     <value>Громкость приложения и настройки устройства</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
-  
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value>appwiz.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>Область</value>
     <comment>Mean the settings area or settings category</comment>
@@ -247,7 +253,9 @@
   <data name="AreaClockAndRegion" xml:space="preserve">
     <value>Часы и регион</value>
   </data>
-  
+  <data name="AreaControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+  </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Кортана</value>
   </data>
@@ -287,7 +295,9 @@
   <data name="AreaPrograms" xml:space="preserve">
     <value>Программы</value>
   </data>
-  
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
   <data name="AreaSystem" xml:space="preserve">
     <value>Система</value>
   </data>
@@ -367,7 +377,10 @@
   <data name="BlueLight" xml:space="preserve">
     <value>Голубой</value>
   </data>
-  
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="BluetoothDevices" xml:space="preserve">
     <value>Устройства Bluetooth</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -406,7 +419,10 @@
     <value>IME Cangjie</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
-  
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+    <comment>Mean the "Caps Lock" key</comment>
+  </data>
   <data name="CellularAndSim" xml:space="preserve">
     <value>Передача данных и SIM</value>
     <comment>Area NetworkAndInternet</comment>
@@ -439,7 +455,10 @@
     <value>Цвета</value>
     <comment>Area Personalization</comment>
   </data>
-  
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+    <comment>The command to direct start a setting</comment>
+  </data>
   <data name="ConnectedDevices" xml:space="preserve">
     <value>Подключенные устройства</value>
     <comment>Area Device</comment>
@@ -448,7 +467,10 @@
     <value>Контакты</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="ControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+    <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
+  </data>
   <data name="CopyCommand" xml:space="preserve">
     <value>Команда Copy</value>
   </data>
@@ -516,7 +538,10 @@
     <value>Оптимизация доставки</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="desk.cpl" xml:space="preserve">
+    <value>desk.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="DesktopThemes" xml:space="preserve">
     <value>Темы рабочего стола</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -533,7 +558,10 @@
     <value>Устройства и принтеры</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="DialUp" xml:space="preserve">
     <value>Удаленный доступ</value>
     <comment>Area NetworkAndInternet</comment>
@@ -594,7 +622,10 @@
     <value>Среда</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
-  
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="ExploitProtection" xml:space="preserve">
     <value>Защита от эксплойтов</value>
   </data>
@@ -622,8 +653,14 @@
     <value>Файловая система</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value>findfast.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="FindMyDevice" xml:space="preserve">
     <value>Поиск устройства</value>
     <comment>Area UpdateAndSecurity</comment>
@@ -663,7 +700,10 @@
     <value>DVR для игр</value>
     <comment>Area Gaming</comment>
   </data>
-  
+  <data name="GameMode" xml:space="preserve">
+    <value>Game Mode</value>
+    <comment>Area Gaming</comment>
+  </data>
   <data name="Gateway" xml:space="preserve">
     <value>Шлюз</value>
     <comment>Should not translated</comment>
@@ -730,7 +770,10 @@
     <value>Параметры индексирования</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value>inetcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Infrared" xml:space="preserve">
     <value>Инфракрасное</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -743,7 +786,10 @@
     <value>Свойства браузера</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="intl.cpl" xml:space="preserve">
+    <value>intl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="InvertedColors" xml:space="preserve">
     <value>Инвертированные цвета</value>
   </data>
@@ -758,7 +804,10 @@
     <value>Параметры IME для японского языка</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
-  
+  <data name="joy.cpl" xml:space="preserve">
+    <value>joy.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="JoystickProperties" xml:space="preserve">
     <value>Свойства джойстика</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -787,7 +836,10 @@
   <data name="LightMode" xml:space="preserve">
     <value>Светлый режим</value>
   </data>
-  
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>Area Privacy</comment>
+  </data>
   <data name="LockScreen" xml:space="preserve">
     <value>Экран блокировки</value>
     <comment>Area Personalization</comment>
@@ -800,7 +852,10 @@
     <value>Электронная почта — Microsoft Exchange или Сообщения Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="main.cpl" xml:space="preserve">
+    <value>main.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
     <value>Управление известными сетями</value>
     <comment>Area NetworkAndInternet</comment>
@@ -820,9 +875,18 @@
     <value>Микрофон</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
-  
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value>mlcfg32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value>mmsys.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="MobileDevices" xml:space="preserve">
     <value>Мобильные устройства</value>
   </data>
@@ -830,8 +894,13 @@
     <value>Мобильный хот-спот</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
-  
+  <data name="modem.cpl" xml:space="preserve">
+    <value>modem.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>Дополнительные сведения</value>
     <comment>Area Cortana</comment>
@@ -872,8 +941,14 @@
     <value>Панель навигации</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value>netcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value>netsetup.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Network" xml:space="preserve">
     <value>Сеть</value>
     <comment>Area NetworkAndInternet</comment>
@@ -898,7 +973,10 @@
     <value>Состояние сети</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="NFCTransactions" xml:space="preserve">
     <value>Транзакции NFC</value>
     <comment>"NFC should not translated"</comment>
@@ -988,8 +1066,14 @@
     <value>Клавиша NUM LOCK</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
-  
-  
+  <data name="nwc.cpl" xml:space="preserve">
+    <value>nwc.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value>odbccp32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
     <value>Администратор источника данных ODBC (32-разрядный)</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1035,7 +1119,10 @@
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
-  
+  <data name="password.cpl" xml:space="preserve">
+    <value>password.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PasswordProperties" xml:space="preserve">
     <value>Свойства пароля</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1125,7 +1212,10 @@
     <value>Электропитание и спящий режим</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value>powercfg.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PowerOptions" xml:space="preserve">
     <value>Параметры электропитания</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1263,12 +1353,18 @@
     <value>SCROLL LOCK</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
-  
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SearchingWindows" xml:space="preserve">
     <value>Поиск в Windows</value>
     <comment>Area Cortana</comment>
   </data>
-  
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SecurityCenter" xml:space="preserve">
     <value>Центр безопасности</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1337,7 +1433,10 @@
     <value>Запуск приложений</value>
     <comment>Area Apps</comment>
   </data>
-  
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value>sticpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Storage" xml:space="preserve">
     <value>Хранилище</value>
     <comment>Area System</comment>
@@ -1350,7 +1449,10 @@
     <value>Контроль памяти</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="SubtitlePreposition" xml:space="preserve">
+    <value>in</value>
+    <comment>Example: Area "System" in System settings</comment>
+  </data>
   <data name="SyncCenter" xml:space="preserve">
     <value>Центр синхронизации</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1359,7 +1461,10 @@
     <value>Синхронизация параметров</value>
     <comment>Area UserAccounts</comment>
   </data>
-  
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value>sysdm.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="System" xml:space="preserve">
     <value>Система</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1414,8 +1519,14 @@
     <value>Темы</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="themes.cpl" xml:space="preserve">
+    <value>themes.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value>timedate.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Timeline" xml:space="preserve">
     <value>Временная шкала</value>
   </data>
@@ -1440,7 +1551,10 @@
     <value>Устранение неполадок</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+    <comment>Area Gaming</comment>
+  </data>
   <data name="Typing" xml:space="preserve">
     <value>Ввод с клавиатуры</value>
     <comment>Area Device</comment>
@@ -1449,7 +1563,10 @@
     <value>Удалить</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
-  
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="UserAccounts" xml:space="preserve">
     <value>Учетные записи пользователей</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1480,7 +1597,10 @@
   <data name="Volume" xml:space="preserve">
     <value>Громкость</value>
   </data>
-  
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="Wallpaper" xml:space="preserve">
     <value>Обои</value>
   </data>
@@ -1495,12 +1615,18 @@
     <value>Экран приветствия</value>
     <comment>Area SurfaceHub</comment>
   </data>
-  
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value>wgpocpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Wheel" xml:space="preserve">
     <value>Колесико</value>
     <comment>Area Device</comment>
   </data>
-  
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
   <data name="WiFiCalling" xml:space="preserve">
     <value>Вызовы через Wi-Fi</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
@@ -1516,8 +1642,14 @@
     <value>Программа обновления Windows Anytime Upgrade</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
-  
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+    <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
   <data name="WindowsDefender" xml:space="preserve">
     <value>Защитник Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
