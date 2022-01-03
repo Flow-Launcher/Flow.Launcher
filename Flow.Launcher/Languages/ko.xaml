@@ -66,7 +66,7 @@
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요</system:String>
     <system:String x:Key="pluginDirectory">플러그인 폴더</system:String>
-    <system:String x:Key="author"></system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
     <system:String x:Key="plugin_query_version">| 버</system:String>
@@ -82,7 +82,7 @@
     <system:String x:Key="theme">테</system:String>
     <system:String x:Key="browserMoreThemes">테마 갤러리</system:String>
     <system:String x:Key="howToCreateTheme">테마 제작 안내</system:String>
-    <system:String x:Key="hiThere"></system:String>
+    <system:String x:Key="hiThere">Hi There</system:String>
     <system:String x:Key="queryBoxFont">쿼리 상자 글꼴</system:String>
     <system:String x:Key="resultItemFont">결과 항목 글꼴</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
@@ -140,7 +140,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">정보</system:String>
     <system:String x:Key="website">웹사이트</system:String>
-    <system:String x:Key="github"></system:String>
+    <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">문서</system:String>
     <system:String x:Key="version">버</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher를 {0}번 실행했습니다.</system:String>
@@ -174,8 +174,8 @@
     <system:String x:Key="defaultBrowser_name">브라우저</system:String>
     <system:String x:Key="defaultBrowser_profile_name">브라우저 이름</system:String>
     <system:String x:Key="defaultBrowser_path">브라우저 경로</system:String>
-    <system:String x:Key="defaultBrowser_newtab"></system:String>
-    <system:String x:Key="defaultBrowser_newWindow"></system:String>
+    <system:String x:Key="defaultBrowser_newtab">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">사생활 보호 모드</system:String>
 
     <!--  Priority Setting Dialog  -->
@@ -240,7 +240,7 @@
     <system:String x:Key="update_flowlauncher_update">업데이트</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">취소</system:String>
     <system:String x:Key="update_flowlauncher_fail">업데이트 실</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection"></system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">업데이트를 위해 Flow Launcher를 재시작합니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_upadte_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_files">업데이트 파일</system:String>
@@ -276,7 +276,7 @@
 
     <system:String x:Key="RecommendWeather">날</system:String>
     <system:String x:Key="RecommendWeatherDesc">구글 날씨 검</system:String>
-    <system:String x:Key="RecommendShell"></system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">쉘 명령어</system:String>
     <system:String x:Key="RecommendBluetooth">블루투스</system:String>
     <system:String x:Key="RecommendBluetoothDesc">윈도우 블루투스 설정</system:String>
