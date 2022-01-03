@@ -121,7 +121,10 @@
     <value>关于</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="access.cpl" xml:space="preserve">
+    <value>access.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="AccessibilityOptions" xml:space="preserve">
     <value>辅助功能选项</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -185,7 +188,10 @@
     <value>飞行模式</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tab</value>
+    <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
+  </data>
   <data name="AlternativeName" xml:space="preserve">
     <value>备用名称</value>
   </data>
@@ -223,7 +229,10 @@
     <value>应用卷和设备首选项</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
-  
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value>appwiz.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>区域</value>
     <comment>Mean the settings area or settings category</comment>
@@ -244,8 +253,12 @@
   <data name="AreaClockAndRegion" xml:space="preserve">
     <value>时钟和区域</value>
   </data>
-  
-  
+  <data name="AreaControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
   <data name="AreaDevices" xml:space="preserve">
     <value>设备</value>
   </data>
@@ -282,7 +295,9 @@
   <data name="AreaPrograms" xml:space="preserve">
     <value>计划</value>
   </data>
-  
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
   <data name="AreaSystem" xml:space="preserve">
     <value>系统</value>
   </data>
@@ -377,7 +392,10 @@
     <value>注音输入法</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
-  
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Broadcasting" xml:space="preserve">
     <value>广播</value>
     <comment>Area Gaming</comment>
@@ -449,7 +467,10 @@
     <value>联系人</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="ControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+    <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
+  </data>
   <data name="CopyCommand" xml:space="preserve">
     <value>复制命令</value>
   </data>
@@ -457,7 +478,10 @@
     <value>核心隔离</value>
     <comment>Means the protection of the system core</comment>
   </data>
-  
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Area Cortana</comment>
+  </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
     <value>我的设备上的 Cortana</value>
     <comment>Area Cortana</comment>
@@ -514,7 +538,10 @@
     <value>传递优化</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="desk.cpl" xml:space="preserve">
+    <value>desk.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="DesktopThemes" xml:space="preserve">
     <value>桌面主题</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -531,7 +558,10 @@
     <value>设备和打印机</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="DialUp" xml:space="preserve">
     <value>拨号</value>
     <comment>Area NetworkAndInternet</comment>
@@ -552,7 +582,10 @@
     <value>显示属性</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Documents" xml:space="preserve">
     <value>文档</value>
     <comment>Area Privacy</comment>
@@ -593,7 +626,9 @@
     <value>以太网</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Exploit Protection</value>
+  </data>
   <data name="Extras" xml:space="preserve">
     <value>附加内容</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
@@ -618,8 +653,14 @@
     <value>文件系统</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value>findfast.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="FindMyDevice" xml:space="preserve">
     <value>查找我的设备</value>
     <comment>Area UpdateAndSecurity</comment>
@@ -718,7 +759,10 @@
     <value>家庭组</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="Id" xml:space="preserve">
+    <value>ID</value>
+    <comment>MEans The "Windows Identifier"</comment>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>图像</value>
   </data>
@@ -726,7 +770,10 @@
     <value>索引选项</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value>inetcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Infrared" xml:space="preserve">
     <value>红外线</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -739,11 +786,17 @@
     <value>Internet 选项</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="intl.cpl" xml:space="preserve">
+    <value>intl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="InvertedColors" xml:space="preserve">
     <value>倒色</value>
   </data>
-  
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
     <value>隔离浏览</value>
   </data>
@@ -751,12 +804,18 @@
     <value>日语输入法设置</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
-  
+  <data name="joy.cpl" xml:space="preserve">
+    <value>joy.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="JoystickProperties" xml:space="preserve">
     <value>游戏杆属性</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Keyboard" xml:space="preserve">
     <value>键盘</value>
     <comment>Area EaseOfAccess</comment>
@@ -793,7 +852,10 @@
     <value>邮件 - Microsoft Exchange 或 Windows 消息</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="main.cpl" xml:space="preserve">
+    <value>main.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
     <value>管理已知网络</value>
     <comment>Area NetworkAndInternet</comment>
@@ -813,9 +875,18 @@
     <value>麦克风</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
-  
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value>mlcfg32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value>mmsys.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="MobileDevices" xml:space="preserve">
     <value>移动设备</value>
   </data>
@@ -823,8 +894,13 @@
     <value>移动热点</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
-  
+  <data name="modem.cpl" xml:space="preserve">
+    <value>modem.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>更多详细信息</value>
     <comment>Area Cortana</comment>
@@ -865,8 +941,14 @@
     <value>导航栏</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value>netcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value>netsetup.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Network" xml:space="preserve">
     <value>网络</value>
     <comment>Area NetworkAndInternet</comment>
@@ -891,7 +973,10 @@
     <value>网络状态</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="NFCTransactions" xml:space="preserve">
     <value>NFC 交易</value>
     <comment>"NFC should not translated"</comment>
@@ -977,9 +1062,18 @@
     <value>通知和操作</value>
     <comment>Area System</comment>
   </data>
-  
-  
-  
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+    <comment>Mean the "Num Lock" key</comment>
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value>nwc.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value>odbccp32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
     <value>ODBC 数据源管理员 (32 位)</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1003,7 +1097,10 @@
   <data name="OnScreen" xml:space="preserve">
     <value>屏上</value>
   </data>
-  
+  <data name="Os" xml:space="preserve">
+    <value>OS</value>
+    <comment>Means the "Operating System"</comment>
+  </data>
   <data name="OtherDevices" xml:space="preserve">
     <value>其他设备</value>
     <comment>Area Privacy</comment>
@@ -1022,7 +1119,10 @@
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
-  
+  <data name="password.cpl" xml:space="preserve">
+    <value>password.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PasswordProperties" xml:space="preserve">
     <value>密码属性</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1112,7 +1212,10 @@
     <value>电源和休眠</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value>powercfg.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PowerOptions" xml:space="preserve">
     <value>电源选项</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1163,7 +1266,10 @@
     <value>代理</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
   <data name="QuietMomentsGame" xml:space="preserve">
     <value>免扰时间游戏</value>
   </data>
@@ -1171,7 +1277,10 @@
     <value>无线电收发器</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+    <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
+  </data>
   <data name="Recognition" xml:space="preserve">
     <value>识别</value>
   </data>
@@ -1222,7 +1331,10 @@
     <value>扫描仪和照相机</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Scheduled" xml:space="preserve">
     <value>已计划</value>
   </data>
@@ -1241,12 +1353,18 @@
     <value>滚动锁定</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
-  
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SearchingWindows" xml:space="preserve">
     <value>正在搜索 Windows</value>
     <comment>Area Cortana</comment>
   </data>
-  
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SecurityCenter" xml:space="preserve">
     <value>安全中心</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1315,7 +1433,10 @@
     <value>启动应用</value>
     <comment>Area Apps</comment>
   </data>
-  
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value>sticpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Storage" xml:space="preserve">
     <value>存储</value>
     <comment>Area System</comment>
@@ -1328,7 +1449,10 @@
     <value>存储感知</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="SubtitlePreposition" xml:space="preserve">
+    <value>in</value>
+    <comment>Example: Area "System" in System settings</comment>
+  </data>
   <data name="SyncCenter" xml:space="preserve">
     <value>同步中心</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1337,7 +1461,10 @@
     <value>同步设置</value>
     <comment>Area UserAccounts</comment>
   </data>
-  
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value>sysdm.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="System" xml:space="preserve">
     <value>系统</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1392,8 +1519,14 @@
     <value>主题</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="themes.cpl" xml:space="preserve">
+    <value>themes.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value>timedate.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Timeline" xml:space="preserve">
     <value>时间线</value>
   </data>
@@ -1418,7 +1551,10 @@
     <value>排除故障</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+    <comment>Area Gaming</comment>
+  </data>
   <data name="Typing" xml:space="preserve">
     <value>键入</value>
     <comment>Area Device</comment>
@@ -1427,7 +1563,10 @@
     <value>卸载</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
-  
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="UserAccounts" xml:space="preserve">
     <value>用户帐户</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1458,7 +1597,10 @@
   <data name="Volume" xml:space="preserve">
     <value>音量</value>
   </data>
-  
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="Wallpaper" xml:space="preserve">
     <value>壁纸</value>
   </data>
@@ -1473,7 +1615,10 @@
     <value>欢迎屏幕</value>
     <comment>Area SurfaceHub</comment>
   </data>
-  
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value>wgpocpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Wheel" xml:space="preserve">
     <value>滚轮</value>
     <comment>Area Device</comment>
@@ -1501,8 +1646,14 @@
     <value>随处使用 Windows</value>
     <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
   </data>
-  
-  
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
   <data name="WindowsFirewall" xml:space="preserve">
     <value>Windows 防火墙</value>
     <comment>Area Control Panel (legacy settings)</comment>
