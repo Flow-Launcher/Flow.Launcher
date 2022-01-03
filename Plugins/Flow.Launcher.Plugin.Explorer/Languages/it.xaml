@@ -1,0 +1,67 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--Dialogues-->
+    <system:String x:Key="plugin_explorer_make_selection_warning"></system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning"></system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link"></system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm"></system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess"></system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail"></system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid"></system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid"></system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning"></system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix"></system:String>
+    <system:String x:Key="plugin_explorer_alternative"></system:String>
+    <system:String x:Key="plugin_explorer_alternative_title"></system:String>
+
+    <!--Controls-->
+    <system:String x:Key="plugin_explorer_delete">Cancella</system:String>
+    <system:String x:Key="plugin_explorer_edit">Modifica</system:String>
+    <system:String x:Key="plugin_explorer_add">Aggiungi</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header"></system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header"></system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header"></system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Conferma</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled"></system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip"></system:String>
+
+    <!--Plugin Infos-->
+    <system:String x:Key="plugin_explorer_plugin_name"></system:String>
+    <system:String x:Key="plugin_explorer_plugin_description"></system:String>
+
+    <!--Context menu items-->
+    <system:String x:Key="plugin_explorer_copypath"></system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder"></system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Cancella</system:String>
+    <system:String x:Key="plugin_explorer_path"></system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle"></system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser"></system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle"></system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder"></system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle"></system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor"></system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch"></system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg"></system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions"></system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle"></system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_errormsg"></system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title"></system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle"></system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess"></system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail"></system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess"></system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail"></system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip"></system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip"></system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title"></system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle"></system:String>
+
+</ResourceDictionary>
