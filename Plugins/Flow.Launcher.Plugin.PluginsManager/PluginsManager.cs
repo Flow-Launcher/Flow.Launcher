@@ -333,7 +333,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     if (e.SpecialKeyState.CtrlPressed)
                     {
-                        SearchWeb.NewTabInBrowser(plugin.UrlDownload);
+                        SearchWeb.OpenInBrowserTab(plugin.UrlDownload);
                         return ShouldHideWindow;
                     }
 
@@ -397,7 +397,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             {
                                 if (e.SpecialKeyState.CtrlPressed)
                                 {
-                                    SearchWeb.NewTabInBrowser(x.Website);
+                                    SearchWeb.OpenInBrowserTab(x.Website);
                                     return ShouldHideWindow;
                                 }
 
