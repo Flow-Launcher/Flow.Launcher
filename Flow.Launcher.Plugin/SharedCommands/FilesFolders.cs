@@ -11,7 +11,13 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         private const string FileExplorerProgramEXE = "explorer.exe";
 
-        public static void Copy(this string sourcePath, string targetPath)
+        /// <summary>
+        /// Copies the folder and all of its files and folders 
+        /// including subfolders to the target location
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="targetPath"></param>
+        public static void CopyAll(this string sourcePath, string targetPath)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourcePath);
@@ -44,7 +50,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string temppath = Path.Combine(targetPath, subdir.Name);
-                    Copy(subdir.FullName, temppath);
+                    CopyAll(subdir.FullName, temppath);
                 }
             }
             catch (Exception e)
@@ -108,17 +114,17 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return Directory.Exists(path);
         }
 
-        public static bool FileExits(this string filePath)
+        public static bool FileExists(this string filePath)
         {
             return File.Exists(filePath);
         }
 
         public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = fileOrFolderPath };
+            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
             try
             {
-                if (LocationExists(fileOrFolderPath) || FileExits(fileOrFolderPath))
+                if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
                     Process.Start(psi);
             }
             catch (Exception e)
@@ -140,31 +146,23 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// This checks whether a given string is a directory path or network location string. 
         /// It does not check if location actually exists.
         ///</summary>
-        public static bool IsLocationPathString(string querySearchString)
+        public static bool IsLocationPathString(this string querySearchString)
         {
-            if (string.IsNullOrEmpty(querySearchString))
+            if (string.IsNullOrEmpty(querySearchString) || querySearchString.Length < 3)
                 return false;
 
             // // shared folder location, and not \\\location\
-            if (querySearchString.Length >= 3
-                && querySearchString.StartsWith(@"\\")
-                && char.IsLetter(querySearchString[2]))
+            if (querySearchString.StartsWith(@"\\")
+                && querySearchString[2] != '\\')
                 return true;
 
             // c:\
-            if (querySearchString.Length == 3
-                && char.IsLetter(querySearchString[0])
+            if (char.IsLetter(querySearchString[0])
                 && querySearchString[1] == ':'
                 && querySearchString[2] == '\\')
-                return true;
-
-            // c:\\
-            if (querySearchString.Length >= 4
-                && char.IsLetter(querySearchString[0])
-                && querySearchString[1] == ':'
-                && querySearchString[2] == '\\'
-                && char.IsLetter(querySearchString[3]))
-                return true;
+            {
+                return querySearchString.Length == 3 || querySearchString[3] != '\\';
+            }
 
             return false;
         }
@@ -172,7 +170,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         ///<summary>
         /// Gets the previous level directory from a path string.
         /// Checks that previous level directory exists and returns it 
-        /// as a path string, or empty string if doesn't exit
+        /// as a path string, or empty string if doesn't exist
         ///</summary>
         public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
         {

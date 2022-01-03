@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.WebSearch.SuggestionSources;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             new SearchSource
             {
                 Title = "Google",
-                ActionKeyword = "g",
+                ActionKeyword = "*",
                 Icon = "google.png",
                 Url = "https://www.google.com/search?q={q}",
                 Enabled = true
@@ -196,7 +196,8 @@ namespace Flow.Launcher.Plugin.WebSearch
         [JsonIgnore]
         public SuggestionSource[] Suggestions { get; set; } = {
             new Google(),
-            new Baidu()
+            new Baidu(),
+            new Bing()
         };
 
         [JsonIgnore]

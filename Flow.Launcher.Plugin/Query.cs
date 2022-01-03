@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,11 +12,12 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// to allow unit tests for plug ins
         /// </summary>
-        public Query(string rawQuery, string search, string[] terms, string actionKeyword = "")
+        public Query(string rawQuery, string search, string[] terms, string[] searchTerms, string actionKeyword = "")
         {
             Search = search;
             RawQuery = rawQuery;
             Terms = terms;
+            SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }
 
@@ -23,7 +25,7 @@ namespace Flow.Launcher.Plugin
         /// Raw query, this includes action keyword if it has
         /// We didn't recommend use this property directly. You should always use Search property.
         /// </summary>
-        public string RawQuery { get; internal set; }
+        public string RawQuery { get; internal init; }
 
         /// <summary>
         /// Search part of a query.
@@ -31,45 +33,53 @@ namespace Flow.Launcher.Plugin
         /// Since we allow user to switch a exclusive plugin to generic plugin, 
         /// so this property will always give you the "real" query part of the query
         /// </summary>
-        public string Search { get; internal set; }
+        public string Search { get; internal init; }
 
         /// <summary>
-        /// The raw query splited into a string array.
+        /// The search string split into a string array.
         /// </summary>
-        public string[] Terms { get; set; }
+        public string[] SearchTerms { get; init; }
+
+        /// <summary>
+        /// The raw query split into a string array
+        /// </summary>
+        [Obsolete("It may or may not include action keyword, which can be confusing. Use SearchTerms instead")]
+        public string[] Terms { get; init; }
 
         /// <summary>
         /// Query can be splited into multiple terms by whitespace
         /// </summary>
-        public const string TermSeperater = " ";
+        public const string TermSeparator = " ";
+
+        [Obsolete("Typo")]
+        public const string TermSeperater = TermSeparator;
         /// <summary>
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
-        public const string ActionKeywordSeperater = ";";
+        public const string ActionKeywordSeparator = ";";
+
+        [Obsolete("Typo")]
+        public const string ActionKeywordSeperater = ActionKeywordSeparator;
+
 
         /// <summary>
         /// '*' is used for System Plugin
         /// </summary>
         public const string GlobalPluginWildcardSign = "*";
 
-        public string ActionKeyword { get; set; }
+        public string ActionKeyword { get; init; }
 
         /// <summary>
         /// Return first search split by space if it has
         /// </summary>
         public string FirstSearch => SplitSearch(0);
 
+        private string _secondToEndSearch;
+
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
-        public string SecondToEndSearch
-        {
-            get
-            {
-                var index = string.IsNullOrEmpty(ActionKeyword) ? 1 : 2;
-                return string.Join(TermSeperater, Terms.Skip(index).ToArray());
-            }
-        }
+        public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
         /// Return second search split by space if it has
@@ -83,25 +93,9 @@ namespace Flow.Launcher.Plugin
 
         private string SplitSearch(int index)
         {
-            try
-            {
-                return string.IsNullOrEmpty(ActionKeyword) ? Terms[index] : Terms[index + 1];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return string.Empty;
-            }
+            return index < SearchTerms.Length ? SearchTerms[index] : string.Empty;
         }
 
         public override string ToString() => RawQuery;
-
-        [Obsolete("Use ActionKeyword, this property will be removed in v1.3.0")]
-        public string ActionName { get; internal set; }
-
-        [Obsolete("Use Search instead, this property will be removed in v1.3.0")]
-        public List<string> ActionParameters { get; internal set; }
-
-        [Obsolete("Use Search instead, this method will be removed in v1.3.0")]
-        public string GetAllRemainingParameter() => Search;
     }
 }

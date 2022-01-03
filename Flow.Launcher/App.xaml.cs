@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace Flow.Launcher
         private SettingWindowViewModel _settingsVM;
         private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
         private readonly Portable _portable = new Portable();
-        private readonly Alphabet _alphabet = new Alphabet();
+        private readonly PinyinAlphabet _alphabet = new PinyinAlphabet();
         private StringMatcher _stringMatcher;
 
         [STAThread]
@@ -44,9 +45,9 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnStartup(object sender, StartupEventArgs e)
+        private async void OnStartupAsync(object sender, StartupEventArgs e)
         {
-            Stopwatch.Normal("|App.OnStartup|Startup cost", () =>
+            await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
@@ -67,13 +68,21 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
-                var window = new MainWindow(_settings, _mainVM);
+
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
-                PluginManager.InitializePlugins(API);
+
+                Http.API = API;
+                Http.Proxy = _settings.Proxy;
+
+                await PluginManager.InitializePlugins(API);
+                var window = new MainWindow(_settings, _mainVM);
+
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
+                
+                HotKeyMapper.Initialize(_mainVM);
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
@@ -83,14 +92,14 @@ namespace Flow.Launcher
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
-                Http.Proxy = _settings.Proxy;
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
 
                 AutoStartup();
                 AutoUpdates();
 
-                _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
+                API.SaveAppAllSettings();
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
@@ -118,12 +127,12 @@ namespace Flow.Launcher
                     var timer = new Timer(1000 * 60 * 60 * 5);
                     timer.Elapsed += async (s, e) =>
                     {
-                        await _updater.UpdateApp();
+                        await _updater.UpdateAppAsync(API);
                     };
                     timer.Start();
 
                     // check updates on startup
-                    await _updater.UpdateApp();
+                    await _updater.UpdateAppAsync(API);
                 }
             });
         }
@@ -167,7 +176,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Visibility = Visibility.Visible;
+            Current.MainWindow.Show();
         }
     }
 }

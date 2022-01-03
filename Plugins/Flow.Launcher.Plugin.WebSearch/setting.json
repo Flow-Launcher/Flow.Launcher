@@ -2,9 +2,51 @@
   "WebSearches": [
     {
       "Title": "Google",
-      "ActionKeyword": "g",
+      "ActionKeyword": "*",
       "IconPath": "Images\\google.png",
       "Url": "https://www.google.com/search?q={q}",
+      "Enabled": true
+    },
+    {
+      "Title": "Youtube",
+      "ActionKeyword": "youtube",
+      "IconPath": "Images\\youtube.png",
+      "Url": "http://www.youtube.com/results?search_query={q}",
+      "Enabled": true
+    },
+    {
+      "Title": "Netflix",
+      "ActionKeyword": "netflix",
+      "IconPath": "Images\\netflix.png",
+      "Url": "https://www.netflix.com/search?q={q}",
+      "Enabled": true
+    },
+    {
+      "Title": "Google Translate",
+      "ActionKeyword": "translate",
+      "IconPath": "Images\\google_translate.png",
+      "Url": "http://translate.google.com/#auto|en|{q}",
+      "Enabled": true
+    },
+    {
+      "Title": "Gmail",
+      "ActionKeyword": "gmail",
+      "IconPath": "Images\\gmail.png",
+      "Url": "https://mail.google.com/mail/ca/u/0/#apps/{q}",
+      "Enabled": true
+    },
+    {
+      "Title": "Google Drive",
+      "ActionKeyword": "drive",
+      "IconPath": "Images\\google_drive.png",
+      "Url": "http://drive.google.com/?hl=en&tab=bo#search/{q}",
+      "Enabled": true
+    },
+    {
+      "Title": "Youtube Music",
+      "ActionKeyword": "ytmusic",
+      "IconPath": "Images\\youtubemusic.png",
+      "Url": "https://music.youtube.com/search?q={q}",
       "Enabled": true
     },
     {
@@ -12,13 +54,6 @@
       "ActionKeyword": "wiki",
       "IconPath": "Images\\wiki.png",
       "Url": "http://en.wikipedia.org/wiki/{q}",
-      "Enabled": true
-    },
-    {
-      "Title": "FindIcon",
-      "ActionKeyword": "findicon",
-      "IconPath": "Images\\pictures.png",
-      "Url": "http://findicons.com/search/{q}",
       "Enabled": true
     },
     {
@@ -43,13 +78,6 @@
       "Enabled": true
     },
     {
-      "Title": "Google Translate",
-      "ActionKeyword": "translate",
-      "IconPath": "Images\\google_translate.png",
-      "Url": "http://translate.google.com/#auto|en|{q}",
-      "Enabled": true
-    },
-    {
       "Title": "Duckduckgo",
       "ActionKeyword": "duckduckgo",
       "IconPath": "Images\\duckduckgo.png",
@@ -68,20 +96,6 @@
       "ActionKeyword": "gist",
       "IconPath": "Images\\gist.png",
       "Url": "https://gist.github.com/search?q={q}",
-      "Enabled": true
-    },
-    {
-      "Title": "Gmail",
-      "ActionKeyword": "gmail",
-      "IconPath": "Images\\gmail.png",
-      "Url": "https://mail.google.com/mail/ca/u/0/#apps/{q}",
-      "Enabled": true
-    },
-    {
-      "Title": "Google Drive",
-      "ActionKeyword": "drive",
-      "IconPath": "Images\\google_drive.png",
-      "Url": "http://drive.google.com/?hl=en&tab=bo#search/{q}",
       "Enabled": true
     },
     {
@@ -110,13 +124,6 @@
       "ActionKeyword": "image",
       "IconPath": "Images\\google.png",
       "Url": "https://www.google.com/search?q={q}&tbm=isch",
-      "Enabled": true
-    },
-    {
-      "Title": "Youtube",
-      "ActionKeyword": "youtube",
-      "IconPath": "Images\\youtube.png",
-      "Url": "http://www.youtube.com/results?search_query={q}",
       "Enabled": true
     },
     {

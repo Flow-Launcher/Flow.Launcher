@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Reflection;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -15,6 +15,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const string ExplorerIconImagePath = "Images\\explorer.png";
         internal const string DifferentUserIconImagePath = "Images\\user.png";
         internal const string IndexingOptionsIconImagePath = "Images\\windowsindexingoptions.png";
+        internal const string QuickAccessImagePath = "Images\\quickaccess.png";
+        internal const string RemoveQuickAccessImagePath = "Images\\removequickaccess.png";
 
         internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";
 
@@ -22,8 +24,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const char AllFilesFolderSearchWildcard = '>';
 
+        internal const string DefaultContentSearchActionKeyword = "doc:";
+
         internal const char DirectorySeperator = '\\';
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";
+
+        internal static string ExplorerIconImageFullPath 
+            => Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString()) + "\\" + ExplorerIconImagePath;
     }
 }

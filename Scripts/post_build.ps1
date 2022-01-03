@@ -1,13 +1,13 @@
 param(
     [string]$config = "Release", 
-    [string]$solution,
-    [string]$targetpath
+    [string]$solution = (Join-Path $PSScriptRoot ".." -Resolve)
 )
 Write-Host "Config: $config"
 
 function Build-Version {
     if ([string]::IsNullOrEmpty($env:flowVersion)) {
-        $v = (Get-Command ${TargetPath}).FileVersionInfo.FileVersion
+        $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
+        $v = (Get-Command ${targetPath}).FileVersionInfo.FileVersion
     } else {
         $v = $env:flowVersion
     }
@@ -31,40 +31,35 @@ function Build-Path {
     return $p
 }
 
-function Copy-Resources ($path, $config) {
-    $project = "$path\Flow.Launcher"
-    $output = "$path\Output"
-    $target = "$output\$config"
-    Copy-Item -Recurse -Force $project\Images\* $target\Images\
-    Copy-Item -Recurse -Force $path\JsonRPC $target\JsonRPC
+function Copy-Resources ($path) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $output\Update.exe
+    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
 }
 
 function Delete-Unused ($path, $config) {
     $target = "$path\Output\$config"
     $included = Get-ChildItem $target -Filter "*.dll"
     foreach ($i in $included){
-        Remove-Item -Path $target\Plugins -Include $i -Recurse 
-        Write-Host "Deleting duplicated $i"
+        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" } 
+        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+        $deleteList | Remove-Item
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse 
 }
+
+function Remove-CreateDumpExe ($path, $config) {
+    $target = "$path\Output\$config"
+
+    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
+    Remove-Item -Path $target -Include "*createdump.exe" -Recurse
+}
+
 
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
 }
 
-function Zip-Release ($path, $version, $output) {
-    Write-Host "Begin zip release"
-
-    $content = "$path\Output\Release\*"
-    $zipFile = "$output\Flow-Launcher-v$version.zip"
-
-    Compress-Archive -Force -Path $content -DestinationPath $zipFile
-
-    Write-Host "End zip release"
-}
 
 function Pack-Squirrel-Installer ($path, $version, $output) {
     # msbuild based installer generation is not working in appveyor, not sure why
@@ -75,7 +70,9 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
-    # TODO: can we use dotnet pack here?
+    # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
+    New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
+    # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
     nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
@@ -92,7 +89,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow-Launcher-v$version.exe"
+    $file = "$output\Flow-Launcher-Setup.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
@@ -100,40 +97,41 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
-function IsDotNetCoreAppSelfContainedPublishEvent{
-    return Test-Path $solution\Output\Release\coreclr.dll
+function Publish-Self-Contained ($p) {
+
+    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
+    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net5.0-SelfContained.pubxml" -Resolve
+
+    # we call dotnet publish on the main project. 
+    # The other projects should have been built in Release at this point.
+    dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
-function FixPublishLastWriteDateTimeError ($solutionPath) {
-    #Fix error from publishing self contained app, when nuget tries to pack core dll references throws the error 'The DateTimeOffset specified cannot be converted into a Zip file timestamp' 
-    gci -path "$solutionPath\Output\Release" -rec -file *.dll | Where-Object {$_.LastWriteTime -lt (Get-Date).AddYears(-20)} | %  { try { $_.LastWriteTime = '01/01/2000 00:00:00' } catch {} }
+function Publish-Portable ($outputLocation, $version) {
+    
+    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }
 
 function Main {
     $p = Build-Path
     $v = Build-Version
-    Copy-Resources $p $config
+    Copy-Resources $p
 
     if ($config -eq "Release"){
         
-        if(IsDotNetCoreAppSelfContainedPublishEvent) {
-            FixPublishLastWriteDateTimeError $p
-        }
-        
         Delete-Unused $p $config
+
+        Publish-Self-Contained $p
+
+        Remove-CreateDumpExe $p $config
+
         $o = "$p\Output\Packages"
         Validate-Directory $o
-        # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-        New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
         Pack-Squirrel-Installer $p $v $o
-    
-        $isInCI = $env:APPVEYOR
-        if ($isInCI) {
-            Zip-Release $p $v $o
-        }
 
-        Write-Host "List output directory"
-        Get-ChildItem $o
+        Publish-Portable $o $v
     }
 }
 

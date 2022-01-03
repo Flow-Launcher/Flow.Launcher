@@ -3,6 +3,8 @@ using System.Windows.Threading;
 using NLog;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Exception;
+using NLog.Fluent;
+using Log = Flow.Launcher.Infrastructure.Logger.Log;
 
 namespace Flow.Launcher.Helper
 {
@@ -41,8 +43,7 @@ namespace Flow.Launcher.Helper
 
         public static string DependenciesInfo()
         {
-            var info = $"\nPython Path: {Constant.PythonPath}" +
-                       $"\nEverything SDK Path: {Constant.EverythingSDKPath}";
+            var info = $"\nPython Path: {Constant.PythonPath}";
             return info;
         }
     }

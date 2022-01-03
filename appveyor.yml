@@ -1,4 +1,4 @@
-version: '1.0.0.{build}'
+version: '1.9.1.{build}'
 
 init:
 - ps: |
@@ -14,6 +14,8 @@ assembly_info:
   assembly_file_version: $(flowVersion)
   assembly_informational_version: $(flowVersion)
 
+skip_branch_with_pr: true
+
 skip_commits:
   files:
     - '*.md'
@@ -26,9 +28,56 @@ before_build:
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
+after_build:
+  - ps: .\Scripts\post_build.ps1
 
 artifacts:
-- path: 'Output\Packages\Flow-Launcher-*.zip'
-  name: Zip
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
+- path: 'Output\Packages\Flow-Launcher-*.exe'
+  name: Squirrel Installer
+- path: Output\Packages\Flow-Launcher-Portable.zip
+  name: Portable Version
+- path: 'Output\Packages\FlowLauncher-*-full.nupkg'
+  name: Squirrel nupkg
+- path: 'Output\Packages\RELEASES'
+  name: Squirrel RELEASES
+
+deploy:
+  - provider: NuGet
+    artifact: Plugin nupkg
+    api_key:
+      secure: M0FYTgnThhthw9FPAI51CR0l5/te1VSh914YbCtOfDTTLYgbA/Ii9R91sc5l5bAN
+    on:
+      APPVEYOR_REPO_TAG: true
+
+  - provider: GitHub
+    release: v$(flowVersion)
+    auth_token:
+      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
+    draft: true
+    force_update: true
+    on:
+      branch: master
+
+  - provider: GitHub
+    release: v$(flowVersion)
+    auth_token:
+      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
+    force_update: true
+    on:
+      APPVEYOR_REPO_TAG: true
+
+environment:
+  winget_token:
+    secure: HKfVT2FYZITAG0qqMCePYhIem5a/gzvAgYDSlr6RlXfGmeBUOANUtgJ9X6fNroxN
+
+on_success:
+  - ps: |
+        if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:APPVEYOR_REPO_TAG -eq "true")
+        {
+            iwr https://github.com/microsoft/winget-create/releases/download/v0.2.0.29-preview/wingetcreate.exe -OutFile wingetcreate.exe
+            .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe -v $env:flowVersion -t $env:winget_token
+        }

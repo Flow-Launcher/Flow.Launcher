@@ -9,5 +9,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         string UniqueIdentifier { get; set; }
         string Name { get; }
         string Location { get; }
+        bool Enabled { get; }
     }
 }

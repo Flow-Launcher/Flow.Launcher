@@ -1,10 +1,16 @@
 {
   "ID": "572be03c74c642baae319fc283e561a8",
-  "ActionKeyword": "*",
+  "ActionKeywords": [
+    "*",
+    "doc:",
+    "*",
+    "*",
+    "*"
+  ],
   "Name": "Explorer",
   "Description": "Search and manage files and folders. Explorer utilises Windows Index Search",
   "Author": "Jeremy Wu",
-  "Version": "1.0.0",
+  "Version": "1.11.1",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Explorer.dll",

@@ -7,7 +7,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : ISettingProvider,IPlugin, IPluginI18n, ISavable
+    public class Main : ISettingProvider,IPlugin, IPluginI18n
     {
         //based on https://gist.github.com/dperini/729294
         private const string urlPattern = "^" +
@@ -44,20 +44,9 @@ namespace Flow.Launcher.Plugin.Url
             "$";
         Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private PluginInitContext context;
-        private readonly Settings _settings;
-        private readonly PluginJsonStorage<Settings> _storage;
+        private Settings _settings;
 
-        public Main()
-        {
-            _storage = new PluginJsonStorage<Settings>();
-            _settings = _storage.Load();
-        }
-
-        public void Save()
-        {
-            _storage.Save();
-        }
-
+        
         public List<Result> Query(Query query)
         {
             var raw = query.Search;
@@ -79,14 +68,7 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                if (_settings.OpenInNewBrowserWindow)
-                                {
-                                    raw.NewBrowserWindow(_settings.BrowserPath);
-                                }
-                                else
-                                {
-                                    raw.NewTabInBrowser(_settings.BrowserPath);
-                                }
+                                context.API.OpenUrl(raw);
                                 
                                 return true;
                             }
@@ -128,6 +110,8 @@ namespace Flow.Launcher.Plugin.Url
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()

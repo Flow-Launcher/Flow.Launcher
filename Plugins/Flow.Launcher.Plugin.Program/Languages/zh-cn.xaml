@@ -6,12 +6,15 @@
     <system:String x:Key="flowlauncher_plugin_program_delete">删除</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">编辑</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">增加</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">停用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">位置</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_all_programs">所有程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">索引文件后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">重新索引</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">索引中</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">索引开始菜单</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">索引注册表</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">启用程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">最大深度</system:String>
 
@@ -21,6 +24,7 @@
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">最大搜索深度（-1是无限的）：</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">请先选择一项</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">您确定要删除选定的程序源吗？</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher仅索引下列后缀的文件：</system:String>
@@ -28,12 +32,23 @@
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">成功更新索引文件后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">文件后缀不能为空</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">以其他用户身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">以管理员身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">打开所属文件夹</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">禁止显示该程序</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">在Flow Launcher中搜索程序</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">无效路径</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">自定义资源管理器</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">参数</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">您可以通过输入要使用的资源管理器的环境变量来自定义用于打开容器文件夹的资源管理器。 使用CMD来测试环境变量是否可用。</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">输入要为自定义资源管理器添加的自定义参数。 ％s代表父目录，％f代表完整路径（仅适用于win32）。 检查资源管理器的网站以获取详细信息。</system:String>
+
+    <!--Dialogs-->
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">完成</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">成功禁用了该程序以使其无法显示在查询中</system:String>
 
 </ResourceDictionary>

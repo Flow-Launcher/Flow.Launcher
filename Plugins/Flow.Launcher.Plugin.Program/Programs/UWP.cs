@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,12 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using AppxPackaing;
-using Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
-using IStream = AppxPackaing.IStream;
 using Rect = System.Windows.Rect;
+using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -51,33 +51,27 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void InitializeAppInfo()
         {
+            AppxPackageHelper _helper = new AppxPackageHelper();
             var path = Path.Combine(Location, "AppxManifest.xml");
 
             var namespaces = XmlNamespaces(path);
             InitPackageVersion(namespaces);
 
-            var appxFactory = new AppxFactory();
-            IStream stream;
             const uint noAttribute = 0x80;
             const Stgm exclusiveRead = Stgm.Read | Stgm.ShareExclusive;
-            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out stream);
+            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out IStream stream);
 
             if (hResult == Hresult.Ok)
             {
-                var reader = appxFactory.CreateManifestReader(stream);
-                var manifestApps = reader.GetApplications();
                 var apps = new List<Application>();
-                while (manifestApps.GetHasCurrent() != 0)
+
+                List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
+                foreach (var _app in _apps)
                 {
-                    var manifestApp = manifestApps.GetCurrent();
-                    var appListEntry = manifestApp.GetStringValue("AppListEntry");
-                    if (appListEntry != "none")
-                    {
-                        var app = new Application(manifestApp, this);
-                        apps.Add(app);
-                    }
-                    manifestApps.MoveNext();
+                    var app = new Application(_app, this);
+                    apps.Add(app);
                 }
+
                 Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
             }
             else
@@ -87,6 +81,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                 "|Error caused while trying to get the details of the UWP program", e);
 
                 Apps = new List<Application>().ToArray();
+            }
+
+            if (Marshal.ReleaseComObject(stream) > 0)
+            {
+                Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
             }
         }
 
@@ -192,7 +191,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (u != null)
             {
                 var id = u.Value;
-                var m = new PackageManager();
+                PackageManager m;
+                try
+                {
+                    m = new PackageManager();
+                }
+                catch
+                {
+                    // Bug from https://github.com/microsoft/CsWinRT, using Microsoft.Windows.SDK.NET.Ref 10.0.19041.0.
+                    // Only happens on the first time, so a try catch can fix it.
+                    m = new PackageManager();
+                }
                 var ps = m.FindPackagesForUser(id);
                 ps = ps.Where(p =>
                 {
@@ -206,12 +215,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP" ,"CurrentUserPackages", $"id","An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"id", "An unexpected error occured and "
                                                    + $"unable to verify if package is valid", e);
                         return false;
                     }
-                    
-                    
+
                     return valid;
                 });
                 return ps;
@@ -254,63 +262,93 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string UserModelId { get; set; }
             public string BackgroundColor { get; set; }
 
+            public string EntryPoint { get; set; }
             public string Name => DisplayName;
             public string Location => Package.Location;
 
             public bool Enabled { get; set; }
+            public bool CanRunElevated { get; set; }
 
             public string LogoUri { get; set; }
             public string LogoPath { get; set; }
             public UWP Package { get; set; }
 
-            public Application(){}
+            public Application() { }
 
-            private int Score(string query)
-            {
-                var displayNameMatch = StringMatcher.FuzzySearch(query, DisplayName);
-                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-                var score = new[] { displayNameMatch.Score, descriptionMatch.Score }.Max();
-                return score;
-            }
 
             public Result Result(string query, IPublicAPI api)
             {
-                var score = Score(query);
-                if (score <= 0)
-                { // no need to create result if score is 0
-                    return null;
+                string title;
+                MatchResult matchResult;
+
+                // We suppose Name won't be null
+                if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
+                {
+                    title = Name;
+                    matchResult = StringMatcher.FuzzySearch(query, title);
                 }
+                else if (Description.StartsWith(Name))
+                {
+                    title = Description;
+                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                }
+                else
+                {
+                    title = $"{Name}: {Description}";
+                    var nameMatch = StringMatcher.FuzzySearch(query, Name);
+                    var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
+                    if (desciptionMatch.Score > nameMatch.Score)
+                    {
+                        for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                        {
+                            desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                        }
+                        matchResult = desciptionMatch;
+                    }
+                    else matchResult = nameMatch;
+                }
+
+                if (!matchResult.Success)
+                    return null;
 
                 var result = new Result
                 {
-                    SubTitle = Package.Location,
+                    Title = title,
+                    SubTitle = Main._settings.HideAppsPath ? string.Empty : Package.Location,
                     Icon = Logo,
-                    Score = score,
+                    Score = matchResult.Score,
+                    TitleHighlightData = matchResult.MatchData,
                     ContextData = this,
                     Action = e =>
                     {
-                        Launch(api);
+                        var elevated = (
+                            e.SpecialKeyState.CtrlPressed &&
+                            e.SpecialKeyState.ShiftPressed &&
+                            !e.SpecialKeyState.AltPressed &&
+                            !e.SpecialKeyState.WinPressed
+                        );
+
+                        if (elevated && CanRunElevated)
+                        {
+                            LaunchElevated();
+                        }
+                        else
+                        {
+                            Launch(api);
+
+                            if (elevated)
+                            {
+                                var title = "Plugin: Program";
+                                var message = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator_not_supported_message");
+                                api.ShowMsg(title, message, string.Empty);
+                            }
+                        }
+
                         return true;
                     }
                 };
 
-                if (Description.Length >= DisplayName.Length &&
-                    Description.Substring(0, DisplayName.Length) == DisplayName)
-                {
-                    result.Title = Description;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, Description).MatchData;
-                }
-                else if (!string.IsNullOrEmpty(Description))
-                {
-                    var title = $"{DisplayName}: {Description}";
-                    result.Title = title;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, title).MatchData;
-                }
-                else
-                {
-                    result.Title = DisplayName;
-                    result.TitleHighlightData = StringMatcher.FuzzySearch(query, DisplayName).MatchData;
-                }
+
                 return result;
             }
 
@@ -324,7 +362,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         Action = _ =>
                         {
-                            Main.StartProcess(Process.Start, new ProcessStartInfo(Package.Location));
+                            Main.Context.API.OpenDirectory(Package.Location);
 
                             return true;
                         },
@@ -332,20 +370,34 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         IcoPath = "Images/folder.png"
                     }
                 };
+
+                if (CanRunElevated)
+                {
+                    contextMenus.Add(new Result
+                    {
+                        Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
+                        Action = _ =>
+                        {
+                            LaunchElevated();
+                            return true;
+                        },
+                        IcoPath = "Images/cmd.png"
+                    });
+                }
+
                 return contextMenus;
             }
 
             private async void Launch(IPublicAPI api)
             {
-                var appManager = new ApplicationActivationManager();
-                uint unusedPid;
+                var appManager = new ApplicationActivationHelper.ApplicationActivationManager();
                 const string noArgs = "";
-                const ACTIVATEOPTIONS noFlags = ACTIVATEOPTIONS.AO_NONE;
+                const ApplicationActivationHelper.ActivateOptions noFlags = ApplicationActivationHelper.ActivateOptions.None;
                 await Task.Run(() =>
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out unusedPid);
+                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -356,13 +408,38 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            public Application(IAppxManifestApplication manifestApp, UWP package)
+            private async void LaunchElevated()
             {
-                UserModelId = manifestApp.GetAppUserModelId();
-                UniqueIdentifier = manifestApp.GetAppUserModelId();
-                DisplayName = manifestApp.GetStringValue("DisplayName");
-                Description = manifestApp.GetStringValue("Description");
-                BackgroundColor = manifestApp.GetStringValue("BackgroundColor");
+                string command = "shell:AppsFolder\\" + UniqueIdentifier;
+                command = Environment.ExpandEnvironmentVariables(command.Trim());
+
+                var info = new ProcessStartInfo(command)
+                {
+                    UseShellExecute = true,
+                    Verb = "runas",
+                };
+
+                Main.StartProcess(Process.Start, info);
+            }
+
+            public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
+            {
+                // This is done because we cannot use the keyword 'out' along with a property
+
+                manifestApp.GetAppUserModelId(out string tmpUserModelId);
+                manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
+                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+                manifestApp.GetStringValue("Description", out string tmpDescription);
+                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
+
+                UserModelId = tmpUserModelId;
+                UniqueIdentifier = tmpUniqueIdentifier;
+                DisplayName = tmpDisplayName;
+                Description = tmpDescription;
+                BackgroundColor = tmpBackgroundColor;
+                EntryPoint = tmpEntryPoint;
+
                 Package = package;
 
                 DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
@@ -371,6 +448,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 LogoPath = LogoPathFromUri(LogoUri);
 
                 Enabled = true;
+                CanRunElevated = CanApplicationRunElevated();
+            }
+
+            private bool CanApplicationRunElevated()
+            {
+                if (EntryPoint == "Windows.FullTrustApplication")
+                {
+                    return true;
+                }
+
+                var manifest = Package.Location + "\\AppxManifest.xml";
+                if (File.Exists(manifest))
+                {
+                    var file = File.ReadAllText(manifest);
+
+                    if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
 
             internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
@@ -409,14 +508,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
             {
                 const string prefix = "ms-resource:";
-                
+
                 if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
                     return rawPriReferenceValue;
 
                 string key = rawPriReferenceValue.Substring(prefix.Length);
                 if (key.StartsWith("//"))
                     return $"{prefix}{key}";
-                
+
                 if (!key.StartsWith("/"))
                 {
                     key = $"/{key}";
@@ -430,7 +529,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return $"{prefix}//{packageName}{key}";
             }
 
-            internal string LogoUriFromManifest(IAppxManifestApplication app)
+            internal string LogoUriFromManifest(AppxPackageHelper.IAppxManifestApplication app)
             {
                 var logoKeyFromVersion = new Dictionary<PackageVersion, string>
                 {
@@ -441,7 +540,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
                     var key = logoKeyFromVersion[Package.Version];
-                    var logoUri = app.GetStringValue(key);
+                    app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else
@@ -533,10 +632,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
                 else
                 {
-                    ProgramLogger.LogException($"|UWP|ImageFromPath|{path}" +
+                    ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
                                                     $"|Unable to get logo for {UserModelId} from {path} and" +
                                                     $" located in {Package.Location}", new FileNotFoundException());
-                    return new BitmapImage(new Uri(Constant.ErrorIcon));
+                    return new BitmapImage(new Uri(Constant.MissingImgIcon));
                 }
             }
 
@@ -586,7 +685,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                     $"|Unable to convert background string {BackgroundColor} " +
                                                     $"to color for {Package.Location}", new InvalidOperationException());
 
-                        return new BitmapImage(new Uri(Constant.ErrorIcon));
+                        return new BitmapImage(new Uri(Constant.MissingImgIcon));
                     }
                 }
                 else

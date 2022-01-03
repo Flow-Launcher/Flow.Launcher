@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
@@ -63,17 +66,14 @@ namespace Flow.Launcher.Plugin.Sys
                 if (score > 0)
                 {
                     c.Score = score;
+
                     if (score == titleMatch.Score)
-                    {
                         c.TitleHighlightData = titleMatch.MatchData;
-                    }
-                    else 
-                    {
-                        c.SubTitleHighlightData = subTitleMatch.MatchData;
-                    }
+
                     results.Add(c);
                 }
             }
+
             return results;
         }
 
@@ -91,16 +91,19 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Shutdown",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var reuslt = MessageBox.Show(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
-                                                     context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
-                                                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        var reuslt = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (reuslt == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/s /t 0");
                         }
+
                         return true;
                     }
                 },
@@ -108,16 +111,38 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Restart",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe777"),
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
-                                                     context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
-                                                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        var result = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/r /t 0");
                         }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Restart With Advanced Boot Options",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xecc5"),
+                    IcoPath = "Images\\restart_advanced.png",
+                    Action = c =>
+                    {
+                        var result = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        
+                        if (result == MessageBoxResult.Yes)
+                            Process.Start("shutdown", "/r /o /t 0");
+
                         return true;
                     }
                 },
@@ -125,6 +150,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Log Off",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
                     Action = c => ExitWindowsEx(EWX_LOGOFF, 0)
                 },
@@ -132,6 +158,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Lock",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_lock"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72e"),
                     IcoPath = "Images\\lock.png",
                     Action = c =>
                     {
@@ -143,6 +170,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Sleep",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
                     Action = c => FormsApplication.SetSuspendState(PowerState.Suspend, false, false)
                 },
@@ -150,27 +178,39 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Hibernate",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
-                    IcoPath = "Images\\sleep.png", // Icon change needed
-                    Action = c => FormsApplication.SetSuspendState(PowerState.Hibernate, false, false)
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe945"),
+                    IcoPath = "Images\\hibernate.png",
+                    Action= c =>
+                    {
+                        var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
+                        info.WindowStyle = ProcessWindowStyle.Hidden;
+                        info.UseShellExecute = true;
+
+                        ShellCommand.Execute(info);
+                        
+                        return true;
+                    }
                 },
                 new Result
                 {
                     Title = "Empty Recycle Bin",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     Action = c =>
                     {
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
                         // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
                         // 0 for nothing
                         var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
-                        if (result != (uint) HRESULT.S_OK && result != (uint)0x8000FFFF)
+                        if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
                         {
                             MessageBox.Show($"Error emptying recycle bin, error code: {result}\n" +
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
-                                            "Error",
-                                            MessageBoxButton.OK, MessageBoxImage.Error);
+                                "Error",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+
                         return true;
                     }
                 },
@@ -229,27 +269,64 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Application.Current.MainWindow.Hide();
-                        context.API.ReloadAllPluginData();
-                        context.API.ShowMsg(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded"));
+
+                        context.API.ReloadAllPluginData().ContinueWith(_ =>
+                            context.API.ShowMsg(
+                                context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
+                                context.API.GetTranslation(
+                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")));
+                        
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = "Check for new Flow Launcher update",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update"),
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
                         Application.Current.MainWindow.Hide();
                         context.API.CheckForNewUpdate();
-                        context.API.ShowMsg("Please wait...",
-                            "Checking for new update");
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Open Log Location",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
+                        context.API.OpenDirectory(logPath);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher Tips",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        context.API.OpenUrl(Constant.Documentation);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher UserData Folder",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 }
             });
+
             return results;
         }
 

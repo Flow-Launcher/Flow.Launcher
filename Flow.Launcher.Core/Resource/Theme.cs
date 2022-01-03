@@ -17,14 +17,20 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
+        private const int ShadowExtraMargin = 12;
+
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
         private string _oldTheme;
         public Settings Settings { get; set; }
-        private const string Folder = "Themes";
+        private const string Folder = Constant.Themes;
         private const string Extension = ".xaml";
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
+
+        public bool BlurEnabled { get; set; }
+
+        private double mainWindowWidth;
 
         public Theme()
         {
@@ -86,8 +92,12 @@ namespace Flow.Launcher.Core.Resource
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                if (Settings.UseDropShadowEffect)
+                BlurEnabled = IsBlurTheme();
+
+                if (Settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
+
+                SetBlurForWindow();
             }
             catch (DirectoryNotFoundException e)
             {
@@ -135,27 +145,39 @@ namespace Flow.Launcher.Core.Resource
         public ResourceDictionary GetResourceDictionary()
         {
             var dict = CurrentThemeResourceDictionary();
-
-            Style queryBoxStyle = dict["QueryBoxStyle"] as Style;
-            if (queryBoxStyle != null)
+           
+            if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
+                dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, new FontFamily(Settings.QueryBoxFont)));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.QueryBoxFontStyle)));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.QueryBoxFontWeight)));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.QueryBoxFontStretch)));
+                var fontFamily = new FontFamily(Settings.QueryBoxFont);
+                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.QueryBoxFontStyle);
+                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.QueryBoxFontWeight);
+                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.QueryBoxFontStretch);
+
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
+                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
 
                 var caretBrushPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
                 var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null) //otherwise BaseQueryBoxStyle will handle styling
                     queryBoxStyle.Setters.Add(new Setter(TextBox.CaretBrushProperty, foregroundPropertyValue));
+
+                // Query suggestion box's font style is aligned with query box
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
+                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
             }
 
-            Style resultItemStyle = dict["ItemTitleStyle"] as Style;
-            Style resultSubItemStyle = dict["ItemSubTitleStyle"] as Style;
-            Style resultItemSelectedStyle = dict["ItemTitleSelectedStyle"] as Style;
-            Style resultSubItemSelectedStyle = dict["ItemSubTitleSelectedStyle"] as Style;
-            if (resultItemStyle != null && resultSubItemStyle != null && resultSubItemSelectedStyle != null && resultItemSelectedStyle != null)
+            if (dict["ItemTitleStyle"] is Style resultItemStyle &&
+                dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
+                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle &&
+                dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
+                dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
+                dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
             {
                 Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultFont));
                 Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.ResultFontStyle));
@@ -163,9 +185,15 @@ namespace Flow.Launcher.Core.Resource
                 Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
-                Array.ForEach(new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle }, o => Array.ForEach(setters, p => o.Setters.Add(p)));
+                Array.ForEach(
+                    new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
+                    => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
-
+            /* Ignore Theme Window Width and use setting */
+            var windowStyle = dict["WindowStyle"] as Style;
+            var width = Settings.WindowSize;
+            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
+            mainWindowWidth = (double)width;
             return dict;
         }
 
@@ -198,30 +226,69 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-            var dict = CurrentThemeResourceDictionary();
+            var dict = GetResourceDictionary();
 
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            var effectSetter = new Setter();
-            effectSetter.Property = Border.EffectProperty;
-            effectSetter.Value = new DropShadowEffect
+            var effectSetter = new Setter
             {
-                Opacity = 0.9,
-                ShadowDepth = 2,
-                BlurRadius = 15
+                Property = Border.EffectProperty,
+                Value = new DropShadowEffect
+                {
+                    Opacity = 0.4,
+                    ShadowDepth = 2,
+                    BlurRadius = 15
+                }
             };
+
+            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+            if (marginSetter == null)
+            {
+                marginSetter = new Setter()
+                {
+                    Property = Border.MarginProperty,
+                    Value = new Thickness(ShadowExtraMargin),
+                };
+                windowBorderStyle.Setters.Add(marginSetter);
+            }
+            else
+            {
+                var baseMargin = (Thickness)marginSetter.Value;
+                var newMargin = new Thickness(
+                    baseMargin.Left + ShadowExtraMargin,
+                    baseMargin.Top + ShadowExtraMargin,
+                    baseMargin.Right + ShadowExtraMargin,
+                    baseMargin.Bottom + ShadowExtraMargin);
+                marginSetter.Value = newMargin;
+            }
 
             windowBorderStyle.Setters.Add(effectSetter);
 
             UpdateResourceDictionary(dict);
         }
 
-        public void RemoveDropShadowEffectToCurrentTheme()
+        public void RemoveDropShadowEffectFromCurrentTheme()
         {
             var dict = CurrentThemeResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            dict.Remove(Border.EffectProperty);
+            var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
+            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+
+            if (effectSetter != null)
+            {
+                windowBorderStyle.Setters.Remove(effectSetter);
+            }
+            if (marginSetter != null)
+            {
+                var currentMargin = (Thickness)marginSetter.Value;
+                var newMargin = new Thickness(
+                    currentMargin.Left - ShadowExtraMargin,
+                    currentMargin.Top - ShadowExtraMargin,
+                    currentMargin.Right - ShadowExtraMargin,
+                    currentMargin.Bottom - ShadowExtraMargin);
+                marginSetter.Value = newMargin;
+            }
 
             UpdateResourceDictionary(dict);
         }
@@ -268,35 +335,37 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
+            if (BlurEnabled)
+            {
+                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
+            }
+            else
+            {
+                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
+            }
+        }
 
-            // Exception of FindResource can't be cathed if global exception handle is set
+        private bool IsBlurTheme()
+        {
             if (Environment.OSVersion.Version >= new Version(6, 2))
             {
                 var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-                bool blur;
-                if (resource is bool)
-                {
-                    blur = (bool)resource;
-                }
-                else
-                {
-                    blur = false;
-                }
 
-                if (blur)
-                {
-                    SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
-                }
-                else
-                {
-                    SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
-                }
+                if (resource is bool)
+                    return (bool)resource;
+
+                return false;
             }
+
+            return false;
         }
 
         private void SetWindowAccent(Window w, AccentState state)
         {
             var windowHelper = new WindowInteropHelper(w);
+
+            windowHelper.EnsureHandle();
+
             var accent = new AccentPolicy { AccentState = state };
             var accentStructSize = Marshal.SizeOf(accent);
 

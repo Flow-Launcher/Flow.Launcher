@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             baseQuery.QueryMaxResults = settings.MaxResult;
 
             // Set list of columns we want to display, getting the path presently
-            baseQuery.QuerySelectColumns = "System.FileName, System.ItemPathDisplay, System.ItemType";
+            baseQuery.QuerySelectColumns = "System.FileName, System.ItemUrl, System.ItemType";
 
             // Filter based on file name
             baseQuery.QueryContentProperties = "System.FileName";
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             // Get the ISearchQueryHelper which will help us to translate AQS --> SQL necessary to query the indexer
             var queryHelper = catalogManager.GetQueryHelper();
-
+            
             return queryHelper;
         }
 
@@ -81,11 +81,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var previousLevelDirectory = path.Substring(0, indexOfSeparator);
 
             if (string.IsNullOrEmpty(itemName))
-                return searchDepth + $"{previousLevelDirectory}'";
+                return $"{searchDepth}{previousLevelDirectory}'";
 
-            return $"(System.FileName LIKE '{itemName}%' " +
-                    $"OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND " +
-                    searchDepth + $"{previousLevelDirectory}'";
+            return $"(System.FileName LIKE '{itemName}%' OR CONTAINS(System.FileName,'\"{itemName}*\"',1033)) AND {searchDepth}{previousLevelDirectory}'";
         }
 
         ///<summary>
@@ -96,9 +94,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
 
             if (path.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > path.LastIndexOf(Constants.DirectorySeperator))
-                return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
+                return query + QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path) + QueryOrderByFileNameRestriction;
 
-            return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path);
+            return query + QueryWhereRestrictionsForTopLevelDirectorySearch(path) + QueryOrderByFileNameRestriction;
         }
 
         ///<summary>
@@ -107,15 +105,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string QueryForAllFilesAndFolders(string userSearchString)
         {
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch();
+            return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch
+                + QueryOrderByFileNameRestriction;
         }
 
         ///<summary>
         /// Set the required WHERE clause restriction to search for all files and folders.
         ///</summary>
-        public string QueryWhereRestrictionsForAllFilesAndFoldersSearch()
+        public const string QueryWhereRestrictionsForAllFilesAndFoldersSearch = "scope='file:'";
+
+        public const string QueryOrderByFileNameRestriction = " ORDER BY System.FileName";
+
+
+        ///<summary>
+        /// Search will be performed on all indexed file contents for the specified search keywords.
+        ///</summary>
+        public string QueryForFileContentSearch(string userSearchString)
         {
-            return $"scope='file:'";
+            string query = "SELECT TOP " + settings.MaxResult + $" {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE ";
+
+            return query + QueryWhereRestrictionsForFileContentSearch(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch
+                + QueryOrderByFileNameRestriction;
+        }
+
+        ///<summary>
+        /// Set the required WHERE clause restriction to search within file content.
+        ///</summary>
+        public string QueryWhereRestrictionsForFileContentSearch(string searchQuery)
+        {
+            return $"FREETEXT('{searchQuery}')";
         }
     }
 }

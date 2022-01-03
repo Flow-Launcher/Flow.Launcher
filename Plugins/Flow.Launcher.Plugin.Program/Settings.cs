@@ -13,9 +13,17 @@ namespace Flow.Launcher.Plugin.Program
 
         public bool EnableStartMenuSource { get; set; } = true;
 
+        public bool EnableDescription { get; set; } = false;
+        public bool HideAppsPath { get; set; } = true;
         public bool EnableRegistrySource { get; set; } = true;
+        public string CustomizedExplorer { get; set; } = Explorer;
+        public string CustomizedArgs { get; set; } = ExplorerArgs;
 
         internal const char SuffixSeperator = ';';
+
+        internal const string Explorer = "explorer";
+
+        internal const string ExplorerArgs = "%s";
 
         /// <summary>
         /// Contains user added folder location contents as well as all user disabled applications

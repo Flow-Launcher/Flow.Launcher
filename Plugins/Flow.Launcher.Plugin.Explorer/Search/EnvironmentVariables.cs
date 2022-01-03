@@ -10,10 +10,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         internal static bool IsEnvironmentVariableSearch(string search)
         {
-            return LoadEnvironmentStringPaths().Count > 0 
-                    && search.StartsWith("%") 
+            return search.StartsWith("%") 
                     && search != "%%"
-                    && !search.Contains("\\");
+                    && !search.Contains("\\") &&
+                    LoadEnvironmentStringPaths().Count > 0;
         }
 
         internal static Dictionary<string, string> LoadEnvironmentStringPaths()
@@ -22,11 +22,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
             {
-                if (Directory.Exists(special.Value.ToString()))
+                var path = special.Value.ToString();
+                if (Directory.Exists(path))
                 {
+                    // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
+                    // for example, if %systemdrive% is C: we turn it to C:\
+                    path = path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
+                    // if we don't have an absolute path, we use Path.GetFullPath to get one.
+                    // for example, if %homepath% is \Users\John we turn it to C:\Users\John
+                    path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path);
+
                     // Variables are returned with a mixture of all upper/lower case. 
                     // Call ToLower() to make the results look consistent
-                    envStringPaths.Add(special.Key.ToString().ToLower(), special.Value.ToString());
+                    envStringPaths.Add(special.Key.ToString().ToLower(), path);
                 }
             }
 
@@ -67,7 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     var expandedPath = environmentVariables[search];
                    
-                    results.Add(new ResultManager(context).CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
+                    results.Add(ResultManager.CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
                     
                     return results;
                 }
@@ -86,7 +95,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 if (p.Key.StartsWith(search, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    results.Add(new ResultManager(context).CreateFolderResult($"%{p.Key}%", p.Value, p.Value, query));
+                    results.Add(ResultManager.CreateFolderResult($"%{p.Key}%", p.Value, p.Value, query));
                 }
             }
 

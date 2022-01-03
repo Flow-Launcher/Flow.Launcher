@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Documents;
 
 namespace Flow.Launcher.Converters
@@ -30,7 +31,9 @@ namespace Flow.Launcher.Converters
                 var currentCharacter = text.Substring(i, 1);
                 if (this.ShouldHighlight(highlightData, i))
                 {
-                    textBlock.Inlines.Add(new Bold(new Run(currentCharacter)));
+
+                    textBlock.Inlines.Add(new Run(currentCharacter) { Style = (Style)Application.Current.FindResource("HighlightStyle") });
+
                 }
                 else
                 {

@@ -16,12 +16,10 @@ namespace Flow.Launcher.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var hotkeyNumber = int.MaxValue;
-             
-            if (value is ListBoxItem listBoxItem)
-            {
-                ListBox listBox = ItemsControl.ItemsControlFromItemContainer(listBoxItem) as ListBox;
+
+            if (value is ListBoxItem listBoxItem
+                && ItemsControl.ItemsControlFromItemContainer(listBoxItem) is ListBox listBox)
                 hotkeyNumber = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem) + 1;
-            }
 
             return hotkeyNumber <= MaxVisibleHotkeys ? Visibility.Visible : Visibility.Collapsed;
         }

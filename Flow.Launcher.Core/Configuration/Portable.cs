@@ -95,7 +95,7 @@ namespace Flow.Launcher.Core.Configuration
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
         {
-            FilesFolders.Copy(fromLocation, toLocation);
+            FilesFolders.CopyAll(fromLocation, toLocation);
             VerifyUserDataAfterMove(fromLocation, toLocation);
         }
 

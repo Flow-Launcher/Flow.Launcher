@@ -1,13 +1,11 @@
 ﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
-using NHotkey;
-using NHotkey.Wpf;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Flow.Launcher
 {
@@ -52,12 +50,7 @@ namespace Flow.Launcher
                 };
                 _settings.CustomPluginHotkeys.Add(pluginHotkey);
 
-                SetHotkey(ctlHotkey.CurrentHotkey, delegate
-                {
-                    App.API.ChangeQuery(pluginHotkey.ActionKeyword);
-                    Application.Current.MainWindow.Visibility = Visibility.Visible;
-                });
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("success"));
+                HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
             }
             else
             {
@@ -70,13 +63,8 @@ namespace Flow.Launcher
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
                 updateCustomHotkey.Hotkey = ctlHotkey.CurrentHotkey.ToString();
                 //remove origin hotkey
-                RemoveHotkey(oldHotkey);
-                SetHotkey(new HotkeyModel(updateCustomHotkey.Hotkey), delegate
-                {
-                    App.API.ChangeQuery(updateCustomHotkey.ActionKeyword);
-                    Application.Current.MainWindow.Visibility = Visibility.Visible;
-                });
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("success"));
+                HotKeyMapper.RemoveHotkey(oldHotkey);
+                HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
             }
 
             Close();
@@ -101,34 +89,24 @@ namespace Flow.Launcher
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbAction.Text);
-            Application.Current.MainWindow.Visibility = Visibility.Visible;
-        }
-
-        private void RemoveHotkey(string hotkeyStr)
-        {
-            if (!string.IsNullOrEmpty(hotkeyStr))
-            {
-                HotkeyManager.Current.Remove(hotkeyStr);
-            }
-        }
-
-        private void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
-        {
-            string hotkeyStr = hotkey.ToString();
-            try
-            {
-                HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
-            }
-            catch (Exception)
-            {
-                string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-                MessageBox.Show(errorMsg);
-            }
+            Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.Opacity = 1;
+            Application.Current.MainWindow.Focus();
         }
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             Close();
+        }
+
+        private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
+        {
+            TextBox textBox = Keyboard.FocusedElement as TextBox;
+            if (textBox != null)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                textBox.MoveFocus(tRequest);
+            }
         }
     }
 }

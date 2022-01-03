@@ -1,33 +1,33 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
+﻿using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.FolderLinks;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public class SettingsViewModel
     {
-        private readonly PluginJsonStorage<Settings> storage;
-
         internal Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
 
-        public SettingsViewModel(PluginInitContext context)
+        public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
-            storage = new PluginJsonStorage<Settings>();
-            Settings = storage.Load();
+            Settings = settings;
         }
+
 
         public void Save()
         {
-            storage.Save();
+            Context.API.SaveSettingJsonStorage<Settings>();
         }
 
-        internal void RemoveFolderLinkFromQuickFolders(FolderLink selectedRow) => Settings.QuickFolderAccessLinks.Remove(selectedRow);
+        internal void RemoveLinkFromQuickAccess(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);
 
-        internal void RemoveFolderLinkFromExcludedIndexPaths(FolderLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
+        internal void RemoveAccessLinkFromExcludedIndexPaths(AccessLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
 
         internal void OpenWindowsIndexingOptions()
         {
@@ -40,5 +40,17 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
             Process.Start(psi);
         }
+
+        internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword)
+        {
+            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+        }
+
+        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword)
+        {
+            return PluginManager.ActionKeywordRegistered(newActionKeyword);
+        }
+
+        internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
     }
 }

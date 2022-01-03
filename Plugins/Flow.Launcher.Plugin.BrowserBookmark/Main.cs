@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
@@ -9,71 +12,73 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, ISavable
+    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu
     {
         private PluginInitContext context;
-        
+
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
-        private readonly Settings _settings;
-        private readonly PluginJsonStorage<Settings> _storage;
-
-        public Main()
-        {
-            _storage = new PluginJsonStorage<Settings>();
-            _settings = _storage.Load();
-
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
-        }
+        private Settings _settings { get; set;}
 
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
+
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public List<Result> Query(Query query)
         {
-            string param = query.GetAllRemainingParameter().TrimStart();
+            string param = query.Search.TrimStart();
 
             // Should top results be returned? (true if no search parameters have been passed)
             var topResults = string.IsNullOrEmpty(param);
-            
-            var returnList = cachedBookmarks;
+
 
             if (!topResults)
             {
                 // Since we mixed chrome and firefox bookmarks, we should order them again                
-                returnList = cachedBookmarks.Where(o => Bookmarks.MatchProgram(o, param)).ToList();
-                returnList = returnList.OrderByDescending(o => o.Score).ToList();
-            }
-            
-            return returnList.Select(c => new Result()
-            {
-                Title = c.Name,
-                SubTitle = c.Url,
-                IcoPath = @"Images\bookmark.png",
-                Score = 5,
-                Action = (e) =>
+                var returnList = cachedBookmarks.Select(c => new Result()
                 {
-                    if (_settings.OpenInNewBrowserWindow)
+                    Title = c.Name,
+                    SubTitle = c.Url,
+                    IcoPath = @"Images\bookmark.png",
+                    Score = BookmarkLoader.MatchProgram(c, param).Score,
+                    Action = _ =>
                     {
-                        c.Url.NewBrowserWindow(_settings.BrowserPath);
-                    }
-                    else
-                    {
-                        c.Url.NewTabInBrowser(_settings.BrowserPath);
-                    }
+                        context.API.OpenUrl(c.Url);
 
-                    return true;
-                }
-            }).ToList();
+                        return true;
+                    },
+                    ContextData = new BookmarkAttributes { Url = c.Url }
+                }).Where(r => r.Score > 0);
+                return returnList.ToList();
+            }
+            else
+            {
+                return cachedBookmarks.Select(c => new Result()
+                {
+                    Title = c.Name,
+                    SubTitle = c.Url,
+                    IcoPath = @"Images\bookmark.png",
+                    Score = 5,
+                    Action = _ =>
+                    {
+                        context.API.OpenUrl(c.Url);
+                        return true;
+                    },
+                    ContextData = new BookmarkAttributes { Url = c.Url }
+                }).ToList();
+            }
         }
 
         public void ReloadData()
         {
             cachedBookmarks.Clear();
 
-            cachedBookmarks = Bookmarks.LoadAllBookmarks();
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         }
 
         public string GetTranslatedPluginTitle()
@@ -91,9 +96,38 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             return new SettingsControl(_settings);
         }
 
-        public void Save()
+        public List<Result> LoadContextMenus(Result selectedResult)
         {
-            _storage.Save();
+            return new List<Result>() {
+                new Result
+                {
+                    Title = context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_subtitle"),
+                    Action = _ =>
+                    {
+                        try
+                        {
+                            Clipboard.SetDataObject(((BookmarkAttributes)selectedResult.ContextData).Url);
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            var message = "Failed to set url in clipboard";
+                            Log.Exception("Main",message, e, "LoadContextMenus");
+
+                            context.API.ShowMsg(message);
+
+                            return false;
+                        }
+                    },
+                    IcoPath = "Images\\copylink.png"
+                }};
+        }
+
+        internal class BookmarkAttributes
+        {
+            internal string Url { get; set; }
         }
     }
 }

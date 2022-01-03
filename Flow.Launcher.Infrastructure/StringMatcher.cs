@@ -1,8 +1,7 @@
+using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using static Flow.Launcher.Infrastructure.StringMatcher;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -21,18 +20,6 @@ namespace Flow.Launcher.Infrastructure
 
         public static StringMatcher Instance { get; internal set; }
 
-        [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
-        public static int Score(string source, string target)
-        {
-            return FuzzySearch(target, source).Score;
-        }
-
-        [Obsolete("This method is obsolete and should not be used. Please use the static function StringMatcher.FuzzySearch")]
-        public static bool IsMatch(string source, string target)
-        {
-            return Score(source, target) > 0;
-        }
-
         public static MatchResult FuzzySearch(string query, string stringToCompare)
         {
             return Instance.FuzzyMatch(query, stringToCompare);
@@ -44,7 +31,20 @@ namespace Flow.Launcher.Infrastructure
         }
 
         /// <summary>
-        /// Current method:
+        /// Current method has two parts, Acronym Match and Fuzzy Search:
+        /// 
+        /// Acronym Match:
+        /// Charater listed below will be considered as acronym
+        /// 1. Character on index 0
+        /// 2. Character appears after a space
+        /// 3. Character that is UpperCase
+        /// 4. Character that is number
+        /// 
+        /// Acronym Match will succeed when all query characters match with acronyms in stringToCompare.
+        /// If any of the characters in the query isn't matched with stringToCompare, Acronym Match will fail.
+        /// Score will be calculated based the percentage of all query characters matched with total acronyms in stringToCompare.
+        /// 
+        /// Fuzzy Search:
         /// Character matching + substring matching;
         /// 1. Query search string is split into substrings, separator is whitespace.
         /// 2. Check each query substring's characters against full compare string,
@@ -56,20 +56,21 @@ namespace Flow.Launcher.Infrastructure
         /// </summary>
         public MatchResult FuzzyMatch(string query, string stringToCompare, MatchOption opt)
         {
-            if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query)) return new MatchResult (false, UserSettingSearchPrecision);
-            
-            query = query.Trim();
+            if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query))
+                return new MatchResult(false, UserSettingSearchPrecision);
 
-            if (_alphabet != null)
-            {
-                query = _alphabet.Translate(query);
-                stringToCompare = _alphabet.Translate(stringToCompare);
-            }
+            query = query.Trim();
+            TranslationMapping translationMapping;
+            (stringToCompare, translationMapping) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
+
+            var currentAcronymQueryIndex = 0;
+            var acronymMatchData = new List<int>();
+            int acronymsTotalCount = 0;
+            int acronymsMatched = 0;
 
             var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
-
             var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
-                        
+
             var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
@@ -87,17 +88,44 @@ namespace Flow.Launcher.Infrastructure
 
             for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
             {
+                // If acronyms matching successfully finished, this gets the remaining not matched acronyms for score calculation
+                if (currentAcronymQueryIndex >= query.Length && acronymsMatched == query.Length)
+                {
+                    if (IsAcronymCount(stringToCompare, compareStringIndex))
+                        acronymsTotalCount++;
+                    continue;
+                }
+
+                if (currentAcronymQueryIndex >= query.Length ||
+                    currentAcronymQueryIndex >= query.Length && allQuerySubstringsMatched)
+                    break;
 
                 // To maintain a list of indices which correspond to spaces in the string to compare
                 // To populate the list only for the first query substring
-                if (fullStringToCompareWithoutCase[compareStringIndex].Equals(' ') && currentQuerySubstringIndex == 0)
-                {
+                if (fullStringToCompareWithoutCase[compareStringIndex] == ' ' && currentQuerySubstringIndex == 0)
                     spaceIndices.Add(compareStringIndex);
+
+                // Acronym Match
+                if (IsAcronym(stringToCompare, compareStringIndex))
+                {
+                    if (fullStringToCompareWithoutCase[compareStringIndex] ==
+                        queryWithoutCase[currentAcronymQueryIndex])
+                    {
+                        acronymMatchData.Add(compareStringIndex);
+                        acronymsMatched++;
+
+                        currentAcronymQueryIndex++;
+                    }
                 }
 
-                if (fullStringToCompareWithoutCase[compareStringIndex] != currentQuerySubstring[currentQuerySubstringCharacterIndex])
+                if (IsAcronymCount(stringToCompare, compareStringIndex))
+                    acronymsTotalCount++;
+
+                if (allQuerySubstringsMatched || fullStringToCompareWithoutCase[compareStringIndex] !=
+                    currentQuerySubstring[currentQuerySubstringCharacterIndex])
                 {
                     matchFoundInPreviousLoop = false;
+
                     continue;
                 }
 
@@ -119,14 +147,16 @@ namespace Flow.Launcher.Infrastructure
                     // in order to do so we need to verify all previous chars are part of the pattern
                     var startIndexToVerify = compareStringIndex - currentQuerySubstringCharacterIndex;
 
-                    if (AllPreviousCharsMatched(startIndexToVerify, currentQuerySubstringCharacterIndex, fullStringToCompareWithoutCase, currentQuerySubstring))
+                    if (AllPreviousCharsMatched(startIndexToVerify, currentQuerySubstringCharacterIndex,
+                        fullStringToCompareWithoutCase, currentQuerySubstring))
                     {
                         matchFoundInPreviousLoop = true;
 
                         // if it's the beginning character of the first query substring that is matched then we need to update start index
                         firstMatchIndex = currentQuerySubstringIndex == 0 ? startIndexToVerify : firstMatchIndex;
 
-                        indexList = GetUpdatedIndexList(startIndexToVerify, currentQuerySubstringCharacterIndex, firstMatchIndexInWord, indexList);
+                        indexList = GetUpdatedIndexList(startIndexToVerify, currentQuerySubstringCharacterIndex,
+                            firstMatchIndexInWord, indexList);
                     }
                 }
 
@@ -139,49 +169,96 @@ namespace Flow.Launcher.Infrastructure
                 if (currentQuerySubstringCharacterIndex == currentQuerySubstring.Length)
                 {
                     // if any of the substrings was not matched then consider as all are not matched
-                    allSubstringsContainedInCompareString = matchFoundInPreviousLoop && allSubstringsContainedInCompareString;
+                    allSubstringsContainedInCompareString =
+                        matchFoundInPreviousLoop && allSubstringsContainedInCompareString;
 
                     currentQuerySubstringIndex++;
 
-                    allQuerySubstringsMatched = AllQuerySubstringsMatched(currentQuerySubstringIndex, querySubstrings.Length);
+                    allQuerySubstringsMatched =
+                        AllQuerySubstringsMatched(currentQuerySubstringIndex, querySubstrings.Length);
+
                     if (allQuerySubstringsMatched)
-                        break;
+                        continue;
 
                     // otherwise move to the next query substring
                     currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
                     currentQuerySubstringCharacterIndex = 0;
                 }
             }
-            
+
+            // return acronym match if all query char matched
+            if (acronymsMatched > 0 && acronymsMatched == query.Length)
+            {
+                int acronymScore = acronymsMatched * 100 / acronymsTotalCount;
+
+                if (acronymScore >= (int)UserSettingSearchPrecision)
+                {
+                    acronymMatchData = acronymMatchData.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                    return new MatchResult(true, UserSettingSearchPrecision, acronymMatchData, acronymScore);
+                }
+            }
+
             // proceed to calculate score if every char or substring without whitespaces matched
             if (allQuerySubstringsMatched)
             {
                 var nearestSpaceIndex = CalculateClosestSpaceIndex(spaceIndices, firstMatchIndex);
-                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1, lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
+                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1,
+                    lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
 
-                return new MatchResult(true, UserSettingSearchPrecision, indexList, score);
+                var resultList = indexList.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
+                return new MatchResult(true, UserSettingSearchPrecision, resultList, score);
             }
 
             return new MatchResult(false, UserSettingSearchPrecision);
         }
 
+        private bool IsAcronym(string stringToCompare, int compareStringIndex)
+        {
+            if (IsAcronymChar(stringToCompare, compareStringIndex) || IsAcronymNumber(stringToCompare, compareStringIndex))
+                return true;
+
+            return false;
+        }
+
+        // When counting acronyms, treat a set of numbers as one acronym ie. Visual 2019 as 2 acronyms instead of 5
+        private bool IsAcronymCount(string stringToCompare, int compareStringIndex)
+        {
+            if (IsAcronymChar(stringToCompare, compareStringIndex))
+                return true;
+
+            if (IsAcronymNumber(stringToCompare, compareStringIndex))
+                return compareStringIndex == 0 || char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
+
+            return false;
+        }
+
+        private bool IsAcronymChar(string stringToCompare, int compareStringIndex)
+            => char.IsUpper(stringToCompare[compareStringIndex]) ||
+               compareStringIndex == 0 || // 0 index means char is the start of the compare string, which is an acronym
+               char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
+
+        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
+            => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
+
         // To get the index of the closest space which preceeds the first matching index
         private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
         {
-            if (spaceIndices.Count == 0)
+            var closestSpaceIndex = -1;
+
+            // spaceIndices should be ordered asc
+            foreach (var index in spaceIndices)
             {
-                return -1;
+                if (index < firstMatchIndex)
+                    closestSpaceIndex = index;
+                else
+                    break;
             }
-            else
-            {
-                int? ind = spaceIndices.OrderBy(item => (firstMatchIndex - item)).Where(item => firstMatchIndex > item).FirstOrDefault();
-                int closestSpaceIndex = ind ?? -1;
-                return closestSpaceIndex;
-            }
+
+            return closestSpaceIndex;
         }
 
         private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
-                                                        string fullStringToCompareWithoutCase, string currentQuerySubstring)
+            string fullStringToCompareWithoutCase, string currentQuerySubstring)
         {
             var allMatch = true;
             for (int indexToCheck = 0; indexToCheck < currentQuerySubstringCharacterIndex; indexToCheck++)
@@ -195,8 +272,9 @@ namespace Flow.Launcher.Infrastructure
 
             return allMatch;
         }
-        
-        private static List<int> GetUpdatedIndexList(int startIndexToVerify, int currentQuerySubstringCharacterIndex, int firstMatchIndexInWord, List<int> indexList)
+
+        private static List<int> GetUpdatedIndexList(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
+            int firstMatchIndexInWord, List<int> indexList)
         {
             var updatedList = new List<int>();
 
@@ -214,10 +292,12 @@ namespace Flow.Launcher.Infrastructure
 
         private static bool AllQuerySubstringsMatched(int currentQuerySubstringIndex, int querySubstringsLength)
         {
+            // Acronym won't utilize the substring to match
             return currentQuerySubstringIndex >= querySubstringsLength;
         }
 
-        private static int CalculateSearchScore(string query, string stringToCompare, int firstIndex, int matchLen, bool allSubstringsContainedInCompareString)
+        private static int CalculateSearchScore(string query, string stringToCompare, int firstIndex, int matchLen,
+            bool allSubstringsContainedInCompareString)
         {
             // A match found near the beginning of a string is scored more than a match found near the end
             // A match is scored more if the characters in the patterns are closer to each other, 
@@ -251,90 +331,10 @@ namespace Flow.Launcher.Infrastructure
 
             return score;
         }
-
-        public enum SearchPrecisionScore
-        {
-            Regular = 50,
-            Low = 20,
-            None = 0
-        }
-    }
-
-    public class MatchResult
-    {
-        public MatchResult(bool success, SearchPrecisionScore searchPrecision)
-        {
-            Success = success;
-            SearchPrecision = searchPrecision;
-        }
-
-        public MatchResult(bool success, SearchPrecisionScore searchPrecision, List<int> matchData, int rawScore)
-        {
-            Success = success;
-            SearchPrecision = searchPrecision;
-            MatchData = matchData;
-            RawScore = rawScore;
-        }
-
-        public bool Success { get; set; }
-
-        /// <summary>
-        /// The final score of the match result with search precision filters applied.
-        /// </summary>
-        public int Score { get; private set; }
-
-        /// <summary>
-        /// The raw calculated search score without any search precision filtering applied.
-        /// </summary>
-        private int _rawScore;
-
-        public int RawScore
-        {
-            get { return _rawScore; }
-            set
-            {
-                _rawScore = value;
-                Score = ScoreAfterSearchPrecisionFilter(_rawScore);
-            }
-        }
-
-        /// <summary>
-        /// Matched data to highlight.
-        /// </summary>
-        public List<int> MatchData { get; set; }
-
-        public SearchPrecisionScore SearchPrecision { get; set; }
-
-        public bool IsSearchPrecisionScoreMet()
-        {
-            return IsSearchPrecisionScoreMet(_rawScore);
-        }
-
-        private bool IsSearchPrecisionScoreMet(int rawScore)
-        {
-            return rawScore >= (int)SearchPrecision;
-        }
-
-        private int ScoreAfterSearchPrecisionFilter(int rawScore)
-        {
-            return IsSearchPrecisionScoreMet(rawScore) ? rawScore : 0;
-        }
     }
 
     public class MatchOption
     {
-        /// <summary>
-        /// prefix of match char, use for highlight
-        /// </summary>
-        [Obsolete("this is never used")]
-        public string Prefix { get; set; } = "";
-
-        /// <summary>
-        /// suffix of match char, use for highlight
-        /// </summary>
-        [Obsolete("this is never used")]
-        public string Suffix { get; set; } = "";
-
         public bool IgnoreCase { get; set; } = true;
     }
 }

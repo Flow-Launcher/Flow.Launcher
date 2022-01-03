@@ -1,39 +1,58 @@
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.ViewModel
 {
     public class PluginViewModel : BaseModel
     {
-        public PluginPair PluginPair { get; set; }
-
-        private readonly Internationalization _translator = InternationalizationManager.Instance;
+        private readonly PluginPair _pluginPair;
+        public PluginPair PluginPair
+        {
+            get => _pluginPair;
+            init
+            {
+                _pluginPair = value;
+                value.Metadata.PropertyChanged += (_, args) =>
+                {
+                    if (args.PropertyName == nameof(PluginPair.Metadata.AvgQueryTime))
+                        OnPropertyChanged(nameof(QueryTime));
+                };
+            }
+        }
 
         public ImageSource Image => ImageLoader.Load(PluginPair.Metadata.IcoPath);
         public bool PluginState
         {
-            get { return !PluginPair.Metadata.Disabled; }
-            set 
-            {
-                PluginPair.Metadata.Disabled = !value; 
-            }
+            get => !PluginPair.Metadata.Disabled;
+            set => PluginPair.Metadata.Disabled = !value;
         }
-        public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count > 1 ? Visibility.Collapsed : Visibility.Visible;
-        public string InitilizaTime => PluginPair.Metadata.InitTime.ToString() + "ms";
+
+        private Control _settingControl;
+        public Control SettingControl => _settingControl ??= PluginPair.Plugin is not ISettingProvider settingProvider ? new Control() : settingProvider.CreateSettingPanel();
+
+        public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
+        public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
-        public string ActionKeywordsText => string.Join(Query.ActionKeywordSeperater, PluginPair.Metadata.ActionKeywords);
+        public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
+        public int Priority => PluginPair.Metadata.Priority;
 
         public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
         {
             PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeyword, newActionKeyword);
-            
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
-        public bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+        public void ChangePriority(int newPriority)
+        {
+            PluginPair.Metadata.Priority = newPriority;
+            OnPropertyChanged(nameof(Priority));
+        }
+
+        public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
     }
+
 }

@@ -27,12 +27,63 @@ namespace Flow.Launcher.Plugin.Program.Views
         // this as temporary holder for displaying all loaded programs sources. 
         internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
 
+        public bool EnableDescription
+        {
+            get => _settings.EnableDescription;
+            set
+            {
+                Main.ResetCache();
+                _settings.EnableDescription = value;
+            }
+        }
+        public bool HideAppsPath
+        {
+            get => _settings.HideAppsPath;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideAppsPath = value;
+            }
+        }
+
+        public bool EnableRegistrySource
+        {
+            get => _settings.EnableRegistrySource;
+            set
+            {
+                _settings.EnableRegistrySource = value;
+                ReIndexing();
+            }
+        }
+
+        public bool EnableStartMenuSource
+        {
+            get => _settings.EnableStartMenuSource;
+            set
+            {
+                _settings.EnableStartMenuSource = value;
+                ReIndexing();
+            }
+        }
+
+        public string CustomizedExplorerPath
+        {
+            get => _settings.CustomizedExplorer;
+            set => _settings.CustomizedExplorer = value;
+        }
+
+        public string CustomizedExplorerArg
+        {
+            get => _settings.CustomizedArgs;
+            set => _settings.CustomizedArgs = value;
+        }
+
         public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)
         {
             this.context = context;
-            InitializeComponent();
-            Loaded += Setting_Loaded;
             _settings = settings;
+            Loaded += Setting_Loaded;
+            InitializeComponent();
         }
 
         private void Setting_Loaded(object sender, RoutedEventArgs e)
@@ -40,15 +91,12 @@ namespace Flow.Launcher.Plugin.Program.Views
             ProgramSettingDisplayList = _settings.ProgramSources.LoadProgramSources();
             programSourceView.ItemsSource = ProgramSettingDisplayList;
 
-            StartMenuEnabled.IsChecked = _settings.EnableStartMenuSource;
-            RegistryEnabled.IsChecked = _settings.EnableRegistrySource;
-
             ViewRefresh();
         }
 
         private void ViewRefresh()
         {
-            if(programSourceView.Items.Count == 0 
+            if (programSourceView.Items.Count == 0
                 && btnProgramSourceStatus.Visibility == Visibility.Visible
                 && btnEditProgramSource.Visibility == Visibility.Visible)
             {
@@ -67,21 +115,18 @@ namespace Flow.Launcher.Plugin.Program.Views
             programSourceView.Items.Refresh();
         }
 
-        private void ReIndexing()
+        private async void ReIndexing()
         {
             ViewRefresh();
-            Task.Run(() =>
-            {
-                Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Visible; });
-                Main.IndexPrograms();
-                Dispatcher.Invoke(() => { indexingPanel.Visibility = Visibility.Hidden; });
-            });
+            indexingPanel.Visibility = Visibility.Visible;
+            await Main.IndexPrograms();
+            indexingPanel.Visibility = Visibility.Hidden;
         }
 
         private void btnAddProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
             var add = new AddProgramSource(context, _settings);
-            if(add.ShowDialog() ?? false)
+            if (add.ShowDialog() ?? false)
             {
                 ReIndexing();
             }
@@ -162,31 +207,19 @@ namespace Flow.Launcher.Plugin.Program.Views
                             UniqueIdentifier = directory
                         };
 
-                        directoriesToAdd.Add(source);                        
+                        directoriesToAdd.Add(source);
                     }
                 }
 
                 if (directoriesToAdd.Count() > 0)
                 {
                     directoriesToAdd.ForEach(x => _settings.ProgramSources.Add(x));
-                    directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));                   
+                    directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));
 
                     ViewRefresh();
                     ReIndexing();
                 }
             }
-        }
-
-        private void StartMenuEnabled_Click(object sender, RoutedEventArgs e)
-        {
-            _settings.EnableStartMenuSource = StartMenuEnabled.IsChecked ?? false;
-            ReIndexing();
-        }
-
-        private void RegistryEnabled_Click(object sender, RoutedEventArgs e)
-        {
-            _settings.EnableRegistrySource = RegistryEnabled.IsChecked ?? false;
-            ReIndexing();
         }
 
         private void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
@@ -235,8 +268,8 @@ namespace Flow.Launcher.Plugin.Program.Views
                 ProgramSettingDisplayList.SetProgramSourcesStatus(selectedItems, true);
 
                 ProgramSettingDisplayList.RemoveDisabledFromSettings();
-            }            
-            
+            }
+
             if (selectedItems.IsReindexRequired())
                 ReIndexing();
 
@@ -279,7 +312,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                     var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
 
                     Sort(sortBy, direction);
-                    
+
                     _lastHeaderClicked = headerClicked;
                     _lastDirection = direction;
                 }

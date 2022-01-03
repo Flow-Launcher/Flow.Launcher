@@ -1,0 +1,14 @@
+{
+  "ID": "9f8f9b14-2518-4907-b211-35ab6290dee7",
+  "ActionKeywords": [
+    "pm"
+  ],
+  "Name": "Plugins Manager",
+  "Description": "Management of installing, uninstalling or updating Flow Launcher plugins",
+  "Author": "Jeremy Wu",
+  "Version": "1.11.1",
+  "Language": "csharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+  "ExecuteFileName": "Flow.Launcher.Plugin.PluginsManager.dll",
+  "IcoPath": "Images\\pluginsmanager.png"
+}

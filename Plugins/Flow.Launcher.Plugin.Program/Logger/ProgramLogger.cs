@@ -20,27 +20,6 @@ namespace Flow.Launcher.Plugin.Program.Logger
     {
         public const string DirectoryName = "Logs";
 
-        static ProgramLogger()
-        {
-            var path = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Version);
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            var configuration = new LoggingConfiguration();
-            var target = new FileTarget();
-            configuration.AddTarget("file", target);
-            target.FileName = path.Replace(@"\", "/") + "/${shortdate}.txt";
-#if DEBUG
-            var rule = new LoggingRule("*", LogLevel.Debug, target);
-#else
-            var rule = new LoggingRule("*", LogLevel.Error, target);
-#endif
-            configuration.LoggingRules.Add(rule);
-            LogManager.Configuration = configuration;
-        }
-
         /// <summary>
         /// Logs an exception
         /// </summary>
@@ -48,8 +27,6 @@ namespace Flow.Launcher.Plugin.Program.Logger
         internal static void LogException(string classname, string callingMethodName, string loadingProgramPath,
             string interpretationMessage, Exception e)
         {
-            Debug.WriteLine($"ERROR{classname}|{callingMethodName}|{loadingProgramPath}|{interpretationMessage}");
-
             var logger = LogManager.GetLogger("");
 
             var innerExceptionNumber = 1;
@@ -98,17 +75,18 @@ namespace Flow.Launcher.Plugin.Program.Logger
         internal static void LogException(string message, Exception e)
         {
             //Index 0 is always empty.
-            var parts = message.Split('|');
+            var parts = message.Split('|', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 4)
             {
                 var logger = LogManager.GetLogger("");
                 logger.Error(e, $"fail to log exception in program logger, parts length is too small: {parts.Length}, message: {message}");
+                return;
             }
 
-            var classname = parts[1];
-            var callingMethodName = parts[2];
-            var loadingProgramPath = parts[3];
-            var interpretationMessage = parts[4];
+            var classname = parts[0];
+            var callingMethodName = parts[1];
+            var loadingProgramPath = parts[2];
+            var interpretationMessage = parts[3];
 
             LogException(classname, callingMethodName, loadingProgramPath, interpretationMessage, e);
         }

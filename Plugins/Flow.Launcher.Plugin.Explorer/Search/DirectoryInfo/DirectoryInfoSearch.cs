@@ -4,29 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
-    public class DirectoryInfoSearch
+    public static class DirectoryInfoSearch
     {
-        private readonly ResultManager resultManager;
-
-        public DirectoryInfoSearch(PluginInitContext context)
-        {
-            resultManager = new ResultManager(context);
-        }
-
-        internal List<Result> TopLevelDirectorySearch(Query query, string search)
+        internal static List<Result> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
         {
             var criteria = ConstructSearchCriteria(search);
 
-            if (search.LastIndexOf(Constants.AllFilesFolderSearchWildcard) > search.LastIndexOf(Constants.DirectorySeperator))
-                return DirectorySearch(SearchOption.AllDirectories, query, search, criteria);
-            
-            return DirectorySearch(SearchOption.TopDirectoryOnly, query, search, criteria);
+            if (search.LastIndexOf(Constants.AllFilesFolderSearchWildcard) >
+                search.LastIndexOf(Constants.DirectorySeperator))
+                return DirectorySearch(new EnumerationOptions
+                {
+                    RecurseSubdirectories = true
+                }, query, search, criteria, token);
+
+            return DirectorySearch(new EnumerationOptions(), query, search, criteria,
+                token); // null will be passed as default
         }
 
-        public string ConstructSearchCriteria(string search)
+        public static string ConstructSearchCriteria(string search)
         {
             string incompleteName = "";
 
@@ -45,7 +44,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             return incompleteName;
         }
 
-        private List<Result> DirectorySearch(SearchOption searchOption, Query query, string search, string searchCriteria)
+        private static List<Result> DirectorySearch(EnumerationOptions enumerationOption, Query query, string search,
+            string searchCriteria, CancellationToken token)
         {
             var results = new List<Result>();
 
@@ -57,39 +57,32 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             try
             {
                 var directoryInfo = new System.IO.DirectoryInfo(path);
-                var fileSystemInfos = directoryInfo.GetFileSystemInfos(searchCriteria, searchOption);
 
-                foreach (var fileSystemInfo in fileSystemInfos)
+                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption)
+                )
                 {
-                    if ((fileSystemInfo.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden) continue;
-
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        folderList.Add(resultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName, fileSystemInfo.FullName, query, true, false));
+                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
+                            fileSystemInfo.FullName, query, 0, true, false));
                     }
                     else
                     {
-                        fileList.Add(resultManager.CreateFileResult(fileSystemInfo.FullName, query, true, false));
+                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, 0, true, false));
                     }
+
+                    token.ThrowIfCancellationRequested();
                 }
             }
             catch (Exception e)
             {
-                if (e is UnauthorizedAccessException || e is ArgumentException)
-                {
-                    results.Add(new Result { Title = e.Message, Score = 501 });
+                Log.Exception("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
+                results.Add(new Result {Title = e.Message, Score = 501});
 
-                    return results;
-                }
-
-#if DEBUG // Please investigate and handle error from DirectoryInfo search
-                throw e;
-#else
-                Log.Exception($"|Flow.Launcher.Plugin.Explorer.DirectoryInfoSearch|Error from performing DirectoryInfoSearch", e);
-#endif          
+                return results;
             }
 
-            // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
+            // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
             return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList();
         }
     }

@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -34,9 +36,11 @@ namespace Flow.Launcher.ViewModel
             Settings = _storage.Load();
             Settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(Settings.ActivateTimes))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(ActivatedTimes));
+                    case nameof(Settings.ActivateTimes):
+                        OnPropertyChanged(nameof(ActivatedTimes));
+                        break;
                 }
             };
         }
@@ -45,12 +49,12 @@ namespace Flow.Launcher.ViewModel
 
         public async void UpdateApp()
         {
-            await _updater.UpdateApp(false);
+            await _updater.UpdateAppAsync(App.API, false);
         }
 
         public bool AutoUpdates
         {
-            get { return Settings.AutoUpdates; }
+            get => Settings.AutoUpdates;
             set
             {
                 Settings.AutoUpdates = value;
@@ -64,7 +68,7 @@ namespace Flow.Launcher.ViewModel
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
         {
-            get { return _portableMode; }
+            get => _portableMode;
             set
             {
                 if (!_portable.CanUpdatePortability())
@@ -88,6 +92,7 @@ namespace Flow.Launcher.ViewModel
                 var id = vm.PluginPair.Metadata.ID;
 
                 Settings.PluginSettings.Plugins[id].Disabled = vm.PluginPair.Metadata.Disabled;
+                Settings.PluginSettings.Plugins[id].Priority = vm.Priority;
             }
 
             PluginManager.Save();
@@ -136,11 +141,11 @@ namespace Flow.Launcher.ViewModel
 
         public bool ShouldUsePinyin
         {
-            get 
+            get
             {
-                return Settings.ShouldUsePinyin;            
+                return Settings.ShouldUsePinyin;
             }
-            set 
+            set
             {
                 Settings.ShouldUsePinyin = value;
             }
@@ -152,7 +157,7 @@ namespace Flow.Launcher.ViewModel
             {
                 var precisionStrings = new List<string>();
 
-                var enumList = Enum.GetValues(typeof(StringMatcher.SearchPrecisionScore)).Cast<StringMatcher.SearchPrecisionScore>().ToList();
+                var enumList = Enum.GetValues(typeof(SearchPrecisionScore)).Cast<SearchPrecisionScore>().ToList();
 
                 enumList.ForEach(x => precisionStrings.Add(x.ToString()));
 
@@ -179,7 +184,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_updater.GitHubRepository);
-            
+
             if (string.IsNullOrEmpty(proxyUserName) || string.IsNullOrEmpty(Settings.Proxy.Password))
             {
                 request.Proxy = new WebProxy(proxyServer, Settings.Proxy.Port);
@@ -213,7 +218,7 @@ namespace Flow.Launcher.ViewModel
 
         #region plugin
 
-        public static string Plugin => "http://www.wox.one/plugin";
+        public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
         public PluginViewModel SelectedPlugin { get; set; }
 
         public IList<PluginViewModel> PluginViewModels
@@ -223,9 +228,17 @@ namespace Flow.Launcher.ViewModel
                 var metadatas = PluginManager.AllPlugins
                     .OrderBy(x => x.Metadata.Disabled)
                     .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel { PluginPair = p})
+                    .Select(p => new PluginViewModel { PluginPair = p })
                     .ToList();
                 return metadatas;
+            }
+        }
+
+        public IList<UserPlugin> ExternalPlugins
+        {
+            get
+            {
+                return PluginsManifest.UserPlugins;
             }
         }
 
@@ -248,13 +261,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public async Task RefreshExternalPluginsAsync()
+        {
+            await PluginsManifest.UpdateManifestAsync();
+            OnPropertyChanged(nameof(ExternalPlugins));
+        }
+
 
 
         #endregion
 
         #region theme
 
-        public static string Theme => @"http://www.wox.one/theme/builder";
+        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
 
         public string SelectedTheme
         {
@@ -263,6 +282,9 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
+                
+                if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
+                    DropShadowEffect = false;
             }
         }
 
@@ -274,17 +296,70 @@ namespace Flow.Launcher.ViewModel
             get { return Settings.UseDropShadowEffect; }
             set
             {
+                if (ThemeManager.Instance.BlurEnabled && value)
+                {
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                    return;
+                }
+
                 if (value)
                 {
                     ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
                 }
                 else
                 {
-                    ThemeManager.Instance.RemoveDropShadowEffectToCurrentTheme();
+                    ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
                 }
 
                 Settings.UseDropShadowEffect = value;
             }
+        }
+
+        public class ColorScheme
+        {
+            public string Display { get; set; }
+            public ColorSchemes Value { get; set; }
+        }
+
+        public List<ColorScheme> ColorSchemes
+        {
+            get
+            {
+                List<ColorScheme> modes = new List<ColorScheme>();
+                var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
+                foreach (var e in enums)
+                {
+                    var key = $"ColorScheme{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new ColorScheme { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+        public double WindowWidthSize
+        {
+            get => Settings.WindowSize;
+            set => Settings.WindowSize = value;
+        }
+
+        public bool UseGlyphIcons
+        {
+            get => Settings.UseGlyphIcons;
+            set => Settings.UseGlyphIcons = value;
+        }
+
+        public bool UseAnimation
+        {
+            get => Settings.UseAnimation;
+            set => Settings.UseAnimation = value;
+        }
+
+        public bool UseSound
+        {
+            get => Settings.UseSound;
+            set => Settings.UseSound = value;
         }
 
         public Brush PreviewBackground
@@ -319,36 +394,30 @@ namespace Flow.Launcher.ViewModel
                 {
                     new Result
                     {
-                        Title = "WoX is a launcher for Windows that simply works.",
-                        SubTitle = "You can call it Windows omni-eXecutor if you want a long name."
+                        Title = "Explorer",
+                        SubTitle = "Search for files, folders and file contents",
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png")
                     },
                     new Result
                     {
-                        Title = "Search for everything—applications, folders, files and more.",
-                        SubTitle = "Use pinyin to search for programs. (yyy / wangyiyun → 网易云音乐)"
+                        Title = "WebSearch",
+                        SubTitle = "Search the web with different search engine support",
+                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
-                        Title = "Keyword plugin search.",
-                        SubTitle = "search google with g search_term."
+                        Title = "Program",
+                        SubTitle = "Launch programs as admin or a different user",
+                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
-                        Title = "Build custom themes at: ",
-                        SubTitle = Theme
-                    },
-                    new Result
-                    {
-                        Title = "Install plugins from: ",
-                        SubTitle = Plugin
-                    },
-                    new Result
-                    {
-                        Title = $"Open Source: {_updater.GitHubRepository}",
-                        SubTitle = "Please star it!"
+                        Title = "ProcessKiller",
+                        SubTitle = "Terminate unwanted processes",
+                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
-                var vm = new ResultsViewModel();
+                var vm = new ResultsViewModel(Settings);
                 vm.AddResults(results, "PREVIEW");
                 return vm;
             }
@@ -444,7 +513,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public ImageSource ThemeImage => ImageLoader.Load(Constant.QueryTextBoxIconImagePath);
+        public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
         #endregion
 
@@ -456,8 +525,11 @@ namespace Flow.Launcher.ViewModel
 
         #region about
 
-        public string Github => _updater.GitHubRepository;
-        public string ReleaseNotes => _updater.GitHubRepository +  @"/releases/latest";
+        public string Website => Constant.Website;
+        public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
+        public string Documentation => Constant.Documentation;
+        public string Docs => Constant.Docs;
+        public string Github => Constant.GitHub;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
         #endregion

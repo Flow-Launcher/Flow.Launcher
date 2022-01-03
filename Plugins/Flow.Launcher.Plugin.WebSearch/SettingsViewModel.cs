@@ -6,13 +6,12 @@ namespace Flow.Launcher.Plugin.WebSearch
     {
         private readonly PluginJsonStorage<Settings> _storage;
 
-        public SettingsViewModel()
+        public SettingsViewModel(Settings settings)
         {
-            _storage = new PluginJsonStorage<Settings>();
-            Settings = _storage.Load();
+            Settings = settings;
         }
 
-        public Settings Settings { get; set; }
+        public Settings Settings { get; }
 
         public void Save()
         {

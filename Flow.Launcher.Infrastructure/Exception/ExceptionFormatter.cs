@@ -67,7 +67,6 @@ namespace Flow.Launcher.Infrastructure.Exception
             sb.AppendLine($"* IntPtr Length: {IntPtr.Size}");
             sb.AppendLine($"* x64: {Environment.Is64BitOperatingSystem}");
             sb.AppendLine($"* Python Path: {Constant.PythonPath}");
-            sb.AppendLine($"* Everything SDK Path: {Constant.EverythingSDKPath}");
             sb.AppendLine($"* CLR Version: {Environment.Version}");
             sb.AppendLine($"* Installed .NET Framework: ");
             foreach (var result in GetFrameworkVersionFromRegistry())
