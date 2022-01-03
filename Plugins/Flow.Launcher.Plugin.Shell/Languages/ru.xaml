@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_cmd_relace_winr"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_name"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy"></system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history"></system:String>
+</ResourceDictionary>
