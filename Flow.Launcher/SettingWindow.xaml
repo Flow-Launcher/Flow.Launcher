@@ -951,7 +951,7 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" MinWidth="100" />
                                                         <ColumnDefinition Width="8*" />
-                                                        <ColumnDefinition MinWidth="100" />
+                                                        <ColumnDefinition Width="Auto" />
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel
@@ -992,7 +992,7 @@
                                                         <Border>
                                                             <Button
                                                                 x:Name="PriorityButton"
-                                                                Margin="0,0,18,0"
+                                                                Margin="0,0,22,0"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
