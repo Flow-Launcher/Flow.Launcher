@@ -121,7 +121,10 @@
     <value>Hakkında</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="access.cpl" xml:space="preserve">
+    <value>access.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="AccessibilityOptions" xml:space="preserve">
     <value>Erişilebilirlik Seçenekleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -226,7 +229,10 @@
     <value>Uygulama ses ve cihaz tercihleri</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
-  
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value>appwiz.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>Alan</value>
     <comment>Mean the settings area or settings category</comment>
@@ -247,8 +253,12 @@
   <data name="AreaClockAndRegion" xml:space="preserve">
     <value>Saat ve Bölge</value>
   </data>
-  
-  
+  <data name="AreaControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
   <data name="AreaDevices" xml:space="preserve">
     <value>Cihazlar</value>
   </data>
@@ -285,7 +295,9 @@
   <data name="AreaPrograms" xml:space="preserve">
     <value>Programlar</value>
   </data>
-  
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
   <data name="AreaSystem" xml:space="preserve">
     <value>Sistem</value>
   </data>
@@ -365,7 +377,10 @@
   <data name="BlueLight" xml:space="preserve">
     <value>Mavi ışık</value>
   </data>
-  
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="BluetoothDevices" xml:space="preserve">
     <value>Bluetooth cihazları</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -373,8 +388,14 @@
   <data name="BlueYellow" xml:space="preserve">
     <value>Mavi sarı</value>
   </data>
-  
-  
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Broadcasting" xml:space="preserve">
     <value>Yayın</value>
     <comment>Area Gaming</comment>
@@ -394,8 +415,14 @@
     <value>Kamera</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie IME</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+    <comment>Mean the "Caps Lock" key</comment>
+  </data>
   <data name="CellularAndSim" xml:space="preserve">
     <value>Hücresel ve SIM</value>
     <comment>Area NetworkAndInternet</comment>
@@ -440,7 +467,10 @@
     <value>Kişiler</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="ControlPanel" xml:space="preserve">
+    <value>Control Panel</value>
+    <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
+  </data>
   <data name="CopyCommand" xml:space="preserve">
     <value>Kopyalama komutu</value>
   </data>
@@ -448,7 +478,10 @@
     <value>Çekirdek Yalıtımı</value>
     <comment>Means the protection of the system core</comment>
   </data>
-  
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Area Cortana</comment>
+  </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
     <value>Tüm cihazlarımda Cortana</value>
     <comment>Area Cortana</comment>
@@ -505,12 +538,18 @@
     <value>Teslim İyileştirme</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="desk.cpl" xml:space="preserve">
+    <value>desk.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="DesktopThemes" xml:space="preserve">
     <value>Masaüstü temaları</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="deuteranopia" xml:space="preserve">
+    <value>deuteranopia</value>
+    <comment>Medical: Mean you don't can see red colors</comment>
+  </data>
   <data name="DeviceManager" xml:space="preserve">
     <value>Cihaz yöneticisi</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -519,7 +558,10 @@
     <value>Cihazlar ve yazıcılar</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="DialUp" xml:space="preserve">
     <value>Çevirmeli</value>
     <comment>Area NetworkAndInternet</comment>
@@ -540,7 +582,10 @@
     <value>Görüntü özellikleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Documents" xml:space="preserve">
     <value>Belgeler</value>
     <comment>Area Privacy</comment>
@@ -577,8 +622,13 @@
     <value>Ortam</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
-  
-  
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Exploit Protection</value>
+  </data>
   <data name="Extras" xml:space="preserve">
     <value>Ek Özellikler</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
@@ -607,7 +657,10 @@
     <value>Hızlı Bul</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="findfast.cpl" xml:space="preserve">
+    <value>findfast.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="FindMyDevice" xml:space="preserve">
     <value>Cihazımı Bul</value>
     <comment>Area UpdateAndSecurity</comment>
@@ -647,7 +700,10 @@
     <value>Oyun DVR</value>
     <comment>Area Gaming</comment>
   </data>
-  
+  <data name="GameMode" xml:space="preserve">
+    <value>Game Mode</value>
+    <comment>Area Gaming</comment>
+  </data>
   <data name="Gateway" xml:space="preserve">
     <value>Ağ geçidi</value>
     <comment>Should not translated</comment>
@@ -714,7 +770,10 @@
     <value>Dizin oluşturma seçenekleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value>inetcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Infrared" xml:space="preserve">
     <value>Kızılötesi</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -727,11 +786,17 @@
     <value>İnternet seçenekleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="intl.cpl" xml:space="preserve">
+    <value>intl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="InvertedColors" xml:space="preserve">
     <value>Ters renkler</value>
   </data>
-  
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
     <value>Yalıtılmış Gözatma</value>
   </data>
@@ -739,12 +804,18 @@
     <value>Japonya IME ayarları</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
-  
+  <data name="joy.cpl" xml:space="preserve">
+    <value>joy.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="JoystickProperties" xml:space="preserve">
     <value>Oyun çubuğu özellikleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="Keyboard" xml:space="preserve">
     <value>Klavye</value>
     <comment>Area EaseOfAccess</comment>
@@ -781,7 +852,10 @@
     <value>Posta - Microsoft Exchange veya Windows Mesajlaşma</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="main.cpl" xml:space="preserve">
+    <value>main.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
     <value>Bilinen ağları yönet</value>
     <comment>Area NetworkAndInternet</comment>
@@ -801,9 +875,18 @@
     <value>Mikrofon</value>
     <comment>Area Privacy</comment>
   </data>
-  
-  
-  
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value>mlcfg32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value>mmsys.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="MobileDevices" xml:space="preserve">
     <value>Mobil cihazlar</value>
   </data>
@@ -811,8 +894,13 @@
     <value>Mobil etkin nokta</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
-  
+  <data name="modem.cpl" xml:space="preserve">
+    <value>modem.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>Diğer ayrıntılar</value>
     <comment>Area Cortana</comment>
@@ -853,8 +941,14 @@
     <value>Gezinti çubuğu</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value>netcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value>netsetup.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Network" xml:space="preserve">
     <value>Ağ</value>
     <comment>Area NetworkAndInternet</comment>
@@ -879,7 +973,10 @@
     <value>Ağ durumu</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="NFCTransactions" xml:space="preserve">
     <value>NFC İşlemleri</value>
     <comment>"NFC should not translated"</comment>
@@ -965,9 +1062,18 @@
     <value>Bildirimler ve eylemler</value>
     <comment>Area System</comment>
   </data>
-  
-  
-  
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+    <comment>Mean the "Num Lock" key</comment>
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value>nwc.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value>odbccp32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
     <value>ODBC Veri Kaynağı Yöneticisi (32-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1013,7 +1119,10 @@
   <data name="Password" xml:space="preserve">
     <value>Parola</value>
   </data>
-  
+  <data name="password.cpl" xml:space="preserve">
+    <value>password.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PasswordProperties" xml:space="preserve">
     <value>Parola özellikleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1103,7 +1212,10 @@
     <value>Güç ve uyku</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value>powercfg.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="PowerOptions" xml:space="preserve">
     <value>Güç seçenekleri</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1138,7 +1250,10 @@
     <value>Bu bilgisayara yansıtma</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="protanopia" xml:space="preserve">
+    <value>protanopia</value>
+    <comment>Medical: Mean you don't can see green colors</comment>
+  </data>
   <data name="Provisioning" xml:space="preserve">
     <value>Sağlama</value>
     <comment>Area UserAccounts, only available if enterprise has deployed a provisioning package</comment>
@@ -1151,7 +1266,10 @@
     <value>Ara sunucu</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
-  
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
   <data name="QuietMomentsGame" xml:space="preserve">
     <value>Sessiz anlar oyunu</value>
   </data>
@@ -1159,7 +1277,10 @@
     <value>Radyolar</value>
     <comment>Area Privacy</comment>
   </data>
-  
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+    <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
+  </data>
   <data name="Recognition" xml:space="preserve">
     <value>Tanıma</value>
   </data>
@@ -1210,7 +1331,10 @@
     <value>Tarayıcılar ve kameralar</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
-  
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Scheduled" xml:space="preserve">
     <value>Planlanan</value>
   </data>
@@ -1229,12 +1353,18 @@
     <value>Kaydırma Kilidi</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
-  
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SearchingWindows" xml:space="preserve">
     <value>Windows aranıyor</value>
     <comment>Area Cortana</comment>
   </data>
-  
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+    <comment>Should not translated</comment>
+  </data>
   <data name="SecurityCenter" xml:space="preserve">
     <value>Güvenlik Merkezi</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1261,7 +1391,10 @@
   <data name="Shortcuts" xml:space="preserve">
     <value>Kısayollar</value>
   </data>
-  
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>wifi</value>
+    <comment>dont translate this, is a short term to find entries</comment>
+  </data>
   <data name="SignInOptions" xml:space="preserve">
     <value>Oturum açma seçenekleri</value>
     <comment>Area UserAccounts</comment>
@@ -1300,7 +1433,10 @@
     <value>Başlangıç uygulamaları</value>
     <comment>Area Apps</comment>
   </data>
-  
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value>sticpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Storage" xml:space="preserve">
     <value>Depolama</value>
     <comment>Area System</comment>
@@ -1313,7 +1449,10 @@
     <value>Akıllı Depolama</value>
     <comment>Area System</comment>
   </data>
-  
+  <data name="SubtitlePreposition" xml:space="preserve">
+    <value>in</value>
+    <comment>Example: Area "System" in System settings</comment>
+  </data>
   <data name="SyncCenter" xml:space="preserve">
     <value>Eşitleme merkezi</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1322,7 +1461,10 @@
     <value>Ayarlarınızı eşitleyin</value>
     <comment>Area UserAccounts</comment>
   </data>
-  
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value>sysdm.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="System" xml:space="preserve">
     <value>Sistem</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1377,8 +1519,14 @@
     <value>Temalar</value>
     <comment>Area Personalization</comment>
   </data>
-  
-  
+  <data name="themes.cpl" xml:space="preserve">
+    <value>themes.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value>timedate.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Timeline" xml:space="preserve">
     <value>Zaman çizelgesi</value>
   </data>
@@ -1395,12 +1543,18 @@
   <data name="Transparency" xml:space="preserve">
     <value>Saydamlık</value>
   </data>
-  
+  <data name="tritanopia" xml:space="preserve">
+    <value>tritanopia</value>
+    <comment>Medical: Mean you don't can see yellow and blue colors</comment>
+  </data>
   <data name="Troubleshoot" xml:space="preserve">
     <value>Sorun Giderme</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+    <comment>Area Gaming</comment>
+  </data>
   <data name="Typing" xml:space="preserve">
     <value>Yazıyor</value>
     <comment>Area Device</comment>
@@ -1409,7 +1563,10 @@
     <value>Kaldır</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
-  
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+    <comment>Area Device</comment>
+  </data>
   <data name="UserAccounts" xml:space="preserve">
     <value>Kullanıcı hesapları</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1440,7 +1597,10 @@
   <data name="Volume" xml:space="preserve">
     <value>Ses düzeyi</value>
   </data>
-  
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
   <data name="Wallpaper" xml:space="preserve">
     <value>Duvar kağıdı</value>
   </data>
@@ -1455,12 +1615,18 @@
     <value>Giriş Ekranı</value>
     <comment>Area SurfaceHub</comment>
   </data>
-  
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value>wgpocpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
   <data name="Wheel" xml:space="preserve">
     <value>Tekerlek</value>
     <comment>Area Device</comment>
   </data>
-  
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
   <data name="WiFiCalling" xml:space="preserve">
     <value>Wi-Fi Araması</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
@@ -1472,10 +1638,22 @@
   <data name="WindowBorder" xml:space="preserve">
     <value>Pencere kenarlığı</value>
   </data>
-  
-  
-  
-  
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+    <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
   <data name="WindowsFirewall" xml:space="preserve">
     <value>Windows Güvenlik Duvarı</value>
     <comment>Area Control Panel (legacy settings)</comment>
@@ -1492,7 +1670,10 @@
     <value>Windows Insider Programı</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Windows Mobility Center</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
   <data name="WindowsSearch" xml:space="preserve">
     <value>Windows arama</value>
     <comment>Area Cortana</comment>
@@ -1501,7 +1682,10 @@
     <value>Windows Güvenlik</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
-  
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
     <value>Windows Update - Gelişmiş Seçenekler</value>
     <comment>Area UpdateAndSecurity</comment>
