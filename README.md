@@ -164,7 +164,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <p align="center">
 <a href="https://flowlauncher.com/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
-<a href="https://flowlauncher.com/docs/#/develop-py-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
+<a href="https://www.flowlauncher.com/docs/#/py-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
 <a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870071-d67c736b-0748-428f-a283-14587696dfa3.png" width="64"></a>
 <a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
 </p>
