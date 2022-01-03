@@ -84,7 +84,7 @@ on_success:
             iwr https://github.com/microsoft/winget-create/releases/download/v0.2.0.29-preview/wingetcreate.exe -OutFile wingetcreate.exe
             .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe -v $env:flowVersion -t $env:winget_token
             echo "Deploy to Chocolatey"
-            choco new "Flow-Launcher" --version $env:flowVersion maintainername="Flow Launcher Team" maintainerrepo="https://github.com/Flow-Launcher/Flow.Launcher" url="https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe" installertype="exe"
+            choco new "Flow-Launcher" packageversion=$env:flowVersion url="https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe" -t publish_template
             cd ./flow-launcher
             cpack
             choco push flow-launcher.$env:flowVersion.nupkg --source https://push.chocolatey.org/ --api-key $env:choco_token
