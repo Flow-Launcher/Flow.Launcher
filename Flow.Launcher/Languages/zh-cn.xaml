@@ -14,8 +14,8 @@
     <system:String x:Key="iconTrayExit">退出</system:String>
     <system:String x:Key="closeWindow">关闭</system:String>
     <system:String x:Key="copy">复制</system:String>
-    <system:String x:Key="cut"></system:String>
-    <system:String x:Key="paste"></system:String>
+    <system:String x:Key="cut">Cut</system:String>
+    <system:String x:Key="paste">Paste</system:String>
     <system:String x:Key="GameMode">游戏模式</system:String>
     <system:String x:Key="GameModeToolTip">暂停使用快捷键。</system:String>
 
@@ -39,8 +39,8 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键。</system:String>
     <system:String x:Key="defaultFileManager">默认文件管理器</system:String>
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
-    <system:String x:Key="defaultBrowser"></system:String>
-    <system:String x:Key="defaultBrowserToolTip"></system:String>
+    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonDirectory">Python 路径</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
     <system:String x:Key="selectPythonDirectory">选择</system:String>
@@ -61,7 +61,7 @@
     <system:String x:Key="actionKeywords">触发关键字</system:String>
     <system:String x:Key="currentActionKeywords">当前触发关键字</system:String>
     <system:String x:Key="newActionKeyword">新触发关键字</system:String>
-    <system:String x:Key="actionKeywordsTooltip"></system:String>
+    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
@@ -169,14 +169,14 @@
     <system:String x:Key="fileManager_file_arg">选中文件路径参数</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle"></system:String>
-    <system:String x:Key="defaultBrowser_tips"></system:String>
-    <system:String x:Key="defaultBrowser_name"></system:String>
-    <system:String x:Key="defaultBrowser_profile_name"></system:String>
-    <system:String x:Key="defaultBrowser_path"></system:String>
+    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
     <system:String x:Key="defaultBrowser_newtab">新窗户</system:String>
     <system:String x:Key="defaultBrowser_newWindow">新标签</system:String>
-    <system:String x:Key="defaultBrowser_parameter"></system:String>
+    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改优先级</system:String>
@@ -269,7 +269,7 @@
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理员身份运行</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查询历史</system:String>
     <system:String x:Key="HotkeyESCDesc">返回查询界面</system:String>
-    <system:String x:Key="HotkeyTabDesc"></system:String>
+    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
     <system:String x:Key="HotkeyRunDesc">打开/运行选中项目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">打开设置窗口</system:String>
     <system:String x:Key="HotkeyF5Desc">重新加载插件数据</system:String>
