@@ -73,11 +73,19 @@ deploy:
 environment:
   winget_token:
     secure: HKfVT2FYZITAG0qqMCePYhIem5a/gzvAgYDSlr6RlXfGmeBUOANUtgJ9X6fNroxN
+  choco_token:
+    secure: Qfv/0dwpaCaAPsdC+yYRMqecNx8wvDHe4uWQvN4cappvuc0Swij14200//6uDDbY
 
 on_success:
   - ps: |
         if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:APPVEYOR_REPO_TAG -eq "true")
         {
+            echo "Deploy to WinGet"
             iwr https://github.com/microsoft/winget-create/releases/download/v0.2.0.29-preview/wingetcreate.exe -OutFile wingetcreate.exe
             .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe -v $env:flowVersion -t $env:winget_token
+            echo "Deploy to Chocolatey"
+            choco new "Flow-Launcher" --version $env:flowVersion maintainername="Flow Launcher Team" maintainerrepo="https://github.com/Flow-Launcher/Flow.Launcher" url="https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe" installertype="exe"
+            cd ./flow-launcher
+            cpack
+            choco push flow-launcher.$env:flowVersion.nupkg --source https://push.chocolatey.org/ --api-key $env:choco_token
         }
