@@ -1,15 +1,21 @@
-﻿$ErrorActionPreference = 'Stop';
-
-$packageName  = 'FlowLauncher'
-$toolsDir     = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+$ErrorActionPreference = 'Stop'; 
+$toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+$url        = '[[Url]]' 
+$url64      = '' 
 
 $packageArgs = @{
-  packageName   = $packageName
-  fileType      = 'exe'
-  url           = 'https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe'
-  silentArgs    = "/S"
-  validExitCodes= @(0)
+  packageName   = $env:ChocolateyPackageName
+  unzipLocation = $toolsDir
+  fileType      = 'exe' 
+  url           = $url
+  url64bit      = $url64
+  softwareName  = 'Flow-Launcher*'   
+  checksum      = ''
+  checksumType  = 'sha256' 
+  checksum64    = ''
+  checksumType64= 'sha256'
+  silentArgs    = "/qn /norestart /l*v `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`"" 
+  validExitCodes= @(0, 3010, 1641)
 }
 
 Install-ChocolateyPackage @packageArgs
-
