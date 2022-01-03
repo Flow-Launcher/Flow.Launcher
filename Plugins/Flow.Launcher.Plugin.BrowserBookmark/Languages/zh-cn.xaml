@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索您的浏览器书签</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting"></system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">在以下位置打开书签</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">新窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">新标签</system:String>
@@ -14,9 +14,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">选择</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">复制网址</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">将书签的网址复制到剪贴板</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom"></system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName"></system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory"></system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">增加</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">删除</system:String>
 </ResourceDictionary>
