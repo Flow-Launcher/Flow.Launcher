@@ -382,7 +382,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
-    <value>Bluetooth devices</value>
+    <value>Bluetooth zariadenia</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueYellow" xml:space="preserve">
@@ -397,22 +397,22 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Broadcasting" xml:space="preserve">
-    <value>Broadcasting</value>
+    <value>Vysielanie</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Calendar" xml:space="preserve">
-    <value>Calendar</value>
+    <value>Kalendár</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CallHistory" xml:space="preserve">
-    <value>Call history</value>
+    <value>História hovorov</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
     <value>calling</value>
   </data>
   <data name="Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Kamera</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CangjieIme" xml:space="preserve">
@@ -440,11 +440,11 @@
     <comment>Area System</comment>
   </data>
   <data name="ClosedCaptions" xml:space="preserve">
-    <value>Closed captions</value>
+    <value>Skryté titulky</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorFilters" xml:space="preserve">
-    <value>Color filters</value>
+    <value>Farebné filtre</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorManagement" xml:space="preserve">
@@ -464,7 +464,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>Kontakty</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
@@ -535,7 +535,7 @@
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
-    <value>Delivery Optimization</value>
+    <value>Optimalizácia doručovania</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="desk.cpl" xml:space="preserve">
@@ -575,7 +575,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>Obrazovka</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="DisplayProperties" xml:space="preserve">
@@ -587,7 +587,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Documents" xml:space="preserve">
-    <value>Documents</value>
+    <value>Dokumenty</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="DuplicatingMyDisplay" xml:space="preserve">
@@ -599,7 +599,7 @@
     <comment>Area System</comment>
   </data>
   <data name="EaseOfAccessCenter" xml:space="preserve">
-    <value>Ease of access center</value>
+    <value>Centrum zjednodušenia prístupu</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Edition" xml:space="preserve">
@@ -607,7 +607,7 @@
     <comment>Means the "Windows Edition"</comment>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
@@ -634,7 +634,7 @@
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
-    <value>Eye control</value>
+    <value>Ovládanie zrakom</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="EyeTracker" xml:space="preserve">
@@ -646,11 +646,11 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="FeedbackAndDiagnostics" xml:space="preserve">
-    <value>Feedback and diagnostics</value>
+    <value>Diagnostika a pripomienky</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FileSystem" xml:space="preserve">
-    <value>File system</value>
+    <value>Systém súborov</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
@@ -662,7 +662,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="FindMyDevice" xml:space="preserve">
-    <value>Find My Device</value>
+    <value>Nájsť moje zariadenie</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Firewall" xml:space="preserve">
@@ -681,19 +681,19 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Fonts" xml:space="preserve">
-    <value>Fonts</value>
+    <value>Písma</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ForDevelopers" xml:space="preserve">
-    <value>For developers</value>
+    <value>Pre vývojárov</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="GameBar" xml:space="preserve">
-    <value>Game bar</value>
+    <value>Xbox Game Bar</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameControllers" xml:space="preserve">
-    <value>Game controllers</value>
+    <value>Hracie zariadenia</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
@@ -740,7 +740,7 @@
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="HighContrast" xml:space="preserve">
-    <value>High contrast</value>
+    <value>Vysoký kontrast</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
@@ -779,7 +779,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="InkingAndTyping" xml:space="preserve">
-    <value>Inking and typing</value>
+    <value>Prispôsobenie písania rukou a písania na klávesnici</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="InternetOptions" xml:space="preserve">
@@ -817,7 +817,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Keyboard</value>
+    <value>Klávesnica</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Keypad" xml:space="preserve">
@@ -845,7 +845,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Magnifier" xml:space="preserve">
-    <value>Magnifier</value>
+    <value>Zväčšovacie sklo</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
@@ -865,14 +865,14 @@
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Messaging</value>
+    <value>Výmena správ</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
     <value>Metered connection</value>
   </data>
   <data name="Microphone" xml:space="preserve">
-    <value>Microphone</value>
+    <value>Mikrofón</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
@@ -906,11 +906,11 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
-    <value>Motion</value>
+    <value>Poloha</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Mouse" xml:space="preserve">
-    <value>Mouse</value>
+    <value>Myš</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MouseAndTouchpad" xml:space="preserve">
@@ -922,7 +922,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
-    <value>Mouse pointer</value>
+    <value>Textový kurzor</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MultimediaProperties" xml:space="preserve">
@@ -934,7 +934,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Narrator" xml:space="preserve">
-    <value>Narrator</value>
+    <value>Moderátor</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="NavigationBar" xml:space="preserve">
@@ -1055,7 +1055,7 @@
     <value>Only available if enterprise has deployed a provisioning package.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Oznámenia</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
@@ -1102,11 +1102,11 @@
     <comment>Means the "Operating System"</comment>
   </data>
   <data name="OtherDevices" xml:space="preserve">
-    <value>Other devices</value>
+    <value>Ostatné zariadenia</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="OtherOptions" xml:space="preserve">
-    <value>Other options</value>
+    <value>Ďalšie možnosti</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
@@ -1168,7 +1168,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneCalls" xml:space="preserve">
-    <value>Phone calls</value>
+    <value>Telefonické hovory</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PhoneDefaultApps" xml:space="preserve">
@@ -1179,7 +1179,7 @@
     <value>Picture</value>
   </data>
   <data name="Pictures" xml:space="preserve">
-    <value>Pictures</value>
+    <value>Obrázky</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
@@ -1199,7 +1199,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PlayingGameFullScreen" xml:space="preserve">
-    <value>Playing a game full screen</value>
+    <value>Hranie hry na celú obrazovku</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
@@ -1274,7 +1274,7 @@
     <value>Quiet moments game</value>
   </data>
   <data name="Radios" xml:space="preserve">
-    <value>Radios</value>
+    <value>Vysielače</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Ram" xml:space="preserve">
@@ -1285,7 +1285,7 @@
     <value>Recognition</value>
   </data>
   <data name="Recovery" xml:space="preserve">
-    <value>Recovery</value>
+    <value>Obnovenie</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="RedEye" xml:space="preserve">
@@ -1358,7 +1358,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SearchingWindows" xml:space="preserve">
-    <value>Searching Windows</value>
+    <value>Vyhľadávanie vo Windowse</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="SecureDNS" xml:space="preserve">
@@ -1412,7 +1412,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Reč</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
@@ -1500,7 +1500,7 @@
     <value>Taskbar color</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Tasks</value>
+    <value>Úlohy</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
@@ -1548,7 +1548,7 @@
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
-    <value>Troubleshoot</value>
+    <value>Riešenie problémov</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="TruePlay" xml:space="preserve">
@@ -1580,7 +1580,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="Videos" xml:space="preserve">
-    <value>Videos</value>
+    <value>Videá</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="VirtualDesktops" xml:space="preserve">
@@ -1591,7 +1591,7 @@
     <comment>Means the virus in computers and software</comment>
   </data>
   <data name="VoiceActivation" xml:space="preserve">
-    <value>Voice activation</value>
+    <value>Aktivácia hlasom</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
@@ -1679,7 +1679,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="WindowsSecurity" xml:space="preserve">
-    <value>Windows Security</value>
+    <value>Windows Zabezpečenie</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
@@ -1687,23 +1687,23 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
-    <value>Windows Update - Advanced options</value>
+    <value>Windows Update - Rozšírené možnosti</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update - Check for updates</value>
+    <value>Windows Update - Vyhľadať aktualizácie</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
-    <value>Windows Update - Restart options</value>
+    <value>Windows Update - Možnosti reštartovania</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update - View optional updates</value>
+    <value>Windows Update - Zobraziť voliteľné aktualizácie</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update - View update history</value>
+    <value>Windows Update - Zobraziť históriu aktualizácií</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
@@ -1725,7 +1725,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
-    <value>Xbox Networking</value>
+    <value>Sieť Xbox</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
