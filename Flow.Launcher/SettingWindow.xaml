@@ -2045,14 +2045,15 @@
                                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource flowlauncherSpecificHotkey}" />
                                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource flowlauncherSpecificHotkeyToolTip}" />
                                                     </StackPanel>
-                                                    <ComboBox
+                                                    <StackPanel
                                                         Grid.Column="2"
-                                                        Width="180"
                                                         Margin="0,4,18,4"
                                                         VerticalAlignment="Center"
-                                                        FontSize="14">
-                                                        <MenuItem Header="hello" />
-                                                    </ComboBox>
+                                                        Orientation="Horizontal">
+                                                        <Button Margin="4,0,4,0" Content="Alt+Space" />
+                                                        <Button Margin="4,0,4,0" Content="Ctrl+Space" />
+                                                        <Button Margin="4,0,4,0" Content="Pause" />
+                                                    </StackPanel>
                                                 </ItemsControl>
                                             </Border>
 
@@ -2068,15 +2069,22 @@
                                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                                     <StackPanel Style="{StaticResource TextPanel}">
                                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Use Special Key" />
-                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="Use a special key like Winkey or Twice Ctrl" />
+                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="Additionally use a special key like Winkey or Twice Ctrl" />
                                                     </StackPanel>
                                                     <ComboBox
                                                         Grid.Column="2"
                                                         Width="180"
-                                                        Margin="0,4,18,4"
+                                                        Margin="0,0,18,0"
                                                         VerticalAlignment="Center"
-                                                        FontSize="14">
-                                                        <MenuItem Header="hello" />
+                                                        SelectedIndex="0"
+                                                        Style="{DynamicResource DefaultComboBoxStyle}">
+                                                        <MenuItem
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            Header="None" />
+                                                        <MenuItem Header="Twice Ctrl" />
+                                                        <MenuItem Header="Windows Key" />
+                                                        <MenuItem Header="Twice Shift" />
                                                     </ComboBox>
                                                 </ItemsControl>
                                             </Border>
