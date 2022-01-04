@@ -428,7 +428,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Choose which folders appear on Start</value>
+    <value>Vybrať priečinky, ktoré sa majú zobrazovať v ponuke Štart</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
@@ -452,7 +452,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Colors</value>
+    <value>Farby</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
@@ -515,7 +515,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
-    <value>Default apps</value>
+    <value>Predvolené aplikácie</value>
     <comment>Area Apps</comment>
   </data>
   <data name="DefaultCamera" xml:space="preserve">
@@ -611,7 +611,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>Email and app accounts</value>
+    <value>E-mail a kontá</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
@@ -642,7 +642,7 @@
     <comment>Area Privacy, requires eyetracker hardware</comment>
   </data>
   <data name="FamilyAndOtherPeople" xml:space="preserve">
-    <value>Family and other people</value>
+    <value>Rodina a ostatní používatelia</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="FeedbackAndDiagnostics" xml:space="preserve">
@@ -801,7 +801,7 @@
     <value>Isolated Browsing</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
-    <value>Japan IME settings</value>
+    <value>Nastavenia pre japonské IME</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
   <data name="joy.cpl" xml:space="preserve">
@@ -841,7 +841,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
-    <value>Lock screen</value>
+    <value>Obrazovka uzamknutia</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Magnifier" xml:space="preserve">
@@ -861,7 +861,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ManageOptionalFeatures" xml:space="preserve">
-    <value>Manage optional features</value>
+    <value>Spravovať voliteľné súčasti</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
@@ -926,7 +926,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MultimediaProperties" xml:space="preserve">
-    <value>Multimedia properties</value>
+    <value>Spravovať zvukové zariadenia</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Multitasking" xml:space="preserve">
@@ -1087,11 +1087,11 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>Offline mapy</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Offline Maps - Download maps</value>
+    <value>Offline mapy - Stiahnuť mapy</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
@@ -1152,7 +1152,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="PersonalizationCategory" xml:space="preserve">
-    <value>Personalization (category)</value>
+    <value>Prispôsobenie (kategória)</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
@@ -1183,19 +1183,19 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
-    <value>Pinyin IME settings</value>
+    <value>Nastavenia pre Pinyin IME</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Pinyin input method editor is installed</comment>
   </data>
   <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
-    <value>Pinyin IME settings - domain lexicon</value>
+    <value>Nastavenia pre Pinyin IME - doménový lexikón</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
-    <value>Pinyin IME settings - Key configuration</value>
+    <value>Nastavenia pre Pinyin IME – konfigurácia kľúča</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsUdp" xml:space="preserve">
-    <value>Pinyin IME settings - UDP</value>
+    <value>Nastavenia pre Pinyin IME - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PlayingGameFullScreen" xml:space="preserve">
@@ -1301,11 +1301,11 @@
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Oblasť</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalLanguage" xml:space="preserve">
-    <value>Regional language</value>
+    <value>Regionálny jazyk</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalSettingsProperties" xml:space="preserve">
@@ -1381,7 +1381,7 @@
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
-    <value>Set up a kiosk</value>
+    <value>Nastaviť automatickú prezentáciu</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SharedExperiences" xml:space="preserve">
@@ -1396,11 +1396,11 @@
     <comment>dont translate this, is a short term to find entries</comment>
   </data>
   <data name="SignInOptions" xml:space="preserve">
-    <value>Sign-in options</value>
+    <value>Možnosti prihlásenia</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SignInOptionsDynamicLock" xml:space="preserve">
-    <value>Sign-in options - Dynamic lock</value>
+    <value>Možnosti prihlásenia - Dynamický zámok</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
@@ -1423,14 +1423,14 @@
     <value>Speech typing</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>Start</value>
+    <value>Štart</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
     <value>Start places</value>
   </data>
   <data name="StartupApps" xml:space="preserve">
-    <value>Startup apps</value>
+    <value>Aplikácie pri spustení</value>
     <comment>Area Apps</comment>
   </data>
   <data name="sticpl.cpl" xml:space="preserve">
@@ -1458,7 +1458,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
-    <value>Sync your settings</value>
+    <value>Synchronizácia nastavení</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="sysdm.cpl" xml:space="preserve">
@@ -1493,7 +1493,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
-    <value>Taskbar</value>
+    <value>Panel úloh</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
@@ -1576,7 +1576,7 @@
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
-    <value>Video playback</value>
+    <value>Prehrávanie videa</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Videos" xml:space="preserve">
@@ -1659,11 +1659,11 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
-    <value>Windows Hello setup - Face</value>
+    <value>Nastavenie Windows Hello - Tvár</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Windows Hello setup - Fingerprint</value>
+    <value>Nastavenie Windows Hello - Odtlačok prsta</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
@@ -1713,15 +1713,15 @@
     <value>Workplace</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
-    <value>Workplace provisioning</value>
+    <value>Zabezpečenie pracoviska</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Wubi IME settings</value>
+    <value>Nastavenia pre Wubi IME</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Wubi IME settings - UDP</value>
+    <value>Nastavenia pre Wubi IME - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
@@ -1729,7 +1729,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
-    <value>Your info</value>
+    <value>Vaše informácie</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
