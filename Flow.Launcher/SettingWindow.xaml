@@ -1349,7 +1349,29 @@
                                                     Grid.Row="0"
                                                     Grid.RowSpan="2"
                                                     Grid.Column="0"
-                                                    Grid.ColumnSpan="2" />
+                                                    Grid.ColumnSpan="2"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal">
+                                                    <Image
+                                                        Width="32"
+                                                        Height="32"
+                                                        Margin="0,0,8,0"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        RenderOptions.BitmapScalingMode="HighQuality"
+                                                        Source="/Images/new.png"
+                                                        Stretch="Uniform" />
+                                                    <Image
+                                                        Width="28"
+                                                        Height="28"
+                                                        Margin="0,-2,8,0"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        RenderOptions.BitmapScalingMode="HighQuality"
+                                                        Source="/Images/installed.png"
+                                                        Stretch="Uniform"
+                                                        Visibility="Visible" />
+                                                </StackPanel>
 
                                                 <StackPanel
                                                     Grid.Row="0"
