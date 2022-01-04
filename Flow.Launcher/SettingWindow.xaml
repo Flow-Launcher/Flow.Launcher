@@ -646,19 +646,6 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreen}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreenToolTip}" />
-                                    </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}" Style="{DynamicResource SideControlCheckBox}" />
-                                    <TextBlock Style="{StaticResource Glyph}">
-                                        &#xe7fc;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
-
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
@@ -2068,11 +2055,51 @@
                                                     </ComboBox>
                                                 </ItemsControl>
                                             </Border>
+
+                                            <Separator
+                                                Width="Auto"
+                                                BorderThickness="1"
+                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                            <Border
+                                                Margin="0"
+                                                Padding="40,10,0,14"
+                                                BorderThickness="0"
+                                                Style="{DynamicResource SettingGroupBox}">
+                                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                                    <StackPanel Style="{StaticResource TextPanel}">
+                                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Use Special Key" />
+                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="Use a special key like Winkey or Twice Ctrl" />
+                                                    </StackPanel>
+                                                    <ComboBox
+                                                        Grid.Column="2"
+                                                        Width="180"
+                                                        Margin="0,4,18,4"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14">
+                                                        <MenuItem Header="hello" />
+                                                    </ComboBox>
+                                                </ItemsControl>
+                                            </Border>
+
                                         </StackPanel>
+
+                                    </Border>
+
+                                    <Border Margin="0,20,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreen}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreenToolTip}" />
+                                            </StackPanel>
+                                            <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}" Style="{DynamicResource SideControlCheckBox}" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe7fc;
+                                            </TextBlock>
+                                        </ItemsControl>
                                     </Border>
 
                                     <Border
-                                        Margin="0,12,0,0"
+                                        Margin="0,20,0,0"
                                         Padding="0"
                                         CornerRadius="5"
                                         Style="{DynamicResource SettingGroupBox}">
