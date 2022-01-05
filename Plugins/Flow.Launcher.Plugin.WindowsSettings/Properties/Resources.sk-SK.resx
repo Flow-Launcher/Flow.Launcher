@@ -809,7 +809,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="JoystickProperties" xml:space="preserve">
-    <value>Joystick properties</value>
+    <value>Nastavenia hracieho zariadenia</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="jpnime" xml:space="preserve">
@@ -821,10 +821,10 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Keypad" xml:space="preserve">
-    <value>Keypad</value>
+    <value>Klávesnica</value>
   </data>
   <data name="Keys" xml:space="preserve">
-    <value>Keys</value>
+    <value>Kláves</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Jazyk</value>
@@ -834,7 +834,7 @@
     <value>Light color</value>
   </data>
   <data name="LightMode" xml:space="preserve">
-    <value>Light mode</value>
+    <value>Svetlý režim</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Umiestnenie</value>
@@ -849,7 +849,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>Mail - Microsoft Exchange or Windows Messaging</value>
+    <value>Mail - Microsoft Exchange alebo Windows Messaging</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
@@ -869,7 +869,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
-    <value>Metered connection</value>
+    <value>Pripojenie účtované podľa objemu údajov</value>
   </data>
   <data name="Microphone" xml:space="preserve">
     <value>Mikrofón</value>
@@ -888,7 +888,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="MobileDevices" xml:space="preserve">
-    <value>Mobile devices</value>
+    <value>Mobilné zariadenia</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
     <value>Mobilný prístupový bod</value>
@@ -902,7 +902,7 @@
     <value>Mono</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
-    <value>More details</value>
+    <value>Ďalšie podrobnosti</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
@@ -914,11 +914,11 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MouseAndTouchpad" xml:space="preserve">
-    <value>Mouse and touchpad</value>
+    <value>Myš a touchpad</value>
     <comment>Area Device</comment>
   </data>
   <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
-    <value>Mouse, Fonts, Keyboard, and Printers properties</value>
+    <value>Vlastnosti myši, písiem, klávesnice a tlačiarní</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
@@ -938,7 +938,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="NavigationBar" xml:space="preserve">
-    <value>Navigation bar</value>
+    <value>Navigačný panel</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="netcpl.cpl" xml:space="preserve">
@@ -989,34 +989,34 @@
     <comment>Area System</comment>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Poznámka</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>Dostupné iba vtedy, keď máte k zariadeniu pripojené mobilné zariadenie.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>Dostupné iba na zariadeniach, ktoré podporujú pokročilé možnosti grafiky.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>Dostupné iba na zariadeniach s batériou, ako je napríklad tablet.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>Zastarané v systéme Windows 10, verzia 1809 (zostava 17763) a novších.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
     <value>Only available if Dial is paired.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Only available if DirectAccess is enabled.</value>
+    <value>Dostupné iba vtedy, ak je povolený DirectAccess.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
     <value>Dostupné iba na zariadeniach, ktoré podporujú rozšírené možnosti zobrazenia.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>Prítomné iba vtedy, ak je používateľ zaregistrovaný vo WIP.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>Vyžaduje si hardvér eyetracker.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
     <value>Available if the Microsoft Japan input method editor is installed.</value>
