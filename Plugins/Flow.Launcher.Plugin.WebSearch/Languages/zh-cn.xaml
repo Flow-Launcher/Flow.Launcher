@@ -18,9 +18,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">自动补全数据： </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">请选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">您确定要删除 {0} 吗?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you have a web search service you want to use, you can add it to Flow. For example, you can follow the url format in the address bar if you want to search 'casino' on Netflix: &quot;https://www.netflix.com/search?q=Casino&quot;. To do this, change the search term 'Casino' as follows.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">如果您有您想要使用的网页搜索服务，您可以将其添加到Flow 例如，如果您想要在Netflix上搜索“casino”，您可以遵循地址栏中的URL格式：&quot;https://www.netflix.com/search?q=Casino&quot;。要做到这一点，使用搜索词“Casino”。</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Add it to the URL section below. You can now search Netflix with Flow using any search terms.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">将其添加到下面的 URL 部分。您现在可以使用任意的搜索词来从Netflix中搜索。</system:String>
    
 
     <!--web search edit-->
