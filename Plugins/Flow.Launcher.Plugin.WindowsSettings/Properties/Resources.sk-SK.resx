@@ -1019,31 +1019,31 @@
     <value>Vyžaduje si hardvér eyetracker.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>Dostupné, ak je nainštalovaný editor vstupnej metódy Microsoft Japan.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>Dostupné, ak je nainštalovaný editor vstupnej metódy Microsoft Pinyin.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Available if the Microsoft Wubi input method editor is installed.</value>
+    <value>Dostupné, ak je nainštalovaný editor vstupnej metódy Microsoft Wubi.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Only available if the Mixed Reality Portal app is installed.</value>
+    <value>Dostupné iba v prípade, že je nainštalovaná aplikácia Mixed Reality Portal.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
     <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
-    <value>Added in Windows 10, version 1903 (build 18362).</value>
+    <value>Pridané v systéme Windows 10, verzia 1903 (zostava 18362).</value>
   </data>
   <data name="NoteSince19041" xml:space="preserve">
-    <value>Added in Windows 10, version 2004 (build 19041).</value>
+    <value>Pridané v systéme Windows 10, verzia 2004 (zostava 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
     <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Only available if touchpad hardware is present.</value>
+    <value>Dostupné iba vtedy, ak je prítomný hardvér touchpadu.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
     <value>Only available if the device has a Wi-Fi adapter.</value>
