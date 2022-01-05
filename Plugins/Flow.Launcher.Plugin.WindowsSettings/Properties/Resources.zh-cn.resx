@@ -254,10 +254,10 @@
     <value>时钟和区域</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>控制面板</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
-    <value>Cortana</value>
+    <value>小娜</value>
   </data>
   <data name="AreaDevices" xml:space="preserve">
     <value>设备</value>
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>控制面板</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -479,7 +479,7 @@
     <comment>Means the protection of the system core</comment>
   </data>
   <data name="Cortana" xml:space="preserve">
-    <value>Cortana</value>
+    <value>小娜</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
@@ -627,7 +627,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ExploitProtection" xml:space="preserve">
-    <value>Exploit Protection</value>
+    <value>漏洞保护</value>
   </data>
   <data name="Extras" xml:space="preserve">
     <value>附加内容</value>
@@ -899,7 +899,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Mono" xml:space="preserve">
-    <value>Mono</value>
+    <value>单声道</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>更多详细信息</value>
@@ -1063,7 +1063,7 @@
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
-    <value>Num Lock</value>
+    <value>小键盘数字锁定</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
   <data name="nwc.cpl" xml:space="preserve">
@@ -1098,7 +1098,7 @@
     <value>屏上</value>
   </data>
   <data name="Os" xml:space="preserve">
-    <value>OS</value>
+    <value>操作系统</value>
     <comment>Means the "Operating System"</comment>
   </data>
   <data name="OtherDevices" xml:space="preserve">
@@ -1278,7 +1278,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Ram" xml:space="preserve">
-    <value>RAM</value>
+    <value>内存</value>
     <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
   </data>
   <data name="Recognition" xml:space="preserve">
