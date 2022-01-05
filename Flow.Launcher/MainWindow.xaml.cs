@@ -159,6 +159,9 @@ namespace Flow.Launcher
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
                         break;
+                    case nameof(Settings.Hotkey):
+                        UpdateNotifyIconText();
+                        break;
                 }
             };
         }
@@ -180,7 +183,7 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
             ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
             ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
@@ -203,7 +206,7 @@ namespace Flow.Launcher
             };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" +_settings.Hotkey + ")"
             };
             var gamemode = new MenuItem
             {
