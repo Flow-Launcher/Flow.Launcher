@@ -4,15 +4,15 @@
     <!--Dialogues-->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">下载插件</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">下载完成</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">错误：无法下载该插件</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3} 您要卸载此插件吗？ 卸载后，Flow Launcher 将自动重启</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3} 您要安装此插件吗？ 安装后，Flow Launcher 将自动重启</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">插件安装</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_from_web">Download and install {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_from_web">下载与安装 {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">插件卸载</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">插件安装成功。正在重新启动Flow Launcher，请稍候...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">安装失败：无法从新插件中找到plugin.json元数据文件</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">错误：具有相同或更高版本的 {0} 的插件已经存在。</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">安装插件时出错</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">尝试安装 {0} 时发生错误</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">无可用更新</system:String>
@@ -21,17 +21,17 @@
     <system:String x:Key="plugin_pluginsmanager_update_title">插件更新</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">该插件有更新，您想看看吗</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">此插件已安装</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Plugin Manifest Download Failed</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">插件列表下载失败</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">请检查您是否可以连接到 github.com。这个错误意味着您可能无法安装或更新插件。</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">从未知源安装</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">您正在从未知源安装此插件，它可能包含潜在风险！{0}{0}请确保您了解来源以及安全性。{0}{0}您想要继续吗？{0}{0}(您可以通过设置关闭此警告)</system:String>
 
     <!--Controls-->
     
     <!--Plugin Infos-->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">插件管理</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">安装，卸载或更新 Flow Launcher 插件</system:String>
-    <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
+    <system:String x:Key="plugin_pluginsmanager_unknown_author">未知作者</system:String>
 
     <!--Context menu items-->
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">打开网站</system:String>
@@ -44,5 +44,5 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">访问 PluginsManifest 存储库以查看社区提供的插件</system:String>
 
     <!--Settings menu items-->
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">未知源安装警告</system:String>
 </ResourceDictionary>
