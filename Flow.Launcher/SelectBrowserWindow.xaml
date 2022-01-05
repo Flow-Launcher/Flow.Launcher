@@ -196,7 +196,7 @@
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
                             <RadioButton IsChecked="{Binding OpenInTab}" 
-                                         Content="{DynamicResource defaultBrowser_newWindow}"></RadioButton>
+                                         Content="{DynamicResource defaultBrowser_newTab}"></RadioButton>
                             <RadioButton IsChecked="{Binding OpenInNewWindow, Mode=OneTime}"
                                          Content="{DynamicResource defaultBrowser_newWindow}"></RadioButton>
                         </StackPanel>
