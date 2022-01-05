@@ -6,12 +6,13 @@
     <version>[[PackageVersion]]</version>
     <authors>Flow-Launcher Team</authors>
     <projectUrl>https://www.flowlauncher.com</projectUrl>
-	<packageSourceUrl>https://github.com/Flow-Launcher/Flow.Launcher</packageSourceUrl>
-	<iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/dev/Flow.Launcher/Images/app.png</iconUrl>
+    <packageSourceUrl>https://github.com/Flow-Launcher/Flow.Launcher</packageSourceUrl>
+    <iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/dev/Flow.Launcher/Images/app.png</iconUrl>
     <licenseUrl>https://github.com/Flow-Launcher/Flow.Launcher/blob/dev/LICENSE</licenseUrl>
-	<description>Quick file search and app launcher for Windows with community-made plugins</description>
+    <description>Quick file search and app launcher for Windows with community-made plugins</description>
     <releaseNotes>https://github.com/Flow-Launcher/Flow.Launcher/releases</releaseNotes>
-	<docsUrl>https://www.flowlauncher.com/docs</docsUrl>
+    <docsUrl>https://www.flowlauncher.com/docs</docsUrl>
+    <tags>launcher productivity search plugins</tags>
   </metadata>
   <files>
     <file src="tools\**" target="tools" />
