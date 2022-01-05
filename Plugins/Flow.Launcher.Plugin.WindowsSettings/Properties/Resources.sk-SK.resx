@@ -1224,11 +1224,11 @@
     <value>Presentation</value>
   </data>
   <data name="Printers" xml:space="preserve">
-    <value>Printers</value>
+    <value>Tlačiarne</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PrintersAndScanners" xml:space="preserve">
-    <value>Printers and scanners</value>
+    <value>Tlačiarne a skenery</value>
     <comment>Area Device</comment>
   </data>
   <data name="PrintScreen" xml:space="preserve">
@@ -1236,14 +1236,14 @@
     <comment>Mean the "Print screen" key</comment>
   </data>
   <data name="ProblemReportsAndSolutions" xml:space="preserve">
-    <value>Problem reports and solutions</value>
+    <value>Hlásenie a riešenie problémov</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Processor" xml:space="preserve">
-    <value>Processor</value>
+    <value>Procesor</value>
   </data>
   <data name="ProgramsAndFeatures" xml:space="preserve">
-    <value>Programs and features</value>
+    <value>Programy a súčasti</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ProjectingToThisPc" xml:space="preserve">
@@ -1282,14 +1282,14 @@
     <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
   </data>
   <data name="Recognition" xml:space="preserve">
-    <value>Recognition</value>
+    <value>Rozpoznávanie</value>
   </data>
   <data name="Recovery" xml:space="preserve">
     <value>Obnovenie</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="RedEye" xml:space="preserve">
-    <value>Red eye</value>
+    <value>Červené oči</value>
     <comment>Mean red eye effect by over-the-night flights</comment>
   </data>
   <data name="RedGreen" xml:space="preserve">
@@ -1366,18 +1366,18 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Security Center</value>
+    <value>Centrum zabezpečenia</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
-    <value>Security Processor</value>
+    <value>Procesor zabezpečenia</value>
   </data>
   <data name="SessionCleanup" xml:space="preserve">
     <value>Session cleanup</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="SettingsHomePage" xml:space="preserve">
-    <value>Settings home page</value>
+    <value>Domov</value>
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
@@ -1389,7 +1389,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Odkazy</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>wifi</value>
@@ -1404,7 +1404,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Veľkosť</value>
     <comment>Size for text and symbols</comment>
   </data>
   <data name="Sound" xml:space="preserve">
@@ -1416,11 +1416,11 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
-    <value>Speech recognition</value>
+    <value>Rozpoznávanie reči</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SpeechTyping" xml:space="preserve">
-    <value>Speech typing</value>
+    <value>Zadávanie textu hlasom</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Štart</value>
@@ -1454,7 +1454,7 @@
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
-    <value>Sync center</value>
+    <value>Centrum synchronizácie</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
@@ -1482,14 +1482,14 @@
     <comment>Area System</comment>
   </data>
   <data name="TabletPcSettings" xml:space="preserve">
-    <value>Tablet PC settings</value>
+    <value>Centrum synchronizácie</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Talk" xml:space="preserve">
-    <value>Talk</value>
+    <value>Hovoriť</value>
   </data>
   <data name="TalkToCortana" xml:space="preserve">
-    <value>Talk to Cortana</value>
+    <value>Rozprávať sa s Cortanou</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
@@ -1497,7 +1497,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
-    <value>Taskbar color</value>
+    <value>Farba panela úloh</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Úlohy</value>
@@ -1512,11 +1512,11 @@
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
-    <value>Text to speech</value>
+    <value>Prevod textu na reč</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Themes" xml:space="preserve">
-    <value>Themes</value>
+    <value>Motívy</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="themes.cpl" xml:space="preserve">
@@ -1528,20 +1528,20 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Timeline" xml:space="preserve">
-    <value>Timeline</value>
+    <value>Časová os</value>
   </data>
   <data name="Touch" xml:space="preserve">
-    <value>Touch</value>
+    <value>Dotykové ovládanie</value>
   </data>
   <data name="TouchFeedback" xml:space="preserve">
-    <value>Touch feedback</value>
+    <value>Odozva na dotyk</value>
   </data>
   <data name="Touchpad" xml:space="preserve">
     <value>Touchpad</value>
     <comment>Area Device</comment>
   </data>
   <data name="Transparency" xml:space="preserve">
-    <value>Transparency</value>
+    <value>Priehľadnosť</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
     <value>tritanopia</value>
@@ -1556,7 +1556,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
-    <value>Typing</value>
+    <value>Písanie</value>
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
