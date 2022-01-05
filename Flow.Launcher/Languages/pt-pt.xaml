@@ -17,7 +17,7 @@
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Colar</system:String>
     <system:String x:Key="GameMode">Modo de jogo</system:String>
-    <system:String x:Key="GameModeToolTip">Suspender utilização de teclas de atalho</system:String>
+    <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Definições Flow Launcher</system:String>
@@ -46,7 +46,7 @@
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
-    <system:String x:Key="querySearchPrecision">Precisão da pesquisa</system:String>
+    <system:String x:Key="querySearchPrecision">Precisão da consulta</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
     <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permitir Pinyin para a pesquisa. Pinyin é o sistema padrão da ortografia romanizada para tradução de mandarim</system:String>
@@ -55,8 +55,8 @@
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Mais plugins</system:String>
-    <system:String x:Key="enable">Ativar</system:String>
-    <system:String x:Key="disable">Desativar</system:String>
+    <system:String x:Key="enable">Ativo</system:String>
+    <system:String x:Key="disable">Inativo</system:String>
     <system:String x:Key="actionKeywordsTitle">Definição de palavra-chave</system:String>
     <system:String x:Key="actionKeywords">Palavra-chave da ação</system:String>
     <system:String x:Key="currentActionKeywords">Palavra-chave atual</system:String>
@@ -83,7 +83,7 @@
     <system:String x:Key="browserMoreThemes">Galeria de temas</system:String>
     <system:String x:Key="howToCreateTheme">Como criar um tema</system:String>
     <system:String x:Key="hiThere">Olá</system:String>
-    <system:String x:Key="queryBoxFont">Tipo de letra da caixa de pesquisa</system:String>
+    <system:String x:Key="queryBoxFont">Tipo de letra da consulta</system:String>
     <system:String x:Key="resultItemFont">Tipo de letra dos resultados</system:String>
     <system:String x:Key="windowMode">Modo da janela</system:String>
     <system:String x:Key="opacity">Opacidade</system:String>
@@ -173,8 +173,8 @@
     <system:String x:Key="defaultBrowser_name">Navegador</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nome do navegador</system:String>
     <system:String x:Key="defaultBrowser_path">Caminho do navegador</system:String>
-    <system:String x:Key="defaultBrowser_newtab">Nova janela</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">Novo separador</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nova janela</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Novo separador</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
 
     <!--  Priority Setting Dialog  -->
