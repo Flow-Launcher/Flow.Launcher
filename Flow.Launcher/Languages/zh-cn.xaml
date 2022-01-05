@@ -61,7 +61,7 @@
     <system:String x:Key="actionKeywords">触发关键字</system:String>
     <system:String x:Key="currentActionKeywords">当前触发关键字</system:String>
     <system:String x:Key="newActionKeyword">新触发关键字</system:String>
-    <system:String x:Key="actionKeywordsTooltip">更改动作关键字</system:String>
+    <system:String x:Key="actionKeywordsTooltip">更改触发关键字</system:String>
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
@@ -174,8 +174,8 @@
     <system:String x:Key="defaultBrowser_name">浏览器</system:String>
     <system:String x:Key="defaultBrowser_profile_name">浏览器名称</system:String>
     <system:String x:Key="defaultBrowser_path">浏览器路径</system:String>
-    <system:String x:Key="defaultBrowser_newtab">新窗户</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">新标签</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">新窗户</system:String>
+    <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
     <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
 
     <!--  Priority Setting Dialog  -->
