@@ -523,11 +523,11 @@
     <comment>Area Device</comment>
   </data>
   <data name="DefaultLocation" xml:space="preserve">
-    <value>Default location</value>
+    <value>Predvolená poloha</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultPrograms" xml:space="preserve">
-    <value>Default programs</value>
+    <value>Predvolené programy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
@@ -543,7 +543,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="DesktopThemes" xml:space="preserve">
-    <value>Desktop themes</value>
+    <value>Motívy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
@@ -551,7 +551,7 @@
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
-    <value>Device manager</value>
+    <value>Správca zariadení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DevicesAndPrinters" xml:space="preserve">
@@ -571,7 +571,7 @@
     <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
   </data>
   <data name="DirectOpenYourPhone" xml:space="preserve">
-    <value>Direct open your phone</value>
+    <value>Priame otvorenie telefónu</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Display" xml:space="preserve">
@@ -603,7 +603,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Edition" xml:space="preserve">
-    <value>Edition</value>
+    <value>Vydanie</value>
     <comment>Means the "Windows Edition"</comment>
   </data>
   <data name="Email" xml:space="preserve">
@@ -619,7 +619,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Environment" xml:space="preserve">
-    <value>Environment</value>
+    <value>Prostredie</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Ethernet" xml:space="preserve">
@@ -627,7 +627,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ExploitProtection" xml:space="preserve">
-    <value>Exploit Protection</value>
+    <value>Ochrana pred zneužitím</value>
   </data>
   <data name="Extras" xml:space="preserve">
     <value>Extras</value>
@@ -677,7 +677,7 @@
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
-    <value>Folder options</value>
+    <value>Možnosti priečinka</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Fonts" xml:space="preserve">
@@ -705,7 +705,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Gateway</value>
+    <value>Brána</value>
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
@@ -717,7 +717,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GettingStarted" xml:space="preserve">
-    <value>Getting started</value>
+    <value>Začíname</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
@@ -729,10 +729,10 @@
     <comment>Area System</comment>
   </data>
   <data name="Grayscale" xml:space="preserve">
-    <value>Grayscale</value>
+    <value>Odtiene sivej</value>
   </data>
   <data name="GreenWeek" xml:space="preserve">
-    <value>Green week</value>
+    <value>Deuteranomália</value>
     <comment>Mean you don't can see green colors</comment>
   </data>
   <data name="HeadsetDisplay" xml:space="preserve">
@@ -744,19 +744,19 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
-    <value>Holographic audio</value>
+    <value>Holografický zvuk</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
-    <value>Holographic Environment</value>
+    <value>Holografické prostredie</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
-    <value>Holographic Headset</value>
+    <value>Holografická náhlavná súprava</value>
   </data>
   <data name="HolographicManagement" xml:space="preserve">
-    <value>Holographic Management</value>
+    <value>Holografická správa</value>
   </data>
   <data name="HomeGroup" xml:space="preserve">
-    <value>Home group</value>
+    <value>Domáca skupina</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Id" xml:space="preserve">
@@ -764,10 +764,10 @@
     <comment>MEans The "Windows Identifier"</comment>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Image</value>
+    <value>Obrázok</value>
   </data>
   <data name="IndexingOptions" xml:space="preserve">
-    <value>Indexing options</value>
+    <value>Možnosti indexovania</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="inetcpl.cpl" xml:space="preserve">
@@ -775,7 +775,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Infrared" xml:space="preserve">
-    <value>Infrared</value>
+    <value>Infračervené</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="InkingAndTyping" xml:space="preserve">
@@ -783,7 +783,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="InternetOptions" xml:space="preserve">
-    <value>Internet options</value>
+    <value>Možnosti internetu</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="intl.cpl" xml:space="preserve">
@@ -791,14 +791,14 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="InvertedColors" xml:space="preserve">
-    <value>Inverted colors</value>
+    <value>Invertované farby</value>
   </data>
   <data name="Ip" xml:space="preserve">
     <value>IP</value>
     <comment>Should not translated</comment>
   </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
-    <value>Isolated Browsing</value>
+    <value>Izolované prehliadanie</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
     <value>Nastavenia pre japonské IME</value>
@@ -1632,7 +1632,7 @@
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>Wi-Fi settings</value>
+    <value>Nastavenia Wi-Fi</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
