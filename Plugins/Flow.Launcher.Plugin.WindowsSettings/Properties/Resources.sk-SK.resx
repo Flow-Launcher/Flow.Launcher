@@ -1040,16 +1040,16 @@
     <value>Pridané v systéme Windows 10, verzia 2004 (zostava 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
+    <value>Dostupné iba ak "nastavenia aplikácii" sú nainštalované, napr. treťou stranou.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
     <value>Dostupné iba vtedy, ak je prítomný hardvér touchpadu.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Only available if the device has a Wi-Fi adapter.</value>
+    <value>Dostupné iba vtedy, ak má zariadenie adaptér Wi-Fi.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>Device must be Windows Anywhere-capable.</value>
+    <value>Zariadenie musí podporovať Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
     <value>Only available if enterprise has deployed a provisioning package.</value>
@@ -1075,11 +1075,11 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (32-bit)</value>
+    <value>Správca zdroja údajov ODBC (32-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (64-bit)</value>
+    <value>Správca zdroja údajov ODBC (64-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
