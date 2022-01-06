@@ -360,7 +360,7 @@
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverUsageDetails" xml:space="preserve">
-    <value>Battery saver usage details</value>
+    <value>Podrobnosti o používaní šetriča batérie</value>
   </data>
   <data name="BatteryUse" xml:space="preserve">
     <value>Použitie batérie</value>
@@ -386,7 +386,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueYellow" xml:space="preserve">
-    <value>Blue-yellow</value>
+    <value>Modrá-žltá</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
     <value>Bopomofo IME</value>
@@ -409,7 +409,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
-    <value>calling</value>
+    <value>volá</value>
   </data>
   <data name="Camera" xml:space="preserve">
     <value>Kamera</value>
@@ -432,7 +432,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
-    <value>Client service for NetWare</value>
+    <value>Klientsky servis pre NetWare</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Clipboard" xml:space="preserve">
@@ -713,7 +713,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="GetPrograms" xml:space="preserve">
-    <value>Get programs</value>
+    <value>Získať programy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GettingStarted" xml:space="preserve">
@@ -721,7 +721,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Glance</value>
+    <value>Pohľad</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
@@ -1373,7 +1373,7 @@
     <value>Procesor zabezpečenia</value>
   </data>
   <data name="SessionCleanup" xml:space="preserve">
-    <value>Session cleanup</value>
+    <value>Vyčistiť reláciu</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="SettingsHomePage" xml:space="preserve">
@@ -1504,11 +1504,11 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Team Conferencing</value>
+    <value>Tímová konferencia</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
-    <value>Team device management</value>
+    <value>Tímová správa zariadení</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
