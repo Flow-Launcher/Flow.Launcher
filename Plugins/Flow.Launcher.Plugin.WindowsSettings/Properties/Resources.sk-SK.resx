@@ -266,7 +266,7 @@
     <value>Zjednodušenie prístupu</value>
   </data>
   <data name="AreaExtras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Extra</value>
   </data>
   <data name="AreaGaming" xml:space="preserve">
     <value>Hranie hier</value>
@@ -630,7 +630,7 @@
     <value>Ochrana pred zneužitím</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Extra</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
@@ -1083,7 +1083,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Offline files</value>
+    <value>Súbory offline</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
@@ -1095,7 +1095,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>On-Screen</value>
+    <value>Na obrazovke</value>
   </data>
   <data name="Os" xml:space="preserve">
     <value>OS</value>
@@ -1110,10 +1110,10 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
-    <value>Other users</value>
+    <value>Ostatní používatelia</value>
   </data>
   <data name="ParentalControls" xml:space="preserve">
-    <value>Parental controls</value>
+    <value>Rodičovská kontrola</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
@@ -1124,7 +1124,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PasswordProperties" xml:space="preserve">
-    <value>Password properties</value>
+    <value>Vlastnosti hesla</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndInputDevices" xml:space="preserve">
@@ -1132,23 +1132,23 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndTouch" xml:space="preserve">
-    <value>Pen and touch</value>
+    <value>Pero a dotykové ovládanie</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndWindowsInk" xml:space="preserve">
-    <value>Pen and Windows Ink</value>
+    <value>Pero a Windows Ink</value>
     <comment>Area Device</comment>
   </data>
   <data name="PeopleNearMe" xml:space="preserve">
-    <value>People Near Me</value>
+    <value>Ľudia v okolí</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PerformanceInformationAndTools" xml:space="preserve">
-    <value>Performance information and tools</value>
+    <value>Informácie o výkone a nástroje</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PermissionsAndHistory" xml:space="preserve">
-    <value>Permissions and history</value>
+    <value>Povolenia a história</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="PersonalizationCategory" xml:space="preserve">
@@ -1176,7 +1176,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Picture" xml:space="preserve">
-    <value>Picture</value>
+    <value>Obrázok</value>
   </data>
   <data name="Pictures" xml:space="preserve">
     <value>Obrázky</value>
@@ -1203,10 +1203,10 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Plugin to search for Windows settings</value>
+    <value>Plugin na vyhľadávanie nastavení systému Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows settings</value>
+    <value>Nastavenia systému Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Napájanie a spánok</value>
@@ -1217,11 +1217,11 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PowerOptions" xml:space="preserve">
-    <value>Power options</value>
+    <value>Možnosti napájania</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Presentation" xml:space="preserve">
-    <value>Presentation</value>
+    <value>Prezentácia</value>
   </data>
   <data name="Printers" xml:space="preserve">
     <value>Tlačiarne</value>
@@ -1293,7 +1293,7 @@
     <comment>Mean red eye effect by over-the-night flights</comment>
   </data>
   <data name="RedGreen" xml:space="preserve">
-    <value>Red-green</value>
+    <value>Červená-zelená</value>
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
@@ -1309,18 +1309,18 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalSettingsProperties" xml:space="preserve">
-    <value>Regional settings properties</value>
+    <value>Vlastnosti regionálnych nastavení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionAndLanguage" xml:space="preserve">
-    <value>Region and language</value>
+    <value>Oblasť a jazyk</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionFormatting" xml:space="preserve">
-    <value>Region formatting</value>
+    <value>Formáty dátumu a času</value>
   </data>
   <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
-    <value>RemoteApp and desktop connections</value>
+    <value>Pripojenia aplikácie RemoteApp a pracovnej plochy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
@@ -1328,7 +1328,7 @@
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
-    <value>Scanners and cameras</value>
+    <value>Skenery a fotoaparáty</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="schedtasks" xml:space="preserve">
@@ -1336,10 +1336,10 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Naplánované</value>
   </data>
   <data name="ScheduledTasks" xml:space="preserve">
-    <value>Scheduled tasks</value>
+    <value>Naplánované úlohy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
@@ -1347,7 +1347,7 @@
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
-    <value>Scroll bars</value>
+    <value>Posúvače</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
     <value>Scroll Lock</value>
@@ -1560,7 +1560,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Odinštalovať</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Usb" xml:space="preserve">
@@ -1584,10 +1584,10 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="VirtualDesktops" xml:space="preserve">
-    <value>Virtual Desktops</value>
+    <value>Virtuálne plochy</value>
   </data>
   <data name="Virus" xml:space="preserve">
-    <value>Virus</value>
+    <value>Vírus</value>
     <comment>Means the virus in computers and software</comment>
   </data>
   <data name="VoiceActivation" xml:space="preserve">
@@ -1602,17 +1602,17 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Wallpaper" xml:space="preserve">
-    <value>Wallpaper</value>
+    <value>Tapeta</value>
   </data>
   <data name="WarmerColor" xml:space="preserve">
-    <value>Warmer color</value>
+    <value>Teplejšia farba</value>
   </data>
   <data name="WelcomeCenter" xml:space="preserve">
-    <value>Welcome center</value>
+    <value>Uvítacie centrum</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WelcomeScreen" xml:space="preserve">
-    <value>Welcome screen</value>
+    <value>Uvítacia obrazovka</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="wgpocpl.cpl" xml:space="preserve">
@@ -1620,7 +1620,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Wheel" xml:space="preserve">
-    <value>Wheel</value>
+    <value>Koliesko</value>
     <comment>Area Device</comment>
   </data>
   <data name="WiFi" xml:space="preserve">
@@ -1636,7 +1636,7 @@
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
-    <value>Window border</value>
+    <value>Okraj okna</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
     <value>Windows Anytime Upgrade</value>
@@ -1671,7 +1671,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
-    <value>Windows Mobility Center</value>
+    <value>Centrum nastavenia mobilných zariadení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsSearch" xml:space="preserve">
@@ -1707,10 +1707,10 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Bezdrôtové</value>
   </data>
   <data name="Workplace" xml:space="preserve">
-    <value>Workplace</value>
+    <value>Pracovisko</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
     <value>Zabezpečenie pracoviska</value>
@@ -1733,7 +1733,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Približovanie</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
 </root>
