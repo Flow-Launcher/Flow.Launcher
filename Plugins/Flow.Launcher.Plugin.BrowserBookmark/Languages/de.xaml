@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Neuer Tab</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Browser aus Pfad festlegen:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Auswählen</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Kopiere url</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Kopiere Url</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Die Url des Lesezeichens in die Zwischenablage kopieren</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Lade Browser-Lesezeichen aus:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser-Name</system:String>
