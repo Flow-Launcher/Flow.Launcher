@@ -59,6 +59,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
+            Notification.Uninstall();
             Environment.Exit(0);
         }
 
