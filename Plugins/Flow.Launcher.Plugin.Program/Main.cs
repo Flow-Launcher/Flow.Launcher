@@ -18,7 +18,7 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable, IDisposable
     {
         internal static Win32[] _win32s { get; set; }
         internal static UWP.Application[] _uwps { get; set; }
@@ -126,6 +126,9 @@ namespace Flow.Launcher.Plugin.Program
 
             if (!(_win32s.Any() && _uwps.Any()))
                 await indexTask;
+            
+            Win32.WatchProgramUpdate(_settings);
+            UWP.WatchUWPInstallation();
         }
 
         public static void IndexWin32Programs()
@@ -209,13 +212,11 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _uwps.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
-                    .FirstOrDefault()
+                _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)!
                     .Enabled = false;
 
             if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _win32s.Where(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
-                    .FirstOrDefault()
+                _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)!
                     .Enabled = false;
 
             _settings.DisabledProgramSources
@@ -247,6 +248,11 @@ namespace Flow.Launcher.Plugin.Program
         public async Task ReloadDataAsync()
         {
             await IndexPrograms();
+        }
+        public void Dispose()
+        {
+            Win32.Dispose();
+            UWP.Dispose();
         }
     }
 }

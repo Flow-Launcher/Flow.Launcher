@@ -12,9 +12,11 @@ using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Collections;
 using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Channels;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -109,7 +111,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         c.SpecialKeyState.ShiftPressed &&
                         !c.SpecialKeyState.AltPressed &&
                         !c.SpecialKeyState.WinPressed
-                    );
+                        );
 
                     var info = new ProcessStartInfo
                     {
@@ -194,6 +196,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return Name;
         }
 
+        public static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
+
+
         private static Win32 Win32Program(string path)
         {
             try
@@ -216,7 +221,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() { Valid = false, Enabled = false };
+                return new Win32()
+                {
+                    Valid = false, Enabled = false
+                };
             }
         }
 
@@ -294,7 +302,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32() { Valid = false, Enabled = false };
+                return new Win32()
+                {
+                    Valid = false, Enabled = false
+                };
             }
         }
 
@@ -305,8 +316,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
-                IgnoreInaccessible = true,
-                RecurseSubdirectories = true
+                IgnoreInaccessible = true, RecurseSubdirectories = true
             }).Where(x => suffixes.Contains(Extension(x)));
         }
 
@@ -544,6 +554,69 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return false;
 
             return UniqueIdentifier == other.UniqueIdentifier;
+        }
+
+        private static IEnumerable<string> GetStartMenuPaths()
+        {
+            var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
+            var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
+            return new[]
+            {
+                directory1, directory2
+            };
+        }
+
+        public static void WatchProgramUpdate(Settings settings)
+        {
+            var paths = new List<string>();
+            if (settings.EnableStartMenuSource)
+                paths.AddRange(GetStartMenuPaths());
+
+            paths.AddRange(from source in settings.ProgramSources where source.Enabled select source.Location);
+
+            foreach (var directory in from path in paths where Directory.Exists(path) select path)
+            {
+                WatchDirectory(directory);
+            }
+
+            _ = Task.Run(MonitorDirectoryChangeAsync);
+        }
+
+        private static Channel<byte> indexQueue = Channel.CreateBounded<byte>(1);
+
+        public static async Task MonitorDirectoryChangeAsync()
+        {
+            var reader = indexQueue.Reader;
+            while (await reader.WaitToReadAsync())
+            {
+                await Task.Delay(500);
+                while (reader.TryRead(out _))
+                {
+                }
+                Main.IndexWin32Programs();
+            }
+        }
+        
+        public static void WatchDirectory(string directory)
+        {
+            if (!Directory.Exists(directory))
+            {
+                throw new ArgumentException("Path Not Exist");
+            }
+            var watcher = new FileSystemWatcher(directory);
+
+            watcher.Created += static (_, _) => indexQueue.Writer.TryWrite(default);
+            watcher.Deleted += static (_, _) => indexQueue.Writer.TryWrite(default);
+            watcher.EnableRaisingEvents = true;
+            watcher.IncludeSubdirectories = true;
+        }
+
+        public static void Dispose()
+        {
+            foreach (var fileSystemWatcher in Watchers)
+            {
+                fileSystemWatcher.Dispose();
+            }
         }
     }
 }
