@@ -20,6 +20,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 var bookmarkPath = Path.Combine(profile, "Bookmarks");
                 if (!File.Exists(bookmarkPath))
                     continue;
+                
+                Main.RegisterBookmarkFile(bookmarkPath);
 
                 var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
                 bookmarks.AddRange(LoadBookmarksFromFile(bookmarkPath, source));
@@ -31,6 +33,9 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             if (!File.Exists(path))
                 return new();
+
+            Main.RegisterBookmarkFile(path);
+            
             var bookmarks = new List<Bookmark>();
             using var jsonDocument = JsonDocument.Parse(File.ReadAllText(path));
             if (!jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))

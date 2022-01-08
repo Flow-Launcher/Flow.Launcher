@@ -3,6 +3,10 @@ using System.Linq;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.SharedModels;
+using Microsoft.AspNetCore.Authentication;
+using System.IO;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 {
@@ -16,6 +20,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
             return StringMatcher.FuzzySearch(queryString, bookmark.Url);
         }
+
 
         internal static List<Bookmark> LoadAllBookmarks(Settings setting)
         {

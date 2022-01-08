@@ -29,6 +29,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 return new List<Bookmark>();
 
             var bookmarkList = new List<Bookmark>();
+            
+            Main.RegisterBookmarkFile(PlacesPath);
 
             // create the connection string and init the connection
             string dbPath = string.Format(dbPathFormat, PlacesPath);
