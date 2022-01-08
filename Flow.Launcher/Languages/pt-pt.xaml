@@ -105,9 +105,9 @@
     <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para os resultados</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado através do teclado</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado com o teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho em conjunto com os resultados.</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho perto dos resultados</system:String>
     <system:String x:Key="customQueryHotkey">Tecla de atalho personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="delete">Eliminar</system:String>
@@ -160,7 +160,7 @@
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_tips">Especifique a localização do executável do gestor de ficheiros e, eventualmente, alguns argumentos. Os argumentos padrão são &quot;%d&quot; e o caminho é introduzido nesse local. Por exemplo, se necessitar de um comando como &quot;totalcmd.exe /A c:\windows&quot;, o argumento é /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; é o argumento que representa o caminho do ficheiro. É utilizado para dar ênfase ao nome do ficheiro ou da pasta se utilizar um gestor de ficheiros não nativo. Este argumento apenas está disponível para o item &quot;Arg para ficheiro&quot;. Se o seu gestor de ficheiros não possuir esta funcionalidade, pode utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; é o argumento que representa o caminho do ficheiro. É utilizado para dar ênfase ao nome do ficheiro ou da pasta se utilizar um gestor de ficheiros não nativo. Este argumento apenas está disponível para o item &quot;Argumento para ficheiro&quot;. Se o seu gestor de ficheiros não possuir esta funcionalidade, pode utilizar &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">Gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_profile_name">Nome do perfil</system:String>
     <system:String x:Key="fileManager_path">Caminho do gestor de ficheiros</system:String>
@@ -252,12 +252,11 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="Welcome_Page1_Text02">Antes de utilizar a aplicação, este assistente ajuda a configurar Flow Launcher. Caso pretenda, pode ignorar este passo. Por favor escolha um idioma.</system:String>
     <system:String x:Key="Welcome_Page2_Title">Pesquise ficheiros/pastas e execute aplicações no seu computador
 </system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Pode pesquisar aplicações, ficheiros, marcadores, YouTube, Twitter e muito mais. Tudo isto é efetuado através do teclado, dispensando a utilização do rato
-</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher é iniciado com a tecla de atalho abaixo. Experimente. Para alterar esta tecla de atalho, clique no valor e escolha a combinação de teclas a utilizar.</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Pode pesquisar aplicações, ficheiros, marcadores, YouTube, Twitter e muito mais. Tudo isto é efetuado através do teclado, dispensando a utilização do rato</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher é iniciado com a tecla de atalho abaixo. Experimente. Para alterar esta tecla de atalho, clique no valor e escolha a combinação de teclas a utilizar</system:String>
     <system:String x:Key="Welcome_Page3_Title">Teclas de atalho</system:String>
     <system:String x:Key="Welcome_Page4_Title">Palavras-chave e comandos</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Pesquise na Web, inicie aplicações e execute funções através dos nossos plugins. Algumas ações são invocadas com palavras-chave mas, se quiser, podem ser invocadas sem essas palavras-chave. Teste as consultas abaixo para experimentar.</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Pesquise na Web, inicie aplicações e execute funções com os nossos plugins. Algumas ações são invocadas com palavras-chave mas, se quiser, podem ser invocadas sem essas palavras-chave. Teste as consultas abaixo para experimentar.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Vamos iniciar Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Terminado. Desfrute de Flow Launcher. Não se esqueça da tecla de atalho :-)</system:String>
 
