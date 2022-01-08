@@ -141,7 +141,7 @@
     <system:String x:Key="about">Acerca</system:String>
     <system:String x:Key="website">Site</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Documentos</system:String>
+    <system:String x:Key="docs">Documentação</system:String>
     <system:String x:Key="version">Versão</system:String>
     <system:String x:Key="about_activate_times">Ativou o Flow Launcher {0} vezes</system:String>
     <system:String x:Key="checkUpdates">Procurar atualizações</system:String>
@@ -208,7 +208,7 @@
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versão</system:String>
     <system:String x:Key="reportWindow_time">Hora</system:String>
-    <system:String x:Key="reportWindow_reproduce">Indique-nos, por favor, como é que o erro ocorreu para que o possamos corrigir</system:String>
+    <system:String x:Key="reportWindow_reproduce">Indique-nos como é que o erro ocorreu para que o possamos corrigir</system:String>
     <system:String x:Key="reportWindow_send_report">Enviar relatório</system:String>
     <system:String x:Key="reportWindow_cancel">Cancelar</system:String>
     <system:String x:Key="reportWindow_general">Geral</system:String>
