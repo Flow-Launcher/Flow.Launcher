@@ -18,6 +18,7 @@ using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Runtime.Versioning;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -251,12 +252,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             watcher.EnableRaisingEvents = true;
         }
 
-        public static void WatchUWPInstallation()
+        public static void WatchPackageChange()
         {
-            PackageCatalog.OpenForCurrentUser().PackageStatusChanged += (_, _) =>
-            {
-                Task.Delay(10000).ContinueWith(t => Main.IndexUwpPrograms());
-            };
+            if (Environment.OSVersion.Version.Build >= 19041)
+                PackageCatalog.OpenForCurrentUser().PackageStatusChanged += (_, _) =>
+                {
+                    Task.Delay(10000).ContinueWith(t => Main.IndexUwpPrograms());
+                };
         }
 
         public override string ToString()

@@ -128,7 +128,7 @@ namespace Flow.Launcher.Plugin.Program
                 await indexTask;
             
             Win32.WatchProgramUpdate(_settings);
-            UWP.WatchUWPInstallation();
+            UWP.WatchPackageChange();
         }
 
         public static void IndexWin32Programs()
