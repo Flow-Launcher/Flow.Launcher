@@ -211,19 +211,28 @@ namespace Flow.Launcher
 
         public void OpenUrl(string url, bool? inPrivate = null)
         {
-            var browserInfo = _settingsVM.Settings.CustomBrowser;
-
-            var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
-
-            if (browserInfo.OpenInTab)
+            var uri = new Uri(url);
+            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
-            }
-            else
-            {
-                url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                var browserInfo = _settingsVM.Settings.CustomBrowser;
+
+                var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
+
+                if (browserInfo.OpenInTab)
+                {
+                    url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
+                else
+                {
+                    url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
+                return;
             }
 
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = url, UseShellExecute = true
+            })?.Dispose();
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
