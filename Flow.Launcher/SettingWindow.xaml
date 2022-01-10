@@ -2004,6 +2004,32 @@
                                         Style="{DynamicResource SettingGroupBox}">
                                         <StackPanel Orientation="Vertical">
                                             <Border
+                                                Name="WinRGuide"
+                                                Margin="0"
+                                                Background="{DynamicResource GuideAlertBG}"
+                                                BorderThickness="0,0,0,1"
+                                                CornerRadius="5 5 0 0"
+                                                Style="{DynamicResource SettingGroupBox}">
+                                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                                    <StackPanel Style="{StaticResource TextPanel}">
+                                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource WinRHotkeyAlert}" />
+                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource WinRHotkeyAlertToolTip}" />
+                                                    </StackPanel>
+                                                    <StackPanel
+                                                        Grid.Column="2"
+                                                        Margin="0,4,18,4"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal" />
+                                                    <TextBlock Foreground="{DynamicResource GuideAlertCircleFill}" Style="{StaticResource Glyph}">
+                                                        &#xf136;
+                                                    </TextBlock>
+                                                    <TextBlock Foreground="{DynamicResource Color02B}" Style="{StaticResource Glyph}">
+                                                        &#xf13c;
+                                                    </TextBlock>
+
+                                                </ItemsControl>
+                                            </Border>
+                                            <Border
                                                 Margin="0"
                                                 BorderThickness="0"
                                                 Style="{DynamicResource SettingGroupBox}">
