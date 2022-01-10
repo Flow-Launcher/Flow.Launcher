@@ -180,8 +180,8 @@
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
     <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newtab">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
 
     <!--  Priority Setting Dialog  -->

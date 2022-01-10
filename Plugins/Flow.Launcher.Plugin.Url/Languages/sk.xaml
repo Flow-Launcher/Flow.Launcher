@@ -5,8 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_new_window">Nové okno</system:String>
     <system:String x:Key="flowlauncher_plugin_new_tab">Nová karta</system:String>
     
-    <system:String x:Key="flowlauncher_plugin_url_open_url">Otvoriť url:{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">Adresa URL sa nedá otvoriť: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_open_url">Otvoriť URL:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">Adresa URL sa nedá otvoriť:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">Adresa URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Otvoriť zadanú adresu URL z Flow Launchera</system:String>
