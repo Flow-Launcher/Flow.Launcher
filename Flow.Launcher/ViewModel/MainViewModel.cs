@@ -644,7 +644,7 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg("Success");
+                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
                         return false;
                     }
                 };
