@@ -59,7 +59,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             else
             {
-                _downloadManifestTask = PluginsManifest.UpdateTask;
+                _downloadManifestTask = PluginsManifest.UpdateManifestAsync();
                 if (!silent)
                     _downloadManifestTask.ContinueWith(_ =>
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
@@ -181,10 +181,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
-            if (!PluginsManifest.UserPlugins.Any())
-            {
-                await UpdateManifestAsync();
-            }
+            await UpdateManifestAsync();
 
             token.ThrowIfCancellationRequested();
 
@@ -371,10 +368,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            if (!PluginsManifest.UserPlugins.Any())
-            {
-                await UpdateManifestAsync();
-            }
+            await UpdateManifestAsync();
 
             token.ThrowIfCancellationRequested();
 

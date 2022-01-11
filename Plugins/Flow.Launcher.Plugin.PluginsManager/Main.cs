@@ -24,8 +24,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal PluginsManager pluginManager;
 
-        private DateTime lastUpdateTime = DateTime.MinValue;
-
         public Control CreateSettingPanel()
         {
             return new PluginsManagerSettings(viewModel);
@@ -38,12 +36,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            _manifestUpdateTask = pluginManager
-                .UpdateManifestAsync(true)
-                .ContinueWith(_ =>
-                {
-                    lastUpdateTime = DateTime.Now;
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
             return Task.CompletedTask;
         }
@@ -53,22 +45,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return contextMenu.LoadContextMenus(selectedResult);
         }
 
-        private Task _manifestUpdateTask = Task.CompletedTask;
-
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
             var search = query.Search;
 
             if (string.IsNullOrWhiteSpace(search))
                 return pluginManager.GetDefaultHotKeys();
-
-            if ((DateTime.Now - lastUpdateTime).TotalHours > 12 && _manifestUpdateTask.IsCompleted) // 12 hours
-            {
-                _manifestUpdateTask = pluginManager.UpdateManifestAsync().ContinueWith(t =>
-                {
-                    lastUpdateTime = DateTime.Now;
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
-            }
 
             return search switch
             {
@@ -100,7 +82,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public async Task ReloadDataAsync()
         {
             await pluginManager.UpdateManifestAsync();
-            lastUpdateTime = DateTime.Now;
         }
     }
 }
