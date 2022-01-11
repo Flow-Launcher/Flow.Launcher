@@ -1,3 +1,4 @@
+﻿using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,6 @@ namespace Flow.Launcher.Core.ExternalPlugins
     public static class PluginsManifest
     {
         private const string manifestFileUrl = "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json";
-
-        private static HttpClient httpClient = new HttpClient();
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
@@ -30,7 +29,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 var request = new HttpRequestMessage(HttpMethod.Get, manifestFileUrl);
                 request.Headers.Add("If-None-Match", latestEtag);
 
-                var response = await httpClient.SendAsync(request, token).ConfigureAwait(false);
+                var response = await Http.SendAsync(request, token).ConfigureAwait(false);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
