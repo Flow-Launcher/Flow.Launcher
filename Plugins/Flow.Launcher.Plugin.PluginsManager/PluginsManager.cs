@@ -51,7 +51,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private Task _downloadManifestTask = Task.CompletedTask;
 
-        internal Task UpdateManifestAsync(bool silent = false)
+        internal Task UpdateManifestAsync(CancellationToken token = default, bool silent = false)
         {
             if (_downloadManifestTask.Status == TaskStatus.Running)
             {
@@ -59,7 +59,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             else
             {
-                _downloadManifestTask = PluginsManifest.UpdateManifestAsync();
+                _downloadManifestTask = PluginsManifest.UpdateManifestAsync(token);
                 if (!silent)
                     _downloadManifestTask.ContinueWith(_ =>
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
@@ -181,9 +181,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
         {
-            await UpdateManifestAsync();
-
-            token.ThrowIfCancellationRequested();
+            await UpdateManifestAsync(token);
 
             var autocompletedResults = AutoCompleteReturnAllResults(search,
                 Settings.HotkeyUpdate,
@@ -368,9 +366,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
         {
-            await UpdateManifestAsync();
-
-            token.ThrowIfCancellationRequested();
+            await UpdateManifestAsync(token);
 
             var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty, StringComparison.OrdinalIgnoreCase).Trim();
 

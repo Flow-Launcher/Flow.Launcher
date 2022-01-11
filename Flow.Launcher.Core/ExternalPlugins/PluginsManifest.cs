@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -21,24 +21,24 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; } = new List<UserPlugin>();
 
-        public static async Task UpdateManifestAsync()
+        public static async Task UpdateManifestAsync(CancellationToken token = default)
         {
             try
             {
-                await manifestUpdateLock.WaitAsync().ConfigureAwait(false);
+                await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
 
                 var request = new HttpRequestMessage(HttpMethod.Get, manifestFileUrl);
                 request.Headers.Add("If-None-Match", latestEtag);
 
-                var response = await httpClient.SendAsync(request).ConfigureAwait(false);
+                var response = await httpClient.SendAsync(request, token).ConfigureAwait(false);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     Log.Info($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Fetched plugins from manifest repo");
 
-                    var json = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
 
-                    UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json).ConfigureAwait(false);
+                    UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json, cancellationToken: token).ConfigureAwait(false);
 
                     latestEtag = response.Headers.ETag.Tag;
                 }
