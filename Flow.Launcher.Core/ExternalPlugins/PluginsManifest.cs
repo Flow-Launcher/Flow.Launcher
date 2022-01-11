@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,7 +11,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public static class PluginsManifest
     {
-        private const string manifestFileUrl = "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json";
+        private const string manifestFileUrl = "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json";
 
         private static HttpClient httpClient = new HttpClient();
 
