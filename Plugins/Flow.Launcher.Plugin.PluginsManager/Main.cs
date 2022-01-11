@@ -47,23 +47,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var search = query.Search;
-
-            if (string.IsNullOrWhiteSpace(search))
+            if (string.IsNullOrWhiteSpace(query.Search))
                 return pluginManager.GetDefaultHotKeys();
 
-            return search switch
+            return query.FirstSearch switch
             {
                 //search could be url, no need ToLower() when passed in
-                var s when s.StartsWith(Settings.HotKeyInstall, StringComparison.OrdinalIgnoreCase)
-                    => await pluginManager.RequestInstallOrUpdate(search, token),
-                var s when s.StartsWith(Settings.HotkeyUninstall, StringComparison.OrdinalIgnoreCase)
-                    => pluginManager.RequestUninstall(search),
-                var s when s.StartsWith(Settings.HotkeyUpdate, StringComparison.OrdinalIgnoreCase)
-                    => await pluginManager.RequestUpdate(search, token),
+                var s when s.Equals(Settings.HotKeyInstall, StringComparison.OrdinalIgnoreCase)
+                    => await pluginManager.RequestInstallOrUpdate(query.SecondToEndSearch, token),
+                var s when s.Equals(Settings.HotkeyUninstall, StringComparison.OrdinalIgnoreCase)
+                    => pluginManager.RequestUninstall(query.SecondToEndSearch),
+                var s when s.Equals(Settings.HotkeyUpdate, StringComparison.OrdinalIgnoreCase)
+                    => await pluginManager.RequestUpdate(query.SecondToEndSearch, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
-                    hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
+                    hotkey.Score = StringMatcher.FuzzySearch(query.Search, hotkey.Title).Score;
                     return hotkey.Score > 0;
                 }).ToList()
             };

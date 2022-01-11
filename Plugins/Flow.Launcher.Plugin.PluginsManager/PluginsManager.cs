@@ -186,16 +186,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             await UpdateManifestAsync(token);
 
-            var autocompletedResults = AutoCompleteReturnAllResults(search,
-                Settings.HotkeyUpdate,
-                "Update",
-                "Select a plugin to update");
-
-            if (autocompletedResults.Any())
-                return autocompletedResults;
-
-            var uninstallSearch = search.Replace(Settings.HotkeyUpdate, string.Empty, StringComparison.OrdinalIgnoreCase).TrimStart();
-
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
                 join pluginFromManifest in PluginsManifest.UserPlugins
@@ -283,7 +273,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
                     });
 
-            return Search(results, uninstallSearch);
+            return Search(results, search);
         }
 
         internal bool PluginExists(string id)
@@ -367,15 +357,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(contructedUrlPart));
         }
 
-        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string searchName, CancellationToken token)
+        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token)
         {
             await UpdateManifestAsync(token);
 
-            var searchNameWithoutKeyword = searchName.Replace(Settings.HotKeyInstall, string.Empty, StringComparison.OrdinalIgnoreCase).Trim();
-
-            if (Uri.IsWellFormedUriString(searchNameWithoutKeyword, UriKind.Absolute)
-                && searchNameWithoutKeyword.Split('.').Last() == zip)
-                return InstallFromWeb(searchNameWithoutKeyword);
+            if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
+                && search.Split('.').Last() == zip)
+                return InstallFromWeb(search);
 
             var results =
                 PluginsManifest
@@ -401,7 +389,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             ContextData = x
                         });
 
-            return Search(results, searchNameWithoutKeyword);
+            return Search(results, search);
         }
 
         private void Install(UserPlugin plugin, string downloadedFilePath)
@@ -461,16 +449,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal List<Result> RequestUninstall(string search)
         {
-            var autocompletedResults = AutoCompleteReturnAllResults(search,
-                Settings.HotkeyUninstall,
-                "Uninstall",
-                "Select a plugin to uninstall");
-
-            if (autocompletedResults.Any())
-                return autocompletedResults;
-
-            var uninstallSearch = search.Replace(Settings.HotkeyUninstall, string.Empty, StringComparison.OrdinalIgnoreCase).TrimStart();
-
             var results = Context.API
                 .GetAllPlugins()
                 .Select(x =>
@@ -501,7 +479,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         }
                     });
 
-            return Search(results, uninstallSearch);
+            return Search(results, search);
         }
 
         private void Uninstall(PluginMetadata plugin, bool removedSetting = true)
@@ -514,36 +492,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             // Marked for deletion. Will be deleted on next start up
             using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
-        }
-
-        private List<Result> AutoCompleteReturnAllResults(string search, string hotkey, string title, string subtitle)
-        {
-            if (!string.IsNullOrEmpty(search)
-                && hotkey.StartsWith(search)
-                && (hotkey != search || !search.StartsWith(hotkey)))
-            {
-                return
-                    new List<Result>
-                    {
-                        new Result
-                        {
-                            Title = title,
-                            IcoPath = icoPath,
-                            SubTitle = subtitle,
-                            Action = e =>
-                            {
-                                Context
-                                    .API
-                                    .ChangeQuery(
-                                        $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {hotkey} ");
-
-                                return false;
-                            }
-                        }
-                    };
-            }
-
-            return new List<Result>();
         }
 
         private bool SameOrLesserPluginVersionExists(string metadataPath)
