@@ -226,9 +226,9 @@
     <system:String x:Key="update_flowlauncher_fail">更新失败</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">检查网络是否可以连接至github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此次更新需要重启Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">下列文件会被更新</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">下列文件会被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新文件</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">更新日志</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">更新日志</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">跳过</system:String>
