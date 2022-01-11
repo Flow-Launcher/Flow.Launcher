@@ -77,9 +77,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     Title = Settings.HotKeyInstall,
                     IcoPath = icoPath,
+                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotKeyInstall} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery("pm install ");
+                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotKeyInstall} ");
                         return false;
                     }
                 },
@@ -87,9 +88,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     Title = Settings.HotkeyUninstall,
                     IcoPath = icoPath,
+                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUninstall} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery("pm uninstall ");
+                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUninstall} ");
                         return false;
                     }
                 },
@@ -97,9 +99,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 {
                     Title = Settings.HotkeyUpdate,
                     IcoPath = icoPath,
+                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUpdate} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery("pm update ");
+                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUpdate} ");
                         return false;
                     }
                 }
