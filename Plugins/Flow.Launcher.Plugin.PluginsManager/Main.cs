@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new PluginsManagerSettings(viewModel);
         }
 
-        public Task InitAsync(PluginInitContext context)
+        public async Task InitAsync(PluginInitContext context)
         {
             Context = context;
             Settings = context.API.LoadSettingJsonStorage<Settings>();
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
 
-            return Task.CompletedTask;
+            await pluginManager.UpdateManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
