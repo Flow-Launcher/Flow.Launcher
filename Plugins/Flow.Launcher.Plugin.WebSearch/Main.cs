@@ -41,8 +41,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             var results = new List<Result>();
 
             foreach (SearchSource searchSource in _settings.SearchSources.Where(o => (o.ActionKeyword == query.ActionKeyword ||
-                                                                  o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
-                                                && o.Enabled))
+                                                                                      o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
+                                                                                     && o.Enabled))
             {
                 string keyword = string.Empty;
                 keyword = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? query.ToString() : query.Search;
@@ -85,8 +85,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
                 {
-                    Results = results,
-                    Query = query
+                    Results = results, Query = query
                 });
 
                 await UpdateResultsFromSuggestionAsync(results, keyword, subtitle, searchSource, query, token).ConfigureAwait(false);
@@ -105,11 +104,11 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (_settings.EnableSuggestion)
             {
                 var suggestions = await SuggestionsAsync(keyword, subtitle, searchSource, token).ConfigureAwait(false);
-                if (token.IsCancellationRequested || !suggestions.Any())
+                var enumerable = suggestions?.ToList();
+                if (token.IsCancellationRequested || enumerable is not { Count: > 0 })
                     return;
-
-
-                results.AddRange(suggestions);
+                
+                results.AddRange(enumerable);
 
                 token.ThrowIfCancellationRequested();
             }
@@ -118,32 +117,31 @@ namespace Flow.Launcher.Plugin.WebSearch
         private async Task<IEnumerable<Result>> SuggestionsAsync(string keyword, string subtitle, SearchSource searchSource, CancellationToken token)
         {
             var source = _settings.SelectedSuggestion;
-            if (source != null)
+            if (source == null)
             {
-                //Suggestions appear below actual result, and appear above global action keyword match if non-global;
-                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
-
-                var suggestions = await source.Suggestions(keyword, token).ConfigureAwait(false);
-
-                token.ThrowIfCancellationRequested();
-
-                var resultsFromSuggestion = suggestions?.Select(o => new Result
-                {
-                    Title = o,
-                    SubTitle = subtitle,
-                    Score = score,
-                    IcoPath = searchSource.IconPath,
-                    ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
-                    Action = c =>
-                    {
-                        _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
-
-                        return true;
-                    }
-                });
-                return resultsFromSuggestion;
+                return new List<Result>();
             }
-            return new List<Result>();
+            //Suggestions appear below actual result, and appear above global action keyword match if non-global;
+            var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
+
+            var suggestions = await source.SuggestionsAsync(keyword, token).ConfigureAwait(false);
+
+            token.ThrowIfCancellationRequested();
+
+            var resultsFromSuggestion = suggestions?.Select(o => new Result
+            {
+                Title = o,
+                SubTitle = subtitle,
+                Score = score,
+                IcoPath = searchSource.IconPath,
+                Action = c =>
+                {
+                    _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
+
+                    return true;
+                }
+            });
+            return resultsFromSuggestion;
         }
 
         public Task InitAsync(PluginInitContext context)
@@ -167,7 +165,9 @@ namespace Flow.Launcher.Plugin.WebSearch
                 // Custom images directory is in the WebSearch's data location folder 
                 var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
                 CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
-            };
+            }
+
+            ;
         }
 
         #region ISettingProvider Members

@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Google : SuggestionSource
     {
-        public override async Task<List<string>> Suggestions(string query, CancellationToken token)
+        public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 return results.EnumerateArray().Select(o => o.GetString()).ToList();
 
             }
-            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
+            catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
                 return null;
