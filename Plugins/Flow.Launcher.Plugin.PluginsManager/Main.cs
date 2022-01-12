@@ -50,15 +50,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (string.IsNullOrWhiteSpace(query.Search))
                 return pluginManager.GetDefaultHotKeys();
 
-            return query.FirstSearch switch
+            return query.FirstSearch.ToLower() switch
             {
                 //search could be url, no need ToLower() when passed in
-                var s when s.Equals(Settings.HotKeyInstall, StringComparison.OrdinalIgnoreCase)
-                    => await pluginManager.RequestInstallOrUpdate(query.SecondToEndSearch, token),
-                var s when s.Equals(Settings.HotkeyUninstall, StringComparison.OrdinalIgnoreCase)
-                    => pluginManager.RequestUninstall(query.SecondToEndSearch),
-                var s when s.Equals(Settings.HotkeyUpdate, StringComparison.OrdinalIgnoreCase)
-                    => await pluginManager.RequestUpdate(query.SecondToEndSearch, token),
+                Settings.InstallCommand => await pluginManager.RequestInstallOrUpdate(query.SecondToEndSearch, token),
+                Settings.UninstallCommand => pluginManager.RequestUninstall(query.SecondToEndSearch),
+                Settings.UpdateCommand => await pluginManager.RequestUpdate(query.SecondToEndSearch, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(query.Search, hotkey.Title).Score;

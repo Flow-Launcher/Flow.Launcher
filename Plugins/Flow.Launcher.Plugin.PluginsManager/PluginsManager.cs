@@ -75,34 +75,34 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 new Result()
                 {
-                    Title = Settings.HotKeyInstall,
+                    Title = Settings.InstallCommand,
                     IcoPath = icoPath,
-                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotKeyInstall} ",
+                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.InstallCommand} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotKeyInstall} ");
+                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.InstallCommand} ");
                         return false;
                     }
                 },
                 new Result()
                 {
-                    Title = Settings.HotkeyUninstall,
+                    Title = Settings.UninstallCommand,
                     IcoPath = icoPath,
-                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUninstall} ",
+                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UninstallCommand} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUninstall} ");
+                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UninstallCommand} ");
                         return false;
                     }
                 },
                 new Result()
                 {
-                    Title = Settings.HotkeyUpdate,
+                    Title = Settings.UpdateCommand,
                     IcoPath = icoPath,
-                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUpdate} ",
+                    AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UpdateCommand} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.HotkeyUpdate} ");
+                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UpdateCommand} ");
                         return false;
                     }
                 }
@@ -122,7 +122,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         Context
                             .API
                             .ChangeQuery(
-                                $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.HotkeyUpdate} {plugin.Name}");
+                                $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {plugin.Name}");
 
                     var mainWindow = Application.Current.MainWindow;
                     mainWindow.Show();
