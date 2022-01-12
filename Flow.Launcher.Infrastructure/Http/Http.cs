@@ -159,7 +159,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token = default)
         {
-            return await client.SendAsync(request, token);
+            return await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
         }
     }
 }
