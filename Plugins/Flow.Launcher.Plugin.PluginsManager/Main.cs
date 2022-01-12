@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
     {
         internal PluginInitContext Context { get; set; }
 
@@ -75,11 +75,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_pluginsmanager_plugin_description");
-        }
-
-        public async Task ReloadDataAsync()
-        {
-            await pluginManager.UpdateManifestAsync();
         }
     }
 }
