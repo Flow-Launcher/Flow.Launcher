@@ -242,9 +242,9 @@
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy k github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Nasledujúce súbory budú aktualizované</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Aktualizovať popis</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Aktualizovať popis</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Preskočiť</system:String>
@@ -279,7 +279,7 @@
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Príkazový riadok</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth v nastaveniach Windowsu</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
