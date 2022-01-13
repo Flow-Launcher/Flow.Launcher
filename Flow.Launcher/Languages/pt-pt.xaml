@@ -241,9 +241,9 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="update_flowlauncher_fail">Falha ao atualizar</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Verifique a sua ligação e as definições do proxy estabelecidas para github-cloud.s3.amazonaws.com</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Esta atualização irá reiniciar o Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Os seguintes ficheiros serão atualizados</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Os seguintes ficheiros serão atualizados</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Atualizar ficheiros</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Atualizar descrição</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Atualizar descrição</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Ignorar</system:String>
@@ -279,7 +279,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Comando de consola</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth nas definições do Windows</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
