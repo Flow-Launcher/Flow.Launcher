@@ -84,7 +84,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Duckduckgo",
+                Title = "DuckDuckGo",
                 ActionKeyword = "duckduckgo",
                 Icon = "duckduckgo.png",
                 Url = "https://duckduckgo.com/?q={q}",
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Github",
+                Title = "GitHub",
                 ActionKeyword = "github",
                 Icon = "github.png",
                 Url = "https://github.com/search?q={q}",
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Github Gist",
+                Title = "GitHub Gist",
                 ActionKeyword = "gist",
                 Icon = "gist.png",
                 Url = "https://gist.github.com/search?q={q}",
@@ -124,7 +124,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Wolframalpha",
+                Title = "WolframAlpha",
                 ActionKeyword = "wolframalpha",
                 Icon = "wolframalpha.png",
                 Url = "https://www.wolframalpha.com/input/?i={q}",
@@ -132,7 +132,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Stackoverflow",
+                Title = "Stack Overflow",
                 ActionKeyword = "stackoverflow",
                 Icon = "stackoverflow.png",
                 Url = "https://stackoverflow.com/search?q={q}",
@@ -148,7 +148,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Google Image",
+                Title = "Google Images",
                 ActionKeyword = "image",
                 Icon = "google.png",
                 Url = "https://www.google.com/search?q={q}&tbm=isch",
@@ -156,7 +156,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             },
             new SearchSource
             {
-                Title = "Youtube",
+                Title = "YouTube",
                 ActionKeyword = "youtube",
                 Icon = "youtube.png",
                 Url = "https://www.youtube.com/results?search_query={q}",
