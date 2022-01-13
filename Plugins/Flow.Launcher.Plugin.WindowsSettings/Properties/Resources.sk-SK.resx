@@ -978,7 +978,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFCTransactions" xml:space="preserve">
-    <value>NFC Transactions</value>
+    <value>Transakcia cez NFC</value>
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
@@ -1040,7 +1040,7 @@
     <value>Pridané v systéme Windows 10, verzia 2004 (zostava 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Dostupné iba ak "nastavenia aplikácii" sú nainštalované, napr. treťou stranou.</value>
+    <value>Dostupné iba ak sú nainštalované "nastavenia aplikácii", napr. treťou stranou.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
     <value>Dostupné iba vtedy, ak je prítomný hardvér touchpadu.</value>
