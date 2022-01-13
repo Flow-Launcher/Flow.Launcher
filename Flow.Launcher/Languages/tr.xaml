@@ -242,9 +242,9 @@
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Bu güncelleme Flow Launcher'u yeniden başlatacaktır</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Aşağıdaki dosyalar güncelleştirilecektir</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Aşağıdaki dosyalar güncelleştirilecektir</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Güncellenecek dosyalar</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Güncelleme açıklaması</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Güncelleme açıklaması</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
@@ -279,7 +279,7 @@
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Setting</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
