@@ -229,7 +229,7 @@ namespace Flow.Launcher.ViewModel
             AutocompleteQueryCommand = new RelayCommand(_ =>
             {
                 var result = SelectedResults.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
                 {
                     var autoCompleteText = result.Title;
 
