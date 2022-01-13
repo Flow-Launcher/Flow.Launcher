@@ -132,8 +132,8 @@
     <system:String x:Key="update_flowlauncher_update">Mettre à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annuler</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Flow Launcher doit redémarrer pour installer cette mise à jour</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Les fichiers suivants seront mis à jour</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Les fichiers suivants seront mis à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Fichiers mis à jour</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Description de la mise à jour</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Description de la mise à jour</system:String>
     
 </ResourceDictionary>
