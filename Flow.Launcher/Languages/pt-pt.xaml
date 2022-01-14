@@ -279,7 +279,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Comando de consola</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth nas definições do Windows</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
