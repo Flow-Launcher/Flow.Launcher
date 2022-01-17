@@ -153,7 +153,6 @@ namespace Flow.Launcher
             DispatcherUnhandledException += ErrorReporting.DispatcherUnhandledException;
         }
 
-
         /// <summary>
         /// let exception throw as normal is better for Debug
         /// </summary>
