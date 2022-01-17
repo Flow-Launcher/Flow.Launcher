@@ -166,9 +166,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 // Custom images directory is in the WebSearch's data location folder 
                 var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
                 CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
-            }
-
-            ;
+            };
         }
 
         #region ISettingProvider Members
