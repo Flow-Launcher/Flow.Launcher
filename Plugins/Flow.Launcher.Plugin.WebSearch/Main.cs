@@ -85,7 +85,8 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
                 {
-                    Results = results, Query = query
+                    Results = results,
+                    Query = query
                 });
 
                 await UpdateResultsFromSuggestionAsync(results, keyword, subtitle, searchSource, query, token).ConfigureAwait(false);
