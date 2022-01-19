@@ -135,6 +135,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 SubTitle = subtitle,
                 Score = score,
                 IcoPath = searchSource.IconPath,
+                ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                 Action = c =>
                 {
                     _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
