@@ -13,12 +13,12 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-
 
 namespace Flow.Launcher.ViewModel
 {
@@ -252,6 +252,14 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
+            BackspaceCommand = new RelayCommand(index =>
+            {
+                var path = QueryText;
+
+                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+                ChangeQueryText(FilesFolders.GetPreviousExistingDirectory(FilesFolders.IsLocationPathString, path.TrimEnd('\\')));
+            });
+
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -398,6 +406,7 @@ namespace Flow.Launcher.ViewModel
         public string PluginIconPath { get; set; } = null;
 
         public ICommand EscCommand { get; set; }
+        public ICommand BackspaceCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
         public ICommand SelectPrevItemCommand { get; set; }
         public ICommand SelectNextPageCommand { get; set; }

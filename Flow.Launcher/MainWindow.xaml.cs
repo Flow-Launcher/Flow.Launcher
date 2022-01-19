@@ -18,6 +18,8 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher
 {
@@ -497,6 +499,20 @@ namespace Flow.Launcher
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
+                    }
+                    break;
+                case Key.Back:
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
+                            && FilesFolders.IsLocationPathString(QueryTextBox.Text))
+                        {
+
+                            _viewModel.BackspaceCommand.Execute(null);
+                            e.Handled = true;
+                        }
                     }
                     break;
                 default:
