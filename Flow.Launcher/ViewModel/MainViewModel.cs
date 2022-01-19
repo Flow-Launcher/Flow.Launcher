@@ -20,7 +20,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.IO;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -230,7 +229,10 @@ namespace Flow.Launcher.ViewModel
 
             BackspaceCommand = new RelayCommand(index =>
             {
-                ChangeQueryText(Path.GetDirectoryName(QueryText));
+                var path = QueryText;
+
+                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+                ChangeQueryText(FilesFolders.GetPreviousExistingDirectory(FilesFolders.IsLocationPathString, path.TrimEnd('\\')));
             });
 
             LoadContextMenuCommand = new RelayCommand(_ =>

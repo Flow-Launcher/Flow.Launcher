@@ -18,6 +18,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher
 {
@@ -476,7 +477,7 @@ namespace Flow.Launcher
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                            && !string.IsNullOrEmpty(QueryTextBox.Text) && QueryTextBox.Text.Contains(":\\"))
+                            && FilesFolders.IsLocationPathString(QueryTextBox.Text))
                         {
 
                             _viewModel.BackspaceCommand.Execute(null);
