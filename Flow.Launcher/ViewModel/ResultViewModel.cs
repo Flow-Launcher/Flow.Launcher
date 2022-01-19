@@ -62,8 +62,6 @@ namespace Flow.Launcher.ViewModel
             Settings = settings;
         }
 
-        
-
         private Settings Settings { get; }
 
         public Visibility ShowOpenResultHotkey =>
