@@ -80,19 +80,20 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="100"
                     Height="30"
+                    MinWidth="140"
                     Margin="0,0,5,0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
 
                 <Button
-                    Width="100"
                     Height="30"
+                    MinWidth="140"
                     Margin="5,0,0,0"
                     HorizontalAlignment="Right"
                     Click="ButtonBase_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_update}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_update}"
+                    Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
     </Grid>

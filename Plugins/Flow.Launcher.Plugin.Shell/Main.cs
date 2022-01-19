@@ -312,12 +312,12 @@ namespace Flow.Launcher.Plugin.Shell
         {
             this.context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
-            context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
+            context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
-            if (_settings.ReplaceWinR)
+            if (!context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
                 if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
                 {
@@ -337,12 +337,9 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
-
             // show the main window and set focus to the query box
-            Window mainWindow = Application.Current.MainWindow;
-            mainWindow.Show();
-            mainWindow.Focus();
+            context.API.ShowMainWindow();
+            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
         }
 
         public Control CreateSettingPanel()

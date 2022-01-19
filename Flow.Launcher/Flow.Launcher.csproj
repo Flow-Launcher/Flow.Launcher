@@ -88,6 +88,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.2" />
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
     <PackageReference Include="NuGet.CommandLine" Version="5.4.0">

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media;
@@ -10,11 +10,11 @@ namespace Flow.Launcher.Plugin
     {
 
         private string _pluginDirectory;
-        
+
         private string _icoPath;
 
         /// <summary>
-        /// Provides the title of the result. This is always required.
+        /// The title of the result. This is always required.
         /// </summary>
         public string Title { get; set; }
 
@@ -29,6 +29,18 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
+        /// <summary>
+        /// This holds the text which can be provided by plugin to help Flow autocomplete text
+        /// for user on the plugin result. If autocomplete action for example is tab, pressing tab will have 
+        /// the default constructed autocomplete text (result's Title), or the text provided here if not empty.
+        /// </summary>
+        public string AutoCompleteText { get; set; }
+
+        /// <summary>
+        /// Image Displayed on the result
+        /// <value>Relative Path to the Image File</value>
+        /// <remarks>GlyphInfo is prioritized if not null</remarks>
+        /// </summary>
         public string IcoPath
         {
             get { return _icoPath; }
@@ -53,16 +65,23 @@ namespace Flow.Launcher.Plugin
         public IconDelegate Icon;
 
         /// <summary>
-        /// Information for Glyph Icon
+        /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
-        public GlyphInfo Glyph { get; init; } 
+        public GlyphInfo Glyph { get; init; }
 
 
         /// <summary>
-        /// return true to hide flowlauncher after select result
+        /// Delegate. An action to take in the form of a function call when the result has been selected
+        /// <returns>
+        /// true to hide flowlauncher after select result
+        /// </returns>
         /// </summary>
         public Func<ActionContext, bool> Action { get; set; }
 
+        /// <summary>
+        /// Priority of the current result
+        /// <value>default: 0</value>
+        /// </summary>
         public int Score { get; set; }
 
         /// <summary>
@@ -70,13 +89,11 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public IList<int> TitleHighlightData { get; set; }
 
-        /// <summary>
-        /// A list of indexes for the characters to be highlighted in SubTitle
-        /// </summary>
+        [Obsolete("Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered")]
         public IList<int> SubTitleHighlightData { get; set; }
 
         /// <summary>
-        /// Only results that originQuery match with current query will be displayed in the panel
+        /// Query information associated with the result
         /// </summary>
         internal Query OriginQuery { get; set; }
 
@@ -96,6 +113,7 @@ namespace Flow.Launcher.Plugin
             }
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             var r = obj as Result;
@@ -103,12 +121,12 @@ namespace Flow.Launcher.Plugin
             var equality = string.Equals(r?.Title, Title) &&
                            string.Equals(r?.SubTitle, SubTitle) &&
                            string.Equals(r?.IcoPath, IcoPath) &&
-                           TitleHighlightData == r.TitleHighlightData &&
-                           SubTitleHighlightData == r.SubTitleHighlightData;
+                           TitleHighlightData == r.TitleHighlightData;
 
             return equality;
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             var hashcode = (Title?.GetHashCode() ?? 0) ^
@@ -116,15 +134,17 @@ namespace Flow.Launcher.Plugin
             return hashcode;
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return Title + SubTitle;
         }
 
-        public Result() { }
-
         /// <summary>
-        /// Additional data associate with this result
+        /// Additional data associated with this result
+        /// <example>
+        /// As external information for ContextMenu
+        /// </example>
         /// </summary>
         public object ContextData { get; set; }
 

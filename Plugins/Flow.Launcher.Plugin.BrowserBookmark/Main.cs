@@ -48,14 +48,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     Score = BookmarkLoader.MatchProgram(c, param).Score,
                     Action = _ =>
                     {
-                        if (_settings.OpenInNewBrowserWindow)
-                        {
-                            c.Url.NewBrowserWindow(_settings.BrowserPath);
-                        }
-                        else
-                        {
-                            c.Url.NewTabInBrowser(_settings.BrowserPath);
-                        }
+                        context.API.OpenUrl(c.Url);
 
                         return true;
                     },
@@ -73,15 +66,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     Score = 5,
                     Action = _ =>
                     {
-                        if (_settings.OpenInNewBrowserWindow)
-                        {
-                            c.Url.NewBrowserWindow(_settings.BrowserPath);
-                        }
-                        else
-                        {
-                            c.Url.NewTabInBrowser(_settings.BrowserPath);
-                        }
-
+                        context.API.OpenUrl(c.Url);
                         return true;
                     },
                     ContextData = new BookmarkAttributes { Url = c.Url }

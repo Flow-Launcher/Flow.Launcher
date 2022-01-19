@@ -1,82 +1,145 @@
-<UserControl x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
-             xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+<UserControl
+    x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
+    xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate x:Key="ListViewTemplateAccessLinks">
-            <TextBlock
-                Text="{Binding Path, Mode=OneTime}"
-                Margin="0,5,0,5" />
+            <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
         <DataTemplate x:Key="ListViewTemplateExcludedPaths">
-            <TextBlock
-                Text="{Binding Path, Mode=OneTime}"
-                Margin="0,5,0,5" />
+            <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
-        <DataTemplate x:Key="ListViewActionKeywords"
-                      DataType="views:ActionKeywordView">
+        <DataTemplate x:Key="ListViewActionKeywords" DataType="views:ActionKeywordView">
             <Grid>
-                <TextBlock 
-                    Text="{Binding Description, Mode=OneTime}"
-                    Foreground="{Binding Color, Mode=OneWay}"
-                    Margin="0,5,0,0" />
-                <TextBlock 
-                    Text="{Binding Keyword, Mode=OneTime}"
-                    Foreground="{Binding Color, Mode=OneWay}"
-                    Margin="250,5,0,0" />
+                <TextBlock
+                    Margin="0,5,0,0"
+                    IsEnabled="{Binding Enabled}"
+                    Text="{Binding Description, Mode=OneTime}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{DynamicResource Color18B}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock
+                    Margin="250,5,0,0"
+                    IsEnabled="{Binding Enabled}"
+                    Text="{Binding Keyword, Mode=OneTime}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{DynamicResource Color18B}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        <ScrollViewer Margin="20 35 0 0" HorizontalScrollBarVisibility="Hidden" Grid.Row="0" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer
+            Grid.Row="0"
+            Margin="20,35,0,0"
+            HorizontalScrollBarVisibility="Hidden"
+            VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <Expander Name="expActionKeywords" Header="{DynamicResource plugin_explorer_manageactionkeywords_header}"
-                          Expanded="expActionKeywords_Click" Collapsed="expActionKeywords_Collapsed">
-                    <ListView x:Name="lbxActionKeywords"
-                        ItemTemplate="{StaticResource ListViewActionKeywords}"/>
+                <Expander
+                    Name="expActionKeywords"
+                    Collapsed="expActionKeywords_Collapsed"
+                    Expanded="expActionKeywords_Click"
+                    Header="{DynamicResource plugin_explorer_manageactionkeywords_header}">
+                    <ListView x:Name="lbxActionKeywords" ItemTemplate="{StaticResource ListViewActionKeywords}" />
                 </Expander>
-                <Expander Name="expAccessLinks" Header="{DynamicResource plugin_explorer_quickaccesslinks_header}"
-                          Expanded="expAccessLinks_Click" Collapsed="expAccessLinks_Collapsed"
-                          Margin="0 10 0 0">
+                <Expander
+                    Name="expAccessLinks"
+                    Margin="0,10,0,0"
+                    Collapsed="expAccessLinks_Collapsed"
+                    Expanded="expAccessLinks_Click"
+                    Header="{DynamicResource plugin_explorer_quickaccesslinks_header}">
                     <ListView
-                        x:Name="lbxAccessLinks" AllowDrop="True"
-                        Drop="lbxAccessLinks_Drop"
+                        x:Name="lbxAccessLinks"
+                        AllowDrop="True"
                         DragEnter="lbxAccessLinks_DragEnter"
-                        ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"/>
+                        Drop="lbxAccessLinks_Drop"
+                        ItemTemplate="{StaticResource ListViewTemplateAccessLinks}" />
                 </Expander>
-                <Expander x:Name="expExcludedPaths" Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}" 
-                          Expanded="expExcludedPaths_Click"
-                          Margin="0 10 0 0">
+                <Expander
+                    x:Name="expExcludedPaths"
+                    Margin="0,10,0,0"
+                    Expanded="expExcludedPaths_Click"
+                    Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}">
                     <ListView
-                        x:Name="lbxExcludedPaths" AllowDrop="True"
-                        Drop="lbxAccessLinks_Drop"
+                        x:Name="lbxExcludedPaths"
+                        AllowDrop="True"
                         DragEnter="lbxAccessLinks_DragEnter"
-                        ItemTemplate="{StaticResource ListViewTemplateExcludedPaths}"/>
+                        Drop="lbxAccessLinks_Drop"
+                        ItemTemplate="{StaticResource ListViewTemplateExcludedPaths}" />
                 </Expander>
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="450" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button x:Name="btnIndexingOptions" Click="btnOpenIndexingOptions_Click" Width="130" Margin="10" 
-                        Content="{DynamicResource plugin_explorer_manageindexoptions}"/>
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnIndexingOptions"
+                    MinWidth="130"
+                    Margin="10"
+                    Click="btnOpenIndexingOptions_Click"
+                    Content="{DynamicResource plugin_explorer_manageindexoptions}" />
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button x:Name="btnDelete" Click="btnDelete_Click" Width="100" Margin="10" Content="{DynamicResource plugin_explorer_delete}"/>
-                <Button x:Name="btnEdit" Click="btnEdit_Click" Width="100" Margin="10" Content="{DynamicResource plugin_explorer_edit}"/>
-                <Button x:Name="btnAdd" Click="btnAdd_Click" Width="100" Margin="10" Content="{DynamicResource plugin_explorer_add}"/>
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnDelete"
+                    MinWidth="100"
+                    Margin="10"
+                    Click="btnDelete_Click"
+                    Content="{DynamicResource plugin_explorer_delete}" />
+                <Button
+                    x:Name="btnEdit"
+                    MinWidth="100"
+                    Margin="10"
+                    Click="btnEdit_Click"
+                    Content="{DynamicResource plugin_explorer_edit}" />
+                <Button
+                    x:Name="btnAdd"
+                    MinWidth="100"
+                    Margin="10"
+                    Click="btnAdd_Click"
+                    Content="{DynamicResource plugin_explorer_add}" />
             </StackPanel>
         </Grid>
     </Grid>

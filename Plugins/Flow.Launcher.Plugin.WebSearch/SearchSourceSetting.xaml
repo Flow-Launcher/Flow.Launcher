@@ -69,7 +69,7 @@
                                 Text="{DynamicResource flowlauncher_plugin_websearch_window_title}"
                                 TextAlignment="Left" />
                         </StackPanel>
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel>
                             <TextBlock
                                 FontSize="14"
                                 Text="{DynamicResource flowlauncher_plugin_websearch_guide_1}"
@@ -90,96 +90,103 @@
                                 TextWrapping="WrapWithOverflow" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="100"
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource flowlauncher_plugin_websearch_title}" />
-                            <TextBox
-                                Width="330"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{Binding SearchSource.Title}" />
-
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="0"
-                                Width="100"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource flowlauncher_plugin_websearch_icon}" />
-                            <Button
-                                Height="35"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Click="OnSelectIconClick"
-                                Content="{DynamicResource flowlauncher_plugin_websearch_select_icon}" />
-                            <Image
-                                Name="imgPreviewIcon"
-                                Width="24"
-                                Height="24"
-                                Margin="14,0,0,0"
-                                VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="100"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource flowlauncher_plugin_websearch_url}" />
-                            <TextBox
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Width="330"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{Binding SearchSource.Url}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Width="100"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource flowlauncher_plugin_websearch_action_keyword}" />
-                            <TextBox
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Width="330"
-                                Margin="10,0,10,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{Binding SearchSource.ActionKeyword}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Width="100"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource flowlauncher_plugin_websearch_enable}" />
-                            <CheckBox
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                Margin="10"
-                                VerticalAlignment="Center"
-                                IsChecked="{Binding SearchSource.Enabled}" />
+                            <Grid Width="500">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="10,10,15,10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_title}" />
+                                <TextBox
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding SearchSource.Title}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="10,10,15,10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_icon}" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Height="35"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Click="OnSelectIconClick"
+                                        Content="{DynamicResource flowlauncher_plugin_websearch_select_icon}" />
+                                    <Image
+                                        Name="imgPreviewIcon"
+                                        Width="24"
+                                        Height="24"
+                                        Margin="14,0,0,0"
+                                        VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="10,10,15,10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_url}" />
+                                <TextBox
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="10"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding SearchSource.Url}" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Margin="10,10,15,10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_action_keyword}" />
+                                <TextBox
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Margin="10,0,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding SearchSource.ActionKeyword}" />
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Margin="10,10,15,15"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_enable}" />
+                                <CheckBox
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,15"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding SearchSource.Enabled}" />
+                            </Grid>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -192,15 +199,16 @@
             BorderThickness="0,1,0,0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
-                    Width="100"
+                    MinWidth="140"
                     Margin="10,0,5,0"
                     Click="OnCancelButtonClick"
                     Content="{DynamicResource flowlauncher_plugin_websearch_cancel}" />
                 <Button
-                    Width="100"
+                    MinWidth="140"
                     Margin="5,0,10,0"
                     Click="OnConfirmButtonClick"
-                    Content="{DynamicResource flowlauncher_plugin_websearch_confirm}" />
+                    Content="{DynamicResource flowlauncher_plugin_websearch_confirm}"
+                    Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
     </Grid>
