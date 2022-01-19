@@ -10,6 +10,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -95,10 +96,13 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            UpdatePluginMetadataTranslations();
             Settings.Language = language.LanguageCode;
             CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+            Task.Run(() =>
+            {
+                UpdatePluginMetadataTranslations();
+            });
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)

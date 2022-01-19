@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -14,7 +13,6 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
@@ -191,7 +189,7 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
             OpenResultCommand = new RelayCommand(index =>
@@ -208,7 +206,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     bool hideWindow = result.Action != null && result.Action(new ActionContext
                     {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
+                        SpecialKeyState = GlobalHotkey.CheckModifiers()
                     });
 
                     if (hideWindow)
@@ -225,6 +223,32 @@ namespace Flow.Launcher.ViewModel
                     {
                         SelectedResults = Results;
                     }
+                }
+            });
+
+            AutocompleteQueryCommand = new RelayCommand(_ =>
+            {
+                var result = SelectedResults.SelectedItem?.Result;
+                if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
+                {
+                    var autoCompleteText = result.Title;
+
+                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
+                    {
+                        autoCompleteText = result.AutoCompleteText;
+                    }
+                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                    {
+                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
+                    }
+
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.ShiftPressed)
+                    {
+                        autoCompleteText = result.SubTitle;
+                    }
+
+                    ChangeQueryText(autoCompleteText);
                 }
             });
 
@@ -287,7 +311,6 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; }
 
         private string _queryText;
-
         public string QueryText
         {
             get => _queryText;
@@ -368,7 +391,11 @@ namespace Flow.Launcher.ViewModel
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
+        public Visibility SearchIconVisibility { get; set; }
+
         public double MainWindowWidth => _settings.WindowSize;
+
+        public string PluginIconPath { get; set; } = null;
 
         public ICommand EscCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
@@ -383,6 +410,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
+        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -502,6 +530,8 @@ namespace Flow.Launcher.ViewModel
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
+                PluginIconPath = null;
+                SearchIconVisibility = Visibility.Visible;
                 return;
             }
 
@@ -529,6 +559,18 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            if (plugins.Count == 1)
+            {
+                PluginIconPath = plugins.Single().Metadata.IcoPath;
+                SearchIconVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                PluginIconPath = null;
+                SearchIconVisibility = Visibility.Visible;
+            }
+            
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -620,7 +662,7 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg("Success");
+                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
                         return false;
                     }
                 };
@@ -656,7 +698,7 @@ namespace Flow.Launcher.ViewModel
             var plugin = translator.GetTranslation("plugin");
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
-            var subtitle = $"{author}: {metadata.Author}, {website}: {metadata.Website} {version}: {metadata.Version}";
+            var subtitle = $"{author} {metadata.Author}";
 
             var menu = new Result
             {
@@ -708,20 +750,10 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            if (_settings.UseSound)
-            {
-                MediaPlayer media = new MediaPlayer();
-                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                media.Play();
-            }
-
             MainWindowVisibility = Visibility.Visible;
 
             MainWindowVisibilityStatus = true;
-            
-            if(_settings.UseAnimation)
-                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
-            
+
             MainWindowOpacity = 1;
         }
 

@@ -5,75 +5,110 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
-    Height="450"
-    d:DesignHeight="404.508"
-    d:DesignWidth="600"
+    Height="520"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
-    <Grid Margin="20">
+    <Grid Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="120" />
+            <RowDefinition Height="170" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
             HorizontalAlignment="Stretch"
-            Orientation="Horizontal">
+            Orientation="Vertical">
             <StackPanel Width="Auto" Orientation="Vertical">
-                <CheckBox
-                    Name="StartMenuEnabled"
-                    Margin="5"
-                    Content="{DynamicResource flowlauncher_plugin_program_index_start}"
-                    IsChecked="{Binding EnableStartMenuSource}"
-                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
-                <CheckBox
-                    Name="RegistryEnabled"
-                    Margin="5"
-                    Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
-                    IsChecked="{Binding EnableRegistrySource}"
-                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
-                <CheckBox
-                    Name="DescriptionEnabled"
-                    Margin="5"
-                    Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
-                    IsChecked="{Binding EnableDescription}"
-                    ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
+                <StackPanel Width="Auto" Orientation="Horizontal">
+                    <CheckBox
+                        Name="StartMenuEnabled"
+                        Width="220"
+                        Margin="70,8,10,8"
+                        Content="{DynamicResource flowlauncher_plugin_program_index_start}"
+                        IsChecked="{Binding EnableStartMenuSource}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
+                    <CheckBox
+                        Name="RegistryEnabled"
+                        Margin="70,8,10,8"
+                        Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
+                        IsChecked="{Binding EnableRegistrySource}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
+                </StackPanel>
+
+                <Separator
+                    Height="1"
+                    BorderBrush="{DynamicResource Color03B}"
+                    BorderThickness="1" />
+                <StackPanel Width="Auto" Orientation="Horizontal">
+                    <CheckBox
+                        Name="HideLnkEnabled"
+                        Width="220"
+                        Margin="70,8,10,8"
+                        Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
+                        IsChecked="{Binding HideAppsPath}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
+                    <CheckBox
+                        Name="DescriptionEnabled"
+                        Margin="70,8,10,8"
+                        Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
+                        IsChecked="{Binding EnableDescription}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
+                </StackPanel>
+                <Separator
+                    Height="1"
+                    BorderBrush="{DynamicResource Color03B}"
+                    BorderThickness="1" />
             </StackPanel>
             <StackPanel
                 Width="Auto"
-                HorizontalAlignment="Right"
+                Margin="10,6,0,0"
+                HorizontalAlignment="Left"
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnLoadAllProgramSource"
-                    Width="100"
-                    Height="31"
-                    Margin="10"
+                    MinWidth="120"
+                    Margin="10,10,5,10"
                     HorizontalAlignment="Right"
                     Click="btnLoadAllProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
                 <Button
                     x:Name="btnProgramSuffixes"
-                    Width="100"
-                    Height="31"
-                    Margin="10"
+                    MinWidth="120"
+                    Margin="5,10,5,10"
                     HorizontalAlignment="Right"
                     Click="BtnProgramSuffixes_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
                 <Button
                     x:Name="btnReindex"
-                    Width="100"
-                    Height="31"
-                    Margin="10"
+                    MinWidth="120"
+                    Margin="5,10,5,10"
                     HorizontalAlignment="Right"
                     Click="btnReindex_Click"
                     Content="{DynamicResource flowlauncher_plugin_program_reindex}" />
+                <StackPanel
+                    x:Name="indexingPanel"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Visibility="Hidden">
+                    <ProgressBar
+                        x:Name="progressBarIndexing"
+                        Width="80"
+                        Height="20"
+                        IsIndeterminate="True"
+                        Maximum="100"
+                        Minimum="0" />
+                    <TextBlock
+                        Height="20"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Center"
+                        Text="{DynamicResource flowlauncher_plugin_program_indexing}" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <ListView
             x:Name="programSourceView"
             Grid.Row="1"
-            Margin="0,13,0,10"
+            Margin="20,0,20,0"
             AllowDrop="True"
             BorderBrush="DarkGray"
             BorderThickness="1"
@@ -81,24 +116,17 @@
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
-            SelectionMode="Extended"
-            Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseUp" Handler="Row_OnClick" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
+            SelectionMode="Extended">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150" Header="Name">
+                    <GridViewColumn Width="150" Header="{DynamicResource flowlauncher_plugin_program_name}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Enabled">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enable}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock
@@ -121,41 +149,23 @@
         <DockPanel
             Grid.Row="2"
             Grid.RowSpan="1"
-            Margin="0,0,0,0">
-            <StackPanel
-                x:Name="indexingPanel"
-                HorizontalAlignment="Left"
-                Orientation="Horizontal"
-                Visibility="Hidden">
-                <ProgressBar
-                    x:Name="progressBarIndexing"
-                    Width="80"
-                    Height="20"
-                    IsIndeterminate="True"
-                    Maximum="100"
-                    Minimum="0" />
-                <TextBlock
-                    Height="20"
-                    Margin="10,0,0,0"
-                    HorizontalAlignment="Center"
-                    Text="{DynamicResource flowlauncher_plugin_program_indexing}" />
-            </StackPanel>
+            Margin="0,0,20,10">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
                     x:Name="btnProgramSourceStatus"
-                    Width="100"
+                    MinWidth="100"
                     Margin="10"
                     Click="btnProgramSourceStatus_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_disable}" />
                 <Button
                     x:Name="btnEditProgramSource"
-                    Width="100"
+                    MinWidth="100"
                     Margin="10"
                     Click="btnEditProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_edit}" />
                 <Button
                     x:Name="btnAddProgramSource"
-                    Width="100"
+                    MinWidth="100"
                     Margin="10,10,0,10"
                     Click="btnAddProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_add}" />

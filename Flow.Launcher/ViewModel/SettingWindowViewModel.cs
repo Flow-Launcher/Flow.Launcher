@@ -273,7 +273,7 @@ namespace Flow.Launcher.ViewModel
 
         #region theme
 
-        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
+        public static string Theme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
 
         public string SelectedTheme
         {
@@ -315,22 +315,23 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public class DarkMode
+        public class ColorScheme
         {
             public string Display { get; set; }
-            public Infrastructure.UserSettings.DarkMode Value { get; set; }
+            public ColorSchemes Value { get; set; }
         }
-        public List<DarkMode> DarkModes
+
+        public List<ColorScheme> ColorSchemes
         {
             get
             {
-                List<DarkMode> modes = new List<DarkMode>();
-                var enums = (Infrastructure.UserSettings.DarkMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.DarkMode));
+                List<ColorScheme> modes = new List<ColorScheme>();
+                var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
                 foreach (var e in enums)
                 {
-                    var key = $"DarkMode{e}";
+                    var key = $"ColorScheme{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new DarkMode { Display = display, Value = e, };
+                    var m = new ColorScheme { Display = display, Value = e, };
                     modes.Add(m);
                 }
                 return modes;

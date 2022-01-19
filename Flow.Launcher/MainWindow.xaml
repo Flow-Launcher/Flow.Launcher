@@ -41,10 +41,10 @@
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F1" Command="{Binding StartHelpCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding Key="Tab" Command="{Binding SelectNextItemCommand}" />
+        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
         <KeyBinding
             Key="Tab"
-            Command="{Binding SelectPrevItemCommand}"
+            Command="{Binding AutocompleteQueryCommand}"
             Modifiers="Shift" />
         <KeyBinding
             Key="I"
@@ -161,8 +161,9 @@
                         Style="{DynamicResource QuerySuggestionBoxStyle}">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                <Binding ElementName="QueryTextBox" Path="Text" />
+                                <Binding ElementName="QueryTextBox" Mode="OneTime" />
                                 <Binding ElementName="ResultListBox" Path="SelectedItem" />
+                                <Binding ElementName="QueryTextBox" Path="Text" />
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
@@ -176,9 +177,9 @@
                         Visibility="Visible">
                         <TextBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Command="ApplicationCommands.Cut" />
-                                <MenuItem Command="ApplicationCommands.Copy" />
-                                <MenuItem Command="ApplicationCommands.Paste" />
+                                <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}" />
+                                <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}" />
+                                <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}" />
                                 <Separator
                                     Margin="0"
                                     Padding="0,4,0,4"
@@ -189,12 +190,25 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <Canvas Style="{DynamicResource SearchIconPosition}">
+                        <Image
+                            x:Name="PluginActivationIcon"
+                            Width="32"
+                            Height="32"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="2"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="{Binding PluginIconPath}"
+                            Stretch="Uniform"
+                            Style="{DynamicResource PluginActivationIcon}" />
                         <Path
                             Name="SearchIcon"
                             Margin="0"
                             Data="{DynamicResource SearchIconImg}"
                             Stretch="Fill"
-                            Style="{DynamicResource SearchIconStyle}" />
+                            Style="{DynamicResource SearchIconStyle}"
+                            Visibility="{Binding SearchIconVisibility}" />
                     </Canvas>
                 </Grid>
 

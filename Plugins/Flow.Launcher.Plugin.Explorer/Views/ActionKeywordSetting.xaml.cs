@@ -100,6 +100,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             MessageBox.Show(settingsViewModel.Context.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
         }
 
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

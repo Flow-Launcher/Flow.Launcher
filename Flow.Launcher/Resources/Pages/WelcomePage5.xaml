@@ -1,0 +1,122 @@
+﻿<ui:Page
+    x:Class="Flow.Launcher.Resources.Pages.WelcomePage5"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    Title="WelcomePage5"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
+            <Setter Property="Opacity" Value="0" />
+            <Style.Triggers>
+                <!--  Fades-in the image when it becomes visible  -->
+                <Trigger Property="IsVisible" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <BeginStoryboard.Storyboard>
+                                <Storyboard x:Name="FadeIn">
+
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="(Canvas.Top)"
+                                        From="110"
+                                        To="75"
+                                        Duration="0:0:1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <QuadraticEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0"
+                                        To="1"
+                                        Duration="0:0:1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <QuadraticEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard.Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" HorizontalAlignment="Stretch">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#7b83eb" />
+                            <GradientStop Offset="1.0" Color="#555dc0" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Canvas Width="550" Height="250">
+                        <Image
+                            Name="Logo"
+                            Canvas.Left="225"
+                            Width="100"
+                            Height="100"
+                            Source="../../images/app.png"
+                            Style="{DynamicResource StyleImageFadeIn}" />
+                    </Canvas>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="1" Margin="24,20,24,20">
+                <StackPanel>
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="{DynamicResource Welcome_Page5_Title}" />
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontSize="14"
+                        Text="{DynamicResource Welcome_Page5_Text01}"
+                        TextWrapping="WrapWithOverflow" />
+                    <StackPanel Margin="0,30,0,0" Orientation="Horizontal">
+                        <CheckBox
+                            Checked="OnAutoStartupChecked"
+                            Content="{DynamicResource startFlowLauncherOnSystemStartup}"
+                            IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
+                            Style="{DynamicResource DefaultCheckBoxStyle}"
+                            Unchecked="OnAutoStartupUncheck" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                        <CheckBox
+                            Checked="OnHideOnStartupChecked"
+                            Content="{DynamicResource hideOnStartup}"
+                            IsChecked="{Binding Settings.HideOnStartup}"
+                            Style="{DynamicResource DefaultCheckBoxStyle}"
+                            Unchecked="OnHideOnStartupUnchecked" />
+                    </StackPanel>
+                    <Button
+                        Width="150"
+                        Height="40"
+                        Margin="0,60,0,0"
+                        HorizontalAlignment="Right"
+                        Click="BtnCancel_OnClick"
+                        Content="{DynamicResource done}"
+                        Style="{DynamicResource AccentButtonStyle}" />
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</ui:Page>

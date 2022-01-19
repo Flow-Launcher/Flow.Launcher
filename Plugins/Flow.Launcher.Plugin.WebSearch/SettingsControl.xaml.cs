@@ -21,9 +21,6 @@ namespace Flow.Launcher.Plugin.WebSearch
             _context = context;
             _settings = viewModel.Settings;
             DataContext = viewModel;
-            browserPathBox.Text = _settings.BrowserPath;
-            NewWindowBrowser.IsChecked = _settings.OpenInNewBrowser;
-            NewTabInBrowser.IsChecked = !_settings.OpenInNewBrowser;
         }
 
         private void OnAddSearchSearchClick(object sender, RoutedEventArgs e)
@@ -61,34 +58,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 webSearch.ShowDialog();
             }
-        }
-
-        private void OnNewBrowserWindowClick(object sender, RoutedEventArgs e)
-        {
-            _settings.OpenInNewBrowser = true;
-        }
-
-        private void OnNewTabClick(object sender, RoutedEventArgs e)
-        {
-            _settings.OpenInNewBrowser = false;
-        }
-
-        private void OnChooseClick(object sender, RoutedEventArgs e)
-        {
-            var fileBrowserDialog = new OpenFileDialog();
-            fileBrowserDialog.Filter = "Application(*.exe)|*.exe|All files|*.*";
-            fileBrowserDialog.CheckFileExists = true;
-            fileBrowserDialog.CheckPathExists = true;
-            if (fileBrowserDialog.ShowDialog() == true)
-            {
-                browserPathBox.Text = fileBrowserDialog.FileName;
-                _settings.BrowserPath = fileBrowserDialog.FileName;
-            }
-        }
-
-        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
-        {
-            _settings.BrowserPath = browserPathBox.Text;
         }
 
         GridViewColumnHeader _lastHeaderClicked = null;
