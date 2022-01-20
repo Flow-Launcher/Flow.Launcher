@@ -506,12 +506,16 @@ namespace Flow.Launcher
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
-                            && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                            && FilesFolders.IsLocationPathString(QueryTextBox.Text))
+                            && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
-
-                            _viewModel.BackspaceCommand.Execute(null);
-                            e.Handled = true;
+                            var queryWithoutActionKeyword = 
+                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins).Search;
+                            
+                            if (FilesFolders.IsLocationPathString(queryWithoutActionKeyword))
+                            {
+                                _viewModel.BackspaceCommand.Execute(null);
+                                e.Handled = true;
+                            }
                         }
                     }
                     break;
