@@ -254,10 +254,14 @@ namespace Flow.Launcher.ViewModel
 
             BackspaceCommand = new RelayCommand(index =>
             {
-                var path = QueryText;
+                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
                 // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
-                ChangeQueryText(FilesFolders.GetPreviousExistingDirectory(FilesFolders.IsLocationPathString, path.TrimEnd('\\')));
+                var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
+
+                var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
+
+                ChangeQueryText($"{actionKeyword}{path}");
             });
 
             LoadContextMenuCommand = new RelayCommand(_ =>
