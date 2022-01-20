@@ -226,7 +226,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Ctrl</kbd> +<kbd>i</kbd>                                | Open Setting Window                          |
 | <kbd>F5</kbd>                                                | Reload All Plugin Data & Window Search Index |
 | <kbd>Ctrl</kbd> + <kbd>h</kbd>                               | Open Query History                           |
-| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
+| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to Previous Directory                   |
 
 
 ## System Command List
