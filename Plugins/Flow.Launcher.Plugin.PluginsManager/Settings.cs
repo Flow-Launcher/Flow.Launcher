@@ -6,6 +6,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class Settings
     {
+        internal const string ListCommand = "list";
+
         internal const string InstallCommand = "install";
 
         internal const string UninstallCommand = "uninstall";
