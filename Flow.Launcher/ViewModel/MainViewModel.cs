@@ -719,7 +719,11 @@ namespace Flow.Launcher.ViewModel
                 IcoPath = icon,
                 SubTitle = subtitle,
                 PluginDirectory = metadata.PluginDirectory,
-                Action = _ => false
+                Action = _ =>
+                {
+                    App.API.OpenUrl(metadata.Website);
+                    return true;
+                }
             };
             return menu;
         }
