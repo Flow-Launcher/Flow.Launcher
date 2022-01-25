@@ -2001,7 +2001,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="43" />
                                     <RowDefinition Height="80" />
-                                    <RowDefinition Height="216" />
+                                    <RowDefinition Height="146" />
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
@@ -2077,7 +2077,7 @@
                                             Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
-                                            Padding="0,10,0,10"
+                                            Padding="0,10,0,0"
                                             BorderThickness="0"
                                             Style="{DynamicResource SettingGroupBox}">
                                             <ItemsControl Style="{StaticResource SettingGrid}">
@@ -2094,34 +2094,6 @@
                                                     FontSize="14"
                                                     IsChecked="{Binding Settings.ShowOpenResultHotkey}"
                                                     Style="{DynamicResource SideControlCheckBox}" />
-                                            </ItemsControl>
-                                        </Border>
-
-                                        <Separator
-                                            Width="Auto"
-                                            BorderThickness="1"
-                                            Style="{StaticResource SettingSeparatorStyle}" />
-
-                                        <Border
-                                            Margin="0,0,0,10"
-                                            BorderThickness="0"
-                                            Style="{DynamicResource SettingGroupBox}">
-                                            <ItemsControl Style="{StaticResource SettingGrid}">
-                                                <StackPanel Style="{StaticResource TextPanel}">
-                                                    <TextBlock
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                        Text="{DynamicResource cycleHistoryModifierHotkey}" />
-                                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource cycleHistoryModifierHotkeyTooltip}" />
-                                                </StackPanel>
-                                                <ComboBox
-                                                    Grid.Column="2"
-                                                    Width="120"
-                                                    Margin="0,0,18,0"
-                                                    FontSize="14"
-                                                    ItemsSource="{Binding CycleHistoryModifiersList}"
-                                                    SelectedItem="{Binding Settings.CycleHistoryModifiers}" />
                                             </ItemsControl>
                                         </Border>
 
