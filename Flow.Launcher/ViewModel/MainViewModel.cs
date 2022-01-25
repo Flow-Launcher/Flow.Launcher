@@ -180,19 +180,31 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
-            SelectNextItemCommand = new RelayCommand(_ => { SelectedResults.SelectNextResult(); });
+            SelectNextItemCommand = new RelayCommand(_ => {
+                SelectedResults.SelectNextResult();
+                OpenQuickLook.Execute("Switch");
+            });
 
-            SelectPrevItemCommand = new RelayCommand(_ => { SelectedResults.SelectPrevResult(); });
+            SelectPrevItemCommand = new RelayCommand(_ => {
+                SelectedResults.SelectPrevResult();
+                OpenQuickLook.Execute("Switch");
+            });
 
             SelectNextPageCommand = new RelayCommand(_ => { SelectedResults.SelectNextPage(); });
 
             SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
 
-            OpenQuickLook = new RelayCommand(_ =>
+
+
+            OpenQuickLook = new RelayCommand(command =>
             {
                 var results = SelectedResults;
                 var result = results.SelectedItem?.Result;
                 string PipeName = "QuickLook.App.Pipe." + WindowsIdentity.GetCurrent().User?.Value;
+                if (command == null)
+                {
+                    command = "Toggle";
+                }
                 try
                 {
                     using (var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out))
@@ -201,7 +213,7 @@ namespace Flow.Launcher.ViewModel
 
                         using (var writer = new StreamWriter(client))
                         {
-                            writer.WriteLine($"QuickLook.App.PipeMessages.Toggle|{result.QuickLookPath}");
+                            writer.WriteLine($"QuickLook.App.PipeMessages.{command}|{result.QuickLookPath}");
                             writer.Flush();
                         }
                     }
