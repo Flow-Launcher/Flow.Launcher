@@ -8,7 +8,7 @@
       "Enabled": true
     },
     {
-      "Title": "Youtube",
+      "Title": "YouTube",
       "ActionKeyword": "youtube",
       "IconPath": "Images\\youtube.png",
       "Url": "http://www.youtube.com/results?search_query={q}",
@@ -43,7 +43,7 @@
       "Enabled": true
     },
     {
-      "Title": "Youtube Music",
+      "Title": "YouTube Music",
       "ActionKeyword": "ytmusic",
       "IconPath": "Images\\youtubemusic.png",
       "Url": "https://music.youtube.com/search?q={q}",
@@ -78,35 +78,35 @@
       "Enabled": true
     },
     {
-      "Title": "Duckduckgo",
+      "Title": "DuckDuckGo",
       "ActionKeyword": "duckduckgo",
       "IconPath": "Images\\duckduckgo.png",
       "Url": "https://duckduckgo.com/?q={q}",
       "Enabled": true
     },
     {
-      "Title": "Github",
+      "Title": "GitHub",
       "ActionKeyword": "github",
       "IconPath": "Images\\github.png",
       "Url": "https://github.com/search?q={q}",
       "Enabled": true
     },
     {
-      "Title": "Github Gist",
+      "Title": "GitHub Gist",
       "ActionKeyword": "gist",
       "IconPath": "Images\\gist.png",
       "Url": "https://gist.github.com/search?q={q}",
       "Enabled": true
     },
     {
-      "Title": "Wolframalpha",
+      "Title": "WolframAlpha",
       "ActionKeyword": "wolframalpha",
       "IconPath": "Images\\wolframalpha.png",
       "Url": "http://www.wolframalpha.com/input/?i={q}",
       "Enabled": true
     },
     {
-      "Title": "Stackoverflow",
+      "Title": "Stack Overflow",
       "ActionKeyword": "stackoverflow",
       "IconPath": "Images\\stackoverflow.png",
       "Url": "http://stackoverflow.com/search?q={q}",
@@ -120,7 +120,7 @@
       "Enabled": true
     },
     {
-      "Title": "Google Image",
+      "Title": "Google Images",
       "ActionKeyword": "image",
       "IconPath": "Images\\google.png",
       "Url": "https://www.google.com/search?q={q}&tbm=isch",

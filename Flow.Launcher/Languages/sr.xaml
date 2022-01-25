@@ -135,8 +135,8 @@
     <system:String x:Key="update_flowlauncher_update">Ažuriraj</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Otkaži</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Ova nadogradnja će ponovo pokrenuti Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Sledeće datoteke će biti ažurirane</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Sledeće datoteke će biti ažurirane</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Ažuriraj datoteke</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Opis ažuriranja</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Opis ažuriranja</system:String>
 
 </ResourceDictionary>

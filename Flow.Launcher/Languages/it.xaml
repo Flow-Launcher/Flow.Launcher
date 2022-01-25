@@ -135,8 +135,8 @@
     <system:String x:Key="update_flowlauncher_update">Aggiorna</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annulla</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Questo aggiornamento riavvierà Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">I seguenti file saranno aggiornati</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">I seguenti file saranno aggiornati</system:String>
     <system:String x:Key="update_flowlauncher_update_files">File aggiornati</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Descrizione aggiornamento</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Descrizione aggiornamento</system:String>
 
 </ResourceDictionary>

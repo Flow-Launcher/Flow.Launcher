@@ -57,10 +57,7 @@
                                     MinWidth="20"
                                     MaxWidth="60" />
                                 <ColumnDefinition Width="8*" />
-                                <ColumnDefinition
-                                    Width="Auto"
-                                    MinWidth="40"
-                                    MaxWidth="550" />
+                                <ColumnDefinition Width="Auto" MinWidth="30" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -102,7 +99,7 @@
             TargetType="{x:Type CheckBox}">
             <Setter Property="Width" Value="24" />
             <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="Margin" Value="0,4,10,4" />
             <Setter Property="LayoutTransform">
                 <Setter.Value>
                     <ScaleTransform ScaleX="1" ScaleY="1" />
@@ -115,7 +112,12 @@
             BasedOn="{StaticResource DefaultToggleSwitch}"
             TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="OffContent" Value="{DynamicResource disable}" />
+            <Setter Property="OnContent" Value="{DynamicResource enable}" />
+            <Setter Property="Margin" Value="0,4,22,4" />
         </Style>
 
         <Style x:Key="SideTextAbout" TargetType="{x:Type TextBlock}">
@@ -682,7 +684,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        Width="100"
                                         FocusVisualMargin="5"
                                         IsOn="{Binding AutoUpdates}"
                                         Style="{DynamicResource SideToggleSwitch}" />
@@ -700,7 +701,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        Width="100"
                                         FocusVisualMargin="5"
                                         IsOn="{Binding PortableMode}"
                                         Style="{DynamicResource SideToggleSwitch}" />
@@ -756,7 +756,6 @@
                                             </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
-                                                MaxWidth="200"
                                                 Margin="10,0,18,0"
                                                 DisplayMemberPath="Display"
                                                 ItemsSource="{Binding LastQueryModes}"
@@ -951,13 +950,9 @@
                                                     FlowDirection="LeftToRight">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" MinWidth="100" />
-                                                        <ColumnDefinition
-                                                            Width="*"
-                                                            MinWidth="350"
-                                                            MaxWidth="700" />
-                                                        <ColumnDefinition MaxWidth="1400" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="8*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel
                                                         Grid.Column="0"
@@ -984,9 +979,11 @@
                                                             <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
                                                         </TextBlock>
                                                     </StackPanel>
-                                                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                                    <StackPanel
+                                                        Grid.Column="2"
+                                                        HorizontalAlignment="Right"
+                                                        Orientation="Horizontal">
                                                         <TextBlock
-                                                            MaxWidth="100"
                                                             Margin="0,0,8,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="12"
@@ -995,7 +992,7 @@
                                                         <Border>
                                                             <Button
                                                                 x:Name="PriorityButton"
-                                                                Margin="0,0,0,0"
+                                                                Margin="0,0,22,0"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
@@ -1025,13 +1022,14 @@
                                                             </Button>
                                                         </Border>
                                                     </StackPanel>
-                                                    <ui:ToggleSwitch
-                                                        Grid.Column="4"
-                                                        MaxWidth="110"
-                                                        HorizontalAlignment="Right"
-                                                        IsOn="{Binding PluginState}"
-                                                        OffContent="{DynamicResource disable}"
-                                                        OnContent="{DynamicResource enable}" />
+                                                    <DockPanel Grid.Column="3">
+                                                        <ui:ToggleSwitch
+                                                            Margin="0,0,6,0"
+                                                            HorizontalAlignment="Right"
+                                                            IsOn="{Binding PluginState}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}" />
+                                                    </DockPanel>
                                                 </Grid>
 
                                             </Expander.Header>
@@ -1079,7 +1077,7 @@
                                                                         Cursor="Hand"
                                                                         DockPanel.Dock="Right"
                                                                         FontWeight="Bold"
-                                                                        ToolTip="Change Action Keywords"
+                                                                        ToolTip="{DynamicResource actionKeywordsTooltip}"
                                                                         Visibility="{Binding ActionKeywordsVisibility}" />
                                                                 </DockPanel>
 
@@ -1138,26 +1136,22 @@
                                                                     Orientation="Horizontal"
                                                                     Style="{StaticResource TextPanel}">
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="10,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{DynamicResource author}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding PluginPair.Metadata.Author}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="|" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
@@ -1169,33 +1163,28 @@
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding InitilizaTime}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="|" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{DynamicResource plugin_query_time}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding QueryTime}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{DynamicResource plugin_query_version}" />
                                                                     <TextBlock
-                                                                        MaxWidth="100"
                                                                         Margin="5,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="11"
@@ -1203,12 +1192,11 @@
                                                                         Text="{Binding PluginPair.Metadata.Version}" />
 
                                                                     <TextBlock
-                                                                        MaxWidth="120"
                                                                         Margin="10,0,0,0"
                                                                         HorizontalAlignment="Right"
                                                                         VerticalAlignment="Center"
                                                                         Cursor="Hand"
-                                                                        FontSize="12">
+                                                                        FontSize="11">
                                                                         <Hyperlink
                                                                             Foreground="{DynamicResource PluginInfoColor}"
                                                                             NavigateUri="{Binding PluginPair.Metadata.Website}"
@@ -1218,12 +1206,11 @@
                                                                     </TextBlock>
 
                                                                     <TextBlock
-                                                                        MaxWidth="120"
                                                                         Margin="10,0,0,0"
                                                                         HorizontalAlignment="Right"
                                                                         VerticalAlignment="Center"
                                                                         Cursor="Hand"
-                                                                        FontSize="12"
+                                                                        FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnPluginDirecotyClick"
                                                                         Text="{DynamicResource pluginDirectory}"
@@ -1479,9 +1466,9 @@
                                                             <Button
                                                                 Name="ShortCutButtonPrev"
                                                                 Grid.Column="1"
-                                                                Width="90"
                                                                 MinHeight="40"
                                                                 Margin="0,0,0,0"
+                                                                Padding="15,5,15,5"
                                                                 HorizontalAlignment="Right"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnExternalPluginInstallClick"
@@ -1606,9 +1593,10 @@
                                             <ui:ToggleSwitch
                                                 Grid.Row="0"
                                                 Grid.Column="2"
-                                                Width="100"
-                                                Margin="0,0,2,0"
-                                                IsOn="{Binding DropShadowEffect, Mode=TwoWay}" />
+                                                IsOn="{Binding DropShadowEffect, Mode=TwoWay}"
+                                                OffContent="{DynamicResource disable}"
+                                                OnContent="{DynamicResource enable}"
+                                                Style="{DynamicResource SideToggleSwitch}" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeb91;
                                             </TextBlock>
@@ -1774,9 +1762,8 @@
                                                     <ui:ToggleSwitch
                                                         Grid.Row="0"
                                                         Grid.Column="2"
-                                                        Width="100"
-                                                        Margin="0,0,2,0"
-                                                        IsOn="{Binding UseGlyphIcons, Mode=TwoWay}" />
+                                                        IsOn="{Binding UseGlyphIcons, Mode=TwoWay}"
+                                                        Style="{DynamicResource SideToggleSwitch}" />
                                                     <TextBlock Style="{StaticResource Glyph}">
                                                         &#xf6b8;
                                                     </TextBlock>
@@ -1905,9 +1892,10 @@
                                                         <ui:ToggleSwitch
                                                             Grid.Row="0"
                                                             Grid.Column="2"
-                                                            Width="100"
-                                                            Margin="0,0,2,0"
-                                                            IsOn="{Binding UseAnimation, Mode=TwoWay}" />
+                                                            IsOn="{Binding UseAnimation, Mode=TwoWay}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xedb5;
                                                         </TextBlock>
@@ -1929,9 +1917,10 @@
                                                         <ui:ToggleSwitch
                                                             Grid.Row="0"
                                                             Grid.Column="2"
-                                                            Width="100"
-                                                            Margin="0,0,2,0"
-                                                            IsOn="{Binding UseSound, Mode=TwoWay}" />
+                                                            IsOn="{Binding UseSound, Mode=TwoWay}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
                                                         </TextBlock>
@@ -1948,7 +1937,7 @@
                                                 <ComboBox
                                                     x:Name="ColorSchemeComboBox"
                                                     Grid.Column="2"
-                                                    Width="180"
+                                                    MinWidth="180"
                                                     Margin="0,0,18,0"
                                                     DisplayMemberPath="Display"
                                                     FontSize="14"
@@ -1969,7 +1958,7 @@
                                                 </StackPanel>
                                                 <Button
                                                     Grid.Column="2"
-                                                    Width="180"
+                                                    MinWidth="180"
                                                     Margin="0,0,18,0"
                                                     HorizontalAlignment="Center"
                                                     Click="OpenThemeFolder"
@@ -2149,23 +2138,22 @@
                                 </ListView>
                                 <StackPanel
                                     Grid.Row="5"
-                                    Width="350"
                                     Margin="0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
                                     Orientation="Horizontal">
                                     <Button
-                                        Width="100"
+                                        MinWidth="100"
                                         Margin="10"
                                         Click="OnDeleteCustomHotkeyClick"
                                         Content="{DynamicResource delete}" />
                                     <Button
-                                        Width="100"
+                                        MinWidth="100"
                                         Margin="10"
                                         Click="OnnEditCustomHotkeyClick"
                                         Content="{DynamicResource edit}" />
                                     <Button
-                                        Width="100"
+                                        MinWidth="100"
                                         Margin="10,10,0,10"
                                         Click="OnAddCustomeHotkeyClick"
                                         Content="{DynamicResource add}" />
@@ -2524,6 +2512,18 @@
                                 </Border>
                                 <TextBlock
                                     Margin="14,14,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="12"
+                                    Foreground="{DynamicResource Color15B}"
+                                    TextWrapping="WrapWithOverflow">
+                                    <Hyperlink NavigateUri="https://icons8.com" RequestNavigate="OnRequestNavigate">
+                                        <Run Text="Icons by icons8.com" />
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <TextBlock
+                                    Margin="14,4,0,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
                                     DockPanel.Dock="Bottom"

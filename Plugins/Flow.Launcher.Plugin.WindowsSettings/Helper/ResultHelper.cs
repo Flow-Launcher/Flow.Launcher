@@ -54,7 +54,6 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                     if (areaMatch.IsSearchPrecisionScoreMet())
                     {
                         var settingResult = NewSettingResult(areaMatch.Score + midScore, entry.Type);
-                        settingResult.SubTitleHighlightData = areaMatch.MatchData.Select(x => x + 6).ToList();
                         result = settingResult;
                     }
                     else

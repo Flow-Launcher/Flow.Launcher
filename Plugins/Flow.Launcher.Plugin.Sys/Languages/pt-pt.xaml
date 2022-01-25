@@ -7,7 +7,7 @@
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Desligar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reiniciar</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reinicia o computador com as opções de arranque para os modos de segurança e de depuração assim como outras opções</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reinicia o computador com as opções avançadas de arranque para os modos de segurança e de depuração</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Sair</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquear</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Fechar Flow Launcher</system:String>
