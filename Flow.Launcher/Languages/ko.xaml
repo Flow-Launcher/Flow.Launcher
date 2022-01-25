@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">핫키 등록 실패: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">단축키 등록 실패: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher 플러그인 파일 형식이 유효하지 않습니다.</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">이 쿼리의 최상위로 설정</system:String>
@@ -15,8 +15,11 @@
     <system:String x:Key="iconTrayAbout">정보</system:String>
     <system:String x:Key="iconTrayExit">종료</system:String>
     <system:String x:Key="closeWindow">닫기</system:String>
+    <system:String x:Key="copy">복사</system:String>
+    <system:String x:Key="cut">잘라내기</system:String>
+    <system:String x:Key="paste">붙여넣기</system:String>
     <system:String x:Key="GameMode">게임 모드</system:String>
-    <system:String x:Key="GameModeToolTip">핫키 사용을 일시중단합니다.</system:String>
+    <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 설정</system:String>
@@ -34,10 +37,12 @@
     <system:String x:Key="LastQuerySelected">직전 쿼리 내용 선택</system:String>
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 핫키 무시</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 단축키 무시</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="defaultFileManager">기본 파일관리자</system:String>
     <system:String x:Key="defaultFileManagerToolTip">폴더를 열 때 사용할 파일관리자를 선택하세요.</system:String>
+    <system:String x:Key="defaultBrowser">기본 웹 브라우저</system:String>
+    <system:String x:Key="defaultBrowserToolTip">새 탭, 새 창, 프라이빗 모드 설정</system:String>
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
@@ -97,20 +102,20 @@
     <system:String x:Key="AnimationTip">일부 UI에 애니메이션을 사용합니다.</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">핫키</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher 핫키</system:String>
+    <system:String x:Key="hotkey">단축키</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력합니다.</system:String>
     <system:String x:Key="openResultModifiers">결과 선택 단축키</system:String>
     <system:String x:Key="openResultModifiersToolTip">결과 목록을 선택하는 단축키입니다.</system:String>
     <system:String x:Key="showOpenResultHotkey">단축키 표시</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">결과창에서 결과 선택 단축키를 표시합니다.</system:String>
-    <system:String x:Key="customQueryHotkey">사용자지정 쿼리 핫키</system:String>
+    <system:String x:Key="customQueryHotkey">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customQuery">쿼리</system:String>
     <system:String x:Key="delete">삭제</system:String>
     <system:String x:Key="edit">편집</system:String>
     <system:String x:Key="add">추가</system:String>
     <system:String x:Key="pleaseSelectAnItem">항목을 선택하세요.</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 핫키를 삭제하시겠습니까?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 단축키를 삭제하시겠습니까?</system:String>
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
@@ -152,6 +157,7 @@
     <system:String x:Key="devtool">개발자도구</system:String>
     <system:String x:Key="settingfolder">설정 폴더</system:String>
     <system:String x:Key="logfolder">로그 폴더</system:String>
+    <system:String x:Key="welcomewindow">마법사</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">파일관리자 선택</system:String>
@@ -162,6 +168,16 @@
     <system:String x:Key="fileManager_path">파일관리자 경로</system:String>
     <system:String x:Key="fileManager_directory_arg">폴더경로 인수</system:String>
     <system:String x:Key="fileManager_file_arg">파일경로 인수</system:String>
+
+    <!--  DefaultBrowser Setting Dialog  -->
+    <system:String x:Key="defaultBrowserTitle">기본 웹 브라우저r</system:String>
+    <system:String x:Key="defaultBrowser_tips">기본 설정은 OS의 브라우저 설정을 따릅니다. 별도 설정시 Flow Launcher가 해당 브라우저를 사용합니다.</system:String>
+    <system:String x:Key="defaultBrowser_name">브라우저</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">브라우저 이름</system:String>
+    <system:String x:Key="defaultBrowser_path">브라우저 경로</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">새 창</system:String>
+    <system:String x:Key="defaultBrowser_newTab">새 탭</system:String>
+    <system:String x:Key="defaultBrowser_parameter">프라이빗 모드</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">중요도 변경</system:String>
@@ -180,15 +196,15 @@
     <system:String x:Key="actionkeyword_tips">플러그인을 시작하는데 필요한 액션 키워드를 입력하세요. 액션 키워드를 지정하지 않으려면 *를 사용하세요. 이 경우 키워드를 입력하지 않아도 동작합니다.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">커스텀 플러그인 핫키</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">커스텀 플러그인 단축키</system:String>
     <system:String x:Key="customeQueryHotkeyTips">단축키를 지정하여 특정 쿼리를 자동으로 입력할 수 있습니다. 사용하고 싶은 단축키를 눌러 지정한 후, 사용할 쿼리를 입력하세요.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">핫키를 사용할 수 없습니다. 다른 핫키를 입력하세요.</system:String>
-    <system:String x:Key="invalidPluginHotkey">플러그인 핫키가 유효하지 않습니다.</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
+    <system:String x:Key="invalidPluginHotkey">플러그인 단축키가 유효하지 않습니다.</system:String>
     <system:String x:Key="update">업데이트</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">핫키를 사용할 수 없습니다.</system:String>
+    <system:String x:Key="hotkeyUnavailable">단축키를 사용할 수 없습니다.</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">버전</system:String>
@@ -225,8 +241,45 @@
     <system:String x:Key="update_flowlauncher_fail">업데이트 실패</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">업데이트를 위해 Flow Launcher를 재시작합니다.</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">아래 파일들이 업데이트됩니다.</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_files">업데이트 파일</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">업데이트 설명</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">업데이트 설명</system:String>
+
+
+    <!--  Welcome Window  -->
+    <system:String x:Key="Skip">건너뛰기</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Flow Launcher에 오신 것을 환영합니다</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">안녕하세요, Flow Launcher를 처음 실행하시네요!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">시작하기전에 이 마법사가 간단한 설정을 도와드릴겁니다. 물론 건너 뛰셔도 됩니다. 사용하시는 언어를 선택해주세요.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">PC에서 모든 파일과 프로그램을 검색하고 실행합니다</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">프로그램, 파일, 즐겨찾기, YouTube, Twitter 등 모든 것을 검색하세요. 마우스에 손대지 않고 키보드만으로 모든 것을 얻을 수 있습니다.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow는 아래의 단축키로 실행합니다. 변경하려면 입력창을 선택하고 키보드에서 원하는 단축키를 누릅니다.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">단축키</system:String>
+    <system:String x:Key="Welcome_Page4_Title">액션 키워드와 명령어</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Flow Launcher는 플러그인을 통해 웹 검색, 프로그램 실행, 다양한 기능을 실행합니다. 특정 기능은 액션 키워드로 시작하며, 필요한 경우 액션 키워드 없이 사용할 수 있습니다. Flow Launcher에서 아래 쿼리를 사용해 보세요.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Flow Launcher를 시작합시다</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">끝났습니다. Flow Launcher를 즐겨주세요. 시작하는 단축키를 잊지마세요 :)</system:String>
+
+    <!--  General Guide & Hotkey  -->
+
+    <system:String x:Key="HotkeyUpDownDesc">뒤로/ 콘텍스트 메뉴</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">아이템 이동</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">콘텍스트 메뉴 열기</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">포함된 폴더 열기</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">관리자 권한으로 실행</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">검색 기록</system:String>
+    <system:String x:Key="HotkeyESCDesc">콘텍스트 메뉴에서 뒤로 가기</system:String>
+    <system:String x:Key="HotkeyRunDesc">선택한 아이템 열기</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">설정창 열기</system:String>
+    <system:String x:Key="HotkeyF5Desc">플러그인 데이터 새로고침</system:String>
+
+    <system:String x:Key="RecommendWeather">날씨</system:String>
+    <system:String x:Key="RecommendWeatherDesc">구글 날씨 검색</system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
+    <system:String x:Key="RecommendShellDesc">쉘 명령어</system:String>
+    <system:String x:Key="RecommendBluetooth">블루투스</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">윈도우 블루투스 설정</system:String>
+    <system:String x:Key="RecommendAcronyms">스메</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">스티커 메모</system:String>
 
 </ResourceDictionary>

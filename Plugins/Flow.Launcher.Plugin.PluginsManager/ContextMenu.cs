@@ -2,7 +2,7 @@
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = selectedResult.IcoPath,
                     Action = _ => 
                     {
-                        SharedCommands.SearchWeb.NewTabInBrowser(pluginManifestInfo.Website);
+                        Context.API.OpenUrl(pluginManifestInfo.Website);
                         return true;
                     }
                 },
@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = "Images\\sourcecode.png",
                     Action = _ =>
                     {
-                        SharedCommands.SearchWeb.NewTabInBrowser(pluginManifestInfo.UrlSourceCode);
+                        Context.API.OpenUrl(pluginManifestInfo.UrlSourceCode);
                         return true;
                     }
                 },
@@ -53,10 +53,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     {
                         // standard UrlSourceCode format in PluginsManifest's plugins.json file: https://github.com/jjw24/Flow.Launcher.Plugin.Putty/tree/master
                         var link = pluginManifestInfo.UrlSourceCode.StartsWith("https://github.com") 
-                                                                ? pluginManifestInfo.UrlSourceCode.Replace("/tree/master", "/issues/new/choose") 
-                                                                : pluginManifestInfo.UrlSourceCode;
+                                        ? Regex.Replace(pluginManifestInfo.UrlSourceCode, @"\/tree\/\w+$", "") + "/issues/new/choose"
+                                        : pluginManifestInfo.UrlSourceCode;
 
-                        SharedCommands.SearchWeb.NewTabInBrowser(link);
+                        Context.API.OpenUrl(link);
                         return true;
                     }
                 },
@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     IcoPath = "Images\\manifestsite.png",
                     Action = _ =>
                     {
-                        SharedCommands.SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
+                        Context.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
                         return true;
                     }
                 }

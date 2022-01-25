@@ -17,6 +17,9 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
+using System.Windows.Media;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher
 {
@@ -30,6 +33,7 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
+        private readonly MediaPlayer animationSound = new();
         private bool _animating;
 
         #endregion
@@ -41,6 +45,7 @@ namespace Flow.Launcher
             _settings = settings;
             InitializeComponent();
             InitializePosition();
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
         public MainWindow()
@@ -76,6 +81,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
+            Notification.Uninstall();
             Environment.Exit(0);
         }
 
@@ -85,6 +91,7 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
@@ -103,6 +110,12 @@ namespace Flow.Launcher
                         {
                             if (_viewModel.MainWindowVisibilityStatus)
                             {
+                                if (_settings.UseSound)
+                                {
+                                    animationSound.Position = TimeSpan.Zero;
+                                    animationSound.Play();
+                                }
+                                
                                 UpdatePosition();
                                 Activate();
                                 QueryTextBox.Focus();
@@ -118,6 +131,9 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
+
+                                if(_settings.UseAnimation)
+                                    WindowAnimator();
                             }
                             else if (!isProgressBarStoryboardPaused)
                             {
@@ -166,6 +182,9 @@ namespace Flow.Launcher
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
                         break;
+                    case nameof(Settings.Hotkey):
+                        UpdateNotifyIconText();
+                        break;
                 }
             };
         }
@@ -187,7 +206,7 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen");
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
             ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
             ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
@@ -210,7 +229,7 @@ namespace Flow.Launcher
             };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" +_settings.Hotkey + ")"
             };
             var gamemode = new MenuItem
             {
@@ -252,6 +271,20 @@ namespace Flow.Launcher
             };
         }
 
+        private void CheckFirstLaunch()
+        {
+            if (_settings.FirstLaunch)
+            {
+                _settings.FirstLaunch = false;
+                PluginManager.API.SaveAppAllSettings();
+                OpenWelcomeWindow();
+            }
+        }
+        private void OpenWelcomeWindow()
+        {
+            var WelcomeWindow = new WelcomeWindow(_settings);
+            WelcomeWindow.Show();
+        }
         private void ToggleGameMode()
         {
             if (_viewModel.GameModeStatus)
@@ -279,7 +312,6 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
-
         public void WindowAnimator()
         {
             if (_animating)
@@ -489,6 +521,24 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.Back:
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
+                        {
+                            var queryWithoutActionKeyword = 
+                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins).Search;
+                            
+                            if (FilesFolders.IsLocationPathString(queryWithoutActionKeyword))
+                            {
+                                _viewModel.BackspaceCommand.Execute(null);
+                                e.Handled = true;
+                            }
+                        }
+                    }
+                    break;
                 default:
                     break;
 
@@ -497,7 +547,7 @@ namespace Flow.Launcher
 
         private void MoveQueryTextToEnd()
         {
-            QueryTextBox.CaretIndex = QueryTextBox.Text.Length;
+            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
         }
 
         public void InitializeColorScheme()

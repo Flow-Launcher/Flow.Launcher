@@ -51,15 +51,12 @@ namespace Flow.Launcher.Core.Plugin
             // TODO: Async Action
             return Execute(_startInfo);
         }
-        public override Task InitAsync(PluginInitContext context)
+        public override async Task InitAsync(PluginInitContext context)
         {
-            this.context = context;
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
             _startInfo.ArgumentList.Add("");
-
+            await base.InitAsync(context);
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
-
-            return Task.CompletedTask;
         }
     }
 }

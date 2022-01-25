@@ -1,12 +1,12 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-	<!--Plugin Info-->
-	<system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Prehliadač záložiek</system:String>
-	<system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Vyhľadáva záložky prehliadača</system:String>
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Záložky prehliadača</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Vyhľadáva záložky prehliadača</system:String>
 
-    <!--Settings-->
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Nastavenia pluginu</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Otvoriť záložky v:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nové okno</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nová karta</system:String>
@@ -16,7 +16,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Kopírovať URL záložky do schránky</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Načítať prehliadač z:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Názov prehliadača</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookDataDirectory">Umiestnenie priečinka Data</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Umiestnenie priečinku s dátami</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Pridať</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Odstrániť</system:String>
 </ResourceDictionary>

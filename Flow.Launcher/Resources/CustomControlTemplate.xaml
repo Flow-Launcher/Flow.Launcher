@@ -1469,6 +1469,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ui:ToggleSwitch">
                     <Border
+                        Width="Auto"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -1478,7 +1479,7 @@
                             <ui:SimpleVisualStateManager />
                         </VisualStateManager.CustomVisualStateManager>
 
-                        <Grid>
+                        <Grid HorizontalAlignment="Right">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
@@ -1486,7 +1487,7 @@
 
                             <ui:ContentPresenterEx
                                 x:Name="HeaderContentPresenter"
-                                Grid.Row="1"
+                                Grid.Row="0"
                                 Margin="{DynamicResource ToggleSwitchTopHeaderMargin}"
                                 VerticalAlignment="Top"
                                 Content="{TemplateBinding Header}"
@@ -1497,11 +1498,9 @@
                                 TextWrapping="Wrap"
                                 Visibility="Collapsed" />
                             <Grid
-                                Grid.Row="0"
-                                Width="100"
-                                MinWidth="{DynamicResource ToggleSwitchThemeMinWidth}"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
+                                Grid.Row="1"
+                                MinWidth="10"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Top">
 
                                 <Grid.RowDefinitions>
@@ -1520,6 +1519,7 @@
                                     Grid.RowSpan="3"
                                     Grid.ColumnSpan="3"
                                     Margin="0,5"
+                                    HorizontalAlignment="Right"
                                     ui:FocusVisualHelper.IsTemplateFocusTarget="True"
                                     Background="{DynamicResource ToggleSwitchContainerBackground}" />
                                 <ContentPresenter
@@ -1552,6 +1552,7 @@
                                     Grid.Column="2"
                                     Width="40"
                                     Height="20"
+                                    HorizontalAlignment="Right"
                                     Fill="{DynamicResource ToggleSwitchFillOff}"
                                     RadiusX="10"
                                     RadiusY="10"
@@ -1563,6 +1564,7 @@
                                     Grid.Column="2"
                                     Width="40"
                                     Height="20"
+                                    HorizontalAlignment="Right"
                                     Fill="{DynamicResource ToggleSwitchFillOn}"
                                     Opacity="0"
                                     RadiusX="10"
@@ -1830,7 +1832,6 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultToggleSwitch}" TargetType="{x:Type ui:ToggleSwitch}" />
-
     <!--#region Expander for Setting Window-->
     <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">

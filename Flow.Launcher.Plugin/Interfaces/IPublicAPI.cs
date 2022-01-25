@@ -119,7 +119,21 @@ namespace Flow.Launcher.Plugin
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
+        [Obsolete("Unable to Retrieve correct return value")]
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        
+        /// <summary>
+        /// Register a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+        
+        /// <summary>
+        /// Remove a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+
 
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
@@ -212,5 +226,10 @@ namespace Flow.Launcher.Plugin
         /// <param name="DirectoryPath">Directory Path to open</param>
         /// <param name="FileName">Extra FileName Info</param>
         public void OpenDirectory(string DirectoryPath, string FileName = null);
+
+        /// <summary>
+        /// Opens the url. The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// </summary>
+        public void OpenUrl(string url, bool? inPrivate = null);
     }
 }
