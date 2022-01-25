@@ -274,7 +274,7 @@ namespace Flow.Launcher.ViewModel
 
         #region theme
 
-        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
+        public static string Theme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
 
         public string SelectedTheme
         {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -20,7 +19,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-
 
 namespace Flow.Launcher.ViewModel
 {
@@ -238,7 +236,7 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
             OpenResultCommand = new RelayCommand(index =>
@@ -278,7 +276,7 @@ namespace Flow.Launcher.ViewModel
             AutocompleteQueryCommand = new RelayCommand(_ =>
             {
                 var result = SelectedResults.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
                 {
                     var autoCompleteText = result.Title;
 
@@ -299,6 +297,18 @@ namespace Flow.Launcher.ViewModel
 
                     ChangeQueryText(autoCompleteText);
                 }
+            });
+
+            BackspaceCommand = new RelayCommand(index =>
+            {
+                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+
+                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+                var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
+
+                var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
+
+                ChangeQueryText($"{actionKeyword}{path}");
             });
 
             LoadContextMenuCommand = new RelayCommand(_ =>
@@ -440,9 +450,14 @@ namespace Flow.Launcher.ViewModel
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
+        public Visibility SearchIconVisibility { get; set; }
+
         public double MainWindowWidth => _settings.WindowSize;
 
+        public string PluginIconPath { get; set; } = null;
+
         public ICommand EscCommand { get; set; }
+        public ICommand BackspaceCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
         public ICommand SelectPrevItemCommand { get; set; }
         public ICommand SelectNextPageCommand { get; set; }
@@ -580,6 +595,8 @@ namespace Flow.Launcher.ViewModel
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
                 lasthistoryindex = 1;
+                PluginIconPath = null;
+                SearchIconVisibility = Visibility.Visible;
                 return;
             }
 
@@ -607,6 +624,18 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            if (plugins.Count == 1)
+            {
+                PluginIconPath = plugins.Single().Metadata.IcoPath;
+                SearchIconVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                PluginIconPath = null;
+                SearchIconVisibility = Visibility.Visible;
+            }
+            
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -698,7 +727,7 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg("Success");
+                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
                         return false;
                     }
                 };
@@ -742,7 +771,11 @@ namespace Flow.Launcher.ViewModel
                 IcoPath = icon,
                 SubTitle = subtitle,
                 PluginDirectory = metadata.PluginDirectory,
-                Action = _ => false
+                Action = _ =>
+                {
+                    App.API.OpenUrl(metadata.Website);
+                    return true;
+                }
             };
             return menu;
         }
@@ -791,20 +824,10 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            if (_settings.UseSound)
-            {
-                MediaPlayer media = new MediaPlayer();
-                media.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-                media.Play();
-            }
-
             MainWindowVisibility = Visibility.Visible;
 
             MainWindowVisibilityStatus = true;
-            
-            if(_settings.UseAnimation)
-                ((MainWindow)Application.Current.MainWindow).WindowAnimator();
-            
+
             MainWindowOpacity = 1;
         }
 

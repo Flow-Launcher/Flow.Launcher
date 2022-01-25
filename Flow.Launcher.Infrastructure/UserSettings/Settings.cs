@@ -40,6 +40,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
+        public bool UseAnimation { get; set; } = true;
+        public bool UseSound { get; set; } = true;
         public bool FirstLaunch { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
@@ -85,8 +87,52 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-        public bool UseAnimation { get; set; } = true;
-        public bool UseSound { get; set; } = true;
+        public int CustomBrowserIndex { get; set; } = 0;
+
+        [JsonIgnore]
+        public CustomBrowserViewModel CustomBrowser
+        {
+            get => CustomBrowserList[CustomBrowserIndex];
+            set => CustomBrowserList[CustomBrowserIndex] = value;
+        }
+
+        public List<CustomBrowserViewModel> CustomBrowserList { get; set; } = new()
+        {
+            new()
+            {
+                Name = "Default",
+                Path = "*",
+                PrivateArg = "",
+                EnablePrivate = false,
+                Editable = false
+            },
+            new()
+            {
+                Name = "Google Chrome",
+                Path = "chrome",
+                PrivateArg = "-incognito",
+                EnablePrivate = false,
+                Editable = false
+            },
+            new()
+            {
+                Name = "Mozilla Firefox",
+                Path = "firefox",
+                PrivateArg = "-private",
+                EnablePrivate = false,
+                Editable = false
+            }
+            ,
+            new()
+            {
+                Name = "MS Edge",
+                Path = "msedge",
+                PrivateArg = "-inPrivate",
+                EnablePrivate = false,
+                Editable = false
+            }
+        };
+
 
         /// <summary>
         /// when false Alphabet static service will always return empty results

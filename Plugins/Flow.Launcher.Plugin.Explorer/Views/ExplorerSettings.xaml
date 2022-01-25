@@ -103,7 +103,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="350" />
+                <ColumnDefinition Width="450" />
             </Grid.ColumnDefinitions>
             <StackPanel
                 Grid.Row="1"
@@ -112,7 +112,7 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnIndexingOptions"
-                    Width="130"
+                    MinWidth="130"
                     Margin="10"
                     Click="btnOpenIndexingOptions_Click"
                     Content="{DynamicResource plugin_explorer_manageindexoptions}" />
@@ -124,19 +124,19 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnDelete"
-                    Width="100"
+                    MinWidth="100"
                     Margin="10"
                     Click="btnDelete_Click"
                     Content="{DynamicResource plugin_explorer_delete}" />
                 <Button
                     x:Name="btnEdit"
-                    Width="100"
+                    MinWidth="100"
                     Margin="10"
                     Click="btnEdit_Click"
                     Content="{DynamicResource plugin_explorer_edit}" />
                 <Button
                     x:Name="btnAdd"
-                    Width="100"
+                    MinWidth="100"
                     Margin="10"
                     Click="btnAdd_Click"
                     Content="{DynamicResource plugin_explorer_add}" />

@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_program_delete">Odstrániť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">Upraviť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Pridať</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">Názov</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable">Povoliť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Zakázať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Umiestnenie</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Všetky programy</system:String>
@@ -18,11 +20,11 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Skryť cestu k aplikácii</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Pre spustiteľné súbory ako sú UWP alebo odkazy nezobrazovať cestu k súborom</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Povoliť popis programu</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Zakázaním tejto funkcie sa tiež zastaví vyhľadávanie popisu programu cez Flow</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Zakázaním tejto funkcie sa tiež zastaví vyhľadávanie v popise programu cez Flow</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Prípony</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max. hĺbka</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_directory">Priečinok:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_directory">Priečinok</system:String>
     <system:String x:Key="flowlauncher_plugin_program_browse">Prehliadať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_file_suffixes">Prípony súboru:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Max. hĺbka hľadania (-1 je neobm.):</system:String>
@@ -31,9 +33,9 @@
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Naozaj chcete odstrániť vybrané zdroje programov?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Aktualizovať</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher bude indexovať iba súbory s nasledujúcimi príponami:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher bude indexovať iba súbory s nasledujúcimi príponami. (Jednotlivé prípony oddeľujte znakom &quot;;&quot;)</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Prípony boli úspešne aktualizované</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Súbor s príponami nemôže byť prázdny</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Pole s príponami nemôže byť prázdne</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Spustiť ako správca</system:String>
@@ -47,7 +49,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Vlastný správca súborov</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Arg.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Môžete si prispôsobiť otváranie umiestnenia priečinka vložením Premenných prostredia, ktoré chcete použiť. Dostupnosť premenných prostredia môžete vyskúšať cez príkazový riadok.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Môžete si prispôsobiť otváranie umiestnenia priečinka vložením premenných prostredia, ktoré chcete použiť. Dostupnosť premenných prostredia môžete vyskúšať cez príkazový riadok.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadajte argumenty, ktoré chcete pridať pre správcu súborov. %s pre rodičovský priečinok, %f pre celú cestu (funguje iba pre win32). Pre podrobnosti pozrite webovú stránku správcu súborov.</system:String>
 
     <!--  Dialogs  -->

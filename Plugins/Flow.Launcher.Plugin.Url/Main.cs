@@ -68,14 +68,7 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                if (_settings.OpenInNewBrowserWindow)
-                                {
-                                    raw.NewBrowserWindow(_settings.BrowserPath);
-                                }
-                                else
-                                {
-                                    raw.NewTabInBrowser(_settings.BrowserPath);
-                                }
+                                context.API.OpenUrl(raw);
                                 
                                 return true;
                             }

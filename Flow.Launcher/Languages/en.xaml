@@ -15,6 +15,9 @@
     <system:String x:Key="iconTrayAbout">About</system:String>
     <system:String x:Key="iconTrayExit">Exit</system:String>
     <system:String x:Key="closeWindow">Close</system:String>
+    <system:String x:Key="copy">Copy</system:String>
+    <system:String x:Key="cut">Cut</system:String>
+    <system:String x:Key="paste">Paste</system:String>
     <system:String x:Key="GameMode">Game Mode</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
@@ -38,6 +41,8 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
     <system:String x:Key="defaultFileManager">Default File Manager</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
+    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
     <system:String x:Key="selectPythonDirectory">Select</system:String>
@@ -58,6 +63,7 @@
     <system:String x:Key="actionKeywords">Action keyword</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
     <system:String x:Key="newActionKeyword">New action keyword</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
@@ -166,6 +172,16 @@
     <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
+    <!--  DefaultBrowser Setting Dialog  -->
+    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Change Priority</system:String>
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
@@ -230,9 +246,9 @@
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Following files will be updated</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Update description</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
@@ -257,6 +273,7 @@
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
+    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
     <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
     <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
@@ -266,7 +283,7 @@
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Setting</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 

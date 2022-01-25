@@ -6,12 +6,12 @@
     <system:String x:Key="plugin_pluginsmanager_download_success">Úspešne stiahnuté</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Chyba: Nepodarilo sa stiahnuť plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} od {1} {2}{3}Chcete odinštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} od {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Inštalovať plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Stiahnuť a nainštalovať {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinštalovať plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin bol úspešne nainštalovaný. Reštartuje sa Flow, čakajte, prosím...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Inštalácia zlyhala: nepodarilo sa nájsť metadáta súboru plugin.json nového pluginu</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Inštalácia zlyhala: nepodarilo sa nájsť metadáta súboru plugin.json z extrahovaného súboru ZIP.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Chyba: Plugin s rovnakou alebo vyššou verziou ako {0} už existuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Chyba inštalácie pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Nastala chyba počas inštalácie pluginu {0}</system:String>
@@ -19,10 +19,10 @@
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Všetky pluginy sú aktuálne</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} od {1} {2}{3}Chcete aktualizovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizácia pluginu</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Tento plugin má dostupnú aktualizáciu, chcete ju zobraziť?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_exists">Aktualizácia pre tento plugin je k dispozícii, chcete ju zobraziť?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je už nainštalovaný</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stiahnutie manifestu pluginu zlyhalo</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Skontrolujte, či sa môžete pripojiť na github.com. Táto chyba znamená, že pravdepodobne nemôžete pluginy inštalovať alebo aktualizovať.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Skontrolujte, či sa môžete pripojiť ku github.com. Táto chyba znamená, že pravdepodobne nemôžete pluginy inštalovať alebo aktualizovať.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Inštalácia z neznámeho zdroja</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Tento plugin inštalujete z neznámeho zdroja a môže obsahovať potenciálne riziká!{0}{0}Uistite sa, že rozumiete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť v nastaveniach)</system:String>
 

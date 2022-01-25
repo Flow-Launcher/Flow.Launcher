@@ -37,59 +37,13 @@
     </UserControl.Resources>
     <Grid Margin="14,14,14,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="40" />
             <RowDefinition />
             <RowDefinition Height="56" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <StackPanel
-            Grid.Row="0"
-            Margin="14,0,0,0"
-            HorizontalAlignment="Left"
-            Orientation="Horizontal">
-            <Label Margin="0,15,20,0" Content="{DynamicResource flowlauncher_plugin_websearch_open_search_in}" />
-            <RadioButton
-                Name="NewWindowBrowser"
-                Margin="0,0,20,0"
-                Click="OnNewBrowserWindowClick"
-                Content="{DynamicResource flowlauncher_plugin_websearch_new_window}"
-                GroupName="OpenSearchBehaviour" />
-            <RadioButton
-                Name="NewTabInBrowser"
-                Click="OnNewTabClick"
-                Content="{DynamicResource flowlauncher_plugin_websearch_new_tab}"
-                GroupName="OpenSearchBehaviour" />
-        </StackPanel>
-        <StackPanel
-            Grid.Row="1"
-            Margin="14,3,0,0"
-            HorizontalAlignment="Left"
-            Orientation="Horizontal">
-            <Label
-                Margin="0,0,10,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Content="{DynamicResource flowlaucnher_plugin_websearch_set_browser_path}" />
-            <TextBox
-                x:Name="browserPathBox"
-                Width="250"
-                Margin="0,0,0,0"
-                HorizontalAlignment="Left"
-                Style="{StaticResource BrowserPathBoxStyle}"
-                TextChanged="OnBrowserPathTextChanged" />
-            <Button
-                x:Name="viewButton"
-                Width="80"
-                Margin="10,0,0,0"
-                HorizontalAlignment="Left"
-                Click="OnChooseClick"
-                Content="{DynamicResource flowlauncher_plugin_websearch_choose}"
-                FontSize="13" />
-        </StackPanel>
         <ListView
             x:Name="SearchSourcesListView"
-            Grid.Row="2"
+            Grid.Row="0"
             Margin="0,18,0,0"
             BorderBrush="DarkGray"
             BorderThickness="1"
@@ -146,7 +100,7 @@
             </ListView.View>
         </ListView>
         <StackPanel
-            Grid.Row="3"
+            Grid.Row="1"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
@@ -166,7 +120,7 @@
                 Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
         <Border
-            Grid.Row="4"
+            Grid.Row="2"
             Margin="0,0,0,0"
             HorizontalAlignment="Stretch"
             BorderBrush="#cecece"

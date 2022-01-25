@@ -126,8 +126,8 @@
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">下列檔案會被更新</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">下列檔案會被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新檔案</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">更新日誌</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">更新日誌</system:String>
 
 </ResourceDictionary>
