@@ -504,6 +504,7 @@ namespace Flow.Launcher
                 case Key.F1:
                     _viewModel.OpenQuickLook.Execute(null);
                     e.Handled = true;
+                    break;
                 case Key.Back:
                     var specialKeyState = GlobalHotkey.CheckModifiers();
                     if (specialKeyState.CtrlPressed)
