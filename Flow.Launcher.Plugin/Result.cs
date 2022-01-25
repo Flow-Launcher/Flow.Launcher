@@ -13,6 +13,8 @@ namespace Flow.Launcher.Plugin
 
         private string _icoPath;
 
+        private string _QuickLookPath;
+
         /// <summary>
         /// The title of the result. This is always required.
         /// </summary>
@@ -54,6 +56,38 @@ namespace Flow.Launcher.Plugin
                 {
                     _icoPath = value;
                 }
+            }
+        }
+
+        public string QuickLookPath
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_QuickLookPath))
+                {
+                    return _QuickLookPath;
+                }
+                else if (File.Exists(Title) || Directory.Exists(Title))
+                {
+                    return Title;
+                }
+                else if (File.Exists(SubTitle) || Directory.Exists(SubTitle))
+                {
+                    return SubTitle;
+                }
+                else if (!string.IsNullOrEmpty(IcoPath))
+                {
+                    return IcoPath;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            set
+            {
+                _QuickLookPath = value;
             }
         }
 

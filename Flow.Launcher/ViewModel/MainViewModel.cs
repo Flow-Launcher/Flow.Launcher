@@ -201,7 +201,7 @@ namespace Flow.Launcher.ViewModel
 
                         using (var writer = new StreamWriter(client))
                         {
-                            writer.WriteLine($"QuickLook.App.PipeMessages.Toggle|{result.SubTitle}");
+                            writer.WriteLine($"QuickLook.App.PipeMessages.Toggle|{result.QuickLookPath}");
                             writer.Flush();
                         }
                     }
