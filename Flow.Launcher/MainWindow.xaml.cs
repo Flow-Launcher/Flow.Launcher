@@ -20,6 +20,7 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.IO;
 
 namespace Flow.Launcher
 {
@@ -59,18 +60,31 @@ namespace Flow.Launcher
             {
                 var results = _viewModel.Results;
                 var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result != null) 
                 {
-                    string _copyText = String.IsNullOrEmpty(result.CopyText) ? result.Title : result.CopyText;
-                    System.Windows.Clipboard.SetDataObject(_copyText.ToString());
+                    string copyText = String.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
+                    if (File.Exists(copyText) || Directory.Exists(copyText))
+                    {
+
+                        System.Collections.Specialized.StringCollection paths = new System.Collections.Specialized.StringCollection();
+                        paths.Add(copyText);
+
+                        System.Windows.Clipboard.SetFileDropList(paths);
+    
+                    }
+                    else
+                    {
+                        System.Windows.Clipboard.SetDataObject(copyText.ToString());
+                    }
+                    
                     e.Handled = true;
                 }
 
             }
-            //else if (!String.IsNullOrEmpty(QueryTextBox.Text))
-            //{
-            //    System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
-            //}
+            else if (!String.IsNullOrEmpty(QueryTextBox.Text))
+            {
+                System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
+            }
             e.Handled = false;
         }
         private async void OnClosing(object sender, CancelEventArgs e)
