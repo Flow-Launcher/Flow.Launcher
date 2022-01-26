@@ -30,7 +30,7 @@
     <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
     <system:String x:Key="language">语言</system:String>
     <system:String x:Key="lastQueryMode">再次激活时</system:String>
-    <system:String x:Key="lastQueryModeToolTip">重启Flow Launcher时显示/隐藏以前的结果。</system:String>
+    <system:String x:Key="lastQueryModeToolTip">重启 Flow Launcher 时显示/隐藏以前的结果。</system:String>
     <system:String x:Key="LastQueryPreserved">保留上次搜索关键字</system:String>
     <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
@@ -232,7 +232,7 @@
     <system:String x:Key="update_flowlauncher_updating">更新中...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher 无法将您的用户配置文件数据移动到新的更新版本中。
-        请手动将您的用户配置文件数据文件夹从 {0} 到 {1}
+        请手动将您的用户配置文件数据文件夹从 {0} 移动到 {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">新的更新</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">发现 Flow Launcher 新版本 V{0}</system:String>
