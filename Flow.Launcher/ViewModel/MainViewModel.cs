@@ -890,18 +890,28 @@ namespace Flow.Launcher.ViewModel
                 if (result != null)
                 {
                     string copyText = string.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
-                    if (File.Exists(copyText) || Directory.Exists(copyText))
+                    var isFile = File.Exists(copyText);
+                    var isFolder = Directory.Exists(copyText);
+                    if (isFile || isFolder)
                     {
-
                         var paths = new StringCollection();
                         paths.Add(copyText);
 
                         Clipboard.SetFileDropList(paths);
-
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                +" " 
+                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("completedSuccessfully"));
                     }
                     else
                     {
                         Clipboard.SetDataObject(copyText.ToString());
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                + " " 
+                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("completedSuccessfully"));
                     }
                 }
 
