@@ -317,7 +317,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
-            if (_settings.ReplaceWinR)
+            if (!context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
                 if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
                 {

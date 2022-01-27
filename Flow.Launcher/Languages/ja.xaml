@@ -138,8 +138,8 @@
     <system:String x:Key="update_flowlauncher_update">アップデート</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">キャンセル</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">このアップデートでは、Flow Launcherの再起動が必要です</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">次のファイルがアップデートされます</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">次のファイルがアップデートされます</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新ファイル一覧</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">アップデートの詳細</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">アップデートの詳細</system:String>
     
 </ResourceDictionary>
