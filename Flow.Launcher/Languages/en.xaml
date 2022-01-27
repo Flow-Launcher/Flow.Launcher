@@ -18,6 +18,9 @@
     <system:String x:Key="copy">Copy</system:String>
     <system:String x:Key="cut">Cut</system:String>
     <system:String x:Key="paste">Paste</system:String>
+    <system:String x:Key="fileTitle">File</system:String>
+    <system:String x:Key="folderTitle">Folder</system:String>
+    <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Game Mode</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
@@ -176,8 +179,8 @@
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
     <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newtab">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
 
     <!--  Priority Setting Dialog  -->
@@ -244,9 +247,9 @@
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Following files will be updated</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Update description</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
@@ -281,7 +284,7 @@
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Setting</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 

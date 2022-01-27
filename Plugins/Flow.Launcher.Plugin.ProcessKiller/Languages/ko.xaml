@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">프로세스 킬러</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">실행중인 프로세스를 Flow를 사용하여 종료합니다</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">&quot;{0}&quot;의 모든 인스턴스를 종료</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">{0} 프로세스 종료</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">모든 인스턴스 종료</system:String>
+
+</ResourceDictionary>

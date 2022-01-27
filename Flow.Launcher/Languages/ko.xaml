@@ -175,8 +175,8 @@
     <system:String x:Key="defaultBrowser_name">브라우저</system:String>
     <system:String x:Key="defaultBrowser_profile_name">브라우저 이름</system:String>
     <system:String x:Key="defaultBrowser_path">브라우저 경로</system:String>
-    <system:String x:Key="defaultBrowser_newtab">새 창</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">새 탭</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">새 창</system:String>
+    <system:String x:Key="defaultBrowser_newTab">새 탭</system:String>
     <system:String x:Key="defaultBrowser_parameter">프라이빗 모드</system:String>
 
     <!--  Priority Setting Dialog  -->
@@ -241,9 +241,9 @@
     <system:String x:Key="update_flowlauncher_fail">업데이트 실패</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">업데이트를 위해 Flow Launcher를 재시작합니다.</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">아래 파일들이 업데이트됩니다.</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_files">업데이트 파일</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">업데이트 설명</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">업데이트 설명</system:String>
 
 
     <!--  Welcome Window  -->
