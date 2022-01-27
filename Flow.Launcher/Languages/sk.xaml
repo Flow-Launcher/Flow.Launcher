@@ -16,8 +16,8 @@
     <system:String x:Key="copy">Kopírovať</system:String>
     <system:String x:Key="cut">Vystrihnúť</system:String>
     <system:String x:Key="paste">Prilepiť</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
+    <system:String x:Key="fileTitle">Súbor</system:String>
+    <system:String x:Key="folderTitle">Priečinok</system:String>
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
