@@ -20,7 +20,6 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.IO;
 
 namespace Flow.Launcher
 {
@@ -55,37 +54,15 @@ namespace Flow.Launcher
         }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
-
             if (QueryTextBox.SelectionLength == 0)
             {
-                var results = _viewModel.Results;
-                var result = results.SelectedItem?.Result;
-                if (result != null) 
-                {
-                    string copyText = String.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
-                    if (File.Exists(copyText) || Directory.Exists(copyText))
-                    {
-
-                        System.Collections.Specialized.StringCollection paths = new System.Collections.Specialized.StringCollection();
-                        paths.Add(copyText);
-
-                        System.Windows.Clipboard.SetFileDropList(paths);
-    
-                    }
-                    else
-                    {
-                        System.Windows.Clipboard.SetDataObject(copyText.ToString());
-                    }
-                    
-                    e.Handled = true;
-                }
+                _viewModel.ResultCopy(string.Empty);
 
             }
-            else if (!String.IsNullOrEmpty(QueryTextBox.Text))
+            else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
-                System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
+                _viewModel.ResultCopy(QueryTextBox.SelectedText);
             }
-            e.Handled = false;
         }
         private async void OnClosing(object sender, CancelEventArgs e)
         {

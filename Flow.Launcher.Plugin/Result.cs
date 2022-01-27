@@ -29,8 +29,12 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
-        public string CopyText { get; set; } = String.Empty;
-        public string FileCopy { get; set; } = String.Empty;
+        /// <summary>
+        /// This holds the text which can be provided by plugin to be copied to the 
+        /// user's clipboard when Ctrl + C is pressed on a result. If the text is a file/directory path
+        /// flow will copy the actual file/folder instead of just the path text.
+        /// </summary>
+        public string CopyText { get; set; } = string.Empty;
 
         /// <summary>
         /// This holds the text which can be provided by plugin to help Flow autocomplete text
