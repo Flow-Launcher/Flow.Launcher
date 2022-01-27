@@ -52,7 +52,18 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+        private void OnCopy(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (QueryTextBox.SelectionLength == 0)
+            {
+                _viewModel.ResultCopy(string.Empty);
 
+            }
+            else if (!string.IsNullOrEmpty(QueryTextBox.Text))
+            {
+                _viewModel.ResultCopy(QueryTextBox.SelectedText);
+            }
+        }
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _settings.WindowTop = Top;

@@ -22,6 +22,7 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Security.Principal;
 using System.IO.Pipes;
+using System.Collections.Specialized;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -463,6 +464,7 @@ namespace Flow.Launcher.ViewModel
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
         public ICommand OpenQuickLook { get; set; }
+        public ICommand CopyToClipboard { get; set; }
         public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
@@ -908,6 +910,52 @@ namespace Flow.Launcher.ViewModel
             }
 
             Results.AddResults(resultsForUpdates, token);
+        }
+
+        /// <summary>
+        /// This is the global copy method for an individual result. If no text is passed, 
+        /// the method will work out what is to be copied based on the result, so plugin can offer the text 
+        /// to be copied via the result model. If the text is a directory/file path, 
+        /// then actual file/folder will be copied instead. 
+        /// The result's subtitle text is the default text to be copied
+        /// </summary>
+        public void ResultCopy(string stringToCopy)
+        {
+            if (string.IsNullOrEmpty(stringToCopy))
+            {
+                var result = Results.SelectedItem?.Result;
+                if (result != null)
+                {
+                    string copyText = string.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
+                    var isFile = File.Exists(copyText);
+                    var isFolder = Directory.Exists(copyText);
+                    if (isFile || isFolder)
+                    {
+                        var paths = new StringCollection();
+                        paths.Add(copyText);
+
+                        Clipboard.SetFileDropList(paths);
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                +" " 
+                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("completedSuccessfully"));
+                    }
+                    else
+                    {
+                        Clipboard.SetDataObject(copyText.ToString());
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                + " " 
+                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("completedSuccessfully"));
+                    }
+                }
+
+                return;
+            }
+
+            Clipboard.SetDataObject(stringToCopy);
         }
 
         #endregion
