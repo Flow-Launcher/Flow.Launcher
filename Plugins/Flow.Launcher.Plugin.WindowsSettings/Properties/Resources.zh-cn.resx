@@ -813,7 +813,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="jpnime" xml:space="preserve">
-    <value>JpnIME</value>
+    <value>jpnime</value>
     <comment>Should not translated</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
