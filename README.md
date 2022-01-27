@@ -54,7 +54,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 | [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `winget install "Flow Launcher"` | `scoop install Flow-Launcher` |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: | :------------------------------: |
 
-> Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
+> When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up. 
 
 And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/discussions" target="_blank">early access version</a>.
 
@@ -215,18 +215,19 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 | Hotkey                                                       | Description                                  |
 | ------------------------------------------------------------ | -------------------------------------------- |
-| <kbd>Alt</kbd>+ <kbd>Space</kbd>                             | Open Search Box (default and configurable)   |
+| <kbd>Alt</kbd>+ <kbd>Space</kbd>                             | Open search window (default and configurable)|
 | <kbd>Enter</kbd>                                             | Execute                                      |
-| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run As Admin                                 |
-| <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & Down                             |
-| <kbd>←</kbd><kbd>→</kbd>                                     | Back to Result / Open Context Menu           |
-| <kbd>Ctrl</kbd> +<kbd>o</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                      |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run as admin                                 |
+| <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & down                             |
+| <kbd>←</kbd><kbd>→</kbd>                                     | Back to result / Open Context Menu           |
+| <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                      |
 | <kbd>Tab</kbd>                                               | Autocomplete                                 |
-| <kbd>Esc</kbd>                                               | Back to Result & Close                       |
-| <kbd>Ctrl</kbd> +<kbd>i</kbd>                                | Open Setting Window                          |
-| <kbd>F5</kbd>                                                | Reload All Plugin Data & Window Search Index |
-| <kbd>Ctrl</kbd> + <kbd>h</kbd>                               | Open Query History                           |
-| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to Previous Directory                   |
+| <kbd>Esc</kbd>                                               | Back to results / hide search window         |
+| <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
+| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
+| <kbd>F5</kbd>                                                | Reload all plugin data                       |
+| <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
+| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
 
 ## System Command List
