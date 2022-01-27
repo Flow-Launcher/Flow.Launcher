@@ -90,9 +90,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-
-
-
         /// http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
         private string[] XmlNamespaces(string path)
         {
