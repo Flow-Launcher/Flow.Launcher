@@ -21,7 +21,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
             return StringMatcher.FuzzySearch(queryString, bookmark.Url);
         }
 
-
         internal static List<Bookmark> LoadAllBookmarks(Settings setting)
         {
 
