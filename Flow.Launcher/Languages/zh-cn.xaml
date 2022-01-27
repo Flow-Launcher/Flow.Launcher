@@ -16,6 +16,9 @@
     <system:String x:Key="copy">复制</system:String>
     <system:String x:Key="cut">剪切</system:String>
     <system:String x:Key="paste">粘贴</system:String>
+    <system:String x:Key="fileTitle">File</system:String>
+    <system:String x:Key="folderTitle">Folder</system:String>
+    <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">游戏模式</system:String>
     <system:String x:Key="GameModeToolTip">暂停使用快捷键。</system:String>
 
