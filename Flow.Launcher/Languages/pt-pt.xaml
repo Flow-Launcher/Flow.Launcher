@@ -16,9 +16,9 @@
     <system:String x:Key="copy">Copiar</system:String>
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Colar</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
+    <system:String x:Key="fileTitle">Ficheiro</system:String>
+    <system:String x:Key="folderTitle">Pasta</system:String>
+    <system:String x:Key="textTitle">Texto</system:String>
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
 
