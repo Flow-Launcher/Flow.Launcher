@@ -226,6 +226,7 @@ namespace Flow.Launcher
                 {
                     url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
                 }
+
                 return;
             }
 
@@ -240,7 +241,7 @@ namespace Flow.Launcher
                 return;
             }
 
-            throw new InvalidOperationException("URI scheme not specifiedor supported ");
+            throw new InvalidOperationException("URI scheme not specified or supported ");
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)
