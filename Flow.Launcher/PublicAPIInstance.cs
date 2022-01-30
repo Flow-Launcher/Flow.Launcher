@@ -209,21 +209,49 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
+        public void OpenUri(string url, bool? inPrivate = null, bool isAppUri = false)
+        {
+            var uri = new Uri(url);
+            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+            {
+                var browserInfo = _settingsVM.Settings.CustomBrowser;
+
+                var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
+
+                if (browserInfo.OpenInTab)
+                {
+                    url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
+                else
+                {
+                    url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
+
+                return;
+            }
+
+            if (isAppUri)
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                })?.Dispose();
+
+                return;
+            }
+
+            throw new InvalidOperationException("URI scheme not specified or supported ");
+        }
+
         public void OpenUrl(string url, bool? inPrivate = null)
         {
-            var browserInfo = _settingsVM.Settings.CustomBrowser;
+            OpenUri(url, inPrivate);
+        }
 
-            var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
-
-            if (browserInfo.OpenInTab)
-            {
-                url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
-            }
-            else
-            {
-                url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
-            }
-
+        public void OpenAppUri(string appUri)
+        {
+            OpenUri(appUri, isAppUri: true);
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

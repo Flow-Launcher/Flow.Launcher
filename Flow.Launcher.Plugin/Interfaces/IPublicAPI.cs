@@ -231,5 +231,10 @@ namespace Flow.Launcher.Plugin
         /// Opens the url. The browser and mode used is based on what's configured in Flow's default browser settings.
         /// </summary>
         public void OpenUrl(string url, bool? inPrivate = null);
+
+        /// <summary>
+        /// Opens the application URI.
+        /// </summary>
+        public void OpenAppUri(string appUri);
     }
 }

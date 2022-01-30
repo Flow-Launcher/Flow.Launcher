@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
             try
             {
-                Process.Start(psi);
+                Process.Start(psi)?.Dispose();
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     psi.FileName = url;
                 }
 
-                Process.Start(psi);
+                Process.Start(psi)?.Dispose();
             }
             // This error may be thrown if browser path is incorrect
             catch (System.ComponentModel.Win32Exception)
