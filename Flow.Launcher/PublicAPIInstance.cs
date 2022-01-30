@@ -209,7 +209,7 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
-        public void OpenUrl(string url, bool? inPrivate = null)
+        public void OpenUri(string url, bool? inPrivate = null, bool isAppUri = false)
         {
             var uri = new Uri(url);
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
@@ -229,10 +229,28 @@ namespace Flow.Launcher
                 return;
             }
 
-            Process.Start(new ProcessStartInfo()
+            if (isAppUri)
             {
-                FileName = url, UseShellExecute = true
-            })?.Dispose();
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                })?.Dispose();
+
+                return;
+            }
+
+            throw new InvalidOperationException("URI scheme not specifiedor supported ");
+        }
+
+        public void OpenUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(url, inPrivate);
+        }
+
+        public void OpenAppUri(string appUri)
+        {
+            OpenUri(appUri, isAppUri: true);
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
