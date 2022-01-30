@@ -13,12 +13,14 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-
+using System.IO;
+using System.Collections.Specialized;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -252,6 +254,18 @@ namespace Flow.Launcher.ViewModel
                 }
             });
 
+            BackspaceCommand = new RelayCommand(index =>
+            {
+                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+
+                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+                var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
+
+                var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
+
+                ChangeQueryText($"{actionKeyword}{path}");
+            });
+
             LoadContextMenuCommand = new RelayCommand(_ =>
             {
                 if (SelectedIsFromQueryResults())
@@ -398,6 +412,7 @@ namespace Flow.Launcher.ViewModel
         public string PluginIconPath { get; set; } = null;
 
         public ICommand EscCommand { get; set; }
+        public ICommand BackspaceCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
         public ICommand SelectPrevItemCommand { get; set; }
         public ICommand SelectNextPageCommand { get; set; }
@@ -410,6 +425,9 @@ namespace Flow.Launcher.ViewModel
         public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
         public ICommand ClearQueryCommand { get; private set; }
+
+        public ICommand CopyToClipboard { get; set; }
+
         public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
@@ -706,7 +724,11 @@ namespace Flow.Launcher.ViewModel
                 IcoPath = icon,
                 SubTitle = subtitle,
                 PluginDirectory = metadata.PluginDirectory,
-                Action = _ => false
+                Action = _ =>
+                {
+                    App.API.OpenUrl(metadata.Website);
+                    return true;
+                }
             };
             return menu;
         }
@@ -851,6 +873,52 @@ namespace Flow.Launcher.ViewModel
             }
 
             Results.AddResults(resultsForUpdates, token);
+        }
+
+        /// <summary>
+        /// This is the global copy method for an individual result. If no text is passed, 
+        /// the method will work out what is to be copied based on the result, so plugin can offer the text 
+        /// to be copied via the result model. If the text is a directory/file path, 
+        /// then actual file/folder will be copied instead. 
+        /// The result's subtitle text is the default text to be copied
+        /// </summary>
+        public void ResultCopy(string stringToCopy)
+        {
+            if (string.IsNullOrEmpty(stringToCopy))
+            {
+                var result = Results.SelectedItem?.Result;
+                if (result != null)
+                {
+                    string copyText = string.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
+                    var isFile = File.Exists(copyText);
+                    var isFolder = Directory.Exists(copyText);
+                    if (isFile || isFolder)
+                    {
+                        var paths = new StringCollection();
+                        paths.Add(copyText);
+
+                        Clipboard.SetFileDropList(paths);
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                +" " 
+                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("completedSuccessfully"));
+                    }
+                    else
+                    {
+                        Clipboard.SetDataObject(copyText.ToString());
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                + " " 
+                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("completedSuccessfully"));
+                    }
+                }
+
+                return;
+            }
+
+            Clipboard.SetDataObject(stringToCopy);
         }
 
         #endregion

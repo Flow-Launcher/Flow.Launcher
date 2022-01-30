@@ -51,8 +51,8 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 ### Installation
 
-| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `WinGet install "Flow Launcher"` |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: |
+| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `winget install "Flow Launcher"` | `scoop install Flow-Launcher` |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: | :------------------------------: |
 
 > Windows may complain about security due to code not being signed, this will be completed at a later stage. If you downloaded from this repo, you are good to continue the set up. 
 
@@ -215,17 +215,18 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 | Hotkey                                                       | Description                                  |
 | ------------------------------------------------------------ | -------------------------------------------- |
-| <kbd>Alt</kbd>+ <kbd>Space</kbd>                             | Open Search Box (Default and Configurable)   |
+| <kbd>Alt</kbd>+ <kbd>Space</kbd>                             | Open Search Box (default and configurable)   |
 | <kbd>Enter</kbd>                                             | Execute                                      |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run As Admin                                 |
 | <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & Down                             |
 | <kbd>←</kbd><kbd>→</kbd>                                     | Back to Result / Open Context Menu           |
-| <kbd>Ctrl</kbd> +<kbd>o</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                            |
-| <kbd>Tab</kbd>                                               | Autocomplete                    |
+| <kbd>Ctrl</kbd> +<kbd>o</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                      |
+| <kbd>Tab</kbd>                                               | Autocomplete                                 |
 | <kbd>Esc</kbd>                                               | Back to Result & Close                       |
 | <kbd>Ctrl</kbd> +<kbd>i</kbd>                                | Open Setting Window                          |
 | <kbd>F5</kbd>                                                | Reload All Plugin Data & Window Search Index |
 | <kbd>Ctrl</kbd> + <kbd>h</kbd>                               | Open Query History                           |
+| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to Previous Directory                   |
 
 
 ## System Command List

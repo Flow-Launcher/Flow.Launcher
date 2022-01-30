@@ -18,6 +18,9 @@
     <system:String x:Key="copy">Copy</system:String>
     <system:String x:Key="cut">Cut</system:String>
     <system:String x:Key="paste">Paste</system:String>
+    <system:String x:Key="fileTitle">File</system:String>
+    <system:String x:Key="folderTitle">Folder</system:String>
+    <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Game Mode</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
