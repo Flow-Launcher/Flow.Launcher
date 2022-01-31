@@ -228,12 +228,13 @@ namespace Flow.Launcher.Plugin
         public void OpenDirectory(string DirectoryPath, string FileName = null);
 
         /// <summary>
-        /// Opens the url. The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// Opens the URL. The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// Also supports application URIs e.g. obsidian://search-query-example
         /// </summary>
         public void OpenUrl(string url, bool? inPrivate = null);
 
         /// <summary>
-        /// Opens the application URI.
+        /// Opens the application URI, e.g. obsidian://search-query-example
         /// </summary>
         public void OpenAppUri(string appUri);
     }
