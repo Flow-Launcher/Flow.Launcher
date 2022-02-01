@@ -199,6 +199,7 @@ namespace Flow.Launcher.ViewModel
 
 
 
+#pragma warning disable VSTHRD101 // Avoid unsupported async delegates
             OpenQuickLook = new RelayCommand(async command =>
             {
                 var results = SelectedResults;
@@ -223,7 +224,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    if (command == "Toggle")
+                    if ((string)command == "Toggle")
                     {
                         Log.Warn("MainViewModel", "Unable to activate quicklook");
                     }
@@ -231,6 +232,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 
             });
+#pragma warning restore VSTHRD101 // Avoid unsupported async delegates
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
