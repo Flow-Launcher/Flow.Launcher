@@ -23,6 +23,8 @@ using System.IO;
 using System.Security.Principal;
 using System.IO.Pipes;
 using System.Collections.Specialized;
+using System.Text;
+using System.Buffers;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -197,32 +199,37 @@ namespace Flow.Launcher.ViewModel
 
 
 
-            OpenQuickLook = new RelayCommand(command =>
+            OpenQuickLook = new RelayCommand(async command =>
             {
                 var results = SelectedResults;
                 var result = results.SelectedItem?.Result;
-                string PipeName = "QuickLook.App.Pipe." + WindowsIdentity.GetCurrent().User?.Value;
-                if (command == null)
+
+                if (result is null)
+                    return;
+                if (command is null)
                 {
                     command = "Toggle";
                 }
+                string pipeName = "QuickLook.App.Pipe." + WindowsIdentity.GetCurrent().User?.Value;
+
+                await using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.Out);
                 try
                 {
-                    using (var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out))
-                    {
-                        client.Connect();
-
-                        using (var writer = new StreamWriter(client))
-                        {
-                            writer.WriteLine($"QuickLook.App.PipeMessages.{command}|{result.QuickLookPath}");
-                            writer.Flush();
-                        }
-                    }
+                    await client.ConnectAsync(100).ConfigureAwait(false);
+                    var message = $"QuickLook.App.PipeMessages.{command}|{result.QuickLookPath}\n";
+                    using var buffer = MemoryPool<byte>.Shared.Rent(Encoding.UTF8.GetMaxByteCount(message.Length));
+                    var count = Encoding.UTF8.GetBytes(message, buffer.Memory.Span);
+                    await client.WriteAsync(buffer.Memory[..count]);
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception("Test", "fail to convert text for suggestion box", ex);
+                    if (command == "Toggle")
+                    {
+                        Log.Warn("MainViewModel", "Unable to activate quicklook");
+                    }
+                    
                 }
+                
             });
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
