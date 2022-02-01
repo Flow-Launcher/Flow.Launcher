@@ -88,7 +88,7 @@ namespace Flow.Launcher.Plugin
                 }
                 else
                 {
-                    return null;
+                    return _QuickLookPath;
                 }
 
             }
