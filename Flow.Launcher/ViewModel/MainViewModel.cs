@@ -222,7 +222,7 @@ namespace Flow.Launcher.ViewModel
                     var count = Encoding.UTF8.GetBytes(message, buffer.Memory.Span);
                     await client.WriteAsync(buffer.Memory[..count]);
                 }
-                catch (Exception ex)
+                catch (System.TimeoutException)
                 {
                     if ((string)command == "Toggle")
                     {
