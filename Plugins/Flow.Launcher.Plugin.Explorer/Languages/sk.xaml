@@ -61,7 +61,7 @@
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Úspešne odstránené z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Pridať do Rýchleho prístupu, aby ho bolo možné otvoriť pomocou aktivačného príkazu pluginu Prieskumník</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Odstráni z Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstrániť z Rýchleho prístupu</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstráni {0} z Rýchleho prístupu</system:String>
 
 </ResourceDictionary>
