@@ -4,9 +4,9 @@
     <!--Dialogues-->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Descarregar plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Descarregado com sucesso</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_error">Erro: não foi possível descarregar o plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">Não foi possível descarregar o plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende desinstalar este plugin? Após a desinstalação, Flow Launcher será reiniciado.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} de{1} {2}{3}Tem a certeza de que pretende instalar este plugin? Após a instalação, Flow Launcher será reiniciado.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende instalar este plugin? Após a instalação, Flow Launcher será reiniciado.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Instalador de plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descarregar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalador de plugins</system:String>
