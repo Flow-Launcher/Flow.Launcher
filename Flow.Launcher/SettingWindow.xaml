@@ -57,10 +57,7 @@
                                     MinWidth="20"
                                     MaxWidth="60" />
                                 <ColumnDefinition Width="8*" />
-                                <ColumnDefinition
-                                    Width="Auto"
-                                    MinWidth="40"
-                                    MaxWidth="550" />
+                                <ColumnDefinition Width="Auto" MinWidth="30" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
@@ -102,7 +99,7 @@
             TargetType="{x:Type CheckBox}">
             <Setter Property="Width" Value="24" />
             <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="Margin" Value="0,4,0,4" />
+            <Setter Property="Margin" Value="0,4,10,4" />
             <Setter Property="LayoutTransform">
                 <Setter.Value>
                     <ScaleTransform ScaleX="1" ScaleY="1" />
@@ -110,11 +107,16 @@
             </Setter>
         </Style>
 
-        <Style x:Key="SideToggleSwitch" TargetType="{x:Type ui:ToggleSwitch}">
+        <Style
+            x:Key="SideToggleSwitch"
+            BasedOn="{StaticResource DefaultToggleSwitch}"
+            TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="OffContent" Value="{DynamicResource disable}" />
             <Setter Property="OnContent" Value="{DynamicResource enable}" />
-            <Setter Property="FlowDirection" Value="RightToLeft" />
             <Setter Property="Margin" Value="0,4,22,4" />
         </Style>
 
@@ -948,9 +950,9 @@
                                                     FlowDirection="LeftToRight">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" MinWidth="100" />
-                                                        <ColumnDefinition Width="3*" />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="8*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel
                                                         Grid.Column="0"
@@ -990,7 +992,7 @@
                                                         <Border>
                                                             <Button
                                                                 x:Name="PriorityButton"
-                                                                Margin="0,0,12,0"
+                                                                Margin="0,0,22,0"
                                                                 VerticalAlignment="Center"
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
@@ -1022,10 +1024,11 @@
                                                     </StackPanel>
                                                     <DockPanel Grid.Column="3">
                                                         <ui:ToggleSwitch
-                                                            Margin="0"
-                                                            DockPanel.Dock="Right"
+                                                            Margin="0,0,6,0"
+                                                            HorizontalAlignment="Right"
                                                             IsOn="{Binding PluginState}"
-                                                            Style="{DynamicResource SideToggleSwitch}" />
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}" />
                                                     </DockPanel>
                                                 </Grid>
 
@@ -1955,7 +1958,7 @@
                                                 </StackPanel>
                                                 <Button
                                                     Grid.Column="2"
-                                                    Width="180"
+                                                    MinWidth="180"
                                                     Margin="0,0,18,0"
                                                     HorizontalAlignment="Center"
                                                     Click="OpenThemeFolder"
