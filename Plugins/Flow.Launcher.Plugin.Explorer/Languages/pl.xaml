@@ -1,14 +1,67 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
-
-    <!--Controls-->
-    <system:String x:Key="plugin_explorer_delete">Usuń</system:String>
-    <system:String x:Key="plugin_explorer_edit">Edytuj</system:String>
-    <system:String x:Key="plugin_explorer_add">Dodaj</system:String>
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Dialogues-->
+    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Musisz wybrać któryś folder z listy</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Czy jesteś pewien że chcesz usunąć {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted the {0}</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
+    <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
+
+    <!--Controls-->
+    <system:String x:Key="plugin_explorer_delete">Usu</system:String>
+    <system:String x:Key="plugin_explorer_edit">Edytuj</system:String>
+    <system:String x:Key="plugin_explorer_add">Dodaj</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Zapisz</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
+
+    <!--Plugin Infos-->
+    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Search and manage files and folders. Explorer utilises Windows Index Search</system:String>
+
+    <!--Context menu items-->
+    <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Usu</system:String>
+    <system:String x:Key="plugin_explorer_path">Path:</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Failed to open Windows Indexing Options</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Add to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add the current {0} to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Successfully Removed</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove the current {0} from Quick Access</system:String>
 
 </ResourceDictionary>
