@@ -1,17 +1,22 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-	<!--Plugin Info-->
-	<system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">浏览器书签</system:String>
-	<system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索您的浏览器书签</system:String>
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">浏览器书签</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索您的浏览器书签</system:String>
 
-    <!--Settings-->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">在以下位置打开书签：</system:String>
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">书签数据</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">在以下位置打开书签</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">新窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">新标签</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">设置浏览器路径：</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">设置浏览器路径</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">选择</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">复制网址</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">将书签的网址复制到剪贴板</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">从以下浏览器加载：</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">浏览器名称</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">数据文件路径</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">增加</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">删除</system:String>
 </ResourceDictionary>
