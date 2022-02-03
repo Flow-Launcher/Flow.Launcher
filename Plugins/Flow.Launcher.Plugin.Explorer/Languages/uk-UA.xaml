@@ -17,7 +17,7 @@
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">Видалити</system:String>
-    <system:String x:Key="plugin_explorer_edit">Змінити</system:String>
+    <system:String x:Key="plugin_explorer_edit">Редагувати</system:String>
     <system:String x:Key="plugin_explorer_add">Додати</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
