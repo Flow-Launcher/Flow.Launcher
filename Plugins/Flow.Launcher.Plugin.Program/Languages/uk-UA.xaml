@@ -3,7 +3,7 @@
 
     <!--  Program setting  -->
     <system:String x:Key="flowlauncher_plugin_program_delete">Видалити</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">Змінити</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">Редагувати</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Додати</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
@@ -53,7 +53,7 @@
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Збережено</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Успішно</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
 
