@@ -170,7 +170,7 @@
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
-    <value>Средства администрирования</value>
+    <value>Инструменты администрирования</value>
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
@@ -185,11 +185,11 @@
     <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="AirplaneMode" xml:space="preserve">
-    <value>Режим "в самолете"</value>
+    <value>Режим полёта</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
-    <value>ALT+TAB</value>
+    <value>Alt+Tab</value>
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>Громкость приложения и настройки устройства</value>
+    <value>Настройки громкости приложения и устройства</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -241,7 +241,7 @@
     <value>Учетные записи</value>
   </data>
   <data name="AreaAdministrativeTools" xml:space="preserve">
-    <value>Средства администрирования</value>
+    <value>Инструменты администрирования</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
@@ -375,7 +375,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>Голубой</value>
+    <value>Синий свет</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
     <value>Bluetooth</value>
@@ -386,14 +386,14 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueYellow" xml:space="preserve">
-    <value>Синие-желтый</value>
+    <value>Сине-желтый</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
     <value>IME Bopomofo</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="bpmf" xml:space="preserve">
-    <value>чжуинь</value>
+    <value>bpmf</value>
     <comment>Should not translated</comment>
   </data>
   <data name="Broadcasting" xml:space="preserve">
@@ -409,7 +409,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
-    <value>вызовы</value>
+    <value>вызывает</value>
   </data>
   <data name="Camera" xml:space="preserve">
     <value>Камера</value>
@@ -472,7 +472,7 @@
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
-    <value>Команда Copy</value>
+    <value>Скопировать команду</value>
   </data>
   <data name="CoreIsolation" xml:space="preserve">
     <value>Изоляция ядра</value>
@@ -619,7 +619,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Environment" xml:space="preserve">
-    <value>Среда</value>
+    <value>Окружение</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Ethernet" xml:space="preserve">
@@ -747,7 +747,7 @@
     <value>Голографический звук</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
-    <value>Голографическая среда</value>
+    <value>Голографическое окружение</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
     <value>Голографическая гарнитура</value>
@@ -824,7 +824,7 @@
     <value>Клавиатура</value>
   </data>
   <data name="Keys" xml:space="preserve">
-    <value>Ключи</value>
+    <value>Клавиши</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Язык</value>
@@ -891,7 +891,7 @@
     <value>Мобильные устройства</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
-    <value>Мобильный хот-спот</value>
+    <value>Мобильная точка доступа</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="modem.cpl" xml:space="preserve">
@@ -1016,7 +1016,7 @@
     <value>Отображается, только если пользователь зарегистрирован в НЗП.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Требуется оборудование для отслеживания взгляда.</value>
+    <value>Требуется оборудование для отслеживания глаз.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
     <value>Доступно, если установлен редактор метода ввода Майкрософт для японского языка.</value>
@@ -1176,10 +1176,10 @@
     <comment>Area System</comment>
   </data>
   <data name="Picture" xml:space="preserve">
-    <value>Рисунок</value>
+    <value>Изображение</value>
   </data>
   <data name="Pictures" xml:space="preserve">
-    <value>Рисунки</value>
+    <value>Изображения</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
@@ -1267,11 +1267,11 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Quickime" xml:space="preserve">
-    <value>Куиккиме</value>
+    <value>Быстрый поиск</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value>Игра со спокойными моментами</value>
+    <value>Тихие моменты игры</value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Радио</value>
@@ -1293,7 +1293,7 @@
     <comment>Mean red eye effect by over-the-night flights</comment>
   </data>
   <data name="RedGreen" xml:space="preserve">
-    <value>Красный-зеленый</value>
+    <value>Красно-зелёный</value>
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
@@ -1350,7 +1350,7 @@
     <value>Полосы прокрутки</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
-    <value>SCROLL LOCK</value>
+    <value>Клавиша SCROLL LOCK</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
   <data name="Sdns" xml:space="preserve">
@@ -1486,10 +1486,10 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Talk" xml:space="preserve">
-    <value>Разговор</value>
+    <value>Говорить</value>
   </data>
   <data name="TalkToCortana" xml:space="preserve">
-    <value>Беседа с Кортаной</value>
+    <value>Поговорить с Кортаной</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
@@ -1504,7 +1504,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Конференц-связь в команде</value>
+    <value>Веб-конференции в команде</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
@@ -1663,7 +1663,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Настройка Windows Hello — отпечаток</value>
+    <value>Настройка Windows Hello — Распознавание отпечатка</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
@@ -1717,11 +1717,11 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Параметры редактора метода ввода Wubi</value>
+    <value>Параметры редактора метода ввода вуби</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Параметры редактора метода ввода WuBi — UDP</value>
+    <value>Параметры редактора метода ввода вуби — UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
