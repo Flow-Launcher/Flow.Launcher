@@ -21,6 +21,7 @@ using System.Windows.Interop;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
@@ -392,9 +393,14 @@ namespace Flow.Launcher
             return false;
         }
 
-        private void OnPluginSearchTextChanged(object sender, TextChangedEventArgs e)
+        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
         {
             pluginListView.Refresh();
+        }
+        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+                pluginListView.Refresh();
         }
     }
 }

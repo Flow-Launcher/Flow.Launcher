@@ -927,7 +927,8 @@
                                         FontSize="14"
                                         Text=""
                                         TextAlignment="Left"
-                                        TextChanged="OnPluginSearchTextChanged">
+                                        LostFocus="RefreshPluginListEventHandler"
+                                        KeyDown="PluginFilterTxb_OnKeyDown">
                                         <TextBox.Style>
                                             <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
                                                 <Style.Resources>
