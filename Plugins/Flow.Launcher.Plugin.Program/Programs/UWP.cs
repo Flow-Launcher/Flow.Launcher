@@ -241,14 +241,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static List<FileSystemWatcher> _watchers = new();
 
-        private static void GenerateWatcher(string path)
-        {
-            var watcher = new FileSystemWatcher(path);
-            watcher.Created += static (_, _) => Task.Run(Main.IndexUwpPrograms);
-            watcher.Deleted += static (_, _) => Task.Run(Main.IndexUwpPrograms);
-            watcher.EnableRaisingEvents = true;
-        }
-
         public static void WatchPackageChange()
         {
             if (Environment.OSVersion.Version.Build >= 19041)
