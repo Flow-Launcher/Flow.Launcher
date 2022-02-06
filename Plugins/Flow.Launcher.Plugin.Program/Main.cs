@@ -24,7 +24,6 @@ namespace Flow.Launcher.Plugin.Program
         internal static UWP.Application[] _uwps { get; set; }
         internal static Settings _settings { get; set; }
 
-        private static bool IsStartupIndexProgramsRequired => _settings.LastIndexTime.AddDays(3) < DateTime.Today;
 
         internal static PluginInitContext Context { get; private set; }
 
@@ -51,29 +50,25 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-
-            if (IsStartupIndexProgramsRequired)
-                _ = IndexPrograms();
-
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
-             {
-                 var resultList = await Task.Run(() =>
-                          _win32s.Cast<IProgram>()
-                          .Concat(_uwps)
-                          .AsParallel()
-                          .WithCancellation(token)
-                          .Where(p => p.Enabled)
-                          .Select(p => p.Result(query.Search, Context.API))
-                          .Where(r => r?.Score > 0)
-                          .ToList());
+            {
+                var resultList = await Task.Run(() =>
+                    _win32s.Cast<IProgram>()
+                        .Concat(_uwps)
+                        .AsParallel()
+                        .WithCancellation(token)
+                        .Where(p => p.Enabled)
+                        .Select(p => p.Result(query.Search, Context.API))
+                        .Where(r => r?.Score > 0)
+                        .ToList());
 
-                 resultList = resultList.Any() ? resultList : emptyResults;
+                resultList = resultList.Any() ? resultList : emptyResults;
 
-                 entry.SetSize(resultList.Count);
-                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
+                entry.SetSize(resultList.Count);
+                entry.SetSlidingExpiration(TimeSpan.FromHours(8));
 
-                 return resultList;
-             });
+                return resultList;
+            });
 
             return result;
         }
@@ -84,49 +79,35 @@ namespace Flow.Launcher.Plugin.Program
 
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
-            await Task.Yield();
-
             Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
             {
                 _win32Storage = new BinaryStorage<Win32[]>("Win32");
-                _win32s = _win32Storage.TryLoad(new Win32[] { });
+                _win32s = _win32Storage.TryLoad(new Win32[]
+                {
+                });
                 _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
-                _uwps = _uwpStorage.TryLoad(new UWP.Application[] { });
+                _uwps = _uwpStorage.TryLoad(new UWP.Application[]
+                {
+                });
             });
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
 
-
-            bool indexedWinApps = false;
-            bool indexedUWPApps = false;
+            bool cacheEmpty = !_win32s.Any() && !_uwps.Any();
 
             var a = Task.Run(() =>
             {
-                if (IsStartupIndexProgramsRequired || !_win32s.Any())
-                {
-                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
-                    indexedWinApps = true;
-                }
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
             });
 
             var b = Task.Run(() =>
             {
-                if (IsStartupIndexProgramsRequired || !_uwps.Any())
-                {
-                    Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
-                    indexedUWPApps = true;
-                }
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
             });
 
-            var indexTask = Task.WhenAll(a, b).ContinueWith(t =>
-            {
-                if (indexedWinApps && indexedUWPApps)
-                    _settings.LastIndexTime = DateTime.Today;
-            });
+            if (cacheEmpty)
+                await Task.WhenAll(a, b);
 
-            if (!(_win32s.Any() && _uwps.Any()))
-                await indexTask;
-            
             Win32.WatchProgramUpdate(_settings);
             UWP.WatchPackageChange();
         }
@@ -141,7 +122,9 @@ namespace Flow.Launcher.Plugin.Program
         {
             var windows10 = new Version(10, 0);
             var support = Environment.OSVersion.Version.Major >= windows10.Major;
-            var applications = support ? UWP.All() : new UWP.Application[] { };
+            var applications = support ? UWP.All() : new UWP.Application[]
+            {
+            };
             _uwps = applications;
         }
 
