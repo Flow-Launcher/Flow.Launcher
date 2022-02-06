@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class FirefoxBookmarkLoader : IBookmarkLoader
     {
-        private const string QueryAllBookmarks = @"SELECT moz_places.url, moz_bookmarks.title
+        private const string queryAllBookmarks = @"SELECT moz_places.url, moz_bookmarks.title
               FROM moz_places
               INNER JOIN moz_bookmarks ON (
                 moz_bookmarks.fk NOT NULL AND moz_bookmarks.title NOT NULL AND moz_bookmarks.fk = moz_places.id
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             using var dbConnection = new SQLiteConnection(dbPath);
             // Open connection to the database file and execute the query
             dbConnection.Open();
-            var reader = new SQLiteCommand(QueryAllBookmarks, dbConnection).ExecuteReader();
+            var reader = new SQLiteCommand(queryAllBookmarks, dbConnection).ExecuteReader();
 
             // return results in List<Bookmark> format
             bookmarkList = reader.Select(

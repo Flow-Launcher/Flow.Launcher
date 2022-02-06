@@ -212,11 +212,11 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)!
+                _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                     .Enabled = false;
 
             if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)!
+                _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                     .Enabled = false;
 
             _settings.DisabledProgramSources

@@ -34,8 +34,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             if (!File.Exists(path))
                 return new();
 
-            Main.RegisterBookmarkFile(path);
-            
             var bookmarks = new List<Bookmark>();
             using var jsonDocument = JsonDocument.Parse(File.ReadAllText(path));
             if (!jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))
