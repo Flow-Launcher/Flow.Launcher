@@ -19,7 +19,6 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using System.Windows.Data;
 
 namespace Flow.Launcher.ViewModel
 {
