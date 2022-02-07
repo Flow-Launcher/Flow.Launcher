@@ -12,20 +12,20 @@
     <system:String x:Key="iconTraySettings">Paramètres</system:String>
     <system:String x:Key="iconTrayAbout">À propos</system:String>
     <system:String x:Key="iconTrayExit">Quitter</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
-    <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
-    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
+    <system:String x:Key="closeWindow">Fermer</system:String>
+    <system:String x:Key="copy">Copier</system:String>
+    <system:String x:Key="cut">Couper</system:String>
+    <system:String x:Key="paste">Coller</system:String>
+    <system:String x:Key="fileTitle">Fichier</system:String>
+    <system:String x:Key="folderTitle">Dossier</system:String>
+    <system:String x:Key="textTitle">Texte</system:String>
+    <system:String x:Key="GameMode">Mode Jeu</system:String>
+    <system:String x:Key="GameModeToolTip">Suspend l'utilisation des raccourcis claviers.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Paramètres - Flow Launcher</system:String>
     <system:String x:Key="general">Général</system:String>
-    <system:String x:Key="portableMode">Portable Mode</system:String>
+    <system:String x:Key="portableMode">Mode Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Lancer Flow Launcher au démarrage du système</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Cacher Flow Launcher lors de la perte de focus</system:String>
