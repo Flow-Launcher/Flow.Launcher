@@ -28,10 +28,11 @@ namespace Flow.Launcher.Plugin.Explorer
             return new ExplorerSettings(viewModel);
         }
 
-        public Task PathSelected(string filePath, string hotkey)
+        public Task PathSelected(string path, string hotkey)
         {
             //checked the hotkey if is ctrl+c, then 
             //copy file to clipboard.
+            Context.API.ShowMsg("Success", string.Format("You have selected path \"{0}\", with hotkey \"{1}\"", path, hotkey));
             return Task.CompletedTask;
         }
 
