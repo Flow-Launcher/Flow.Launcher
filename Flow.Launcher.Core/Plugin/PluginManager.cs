@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -177,6 +177,15 @@ namespace Flow.Launcher.Core.Plugin
             {
                 return GlobalPlugins;
             }
+        }
+
+        public static async Task PublishPathSelectedFromResult(string selectedPath, string hotkey)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IPathSelected p => p.PathSelected(selectedPath, hotkey),
+                _ => Task.CompletedTask,
+            }));
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)

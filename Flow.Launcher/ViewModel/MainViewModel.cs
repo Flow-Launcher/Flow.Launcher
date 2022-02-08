@@ -187,6 +187,33 @@ namespace Flow.Launcher.ViewModel
 
             SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
 
+            F1SelectedCommand = new RelayCommand(_ =>
+            {
+                var results = SelectedResults;
+                var result = results.SelectedItem?.Result;
+
+                if (result is null)
+                    return;
+
+                var selectedPath = string.Empty;
+
+                if (File.Exists(result.Title) || Directory.Exists(result.Title))
+                {
+                    selectedPath = result.Title;
+                }
+                else if (File.Exists(result.SubTitle) || Directory.Exists(result.SubTitle))
+                {
+                    selectedPath = result.SubTitle;
+                }
+                else if (!string.IsNullOrEmpty(result.IcoPath))
+                {
+                    selectedPath = result.IcoPath;
+                }
+
+                PluginManager.PublishPathSelectedFromResult(selectedPath, "f1");
+
+            });
+
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
 
             StartHelpCommand = new RelayCommand(_ =>
@@ -429,6 +456,8 @@ namespace Flow.Launcher.ViewModel
         public ICommand CopyToClipboard { get; set; }
 
         public ICommand AutocompleteQueryCommand { get; set; }
+
+        public ICommand F1SelectedCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
