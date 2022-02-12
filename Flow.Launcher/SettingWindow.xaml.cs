@@ -408,5 +408,10 @@ namespace Flow.Launcher
             if (e.Key == Key.Enter)
                 RefreshPluginListEventHandler(sender, e);
         }
+        private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
+                pluginFilterTxb.Focus();
+        }
     }
 }

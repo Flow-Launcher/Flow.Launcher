@@ -879,7 +879,8 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem>
+                <TabItem
+                    KeyDown="OnPluginSettingKeydown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
