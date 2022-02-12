@@ -44,7 +44,7 @@ namespace Flow.Launcher
             DataContext = viewModel;
             this.viewModel = viewModel;
             API = api;
-            
+
         }
 
         #region General
@@ -57,8 +57,8 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
-            
-            pluginListView = (CollectionView) CollectionViewSource.GetDefaultView(pluginList.ItemsSource);
+
+            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(pluginList.ItemsSource);
             pluginListView.Filter = PluginFilter;
         }
 
@@ -393,14 +393,20 @@ namespace Flow.Launcher
             return false;
         }
 
+        private string lastSearch = "";
+
         private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
         {
-            pluginListView.Refresh();
+            if (pluginFilterTxb.Text != lastSearch)
+            {
+                lastSearch = pluginFilterTxb.Text;
+                pluginListView.Refresh();
+            }
         }
         private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
-                pluginListView.Refresh();
+            if (e.Key == Key.Enter)
+                RefreshPluginListEventHandler(sender, e);
         }
     }
 }
