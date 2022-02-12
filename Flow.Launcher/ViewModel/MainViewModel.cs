@@ -774,6 +774,8 @@ namespace Flow.Launcher.ViewModel
         {
             MainWindowVisibility = Visibility.Visible;
 
+            SelectedResults = Results;
+
             MainWindowVisibilityStatus = true;
 
             MainWindowOpacity = 1;
