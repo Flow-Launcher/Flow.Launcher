@@ -211,11 +211,6 @@ namespace Flow.Launcher.ViewModel
                         SpecialKeyState = GlobalHotkey.CheckModifiers()
                     });
 
-                    if (hideWindow)
-                    {
-                        Hide();
-                    }
-
                     if (SelectedIsFromQueryResults())
                     {
                         _userSelectedRecord.Add(result);
@@ -224,6 +219,11 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         SelectedResults = Results;
+                    }
+                    
+                    if (hideWindow)
+                    {
+                        Hide();
                     }
                 }
             });
@@ -772,9 +772,9 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            MainWindowVisibility = Visibility.Visible;
-
             SelectedResults = Results;
+
+            MainWindowVisibility = Visibility.Visible;
 
             MainWindowVisibilityStatus = true;
 
