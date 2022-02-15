@@ -26,7 +26,6 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IPublicAPI API { private set; get; }
 
-        // todo happlebao, this should not be public, the indicator function should be embeded 
         public static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
 
@@ -181,9 +180,14 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task PublishPathSelectedFromResult(string selectedPath, string hotkey)
         {
-            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            await Task.WhenAll(AllPlugins.Select(pluginPair => pluginPair.Plugin switch
             {
-                IPathSelected p => p.PathSelected(selectedPath, hotkey),
+                IPathSelected p
+                    when pluginPair
+                            .Metadata
+                            .Listeners
+                            .Any(x => x.ContainsKey(hotkey) && x.ContainsValue("IPathSelected"))
+                  => p.PathSelected(selectedPath, hotkey),
                 _ => Task.CompletedTask,
             }));
         }
