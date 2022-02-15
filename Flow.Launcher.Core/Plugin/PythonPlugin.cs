@@ -37,11 +37,14 @@ namespace Flow.Launcher.Core.Plugin
             _startInfo.ArgumentList.Add("-B");
         }
 
-        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
+        protected override Task<Stream> RequestAsync(
+            JsonRPCRequestModel request,
+            CancellationToken token = default,
+            bool ignoreEmptyResponse = false)
         {
             _startInfo.ArgumentList[2] = request.ToString();
 
-            return ExecuteAsync(_startInfo, token);
+            return ExecuteAsync(_startInfo, token, ignoreEmptyResponse: ignoreEmptyResponse);
         }
 
         protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)

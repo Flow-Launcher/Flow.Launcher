@@ -35,7 +35,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable, IPathSelected
     {
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
@@ -44,7 +44,11 @@ namespace Flow.Launcher.Core.Plugin
         /// The language this JsonRPCPlugin support
         /// </summary>
         public abstract string SupportedLanguage { get; set; }
-        protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
+        protected abstract Task<Stream> RequestAsync(
+            JsonRPCRequestModel rpcRequest,
+            CancellationToken token = default,
+            bool ignoreEmptyResponse = false);
+
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
@@ -238,7 +242,10 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
+        protected async Task<Stream> ExecuteAsync(
+            ProcessStartInfo startInfo,
+            CancellationToken token = default,
+            bool ignoreEmptyResponse = false)
         {
             Process process = null;
             bool disposed = false;
@@ -265,7 +272,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 try
                 {
-                    // token expire won't instantly trigger the exception, 
+                    // token expire won't instantly trigger the exception,
                     // manually kill process at before
                     await source.CopyToAsync(buffer, token);
                 }
@@ -281,10 +288,13 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (buffer.Length == 0)
                 {
-                    var errorMessage = process.StandardError.EndOfStream ?
+                    var endOfStream = process.StandardError.EndOfStream;
+                    var errorMessage = endOfStream ?
                         "Empty JSONRPC Response" :
                         await process.StandardError.ReadToEndAsync();
-                    throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
+
+                    if (!endOfStream || (endOfStream && !ignoreEmptyResponse))
+                        throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
                 }
 
                 if (!process.StandardError.EndOfStream)
@@ -533,6 +543,19 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
+        }
+
+        public async Task PathSelected(string filePath, string hotkey)
+        {
+            var request = new JsonRPCRequestModel
+            {
+                Method = "PathSelected",
+                Parameters = new object[]
+                {
+                    filePath, hotkey
+                }
+            };
+            await RequestAsync(request, ignoreEmptyResponse: true);
         }
     }
 }

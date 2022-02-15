@@ -21,12 +21,15 @@ namespace Flow.Launcher.Core.Plugin
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             };
-            
-            // required initialisation for below request calls 
+
+            // required initialisation for below request calls
             _startInfo.ArgumentList.Add(string.Empty);
         }
 
-        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
+        protected override Task<Stream> RequestAsync(
+            JsonRPCRequestModel request,
+            CancellationToken token = default,
+            bool ignoreEmptyResponse = false)
         {
             // since this is not static, request strings will build up in ArgumentList if index is not specified
             _startInfo.ArgumentList[0] = request.ToString();
