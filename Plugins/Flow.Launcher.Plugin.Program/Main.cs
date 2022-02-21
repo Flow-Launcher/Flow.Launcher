@@ -116,6 +116,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             var win32S = Win32.All(_settings);
             _win32s = win32S;
+            ResetCache();
         }
 
         public static void IndexUwpPrograms()
@@ -126,6 +127,7 @@ namespace Flow.Launcher.Plugin.Program
             {
             };
             _uwps = applications;
+            ResetCache();
         }
 
         public static async Task IndexPrograms()
@@ -133,7 +135,6 @@ namespace Flow.Launcher.Plugin.Program
             var t1 = Task.Run(IndexWin32Programs);
             var t2 = Task.Run(IndexUwpPrograms);
             await Task.WhenAll(t1, t2).ConfigureAwait(false);
-            ResetCache();
             _settings.LastIndexTime = DateTime.Today;
         }
 
@@ -235,7 +236,6 @@ namespace Flow.Launcher.Plugin.Program
         public void Dispose()
         {
             Win32.Dispose();
-            UWP.Dispose();
         }
     }
 }

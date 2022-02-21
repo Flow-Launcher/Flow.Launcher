@@ -19,6 +19,7 @@ using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Runtime.Versioning;
+using System.Threading.Channels;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -163,8 +164,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     catch (Exception e)
                     {
                         ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and "
-                                                        + $"unable to convert Package to UWP for {p.Id.FullName}", e);
-                        return new Application[] { };
+                                                   + $"unable to convert Package to UWP for {p.Id.FullName}", e);
+                        return new Application[]
+                        {
+                        };
                     }
 #endif
 #if DEBUG //make developer aware and implement handling
@@ -239,15 +242,37 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static List<FileSystemWatcher> _watchers = new();
+        private static Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
 
-        public static void WatchPackageChange()
+        public static async Task WatchPackageChange()
         {
-            if (Environment.OSVersion.Version.Build >= 19041)
-                PackageCatalog.OpenForCurrentUser().PackageStatusChanged += (_, _) =>
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                var catalog = PackageCatalog.OpenForCurrentUser();
+                catalog.PackageInstalling += (_, args) =>
                 {
-                    Task.Delay(10000).ContinueWith(t => Main.IndexUwpPrograms());
+                    if (args.IsComplete)
+                        PackageChangeChannel.Writer.TryWrite(default);
                 };
+                catalog.PackageUninstalling += (_, args) =>
+                {
+                    if (args.IsComplete)
+                        PackageChangeChannel.Writer.TryWrite(default);
+                };
+                catalog.PackageUpdating += (_, args) =>
+                {
+                    if (args.IsComplete)
+                        PackageChangeChannel.Writer.TryWrite(default);
+                };
+
+                while (await PackageChangeChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
+                {
+                    await Task.Delay(3000).ConfigureAwait(false);
+                    PackageChangeChannel.Reader.TryRead(out _);
+                    await Task.Run(Main.IndexUwpPrograms);
+                }
+                
+            }
         }
 
         public override string ToString()
@@ -747,14 +772,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public override string ToString()
             {
                 return $"{DisplayName}: {Description}";
-            }
-        }
-
-        public static void Dispose()
-        {
-            foreach (var fileSystemWatcher in _watchers)
-            {
-                fileSystemWatcher.Dispose();
             }
         }
 
