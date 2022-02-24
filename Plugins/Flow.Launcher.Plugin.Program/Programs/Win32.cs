@@ -593,7 +593,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 while (reader.TryRead(out _))
                 {
                 }
-                Main.IndexWin32Programs();
+                await Task.Run(Main.IndexWin32Programs);
             }
         }
         
