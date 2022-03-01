@@ -17,6 +17,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
+using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
@@ -317,9 +318,9 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public ResultsViewModel Results { get; private set; }
-        
+
         public ResultsViewModel ContextMenu { get; private set; }
-        
+
         public ResultsViewModel History { get; private set; }
 
         public bool GameModeStatus { get; set; }
@@ -553,14 +554,16 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            string query = QueryText;
+            StringBuilder queryBuilder = new(QueryText);
 
             foreach (var shortcut in _settings.ShortCuts)
             {
-                if (QueryText == shortcut.Key)
+                if (queryBuilder.Equals(shortcut.Key))
                 {
-                    query = shortcut.Value;
+                    queryBuilder.Replace(shortcut.Key, shortcut.Value);
                 }
+
+                queryBuilder.Replace('@' + shortcut.Key, shortcut.Value);
             }
 
             _updateSource?.Dispose();
@@ -578,8 +581,8 @@ namespace Flow.Launcher.ViewModel
 
             if (currentCancellationToken.IsCancellationRequested)
                 return;
-
-            var query = QueryBuilder.Build(query.Trim(), PluginManager.NonGlobalPlugins);
+            
+            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);

@@ -19,6 +19,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -117,7 +118,10 @@ namespace Flow.Launcher.ViewModel
                 {
                     var key = $"LastQuery{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new LastQueryMode { Display = display, Value = e, };
+                    var m = new LastQueryMode
+                    {
+                        Display = display, Value = e,
+                    };
                     modes.Add(m);
                 }
                 return modes;
@@ -165,12 +169,17 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public List<string> OpenResultModifiersList => new List<string> { KeyConstant.Alt, KeyConstant.Ctrl, $"{KeyConstant.Ctrl}+{KeyConstant.Alt}" };
+        public List<string> OpenResultModifiersList => new List<string>
+        {
+            KeyConstant.Alt,
+            KeyConstant.Ctrl,
+            $"{KeyConstant.Ctrl}+{KeyConstant.Alt}"
+        };
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public List<ShortCutModel> ShortCuts => Settings.ShortCuts;
+        public ObservableCollection<KeyValuePair<string, string>> ShortCuts => Settings.ShortCuts;
 
         public string TestProxy()
         {
@@ -230,7 +239,10 @@ namespace Flow.Launcher.ViewModel
                 var metadatas = PluginManager.AllPlugins
                     .OrderBy(x => x.Metadata.Disabled)
                     .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel { PluginPair = p })
+                    .Select(p => new PluginViewModel
+                    {
+                        PluginPair = p
+                    })
                     .ToList();
                 return metadatas;
             }
@@ -269,8 +281,6 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(ExternalPlugins));
         }
 
-
-
         #endregion
 
         #region theme
@@ -284,7 +294,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
-                
+
                 if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                     DropShadowEffect = false;
             }
@@ -333,7 +343,10 @@ namespace Flow.Launcher.ViewModel
                 {
                     var key = $"ColorScheme{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new ColorScheme { Display = display, Value = e, };
+                    var m = new ColorScheme
+                    {
+                        Display = display, Value = e,
+                    };
                     modes.Add(m);
                 }
                 return modes;
@@ -376,7 +389,10 @@ namespace Flow.Launcher.ViewModel
                     bitmap.BeginInit();
                     bitmap.StreamSource = memStream;
                     bitmap.EndInit();
-                    var brush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+                    var brush = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
                     return brush;
                 }
                 else
@@ -404,19 +420,19 @@ namespace Flow.Launcher.ViewModel
                     {
                         Title = "WebSearch",
                         SubTitle = "Search the web with different search engine support",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
                         Title = "Program",
                         SubTitle = "Launch programs as admin or a different user",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
                         Title = "ProcessKiller",
                         SubTitle = "Terminate unwanted processes",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
                 var vm = new ResultsViewModel(Settings);
@@ -430,8 +446,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Fonts.SystemFontFamilies.Count(o =>
-                    o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.QueryBoxFont)) > 0)
+                        o.FamilyNames.Values != null &&
+                        o.FamilyNames.Values.Contains(Settings.QueryBoxFont)) > 0)
                 {
                     var font = new FontFamily(Settings.QueryBoxFont);
                     return font;
@@ -458,7 +474,7 @@ namespace Flow.Launcher.ViewModel
                         Settings.QueryBoxFontStyle,
                         Settings.QueryBoxFontWeight,
                         Settings.QueryBoxFontStretch
-                        ));
+                    ));
                 return typeface;
             }
             set
@@ -475,8 +491,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Fonts.SystemFontFamilies.Count(o =>
-                    o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.ResultFont)) > 0)
+                        o.FamilyNames.Values != null &&
+                        o.FamilyNames.Values.Contains(Settings.ResultFont)) > 0)
                 {
                     var font = new FontFamily(Settings.ResultFont);
                     return font;
@@ -503,7 +519,7 @@ namespace Flow.Launcher.ViewModel
                         Settings.ResultFontStyle,
                         Settings.ResultFontWeight,
                         Settings.ResultFontStretch
-                        ));
+                    ));
                 return typeface;
             }
             set
@@ -534,6 +550,7 @@ namespace Flow.Launcher.ViewModel
         public string Github => Constant.GitHub;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
+
         #endregion
     }
 }

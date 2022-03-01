@@ -120,8 +120,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 PrivateArg = "-private",
                 EnablePrivate = false,
                 Editable = false
-            }
-            ,
+            },
             new()
             {
                 Name = "MS Edge",
@@ -205,7 +204,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
-        internal List<ShortCutModel> ShortCuts { get; set; } = new List<ShortCutModel>();
+        internal ObservableCollection<KeyValuePair<string, string>> ShortCuts { get; set; } = new()
+        {
+            new("spp", "sp play")
+        };
     }
 
     public enum LastQueryMode
