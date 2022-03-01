@@ -11,24 +11,24 @@ namespace Flow.Launcher.Core.Plugin
 {
     internal class PluginAssemblyLoader : AssemblyLoadContext
     {
-        private readonly AssemblyDependencyResolver _dependencyResolver;
+        private readonly AssemblyDependencyResolver dependencyResolver;
 
-        private readonly AssemblyName _assemblyName;
+        private readonly AssemblyName assemblyName;
 
         internal PluginAssemblyLoader(string assemblyFilePath)
         {
-            _dependencyResolver = new AssemblyDependencyResolver(assemblyFilePath);
-            _assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
+            dependencyResolver = new AssemblyDependencyResolver(assemblyFilePath);
+            assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
         }
 
         internal Assembly LoadAssemblyAndDependencies()
         {
-            return LoadFromAssemblyName(_assemblyName);
+            return LoadFromAssemblyName(assemblyName);
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            string assemblyPath = _dependencyResolver.ResolveAssemblyToPath(assemblyName);
+            string assemblyPath = dependencyResolver.ResolveAssemblyToPath(assemblyName);
 
             // When resolving dependencies, ignore assembly depenedencies that already exits with Flow.Launcher
             // Otherwise duplicate assembly will be loaded and some weird behavior will occur, such as WinRT.Runtime.dll
