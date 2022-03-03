@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1206,7 +1206,7 @@
     <value>Wtyczka do wyszukiwania ustawień systemu Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Ustawienia systemu Windows</value>
+    <value>Windows Settings</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Zasilanie i uśpienie</value>
