@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1206,7 +1206,7 @@
     <value>用于搜索 Windows 设置的插件</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows 设置</value>
+    <value>Windows Settings</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>电源和休眠</value>
