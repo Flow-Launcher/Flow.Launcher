@@ -174,8 +174,8 @@
     <system:String x:Key="defaultBrowser_name">Prehliadač</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Názov prehliadača</system:String>
     <system:String x:Key="defaultBrowser_path">Cesta k prehliadaču</system:String>
-    <system:String x:Key="defaultBrowser_newtab">Nové okno</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">Nová karta</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nové okno</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nová karta</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privátny režim</system:String>
 
     <!--  Priority Setting Dialog  -->

@@ -52,8 +52,8 @@ namespace Flow.Launcher
             var link = new Hyperlink { IsEnabled = true };
             link.Inlines.Add(url);
             link.NavigateUri = new Uri(url);
-            link.RequestNavigate += (s, e) => SearchWeb.NewTabInBrowser(e.Uri.ToString());
-            link.Click += (s, e) => SearchWeb.NewTabInBrowser(url);
+            link.RequestNavigate += (s, e) => SearchWeb.OpenInBrowserTab(e.Uri.ToString());
+            link.Click += (s, e) => SearchWeb.OpenInBrowserTab(url);
 
             paragraph.Inlines.Add(textBeforeUrl);
             paragraph.Inlines.Add(link);
