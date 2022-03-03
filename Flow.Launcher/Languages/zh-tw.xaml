@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">外掛</system:String>
+    <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">停</system:String>
