@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1206,7 +1206,7 @@
     <value>Windows 설정을 검색하는 플러그 인</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows 설정</value>
+    <value>Windows Settings</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>전원 및 절전 모드</value>
