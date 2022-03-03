@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">插件</system:String>
+    <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">浏览更多插件</system:String>
     <system:String x:Key="enable">启用</system:String>
     <system:String x:Key="disable">禁用</system:String>
