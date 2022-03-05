@@ -1206,7 +1206,7 @@
     <value>用于搜索 Windows 设置的插件</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Windows 设置</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>电源和休眠</value>
