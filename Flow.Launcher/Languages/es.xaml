@@ -57,18 +57,18 @@
 
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
+    <system:String x:Key="browserMorePlugins">Encontrar más plugins</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Off</system:String>
-    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
-    <system:String x:Key="actionKeywords">Action keyword</system:String>
-    <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
-    <system:String x:Key="newActionKeyword">New action keyword</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
-    <system:String x:Key="priority">Priority</system:String>
-    <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
+    <system:String x:Key="actionKeywordsTitle">Ajuste de palabra clave de acción</system:String>
+    <system:String x:Key="actionKeywords">Palabra clave de acción</system:String>
+    <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
+    <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Cambiar palabras clave de acción</system:String>
+    <system:String x:Key="currentPriority">Prioridad Actual</system:String>
+    <system:String x:Key="newPriority">Nueva Prioridad</system:String>
+    <system:String x:Key="priority">Prioridad</system:String>
+    <system:String x:Key="pluginDirectory">Directorio de Plugins</system:String>
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
