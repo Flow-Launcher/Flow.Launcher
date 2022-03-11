@@ -58,8 +58,8 @@
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Encontrar más plugins</system:String>
-    <system:String x:Key="enable">On</system:String>
-    <system:String x:Key="disable">Off</system:String>
+    <system:String x:Key="enable">Si</system:String>
+    <system:String x:Key="disable">No</system:String>
     <system:String x:Key="actionKeywordsTitle">Ajuste de palabra clave de acción</system:String>
     <system:String x:Key="actionKeywords">Palabra clave de acción</system:String>
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
@@ -175,15 +175,15 @@
     <system:String x:Key="defaultBrowserTitle">Navegador Web Predeterminado</system:String>
     <system:String x:Key="defaultBrowser_tips">La configuración predeterminada sigue la configuración por defecto del navegador del SO. Si se especifica por separado, flow utiliza ese navegador.</system:String>
     <system:String x:Key="defaultBrowser_name">Navegador</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nombre del Navegador</system:String>
+    <system:String x:Key="defaultBrowser_path">Ruta del Navegador</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nueva Ventana</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nueva Pestaña</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Modo Privado</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
+    <system:String x:Key="changePriorityWindow">Cambiar Prioridad</system:String>
+    <system:String x:Key="priority_tips">Mayor el número, mayor el resultado será clasificado. Intente establecerlo como 5. Si desea que los resultados sean inferiores a cualquier otro plugin, proporcione un número negativo</system:String>
     <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
