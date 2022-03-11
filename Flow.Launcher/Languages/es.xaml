@@ -184,64 +184,64 @@
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar Prioridad</system:String>
     <system:String x:Key="priority_tips">Mayor el número, mayor el resultado será clasificado. Intente establecerlo como 5. Si desea que los resultados sean inferiores a cualquier otro plugin, proporcione un número negativo</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="invalidPriority">¡Por favor, proporcione un entero válido para la prioridad!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
-    <system:String x:Key="newActionKeywords">New Action Keyword</system:String>
-    <system:String x:Key="cancel">Cancel</system:String>
-    <system:String x:Key="done">Done</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
-    <system:String x:Key="success">Success</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="oldActionKeywords">Palabra Clave de Acción Antigua</system:String>
+    <system:String x:Key="newActionKeywords">Nueva Palabra Clave de Acción</system:String>
+    <system:String x:Key="cancel">Cancelar</system:String>
+    <system:String x:Key="done">Hecho</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">No se puede encontrar el plugin especificado</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">La nueva palabra clave de acción no puede estar vacía</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta nueva palabra clave de acción ya está asignada a otro plugin, por favor elija una diferente</system:String>
+    <system:String x:Key="success">Éxito</system:String>
+    <system:String x:Key="completedSuccessfully">Completado con éxito</system:String>
+    <system:String x:Key="actionkeyword_tips">Introduzca la palabra clave de acción que desea utilizar para iniciar el plugin. Utilice * si no desea especificar ninguno, y el plugin se activará sin ninguna palabra clave de acción.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
-    <system:String x:Key="preview">Preview</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
-    <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
-    <system:String x:Key="update">Update</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Tecla Rápida de Consulta Personalizada</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Presione la tecla rápida personalizada para insertar automáticamente la consulta especificada.</system:String>
+    <system:String x:Key="preview">Vista previa</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">La tecla rápida no está disponible, por favor seleccione una nueva tecla de acceso directo</system:String>
+    <system:String x:Key="invalidPluginHotkey">Tecla rápida de plugin no válida</system:String>
+    <system:String x:Key="update">Actualizar</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>
+    <system:String x:Key="hotkeyUnavailable">Tecla Rápida No Disponible</system:String>
 
     <!--  Crash Reporter  -->
-    <system:String x:Key="reportWindow_version">Version</system:String>
-    <system:String x:Key="reportWindow_time">Time</system:String>
-    <system:String x:Key="reportWindow_reproduce">Please tell us how application crashed so we can fix it</system:String>
-    <system:String x:Key="reportWindow_send_report">Send Report</system:String>
-    <system:String x:Key="reportWindow_cancel">Cancel</system:String>
+    <system:String x:Key="reportWindow_version">Versión</system:String>
+    <system:String x:Key="reportWindow_time">Hora</system:String>
+    <system:String x:Key="reportWindow_reproduce">Por favor, díganos cómo falló la aplicación para que podamos arreglarla</system:String>
+    <system:String x:Key="reportWindow_send_report">Enviar Reporte</system:String>
+    <system:String x:Key="reportWindow_cancel">Cancelar</system:String>
     <system:String x:Key="reportWindow_general">General</system:String>
-    <system:String x:Key="reportWindow_exceptions">Exceptions</system:String>
-    <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
-    <system:String x:Key="reportWindow_source">Source</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
-    <system:String x:Key="reportWindow_sending">Sending</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Report sent successfully</system:String>
-    <system:String x:Key="reportWindow_report_failed">Failed to send report</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher got an error</system:String>
+    <system:String x:Key="reportWindow_exceptions">Excepciones</system:String>
+    <system:String x:Key="reportWindow_exception_type">Tipo de Excepción</system:String>
+    <system:String x:Key="reportWindow_source">Fuente</system:String>
+    <system:String x:Key="reportWindow_stack_trace">Traza de Pila</system:String>
+    <system:String x:Key="reportWindow_sending">Enviando</system:String>
+    <system:String x:Key="reportWindow_report_succeed">Informe enviado correctamente</system:String>
+    <system:String x:Key="reportWindow_report_failed">Error al enviar el informe</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher obtuvo un error</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">Por favor espere...</system:String>
 
     <!--  update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Buscando nueva actualización</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Ya tienes la última versión de Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">Actualización encontrada</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Actualizando...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        Flow Launcher no pudo mover los datos de su perfil de usuario a la nueva versión de actualización.
+        Por favor, mueve manualmente la carpeta de datos de tu perfil de {0} a {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">New Flow Launcher release {0} is now available</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">An error occurred while trying to install software updates</system:String>
-    <system:String x:Key="update_flowlauncher_update">Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">Cancel</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Nueva Actualización</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">La nueva versión {0} de Flow Launcher ya está disponible</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Ocurrió un error mientras se trataba de instalar actualizaciones de software</system:String>
+    <system:String x:Key="update_flowlauncher_update">Actualizar</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Cancelar</system:String>
     <system:String x:Key="update_flowlauncher_fail">Error al actualizar</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Compruebe su conexión e intente actualizar la configuración del proxy a github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Esta actualización reiniciará Flow Launcher</system:String>
@@ -254,31 +254,31 @@
     <system:String x:Key="Welcome_Page1_Title">Bienvenido a Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Hola, ¡esta es la primera vez que ejecutas Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Antes de comenzar, este asistente ayudará a configurar Flow Launcher. Puedes saltarlo si quieres. Por favor, elige un idioma</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Busca y ejecuta todos los archivos y aplicaciones en tu PC</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Busca todo desde aplicaciones, archivos, marcadores, YouTube, Twitter y mucho más. Todo desde la comodidad de tu teclado sin tocar nunca el ratón.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher comienza con la tecla de acceso directo de abajo, sigue adelante y pruébala ahora. Para cambiarla, haga clic en la entrada y presione la tecla de acceso rápido deseada en el teclado.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Teclas Rápidas</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Palabra Clave de Acción y Comandos</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Busca en la web, inicia aplicaciones o ejecuta varias funciones a través de plugins de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción, y si es necesario, pueden ser usadas sin palabras clave de acción. Prueba las consultas de abajo en Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Comencemos Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides la tecla de acceso rápido para empezar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú Contextual</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navegación de Elemento</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Abrir Menú Contextual</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir Carpeta Contenedora</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como Admin</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Historial de Consultas</system:String>
+    <system:String x:Key="HotkeyESCDesc">Volver al Resultado en el Menú Contextual</system:String>
+    <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
+    <system:String x:Key="HotkeyRunDesc">Abrir / Ejecutar Elemento Seleccionado</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Abrir Ventana de Ajustes</system:String>
+    <system:String x:Key="HotkeyF5Desc">Recargar Datos del Plugin</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">Clima</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Clima en los Resultados de Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
