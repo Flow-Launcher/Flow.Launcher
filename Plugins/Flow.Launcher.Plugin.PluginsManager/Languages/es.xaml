@@ -11,7 +11,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Unable to find the plugin.json metadata file from the extracted zip file.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se puede encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occured while trying to install {0}</system:String>
