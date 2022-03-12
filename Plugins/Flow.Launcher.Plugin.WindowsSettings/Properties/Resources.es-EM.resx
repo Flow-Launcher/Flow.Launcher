@@ -440,42 +440,42 @@
     <comment>Area System</comment>
   </data>
   <data name="ClosedCaptions" xml:space="preserve">
-    <value>Closed captions</value>
+    <value>Subtítulos</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorFilters" xml:space="preserve">
-    <value>Color filters</value>
+    <value>Filtros de color</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorManagement" xml:space="preserve">
-    <value>Color management</value>
+    <value>Administración de color</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Colors</value>
+    <value>Colores</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Comando</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
-    <value>Connected Devices</value>
+    <value>Dispositivos conectados</value>
     <comment>Area Device</comment>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>Contactos</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Panel de control</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
-    <value>Copy command</value>
+    <value>Copiar comando</value>
   </data>
   <data name="CoreIsolation" xml:space="preserve">
-    <value>Core Isolation</value>
+    <value>Aislamiento del núcleo</value>
     <comment>Means the protection of the system core</comment>
   </data>
   <data name="Cortana" xml:space="preserve">
@@ -483,51 +483,51 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana across my devices</value>
+    <value>Cortana en todos mis dispositivos</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
-    <value>Cortana - Language</value>
+    <value>Cortana - Idioma</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CredentialManager" xml:space="preserve">
-    <value>Credential manager</value>
+    <value>Administrador de credenciales</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Crossdevice" xml:space="preserve">
-    <value>Crossdevice</value>
+    <value>Multi-plataforma</value>
   </data>
   <data name="CustomDevices" xml:space="preserve">
-    <value>Custom devices</value>
+    <value>Dispositivos personalizados</value>
   </data>
   <data name="DarkColor" xml:space="preserve">
-    <value>Dark color</value>
+    <value>Color oscuro</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
-    <value>Dark mode</value>
+    <value>Modo oscuro</value>
   </data>
   <data name="DataUsage" xml:space="preserve">
-    <value>Data usage</value>
+    <value>Uso de datos</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DateAndTime" xml:space="preserve">
-    <value>Date and time</value>
+    <value>Fecha y hora</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
-    <value>Default apps</value>
+    <value>Aplicaciones predeterminadas</value>
     <comment>Area Apps</comment>
   </data>
   <data name="DefaultCamera" xml:space="preserve">
-    <value>Default camera</value>
+    <value>Cámara predeterminada</value>
     <comment>Area Device</comment>
   </data>
   <data name="DefaultLocation" xml:space="preserve">
-    <value>Default location</value>
+    <value>Ubicación predeterminada</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultPrograms" xml:space="preserve">
-    <value>Default programs</value>
+    <value>Programas predeterminados</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
@@ -638,19 +638,19 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="EyeTracker" xml:space="preserve">
-    <value>Eye tracker</value>
+    <value>Seguimiento ocular</value>
     <comment>Area Privacy, requires eyetracker hardware</comment>
   </data>
   <data name="FamilyAndOtherPeople" xml:space="preserve">
-    <value>Family and other people</value>
+    <value>Familia y otros usuarios</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="FeedbackAndDiagnostics" xml:space="preserve">
-    <value>Feedback and diagnostics</value>
+    <value>Comentarios y diagnóstico</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FileSystem" xml:space="preserve">
-    <value>File system</value>
+    <value>Sistema de archivos</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
@@ -662,42 +662,42 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="FindMyDevice" xml:space="preserve">
-    <value>Find My Device</value>
+    <value>Encontrar mi dispositivo</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>Cortafuegos</value>
   </data>
   <data name="FocusAssistQuietHours" xml:space="preserve">
-    <value>Focus assist - Quiet hours</value>
+    <value>Asistente de concentración - Horas tranquilas</value>
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Focus assist - Quiet moments</value>
+    <value>Asistente de concentración - Momentos tranquilos</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
-    <value>Folder options</value>
+    <value>Opciones de carpeta</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Fonts" xml:space="preserve">
-    <value>Fonts</value>
+    <value>Fuentes</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ForDevelopers" xml:space="preserve">
-    <value>For developers</value>
+    <value>Para desarrolladores</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="GameBar" xml:space="preserve">
-    <value>Game bar</value>
+    <value>Barra de juego</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameControllers" xml:space="preserve">
-    <value>Game controllers</value>
+    <value>Mandos de juego</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
-    <value>Game DVR</value>
+    <value>Juego DVR</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
@@ -713,50 +713,50 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="GetPrograms" xml:space="preserve">
-    <value>Get programs</value>
+    <value>Obtener programas</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GettingStarted" xml:space="preserve">
-    <value>Getting started</value>
+    <value>Empezando</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Glance</value>
+    <value>Apariencia</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
-    <value>Graphics settings</value>
+    <value>Configuración de gráficos</value>
     <comment>Area System</comment>
   </data>
   <data name="Grayscale" xml:space="preserve">
-    <value>Grayscale</value>
+    <value>Escala de grises</value>
   </data>
   <data name="GreenWeek" xml:space="preserve">
-    <value>Green week</value>
+    <value>Deuteranope</value>
     <comment>Mean you don't can see green colors</comment>
   </data>
   <data name="HeadsetDisplay" xml:space="preserve">
-    <value>Headset display</value>
+    <value>Pantalla del casco</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="HighContrast" xml:space="preserve">
-    <value>High contrast</value>
+    <value>Contraste alto</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
-    <value>Holographic audio</value>
+    <value>Audio Holográfico</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
-    <value>Holographic Environment</value>
+    <value>Entorno Holográfico</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
-    <value>Holographic Headset</value>
+    <value>Equipo holográfico</value>
   </data>
   <data name="HolographicManagement" xml:space="preserve">
-    <value>Holographic Management</value>
+    <value>Administración Holográfica</value>
   </data>
   <data name="HomeGroup" xml:space="preserve">
-    <value>Home group</value>
+    <value>Grupo local</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Id" xml:space="preserve">
@@ -764,10 +764,10 @@
     <comment>MEans The "Windows Identifier"</comment>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Image</value>
+    <value>Imagen</value>
   </data>
   <data name="IndexingOptions" xml:space="preserve">
-    <value>Indexing options</value>
+    <value>Opciones de indexación</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="inetcpl.cpl" xml:space="preserve">
@@ -775,15 +775,15 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Infrared" xml:space="preserve">
-    <value>Infrared</value>
+    <value>Infrarrojos</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="InkingAndTyping" xml:space="preserve">
-    <value>Inking and typing</value>
+    <value>Entrada manuscrita y escritura</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="InternetOptions" xml:space="preserve">
-    <value>Internet options</value>
+    <value>Opciones de Internet</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="intl.cpl" xml:space="preserve">
@@ -791,17 +791,17 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="InvertedColors" xml:space="preserve">
-    <value>Inverted colors</value>
+    <value>Colores invertidos</value>
   </data>
   <data name="Ip" xml:space="preserve">
     <value>IP</value>
     <comment>Should not translated</comment>
   </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
-    <value>Isolated Browsing</value>
+    <value>Navegación aislada</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
-    <value>Japan IME settings</value>
+    <value>Ajustes de entrada IME de Japonés</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
   <data name="joy.cpl" xml:space="preserve">
@@ -809,7 +809,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="JoystickProperties" xml:space="preserve">
-    <value>Joystick properties</value>
+    <value>Propiedades del joystick</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="jpnime" xml:space="preserve">
@@ -817,39 +817,39 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Keyboard</value>
+    <value>Teclado</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Keypad" xml:space="preserve">
     <value>Keypad</value>
   </data>
   <data name="Keys" xml:space="preserve">
-    <value>Keys</value>
+    <value>Teclas</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Idioma</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
-    <value>Light color</value>
+    <value>Color claro</value>
   </data>
   <data name="LightMode" xml:space="preserve">
-    <value>Light mode</value>
+    <value>Modo claro</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Ubicación</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
-    <value>Lock screen</value>
+    <value>Bloquear pantalla</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Magnifier" xml:space="preserve">
-    <value>Magnifier</value>
+    <value>Lupa</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>Mail - Microsoft Exchange or Windows Messaging</value>
+    <value>Correo - Mensajes de Microsoft Exchange o Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
@@ -857,22 +857,22 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
-    <value>Manage known networks</value>
+    <value>Administrar redes conocidas</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ManageOptionalFeatures" xml:space="preserve">
-    <value>Manage optional features</value>
+    <value>Administrar características opcionales</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Messaging</value>
+    <value>Mensajería</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
-    <value>Metered connection</value>
+    <value>Conexión de uso medido</value>
   </data>
   <data name="Microphone" xml:space="preserve">
-    <value>Microphone</value>
+    <value>Micrófono</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
@@ -888,10 +888,10 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="MobileDevices" xml:space="preserve">
-    <value>Mobile devices</value>
+    <value>Dispositivos móviles</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
-    <value>Mobile hotspot</value>
+    <value>Zona con cobertura inalámbrica móvil</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="modem.cpl" xml:space="preserve">
@@ -902,43 +902,43 @@
     <value>Mono</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
-    <value>More details</value>
+    <value>Más detalles</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
-    <value>Motion</value>
+    <value>Movimiento</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Mouse" xml:space="preserve">
-    <value>Mouse</value>
+    <value>Ratón</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MouseAndTouchpad" xml:space="preserve">
-    <value>Mouse and touchpad</value>
+    <value>Ratón y panel táctil</value>
     <comment>Area Device</comment>
   </data>
   <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
-    <value>Mouse, Fonts, Keyboard, and Printers properties</value>
+    <value>Propiedades del ratón, fuentes, teclado e impresoras</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
-    <value>Mouse pointer</value>
+    <value>Puntero del ratón</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MultimediaProperties" xml:space="preserve">
-    <value>Multimedia properties</value>
+    <value>Propiedades multimedia</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Multitasking" xml:space="preserve">
-    <value>Multitasking</value>
+    <value>Multitarea</value>
     <comment>Area System</comment>
   </data>
   <data name="Narrator" xml:space="preserve">
-    <value>Narrator</value>
+    <value>Narrador</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="NavigationBar" xml:space="preserve">
-    <value>Navigation bar</value>
+    <value>Barra de navegación</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="netcpl.cpl" xml:space="preserve">
@@ -950,27 +950,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Red</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NetworkAndSharingCenter" xml:space="preserve">
-    <value>Network and sharing center</value>
+    <value>Centro de redes y recursos compartidos</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>Conexión de red</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkProperties" xml:space="preserve">
-    <value>Network properties</value>
+    <value>Propiedades de red</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkSetupWizard" xml:space="preserve">
-    <value>Network Setup Wizard</value>
+    <value>Asistente de configuración de red</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network status</value>
+    <value>Estado de red</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFC" xml:space="preserve">
@@ -978,92 +978,92 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFCTransactions" xml:space="preserve">
-    <value>NFC Transactions</value>
+    <value>Transacciones NFC</value>
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Night light</value>
+    <value>Luz nocturna</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
-    <value>Night light settings</value>
+    <value>Configuración de la luz nocturna</value>
     <comment>Area System</comment>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Nota</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>Sólo disponible cuando haya conectado un dispositivo móvil a su dispositivo.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones de gráficos avanzados.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>Sólo disponible en dispositivos que tienen batería, como una tableta.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>Obsoleto en Windows 10, versión 1809 (build 17763) y posterior.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>Sólo disponible si Dial está emparejado.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Only available if DirectAccess is enabled.</value>
+    <value>Sólo disponible si DirectAccess está habilitado.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced display options.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones de pantalla avanzada.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>Sólo presente si el usuario está inscrito en el Programa de Windows Insider.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>Requiere hardware de seguimiento ocular.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>Disponible si se instala el editor de métodos de entrada de Japonés de Microsoft.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>Disponible si el editor de métodos de entrada Pinyin de Microsoft está instalado.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Available if the Microsoft Wubi input method editor is installed.</value>
+    <value>Disponible si el editor de métodos de entrada Wubi de Microsoft está instalado.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Only available if the Mixed Reality Portal app is installed.</value>
+    <value>Sólo disponible si la aplicación de Realidad Mixta está instalada.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value>Sólo disponible para móviles y si la empresa ha desplegado un paquete para ello.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
-    <value>Added in Windows 10, version 1903 (build 18362).</value>
+    <value>Añadido en Windows 10, versión 1903 (build 18362).</value>
   </data>
   <data name="NoteSince19041" xml:space="preserve">
-    <value>Added in Windows 10, version 2004 (build 19041).</value>
+    <value>Añadido en Windows 10, versión 2004 (build 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
+    <value>Sólo disponible si las "aplicaciones de configuración" están instaladas, por ejemplo, por un tercero.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Only available if touchpad hardware is present.</value>
+    <value>Sólo disponible si el hardware del touchpad está presente.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Only available if the device has a Wi-Fi adapter.</value>
+    <value>Sólo disponible si el dispositivo tiene un adaptador Wi-Fi.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>Device must be Windows Anywhere-capable.</value>
+    <value>El dispositivo debe ser compatible con Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Only available if enterprise has deployed a provisioning package.</value>
+    <value>Sólo disponible si la empresa ha desplegado un paquete para ello.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Notificaciones</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
-    <value>Notifications and actions</value>
+    <value>Notificaciones y acciones</value>
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
-    <value>Num Lock</value>
+    <value>Bloq Num</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
   <data name="nwc.cpl" xml:space="preserve">
@@ -1075,27 +1075,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (32-bit)</value>
+    <value>Administrador de fuentes de datos ODBC (32 bits)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (64-bit)</value>
+    <value>Administrador de fuentes de datos ODBC (64 bits)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Offline files</value>
+    <value>Archivos sin conexión</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>Mapas sin conexión</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Offline Maps - Download maps</value>
+    <value>Mapas sin conexión - Descargar mapas</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>On-Screen</value>
+    <value>En pantalla</value>
   </data>
   <data name="Os" xml:space="preserve">
     <value>OS</value>
