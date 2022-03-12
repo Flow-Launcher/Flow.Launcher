@@ -16,9 +16,9 @@
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
 
     <!--Controls-->
-    <system:String x:Key="plugin_explorer_delete">Delete</system:String>
-    <system:String x:Key="plugin_explorer_edit">Edit</system:String>
-    <system:String x:Key="plugin_explorer_add">Add</system:String>
+    <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
+    <system:String x:Key="plugin_explorer_edit">Editar</system:String>
+    <system:String x:Key="plugin_explorer_add">Añadir</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
@@ -29,7 +29,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_done">Done</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Listo</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
 
@@ -40,7 +40,7 @@
     <!--Context menu items-->
     <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder">Delete</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Eliminar</system:String>
     <system:String x:Key="plugin_explorer_path">Path:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
