@@ -25,7 +25,7 @@
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Opciones de Flow Launcher</system:String>
     <system:String x:Key="general">General</system:String>
-    <system:String x:Key="portableMode">Modo Portable</system:String>
+    <system:String x:Key="portableMode">Modo portable</system:String>
     <system:String x:Key="portableModeToolTIp">Guarda todos los ajustes y datos de usuario en una carpeta (útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Cargar Flow Launcher al iniciar el sistema</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierda el foco</system:String>
@@ -121,69 +121,69 @@
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Usar iconos Segoe Fluent para resultados de búsqueda donde estén soportados</system:String>
 
     <!--  Setting Proxy  -->
-    <system:String x:Key="proxy">HTTP Proxy</system:String>
-    <system:String x:Key="enableProxy">Enable HTTP Proxy</system:String>
-    <system:String x:Key="server">HTTP Server</system:String>
-    <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">User Name</system:String>
-    <system:String x:Key="password">Password</system:String>
-    <system:String x:Key="testProxy">Test Proxy</system:String>
-    <system:String x:Key="save">Save</system:String>
-    <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
-    <system:String x:Key="portCantBeEmpty">Port field can't be empty</system:String>
-    <system:String x:Key="invalidPortFormat">Invalid port format</system:String>
-    <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
-    <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
-    <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
+    <system:String x:Key="proxy">Proxy HTTP</system:String>
+    <system:String x:Key="enableProxy">Habilitar proxy HTTP</system:String>
+    <system:String x:Key="server">Servidor HTTP</system:String>
+    <system:String x:Key="port">Puerto</system:String>
+    <system:String x:Key="userName">Nombre de usuario</system:String>
+    <system:String x:Key="password">Contraseña</system:String>
+    <system:String x:Key="testProxy">Probar proxy</system:String>
+    <system:String x:Key="save">Guardar</system:String>
+    <system:String x:Key="serverCantBeEmpty">El campo servidor no puede estar vacío</system:String>
+    <system:String x:Key="portCantBeEmpty">El campo puerto no puede estar vacío</system:String>
+    <system:String x:Key="invalidPortFormat">Formato de puerto incorrecto</system:String>
+    <system:String x:Key="saveProxySuccessfully">Configuración del proxy guardada correctamente</system:String>
+    <system:String x:Key="proxyIsCorrect">Proxy configurado correctamente</system:String>
+    <system:String x:Key="proxyConnectFailed">Conexión con el proxy fallida</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
-    <system:String x:Key="website">Website</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="about">Acerca de</system:String>
+    <system:String x:Key="website">Sitio web</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
-    <system:String x:Key="version">Version</system:String>
-    <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
-    <system:String x:Key="checkUpdates">Check for Updates</system:String>
-    <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="version">Versión</system:String>
+    <system:String x:Key="about_activate_times">Has activado Flow Launcher {0} veces</system:String>
+    <system:String x:Key="checkUpdates">Buscar actualizaciones</system:String>
+    <system:String x:Key="newVersionTips">La nueva versión {0} está disponible, ¿desea reiniciar Flow Launcher para actualizar?</system:String>
+    <system:String x:Key="checkUpdatesFailed">Falló la comprobación de actualizaciones, compruebe su conexión y cambie la configuración de proxy a api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Falló la descarga de actualizaciones, por favor compruebe su conexión y cambie el proxy a github-cloud.s3.amazonaws.com,
+        o vaya a https://github.com/Flow-Launcher/Flow.Launcher/releases para descargar actualizaciones manualmente.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="releaseNotes">Notas de la versión</system:String>
+    <system:String x:Key="documentation">Consejos de uso</system:String>
+    <system:String x:Key="devtool">Herramientas de desarrolador</system:String>
+    <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
+    <system:String x:Key="logfolder">Carpeta de logs</system:String>
+    <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManagerWindow">Seleccionar gestor de archivos</system:String>
+    <system:String x:Key="fileManager_tips">Por favor, especifique la ubicación del gestor de archivos que utilice y añada argumentos si es necesario. El argumento por defecto es &quot;%d&quot;, introduciendo una ruta en esa ubicación. Por ejemplo, si se requiere un comando como &quot;totalcmd.exe /A c:\windows&quot;, el argumento es /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con gestores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Arg para archivo&quot;. Si el gestor de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_name">Gestor de archivos</system:String>
+    <system:String x:Key="fileManager_profile_name">Nombre de perfil</system:String>
+    <system:String x:Key="fileManager_path">Ruta del gestor de archivos</system:String>
+    <system:String x:Key="fileManager_directory_arg">Arg para la carpeta</system:String>
+    <system:String x:Key="fileManager_file_arg">Arg para archivo</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowserTitle">Navegador web por defecto</system:String>
+    <system:String x:Key="defaultBrowser_tips">La configuración por defecto utiliza el navegador predeterminado del sistema operativo. Si se especifica por separado, Flow Launcher utiliza este otro navegador.</system:String>
+    <system:String x:Key="defaultBrowser_name">Navegador</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nombre del navegador</system:String>
+    <system:String x:Key="defaultBrowser_path">Ruta del navegador</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nueva ventana</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nueva Pestaña</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
+    <system:String x:Key="changePriorityWindow">Cambiar prioridad</system:String>
+    <system:String x:Key="priority_tips">A mayor número, más alto aparecerá el resultado. Intentalo con 5. Si quieres que los resultados aparezcan más abajo que los de cualquier otro complemento, usa un número negativo</system:String>
     <system:String x:Key="invalidPriority">¡Por favor, proporcione un entero válido para la prioridad!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
@@ -251,26 +251,26 @@
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Omitir</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Bienvenido a Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Hola, ¡Esta es la primera vez que ejecutas Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Antes de comenzar, este asistente te ayudará a configurar Flow Launcher. Puedes saltártelo si quieres. Por favor, elige un idioma</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Busca y ejecuta los archivos y aplicaciones en tu equipo</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Busca cualquier cosa desde aplicaciones, archivos, marcadores, YouTube, Twitter y mucho más. Todo desde la comodidad de tu teclado sin tocar el ratón.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher se inicia con el atajo de teclado de abajo, el cual puedes probar ya mismo. Para cambiarlo, haz clic en la caja de texto y presiona la nueva combinación de teclas.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Atajo de teclado</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Palabra clave de acción y comandos</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Busca en la web, inicia aplicaciones o ejecuta varias funciones usando complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción, y si es necesario, pueden ser usadas sin ellas. Prueba las búsquedas de abajo en Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Iniciemos Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides el atajo de teclado para empezar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú contextual</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navegación de elementos</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Historial de búsquedas</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
     <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
