@@ -271,14 +271,14 @@
     <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de búsquedas</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyESCDesc">Volver al resultado en menú contextual</system:String>
+    <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
+    <system:String x:Key="HotkeyRunDesc">Abrir / Ejecutar elemento seleccionado</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Abrir ventana de configuración</system:String>
+    <system:String x:Key="HotkeyF5Desc">Recargar datos del complemento</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">El tiempo</system:String>
+    <system:String x:Key="RecommendWeatherDesc">El tiempo en Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
