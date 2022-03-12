@@ -10,7 +10,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable">Desactivar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Ubicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos los programas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes">Sufijos de archivo</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">Extensiones de archivo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Re-indexar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexando</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Indexar menú de inicio</system:String>
