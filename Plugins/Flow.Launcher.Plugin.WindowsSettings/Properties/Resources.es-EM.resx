@@ -324,7 +324,7 @@
     <value>Alertas de sonido</value>
   </data>
   <data name="AudioAndSpeech" xml:space="preserve">
-    <value>Voz y sonido</value>
+    <value>Audio y voz</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="AutomaticFileDownloads" xml:space="preserve">
@@ -389,7 +389,7 @@
     <value>Azul-amarillo</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
-    <value>Editor de métodos de entrada IME</value>
+    <value>Bopomofo IME</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="bpmf" xml:space="preserve">
@@ -495,7 +495,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Crossdevice" xml:space="preserve">
-    <value>Multi-plataforma</value>
+    <value>Multi-dispositivo</value>
   </data>
   <data name="CustomDevices" xml:space="preserve">
     <value>Dispositivos personalizados</value>
@@ -547,7 +547,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
-    <value>deuteranopía</value>
+    <value>deuteranopia</value>
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
@@ -1251,7 +1251,7 @@
     <comment>Area System</comment>
   </data>
   <data name="protanopia" xml:space="preserve">
-    <value>protanopía</value>
+    <value>protanopia</value>
     <comment>Medical: Mean you don't can see green colors</comment>
   </data>
   <data name="Provisioning" xml:space="preserve">
@@ -1504,11 +1504,11 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Conferencias de equipo</value>
+    <value>Conferencias de grupo</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
-    <value>Gestión de dispositivos de equipo</value>
+    <value>Administración de dispositivos de grupo</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
@@ -1544,7 +1544,7 @@
     <value>Transparencia</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
-    <value>tritanopía</value>
+    <value>tritanopia</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
@@ -1591,7 +1591,7 @@
     <comment>Means the virus in computers and software</comment>
   </data>
   <data name="VoiceActivation" xml:space="preserve">
-    <value>Activación de voz</value>
+    <value>Activación por voz</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
