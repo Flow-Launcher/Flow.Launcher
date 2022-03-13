@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
     xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -91,12 +90,20 @@
                     Margin="0,10,0,0"
                     Expanded="expExcludedPaths_Click"
                     Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}">
-                    <ListView
-                        x:Name="lbxExcludedPaths"
-                        AllowDrop="True"
-                        DragEnter="lbxAccessLinks_DragEnter"
-                        Drop="lbxAccessLinks_Drop"
-                        ItemTemplate="{StaticResource ListViewTemplateExcludedPaths}" />
+                    <StackPanel>
+                        <CheckBox
+                            Name="UseWindowsIndexForDirectorySearch"
+                            Margin="12,10,0,0"
+                            Content="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch}"
+                            IsChecked="{Binding UseWindowsIndexForDirectorySearch}"
+                            ToolTip="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch_tooltip}" />
+                        <ListView
+                            x:Name="lbxExcludedPaths"
+                            AllowDrop="True"
+                            DragEnter="lbxAccessLinks_DragEnter"
+                            Drop="lbxAccessLinks_Drop"
+                            ItemTemplate="{StaticResource ListViewTemplateExcludedPaths}" />
+                    </StackPanel>
                 </Expander>
             </StackPanel>
         </ScrollViewer>

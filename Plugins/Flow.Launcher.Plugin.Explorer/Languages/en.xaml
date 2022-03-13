@@ -23,6 +23,8 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
