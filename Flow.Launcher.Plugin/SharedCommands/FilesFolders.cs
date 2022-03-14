@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.SharedCommands
@@ -190,6 +192,49 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
 
             return previousDirectoryPath;
+        }
+
+        ///<summary>
+        /// Returns a dictionary list of sub-directories and files for a given path
+        ///</summary>
+        public static List<Dictionary<string, string>> DirectoryRecursiveSearch(
+            string searchPath,
+            EnumerationOptions enumerationOption,
+            string searchCriteria, CancellationToken token)
+        {
+            var results = new List<Dictionary<string, string>>();
+
+            var path = ReturnPreviousDirectoryIfIncompleteString(searchPath);
+
+            var directoryInfo = new DirectoryInfo(path);
+
+            foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption))
+            {
+                if (fileSystemInfo is DirectoryInfo)
+                {
+                    results.Add(
+                    new Dictionary<string, string>()
+                    {
+                            { "Type", "Folder" },
+                            { "Name", fileSystemInfo.Name },
+                            { "Path", fileSystemInfo.FullName }
+                    });
+                }
+                else
+                {
+                    results.Add(
+                    new Dictionary<string, string>()
+                    {
+                            { "Type", "File" },
+                            { "Name", fileSystemInfo.Name },
+                            { "Path", fileSystemInfo.FullName }
+                    });
+                }
+
+                token.ThrowIfCancellationRequested();
+            }
+
+            return results;
         }
 
         ///<summary>

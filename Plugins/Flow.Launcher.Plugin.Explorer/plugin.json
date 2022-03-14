@@ -10,7 +10,7 @@
   "Name": "Explorer",
   "Description": "Search and manage files and folders. Explorer utilises Windows Index Search",
   "Author": "Jeremy Wu",
-  "Version": "1.11.2",
+  "Version": "1.12.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Explorer.dll",

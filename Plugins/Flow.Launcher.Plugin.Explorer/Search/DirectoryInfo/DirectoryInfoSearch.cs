@@ -56,22 +56,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
             try
             {
-                var directoryInfo = new System.IO.DirectoryInfo(path);
+                var searchResults = FilesFolders.DirectoryRecursiveSearch(path, enumerationOption, searchCriteria, token);
 
-                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption)
-                )
+                for (var count = 0; count < searchResults.Count; count++)
                 {
-                    if (fileSystemInfo is System.IO.DirectoryInfo)
+                    if (searchResults[count]["Type"] == "Folder")
                     {
-                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
-                            fileSystemInfo.FullName, query, 0, true, false));
+                        folderList.Add(ResultManager.CreateFolderResult(searchResults[count]["Name"], searchResults[count]["Path"],
+                            searchResults[count]["Path"], query, 0, true, false));
                     }
                     else
                     {
-                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, 0, true, false));
-                    }
+                        fileList.Add(ResultManager.CreateFileResult(searchResults[count]["Path"], query, 0, true, false));
 
-                    token.ThrowIfCancellationRequested();
+                    }
                 }
             }
             catch (Exception e)
