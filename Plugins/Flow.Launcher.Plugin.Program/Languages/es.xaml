@@ -2,59 +2,59 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Program setting  -->
-    <system:String x:Key="flowlauncher_plugin_program_delete">Eliminar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">Editar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_add">Añadir</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_name">Nombre</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable">Activar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable">Desactivar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_location">Ubicación</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos los programas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes">Extensiones de archivo</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_reindex">Re-indexar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_indexing">Indexando</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">Indexar menú de inicio</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando está activo, Flow cargará los programas desde el menú de inicio</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexar registro</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Cuando está activo, Flow cargará los programas desde el registro</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para archivos ejecutables como UWP o lnk, oculta la ruta del archivo</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description">Buscar en la descripción del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Desactivar esto también evitará que Flow busque en la descripción del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Extensiones</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidad máxima</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">Edit</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">Add</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">File Suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">Reindex</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_indexing">Indexing</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Index Start Menu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">When enabled, Flow will load programs from the start menu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Index Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Disabling this will also stop Flow from searching via the program desciption</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_directory">Carpeta</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_browse">Buscar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_file_suffixes">Extensiones de archivo:</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Profundidad de búsqueda máxima (-1 es sin límite):</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_directory">Directory</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_browse">Browse</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_file_suffixes">File Suffixes:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Maximum Search Depth (-1 is unlimited):</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Por favor, seleccione la ruta del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">¿Estás seguro de querer eliminar las rutas de programa seleccionadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_update">Aceptar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher sólo indexará los archivos que terminen con las siguientes extensiones. (Separa cada extensión con ';' )</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Extensiones de archivo actualizadas correctamente</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Las extensiones de archivo no pueden estar vacías</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update">OK</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher will only index files that end with the following suffixes. (Each suffix should split by ';' )</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">File suffixes can't be empty</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Ejecutar como usuario diferente</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Ejecutar como administrador</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Esconde este programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Busca programas en Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Ruta incorrecta</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Explorador personalizado</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_args">Parámetros</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Puedes cambiar el explorador usado para abrir la carpeta contenedora introduciendo una variable del entorno que contenga el comando para abrir del explorador que quieres usar. Para probar la variable del entorno puedes usar CMD.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduce los parámetros personalizados que deseas añadir para tu explorador. %s para la carpeta padre, %f para la ruta absoluta (que sólo funciona con win32). Revisa la página web del explorador para más detalles.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is avaliable.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Éxito</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Se escondió el programa en las búsquedas correctamente</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Esta aplicación no fué diseñada para ser ejecutada como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Success</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
 
 </ResourceDictionary>
