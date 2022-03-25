@@ -1,7 +1,11 @@
+using Flow.Launcher.Plugin.Everything.Everything;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -39,6 +43,43 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool QuickAccessKeywordEnabled { get; set; }
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
+
+        private List<IIndexProvider> _indexProviders;
+        public Settings()
+        {
+            _indexProviders = new List<IIndexProvider>()
+            {
+                new EverythingSearchManager(this),
+                new WindowsIndexManager(this)
+            };
+        }
+        public IndexSearchEngineOption IndexSearchEngine { get; set; }
+        public IIndexProvider IndexProvider => _indexProviders[(int)IndexSearchEngine];
+
+        public enum PathTraversalEngineOption
+        {
+            Everything,
+            WindowsIndex,
+            Direct
+        }
+
+        public enum IndexSearchEngineOption
+        {
+            Everything,
+            WindowsIndex
+        }
+        #region Everything Settings
+
+        
+        public bool LaunchHidden { get; set; } = false;
+
+        public string EverythingInstalledPath { get; set; }
+
+        public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();
+
+        public SortOption SortOption { get; set; } = SortOption.NAME_ASCENDING;
+
+        #endregion
 
         internal enum ActionKeyword
         {

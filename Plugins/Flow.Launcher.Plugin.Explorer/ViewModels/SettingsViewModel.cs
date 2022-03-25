@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public class SettingsViewModel
     {
-        internal Settings Settings { get; set; }
+        public Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
 
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         internal void RemoveAccessLinkFromExcludedIndexPaths(AccessLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
 
-        internal void OpenWindowsIndexingOptions()
+        internal static void OpenWindowsIndexingOptions()
         {
             var psi = new ProcessStartInfo
             {

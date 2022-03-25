@@ -13,16 +13,15 @@ using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
-    internal static class IndexSearch
+    internal static class WindowsIndex
     {
 
         // Reserved keywords in oleDB
-        private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
+        private const string ReservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
 
-        internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
+        private static async Task<List<SearchResult>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
-            var results = new List<Result>();
-            var fileResults = new List<Result>();
+            var results = new List<SearchResult>();
 
             try
             {
@@ -35,7 +34,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
                 token.ThrowIfCancellationRequested();
 
-                if (dataReaderResults.HasRows)
+                if (dataReaderResults is { HasRows: true })
                 {
                     while (await dataReaderResults.ReadAsync(token))
                     {
@@ -49,18 +48,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
                             var path = new Uri(encodedFragmentPath).LocalPath;
 
-                            if (dataReaderResults.GetString(2) == "Directory")
+                            results.Add(new SearchResult()
                             {
-                                results.Add(ResultManager.CreateFolderResult(
-                                    dataReaderResults.GetString(0),
-                                    path,
-                                    path,
-                                    query, 0, true, true));
-                            }
-                            else
-                            {
-                                fileResults.Add(ResultManager.CreateFileResult(path, query, 0, true, true));
-                            }
+                                FullPath = path,
+                                Type = dataReaderResults.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                                WindowsIndexed = true
+                            });
                         }
                     }
                 }
@@ -80,13 +73,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 LogException("General error from performing index search", e);
             }
 
-            results.AddRange(fileResults);
-
-            // Intial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-             return results;
+            // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
+            return results;
         }
 
-        internal async static Task<List<Result>> WindowsIndexSearchAsync(
+        internal static async ValueTask<List<SearchResult>> WindowsIndexSearchAsync(
             string searchString,
             Func<CSearchQueryHelper> createQueryHelper,
             Func<string, string> constructQuery,
@@ -94,28 +85,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             Query query,
             CancellationToken token)
         {
-            var regexMatch = Regex.Match(searchString, reservedStringPattern);
+            var regexMatch = Regex.Match(searchString, ReservedStringPattern);
 
             if (regexMatch.Success)
-                return new List<Result>();
-            
-            try
-            {
-                var constructedQuery = constructQuery(searchString);
+                return new();
 
-                return RemoveResultsInExclusionList(
-                        await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, query, token).ConfigureAwait(false),
-                        exclusionList,
-                        token);
-            }
-            catch (COMException)
-            {
-                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
-                if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
-                    return new List<Result>();
+            var constructedQuery = constructQuery(searchString);
 
-                return ResultForWindexSearchOff(query.RawQuery);
-            }
+            return
+                await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, query, token);
         }
 
         private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
@@ -159,7 +137,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
                 return indexManager.IncludedInCrawlScope(path) > 0;
             }
-            catch(COMException)
+            catch (COMException)
             {
                 // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
                 return false;
@@ -180,18 +158,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     {
                         SearchManager.Settings.WarnWindowsSearchServiceOff = false;
 
-                        var pluginsManagerPlugin= api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
+                        var pluginsManagerPlugin = api.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == "9f8f9b14-2518-4907-b211-35ab6290dee7");
 
                         var actionKeywordCount = pluginsManagerPlugin.Metadata.ActionKeywords.Count;
 
                         if (actionKeywordCount > 1)
                             LogException("PluginsManager's action keyword has increased to more than 1, this does not allow for determining the " +
-                                "right action keyword. Explorer's code for managing Windows Search service not running exception needs to be updated",
+                                         "right action keyword. Explorer's code for managing Windows Search service not running exception needs to be updated",
                                 new InvalidOperationException());
 
                         if (MessageBox.Show(string.Format(api.GetTranslation("plugin_explorer_alternative"), Environment.NewLine),
-                            api.GetTranslation("plugin_explorer_alternative_title"),
-                            MessageBoxButton.YesNo) == MessageBoxResult.Yes
+                                api.GetTranslation("plugin_explorer_alternative_title"),
+                                MessageBoxButton.YesNo) == MessageBoxResult.Yes
                             && actionKeywordCount == 1)
                         {
                             api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugin.Metadata.ActionKeywords[0]));
@@ -221,7 +199,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             throw e;
 #else
             Log.Exception($"|Flow.Launcher.Plugin.Explorer.IndexSearch|{message}", e);
-#endif            
+#endif
         }
     }
 }

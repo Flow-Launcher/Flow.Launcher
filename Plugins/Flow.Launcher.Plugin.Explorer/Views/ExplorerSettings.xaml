@@ -6,14 +6,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
     xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
+    xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
-        <DataTemplate x:Key="ListViewTemplateAccessLinks">
-            <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
-        </DataTemplate>
-        <DataTemplate x:Key="ListViewTemplateExcludedPaths">
+        <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
             <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
         <DataTemplate x:Key="ListViewActionKeywords" DataType="views:ActionKeywordView">
@@ -97,8 +96,14 @@
                         AllowDrop="True"
                         DragEnter="lbxAccessLinks_DragEnter"
                         Drop="lbxAccessLinks_Drop"
-                        ItemTemplate="{StaticResource ListViewTemplateExcludedPaths}" />
+                        ItemTemplate="{StaticResource ListViewActionKeywords}" />
                 </Expander>
+                <ComboBox Grid.Row="4"
+                          Grid.Column="1"
+                          Width="200"
+                          SelectedItem="{Binding Settings.SortOption}"
+                          ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}">
+                </ComboBox>
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Row="1">
