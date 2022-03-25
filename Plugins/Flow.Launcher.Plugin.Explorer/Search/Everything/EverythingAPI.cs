@@ -1,5 +1,5 @@
 ﻿using Flow.Launcher.Plugin.Everything.Everything;
-using Flow.Launcher.Plugin.Everything.Everything.Exceptions;
+using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
