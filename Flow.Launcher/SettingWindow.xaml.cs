@@ -13,12 +13,15 @@ using ModernWpf;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
+using ListViewItem = System.Windows.Controls.ListViewItem;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
@@ -44,6 +47,7 @@ namespace Flow.Launcher
         }
 
         #region General
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             RefreshMaximizeRestoreButton();
@@ -247,6 +251,7 @@ namespace Flow.Launcher
                     PluginManager.API.OpenDirectory(directory);
             }
         }
+
         #endregion
 
         #region Proxy
@@ -307,7 +312,7 @@ namespace Flow.Launcher
 
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if(sender is Button { DataContext: UserPlugin plugin })
+            if (sender is Button { DataContext: UserPlugin plugin })
             {
                 var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
                 var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
@@ -326,7 +331,7 @@ namespace Flow.Launcher
             textBox.MoveFocus(tRequest);
         }
 
-        private void ColorSchemeSelectedIndexChanged(object sender, EventArgs e) 
+        private void ColorSchemeSelectedIndexChanged(object sender, EventArgs e)
             => ThemeManager.Current.ApplicationTheme = settings.ColorScheme switch
             {
                 Constant.Light => ApplicationTheme.Light,
@@ -370,5 +375,13 @@ namespace Flow.Launcher
             RefreshMaximizeRestoreButton();
         }
 
+        private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Plugins.ScrollIntoView(Plugins.SelectedItem);
+        }
+        private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Plugins.ScrollIntoView(Plugins.SelectedItem);
+        }
     }
 }
