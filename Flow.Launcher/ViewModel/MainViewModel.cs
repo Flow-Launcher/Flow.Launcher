@@ -556,14 +556,14 @@ namespace Flow.Launcher.ViewModel
 
             StringBuilder queryBuilder = new(QueryText);
 
-            foreach (var shortcut in _settings.ShortCuts)
+            foreach (var (key, value) in _settings.ShortCuts)
             {
-                if (queryBuilder.Equals(shortcut.Key))
+                if (queryBuilder.Equals(key))
                 {
-                    queryBuilder.Replace(shortcut.Key, shortcut.Value);
+                    queryBuilder.Replace(key, value);
                 }
 
-                queryBuilder.Replace('@' + shortcut.Key, shortcut.Value);
+                queryBuilder.Replace('@' + key, value);
             }
 
             _updateSource?.Dispose();
