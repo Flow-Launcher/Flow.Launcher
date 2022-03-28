@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugin">Плагіни</system:String>
     <system:String x:Key="browserMorePlugins">Знайти більше плагінів</system:String>
     <system:String x:Key="enable">Увімкнено</system:String>
     <system:String x:Key="disable">Відключити</system:String>
@@ -142,7 +142,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Про Flow Launcher</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Сай</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Версія</system:String>
@@ -215,7 +215,7 @@
     <system:String x:Key="reportWindow_reproduce">Будь ласка, розкажіть нам, як додаток вийшов із ладу, щоб ми могли це виправити</system:String>
     <system:String x:Key="reportWindow_send_report">Надіслати звіт</system:String>
     <system:String x:Key="reportWindow_cancel">Скасувати</system:String>
-    <system:String x:Key="reportWindow_general">Основні</system:String>
+    <system:String x:Key="reportWindow_general">Основне</system:String>
     <system:String x:Key="reportWindow_exceptions">Винятки</system:String>
     <system:String x:Key="reportWindow_exception_type">Тип винятку</system:String>
     <system:String x:Key="reportWindow_source">Джерело</system:String>
