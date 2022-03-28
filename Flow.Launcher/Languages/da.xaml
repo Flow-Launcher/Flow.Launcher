@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin bibliotek</system:String>
-    <system:String x:Key="author">Forfatter</system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Initaliseringstid:</system:String>
     <system:String x:Key="plugin_query_time">Søgetid:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -241,7 +241,7 @@
     <system:String x:Key="update_flowlauncher_update_new_version_available">Ny Flow Launcher udgivelse {0} er nu tilgængelig</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Der skete en fejl ifm. opdatering af Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update">Opdater</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">Annuler</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Annuller</system:String>
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Denne opdatering vil genstarte Flow Launcher</system:String>
