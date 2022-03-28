@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>À propos</value>
+    <value>À propos de</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Ajouter/Supprimer des programmes</value>
+    <value>Ajout/Suppression de programmes</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Mode jeu</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -837,7 +837,7 @@
     <value>Mode clair</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Emplacement</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <value>Plug-in de recherche de paramètres Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Paramètres Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Alimentation et mise en veille</value>
