@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Cartella Plugin</system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">Autore</system:String>
     <system:String x:Key="plugin_init_time">Tempo di avvio:</system:String>
     <system:String x:Key="plugin_query_time">Tempo ricerca:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -142,7 +142,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">About</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Sito web</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Versione</system:String>
