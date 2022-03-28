@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Comando</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Modo de Jogo</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -827,7 +827,7 @@
     <value>Chaves</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Idioma</value>
+    <value>Linguagem</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
@@ -837,7 +837,7 @@
     <value>Modo claro</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Localização</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <value>Plug-in para pesquisar as configurações do Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Configurações do Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Energia e suspensão</value>
