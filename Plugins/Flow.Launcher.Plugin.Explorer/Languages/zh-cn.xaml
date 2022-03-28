@@ -2,11 +2,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Dialogues-->
-    <system:String x:Key="plugin_explorer_make_selection_warning">请先进行选择</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">请先选</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">您确定要永久删除此 {0} 吗?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">删除成功</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">删除成</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">已成功删除 {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">使用全局操作关键字可能会在搜索过程中带来太多结果。请使用一个特定的操作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">无法使用全局动作关键词作为快速访问关键字，请指定动作关键字</system:String>
@@ -18,10 +18,10 @@
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
     <system:String x:Key="plugin_explorer_edit">编辑</system:String>
-    <system:String x:Key="plugin_explorer_add">增加</system:String>
+    <system:String x:Key="plugin_explorer_add">添</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
-    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索激活</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路径搜索激活:</system:String>
@@ -38,13 +38,13 @@
     <system:String x:Key="plugin_explorer_plugin_description">利用Windows索引来搜索和管理文件和文件夹</system:String>
 
     <!--Context menu items-->
-    <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
+    <system:String x:Key="plugin_explorer_copypath">复制路</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">复制</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">删除</system:String>
     <system:String x:Key="plugin_explorer_path">路径:</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所选内容</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选内容</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开文件或文件夹所在目录</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开</system:String>
@@ -59,7 +59,7 @@
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">成功添加到快速访问</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">删除完成</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">已成功从快速访问中删除</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">添加到快速访问，以便可以使用Explorer的搜索关键字将其打开</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">添加到快速访问，以便可以使用Explorer的搜索关键字将其打</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">从快速访问中删除 {0}</system:String>
