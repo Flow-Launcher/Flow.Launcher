@@ -11,8 +11,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">新窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">新标签</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">设置浏览器路径</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">选</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">复制网</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">选择</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">复制网址</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">将书签的网址复制到剪贴板</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">从以下浏览器加载：</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">浏览器名称</system:String>
