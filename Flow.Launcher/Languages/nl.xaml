@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin map</system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">Auteur</system:String>
     <system:String x:Key="plugin_init_time">Init tijd:</system:String>
     <system:String x:Key="plugin_query_time">Query tijd:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -141,7 +141,7 @@
     <system:String x:Key="proxyConnectFailed">Proxy connectie mislukt</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
+    <system:String x:Key="about">Over</system:String>
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
