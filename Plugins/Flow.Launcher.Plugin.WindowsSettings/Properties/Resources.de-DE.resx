@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Über</value>
+    <value>Info</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Spielmodus</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -837,7 +837,7 @@
     <value>Lichtmodus</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Speicherort</value>
+    <value>Standort</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
@@ -1117,7 +1117,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Passwort</value>
+    <value>Kennwort</value>
   </data>
   <data name="password.cpl" xml:space="preserve">
     <value>password.cpl</value>
@@ -1156,7 +1156,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Smartphone</value>
+    <value>Telefon</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <value>Plug-In zum Suchen nach Windows-Einstellungen</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Windows-Einstellungen</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Energieeinstellungen und Ruhemodus</value>
