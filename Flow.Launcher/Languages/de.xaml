@@ -95,18 +95,18 @@
     <system:String x:Key="ThemeFolder">Themenordner öffnen</system:String>
     <system:String x:Key="OpenThemeFolder">Themenordner öffnen</system:String>
     <system:String x:Key="ColorScheme">Farbschema</system:String>
-    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
-    <system:String x:Key="SoundEffect">Sound Effect</system:String>
-    <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
+    <system:String x:Key="ColorSchemeSystem">Systemvorgabe</system:String>
+    <system:String x:Key="ColorSchemeLight">Hell</system:String>
+    <system:String x:Key="ColorSchemeDark">Dunkel</system:String>
+    <system:String x:Key="SoundEffect">Soundeffekt</system:String>
+    <system:String x:Key="SoundEffectTip">Ton abspielen, wenn das Suchfenster geöffnet wird</system:String>
     <system:String x:Key="Animation">Animation</system:String>
-    <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
+    <system:String x:Key="AnimationTip">Animationen in der Oberfläche verwenden</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Tastenkombination</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Verknüpfung eingeben, um Flow Launcher anzuzeigen/auszublenden.</system:String>
     <system:String x:Key="openResultModifiers">Öffnen Sie die Ergebnismodifikatoren</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Hotkey anzeigen</system:String>
