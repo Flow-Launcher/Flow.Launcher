@@ -352,7 +352,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BatterySaver" xml:space="preserve">
-    <value>省电模式</value>
+    <value>节电模式</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverSettings" xml:space="preserve">
@@ -378,7 +378,7 @@
     <value>蓝光</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
-    <value>Bluetooth</value>
+    <value>蓝牙</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
@@ -630,7 +630,7 @@
     <value>漏洞保护</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>附加内容</value>
+    <value>附加程序</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
@@ -709,7 +709,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
-    <value>通用</value>
+    <value>常规</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="GetPrograms" xml:space="preserve">
@@ -1156,7 +1156,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>手机</value>
+    <value>电话</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
