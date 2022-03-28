@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Oyun Modu</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <value>Windows ayarlarını aramak için eklenti</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Windows ayarları</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Güç ve uyku</value>
