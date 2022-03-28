@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>명령</value>
+    <value>명령어</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -1117,7 +1117,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>암호</value>
+    <value>패스워드</value>
   </data>
   <data name="password.cpl" xml:space="preserve">
     <value>password.cpl</value>
@@ -1203,10 +1203,10 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Windows 설정을 검색하는 플러그인</value>
+    <value>Windows 설정을 검색하는 플러그 인</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows 설정</value>
+    <value>Windows Settings</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>전원 및 절전 모드</value>
@@ -1572,7 +1572,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>버전</value>
+    <value>버</value>
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
