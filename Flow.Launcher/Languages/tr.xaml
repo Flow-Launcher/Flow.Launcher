@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Eklentiler</system:String>
+    <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Daha fazla eklenti bul</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Devre Dışı</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Eklenti Klasörü</system:String>
-    <system:String x:Key="author">Yapımcı</system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Açılış Süresi:</system:String>
     <system:String x:Key="plugin_query_time">Sorgu Süresi:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -142,7 +142,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Hakkında</system:String>
-    <system:String x:Key="website">Web Sitesi</system:String>
+    <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Sürüm</system:String>
