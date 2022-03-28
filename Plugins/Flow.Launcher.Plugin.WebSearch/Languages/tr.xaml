@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Arama önerilerini etkinleştir </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from: </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Lütfen bir web araması seçin</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">{0} aramasını silmek istediğinize emin misiniz?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you have a web search service you want to use, you can add it to Flow. For example, you can follow the url format in the address bar if you want to search 'casino' on Netflix: &quot;https://www.netflix.com/search?q=Casino&quot;. To do this, change the search term 'Casino' as follows.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Add it to the URL section below. You can now search Netflix with Flow using any search terms.</system:String>
