@@ -4,18 +4,18 @@ using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
-    public class WindowsIndexManager : IIndexProvider
+    public class WindowsIndexSearchManager : IIndexProvider, IContentIndexProvider, IPathEnumerable
     {
         private Settings Settings { get; }
         private QueryConstructor QueryConstructor { get; }
-        public WindowsIndexManager(Settings settings)
+        public WindowsIndexSearchManager(Settings settings)
         {
             Settings = settings;
             QueryConstructor = new QueryConstructor(Settings);
         }
 
 
-        private async Task<List<SearchResult>> WindowsIndexFileContentSearchAsync(Query query, string querySearchString,
+        private async Task<List<SearchResult>> WindowsIndexFileContentSearchAsync(string querySearchString,
             CancellationToken token)
         {
             if (string.IsNullOrEmpty(querySearchString))
@@ -26,13 +26,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 QueryConstructor.CreateQueryHelper,
                 QueryConstructor.QueryForFileContentSearch,
                 Settings.IndexSearchExcludedSubdirectoryPaths,
-                query,
                 token).ConfigureAwait(false);
         }
 
 
 
-        private async Task<List<SearchResult>> WindowsIndexFilesAndFoldersSearchAsync(Query query, string querySearchString,
+        private async Task<List<SearchResult>> WindowsIndexFilesAndFoldersSearchAsync(string querySearchString,
             CancellationToken token)
         {
             return await WindowsIndex.WindowsIndexSearchAsync(
@@ -40,12 +39,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 QueryConstructor.CreateQueryHelper,
                 QueryConstructor.QueryForAllFilesAndFolders,
                 Settings.IndexSearchExcludedSubdirectoryPaths,
-                query,
                 token).ConfigureAwait(false);
         }
         
         
-        private async Task<List<SearchResult>> WindowsIndexTopLevelFolderSearchAsync(Query query, string path,
+        private async Task<List<SearchResult>> WindowsIndexTopLevelFolderSearchAsync(string path,string search,
             CancellationToken token)
         {
             var queryConstructor = new QueryConstructor(Settings);
@@ -55,16 +53,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 queryConstructor.CreateQueryHelper,
                 queryConstructor.QueryForTopLevelDirectorySearch,
                 Settings.IndexSearchExcludedSubdirectoryPaths,
-                query,
                 token).ConfigureAwait(false);
         }
-        public ValueTask<IEnumerable<SearchResult>> SearchAsync(Query query, CancellationToken token)
+        public async ValueTask<IEnumerable<SearchResult>> SearchAsync(string search, CancellationToken token)
         {
-            return default;
+            return await WindowsIndexFilesAndFoldersSearchAsync(search, token);
         }
-        public ValueTask<IEnumerable<SearchResult>> ContentSearchAsync(Query query, CancellationToken token)
+        public async ValueTask<IEnumerable<SearchResult>> ContentSearchAsync(string search, CancellationToken token)
         {
-            return default;
+            return await WindowsIndexFileContentSearchAsync(search, token);
+        }
+        public async ValueTask<IEnumerable<SearchResult>> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
+        {
+            if(recursive)
+                return await WindowsIndexFilesAndFoldersSearchAsync(search, token).ConfigureAwait(false);
+            return await WindowsIndexTopLevelFolderSearchAsync(path, search, token);
         }
     }
 }

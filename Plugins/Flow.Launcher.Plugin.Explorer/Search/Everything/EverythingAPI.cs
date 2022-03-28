@@ -101,15 +101,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// </summary>
         /// <param name="keyword">The key word.</param>
         /// <param name="token">when cancelled the current search will stop and exit (and would not reset)</param>
+        /// <param name="parentPath">Search Within a parent folder</param>
+        /// <param name="recursive">Search Within sub folder of the parent folder</param>
         /// <param name="sortOption">Sort By</param>
         /// <param name="offset">The offset.</param>
         /// <param name="maxCount">The max count.</param>
         /// <returns></returns>
-        public static IEnumerable<SearchResult> SearchAsync(string keyword, CancellationToken token, SortOption sortOption = SortOption.NAME_ASCENDING, int offset = 0, int maxCount = 100)
+        public static IEnumerable<SearchResult> SearchAsync(string keyword,
+            CancellationToken token,
+            SortOption sortOption = SortOption.NAME_ASCENDING,
+            string parentPath = "",
+            bool recursive = false,
+            int offset = 0,
+            int maxCount = 100)
         {
-            if (string.IsNullOrEmpty(keyword))
-                throw new ArgumentNullException(nameof(keyword));
-
             if (offset < 0)
                 throw new ArgumentOutOfRangeException(nameof(offset));
 
@@ -122,6 +127,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 {
                     EverythingApiDllImport.Everything_SetRegex(true);
                     keyword = keyword[1..];
+                }
+
+                if (!string.IsNullOrEmpty(parentPath))
+                {
+                    keyword += $" {(recursive ? "" : "parent:")}\"{parentPath}\"";
                 }
 
                 EverythingApiDllImport.Everything_SetSearchW(keyword);

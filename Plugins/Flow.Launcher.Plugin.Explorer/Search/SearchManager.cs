@@ -61,11 +61,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (IsFileContentSearch(query.ActionKeyword))
             {
-                searchResults = await Settings.IndexProvider.ContentSearchAsync(query, token);
+                searchResults = await Settings.ContentIndexProvider.ContentSearchAsync(query.Search, token);
             }
             else
             {
-                searchResults = await Settings.IndexProvider.SearchAsync(query, token);
+                searchResults = await Settings.IndexProvider.SearchAsync(query.Search, token);
             }
 
             if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword) ||
@@ -120,12 +120,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var isEnvironmentVariablePath = querySearch[1..].Contains("%\\");
 
             var locationPath = querySearch;
-
+            
             if (isEnvironmentVariablePath)
                 locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
-            if (!FilesFolders.LocationExists(FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath)))
+            if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).LocationExists())
                 return results.ToList();
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
@@ -134,16 +134,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             token.ThrowIfCancellationRequested();
 
-            // var directoryResult = await TopLevelDirectorySearchBehaviourAsync(WindowsIndexTopLevelFolderSearchAsync,
-            //     DirectoryInfoClassSearch,
-            //     useIndexSearch,
-            //     query,
-            //     locationPath,
-            //     token).ConfigureAwait(false);
+            IEnumerable<SearchResult> directoryResult;
+
+            if (query.Search.Contains('>'))
+            {
+                directoryResult =
+                    await Settings.PathEnumerator.EnumerateAsync(locationPath, "", false, token)
+                        .ConfigureAwait(false);
+            }
+            else
+            {
+                directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token);
+            }
+            
+            
 
             token.ThrowIfCancellationRequested();
 
-            // results.UnionWith(directoryResult);
+            results.UnionWith(directoryResult.Select(searchResult => ResultManager.CreateResult(query, searchResult)));
 
             return results.ToList();
         }
@@ -153,10 +161,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return actionKeyword == Settings.FileContentSearchActionKeyword;
         }
 
-        private List<Result> DirectoryInfoClassSearch(Query query, string querySearch, CancellationToken token)
-        {
-            return DirectoryInfoSearch.TopLevelDirectorySearch(query, querySearch, token);
-        }
 
         public async Task<List<Result>> TopLevelDirectorySearchBehaviourAsync(
             Func<Query, string, CancellationToken, Task<List<Result>>> windowsIndexSearch,

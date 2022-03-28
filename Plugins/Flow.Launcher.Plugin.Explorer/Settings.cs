@@ -6,6 +6,7 @@ using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -44,18 +45,44 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
-        private List<IIndexProvider> _indexProviders;
+        private IReadOnlyList<IIndexProvider> _indexProviders;
+        private IReadOnlyList<IContentIndexProvider> _fileContentIndexProviders;
+        private IReadOnlyList<IPathEnumerable> _pathEnumerables;
         public Settings()
         {
+            var everythingManager = new EverythingSearchManager(this);
+            var windowsIndexManager = new WindowsIndexSearchManager(this);
+            
             _indexProviders = new List<IIndexProvider>()
             {
-                new EverythingSearchManager(this),
-                new WindowsIndexManager(this)
+                everythingManager,
+                windowsIndexManager
+            };
+
+            _pathEnumerables = new List<IPathEnumerable>()
+            {
+                everythingManager,
+                windowsIndexManager
+            };
+
+            _fileContentIndexProviders = new List<IContentIndexProvider>
+            {
+                windowsIndexManager, everythingManager
             };
         }
+        
         public IndexSearchEngineOption IndexSearchEngine { get; set; }
+        [JsonIgnore]
         public IIndexProvider IndexProvider => _indexProviders[(int)IndexSearchEngine];
+        
+        public PathTraversalEngineOption PathEnumerationEngine { get; set; }
+        [JsonIgnore]
+        public IPathEnumerable PathEnumerator => _pathEnumerables[(int)PathEnumerationEngine];
 
+        public ContentIndexSearchEngineOption ContentSearchEngine { get; set; }
+        [JsonIgnore]
+        public IContentIndexProvider ContentIndexProvider => _fileContentIndexProviders[(int)ContentSearchEngine];
+        
         public enum PathTraversalEngineOption
         {
             Everything,
@@ -68,11 +95,17 @@ namespace Flow.Launcher.Plugin.Explorer
             Everything,
             WindowsIndex
         }
-        #region Everything Settings
-
+        
+        public enum ContentIndexSearchEngineOption
+        {
+            Everything,
+            WindowsIndex
+        }
         
         public bool LaunchHidden { get; set; } = false;
 
+        #region Everything Settings
+        
         public string EverythingInstalledPath { get; set; }
 
         public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();

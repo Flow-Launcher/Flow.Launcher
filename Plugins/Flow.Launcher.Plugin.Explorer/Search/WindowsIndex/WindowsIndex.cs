@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         // Reserved keywords in oleDB
         private const string ReservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
 
-        private static async Task<List<SearchResult>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
+        private static async Task<List<SearchResult>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, CancellationToken token)
         {
             var results = new List<SearchResult>();
 
@@ -82,7 +82,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             Func<CSearchQueryHelper> createQueryHelper,
             Func<string, string> constructQuery,
             List<AccessLink> exclusionList,
-            Query query,
             CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, ReservedStringPattern);
@@ -93,40 +92,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var constructedQuery = constructQuery(searchString);
 
             return
-                await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, query, token);
+                await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, token);
         }
 
-        private static List<Result> RemoveResultsInExclusionList(List<Result> results, List<AccessLink> exclusionList, CancellationToken token)
+        private static void RemoveResultsInExclusionList(List<SearchResult> results, IReadOnlyList<AccessLink> exclusionList, CancellationToken token)
         {
             var indexExclusionListCount = exclusionList.Count;
 
             if (indexExclusionListCount == 0)
-                return results;
-
-            var filteredResults = new List<Result>();
-
-            for (var index = 0; index < results.Count; index++)
-            {
-                token.ThrowIfCancellationRequested();
-
-                var excludeResult = false;
-
-                for (var i = 0; i < indexExclusionListCount; i++)
-                {
-                    token.ThrowIfCancellationRequested();
-
-                    if (results[index].SubTitle.StartsWith(exclusionList[i].Path, StringComparison.OrdinalIgnoreCase))
-                    {
-                        excludeResult = true;
-                        break;
-                    }
-                }
-
-                if (!excludeResult)
-                    filteredResults.Add(results[index]);
-            }
-
-            return filteredResults;
+                return;
+            results.RemoveAll(searchResult =>
+                exclusionList.Any(exclude => searchResult.FullPath.StartsWith(exclude.Path, StringComparison.OrdinalIgnoreCase))
+            );
         }
 
         internal static bool PathIsIndexed(string path)
