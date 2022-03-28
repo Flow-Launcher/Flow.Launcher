@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Плагины</system:String>
+    <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Найти больше плагинов</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Отключить</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Директория плагинов</system:String>
-    <system:String x:Key="author">Авто</system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Инициализация:</system:String>
     <system:String x:Key="plugin_query_time">Запрос:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -142,7 +142,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">О Flow Launcher</system:String>
-    <system:String x:Key="website">Сай</system:String>
+    <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Версия</system:String>
@@ -214,7 +214,7 @@
     <system:String x:Key="reportWindow_time">Время</system:String>
     <system:String x:Key="reportWindow_reproduce">Пожалуйста, сообщите, что произошло, чтобы мы могли это исправить</system:String>
     <system:String x:Key="reportWindow_send_report">Отправить отчёт</system:String>
-    <system:String x:Key="reportWindow_cancel">Отмена</system:String>
+    <system:String x:Key="reportWindow_cancel">Отменить</system:String>
     <system:String x:Key="reportWindow_general">Общие</system:String>
     <system:String x:Key="reportWindow_exceptions">Исключения</system:String>
     <system:String x:Key="reportWindow_exception_type">Тип исключения</system:String>
@@ -241,7 +241,7 @@
     <system:String x:Key="update_flowlauncher_update_new_version_available">Доступна новая версия Flow Launcher {0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Произошла ошибка при попытке установить обновление</system:String>
     <system:String x:Key="update_flowlauncher_update">Обновить</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">Отмена</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Отменить</system:String>
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Это обновление перезапустит Flow Launcher</system:String>
