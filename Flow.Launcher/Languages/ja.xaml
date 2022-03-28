@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugin"></system:String>
     <system:String x:Key="browserMorePlugins"></system:String>
     <system:String x:Key="enable">有効</system:String>
     <system:String x:Key="disable">無効</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">重要度</system:String>
     <system:String x:Key="pluginDirectory"></system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">作</system:String>
     <system:String x:Key="plugin_init_time">初期化時間:</system:String>
     <system:String x:Key="plugin_query_time"></system:String>
     <system:String x:Key="plugin_query_version">| バージョン</system:String>
@@ -142,7 +142,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Flow Launcherについて</system:String>
-    <system:String x:Key="website">ウェブサイト</system:String>
+    <system:String x:Key="website"></system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version"></system:String>
@@ -240,7 +240,7 @@
     <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Flow Launcher の最新バージョン V{0} が入手可能です</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Flow Launcherのアップデート中にエラーが発生しまし</system:String>
-    <system:String x:Key="update_flowlauncher_update">更新</system:String>
+    <system:String x:Key="update_flowlauncher_update"></system:String>
     <system:String x:Key="update_flowlauncher_update_cancel"></system:String>
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
