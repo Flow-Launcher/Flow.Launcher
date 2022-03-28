@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>О Flow Launcher</value>
+    <value>О программе</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Команда</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -630,7 +630,7 @@
     <value>Защита от эксплойтов</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Дополнительно</value>
+    <value>Дополнения</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Режим игры</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -837,7 +837,7 @@
     <value>Светлый режим</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Расположение</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <value>Подключаемый модуль для поиска параметров Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Параметры Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Электропитание и спящий режим</value>
