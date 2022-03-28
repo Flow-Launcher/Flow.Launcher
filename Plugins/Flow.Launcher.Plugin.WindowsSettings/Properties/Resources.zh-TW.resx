@@ -378,7 +378,7 @@
     <value>藍色光</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
-    <value>Bluetooth</value>
+    <value>藍牙</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>遊戲模式</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -827,7 +827,7 @@
     <value>金鑰</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>語</value>
+    <value>語言</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
@@ -837,7 +837,7 @@
     <value>淺色模式</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>路徑</value>
+    <value>位置</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
@@ -1156,7 +1156,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>電話</value>
+    <value>手機</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
@@ -1206,7 +1206,7 @@
     <value>搜尋 Windows 設定外掛程式</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Windows 設定</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>電源與睡眠</value>
