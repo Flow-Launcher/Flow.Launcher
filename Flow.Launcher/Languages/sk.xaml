@@ -24,7 +24,7 @@
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
-    <system:String x:Key="general">Všeobecné</system:String>
+    <system:String x:Key="general">Všeobecn</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher pri spustení systému</system:String>
@@ -58,8 +58,8 @@
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
-    <system:String x:Key="enable">Zapnuté</system:String>
-    <system:String x:Key="disable">Vypnuté</system:String>
+    <system:String x:Key="enable">Zap.</system:String>
+    <system:String x:Key="disable">Vyp.</system:String>
     <system:String x:Key="actionKeywordsTitle">Nastavenie akčného príkazu</system:String>
     <system:String x:Key="actionKeywords">Aktivačný príkaz</system:String>
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
@@ -122,7 +122,7 @@
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
     <system:String x:Key="windowWidthSize">Šírka okna</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
+    <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporovan</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -136,7 +136,7 @@
     <system:String x:Key="serverCantBeEmpty">Pole Server nemôže byť prázdne</system:String>
     <system:String x:Key="portCantBeEmpty">Pole Port nemôže byť prázdne</system:String>
     <system:String x:Key="invalidPortFormat">Neplatný formát portu</system:String>
-    <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložené</system:String>
+    <system:String x:Key="saveProxySuccessfully">Nastavenie proxy úspešne uložen</system:String>
     <system:String x:Key="proxyIsCorrect">Nastavenie proxy je v poriadku</system:String>
     <system:String x:Key="proxyConnectFailed">Pripojenie proxy servera zlyhalo</system:String>
 
@@ -194,8 +194,8 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivačný príkaz nemôže byť prázdny</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivačný príkaz už bol priradený inému pluginu, prosím, zvoľte iný aktivačný príkaz</system:String>
-    <system:String x:Key="success">Úspešné</system:String>
-    <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
+    <system:String x:Key="success">Úspešn</system:String>
+    <system:String x:Key="completedSuccessfully">Úspešne dokončen</system:String>
     <system:String x:Key="actionkeyword_tips">Zadajte aktivačný príkaz, ktorý je potrebný na spustenie pluginu. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -215,13 +215,13 @@
     <system:String x:Key="reportWindow_reproduce">Prosím, napíšte nám, ako došlo k pádu aplikácie, aby sme to mohli opraviť</system:String>
     <system:String x:Key="reportWindow_send_report">Odoslať hlásenie</system:String>
     <system:String x:Key="reportWindow_cancel">Zrušiť</system:String>
-    <system:String x:Key="reportWindow_general">Všeobecné</system:String>
+    <system:String x:Key="reportWindow_general">Všeobecn</system:String>
     <system:String x:Key="reportWindow_exceptions">Výnimky</system:String>
     <system:String x:Key="reportWindow_exception_type">Typ výnimky</system:String>
     <system:String x:Key="reportWindow_source">Zdroj</system:String>
     <system:String x:Key="reportWindow_stack_trace">Trasovanie zásobníka</system:String>
     <system:String x:Key="reportWindow_sending">Odosiela sa</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
+    <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslan</system:String>
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
 
@@ -245,7 +245,7 @@
     <system:String x:Key="update_flowlauncher_fail">Aktualizácia zlyhala</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Skontrolujte pripojenie a skúste aktualizovať nastavenia servera proxy k github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Tento upgrade reštartuje Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_files">Nasledujúce súbory budú aktualizované</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Nasledujúce súbory budú aktualizovan</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Aktualizovať popis</system:String>
 
