@@ -11,7 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Adicionar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palavra-chave da ação</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palavra-chave de ação</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Pesquisar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Utilizar conclusão automática da consulta: </system:String>
@@ -31,11 +31,11 @@
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancelar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Pesquisa web inválida</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_title">Introduza um título</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Introduza a palavra-chave da ação</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Introduza a palavra-chave de ação</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Introduza um URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">A palavra-chave já existe. Por favor escolha outra</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Esta palavra-chave já existe. Por favor escolha outra.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Sucesso</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Dica: não é necessário colocar imagens personalizadas neste diretório pois se Flow Launcher for atualizado, estas serão perdidas. O Flow irá copiar todas as imagens que estejam fora deste diretório para em todas as pesquisas Web.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Dica: não é necessário colocar imagens personalizadas neste diretório porque se Flow Launcher for atualizado, estas serão perdidas. A aplicação irá copiar todas as imagens que estejam fora deste diretório para todas as pesquisas Web.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Pesquisas web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Permite pesquisar diretamente na web</system:String>
