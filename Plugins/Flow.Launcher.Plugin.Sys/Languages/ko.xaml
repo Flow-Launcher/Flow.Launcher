@@ -3,13 +3,13 @@
 
     <!--Command List-->
     <system:String x:Key="flowlauncher_plugin_sys_command">명령어</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_desc">설명</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_desc">설</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">컴퓨터 종료</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">컴퓨터 재시작</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">안전 및 디버깅 모드에 대한 고급 부팅 옵션과 기타 옵션을 사용하여 컴퓨터를 다시 시작</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off">로그아웃</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock">컴퓨터 잠금</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off">로그아</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock">컴퓨터 잠</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher 닫기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcher 재시작</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting">이 프로그램을 조정합니다</system:String>
