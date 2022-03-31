@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.Caculator
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             _viewModel = new SettingsViewModel(_settings);
-            
+
             MagesEngine = new Engine(new Configuration
             {
                 Scope = new Dictionary<string, object>
@@ -54,7 +54,19 @@ namespace Flow.Launcher.Plugin.Caculator
 
             try
             {
-                var expression = query.Search.Replace(",", ".");
+                string expression;
+
+                switch (_settings.DecimalSeparator)
+                {
+                    case DecimalSeparator.Comma:
+                    case DecimalSeparator.UseSystemLocale when CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
+                        expression = query.Search.Replace(".", ",");
+                        break;
+                    default:
+                        expression = query.Search;
+                        break;
+                }
+
                 var result = MagesEngine.Interpret(expression);
 
                 if (result?.ToString() == "NaN")
@@ -76,6 +88,7 @@ namespace Flow.Launcher.Plugin.Caculator
                             IcoPath = "Images/calculator.png",
                             Score = 300,
                             SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
+                            CopyText = newResult,
                             Action = c =>
                             {
                                 try
