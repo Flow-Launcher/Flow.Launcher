@@ -13,7 +13,7 @@
     <system:String x:Key="iconTrayAbout">정보</system:String>
     <system:String x:Key="iconTrayExit">종료</system:String>
     <system:String x:Key="closeWindow">닫기</system:String>
-    <system:String x:Key="copy">복사</system:String>
+    <system:String x:Key="copy">복사하기</system:String>
     <system:String x:Key="cut">잘라내기</system:String>
     <system:String x:Key="paste">붙여넣기</system:String>
     <system:String x:Key="fileTitle">File</system:String>
@@ -42,8 +42,8 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="defaultFileManager">기본 파일관리자</system:String>
     <system:String x:Key="defaultFileManagerToolTip">폴더를 열 때 사용할 파일관리자를 선택하세요.</system:String>
-    <system:String x:Key="defaultBrowser">기본 웹 브라우</system:String>
-    <system:String x:Key="defaultBrowserToolTip">새 탭, 새 창, 프라이빗 모드 설정</system:String>
+    <system:String x:Key="defaultBrowser">기본 웹 브라우저</system:String>
+    <system:String x:Key="defaultBrowserToolTip">새 탭, 새  창, 사생활 보호 모드</system:String>
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">플러그인</system:String>
+    <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
     <system:String x:Key="enable">켬</system:String>
     <system:String x:Key="disable">끔</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요</system:String>
     <system:String x:Key="pluginDirectory">플러그인 폴더</system:String>
-    <system:String x:Key="author">제작자</system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
     <system:String x:Key="plugin_query_version">| 버</system:String>
@@ -172,14 +172,14 @@
     <system:String x:Key="fileManager_file_arg">파일경로 인수</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">기본 웹 브라우저r</system:String>
-    <system:String x:Key="defaultBrowser_tips">기본 설정은 OS의 브라우저 설정을 따릅니다. 별도 설정시 Flow Launcher가 해당 브라우저를 사용합니다.</system:String>
-    <system:String x:Key="defaultBrowser_name">브라우</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">브라우저 이</system:String>
+    <system:String x:Key="defaultBrowserTitle">기본 웹 브라우저</system:String>
+    <system:String x:Key="defaultBrowser_tips">기본 설정은 OS의 기본 브라우저 설정을 따릅니다. 특정 브라우저를 지정할 경우, Flow는 해당 브라우저를 사용합니다.</system:String>
+    <system:String x:Key="defaultBrowser_name">브라우저</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">브라우저 이름</system:String>
     <system:String x:Key="defaultBrowser_path">브라우저 경로</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">새 창</system:String>
-    <system:String x:Key="defaultBrowser_newTab">새 탭</system:String>
-    <system:String x:Key="defaultBrowser_parameter">프라이빗 모드</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_parameter">사생활 보호 모드</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">중요도 변경</system:String>
@@ -199,7 +199,7 @@
     <system:String x:Key="actionkeyword_tips">플러그인을 시작하는데 필요한 액션 키워드를 입력하세요. 액션 키워드를 지정하지 않으려면 *를 사용하세요. 이 경우 키워드를 입력하지 않아도 동작합니다.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">커스텀 플러그인 단축키</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customeQueryHotkeyTips">단축키를 지정하여 특정 쿼리를 자동으로 입력할 수 있습니다. 사용하고 싶은 단축키를 눌러 지정한 후, 사용할 쿼리를 입력하세요.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
@@ -282,7 +282,7 @@
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">쉘 명령어</system:String>
     <system:String x:Key="RecommendBluetooth">블루투스</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">윈도우 블루투스 설정</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">스메</system:String>
     <system:String x:Key="RecommendAcronymsDesc">스티커 메</system:String>
 
