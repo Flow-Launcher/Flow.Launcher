@@ -56,7 +56,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">外掛</system:String>
+    <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">停</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
-    <system:String x:Key="author">作</system:String>
+    <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">載入耗時</system:String>
     <system:String x:Key="plugin_query_time">查詢耗時</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
@@ -142,7 +142,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">關於</system:String>
-    <system:String x:Key="website">網站</system:String>
+    <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">版本</system:String>
@@ -215,7 +215,7 @@
     <system:String x:Key="reportWindow_reproduce">請告訴我們如何重現此問題，以便我們進行修</system:String>
     <system:String x:Key="reportWindow_send_report">發送報</system:String>
     <system:String x:Key="reportWindow_cancel">取</system:String>
-    <system:String x:Key="reportWindow_general">基本訊</system:String>
+    <system:String x:Key="reportWindow_general">一般</system:String>
     <system:String x:Key="reportWindow_exceptions">例外訊</system:String>
     <system:String x:Key="reportWindow_exception_type">例外類型</system:String>
     <system:String x:Key="reportWindow_source">例外來源</system:String>
