@@ -6,13 +6,13 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tarayıcılarınızdaki yer işaretlerini arayın.</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Yer İmleri Verisi</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">New window</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy url</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Yeni Pencere</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Yeni Sekme</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Dizin üzerinden tarayıcı seç:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Seç</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Url Kopyala</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
