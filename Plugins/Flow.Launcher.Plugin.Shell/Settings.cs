@@ -5,18 +5,24 @@ namespace Flow.Launcher.Plugin.Shell
     public class Settings
     {
         public Shell Shell { get; set; } = Shell.Cmd;
-        
+
         public bool ReplaceWinR { get; set; } = false;
-        
+
         public bool LeaveShellOpen { get; set; }
 
         public bool RunAsAdministrator { get; set; } = true;
+
+        public bool UseWindowsTerminal { get; set; } = false;
+
+        public string WindowsTerminalProfile { get; set; }
 
         public bool ShowOnlyMostUsedCMDs { get; set; }
 
         public int ShowOnlyMostUsedCMDsNumber { get; set; }
 
-        public Dictionary<string, int> CommandHistory { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> CommandHistory
+        { get; set;
+        } = new Dictionary<string, int>();
 
         public void AddCmdHistory(string cmdName)
         {
@@ -36,6 +42,6 @@ namespace Flow.Launcher.Plugin.Shell
         Cmd = 0,
         Powershell = 1,
         RunCommand = 2,
-
+        WindowsTerminal = 3
     }
 }

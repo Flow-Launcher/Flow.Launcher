@@ -252,6 +252,18 @@ namespace Flow.Launcher.Plugin.Shell
                     throw new NotImplementedException();
             }
 
+            if (_settings.UseWindowsTerminal)
+            {
+                ProcessStartInfo wtInfo = new();
+                wtInfo.FileName = "wt.exe";
+                wtInfo.ArgumentList.Add("-p");
+                wtInfo.ArgumentList.Add(_settings.WindowsTerminalProfile);
+                wtInfo.ArgumentList.Add(info.FileName);
+                wtInfo.ArgumentList.Add(info.FileName + " " + String.Join(" ", info.ArgumentList));
+
+                info = wtInfo;
+            }
+
             info.UseShellExecute = true;
 
             _settings.AddCmdHistory(command);
