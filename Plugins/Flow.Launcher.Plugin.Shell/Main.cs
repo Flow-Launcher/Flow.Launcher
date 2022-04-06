@@ -224,6 +224,20 @@ namespace Flow.Launcher.Plugin.Shell
                         break;
                     }
 
+                case Shell.Pwsh:
+                    {
+                        info.FileName = "pwsh.exe";
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                        }
+
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add(command);
+
+                        break;
+                    }
+
                 case Shell.RunCommand:
                     {
                         var parts = command.Split(new[] { ' ' }, 2);
@@ -258,8 +272,16 @@ namespace Flow.Launcher.Plugin.Shell
                 wtInfo.FileName = "wt.exe";
                 wtInfo.ArgumentList.Add("-p");
                 wtInfo.ArgumentList.Add(_settings.WindowsTerminalProfile);
+
                 wtInfo.ArgumentList.Add(info.FileName);
-                wtInfo.ArgumentList.Add(info.FileName + " " + String.Join(" ", info.ArgumentList));
+
+                foreach (var argument in info.ArgumentList)
+                {
+                    wtInfo.ArgumentList.Add(argument);
+                }
+            
+                wtInfo.WorkingDirectory = info.WorkingDirectory;
+                wtInfo.Verb = info.Verb;
 
                 info = wtInfo;
             }
