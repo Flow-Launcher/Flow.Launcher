@@ -16,7 +16,7 @@ namespace Flow.Launcher.Core.Plugin
                 return null;
             }
 
-            var rawQuery = string.Join(Query.TermSeparator, terms);
+            var rawQuery = text;
             string actionKeyword, search;
             string possibleActionKeyword = terms[0];
             string[] searchTerms;
