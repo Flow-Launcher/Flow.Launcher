@@ -115,7 +115,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var result in queryResponseModel.Result)
             {
-                result.Action = c =>
+                result.ActionAsync = async c =>
                 {
                     UpdateSettings(result.SettingsChange);
 
@@ -133,15 +133,15 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        var actionResponse = Request(result.JsonRPCAction);
+                        var actionResponse = await RequestAsync(result.JsonRPCAction);
 
-                        if (string.IsNullOrEmpty(actionResponse))
+                        if (actionResponse.Length == 0)
                         {
                             return !result.JsonRPCAction.DontHideAfterAction;
                         }
 
-                        var jsonRpcRequestModel =
-                            JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, options);
+                        var jsonRpcRequestModel = await
+                            JsonSerializer.DeserializeAsync<JsonRPCRequestModel>(actionResponse, options);
 
                         if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
                         {
@@ -166,19 +166,20 @@ namespace Flow.Launcher.Core.Plugin
         private void ExecuteFlowLauncherAPI(string method, object[] parameters)
         {
             var parametersTypeArray = parameters.Select(param => param.GetType()).ToArray();
-            MethodInfo methodInfo = PluginManager.API.GetType().GetMethod(method, parametersTypeArray);
-            if (methodInfo != null)
+            var methodInfo = typeof(IPublicAPI).GetMethod(method, parametersTypeArray);
+            if (methodInfo == null)
             {
-                try
-                {
-                    methodInfo.Invoke(PluginManager.API, parameters);
-                }
-                catch (Exception)
-                {
+                return;
+            }
+            try
+            {
+                methodInfo.Invoke(PluginManager.API, parameters);
+            }
+            catch (Exception)
+            {
 #if (DEBUG)
-                    throw;
+                throw;
 #endif
-                }
             }
         }
 
@@ -365,8 +366,7 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new StackPanel
             {
-                Margin = settingPanelMargin,
-                Orientation = Orientation.Vertical
+                Margin = settingPanelMargin, Orientation = Orientation.Vertical
             };
             settingWindow.Content = mainPanel;
 
@@ -374,8 +374,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var panel = new StackPanel
                 {
-                    Orientation = Orientation.Horizontal,
-                    Margin = settingControlMargin
+                    Orientation = Orientation.Horizontal, Margin = settingControlMargin
                 };
                 var name = new TextBlock()
                 {
