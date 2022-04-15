@@ -48,7 +48,7 @@ namespace Flow.Launcher.Test.Plugins
             foreach (var result in results)
             {
                 Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Action);
+                Assert.IsNotNull(result.ActionAsync);
                 Assert.IsNotNull(result.Title);
             }
 
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Test.Plugins
                 Assert.AreEqual(result1, referenceResult);
 
                 Assert.IsNotNull(result1);
-                Assert.IsNotNull(result1.Action);
+                Assert.IsNotNull(result1.ActionAsync);
             }
         }
 
