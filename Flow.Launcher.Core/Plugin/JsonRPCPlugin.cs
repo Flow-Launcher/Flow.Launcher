@@ -115,7 +115,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var result in queryResponseModel.Result)
             {
-                result.ActionAsync = async c =>
+                result.AsyncAction = async c =>
                 {
                     UpdateSettings(result.SettingsChange);
 

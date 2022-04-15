@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin
         /// true to hide flowlauncher after select result
         /// </returns>
         /// </summary>
-        public Func<ActionContext, ValueTask<bool>> ActionAsync { get; set; }
+        public Func<ActionContext, ValueTask<bool>> AsyncAction { get; set; }
 
         /// <summary>
         /// Priority of the current result
@@ -181,7 +181,7 @@ namespace Flow.Launcher.Plugin
     
         public ValueTask<bool> ExecuteAsync(ActionContext context)
         {
-            return ActionAsync?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
+            return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
         }
     }
 }
