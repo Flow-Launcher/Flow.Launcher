@@ -17,14 +17,12 @@ namespace Flow.Launcher.ViewModel
 
         public ResultCollection Results { get; }
 
-        private readonly object _collectionLock = new object();
         private readonly Settings _settings;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
 
         public ResultsViewModel()
         {
             Results = new ResultCollection();
-            BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
         public ResultsViewModel(Settings settings) : this()
         {
@@ -115,20 +113,17 @@ namespace Flow.Launcher.ViewModel
 
         public void Clear()
         {
-            lock (_collectionLock)
-                Results.RemoveAll();
+            Results.RemoveAll();
         }
 
         public void KeepResultsFor(PluginMetadata metadata)
         {
-            lock (_collectionLock)
-                Results.Update(Results.Where(r => r.Result.PluginID == metadata.ID).ToList());
+            Results.Update(Results.Where(r => r.Result.PluginID == metadata.ID).ToList());
         }
 
         public void KeepResultsExcept(PluginMetadata metadata)
         {
-            lock (_collectionLock)
-                Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
+            Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
         }
 
         /// <summary>
@@ -155,26 +150,28 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default)
         {
-            lock (_collectionLock)
+            Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
+
                 if (Results.Any())
                     SelectedItem = Results[0];
-            }
 
-            switch (Visbility)
-            {
-                case Visibility.Collapsed when Results.Count > 0:
-                    Margin = new Thickness { Top = 0 };
-                    SelectedIndex = 0;
-                    Visbility = Visibility.Visible;
-                    break;
-                case Visibility.Visible when Results.Count == 0:
-                    Margin = new Thickness { Top = 0 };
-                    Visbility = Visibility.Collapsed;
-                    break;
-            }
+
+                switch (Visbility)
+                {
+                    case Visibility.Collapsed when Results.Count > 0:
+                        Margin = new Thickness { Top = 0 };
+                        SelectedIndex = 0;
+                        Visbility = Visibility.Visible;
+                        break;
+                    case Visibility.Visible when Results.Count == 0:
+                        Margin = new Thickness { Top = 0 };
+                        Visbility = Visibility.Collapsed;
+                        break;
+                }
+            });
         }
 
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
@@ -258,26 +255,33 @@ namespace Flow.Launcher.ViewModel
 
                 // manually update event
                 // wpf use directx / double buffered already, so just reset all won't cause ui flickering
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                Application.Current.Dispatcher.Invoke(() =>
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)));
             }
             private void AddAll(List<ResultViewModel> Items)
             {
-                for (int i = 0; i < Items.Count; i++)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var item = Items[i];
-                    if (_token.IsCancellationRequested)
-                        return;
-                    Add(item);
-                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
-                }
+                    for (int i = 0; i < Items.Count; i++)
+                    {
+                        var item = Items[i];
+                        if (_token.IsCancellationRequested)
+                            return;
+                        Add(item);
+                        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
+                    }
+                });
             }
             public void RemoveAll(int Capacity = 512)
             {
-                Clear();
-                if (this.Capacity > 8000 && Capacity < this.Capacity)
-                    this.Capacity = Capacity;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Clear();
+                    if (this.Capacity > 8000 && Capacity < this.Capacity)
+                        this.Capacity = Capacity;
 
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                });
             }
 
             /// <summary>
