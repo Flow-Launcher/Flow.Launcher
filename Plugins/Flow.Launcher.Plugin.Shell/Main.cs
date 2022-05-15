@@ -61,11 +61,9 @@ namespace Flow.Launcher.Plugin.Shell
 
                     if (basedir != null)
                     {
-                        var autocomplete = Directory.GetFileSystemEntries(basedir).
-                            Select(o => dir + Path.GetFileName(o)).
-                            Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
-                                       !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
-                                       !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+                        var autocomplete = Directory.GetFileSystemEntries(basedir).Select(o => dir + Path.GetFileName(o)).Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
+                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
+                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
                         autocomplete.Sort();
                         results.AddRange(autocomplete.ConvertAll(m => new Result
                         {
@@ -78,7 +76,7 @@ namespace Flow.Launcher.Plugin.Shell
                                     c.SpecialKeyState.ShiftPressed &&
                                     !c.SpecialKeyState.AltPressed &&
                                     !c.SpecialKeyState.WinPressed
-                                );
+                                    );
 
                                 Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
@@ -118,7 +116,7 @@ namespace Flow.Launcher.Plugin.Shell
                                 c.SpecialKeyState.ShiftPressed &&
                                 !c.SpecialKeyState.AltPressed &&
                                 !c.SpecialKeyState.WinPressed
-                            );
+                                );
 
                             Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
@@ -148,7 +146,7 @@ namespace Flow.Launcher.Plugin.Shell
                         c.SpecialKeyState.ShiftPressed &&
                         !c.SpecialKeyState.AltPressed &&
                         !c.SpecialKeyState.WinPressed
-                    );
+                        );
 
                     Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
@@ -173,7 +171,7 @@ namespace Flow.Launcher.Plugin.Shell
                             c.SpecialKeyState.ShiftPressed &&
                             !c.SpecialKeyState.AltPressed &&
                             !c.SpecialKeyState.WinPressed
-                        );
+                            );
 
                         Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
@@ -195,16 +193,18 @@ namespace Flow.Launcher.Plugin.Shell
 
             ProcessStartInfo info = new()
             {
-                Verb = runAsAdministratorArg,
-                WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
             };
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
                     {
                         info.FileName = "cmd.exe";
-                        info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                        info.ArgumentList.Add(command);
+                        info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
+                        
+                        // ArgumentList may break original shell command separation with quote.
+                        // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                        // info.ArgumentList.Add(command);
                         break;
                     }
 
@@ -226,7 +226,10 @@ namespace Flow.Launcher.Plugin.Shell
 
                 case Shell.RunCommand:
                     {
-                        var parts = command.Split(new[] { ' ' }, 2);
+                        var parts = command.Split(new[]
+                        {
+                            ' '
+                        }, 2);
                         if (parts.Length == 2)
                         {
                             var filename = parts[0];
@@ -366,7 +369,7 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
                     Action = c =>
                     {
-                        Task.Run(() =>Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
+                        Task.Run(() => Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
                         return true;
                     },
                     IcoPath = "Images/user.png"
