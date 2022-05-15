@@ -10,7 +10,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
     public static class DirectoryInfoSearch
     {
-        internal static List<Result> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
+        internal static IEnumerable<SearchResult> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
         {
             var criteria = ConstructSearchCriteria(search);
 
@@ -44,31 +44,36 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             return incompleteName;
         }
 
-        private static List<Result> DirectorySearch(EnumerationOptions enumerationOption, Query query, string search,
+        private static IEnumerable<SearchResult> DirectorySearch(EnumerationOptions enumerationOption, Query query, string search,
             string searchCriteria, CancellationToken token)
         {
-            var results = new List<Result>();
+            var results = new List<SearchResult>();
 
             var path = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(search);
-
-            var folderList = new List<Result>();
-            var fileList = new List<Result>();
 
             try
             {
                 var directoryInfo = new System.IO.DirectoryInfo(path);
 
-                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption)
-                )
+                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption))
                 {
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
-                        folderList.Add(ResultManager.CreateFolderResult(fileSystemInfo.Name, fileSystemInfo.FullName,
-                            fileSystemInfo.FullName, query, 0, true, false));
+                        results.Add(new SearchResult()
+                        {
+                            FullPath = fileSystemInfo.FullName,
+                            Type = ResultType.Folder,
+                            WindowsIndexed = false
+                        });
                     }
                     else
                     {
-                        fileList.Add(ResultManager.CreateFileResult(fileSystemInfo.FullName, query, 0, true, false));
+                        results.Add(new SearchResult()
+                        {
+                            FullPath = fileSystemInfo.FullName,
+                            Type = ResultType.File,
+                            WindowsIndexed = false
+                        });
                     }
 
                     token.ThrowIfCancellationRequested();
@@ -77,13 +82,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             catch (Exception e)
             {
                 Log.Exception("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
-                results.Add(new Result {Title = e.Message, Score = 501});
-
-                return results;
+                throw;
             }
 
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-            return results.Concat(folderList.OrderBy(x => x.Title)).Concat(fileList.OrderBy(x => x.Title)).ToList();
+            return results.OrderBy(r=>r.Type).ThenBy(r=>r.FullPath);
         }
     }
 }

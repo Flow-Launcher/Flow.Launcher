@@ -67,7 +67,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
             _fileContentIndexProviders = new List<IContentIndexProvider>
             {
-                windowsIndexManager, everythingManager
+                windowsIndexManager,
+                everythingManager,
             };
         }
         
@@ -111,6 +112,8 @@ namespace Flow.Launcher.Plugin.Explorer
         public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();
 
         public SortOption SortOption { get; set; } = SortOption.NAME_ASCENDING;
+        
+        public bool EnableEverythingContentSearch { get; set; } = false;
 
         #endregion
 

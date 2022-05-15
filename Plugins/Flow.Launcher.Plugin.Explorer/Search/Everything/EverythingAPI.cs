@@ -107,38 +107,38 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// <param name="offset">The offset.</param>
         /// <param name="maxCount">The max count.</param>
         /// <returns></returns>
-        public static IEnumerable<SearchResult> SearchAsync(string keyword,
-            CancellationToken token,
-            SortOption sortOption = SortOption.NAME_ASCENDING,
-            string parentPath = "",
-            bool recursive = false,
-            int offset = 0,
-            int maxCount = 100)
+        public static IEnumerable<SearchResult> SearchAsync(EverythingSearchOption option,
+            CancellationToken token)
         {
-            if (offset < 0)
-                throw new ArgumentOutOfRangeException(nameof(offset));
+            if (option.Offset < 0)
+                throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
 
-            if (maxCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(maxCount));
+            if (option.MaxCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
 
             lock (syncObject)
             {
-                if (keyword.StartsWith("@"))
+                if (option.Keyword.StartsWith("@"))
                 {
                     EverythingApiDllImport.Everything_SetRegex(true);
-                    keyword = keyword[1..];
+                    option.Keyword = option.Keyword[1..];
                 }
 
-                if (!string.IsNullOrEmpty(parentPath))
+                if (!string.IsNullOrEmpty(option.ParentPath))
                 {
-                    keyword += $" {(recursive ? "" : "parent:")}\"{parentPath}\"";
+                    option.Keyword += $" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"";
                 }
 
-                EverythingApiDllImport.Everything_SetSearchW(keyword);
-                EverythingApiDllImport.Everything_SetOffset(offset);
-                EverythingApiDllImport.Everything_SetMax(maxCount);
+                if (option.IsContentSearch)
+                {
+                    option.Keyword += $" content:\"{option.ContentSearchKeyword}\"";
+                }
 
-                EverythingApiDllImport.Everything_SetSort(sortOption);
+                EverythingApiDllImport.Everything_SetSearchW(option.Keyword);
+                EverythingApiDllImport.Everything_SetOffset(option.Offset);
+                EverythingApiDllImport.Everything_SetMax(option.MaxCount);
+
+                EverythingApiDllImport.Everything_SetSort(option.SortOption);
 
                 if (token.IsCancellationRequested)
                 {

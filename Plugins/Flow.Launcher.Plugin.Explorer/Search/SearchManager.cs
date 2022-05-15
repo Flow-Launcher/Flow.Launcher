@@ -1,4 +1,5 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -59,9 +60,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             IEnumerable<SearchResult> searchResults;
 
-            if (IsFileContentSearch(query.ActionKeyword))
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword))
             {
-                searchResults = await Settings.ContentIndexProvider.ContentSearchAsync(query.Search, token);
+                if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
+                {
+                    return EverythingContentSearchResult(query);
+                }
+                searchResults = await Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
             }
             else
             {
@@ -74,9 +79,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
             }
 
-            if ((ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword) ||
-                 ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)) &&
-                querySearch.Length > 0 &&
+            if (((ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword) ||
+                  ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)) &&
+                 querySearch.Length > 0) ||
+                ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword) &&
                 !querySearch.IsLocationPathString())
             {
                 if (searchResults != null)
@@ -101,7 +107,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Settings.ActionKeyword.IndexSearchActionKeyword => Settings.IndexSearchKeywordEnabled &&
                                                                    keyword == Settings.IndexSearchActionKeyword,
                 Settings.ActionKeyword.QuickAccessActionKeyword => Settings.QuickAccessKeywordEnabled &&
-                                                                   keyword == Settings.QuickAccessActionKeyword
+                                                                   keyword == Settings.QuickAccessActionKeyword,
+                _ => throw new ArgumentOutOfRangeException(nameof(allowedActionKeyword), allowedActionKeyword, "actionKeyword out of range")
+            };
+        }
+
+        private static List<Result> EverythingContentSearchResult(Query query)
+        {
+            return new List<Result>()
+            {
+                new()
+                {
+                    Title = "Do you want to enable content search for Everything?",
+                    SubTitle = "It can be super slow without index (which is only supported in Everything 1.5+)",
+                    IcoPath = "Images/search.png",
+                    Action = c =>
+                    {
+                        Settings.EnableEverythingContentSearch = true;
+                        Context.API.ChangeQuery(query.RawQuery, true);
+                        return false;
+                    }
+                }
             };
         }
 
@@ -120,7 +146,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var isEnvironmentVariablePath = querySearch[1..].Contains("%\\");
 
             var locationPath = querySearch;
-            
+
             if (isEnvironmentVariablePath)
                 locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
 
@@ -136,18 +162,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             IEnumerable<SearchResult> directoryResult;
 
-            if (query.Search.Contains('>'))
+            var recursiveIndicatorIndex = query.Search.IndexOf('>');
+
+            if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathTraversalEngineOption.Direct)
             {
                 directoryResult =
-                    await Settings.PathEnumerator.EnumerateAsync(locationPath, "", false, token)
+                    await Settings.PathEnumerator.EnumerateAsync(query.Search[..recursiveIndicatorIndex],
+                            query.Search[(recursiveIndicatorIndex + 1)..],
+                            true,
+                            token)
                         .ConfigureAwait(false);
+
             }
             else
             {
                 directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token);
             }
-            
-            
+
+
 
             token.ThrowIfCancellationRequested();
 

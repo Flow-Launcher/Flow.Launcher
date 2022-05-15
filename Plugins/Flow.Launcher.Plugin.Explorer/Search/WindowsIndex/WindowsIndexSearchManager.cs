@@ -59,9 +59,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             return await WindowsIndexFilesAndFoldersSearchAsync(search, token);
         }
-        public async ValueTask<IEnumerable<SearchResult>> ContentSearchAsync(string search, CancellationToken token)
+        public async ValueTask<IEnumerable<SearchResult>> ContentSearchAsync(string plainSearch, string contentSearch, CancellationToken token)
         {
-            return await WindowsIndexFileContentSearchAsync(search, token);
+            return await WindowsIndexFileContentSearchAsync(contentSearch, token);
         }
         public async ValueTask<IEnumerable<SearchResult>> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
         {
