@@ -66,14 +66,9 @@ namespace Flow.Launcher.Plugin.Sys
                 if (score > 0)
                 {
                     c.Score = score;
+
                     if (score == titleMatch.Score)
-                    {
                         c.TitleHighlightData = titleMatch.MatchData;
-                    }
-                    else
-                    {
-                        c.SubTitleHighlightData = subTitleMatch.MatchData;
-                    }
 
                     results.Add(c);
                 }

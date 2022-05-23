@@ -16,16 +16,19 @@
     <system:String x:Key="iconTrayAbout">Acerca</system:String>
     <system:String x:Key="iconTrayExit">Sair</system:String>
     <system:String x:Key="closeWindow">Fechar</system:String>
+    <system:String x:Key="copy">Copiar</system:String>
+    <system:String x:Key="cut">Cortar</system:String>
+    <system:String x:Key="paste">Colar</system:String>
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização de teclas de atalho</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Definições Flow launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Definições Flow Launcher</system:String>
     <system:String x:Key="general">Geral</system:String>
     <system:String x:Key="portableMode">Modo portátil</system:String>
     <system:String x:Key="portableModeToolTIp">Guardar todas as definições e dados do utilizador numa pasta (indicado se utilizar discos amovíveis ou serviços cloud)</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">Iniciar Flow launcher ao arrancar o sistema</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow launcher ao perder o foco</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">Iniciar Flow Launcher ao arrancar o sistema</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
     <system:String x:Key="rememberLastLocation">Memorizar localização anterior</system:String>
     <system:String x:Key="language">Idioma</system:String>
@@ -34,18 +37,18 @@
     <system:String x:Key="LastQueryPreserved">Manter última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
-    <system:String x:Key="maxShowResults">N.º máximo de resultados</system:String>
+    <system:String x:Key="maxShowResults">Número máximo de resultados</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de atalho se em ecrã completo</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desativar ativação do Flow Launcher se alguma aplicação estiver em ecrã completo (recomendado para jogos)</system:String>
     <system:String x:Key="defaultFileManager">Gestor de ficheiros padrão</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecione o gestor de ficheiros utilizado para abrir a página</system:String>
-    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="defaultBrowser">Navegador web padrão</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Definições para Novo separador, Nova Janela e Modo privado</system:String>
     <system:String x:Key="pythonDirectory">Diretório Python</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
-    <system:String x:Key="hideOnStartup">Ocultar Flow Launcher no arranque</system:String>
-    <system:String x:Key="hideNotifyIcon">Ocultar ícone da bandeja</system:String>
+    <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
+    <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
     <system:String x:Key="querySearchPrecision">Precisão da pesquisa</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
     <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
@@ -61,12 +64,13 @@
     <system:String x:Key="actionKeywords">Palavra-chave da ação</system:String>
     <system:String x:Key="currentActionKeywords">Palavra-chave atual</system:String>
     <system:String x:Key="newActionKeyword">Nova palavra-chave</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Alterar palavras-chave</system:String>
     <system:String x:Key="currentPriority">Prioridade atual</system:String>
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
     <system:String x:Key="pluginDirectory">Diretório de plugins</system:String>
-    <system:String x:Key="author">Autor:</system:String>
-    <system:String x:Key="plugin_init_time">Tempo de inicialização:</system:String>
+    <system:String x:Key="author">de</system:String>
+    <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
     <system:String x:Key="plugin_query_version">| Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
@@ -102,7 +106,7 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow launcher</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para os resultados</system:String>
     <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado através do teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
@@ -154,6 +158,7 @@
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Pasta de definições</system:String>
     <system:String x:Key="logfolder">Pasta de registos</system:String>
+    <system:String x:Key="welcomewindow">Assistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
@@ -166,14 +171,14 @@
     <system:String x:Key="fileManager_file_arg">Argumento para ficheiro</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newtab">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Priviate Mode</system:String>
+    <system:String x:Key="defaultBrowserTitle">Navegador web padrão</system:String>
+    <system:String x:Key="defaultBrowser_tips">A definição padrão é a que for definida pelo sistema operativo. Se especificado outro, Flow Launcher utiliza esse navegador.</system:String>
+    <system:String x:Key="defaultBrowser_name">Navegador</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nome do navegador</system:String>
+    <system:String x:Key="defaultBrowser_path">Caminho do navegador</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nova janela</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Novo separador</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Alterar prioridade</system:String>
@@ -190,7 +195,7 @@
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta palavra-chave já está associada a um plugin. Por favor escolha outra.</system:String>
     <system:String x:Key="success">Sucesso</system:String>
     <system:String x:Key="completedSuccessfully">Terminado com sucesso</system:String>
-    <system:String x:Key="actionkeyword_tips">Introduza a palavra-chave a utilizar para iniciar o plugin. Utilize * se não quiser utilizar esta funcionalidade e o plugin não será ativada com palavras-chave.</system:String>
+    <system:String x:Key="actionkeyword_tips">Introduza a palavra-chave a utilizar para iniciar o plugin. Utilize * se não quiser utilizar esta funcionalidade e o plugin não será ativado com palavras-chave.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de atalho personalizada</system:String>
@@ -239,8 +244,47 @@
     <system:String x:Key="update_flowlauncher_fail">Falha ao atualizar</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Verifique a sua ligação e as definições do proxy estabelecidas para github-cloud.s3.amazonaws.com</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Esta atualização irá reiniciar o Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Os seguintes ficheiros serão atualizados</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Os seguintes ficheiros serão atualizados</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Atualizar ficheiros</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Atualizar descrição</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Atualizar descrição</system:String>
+
+    <!--  Welcome Window  -->
+    <system:String x:Key="Skip">Ignorar</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Obrigado por utilizar Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Esta é a primeira vez que está a utilizar Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Antes de utilizar a aplicação, este assistente ajuda a configurar Flow Launcher. Caso pretenda, pode ignorar este passo. Por favor escolha um idioma.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Pesquise ficheiros/pastas e execute aplicações no seu computador
+</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Pode pesquisar aplicações, ficheiros, marcadores, YouTube, Twitter e muito mais. Tudo isto é efetuado através do teclado, dispensando a utilização do rato
+</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher é iniciado com a tecla de atalho abaixo. Experimente. Para alterar esta tecla de atalho, clique no valor e escolha a combinação de teclas a utilizar.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Teclas de atalho</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Palavras-chave e comandos</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Pesquise na Web, inicie aplicações e execute funções através dos nossos plugins. Algumas ações são invocadas com palavras-chave mas, se quiser, podem ser invocadas sem essas palavras-chave. Teste as consultas abaixo para experimentar.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Vamos iniciar Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Terminado. Desfrute de Flow Launcher. Não se esqueça da tecla de atalho :-)</system:String>
+
+    <!--  General Guide & Hotkey  -->
+
+    <system:String x:Key="HotkeyUpDownDesc">Recuar/Menu de contexto</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navegação nos itens</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Abrir menu de contexto</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir pasta</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Executar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Histórico de consultas</system:String>
+    <system:String x:Key="HotkeyESCDesc">Voltar aos resultados no menu de contexto</system:String>
+    <system:String x:Key="HotkeyTabDesc">Conclusão automática</system:String>
+    <system:String x:Key="HotkeyRunDesc">Abrir/Executar item selecionado</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Abrir janela de definições</system:String>
+    <system:String x:Key="HotkeyF5Desc">Recarregar dados do plugin</system:String>
+
+    <system:String x:Key="RecommendWeather">Meteorologia</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Meteorologia no Google</system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
+    <system:String x:Key="RecommendShellDesc">Comando de consola</system:String>
+    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth nas definições do Windows</system:String>
+    <system:String x:Key="RecommendAcronyms">sn</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
 </ResourceDictionary>
