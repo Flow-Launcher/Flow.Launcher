@@ -108,7 +108,7 @@
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Voer snelkoppeling in om Flow Launcher te tonen/verbergen.</system:String>
     <system:String x:Key="openResultModifiers">Open resultaatmodificatoren</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Kies een aanpassingstoets om het geselecteerde resultaat te openen via het toetsenbord.</system:String>
     <system:String x:Key="showOpenResultHotkey">Sneltoets weergeven</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Sneltoets</system:String>
@@ -221,8 +221,8 @@
     <system:String x:Key="reportWindow_source">Bron</system:String>
     <system:String x:Key="reportWindow_stack_trace">Stack Opzoeken</system:String>
     <system:String x:Key="reportWindow_sending">Versturen</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Rapport succesvol</system:String>
-    <system:String x:Key="reportWindow_report_failed">Rapport mislukt</system:String>
+    <system:String x:Key="reportWindow_report_succeed">Rapport succesvol verzonden</system:String>
+    <system:String x:Key="reportWindow_report_failed">Verzenden van rapport mislukt</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher heeft een error</system:String>
 
     <!--  General Notice  -->
