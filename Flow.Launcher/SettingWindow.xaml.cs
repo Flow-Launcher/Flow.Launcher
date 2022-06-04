@@ -380,8 +380,8 @@ namespace Flow.Launcher
             }
 
             string deleteWarning =
-                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"),
-                    item.Value.Key);
+                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
+                    item?.Key, item?.Value);
             if (
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
