@@ -175,7 +175,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;
             if (item != null)
@@ -307,7 +307,7 @@ namespace Flow.Launcher
 
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if(sender is Button { DataContext: UserPlugin plugin })
+            if (sender is Button { DataContext: UserPlugin plugin })
             {
                 var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
                 var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
@@ -326,7 +326,7 @@ namespace Flow.Launcher
             textBox.MoveFocus(tRequest);
         }
 
-        private void ColorSchemeSelectedIndexChanged(object sender, EventArgs e) 
+        private void ColorSchemeSelectedIndexChanged(object sender, EventArgs e)
             => ThemeManager.Current.ApplicationTheme = settings.ColorScheme switch
             {
                 Constant.Light => ApplicationTheme.Light,
@@ -370,5 +370,49 @@ namespace Flow.Launcher
             RefreshMaximizeRestoreButton();
         }
 
+        private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            var item = viewModel.SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return;
+            }
+
+            string deleteWarning =
+                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"),
+                    item.Value.Key);
+            if (
+                MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                settings.ShortCuts.Remove(item.Value);
+            }
+        }
+        private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            var item = viewModel.SelectedCustomShortcut;
+            if (item != null)
+            {
+                var shortcutSettingWindow = new CustomShortcutSetting(item.Value);
+                if (shortcutSettingWindow.ShowDialog() == true)
+                {
+                    settings.ShortCuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
+                }
+            }
+            else
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            }
+        }
+
+        private void OnAddCustomeShortCutClick(object sender, RoutedEventArgs e)
+        {
+            var shortcutSettingWindow = new CustomShortcutSetting();
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                settings.ShortCuts.Add(shortcutSettingWindow.ShortCut);
+            }
+        }
     }
 }

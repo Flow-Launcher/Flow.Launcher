@@ -115,6 +115,8 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
     <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expanded</system:String>
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>
     <system:String x:Key="add">Add</system:String>

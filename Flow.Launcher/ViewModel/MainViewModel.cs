@@ -554,17 +554,8 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            StringBuilder queryBuilder = new(QueryText);
+            var query = ConstructQuery(QueryText, _settings.ShortCuts);
 
-            foreach (var (key, value) in _settings.ShortCuts)
-            {
-                if (queryBuilder.Equals(key))
-                {
-                    queryBuilder.Replace(key, value);
-                }
-
-                queryBuilder.Replace('@' + key, value);
-            }
 
             _updateSource?.Dispose();
 
@@ -582,7 +573,6 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
             
-            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -670,6 +660,26 @@ namespace Flow.Launcher.ViewModel
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
             }
+        }
+
+        private static Query ConstructQuery(string queryText, IEnumerable<ShortCutModel> shortcuts)
+        {
+            StringBuilder queryBuilder = new(queryText);
+
+            foreach (var (key, value) in shortcuts)
+            {
+                if (queryBuilder.Equals(key))
+                {
+                    queryBuilder.Replace(key, value);
+                }
+
+                queryBuilder.Replace('@' + key, value);
+            }
+            
+            queryBuilder.Replace("{clipboard}", Clipboard.GetText());
+
+            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return query;
         }
 
         private void RemoveOldQueryResults(Query query)

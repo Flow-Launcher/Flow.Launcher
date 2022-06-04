@@ -204,9 +204,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
-        internal ObservableCollection<KeyValuePair<string, string>> ShortCuts { get; set; } = new()
+        internal ObservableCollection<ShortCutModel> ShortCuts { get; set; } = new()
         {
-            new("spp", "sp play")
+            ("spp", "sp play")
         };
     }
 
@@ -222,5 +222,45 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         System,
         Light,
         Dark
+    }
+
+    public struct ShortCutModel
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+
+        public ShortCutModel(string key, string value)
+        {
+            Key = key;
+            Value = value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is ShortCutModel other &&
+                   Key == other.Key &&
+                   Value == other.Value;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Key, Value);
+        }
+
+        public void Deconstruct(out string key, out string value)
+        {
+            key = Key;
+            value = Value;
+        }
+
+        public static implicit operator (string Key, string Value)(ShortCutModel value)
+        {
+            return (value.Key, value.Value);
+        }
+
+        public static implicit operator ShortCutModel((string Key, string Value) value)
+        {
+            return new ShortCutModel(value.Key, value.Value);
+        }
     }
 }

@@ -2159,7 +2159,7 @@
                                         <Button
                                             MinWidth="100"
                                             Margin="10"
-                                            Click="OnnEditCustomHotkeyClick"
+                                            Click="OnEditCustomHotkeyClick"
                                             Content="{DynamicResource edit}" />
                                         <Button
                                             MinWidth="100"
@@ -2183,7 +2183,8 @@
                                         BorderBrush="DarkGray"
                                         BorderThickness="1"
                                         ItemsSource="{Binding ShortCuts}"
-                                        SelectedItem="{Binding SelectedCustomPluginHotkey}"
+                                        SelectedItem="{Binding SelectedCustomShortcut}"
+                                        SelectedIndex="{Binding SelectCustomShortcutIndex}"
                                         Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                                         <ListView.View>
                                             <GridView>
@@ -2212,17 +2213,17 @@
                                         <Button
                                             MinWidth="100"
                                             Margin="10"
-                                            Click="OnDeleteCustomHotkeyClick"
+                                            Click="OnDeleteCustomShortCutClick"
                                             Content="{DynamicResource delete}" />
                                         <Button
                                             MinWidth="100"
                                             Margin="10"
-                                            Click="OnnEditCustomHotkeyClick"
+                                            Click="OnEditCustomShortCutClick"
                                             Content="{DynamicResource edit}" />
                                         <Button
                                             MinWidth="100"
                                             Margin="10,10,0,10"
-                                            Click="OnAddCustomeHotkeyClick"
+                                            Click="OnAddCustomeShortCutClick"
                                             Content="{DynamicResource add}" />
                                     </StackPanel>
                                 </StackPanel>

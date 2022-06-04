@@ -120,7 +120,8 @@ namespace Flow.Launcher.ViewModel
                     var display = _translater.GetTranslation(key);
                     var m = new LastQueryMode
                     {
-                        Display = display, Value = e,
+                        Display = display,
+                        Value = e,
                     };
                     modes.Add(m);
                 }
@@ -179,7 +180,7 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public ObservableCollection<KeyValuePair<string, string>> ShortCuts => Settings.ShortCuts;
+        public ObservableCollection<ShortCutModel> ShortCuts => Settings.ShortCuts;
 
         public string TestProxy()
         {
@@ -345,7 +346,8 @@ namespace Flow.Launcher.ViewModel
                     var display = _translater.GetTranslation(key);
                     var m = new ColorScheme
                     {
-                        Display = display, Value = e,
+                        Display = display,
+                        Value = e,
                     };
                     modes.Add(m);
                 }
@@ -538,6 +540,9 @@ namespace Flow.Launcher.ViewModel
         #region hotkey
 
         public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
+
+        public ShortCutModel? SelectedCustomShortcut { get; set; }
+        public int? SelectCustomShortcutIndex { get; set; }
 
         #endregion
 
