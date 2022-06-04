@@ -89,6 +89,7 @@
                 <Expander
                     x:Name="expExcludedPaths"
                     Margin="0,10,0,0"
+                    Collapsed="expExcludedPaths_Collapsed"
                     Expanded="expExcludedPaths_Click"
                     Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}">
                     <ListView

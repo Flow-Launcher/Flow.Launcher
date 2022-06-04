@@ -1,4 +1,4 @@
-version: '1.9.2.{build}'
+version: '1.9.3.{build}'
 
 init:
 - ps: |
@@ -69,15 +69,3 @@ deploy:
     force_update: true
     on:
       APPVEYOR_REPO_TAG: true
-
-environment:
-  winget_token:
-    secure: HKfVT2FYZITAG0qqMCePYhIem5a/gzvAgYDSlr6RlXfGmeBUOANUtgJ9X6fNroxN
-
-on_success:
-  - ps: |
-        if ($env:APPVEYOR_REPO_BRANCH -eq "master" -and $env:APPVEYOR_REPO_TAG -eq "true")
-        {
-            iwr https://github.com/microsoft/winget-create/releases/download/v0.2.0.29-preview/wingetcreate.exe -OutFile wingetcreate.exe
-            .\wingetcreate.exe update Flow-Launcher.Flow-Launcher -s true -u https://github.com/Flow-Launcher/Flow.Launcher/releases/download/v$env:flowVersion/Flow-Launcher-Setup.exe -v $env:flowVersion -t $env:winget_token
-        }
