@@ -40,7 +40,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 return new();
             foreach (var folder in rootElement.EnumerateObject())
             {
-                EnumerateFolderBookmark(folder.Value, bookmarks, source);
+                if (folder.Value.ValueKind == JsonValueKind.Object)
+                    EnumerateFolderBookmark(folder.Value, bookmarks, source);
             }
             return bookmarks;
         }

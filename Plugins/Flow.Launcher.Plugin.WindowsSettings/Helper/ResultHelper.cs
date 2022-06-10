@@ -34,8 +34,9 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             var resultList = new List<Result>();
             foreach (var entry in list)
             {
-                const int highScore = 20;
-                const int midScore = 10;
+                // Adjust the score to lower the order of many irrelevant matches from area strings
+                // that may only be for description.
+                const int nonNameMatchScoreAdj = 10;
 
                 Result? result;
                 Debug.Assert(_api != null, nameof(_api) + " != null");
@@ -44,7 +45,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
                 if (nameMatch.IsSearchPrecisionScoreMet())
                 {
-                    var settingResult = NewSettingResult(nameMatch.Score + highScore, entry.Type);
+                    var settingResult = NewSettingResult(nameMatch.Score, entry.Type);
                     settingResult.TitleHighlightData = nameMatch.MatchData;
                     result = settingResult;
                 }
@@ -53,7 +54,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                     var areaMatch = _api.FuzzySearch(query.Search, entry.Area);
                     if (areaMatch.IsSearchPrecisionScoreMet())
                     {
-                        var settingResult = NewSettingResult(areaMatch.Score + midScore, entry.Type);
+                        var settingResult = NewSettingResult(areaMatch.Score - nonNameMatchScoreAdj, entry.Type);
                         result = settingResult;
                     }
                     else
@@ -61,7 +62,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                         result = entry.AltNames?
                             .Select(altName => _api.FuzzySearch(query.Search, altName))
                             .Where(match => match.IsSearchPrecisionScoreMet())
-                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score + midScore, entry.Type))
+                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score - nonNameMatchScoreAdj, entry.Type))
                             .FirstOrDefault();
                     }
 
@@ -75,7 +76,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                                 .SelectMany(x => x)
                                 .Contains(x, StringComparer.CurrentCultureIgnoreCase))
                         )
-                            result = NewSettingResult(midScore, entry.Type);
+                            result = NewSettingResult(nonNameMatchScoreAdj, entry.Type);
                     }
                 }
 
@@ -115,7 +116,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         private static void AddOptionalToolTip(WindowsSetting entry, Result result)
         {
             var toolTipText = new StringBuilder();
-            
+
             var settingType = entry.Type == "AppSettingsApp" ? "System settings" : "Control Panel";
 
             toolTipText.AppendLine($"{Resources.Application}: {settingType}");
