@@ -135,8 +135,8 @@
     <system:String x:Key="update_flowlauncher_update">Oppdater</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Avbryt</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Denne opgraderingen vil starte Flow Launcher på nytt</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Følgende filer vil bli oppdatert</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Følgende filer vil bli oppdatert</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Oppdateringsfiler</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Oppdateringsbeskrivelse</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Oppdateringsbeskrivelse</system:String>
 
 </ResourceDictionary>

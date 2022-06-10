@@ -126,8 +126,8 @@
     <system:String x:Key="update_flowlauncher_update">Оновити</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Скасувати</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Це оновлення перезавантажить Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_files">Ці файли будуть оновлені</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">Ці файли будуть оновлені</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Оновити файли</system:String>
-    <system:String x:Key="update_flowlauncher_update_upadte_description">Опис оновлення</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Опис оновлення</system:String>
 
 </ResourceDictionary>

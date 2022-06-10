@@ -18,6 +18,8 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher
 {
@@ -50,7 +52,18 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+        private void OnCopy(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (QueryTextBox.SelectionLength == 0)
+            {
+                _viewModel.ResultCopy(string.Empty);
 
+            }
+            else if (!string.IsNullOrEmpty(QueryTextBox.Text))
+            {
+                _viewModel.ResultCopy(QueryTextBox.SelectedText);
+            }
+        }
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _settings.WindowTop = Top;
@@ -59,6 +72,7 @@ namespace Flow.Launcher
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
+            Notification.Uninstall();
             Environment.Exit(0);
         }
 
@@ -496,6 +510,24 @@ namespace Flow.Launcher
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
+                    }
+                    break;
+                case Key.Back:
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
+                        {
+                            var queryWithoutActionKeyword = 
+                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins).Search;
+                            
+                            if (FilesFolders.IsLocationPathString(queryWithoutActionKeyword))
+                            {
+                                _viewModel.BackspaceCommand.Execute(null);
+                                e.Handled = true;
+                            }
+                        }
                     }
                     break;
                 default:
