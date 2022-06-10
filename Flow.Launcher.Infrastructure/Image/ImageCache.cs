@@ -74,7 +74,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         // To delete the images from the data dictionary based on the resizing of the Usage Dictionary
                         // Double Check to avoid concurrent remove
                         if (Data.Count > permissibleFactor * MaxCached)
-                            foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key).ToArray())
+                            foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
                                 Data.TryRemove(key, out _);
                         semaphore.Release();
                     }

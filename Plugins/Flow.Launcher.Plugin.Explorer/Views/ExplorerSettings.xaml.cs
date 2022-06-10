@@ -60,9 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
 
-            btnDelete.Visibility = Visibility.Hidden;
-            btnEdit.Visibility = Visibility.Hidden;
-            btnAdd.Visibility = Visibility.Hidden;
+            SetButtonVisibilityToHidden();
 
             if (expAccessLinks.IsExpanded || expExcludedPaths.IsExpanded || expActionKeywords.IsExpanded)
             {
@@ -123,8 +121,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void expActionKeywords_Collapsed(object sender, RoutedEventArgs e)
         {
-            if (!expActionKeywords.IsExpanded)
-                expActionKeywords.Height = double.NaN;
+            expActionKeywords.Height = double.NaN;
+            SetButtonVisibilityToHidden();
         }
 
         private void expAccessLinks_Click(object sender, RoutedEventArgs e)
@@ -143,8 +141,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void expAccessLinks_Collapsed(object sender, RoutedEventArgs e)
         {
-            if (!expAccessLinks.IsExpanded)
-                expAccessLinks.Height = double.NaN;
+            expAccessLinks.Height = double.NaN;
+            SetButtonVisibilityToHidden();
         }
 
         private void expExcludedPaths_Click(object sender, RoutedEventArgs e)
@@ -159,6 +157,11 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 expActionKeywords.IsExpanded = false;
 
             RefreshView();
+        }
+
+        private void expExcludedPaths_Collapsed(object sender, RoutedEventArgs e)
+        {
+            SetButtonVisibilityToHidden();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -308,6 +311,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void btnOpenIndexingOptions_Click(object sender, RoutedEventArgs e)
         {
             viewModel.OpenWindowsIndexingOptions();
+        }
+
+        public void SetButtonVisibilityToHidden()
+        {
+            btnDelete.Visibility = Visibility.Hidden;
+            btnEdit.Visibility = Visibility.Hidden;
+            btnAdd.Visibility = Visibility.Hidden;
         }
     }
 

@@ -11,6 +11,6 @@
     <description>Flow Launcher - a launcher for windows</description>
   </metadata>
   <files>
-    <file src="**\*.*" target="lib\net5.0-windows\" exclude="Flow.Launcher.vshost.exe;Flow.Launcher.vshost.exe.config;Flow.Launcher.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
+    <file src="**\*.*" target="lib\net6.0-windows\" exclude="Flow.Launcher.vshost.exe;Flow.Launcher.vshost.exe.config;Flow.Launcher.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
   </files>
 </package>
