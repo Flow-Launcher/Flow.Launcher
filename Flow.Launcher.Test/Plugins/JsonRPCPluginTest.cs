@@ -76,7 +76,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCaseSource(typeof(JsonRPCPluginTest), nameof(ResponseModelsSource))]
         public async Task GivenModel_WhenSerializeWithDifferentNamingPolicy_ThenExpectSameResult_Async(JsonRPCQueryResponseModel reference)
         {
-            var camelText = JsonSerializer.Serialize(reference, new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var camelText = JsonSerializer.Serialize(reference, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
             var pascalText = JsonSerializer.Serialize(reference);
 
