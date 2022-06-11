@@ -116,8 +116,9 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         {
             Action = _ => DoOpenSettingsAction(entry),
             IcoPath = type == "AppSettingsApp" ? windowsSettingIconPath : controlPanelIconPath,
+            Glyph = entry.IconGlyph,
             SubTitle = GetSubtitle(entry.Area, type),
-            Title = entry.Name + entry.glyph,
+            Title = entry.Name,
             ContextData = entry,
             Score = score - (type == "TaskLink" ? TaskLinkScorePanelty : 0),
         };
