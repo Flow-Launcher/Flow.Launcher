@@ -737,6 +737,15 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string AreaUnknown {
+            get {
+                return ResourceManager.GetString("AreaUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update and security.
         /// </summary>
         public static string AreaUpdateAndSecurity {

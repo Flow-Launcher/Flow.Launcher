@@ -2280,7 +2280,7 @@
   },
   {
     "Name": "AccommodateLearningAbilities",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageQuestionsCognitive",
     "Keywords": [
@@ -2326,7 +2326,7 @@
   },
   {
     "Name": "AccommodateLowVision",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToSee",
     "Keywords": [
@@ -2384,7 +2384,7 @@
   },
   {
     "Name": "ChangeHowYourKeyboardWorks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageKeyboardEasierToUse",
     "Keywords": [
@@ -2433,7 +2433,7 @@
   },
   {
     "Name": "ChangeHowYourMouseWorks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToClick",
     "Keywords": [
@@ -2496,7 +2496,7 @@
   },
   {
     "Name": "UseScreenReader",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageNoVisual",
     "Keywords": [
@@ -2523,7 +2523,7 @@
   },
   {
     "Name": "ChangeTheNarratorSVoice",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\narrator.exe",
     "Keywords": [
@@ -2554,7 +2554,7 @@
   },
   {
     "Name": "ControlTheComputerWithoutTheMouseOrKeyboard",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageNoMouseOrKeyboard",
     "Keywords": [
@@ -2603,7 +2603,7 @@
   },
   {
     "Name": "HearAToneWhenKeysArePressed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageFilterKeysSettings",
     "Keywords": [
@@ -2644,7 +2644,7 @@
   },
   {
     "Name": "HearTextReadAloudWithNarrator",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter",
     "Keywords": [
@@ -2664,7 +2664,7 @@
   },
   {
     "Name": "IgnoreRepeatedKeystrokesUsingFilterkeys",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageFilterKeysSettings",
     "Keywords": [
@@ -2676,7 +2676,7 @@
   },
   {
     "Name": "LetWindowsSuggestEaseOfAccessSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageQuestionsEyesight",
     "Keywords": [
@@ -2723,7 +2723,7 @@
   },
   {
     "Name": "MagnifyPortionsOfTheScreenUsingMagnifier",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToSee",
     "Keywords": [
@@ -2778,7 +2778,7 @@
   },
   {
     "Name": "MoveThePointerWithTheKeypadUsingMousekeys",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageKeyboardEasierToUse",
     "Keywords": [
@@ -2801,7 +2801,7 @@
   },
   {
     "Name": "OptimiseForBlindness",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageNoVisual",
     "Keywords": [
@@ -2906,7 +2906,7 @@
   },
   {
     "Name": "OptimiseVisualDisplay",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToSee",
     "Keywords": [
@@ -3007,7 +3007,7 @@
   },
   {
     "Name": "PressKeyCombinationsOneAtATime",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageKeyboardEasierToUse",
     "Keywords": [
@@ -3026,7 +3026,7 @@
   },
   {
     "Name": "ReplaceSoundsWithVisualCues",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierWithSounds",
     "Keywords": [
@@ -3098,7 +3098,7 @@
   },
   {
     "Name": "TurnHighContrastOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,2",
     "Keywords": [
@@ -3161,7 +3161,7 @@
   },
   {
     "Name": "TurnMagnifierOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter",
     "Keywords": [
@@ -3195,7 +3195,7 @@
   },
   {
     "Name": "TurnOffBackgroundImages",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToSee",
     "Keywords": [
@@ -3234,7 +3234,7 @@
   },
   {
     "Name": "TurnOffUnnecessaryAnimations",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToSee",
     "Keywords": [
@@ -3268,7 +3268,7 @@
   },
   {
     "Name": "TurnOnScreenKeyboardOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter",
     "Keywords": [
@@ -3306,7 +3306,7 @@
   },
   {
     "Name": "TurnOnEasyAccessKeys",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageKeyboardEasierToUse",
     "Keywords": [
@@ -3321,7 +3321,7 @@
   },
   {
     "Name": "UseAudioDescriptionForVideo",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToSee",
     "Keywords": [
@@ -3341,7 +3341,7 @@
   },
   {
     "Name": "ViewCurrentAccessibilitySettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter",
     "Keywords": [
@@ -3376,7 +3376,7 @@
   },
   {
     "Name": "TurnOffAutomaticWindowArrangement",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.EaseOfAccessCenter /page pageEasierToClick",
     "Keywords": [
@@ -3417,7 +3417,7 @@
   },
   {
     "Name": "CreateAndFormatHardDiskPartitions",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\diskmgmt.msc",
     "Keywords": [
@@ -3511,7 +3511,7 @@
   },
   {
     "Name": "DefragmentAndOptimiseYourDrives",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\dfrgui.exe",
     "Keywords": [
@@ -3563,7 +3563,7 @@
   },
   {
     "Name": "DiagnoseYourComputersMemoryProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mdsched.exe",
     "Keywords": [
@@ -3591,7 +3591,7 @@
   },
   {
     "Name": "EditGroupPolicy",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\gpedit.msc",
     "Keywords": [
@@ -3618,7 +3618,7 @@
   },
   {
     "Name": "ClearDiskSpaceByDeletingUnnecessaryFiles",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\cleanmgr.exe",
     "Keywords": [
@@ -3693,7 +3693,7 @@
   },
   {
     "Name": "GenerateASystemHealthReport",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\perfmon.exe /report",
     "Keywords": [
@@ -3746,7 +3746,7 @@
   },
   {
     "Name": "ScheduleTasks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\taskschd.msc",
     "Keywords": [
@@ -3762,7 +3762,7 @@
   },
   {
     "Name": "SetUpODBCDataSources",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\odbcad32.exe",
     "Keywords": [
@@ -3792,7 +3792,7 @@
   },
   {
     "Name": "SetUpODBCDataSources32Bit",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\syswow64\\odbcad32.exe",
     "Keywords": [
@@ -3822,7 +3822,7 @@
   },
   {
     "Name": "SetUpODBCDataSources64Bit",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\odbcad32.exe",
     "Keywords": [
@@ -3852,7 +3852,7 @@
   },
   {
     "Name": "SetUpIscsiInitiator",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\iscsicpl.exe",
     "Keywords": [
@@ -3889,7 +3889,7 @@
   },
   {
     "Name": "ViewEventLogs",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\eventvwr.msc",
     "Keywords": [
@@ -3910,7 +3910,7 @@
   },
   {
     "Name": "ViewLocalServices",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\services.msc",
     "Keywords": [
@@ -3941,7 +3941,7 @@
   },
   {
     "Name": "ManageComputerCertificates",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\certlm.msc",
     "Keywords": [
@@ -3953,7 +3953,7 @@
   },
   {
     "Name": "UninstallAProgram",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ProgramsAndFeatures",
     "Keywords": [
@@ -4012,7 +4012,7 @@
   },
   {
     "Name": "AddOrRemovePrograms",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ProgramsAndFeatures",
     "Keywords": [
@@ -4028,7 +4028,7 @@
   },
   {
     "Name": "ViewInstalledUpdates",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ProgramsAndFeatures /page ::{D450A8A1-9568-45C7-9C0E-B4F9FB4537BD}",
     "Keywords": [
@@ -4078,7 +4078,7 @@
   },
   {
     "Name": "TurnWindowsFeaturesOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\OptionalFeatures.exe",
     "Keywords": [
@@ -4113,7 +4113,7 @@
   },
   {
     "Name": "ShowWhichProgramsAreInstalledOnYourComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ProgramsAndFeatures",
     "Keywords": [
@@ -4158,7 +4158,7 @@
   },
   {
     "Name": "HowToInstallAProgram",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "mshelp://windows/?id=fe7ea80e-52a2-48d6-947a-05e02e78bc37",
     "Keywords": [
@@ -4211,7 +4211,7 @@
   },
   {
     "Name": "InstallAProgramFromTheNetwork",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "shell:::{26EE0668-A00A-44D7-9371-BEB064C98683}\\8\\::{15EAE92E-F17A-4431-9F28-805E482dAFD4}",
     "Keywords": [
@@ -4249,7 +4249,7 @@
   },
   {
     "Name": "ChangeOrRemoveAProgram",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ProgramsAndFeatures",
     "Keywords": [
@@ -4320,7 +4320,7 @@
   },
   {
     "Name": "16BitApplicationSupport",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL ntvdmcpl.dll",
     "Keywords": [
@@ -4370,7 +4370,7 @@
   },
   {
     "Name": "RunProgramsMadeForPreviousVersionsOfWindows",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id PCWDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -4426,7 +4426,7 @@
   },
   {
     "Name": "MakeAFileTypeAlwaysOpenInASpecificProgram",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.DefaultPrograms /page pageFileAssoc",
     "Keywords": [
@@ -4473,7 +4473,7 @@
   },
   {
     "Name": "SetYourDefaultPrograms",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.DefaultPrograms /page pageDefaultProgram",
     "Keywords": [
@@ -4529,7 +4529,7 @@
   },
   {
     "Name": "ViewDevicesAndPrinters",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.DevicesAndPrinters",
     "Keywords": [
@@ -4747,7 +4747,7 @@
   },
   {
     "Name": "AddADevice",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\DevicePairingWizard.exe",
     "Keywords": [
@@ -4836,7 +4836,7 @@
   },
   {
     "Name": "AdvancedPrinterSetup",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe printui.dll,PrintUIEntryDPIAware /il",
     "Keywords": [
@@ -4900,7 +4900,7 @@
   },
   {
     "Name": "AddABluetoothDevice",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\DevicePairingWizard.exe /bluetooth",
     "Keywords": [
@@ -4944,7 +4944,7 @@
   },
   {
     "Name": "DeviceManager",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.DeviceManager",
     "Keywords": [
@@ -5082,14 +5082,14 @@
   },
   {
     "Name": "ChangeWindowsToGoStartUpOptions",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe pwlauncher.dll,ShowPortableWorkspaceLauncherConfigurationUX",
     "Keywords": []
   },
   {
     "Name": "ChangeDefaultPrinter",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.DevicesAndPrinters",
     "Keywords": [
@@ -5139,7 +5139,7 @@
   },
   {
     "Name": "ViewScannersAndCameras",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%ProgramFiles%\\Windows Photo Viewer\\ImagingDevices.exe",
     "Keywords": [
@@ -5170,7 +5170,7 @@
   },
   {
     "Name": "ChangeBluetoothSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL bthprops.cpl,,1",
     "Keywords": [
@@ -5206,7 +5206,7 @@
   },
   {
     "Name": "ScanADocumentOrPicture",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\wfs.exe",
     "Keywords": [
@@ -5225,7 +5225,7 @@
   },
   {
     "Name": "SetUpUSBGameControllers",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL %windir%\\system32\\joy.cpl",
     "Keywords": [
@@ -5260,7 +5260,7 @@
   },
   {
     "Name": "ChangeDeviceInstallationSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe newdev.dll,DeviceInternetSettingUi 5",
     "Keywords": [
@@ -5307,7 +5307,7 @@
   },
   {
     "Name": "ChangeSettingsForContentReceivedUsingTapAndSend",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.AutoPlay",
     "Keywords": [
@@ -5325,7 +5325,7 @@
   },
   {
     "Name": "ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\colorcpl.exe",
     "Keywords": [
@@ -5390,7 +5390,7 @@
   },
   {
     "Name": "AddClocksForDifferentTimeZones",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL timedate.cpl,,1",
     "Keywords": [
@@ -5446,7 +5446,7 @@
   },
   {
     "Name": "AutomaticallyAdjustForDaylightSavingTime",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL timedate.cpl",
     "Keywords": [
@@ -5511,7 +5511,7 @@
   },
   {
     "Name": "ChangeTheTimeZone",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL timedate.cpl",
     "Keywords": [
@@ -5537,7 +5537,7 @@
   },
   {
     "Name": "SetTheTimeAndDate",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL timedate.cpl",
     "Keywords": [
@@ -5589,7 +5589,7 @@
   },
   {
     "Name": "ChangeDefaultSettingsForMediaOrDevices",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.AutoPlay",
     "Keywords": [
@@ -5633,7 +5633,7 @@
   },
   {
     "Name": "PlayCdsOrOtherMediaAutomatically",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.AutoPlay",
     "Keywords": [
@@ -5676,7 +5676,7 @@
   },
   {
     "Name": "StartOrStopUsingAutoplayForAllMediaAndDevices",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.AutoPlay",
     "Keywords": [
@@ -5733,7 +5733,7 @@
   },
   {
     "Name": "ChangeSearchOptionsForFilesAndFolders",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Options_RunDLL 2",
     "Keywords": [
@@ -5762,7 +5762,7 @@
   },
   {
     "Name": "ChangeTheFileTypeAssociatedWithAFileExtension",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.DefaultPrograms /page pageFileAssoc",
     "Keywords": [
@@ -5809,7 +5809,7 @@
   },
   {
     "Name": "ShowHiddenFilesAndFolders",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Options_RunDLL 7",
     "Keywords": [
@@ -5832,7 +5832,7 @@
   },
   {
     "Name": "ShowOrHideFileExtensions",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Options_RunDLL 7",
     "Keywords": [
@@ -5870,7 +5870,7 @@
   },
   {
     "Name": "SpecifySingleOrDoubleClickToOpen",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.FolderOptions",
     "Keywords": [
@@ -5895,7 +5895,7 @@
   },
   {
     "Name": "PreviewDeleteShowOrHideFonts",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Fonts",
     "Keywords": [
@@ -5954,7 +5954,7 @@
   },
   {
     "Name": "ChangeFontSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Fonts /page ::{93412589-74D4-4E4E-AD0E-E0CB621440FD}",
     "Keywords": [
@@ -6004,7 +6004,7 @@
   },
   {
     "Name": "ViewInstalledFonts",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Fonts",
     "Keywords": [
@@ -6034,7 +6034,7 @@
   },
   {
     "Name": "PrivateCharacterEditor",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\eudcedit.exe",
     "Keywords": [
@@ -6048,7 +6048,7 @@
   },
   {
     "Name": "AdjustCommonlyUsedMobilitySettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mblctr.exe /open",
     "Keywords": [
@@ -6091,7 +6091,7 @@
   },
   {
     "Name": "AdjustSettingsBeforeGivingAPresentation",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\presentationsettings.exe",
     "Keywords": [
@@ -6141,7 +6141,7 @@
   },
   {
     "Name": "BlockOrAllowPopUps",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,2",
     "Keywords": [
@@ -6224,7 +6224,7 @@
   },
   {
     "Name": "BlockOrAllowThirdPartyCookies",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,2",
     "Keywords": [
@@ -6285,7 +6285,7 @@
   },
   {
     "Name": "ChangeHowWebPagesAreDisplayedInTabs",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,0",
     "Keywords": [
@@ -6327,7 +6327,7 @@
   },
   {
     "Name": "ChangeSecuritySettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,1",
     "Keywords": [
@@ -6390,7 +6390,7 @@
   },
   {
     "Name": "ChangeTemporaryInternetFileSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,0",
     "Keywords": [
@@ -6489,7 +6489,7 @@
   },
   {
     "Name": "ChangeTheSearchProviderInInternetExplorer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,0",
     "Keywords": [
@@ -6520,7 +6520,7 @@
   },
   {
     "Name": "ChangeYourHomepage",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,0",
     "Keywords": [
@@ -6562,7 +6562,7 @@
   },
   {
     "Name": "ConfigureProxyServer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,4",
     "Keywords": [
@@ -6599,7 +6599,7 @@
   },
   {
     "Name": "ConnectToTheInternet",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "ms-availablenetworks:",
     "Keywords": [
@@ -6657,7 +6657,7 @@
   },
   {
     "Name": "DeleteBrowsingHistory",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,0",
     "Keywords": [
@@ -6738,7 +6738,7 @@
   },
   {
     "Name": "DeleteCookiesOrTemporaryFiles",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,0",
     "Keywords": [
@@ -6793,7 +6793,7 @@
   },
   {
     "Name": "EnableOrDisableSessionCookies",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,2",
     "Keywords": [
@@ -6877,7 +6877,7 @@
   },
   {
     "Name": "ManageBrowserAddOns",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,5",
     "Keywords": [
@@ -6940,7 +6940,7 @@
   },
   {
     "Name": "TellIfAnRSSFeedIsAvailableOnAWebsite",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,3",
     "Keywords": [
@@ -6972,7 +6972,7 @@
   },
   {
     "Name": "TurnAutocompleteInInternetExplorerOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,3",
     "Keywords": [
@@ -7027,7 +7027,7 @@
   },
   {
     "Name": "ChooseHowYouOpenLinks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL inetcpl.cpl,,5",
     "Keywords": [
@@ -7072,7 +7072,7 @@
   },
   {
     "Name": "ChangeCursorBlinkRate",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Keyboard",
     "Keywords": [
@@ -7099,7 +7099,7 @@
   },
   {
     "Name": "CheckKeyboardStatus",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Keyboard /page 1",
     "Keywords": [
@@ -7114,7 +7114,7 @@
   },
   {
     "Name": "ChangeMouseSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse",
     "Keywords": [
@@ -7176,7 +7176,7 @@
   },
   {
     "Name": "ChangeHowTheMousePointerLooks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse /page 1",
     "Keywords": [
@@ -7216,7 +7216,7 @@
   },
   {
     "Name": "ChangeHowTheMousePointerLooksWhenItSMoving",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse /page 2",
     "Keywords": [
@@ -7263,7 +7263,7 @@
   },
   {
     "Name": "ChangeMouseClickSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse",
     "Keywords": [
@@ -7309,7 +7309,7 @@
   },
   {
     "Name": "ChangeMouseWheelSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse /page 3",
     "Keywords": [
@@ -7354,7 +7354,7 @@
   },
   {
     "Name": "ChangeTheMousePointerDisplayOrSpeed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse /page 2",
     "Keywords": [
@@ -7401,7 +7401,7 @@
   },
   {
     "Name": "CustomiseTheMouseButtons",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse",
     "Keywords": [
@@ -7468,7 +7468,7 @@
   },
   {
     "Name": "MakeItEasierToSeeTheMousePointer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse /page 2",
     "Keywords": [
@@ -7511,7 +7511,7 @@
   },
   {
     "Name": "GetMoreFeaturesWithANewEditionOfWindows",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\system32\\WindowsAnytimeUpgradeUI.exe",
     "Keywords": [
@@ -7563,7 +7563,7 @@
   },
   {
     "Name": "SetUpDiallingRules",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PhoneAndModemOptions",
     "Keywords": [
@@ -7601,7 +7601,7 @@
   },
   {
     "Name": "ChangeBatterySettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions",
     "Keywords": [
@@ -7655,7 +7655,7 @@
   },
   {
     "Name": "ChangePowerSavingSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions",
     "Keywords": [
@@ -7721,7 +7721,7 @@
   },
   {
     "Name": "ChangeWhatClosingTheLidDoes",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions /page pageGlobalSettings",
     "Keywords": [
@@ -7795,7 +7795,7 @@
   },
   {
     "Name": "ChangeWhatThePowerButtonsDo",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions /page pageGlobalSettings",
     "Keywords": [
@@ -7869,7 +7869,7 @@
   },
   {
     "Name": "ChangeWhenTheComputerSleeps",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions /page pagePlanSettings",
     "Keywords": [
@@ -7950,7 +7950,7 @@
   },
   {
     "Name": "ChooseWhenToTurnOffDisplay",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions /page pagePlanSettings",
     "Keywords": [
@@ -7993,7 +7993,7 @@
   },
   {
     "Name": "ChooseAPowerPlan",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions",
     "Keywords": [
@@ -8030,7 +8030,7 @@
   },
   {
     "Name": "EditPowerPlan",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.PowerOptions /page pagePlanSettings",
     "Keywords": [
@@ -8067,7 +8067,7 @@
   },
   {
     "Name": "ChangeScreenSaver",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL desk.cpl,screensaver,@screensaver",
     "Keywords": [
@@ -8091,7 +8091,7 @@
   },
   {
     "Name": "TurnScreenSaverOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL desk.cpl,screensaver,@screensaver",
     "Keywords": [
@@ -8137,7 +8137,7 @@
   },
   {
     "Name": "ChangeDateTimeOrNumberFormats",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL intl.cpl",
     "Keywords": [
@@ -8278,7 +8278,7 @@
   },
   {
     "Name": "ChangeTheWayCurrencyIsDisplayed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL intl.cpl",
     "Keywords": [
@@ -8336,7 +8336,7 @@
   },
   {
     "Name": "ChangeTheWayDatesAndListsAreDisplayed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL intl.cpl",
     "Keywords": [
@@ -8403,7 +8403,7 @@
   },
   {
     "Name": "ChangeTheWayMeasurementsAreDisplayed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL intl.cpl",
     "Keywords": [
@@ -8470,7 +8470,7 @@
   },
   {
     "Name": "ChangeTheWayTimeIsDisplayed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL intl.cpl",
     "Keywords": [
@@ -8537,7 +8537,7 @@
   },
   {
     "Name": "AddALanguage",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Language",
     "Keywords": [
@@ -8620,7 +8620,7 @@
   },
   {
     "Name": "ChangeInputMethods",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Language",
     "Keywords": [
@@ -8717,7 +8717,7 @@
   },
   {
     "Name": "SettingsForMicrosoftIMEJapanese",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imejp\\imjpset.exe",
     "Keywords": [
@@ -8731,7 +8731,7 @@
   },
   {
     "Name": "MicrosoftPinyinSimplefastOptions",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imesc\\imscprop.exe /EXPRESS",
     "Keywords": [
@@ -8746,7 +8746,7 @@
   },
   {
     "Name": "MicrosoftNewPhoneticSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /NPH",
     "Keywords": [
@@ -8760,7 +8760,7 @@
   },
   {
     "Name": "MicrosoftChangjieSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /CJ",
     "Keywords": [
@@ -8774,7 +8774,7 @@
   },
   {
     "Name": "MicrosoftQuickSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /QK",
     "Keywords": [
@@ -8788,7 +8788,7 @@
   },
   {
     "Name": "MicrosoftIMERegisterWordJapanese",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imejp\\imjpdct.exe",
     "Keywords": [
@@ -8803,7 +8803,7 @@
   },
   {
     "Name": "ChangeHowWindowsSearches",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.IndexingOptions /page 2",
     "Keywords": [
@@ -8851,7 +8851,7 @@
   },
   {
     "Name": "ViewRecentMessagesAboutYourComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter",
     "Keywords": [
@@ -8878,7 +8878,7 @@
   },
   {
     "Name": "ReviewYourComputersStatusAndResolveIssues",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter",
     "Keywords": [
@@ -8963,7 +8963,7 @@
   },
   {
     "Name": "ChangeUserAccountControlSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\UserAccountControlSettings.exe",
     "Keywords": [
@@ -9040,7 +9040,7 @@
   },
   {
     "Name": "ViewReliabilityHistory",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter /page pageReliabilityView",
     "Keywords": [
@@ -9064,7 +9064,7 @@
   },
   {
     "Name": "FixProblemsWithYourComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter",
     "Keywords": [
@@ -9111,7 +9111,7 @@
   },
   {
     "Name": "ViewRecommendedActionsToKeepWindowsRunningSmoothly",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter",
     "Keywords": [
@@ -9135,7 +9135,7 @@
   },
   {
     "Name": "CheckSecurityStatus",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter",
     "Keywords": [
@@ -9159,7 +9159,7 @@
   },
   {
     "Name": "ViewAllProblemReports",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter /page pageProblems",
     "Keywords": [
@@ -9182,7 +9182,7 @@
   },
   {
     "Name": "ChangeAutomaticMaintenanceSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.ActionCenter /page MaintenanceSettings",
     "Keywords": [
@@ -9216,7 +9216,7 @@
   },
   {
     "Name": "AdjustSystemVolume",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\sndvol.exe",
     "Keywords": [
@@ -9307,7 +9307,7 @@
   },
   {
     "Name": "ChangeSoundCardSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Sound",
     "Keywords": [
@@ -9358,7 +9358,7 @@
   },
   {
     "Name": "ChangeSystemSounds",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Sound /page 2",
     "Keywords": [
@@ -9426,7 +9426,7 @@
   },
   {
     "Name": "ManageAudioDevices",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Sound",
     "Keywords": [
@@ -9542,7 +9542,7 @@
   },
   {
     "Name": "ChangeTextToSpeechSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL %windir%\\system32\\speech\\speechux\\sapi.cpl",
     "Keywords": [
@@ -9574,7 +9574,7 @@
   },
   {
     "Name": "PrintTheSpeechReferenceCard",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "http://go.microsoft.com/fwlink/?LinkId=619882",
     "Keywords": [
@@ -9623,7 +9623,7 @@
   },
   {
     "Name": "SetUpAMicrophone",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%WINDIR%\\system32\\msdt.exe /id SpeechDiagnosticCalibrate /ep ControlPanel /skip true",
     "Keywords": [
@@ -9680,7 +9680,7 @@
   },
   {
     "Name": "StartSpeechRecognition",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\speech\\common\\sapisvr.exe -SpeechUX",
     "Keywords": [
@@ -9723,7 +9723,7 @@
   },
   {
     "Name": "TakeSpeechTutorials",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe %windir%\\system32\\speech\\speechux\\SpeechUX.dll,RunWizard Tutorial",
     "Keywords": [
@@ -9767,7 +9767,7 @@
   },
   {
     "Name": "TrainTheComputerToRecogniseYourVoice",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe %windir%\\system32\\speech\\speechux\\SpeechUX.dll,RunWizard UserTraining",
     "Keywords": [
@@ -9843,7 +9843,7 @@
   },
   {
     "Name": "ManageOfflineFiles",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL %windir%\\system32\\cscui.dll",
     "Keywords": [
@@ -9871,7 +9871,7 @@
   },
   {
     "Name": "EncryptYourOfflineFiles",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL %windir%\\system32\\cscui.dll ,2",
     "Keywords": [
@@ -9891,7 +9891,7 @@
   },
   {
     "Name": "ManageDiskSpaceUsedByYourOfflineFiles",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL %windir%\\system32\\cscui.dll ,1",
     "Keywords": [
@@ -9930,7 +9930,7 @@
   },
   {
     "Name": "AdjustTheAppearanceAndPerformanceOfWindows",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesPerformance.exe",
     "Keywords": [
@@ -9982,7 +9982,7 @@
   },
   {
     "Name": "AllowRemoteAccessToYourComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesRemote.exe",
     "Keywords": [
@@ -10053,7 +10053,7 @@
   },
   {
     "Name": "AllowRemoteAssistanceInvitationsToBeSentFromThisComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesRemote.exe",
     "Keywords": [
@@ -10107,7 +10107,7 @@
   },
   {
     "Name": "InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\system32\\msra.exe",
     "Keywords": [
@@ -10133,7 +10133,7 @@
   },
   {
     "Name": "ChangeWorkgroupName",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesComputerName.exe",
     "Keywords": [
@@ -10158,7 +10158,7 @@
   },
   {
     "Name": "CheckProcessorSpeed",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10202,7 +10202,7 @@
   },
   {
     "Name": "ConfigureAdvancedUserProfileProperties",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe sysdm.cpl,EditUserProfiles",
     "Keywords": [
@@ -10227,7 +10227,7 @@
   },
   {
     "Name": "CreateARestorePoint",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesProtection.exe",
     "Keywords": [
@@ -10255,7 +10255,7 @@
   },
   {
     "Name": "EditEnvironmentVariablesForYourAccount",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe sysdm.cpl,EditEnvironmentVariables",
     "Keywords": [
@@ -10281,7 +10281,7 @@
   },
   {
     "Name": "EditTheSystemEnvironmentVariables",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesAdvanced.exe",
     "Keywords": [
@@ -10307,7 +10307,7 @@
   },
   {
     "Name": "HowToChangeTheSizeOfVirtualMemory",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "mshelp://windows/?id=89ca317f-649d-40a6-8934-e5707ee5c4b8",
     "Keywords": [
@@ -10340,7 +10340,7 @@
   },
   {
     "Name": "JoinADomain",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesComputerName.exe",
     "Keywords": [
@@ -10363,7 +10363,7 @@
   },
   {
     "Name": "RenameThisComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesComputerName.exe",
     "Keywords": [
@@ -10398,7 +10398,7 @@
   },
   {
     "Name": "CreateARecoveryDrive",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\RecoveryDrive.exe",
     "Keywords": [
@@ -10443,7 +10443,7 @@
   },
   {
     "Name": "SeeTheNameOfThisComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10473,7 +10473,7 @@
   },
   {
     "Name": "SelectUsersWhoCanUseRemoteDesktop",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesRemote.exe",
     "Keywords": [
@@ -10520,7 +10520,7 @@
   },
   {
     "Name": "ShowHowMuchRAMIsOnThisComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10571,7 +10571,7 @@
   },
   {
     "Name": "ShowWhichDomainYourComputerIsOn",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10601,7 +10601,7 @@
   },
   {
     "Name": "ShowWhichOperatingSystemYourComputerIsRunning",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10633,7 +10633,7 @@
   },
   {
     "Name": "ShowWhichWorkgroupThisComputerIsOn",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10663,7 +10663,7 @@
   },
   {
     "Name": "ViewAdvancedSystemSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\SystemPropertiesAdvanced.exe",
     "Keywords": [
@@ -10695,7 +10695,7 @@
   },
   {
     "Name": "ViewBasicInformationAboutYourComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.System",
     "Keywords": [
@@ -10739,7 +10739,7 @@
   },
   {
     "Name": "TaskManager",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\taskmgr.exe /6",
     "Keywords": [
@@ -10763,7 +10763,7 @@
   },
   {
     "Name": "ViewSystemResourceUsageInTaskManager",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\taskmgr.exe /6",
     "Keywords": [
@@ -10810,7 +10810,7 @@
   },
   {
     "Name": "SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\taskmgr.exe /6 /Startup",
     "Keywords": [
@@ -10894,7 +10894,7 @@
   },
   {
     "Name": "NavigationProperties",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Options_RunDLL 8",
     "Keywords": [
@@ -10938,7 +10938,7 @@
   },
   {
     "Name": "GroupSimilarWindowsOnTheTaskbar",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Taskbar",
     "Keywords": [
@@ -10976,7 +10976,7 @@
   },
   {
     "Name": "LockOrUnlockTheTaskbar",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Taskbar",
     "Keywords": [
@@ -11052,7 +11052,7 @@
   },
   {
     "Name": "WhatsHappenedToTheQuickLaunchToolbar",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "mshelp://windows/?id=329cf1bc-0f32-41ba-b717-362880a7f6df",
     "Keywords": [
@@ -11092,7 +11092,7 @@
   },
   {
     "Name": "AddOrRemoveUserAccounts",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts /page pageAdminTasks",
     "Keywords": [
@@ -11156,7 +11156,7 @@
   },
   {
     "Name": "ChangeAccountType",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts /page pageAdminTasks",
     "Keywords": [
@@ -11198,7 +11198,7 @@
   },
   {
     "Name": "CreateAPasswordResetDisk",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe keymgr.dll,PRShowSaveWizardExW",
     "Keywords": [
@@ -11246,7 +11246,7 @@
   },
   {
     "Name": "CreateAnAccount",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts /page pageAdminTasks",
     "Keywords": [
@@ -11268,7 +11268,7 @@
   },
   {
     "Name": "CreateStandardUserAccount",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts /page pageAdminTasks",
     "Keywords": [
@@ -11306,7 +11306,7 @@
   },
   {
     "Name": "EditLocalUsersAndGroups",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\lusrmgr.msc",
     "Keywords": [
@@ -11334,7 +11334,7 @@
   },
   {
     "Name": "GiveAdministrativeRightsToADomainUser",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\netplwiz.exe",
     "Keywords": [
@@ -11394,7 +11394,7 @@
   },
   {
     "Name": "GiveOtherUsersAccessToThisComputer",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\netplwiz.exe",
     "Keywords": [
@@ -11434,7 +11434,7 @@
   },
   {
     "Name": "HowToChangeYourWindowsPassword",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "mshelp://windows/?id=5c07e067-286d-4b8d-b342-431306e696aa",
     "Keywords": [
@@ -11482,7 +11482,7 @@
   },
   {
     "Name": "MakeChangesToAccounts",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts /page pageAdminTasks",
     "Keywords": [
@@ -11518,7 +11518,7 @@
   },
   {
     "Name": "ManageFileEncryptionCertificates",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rekeywiz.exe",
     "Keywords": [
@@ -11550,7 +11550,7 @@
   },
   {
     "Name": "ManageUserCertificates",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\certmgr.msc",
     "Keywords": [
@@ -11562,7 +11562,7 @@
   },
   {
     "Name": "ManageNetworkPasswords",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.CredentialManager /page ?SelectedVault=CredmanVault",
     "Keywords": [
@@ -11610,7 +11610,7 @@
   },
   {
     "Name": "ResetSecurityPolicies",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts",
     "Keywords": [
@@ -11628,7 +11628,7 @@
   },
   {
     "Name": "AllowAnAppThroughWindowsFirewall",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WindowsFirewall /page PageConfigureApps",
     "Keywords": [
@@ -11717,7 +11717,7 @@
   },
   {
     "Name": "CheckFirewallStatus",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WindowsFirewall",
     "Keywords": [
@@ -11803,7 +11803,7 @@
   },
   {
     "Name": "ManageBitlocker",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.BitLockerDriveEncryption",
     "Keywords": [
@@ -11865,7 +11865,7 @@
   },
   {
     "Name": "BackUpYourRecoveryKey",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.BitLockerDriveEncryption",
     "Keywords": [
@@ -11927,7 +11927,7 @@
   },
   {
     "Name": "ManageStorageSpaces",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.StorageSpaces",
     "Keywords": [
@@ -11965,7 +11965,7 @@
   },
   {
     "Name": "ManageWorkFolders",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WorkFolders",
     "Keywords": [
@@ -11997,7 +11997,7 @@
   },
   {
     "Name": "SetFlicksToPerformCertainTasks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @0,flicks",
     "Keywords": [
@@ -12055,7 +12055,7 @@
   },
   {
     "Name": "ChangeTabletPenSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @0,pen",
     "Keywords": [
@@ -12094,7 +12094,7 @@
   },
   {
     "Name": "TurnFlicksOnOrOff",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @0,flicks",
     "Keywords": [
@@ -12156,7 +12156,7 @@
   },
   {
     "Name": "ChangeTouchInputSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @0,touch",
     "Keywords": [
@@ -12197,7 +12197,7 @@
   },
   {
     "Name": "ChangeMultiTouchGestureSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @0,touch",
     "Keywords": [
@@ -12238,7 +12238,7 @@
   },
   {
     "Name": "CalibrateTheScreenForPenOrTouchInput",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @1,general",
     "Keywords": [
@@ -12275,7 +12275,7 @@
   },
   {
     "Name": "ChooseTheOrderOfHowYourScreenRotates",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @1,display",
     "Keywords": [
@@ -12314,7 +12314,7 @@
   },
   {
     "Name": "SetTabletButtonsToPerformCertainTasks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @1,buttons",
     "Keywords": [
@@ -12354,7 +12354,7 @@
   },
   {
     "Name": "SpecifyWhichHandYouWriteWith",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL TabletPC.cpl @1,other",
     "Keywords": [
@@ -12399,7 +12399,7 @@
   },
   {
     "Name": "SendOrReceiveAFile",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL irprops.cpl",
     "Keywords": [
@@ -12417,7 +12417,7 @@
   },
   {
     "Name": "ChangeWindowsSideshowCompatibleDeviceSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WindowsSideShow /page pageChangeSettingsDeviceSelector",
     "Keywords": [
@@ -12450,7 +12450,7 @@
   },
   {
     "Name": "ChangeTheOrderOfWindowsSideshowGadgets",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WindowsSideShow /page pageReorderGadgetsDeviceSelector",
     "Keywords": [
@@ -12491,7 +12491,7 @@
   },
   {
     "Name": "ChangeWindowsSideshowSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WindowsSideShow",
     "Keywords": [
@@ -12538,7 +12538,7 @@
   },
   {
     "Name": "ChangePCWakeUpSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.WindowsSideShow /page pageAutoWake",
     "Keywords": [
@@ -12594,7 +12594,7 @@
   },
   {
     "Name": "CalibrateDisplayColour",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\dccw.exe",
     "Keywords": [
@@ -12641,7 +12641,7 @@
   },
   {
     "Name": "AdjustCleartypeText",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\cttune.exe",
     "Keywords": [
@@ -12721,7 +12721,7 @@
   },
   {
     "Name": "ConnectToANetwork",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "ms-availablenetworks:",
     "Keywords": [
@@ -12830,7 +12830,7 @@
   },
   {
     "Name": "SetUpAConnectionOrNetwork",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\xwizard.exe RunWizard {7071ECE0-663B-4bc1-A1FA-B97F3B917C55}",
     "Keywords": [
@@ -12873,7 +12873,7 @@
   },
   {
     "Name": "IdentifyAndRepairNetworkProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\Rundll32.exe ndfapi,NdfRunDllDiagnoseIncident",
     "Keywords": [
@@ -12955,7 +12955,7 @@
   },
   {
     "Name": "ManageAdvancedSharingSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.NetworkAndSharingCenter /page Advanced",
     "Keywords": [
@@ -12971,7 +12971,7 @@
   },
   {
     "Name": "SetUpADialUpConnection",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\xwizard.exe RunWizard {7071EC71-663B-4bc1-A1FA-B97F3B917C55}",
     "Keywords": [
@@ -13039,7 +13039,7 @@
   },
   {
     "Name": "SetUpAVirtualPrivateNetworkVPNConnection",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\xwizard.exe RunWizard {7071EC75-663B-4bc1-A1FA-B97F3B917C55}",
     "Keywords": [
@@ -13096,7 +13096,7 @@
   },
   {
     "Name": "SetUpABroadbandConnection",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\xwizard.exe RunWizard {C03E8585-781E-49a1-8190-CE902D0B2CE7}",
     "Keywords": [
@@ -13140,7 +13140,7 @@
   },
   {
     "Name": "ViewNetworkComputersAndDevices",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "shell:::{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}",
     "Keywords": [
@@ -13178,7 +13178,7 @@
   },
   {
     "Name": "ViewNetworkConnections",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "shell:::{26EE0668-A00A-44D7-9371-BEB064C98683}\\3\\::{7007ACC7-3202-11D1-AAD2-00805FC1270E}",
     "Keywords": [
@@ -13243,7 +13243,7 @@
   },
   {
     "Name": "ViewNetworkStatusAndTasks",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.NetworkAndSharingCenter",
     "Keywords": [
@@ -13291,7 +13291,7 @@
   },
   {
     "Name": "MediaStreamingOptions",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.NetworkAndSharingCenter /page ShareMedia",
     "Keywords": [
@@ -13325,7 +13325,7 @@
   },
   {
     "Name": "AccessRemoteappAndDesktops",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\xwizard.exe RunWizard {7940ACF8-60BA-4213-A7C3-F3B400EE266D}",
     "Keywords": [
@@ -13370,7 +13370,7 @@
   },
   {
     "Name": "FindAndFixProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Troubleshooting",
     "Keywords": [
@@ -13398,7 +13398,7 @@
   },
   {
     "Name": "FindAndFixAudioPlaybackProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id AudioPlaybackDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -13420,7 +13420,7 @@
   },
   {
     "Name": "FindAndFixAudioRecordingProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id AudioRecordingDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -13442,7 +13442,7 @@
   },
   {
     "Name": "PerformRecommendedMaintenanceTasksAutomatically",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id MaintenanceDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -13462,7 +13462,7 @@
   },
   {
     "Name": "FindAndFixNetworkingAndConnectionProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id NetworkDiagnosticsWeb -ep ControlPanelSearch",
     "Keywords": [
@@ -13497,7 +13497,7 @@
   },
   {
     "Name": "FindAndFixPrintingProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id PrinterDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -13524,7 +13524,7 @@
   },
   {
     "Name": "TroubleshootingHistory",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Troubleshooting /page HistoryPage",
     "Keywords": [
@@ -13537,7 +13537,7 @@
   },
   {
     "Name": "FindAndFixProblemsWithWindowsSearch",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id SearchDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -13553,7 +13553,7 @@
   },
   {
     "Name": "RecordStepsToReproduceAProblem",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\psr.exe",
     "Keywords": [
@@ -13572,7 +13572,7 @@
   },
   {
     "Name": "FindAndFixKeyboardProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id KeyboardDiagnostic -ep ControlPanelSearch",
     "Keywords": [
@@ -13588,7 +13588,7 @@
   },
   {
     "Name": "FindAndFixBluescreenProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id BlueScreenDiagnostic -ep CortanaBluescreenSearch",
     "Keywords": [
@@ -13605,7 +13605,7 @@
   },
   {
     "Name": "FindAndFixWindowsUpdateProblems",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\msdt.exe -id windowsupdatediagnostic -ep CortanaWUSearch",
     "Keywords": [
@@ -13625,7 +13625,7 @@
   },
   {
     "Name": "ChangeLocationSettings",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.LocationSettings",
     "Keywords": [
@@ -13759,7 +13759,7 @@
   },
   {
     "Name": "ManageWebCredentials",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.CredentialManager",
     "Keywords": [
@@ -13810,7 +13810,7 @@
   },
   {
     "Name": "ManageWindowsCredentials",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.CredentialManager /page ?SelectedVault=CredmanVault",
     "Keywords": [
@@ -13861,7 +13861,7 @@
   },
   {
     "Name": "BackUpAndRestoreWindows7",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.BackupAndRestore",
     "Keywords": [
@@ -13908,7 +13908,7 @@
   },
   {
     "Name": "RestoreDataFilesOrComputerFromBackupWindows7",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.BackupAndRestore",
     "Keywords": [
@@ -13973,7 +13973,7 @@
   },
   {
     "Name": "SaveBackupCopiesOfYourFilesWithFileHistory",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.FileHistory",
     "Keywords": [
@@ -14085,7 +14085,7 @@
   },
   {
     "Name": "RestoreYourFilesWithFileHistory",
-    "Area": null,
+    "Area": "Unknown",
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\FileHistory.exe",
     "Keywords": [
