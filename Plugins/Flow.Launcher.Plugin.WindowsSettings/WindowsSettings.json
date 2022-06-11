@@ -3851,36 +3851,6 @@
     ]
   },
   {
-    "Name": "Set up ODBC data sources",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\odbcad32.exe",
-    "Keywords": [
-      [
-        "datum",
-        "odbc",
-        "data-base",
-        "database"
-      ],
-      [
-        "activate",
-        "add",
-        "begin",
-        "enable",
-        "intsall",
-        "invoke",
-        "make",
-        "up",
-        "setting",
-        "setup",
-        "start",
-        "on",
-        "turnon",
-        "unlock"
-      ]
-    ]
-  },
-  {
     "Name": "SetUpIscsiInitiator",
     "Area": null,
     "Type": "TaskLink",
@@ -3919,27 +3889,6 @@
   },
   {
     "Name": "ViewEventLogs",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\eventvwr.msc",
-    "Keywords": [
-      [
-        "viewer",
-        "events",
-        "tracker",
-        "eventviewer"
-      ],
-      [
-        "check",
-        "list",
-        "see",
-        "show",
-        "viewing"
-      ]
-    ]
-  },
-  {
-    "Name": "View event logs",
     "Area": null,
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\eventvwr.msc",
@@ -4132,41 +4081,6 @@
     "Area": null,
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\OptionalFeatures.exe",
-    "Keywords": [
-      [
-        "activate",
-        "add",
-        "begin",
-        "enable",
-        "intsall",
-        "invoke",
-        "make",
-        "up",
-        "setting",
-        "setup",
-        "start",
-        "on",
-        "turnon",
-        "unlock"
-      ],
-      [
-        "accessories",
-        "accessory",
-        "components",
-        "feature",
-        "features",
-        "programs",
-        "tools",
-        "utilities",
-        "utility"
-      ]
-    ]
-  },
-  {
-    "Name": "Turn Windows features on or off",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ServerManager.exe -arw",
     "Keywords": [
       [
         "activate",
@@ -5623,58 +5537,6 @@
   },
   {
     "Name": "SetTheTimeAndDate",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL timedate.cpl",
-    "Keywords": [
-      [
-        "adjust",
-        "ajust",
-        "alter",
-        "change",
-        "edit",
-        "modify",
-        "replace",
-        "reset",
-        "set",
-        "switch"
-      ],
-      [
-        "days",
-        "calendar",
-        "clock",
-        "times",
-        "time",
-        "day"
-      ],
-      [
-        "ddmmyyyy",
-        "hour",
-        "12-hour",
-        "24-hour",
-        "clock",
-        "date",
-        "day",
-        "dd",
-        "display",
-        "formating",
-        "formatting",
-        "four",
-        "digit",
-        "long",
-        "mmddyyyy",
-        "month",
-        "properties",
-        "short",
-        "time",
-        "two",
-        "year",
-        "yyyy"
-      ]
-    ]
-  },
-  {
-    "Name": "Set the time and date",
     "Area": null,
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\rundll32.exe shell32.dll,Control_RunDLL timedate.cpl",
@@ -7446,52 +7308,6 @@
     ]
   },
   {
-    "Name": "Change mouse click settings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Mouse",
-    "Keywords": [
-      [
-        "adjust",
-        "ajust",
-        "alter",
-        "change",
-        "edit",
-        "modify",
-        "replace",
-        "reset",
-        "set",
-        "switch"
-      ],
-      [
-        "lock",
-        "clicking",
-        "doubleclick",
-        "double-click",
-        "single-click"
-      ],
-      [
-        "mice",
-        "mouses",
-        "pointer"
-      ],
-      [
-        "set-up",
-        "confg",
-        "configuration",
-        "configure",
-        "define",
-        "management",
-        "options",
-        "personalise",
-        "personalize",
-        "up",
-        "settings",
-        "setup"
-      ]
-    ]
-  },
-  {
     "Name": "ChangeMouseWheelSettings",
     "Area": null,
     "Type": "TaskLink",
@@ -8929,50 +8745,7 @@
     ]
   },
   {
-    "Name": "Microsoft Pinyin SimpleFast Options",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imesc\\imscprop.exe /EXPRESS",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "pinyin",
-        "mspy"
-      ]
-    ]
-  },
-  {
     "Name": "MicrosoftNewPhoneticSettings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /NPH",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "phonetic"
-      ]
-    ]
-  },
-  {
-    "Name": "Microsoft New Phonetic Settings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /NPH",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "phonetic"
-      ]
-    ]
-  },
-  {
-    "Name": "Microsoft New Phonetic Settings",
     "Area": null,
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /NPH",
@@ -9000,63 +8773,7 @@
     ]
   },
   {
-    "Name": "Microsoft ChangJie Settings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /CJ",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "changjie"
-      ]
-    ]
-  },
-  {
-    "Name": "Microsoft ChangJie Settings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /CJ",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "changjie"
-      ]
-    ]
-  },
-  {
     "Name": "MicrosoftQuickSettings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /QK",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "quick"
-      ]
-    ]
-  },
-  {
-    "Name": "Microsoft Quick Settings",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /QK",
-    "Keywords": [
-      [
-        "msime",
-        "ime",
-        "settings",
-        "quick"
-      ]
-    ]
-  },
-  {
-    "Name": "Microsoft Quick Settings",
     "Area": null,
     "Type": "TaskLink",
     "Command": "%windir%\\system32\\ime\\imetc\\imtcprop.exe /QK",
@@ -11107,7 +10824,7 @@
     ]
   },
   {
-    "Name": "Auto-hide the taskbar",
+    "Name": "AutoHideTheTaskbar",
     "Area": "Personalization",
     "Type": "AppSettingsApp",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Taskbar",
@@ -11439,48 +11156,6 @@
   },
   {
     "Name": "ChangeAccountType",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%windir%\\system32\\netplwiz.exe",
-    "Keywords": [
-      [
-        "accounts",
-        "alias",
-        "login",
-        "useraccount",
-        "useracount",
-        "users"
-      ],
-      [
-        "adjust",
-        "ajust",
-        "alter",
-        "change",
-        "edit",
-        "modify",
-        "replace",
-        "reset",
-        "set",
-        "switch"
-      ],
-      [
-        "add",
-        "create",
-        "make",
-        "new"
-      ],
-      [
-        "names",
-        "rename",
-        "renaming"
-      ],
-      [
-        "users"
-      ]
-    ]
-  },
-  {
-    "Name": "Change account type",
     "Area": null,
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.UserAccounts /page pageAdminTasks",
@@ -13695,34 +13370,6 @@
   },
   {
     "Name": "FindAndFixProblems",
-    "Area": null,
-    "Type": "TaskLink",
-    "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Troubleshooting",
-    "Keywords": [
-      [
-        "troubleshoot",
-        "shoot",
-        "troubleshooter",
-        "trubleshoot",
-        "help",
-        "solution"
-      ],
-      [
-        "diagnose",
-        "diagnostics",
-        "diagnosis",
-        "find",
-        "problems",
-        "analyse",
-        "analyze",
-        "analysis",
-        "troubleshooter",
-        "errors"
-      ]
-    ]
-  },
-  {
-    "Name": "Find and fix problems",
     "Area": null,
     "Type": "TaskLink",
     "Command": "%SystemRoot%\\System32\\control.exe -name Microsoft.Troubleshooting",

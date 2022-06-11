@@ -2505,4 +2505,7 @@
   <data name="AppControlPanel" xml:space="preserve">
     <value>Control Panel</value>
   </data>
+  <data name="TaskLink" xml:space="preserve">
+    <value>TaskLink</value>
+  </data>
 </root>

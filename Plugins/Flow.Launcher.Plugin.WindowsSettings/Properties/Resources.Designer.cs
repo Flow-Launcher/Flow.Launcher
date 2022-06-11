@@ -5372,6 +5372,15 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TaskLink.
+        /// </summary>
+        public static string TaskLink {
+            get {
+                return ResourceManager.GetString("TaskLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Task Manager.
         /// </summary>
         public static string TaskManager {
