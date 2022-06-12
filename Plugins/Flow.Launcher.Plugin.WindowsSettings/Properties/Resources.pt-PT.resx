@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -154,7 +154,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
-    <value>Histórico de atividade</value>
+    <value>Histórico da atividade</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
@@ -721,7 +721,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Reprodução automática</value>
+    <value>Reprodução Automática</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
