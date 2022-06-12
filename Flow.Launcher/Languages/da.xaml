@@ -69,7 +69,7 @@
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin bibliotek</system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">af</system:String>
     <system:String x:Key="plugin_init_time">Initaliseringstid:</system:String>
     <system:String x:Key="plugin_query_time">Søgetid:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
