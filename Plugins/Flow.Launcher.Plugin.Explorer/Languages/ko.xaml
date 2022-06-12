@@ -1,0 +1,67 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--Dialogues-->
+    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">폴더 링크를 선택하세요</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted the {0}</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
+    <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
+
+    <!--Controls-->
+    <system:String x:Key="plugin_explorer_delete">삭제</system:String>
+    <system:String x:Key="plugin_explorer_edit">편집</system:String>
+    <system:String x:Key="plugin_explorer_add">추</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">사용자 지정 액션 키워드</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">경로 검색:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">파일 내용 검색:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">색인 검색:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">완료</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">켬</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
+
+    <!--Plugin Infos-->
+    <system:String x:Key="plugin_explorer_plugin_name">탐색기</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Window Index Search를 사용하여 파일과 폴더를 검색 및 관리합니다</system:String>
+
+    <!--Context menu items-->
+    <system:String x:Key="plugin_explorer_copypath">경로 복사</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">복사하기</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">삭제</system:String>
+    <system:String x:Key="plugin_explorer_path">경로:</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">다른 유저 권한으로 실행</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">포함된 폴더 열기</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">편집기에서 열기:</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions">윈도우 인덱싱 옵션 열기</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">윈도우 인덱싱 옵션 열기에 실패했습니다</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Add to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add the current {0} to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">성공적으로 추가되었습니다</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess">성공적으로 제거했습니다</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove the current {0} from Quick Access</system:String>
+
+</ResourceDictionary>
