@@ -4,7 +4,7 @@
     <!--Dialogues-->
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">請選擇一個資料夾</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">你確認要刪除{0}嗎</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">你確認要刪除{0}嗎？</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted the {0}</system:String>
@@ -17,7 +17,7 @@
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">刪除</system:String>
-    <system:String x:Key="plugin_explorer_edit">編</system:String>
+    <system:String x:Key="plugin_explorer_edit">編輯</system:String>
     <system:String x:Key="plugin_explorer_add">新增</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
