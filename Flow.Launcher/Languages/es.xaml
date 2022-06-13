@@ -117,7 +117,7 @@
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">¿Estás seguro de que quieres eliminar el atajo de teclado {0}?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning"></system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
@@ -184,7 +184,7 @@
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar prioridad</system:String>
     <system:String x:Key="priority_tips">A mayor número, más alto aparecerá el resultado. Intentalo con 5. Si quieres que los resultados aparezcan más abajo que los de cualquier otro complemento, usa un número negativo</system:String>
-    <system:String x:Key="invalidPriority">¡Por favor, proporcione un entero válido para la prioridad!</system:String>
+    <system:String x:Key="invalidPriority"></system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Palabra clave de acción antigua</system:String>
