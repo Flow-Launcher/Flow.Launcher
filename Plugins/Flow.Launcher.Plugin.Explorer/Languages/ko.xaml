@@ -43,7 +43,7 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">삭제</system:String>
     <system:String x:Key="plugin_explorer_path">경로:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser">다른 유저 권한으로 실</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">포함된 폴더 열기</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
