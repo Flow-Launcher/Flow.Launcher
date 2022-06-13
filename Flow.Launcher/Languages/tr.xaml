@@ -11,7 +11,7 @@
     <system:String x:Key="iconTrayOpen">Aç</system:String>
     <system:String x:Key="iconTraySettings">Ayarlar</system:String>
     <system:String x:Key="iconTrayAbout">Hakkında</system:String>
-    <system:String x:Key="iconTrayExit">Çıkı</system:String>
+    <system:String x:Key="iconTrayExit">Çıkış</system:String>
     <system:String x:Key="closeWindow">Close</system:String>
     <system:String x:Key="copy">Copy</system:String>
     <system:String x:Key="cut">Cut</system:String>
