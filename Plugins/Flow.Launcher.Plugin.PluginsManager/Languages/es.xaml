@@ -24,7 +24,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Error al descargar el manifiesto del complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, comprueba que puedes establecer conexión con github.com. Este error significa que es posible que no puedas instalar o actualizar complementos.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalando desde una fuente desconocida</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning"></system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">¡Estás instalando este complemento desde una fuente desconocida y puede contener riesgos potenciales!{0}{0}Por favor, asegúrate de saber de dónde procede este complemento y de que es seguro.{0}{0}¿Aún así te gustaría continuar?{0}{0}(Puede apagar esta advertencia en la configuración)</system:String>
 
     <!--Controls-->
     
