@@ -89,7 +89,7 @@
     <system:String x:Key="queryBoxFont">Czcionka okna zapytania</system:String>
     <system:String x:Key="resultItemFont">Czcionka okna wyników</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>
-    <system:String x:Key="opacity">Przeźroczystoś</system:String>
+    <system:String x:Key="opacity">Przeźroczystość</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
@@ -111,12 +111,12 @@
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Pokaż skrót klawiszowy</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
-    <system:String x:Key="customQueryHotkey">Skrót klawiszowy niestandardowych zapyta</system:String>
+    <system:String x:Key="customQueryHotkey">Skrót klawiszowy niestandardowych zapytań</system:String>
     <system:String x:Key="customQuery">Query</system:String>
-    <system:String x:Key="delete">Usu</system:String>
+    <system:String x:Key="delete">Usuń</system:String>
     <system:String x:Key="edit">Edytuj</system:String>
     <system:String x:Key="add">Dodaj</system:String>
-    <system:String x:Key="pleaseSelectAnItem">Musisz coś wybra</system:String>
+    <system:String x:Key="pleaseSelectAnItem">Musisz coś wybrać</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Czy jesteś pewien że chcesz usunąć skrót klawiszowy {0} wtyczki?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
@@ -219,7 +219,7 @@
     <system:String x:Key="reportWindow_exceptions">Wyjątki</system:String>
     <system:String x:Key="reportWindow_exception_type">Typ wyjątku</system:String>
     <system:String x:Key="reportWindow_source">Źródło</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Stos wywoła</system:String>
+    <system:String x:Key="reportWindow_stack_trace">Stos wywołań</system:String>
     <system:String x:Key="reportWindow_sending">Wysyłam raport...</system:String>
     <system:String x:Key="reportWindow_report_succeed">Raport wysłany pomyślnie</system:String>
     <system:String x:Key="reportWindow_report_failed">Nie udało się wysłać raportu</system:String>
