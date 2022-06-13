@@ -7,7 +7,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete">Usu</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete">Usuń</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Edytuj</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Dodaj</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirm</system:String>
@@ -24,13 +24,13 @@
    
 
     <!--web search edit-->
-    <system:String x:Key="flowlauncher_plugin_websearch_title">Tytu</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_title">Tytuł</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Aktywne</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Wybierz ikonę</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Ikona</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Anuluj</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Niepoprawne wyszukanie</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Musisz wpisać tytu</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Musisz wpisać tytuł</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Musisz wpisać wyzwalacz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Musisz wpisać adres URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Ten wyzwalacz jest już używany, musisz wybrać inny</system:String>
