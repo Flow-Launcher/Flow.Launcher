@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado de búsqueda: </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde: </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Por favor, seleccione una búsqueda web</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">¿Estás seguro de que quieres eliminar {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning"></system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Si tienes un servicio de búsqueda web que quieres usar, puedes añadirlo a Flow. Por ejemplo, puedes usar el formato del enlace en la barra de direcciones si quieres buscar 'casino' en Netflix: &quot;https://www.netflix.com/search?q=Casino.Para hacer esto, cambia el término de búsqueda 'Casino' de la siguiente forma.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Agrégala a la sección del enlace debajo. Ahora puedes buscar en Netflix con Flow usando cualquier término de búsqueda.</system:String>
