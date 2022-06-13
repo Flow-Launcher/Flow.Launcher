@@ -3,7 +3,7 @@
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">브라우저 북마크</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">브라우저의 북마크 검</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">브라우저의 북마크 검색</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">북마크 데이터</system:String>
@@ -15,7 +15,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy url</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">브라우저 이</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">브라우저 이름</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">데이터 디렉토리 위치</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">추</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">삭제</system:String>
