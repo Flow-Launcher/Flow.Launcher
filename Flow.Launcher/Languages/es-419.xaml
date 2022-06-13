@@ -117,7 +117,7 @@
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning"></system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar la tecla de acceso rápido del plugin {0}?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana de consulta</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto sombra tiene un uso sustancial de GPU. No se recomienda si el rendimiento de su computadora es limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de Ancho de Ventana</system:String>
@@ -184,7 +184,7 @@
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar Prioridad</system:String>
     <system:String x:Key="priority_tips">Mayor el número, mayor el resultado será clasificado. Intente establecerlo como 5. Si desea que los resultados sean inferiores a cualquier otro plugin, proporcione un número negativo</system:String>
-    <system:String x:Key="invalidPriority"></system:String>
+    <system:String x:Key="invalidPriority">¡Por favor, proporcione un entero válido para la prioridad!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Palabra Clave de Acción Antigua</system:String>
