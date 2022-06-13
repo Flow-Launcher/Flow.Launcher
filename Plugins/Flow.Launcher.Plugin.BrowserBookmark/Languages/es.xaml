@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Marcadores del navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busca en los marcadores de tu navegador</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Datos de marcador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir marcadores en:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nueva ventana</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva Pestaña</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Establecer navegador desde ruta:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elige</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar enlace</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar enlace del marcador al portapapeles</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Iniciar navegador desde:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nombre del navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ruta del directorio de datos</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Añadir</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Eliminar</system:String>
+</ResourceDictionary>
