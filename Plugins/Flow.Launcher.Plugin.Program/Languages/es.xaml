@@ -30,7 +30,7 @@
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Profundidad de búsqueda máxima (-1 es sin límite):</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Por favor, seleccione la ruta del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source"></system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">¿Estás seguro de querer eliminar las rutas de programa seleccionadas?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Aceptar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher sólo indexará los archivos que terminen con las siguientes extensiones. (Separa cada extensión con ';' )</system:String>
