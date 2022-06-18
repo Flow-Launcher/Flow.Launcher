@@ -49,7 +49,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre a localização que contém o ficheiro ou a pasta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir com o editor:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir diretório atual do índice de pesquisas</system:String>
-    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluído do índice de pesquisa</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluído do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opções de indexação do Windows</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Gerir ficheiros e pastas indexadas</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Não foi possível abrir as opções de indexação do Windows</system:String>
