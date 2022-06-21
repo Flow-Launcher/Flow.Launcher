@@ -61,22 +61,26 @@ namespace Flow.Launcher.Plugin.Shell
 
                     if (basedir != null)
                     {
-                        var autocomplete = Directory.GetFileSystemEntries(basedir).Select(o => dir + Path.GetFileName(o)).Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
+                        var autocomplete = 
+                            Directory.GetFileSystemEntries(basedir)
+                                .Select(o => dir + Path.GetFileName(o))
+                                .Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
                             !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
                             !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+                        
                         autocomplete.Sort();
+                        
                         results.AddRange(autocomplete.ConvertAll(m => new Result
                         {
                             Title = m,
                             IcoPath = Image,
                             Action = c =>
                             {
-                                var runAsAdministrator = (
+                                var runAsAdministrator =
                                     c.SpecialKeyState.CtrlPressed &&
                                     c.SpecialKeyState.ShiftPressed &&
                                     !c.SpecialKeyState.AltPressed &&
-                                    !c.SpecialKeyState.WinPressed
-                                    );
+                                    !c.SpecialKeyState.WinPressed;
 
                                 Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
@@ -111,12 +115,11 @@ namespace Flow.Launcher.Plugin.Shell
                         IcoPath = Image,
                         Action = c =>
                         {
-                            var runAsAdministrator = (
+                            var runAsAdministrator =
                                 c.SpecialKeyState.CtrlPressed &&
                                 c.SpecialKeyState.ShiftPressed &&
                                 !c.SpecialKeyState.AltPressed &&
-                                !c.SpecialKeyState.WinPressed
-                                );
+                                !c.SpecialKeyState.WinPressed;
 
                             Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
@@ -141,12 +144,11 @@ namespace Flow.Launcher.Plugin.Shell
                 IcoPath = Image,
                 Action = c =>
                 {
-                    var runAsAdministrator = (
+                    var runAsAdministrator =
                         c.SpecialKeyState.CtrlPressed &&
                         c.SpecialKeyState.ShiftPressed &&
                         !c.SpecialKeyState.AltPressed &&
-                        !c.SpecialKeyState.WinPressed
-                        );
+                        !c.SpecialKeyState.WinPressed;
 
                     Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
@@ -166,12 +168,11 @@ namespace Flow.Launcher.Plugin.Shell
                     IcoPath = Image,
                     Action = c =>
                     {
-                        var runAsAdministrator = (
+                        var runAsAdministrator =
                             c.SpecialKeyState.CtrlPressed &&
                             c.SpecialKeyState.ShiftPressed &&
                             !c.SpecialKeyState.AltPressed &&
-                            !c.SpecialKeyState.WinPressed
-                            );
+                            !c.SpecialKeyState.WinPressed;
 
                         Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
