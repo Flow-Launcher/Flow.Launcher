@@ -194,7 +194,8 @@ namespace Flow.Launcher.Plugin.Shell
 
             ProcessStartInfo info = new()
             {
-                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
             };
             switch (_settings.Shell)
             {
@@ -202,10 +203,20 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         info.FileName = "cmd.exe";
                         info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
-                        
-                        // ArgumentList may break original shell command separation with quote.
+
+                        //// Use info.Arguments instead of info.ArgumentList to enable user better control over the argument they are writing.
+                        //// Previous code using ArgumentList, commands needed to be seperated correctly:                      
+                        //// Incorrect:
                         // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                        // info.ArgumentList.Add(command);
+                        // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
+
+                        //// Correct version should be:
+                        //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                        //info.ArgumentList.Add("mkdir");
+                        //info.ArgumentList.Add(@"c:\test new");
+
+                        //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
+
                         break;
                     }
 
