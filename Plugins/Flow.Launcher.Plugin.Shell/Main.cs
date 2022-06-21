@@ -204,7 +204,7 @@ namespace Flow.Launcher.Plugin.Shell
                         info.FileName = "cmd.exe";
                         info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
 
-                        //// Use info.Arguments instead of info.ArgumentList to enable user better control over the argument they are writing.
+                        //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
                         //// Previous code using ArgumentList, commands needed to be seperated correctly:                      
                         //// Incorrect:
                         // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
@@ -238,10 +238,7 @@ namespace Flow.Launcher.Plugin.Shell
 
                 case Shell.RunCommand:
                     {
-                        var parts = command.Split(new[]
-                        {
-                            ' '
-                        }, 2);
+                        var parts = command.Split(new[] { ' ' }, 2);
                         if (parts.Length == 2)
                         {
                             var filename = parts[0];
