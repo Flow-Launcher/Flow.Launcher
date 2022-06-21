@@ -51,8 +51,11 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 ### Installation
 
-| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `winget install "Flow Launcher"` | `scoop install Flow-Launcher` |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: | :------------------------------: |
+| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+
+| `winget install "Flow Launcher"` | `scoop install Flow-Launcher` | `choco install Flow-Launcher` |
+| :------------------------------: | :------------------------------: | :------------------------------: |
 
 > When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
@@ -275,8 +278,8 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 5
+- Flow Launcher's target framework is .Net 6
 
-- Install Visual Studio 2019
+- Install Visual Studio 2022
 
-- Install .Net 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
+- Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)

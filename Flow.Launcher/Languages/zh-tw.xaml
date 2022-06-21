@@ -1,133 +1,267 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <!--主視窗-->
-    <system:String x:Key="registerHotkeyFailed">登錄快速鍵：{0} 失敗</system:String>
-    <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">在目前查詢中置頂</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">取消置頂</system:String>
-    <system:String x:Key="executeQuery">執行查詢：{0}</system:String>
-    <system:String x:Key="lastExecuteTime">上次執行時間：{0}</system:String>
-    <system:String x:Key="iconTrayOpen">開啟</system:String>
-    <system:String x:Key="iconTraySettings">設定</system:String>
-    <system:String x:Key="iconTrayAbout">關於</system:String>
-    <system:String x:Key="iconTrayExit">結束</system:String>
-
-    <!--設定，一般-->
-    <system:String x:Key="flowlauncher_settings">Flow Launcher 設定</system:String>
-    <system:String x:Key="general">一般</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
-    <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
-    <system:String x:Key="rememberLastLocation">記住上次啟動位置</system:String>
-    <system:String x:Key="language">語言</system:String>
-    <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略熱鍵</system:String>
-    <system:String x:Key="pythonDirectory">Python 路徑</system:String>
-    <system:String x:Key="autoUpdates">自動更新</system:String>
-    <system:String x:Key="selectPythonDirectory">選擇</system:String>
-    <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
-
-    <!--設置，外掛-->
-    <system:String x:Key="plugin">外掛</system:String>
-    <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
-    <system:String x:Key="disable">停用</system:String>
-    <system:String x:Key="actionKeywords">觸發關鍵字</system:String>
-    <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
-    <system:String x:Key="author">作者</system:String>
-    <system:String x:Key="plugin_init_time">載入耗時：</system:String>
-    <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
-
-    <!--設定，主題-->
-    <system:String x:Key="theme">主題</system:String>
-    <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
-    <system:String x:Key="queryBoxFont">查詢框字體</system:String>
-    <system:String x:Key="resultItemFont">結果項字體</system:String>
-    <system:String x:Key="windowMode">視窗模式</system:String>
-    <system:String x:Key="opacity">透明度</system:String>
-
-    <!--設置，熱鍵-->
-    <system:String x:Key="hotkey">熱鍵</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher 執行熱鍵</system:String>
-    <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
-    <system:String x:Key="customQueryHotkey">自定義熱鍵查詢</system:String>
-    <system:String x:Key="showOpenResultHotkey">顯示熱鍵</system:String>
-    <system:String x:Key="delete">刪除</system:String>
-    <system:String x:Key="edit">編輯</system:String>
-    <system:String x:Key="add">新增</system:String>
-    <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的熱鍵嗎？</system:String>
-
-    <!--設置，代理-->
-    <system:String x:Key="proxy">HTTP 代理</system:String>
-    <system:String x:Key="enableProxy">啟用 HTTP 代理</system:String>
-    <system:String x:Key="server">HTTP 伺服器</system:String>
-    <system:String x:Key="Port">Port</system:String>
-    <system:String x:Key="userName">使用者</system:String>
-    <system:String x:Key="password">密碼</system:String>
-    <system:String x:Key="testProxy">測試代理</system:String>
-    <system:String x:Key="save">儲存</system:String>
-    <system:String x:Key="serverCantBeEmpty">伺服器不能為空</system:String>
-    <system:String x:Key="portCantBeEmpty">Port 不能為空</system:String>
-    <system:String x:Key="invalidPortFormat">不正確的 Port 格式</system:String>
-    <system:String x:Key="saveProxySuccessfully">儲存代理設定成功</system:String>
-    <system:String x:Key="proxyIsCorrect">代理設定完成</system:String>
-    <system:String x:Key="proxyConnectFailed">代理連線失敗</system:String>
-
-    <!--設定，關於-->
-    <system:String x:Key="about">關於</system:String>
-    <system:String x:Key="website">網站</system:String>
-    <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
-    <system:String x:Key="checkUpdates">檢查更新</system:String>
-    <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher。</system:String>
-    <system:String x:Key="releaseNotes">更新說明:</system:String>
-
-    <!--Action Keyword 設定對話框-->
-    <system:String x:Key="oldActionKeywords">舊觸發關鍵字</system:String>
-    <system:String x:Key="newActionKeywords">新觸發關鍵字</system:String>
-    <system:String x:Key="cancel">取消</system:String>
-    <system:String x:Key="done">確定</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的外掛</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">新觸發關鍵字不能為空白</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一外掛，請設定其他關鍵字。</system:String>
-    <system:String x:Key="success">成功</system:String>
-    <system:String x:Key="actionkeyword_tips">如果不想設定觸發關鍵字，可以使用*代替</system:String>
-
-    <!--Custom Query Hotkey 對話框-->
-    <system:String x:Key="preview">預覽</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">熱鍵不存在，請設定一個新的熱鍵</system:String>
-    <system:String x:Key="invalidPluginHotkey">外掛熱鍵無法使用</system:String>
-    <system:String x:Key="update">更新</system:String>
-
-    <!--Hotkey 控件-->
-    <system:String x:Key="hotkeyUnavailable">熱鍵無法使用</system:String>
-
-    <!--當機報告視窗-->
-    <system:String x:Key="reportWindow_version">版本</system:String>
-    <system:String x:Key="reportWindow_time">時間</system:String>
-    <system:String x:Key="reportWindow_reproduce">請告訴我們如何重現此問題，以便我們進行修復</system:String>
-    <system:String x:Key="reportWindow_send_report">發送報告</system:String>
-    <system:String x:Key="reportWindow_cancel">取消</system:String>
-    <system:String x:Key="reportWindow_general">基本訊息</system:String>
-    <system:String x:Key="reportWindow_exceptions">例外訊息</system:String>
-    <system:String x:Key="reportWindow_exception_type">例外類型</system:String>
-    <system:String x:Key="reportWindow_source">例外來源</system:String>
-    <system:String x:Key="reportWindow_stack_trace">堆疊資訊</system:String>
-    <system:String x:Key="reportWindow_sending">傳送中</system:String>
-    <system:String x:Key="reportWindow_report_succeed">傳送成功</system:String>
-    <system:String x:Key="reportWindow_report_failed">傳送失敗</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出錯啦</system:String>
-
-    <!--更新-->
-    <system:String x:Key="update_flowlauncher_update_new_version_available">發現 Flow Launcher 新版本 V{0}</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">更新 Flow Launcher 出錯</system:String>
-    <system:String x:Key="update_flowlauncher_update">更新</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_files">下列檔案會被更新</system:String>
-    <system:String x:Key="update_flowlauncher_update_files">更新檔案</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_description">更新日誌</system:String>
-
+<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <!--  MainWindow  -->
+  <system:String x:Key="registerHotkeyFailed">登錄快速鍵：{0} 失敗</system:String>
+  <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
+  <system:String x:Key="invalidFlowLauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
+  <system:String x:Key="setAsTopMostInThisQuery">在目前查詢中置頂</system:String>
+  <system:String x:Key="cancelTopMostInThisQuery">取消置頂</system:String>
+  <system:String x:Key="executeQuery">執行查詢：{0}</system:String>
+  <system:String x:Key="lastExecuteTime">上次執行時間：{0}</system:String>
+  <system:String x:Key="iconTrayOpen">開啟</system:String>
+  <system:String x:Key="iconTraySettings">設定</system:String>
+  <system:String x:Key="iconTrayAbout">關於</system:String>
+  <system:String x:Key="iconTrayExit">結束</system:String>
+  <system:String x:Key="closeWindow">Close</system:String>
+  <system:String x:Key="copy">Copy</system:String>
+  <system:String x:Key="cut">Cut</system:String>
+  <system:String x:Key="paste">Paste</system:String>
+  <system:String x:Key="fileTitle">File</system:String>
+  <system:String x:Key="folderTitle">Folder</system:String>
+  <system:String x:Key="textTitle">Text</system:String>
+  <system:String x:Key="GameMode">Game Mode</system:String>
+  <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
+  <!--  Setting General  -->
+  <system:String x:Key="flowlauncher_settings">Flow Launcher 設定</system:String>
+  <system:String x:Key="general">一般</system:String>
+  <system:String x:Key="portableMode">Portable Mode</system:String>
+  <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
+  <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
+  <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
+  <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
+  <system:String x:Key="rememberLastLocation">記住上次啟動位置</system:String>
+  <system:String x:Key="language">語言</system:String>
+  <system:String x:Key="lastQueryMode">Last Query Style</system:String>
+  <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
+  <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
+  <system:String x:Key="LastQuerySelected">Select last Query</system:String>
+  <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
+  <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
+  <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略熱鍵</system:String>
+  <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
+  <system:String x:Key="defaultFileManager">Default File Manager</system:String>
+  <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
+  <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
+  <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+  <system:String x:Key="pythonDirectory">Python 路徑</system:String>
+  <system:String x:Key="autoUpdates">自動更新</system:String>
+  <system:String x:Key="selectPythonDirectory">選擇</system:String>
+  <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
+  <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+  <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
+  <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
+  <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
+  <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese</system:String>
+  <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+  <!--  Setting Plugin  -->
+  <system:String x:Key="plugin">Plugin</system:String>
+  <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
+  <system:String x:Key="enable">On</system:String>
+  <system:String x:Key="disable">停用</system:String>
+  <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
+  <system:String x:Key="actionKeywords">觸發關鍵字</system:String>
+  <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
+  <system:String x:Key="newActionKeyword">New action keyword</system:String>
+  <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
+  <system:String x:Key="currentPriority">Current Priority</system:String>
+  <system:String x:Key="newPriority">New Priority</system:String>
+  <system:String x:Key="priority">Priority</system:String>
+  <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
+  <system:String x:Key="author">作者</system:String>
+  <system:String x:Key="plugin_init_time">載入耗時：</system:String>
+  <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
+  <system:String x:Key="plugin_query_version">| Version</system:String>
+  <system:String x:Key="plugin_query_web">Website</system:String>
+  <!--  Setting Plugin Store  -->
+  <system:String x:Key="pluginStore">Plugin Store</system:String>
+  <system:String x:Key="refresh">Refresh</system:String>
+  <system:String x:Key="install">Install</system:String>
+  <!--  Setting Theme  -->
+  <system:String x:Key="theme">主題</system:String>
+  <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
+  <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
+  <system:String x:Key="hiThere">Hi There</system:String>
+  <system:String x:Key="queryBoxFont">查詢框字體</system:String>
+  <system:String x:Key="resultItemFont">結果項字體</system:String>
+  <system:String x:Key="windowMode">視窗模式</system:String>
+  <system:String x:Key="opacity">透明度</system:String>
+  <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
+  <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
+  <system:String x:Key="ThemeFolder">Theme Folder</system:String>
+  <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
+  <system:String x:Key="ColorScheme">Color Scheme</system:String>
+  <system:String x:Key="ColorSchemeSystem">System Default</system:String>
+  <system:String x:Key="ColorSchemeLight">Light</system:String>
+  <system:String x:Key="ColorSchemeDark">Dark</system:String>
+  <system:String x:Key="SoundEffect">Sound Effect</system:String>
+  <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
+  <system:String x:Key="Animation">Animation</system:String>
+  <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
+  <!--  Setting Hotkey  -->
+  <system:String x:Key="hotkey">熱鍵</system:String>
+  <system:String x:Key="flowlauncherHotkey">Flow Launcher 執行熱鍵</system:String>
+  <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+  <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
+  <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+  <system:String x:Key="showOpenResultHotkey">顯示熱鍵</system:String>
+  <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+  <system:String x:Key="customQueryHotkey">自定義熱鍵查詢</system:String>
+  <system:String x:Key="customQuery">Query</system:String>
+  <system:String x:Key="delete">刪除</system:String>
+  <system:String x:Key="edit">編輯</system:String>
+  <system:String x:Key="add">新增</system:String>
+  <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
+  <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的熱鍵嗎？</system:String>
+  <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
+  <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
+  <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+  <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
+  <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+  <!--  Setting Proxy  -->
+  <system:String x:Key="proxy">HTTP 代理</system:String>
+  <system:String x:Key="enableProxy">啟用 HTTP 代理</system:String>
+  <system:String x:Key="server">HTTP 伺服器</system:String>
+  <system:String x:Key="port">Port</system:String>
+  <system:String x:Key="userName">使用者</system:String>
+  <system:String x:Key="password">密碼</system:String>
+  <system:String x:Key="testProxy">測試代理</system:String>
+  <system:String x:Key="save">儲存</system:String>
+  <system:String x:Key="serverCantBeEmpty">伺服器不能為空</system:String>
+  <system:String x:Key="portCantBeEmpty">Port 不能為空</system:String>
+  <system:String x:Key="invalidPortFormat">不正確的 Port 格式</system:String>
+  <system:String x:Key="saveProxySuccessfully">儲存代理設定成功</system:String>
+  <system:String x:Key="proxyIsCorrect">代理設定完成</system:String>
+  <system:String x:Key="proxyConnectFailed">代理連線失敗</system:String>
+  <!--  Setting About  -->
+  <system:String x:Key="about">關於</system:String>
+  <system:String x:Key="website">Website</system:String>
+  <system:String x:Key="github">Github</system:String>
+  <system:String x:Key="docs">Docs</system:String>
+  <system:String x:Key="version">版本</system:String>
+  <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
+  <system:String x:Key="checkUpdates">檢查更新</system:String>
+  <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher。</system:String>
+  <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+  <system:String x:Key="downloadUpdatesFailed">
+        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
+        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+    </system:String>
+  <system:String x:Key="releaseNotes">更新說明:</system:String>
+  <system:String x:Key="documentation">Usage Tips</system:String>
+  <system:String x:Key="devtool">DevTools</system:String>
+  <system:String x:Key="settingfolder">Setting Folder</system:String>
+  <system:String x:Key="logfolder">Log Folder</system:String>
+  <system:String x:Key="welcomewindow">Wizard</system:String>
+  <!--  FileManager Setting Dialog  -->
+  <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
+  <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are "%d", and a path is entered at that location. For example, If a command is required such as "totalcmd.exe /A c:\windows", argument is /A "%d".</system:String>
+  <system:String x:Key="fileManager_tips2">"%f" is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the "Arg for File" item. If the file manager does not have that function, you can use "%d".</system:String>
+  <system:String x:Key="fileManager_name">File Manager</system:String>
+  <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
+  <system:String x:Key="fileManager_path">File Manager Path</system:String>
+  <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
+  <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+  <!--  DefaultBrowser Setting Dialog  -->
+  <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+  <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+  <system:String x:Key="defaultBrowser_name">Browser</system:String>
+  <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+  <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+  <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
+  <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
+  <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+  <!--  Priority Setting Dialog  -->
+  <system:String x:Key="changePriorityWindow">Change Priority</system:String>
+  <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
+  <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+  <!--  Action Keyword Setting Dialog  -->
+  <system:String x:Key="oldActionKeywords">舊觸發關鍵字</system:String>
+  <system:String x:Key="newActionKeywords">新觸發關鍵字</system:String>
+  <system:String x:Key="cancel">取消</system:String>
+  <system:String x:Key="done">確定</system:String>
+  <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的外掛</system:String>
+  <system:String x:Key="newActionKeywordsCannotBeEmpty">新觸發關鍵字不能為空白</system:String>
+  <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一外掛，請設定其他關鍵字。</system:String>
+  <system:String x:Key="success">成功</system:String>
+  <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+  <system:String x:Key="actionkeyword_tips">如果不想設定觸發關鍵字，可以使用*代替</system:String>
+  <!--  Custom Query Hotkey Dialog  -->
+  <system:String x:Key="customeQueryHotkeyTitle">自定義熱鍵查詢</system:String>
+  <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
+  <system:String x:Key="preview">預覽</system:String>
+  <system:String x:Key="hotkeyIsNotUnavailable">熱鍵不存在，請設定一個新的熱鍵</system:String>
+  <system:String x:Key="invalidPluginHotkey">外掛熱鍵無法使用</system:String>
+  <system:String x:Key="update">更新</system:String>
+  <!--  Hotkey Control  -->
+  <system:String x:Key="hotkeyUnavailable">熱鍵無法使用</system:String>
+  <!--  Crash Reporter  -->
+  <system:String x:Key="reportWindow_version">版本</system:String>
+  <system:String x:Key="reportWindow_time">時間</system:String>
+  <system:String x:Key="reportWindow_reproduce">請告訴我們如何重現此問題，以便我們進行修復</system:String>
+  <system:String x:Key="reportWindow_send_report">發送報告</system:String>
+  <system:String x:Key="reportWindow_cancel">取消</system:String>
+  <system:String x:Key="reportWindow_general">一般</system:String>
+  <system:String x:Key="reportWindow_exceptions">例外訊息</system:String>
+  <system:String x:Key="reportWindow_exception_type">例外類型</system:String>
+  <system:String x:Key="reportWindow_source">例外來源</system:String>
+  <system:String x:Key="reportWindow_stack_trace">堆疊資訊</system:String>
+  <system:String x:Key="reportWindow_sending">傳送中</system:String>
+  <system:String x:Key="reportWindow_report_succeed">傳送成功</system:String>
+  <system:String x:Key="reportWindow_report_failed">傳送失敗</system:String>
+  <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出錯啦</system:String>
+  <!--  General Notice  -->
+  <system:String x:Key="pleaseWait">Please wait...</system:String>
+  <!--  update  -->
+  <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
+  <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
+  <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
+  <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+  <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
+        Flow Launcher was not able to move your user profile data to the new update version.
+        Please manually move your profile data folder from {0} to {1}
+    </system:String>
+  <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
+  <system:String x:Key="update_flowlauncher_update_new_version_available">發現 Flow Launcher 新版本 V{0}</system:String>
+  <system:String x:Key="update_flowlauncher_update_error">更新 Flow Launcher 出錯</system:String>
+  <system:String x:Key="update_flowlauncher_update">更新</system:String>
+  <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
+  <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
+  <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+  <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow Launcher</system:String>
+  <system:String x:Key="update_flowlauncher_update_update_files">下列檔案會被更新</system:String>
+  <system:String x:Key="update_flowlauncher_update_files">更新檔案</system:String>
+  <system:String x:Key="update_flowlauncher_update_update_description">更新日誌</system:String>
+  <!--  Welcome Window  -->
+  <system:String x:Key="Skip">Skip</system:String>
+  <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
+  <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
+  <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
+  <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
+  <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
+  <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
+  <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
+  <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
+  <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
+  <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
+  <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+  <!--  General Guide & Hotkey  -->
+  <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
+  <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
+  <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
+  <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+  <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
+  <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
+  <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
+  <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
+  <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
+  <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
+  <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+  <system:String x:Key="RecommendWeather">Weather</system:String>
+  <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+  <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
+  <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+  <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+  <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+  <system:String x:Key="RecommendAcronyms">sn</system:String>
+  <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 </ResourceDictionary>
