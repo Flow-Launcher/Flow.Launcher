@@ -12,14 +12,14 @@
     <system:String x:Key="iconTraySettings">Ayarlar</system:String>
     <system:String x:Key="iconTrayAbout">Hakkında</system:String>
     <system:String x:Key="iconTrayExit">Çıkış</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
-    <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
+    <system:String x:Key="closeWindow">Kapat</system:String>
+    <system:String x:Key="copy">Kopyala</system:String>
+    <system:String x:Key="cut">Kes</system:String>
+    <system:String x:Key="paste">Yapıştır</system:String>
+    <system:String x:Key="fileTitle">Dosya</system:String>
+    <system:String x:Key="folderTitle">Klasör</system:String>
+    <system:String x:Key="textTitle">Yazı</system:String>
+    <system:String x:Key="GameMode">Oyun Modu</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
     <!--  Setting General  -->
