@@ -14,7 +14,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elegir</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar url</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar la url del marcador al portapapeles</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Cargar Navegador de:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Cargar navegador desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nombre del Navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ruta del Directorio de Datos</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Añadir</system:String>
