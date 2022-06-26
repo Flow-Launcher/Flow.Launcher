@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">登錄快速鍵：{0} 失敗</system:String>
+    <system:String x:Key="registerHotkeyFailed">登錄快捷鍵：{0} 失敗</system:String>
     <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">在目前查詢中置頂</system:String>
@@ -12,14 +12,14 @@
     <system:String x:Key="iconTraySettings">設定</system:String>
     <system:String x:Key="iconTrayAbout">關於</system:String>
     <system:String x:Key="iconTrayExit">結束</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
-    <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
+    <system:String x:Key="closeWindow">關閉</system:String>
+    <system:String x:Key="copy">複製</system:String>
+    <system:String x:Key="cut">剪下</system:String>
+    <system:String x:Key="paste">貼上</system:String>
+    <system:String x:Key="fileTitle">檔案</system:String>
+    <system:String x:Key="folderTitle">資料夾</system:String>
     <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
+    <system:String x:Key="GameMode">遊戲模式</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
     <!--  Setting General  -->
