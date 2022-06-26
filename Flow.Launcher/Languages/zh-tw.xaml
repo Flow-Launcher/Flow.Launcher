@@ -173,7 +173,7 @@
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">預設瀏覽器</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+    <system:String x:Key="defaultBrowser_tips">默認設定是依照作業系統的預設瀏覽器設定。如果要指定，Flow 將使用指定的瀏覽器。</system:String>
     <system:String x:Key="defaultBrowser_name">瀏覽器</system:String>
     <system:String x:Key="defaultBrowser_profile_name">瀏覽器名稱</system:String>
     <system:String x:Key="defaultBrowser_path">瀏覽器路徑</system:String>
@@ -182,9 +182,9 @@
     <system:String x:Key="defaultBrowser_parameter">無痕模式</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">更改優先度</system:String>
+    <system:String x:Key="priority_tips">數字越大，查詢結過會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他插件，請提供負數</system:String>
+    <system:String x:Key="invalidPriority">請為優先度提供一個有效的整數！</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">舊觸發關鍵字</system:String>
@@ -195,7 +195,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新觸發關鍵字不能為空白</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一外掛，請設定其他關鍵字。</system:String>
     <system:String x:Key="success">成功</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">成功完成</system:String>
     <system:String x:Key="actionkeyword_tips">如果不想設定觸發關鍵字，可以使用*代替</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
