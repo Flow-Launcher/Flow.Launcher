@@ -39,7 +39,7 @@
     <system:String x:Key="LastQueryEmpty">Vaciar última consulta</system:String>
     <system:String x:Key="maxShowResults">Máximo de resultados mostrados</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas rápidas en modo pantalla completa</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deshabilitar la activación de Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deshabilitar Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Gestor de archivos predeterminado</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Seleccione el gestor de archivos a utilizar al abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
@@ -90,7 +90,7 @@
     <system:String x:Key="resultItemFont">Fuente de Resultados</system:String>
     <system:String x:Key="windowMode">Modo Ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Tema {0} no existe, recurre al tema predeterminado</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Tema {0} no existe, se recurrirá al tema predeterminado</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Error al cargar el tema {0}, recurre al tema predeterminado</system:String>
     <system:String x:Key="ThemeFolder">Carpeta de Temas</system:String>
     <system:String x:Key="OpenThemeFolder">Abrir Carpeta de Temas</system:String>
@@ -99,7 +99,7 @@
     <system:String x:Key="ColorSchemeLight">Claro</system:String>
     <system:String x:Key="ColorSchemeDark">Oscuro</system:String>
     <system:String x:Key="SoundEffect">Efectos de Sonido</system:String>
-    <system:String x:Key="SoundEffectTip">Reproducir un pequeño sonido cuando se abre la ventana de consulta</system:String>
+    <system:String x:Key="SoundEffectTip">Reproducir un sonido al abrir la ventana de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
     <system:String x:Key="AnimationTip">Usar Animación en la Interfaz</system:String>
 
@@ -173,7 +173,7 @@
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador Web Predeterminado</system:String>
-    <system:String x:Key="defaultBrowser_tips">La configuración predeterminada sigue la configuración por defecto del navegador del SO. Si se especifica por separado, flow utiliza ese navegador.</system:String>
+    <system:String x:Key="defaultBrowser_tips">La configuración predeterminada sigue la configuración por defecto del navegador del sistema operativo. Si se especifica por separado, Flow utiliza ese navegador.</system:String>
     <system:String x:Key="defaultBrowser_name">Navegador</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nombre del Navegador</system:String>
     <system:String x:Key="defaultBrowser_path">Ruta del Navegador</system:String>
@@ -230,16 +230,16 @@
 
     <!--  update  -->
     <system:String x:Key="update_flowlauncher_update_check">Buscando nueva actualización</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">Ya tienes la última versión de Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Ya esta instalada la última versión de Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Actualización encontrada</system:String>
     <system:String x:Key="update_flowlauncher_updating">Actualizando...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher no pudo mover los datos de su perfil de usuario a la nueva versión de actualización.
-        Por favor, mueve manualmente la carpeta de datos de tu perfil de {0} a {1}
+        Por favor, mueva manualmente la carpeta de datos de su perfil de {0} a {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nueva Actualización</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">La nueva versión {0} de Flow Launcher ya está disponible</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">Ocurrió un error mientras se trataba de instalar actualizaciones de software</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Ocurrió un error mientras se instalaban actualizaciones de software</system:String>
     <system:String x:Key="update_flowlauncher_update">Actualizar</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Cancelar</system:String>
     <system:String x:Key="update_flowlauncher_fail">Error al actualizar</system:String>
@@ -280,10 +280,10 @@
     <system:String x:Key="RecommendWeather">Clima</system:String>
     <system:String x:Key="RecommendWeatherDesc">Clima en los Resultados de Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">Comando de Shell</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth en configuración de Windows</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Notas adhesivas</system:String>
 
 </ResourceDictionary>
