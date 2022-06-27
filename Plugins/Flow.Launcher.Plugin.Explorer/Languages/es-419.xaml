@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Dialogues-->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Por favor, seleccione primero</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this {0}?</system:String>
@@ -16,9 +16,9 @@
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
 
     <!--Controls-->
-    <system:String x:Key="plugin_explorer_delete">Delete</system:String>
-    <system:String x:Key="plugin_explorer_edit">Edit</system:String>
-    <system:String x:Key="plugin_explorer_add">Add</system:String>
+    <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
+    <system:String x:Key="plugin_explorer_edit">Editar</system:String>
+    <system:String x:Key="plugin_explorer_add">Añadir</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
@@ -40,7 +40,7 @@
     <!--Context menu items-->
     <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder">Delete</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Eliminar</system:String>
     <system:String x:Key="plugin_explorer_path">Path:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
