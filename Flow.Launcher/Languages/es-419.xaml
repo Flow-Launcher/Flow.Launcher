@@ -38,7 +38,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Borrar última consulta</system:String>
     <system:String x:Key="maxShowResults">Máximo de resultados mostrados</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de acceso directo en modo pantalla completa</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deshabilitar Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Gestor de archivos predeterminado</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Seleccione el gestor de archivos a utilizar al abrir la carpeta.</system:String>
@@ -207,7 +207,7 @@
     <system:String x:Key="update">Actualizar</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Tecla de Acceso Rápido No Disponible</system:String>
+    <system:String x:Key="hotkeyUnavailable">Tecla No Disponible</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versión</system:String>
@@ -256,12 +256,12 @@
     <system:String x:Key="Welcome_Page1_Text02">Antes de comenzar, este asistente ayudará a configurar Flow Launcher. Puedes saltarlo si quieres. Por favor, elige un idioma</system:String>
     <system:String x:Key="Welcome_Page2_Title">Busca y ejecuta todos los archivos y aplicaciones en tu PC</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Busca todo desde aplicaciones, archivos, marcadores, YouTube, Twitter y mucho más. Todo desde la comodidad de tu teclado sin tocar nunca el ratón.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher comienza con la tecla de acceso directo de abajo, pruébala ahora. Para cambiarla, haga clic en la entrada y presione la tecla de acceso rápido deseada en el teclado.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Teclas Rápidas</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Palabra Clave de Acción y Comandos</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Busca en la web, inicia aplicaciones o ejecuta varias funciones a través de plugins de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción, y si es necesario, pueden ser usadas sin palabras clave de acción. Prueba las consultas de abajo en Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher comienza con la tecla de acceso directo de abajo, pruébala ahora. Para cambiarla, haga clic en la entrada y presione la tecla de acceso directo deseada.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Teclas De Acceso Directo</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Palabra Clave y Comandos</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Busca en la web, inicia aplicaciones o haz uso de varias funciones a través de plugins en Flow Launcher. Algunas funciones necesitan una palabra clave, y si es necesario, pueden ser usadas sin palabras clave. Pruebe consultar lo siguiente en Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Comencemos Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides la tecla de acceso rápido para empezar :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Finalizado. Disfruta de Flow Launcher. No olvides la tecla de acceso directo para empezar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
@@ -269,7 +269,7 @@
     <system:String x:Key="HotkeyLeftRightDesc">Navegación de Elemento</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir Menú Contextual</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Abrir Carpeta Contenedora</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como Admin</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de Consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al Resultado en el Menú Contextual</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
