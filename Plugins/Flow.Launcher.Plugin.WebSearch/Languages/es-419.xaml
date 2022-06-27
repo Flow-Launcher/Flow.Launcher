@@ -16,7 +16,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_search">Buscar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Autocompletar la búsqueda: </system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos de: </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Por favor, seleccione una búsqueda</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">¿Seguro que desea eliminar {0}?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Si quiere utilizar un motor de búsqueda, puede añadirlo a Flow. Por ejemplo, puede seguir el formato de la url en la barra de direcciones si desea buscar 'casino' en Netflix: &quot;https://www. etflix.com/search?q=Casino. Para ello, cambie el término de búsqueda 'Casino' de la siguiente manera.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
