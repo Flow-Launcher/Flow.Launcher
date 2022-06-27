@@ -280,7 +280,7 @@
     <system:String x:Key="RecommendWeather">天氣</system:String>
     <system:String x:Key="RecommendWeatherDesc">Google 搜索的天氣結果</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">Shell 指令</system:String>
     <system:String x:Key="RecommendBluetooth">藍牙</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Windows 設定中的藍牙</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
