@@ -378,7 +378,7 @@
     <value>藍色光</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
-    <value>Bluetooth</value>
+    <value>藍牙</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
