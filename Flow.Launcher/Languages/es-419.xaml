@@ -202,7 +202,7 @@
     <system:String x:Key="customeQueryHotkeyTitle">Tecla Rápida de Consulta Personalizada</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Presione la tecla rápida personalizada para insertar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">La tecla rápida no está disponible, por favor seleccione una nueva tecla de acceso directo</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">Tecla no disponible, por favor seleccione una nueva tecla de acceso directo</system:String>
     <system:String x:Key="invalidPluginHotkey">Tecla rápida de plugin no válida</system:String>
     <system:String x:Key="update">Actualizar</system:String>
 
@@ -223,7 +223,7 @@
     <system:String x:Key="reportWindow_sending">Enviando</system:String>
     <system:String x:Key="reportWindow_report_succeed">Informe enviado correctamente</system:String>
     <system:String x:Key="reportWindow_report_failed">Error al enviar el informe</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher obtuvo un error</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher ha tenido un error</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor espere...</system:String>
