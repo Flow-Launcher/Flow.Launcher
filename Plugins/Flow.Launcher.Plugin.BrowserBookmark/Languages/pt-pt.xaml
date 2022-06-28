@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" ?>
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Marcadores do navegador</system:String>
@@ -16,7 +13,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Caminho do navegador:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Escolher</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar URL do marcador para área de transferência</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar URL do marcador para a área de transferência</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Carregar navegador de:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nome do navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Caminho do diretório de dados</system:String>
