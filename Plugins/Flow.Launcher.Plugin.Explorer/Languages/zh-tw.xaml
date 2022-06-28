@@ -39,7 +39,7 @@
 
     <!--Context menu items-->
     <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
-    <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">複製</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">刪除</system:String>
     <system:String x:Key="plugin_explorer_path">Path:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
