@@ -7,7 +7,7 @@
     <system:String x:Key="setAsTopMostInThisQuery">Establecer como primer resultado en esta consulta</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Cancelar como primer resultado en esta consulta</system:String>
     <system:String x:Key="executeQuery">Ejecutar consulta: {0}</system:String>
-    <system:String x:Key="lastExecuteTime">Última ejecución: {0}</system:String>
+    <system:String x:Key="lastExecuteTime">Fecha de última ejecución: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Abrir</system:String>
     <system:String x:Key="iconTraySettings">Configuración</system:String>
     <system:String x:Key="iconTrayAbout">Acerca de</system:String>
@@ -19,26 +19,26 @@
     <system:String x:Key="fileTitle">Archivo</system:String>
     <system:String x:Key="folderTitle">Carpeta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
-    <system:String x:Key="GameMode">Modo de juego</system:String>
-    <system:String x:Key="GameModeToolTip">Suspender el uso de atajos de teclado.</system:String>
+    <system:String x:Key="GameMode">Modo Juego</system:String>
+    <system:String x:Key="GameModeToolTip">Suspender el uso de teclas de acceso directo.</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Opciones de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
     <system:String x:Key="general">General</system:String>
-    <system:String x:Key="portableMode">Modo portable</system:String>
-    <system:String x:Key="portableModeToolTIp">Guarda todos los ajustes y datos de usuario en una carpeta (útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
+    <system:String x:Key="portableMode">Modo Portable</system:String>
+    <system:String x:Key="portableModeToolTIp">Guardar toda la configuración y datos de usuario en una carpeta (Útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Cargar Flow Launcher al iniciar el sistema</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierda el foco</system:String>
-    <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de versiones nuevas</system:String>
+    <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
     <system:String x:Key="rememberLastLocation">Recordar última posición del Launcher</system:String>
     <system:String x:Key="language">Idioma</system:String>
-    <system:String x:Key="lastQueryMode">Comportamiento de la consulta previa</system:String>
+    <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostrar/Ocultar resultados anteriores cuando Flow Launcher es reactivado.</system:String>
-    <system:String x:Key="LastQueryPreserved">Preservar última consulta</system:String>
-    <system:String x:Key="LastQuerySelected">Seleccionar última consulta</system:String>
-    <system:String x:Key="LastQueryEmpty">Limpiar última consulta</system:String>
-    <system:String x:Key="maxShowResults">Resultados máximos mostrados</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en pantalla completa</system:String>
+    <system:String x:Key="LastQueryPreserved">Conservar la última consulta</system:String>
+    <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
+    <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
+    <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de acceso directo en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deshabilita la activación de Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Gestor de archivos por defecto</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el gestor de archivos a utilizar al abrir carpetas.</system:String>
