@@ -56,10 +56,10 @@
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Complemento</system:String>
+    <system:String x:Key="plugin">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
-    <system:String x:Key="enable">Activar</system:String>
-    <system:String x:Key="disable">Desactivar</system:String>
+    <system:String x:Key="enable">Activado</system:String>
+    <system:String x:Key="disable">Desactivado</system:String>
     <system:String x:Key="actionKeywordsTitle">Configuración de la palabra clave de acción</system:String>
     <system:String x:Key="actionKeywords">Palabra clave de acción</system:String>
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
@@ -99,7 +99,7 @@
     <system:String x:Key="ColorSchemeLight">Claro</system:String>
     <system:String x:Key="ColorSchemeDark">Oscuro</system:String>
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
-    <system:String x:Key="SoundEffectTip">Reproducir un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
+    <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
     <system:String x:Key="AnimationTip">Utilizar animación en la Interfaz de Usuario</system:String>
 
@@ -121,8 +121,8 @@
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
-    <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Usar iconos Segoe Fluent para resultados de búsqueda donde estén soportados</system:String>
+    <system:String x:Key="useGlyphUI">Utilizar iconos Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatible</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -190,7 +190,7 @@
     <system:String x:Key="oldActionKeywords">Palabra clave de acción antigua</system:String>
     <system:String x:Key="newActionKeywords">Palabra clave de acción nueva</system:String>
     <system:String x:Key="cancel">Cancelar</system:String>
-    <system:String x:Key="done">Listo</system:String>
+    <system:String x:Key="done">Hecho</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">No se puede encontrar el complemento especificado</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">La nueva palabra clave de acción no puede estar vacía</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta nueva palabra clave de acción ya está asignada a otro complemento, por favor elija una diferente</system:String>
@@ -252,14 +252,14 @@
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Omitir</system:String>
     <system:String x:Key="Welcome_Page1_Title">Bienvenido a Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hola, ¡Esta es la primera vez que ejecutas Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Hola, ¡es la primera vez que ejecuta Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Antes de comenzar, este asistente te ayudará a configurar Flow Launcher. Puedes saltártelo si quieres. Por favor, elige un idioma</system:String>
     <system:String x:Key="Welcome_Page2_Title">Busca y ejecuta los archivos y aplicaciones en tu equipo</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Busca cualquier cosa desde aplicaciones, archivos, marcadores, YouTube, Twitter y mucho más. Todo desde la comodidad de tu teclado sin tocar el ratón.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher se inicia con el atajo de teclado de abajo, el cual puedes probar ya mismo. Para cambiarlo, haz clic en la caja de texto y presiona la nueva combinación de teclas.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher se inicia con el atajo de teclado abajo indicado, el cual puedes probar ya mismo. Para cambiarlo, haz clic en la caja de texto y presiona la nueva combinación de teclas.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Atajo de teclado</system:String>
     <system:String x:Key="Welcome_Page4_Title">Palabra clave de acción y comandos</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Busca en la web, inicia aplicaciones o ejecuta varias funciones usando complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción, y si es necesario, pueden ser usadas sin ellas. Prueba las búsquedas de abajo en Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Busque en la web, inicie aplicaciones o ejecute diversas funciones mediante los complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción y, si es necesario, pueden utilizarse sin ellas. Pruebe las siguientes consultas en Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Iniciemos Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides el atajo de teclado para empezar :)</system:String>
 
