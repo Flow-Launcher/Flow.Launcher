@@ -26,11 +26,11 @@
     <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
     <system:String x:Key="general">General</system:String>
     <system:String x:Key="portableMode">Modo Portable</system:String>
-    <system:String x:Key="portableModeToolTIp">Guardar toda la configuración y datos de usuario en una carpeta (Útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
+    <system:String x:Key="portableModeToolTIp">Guarda toda la configuración y datos de usuario en una carpeta (Útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Cargar Flow Launcher al iniciar el sistema</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierda el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
-    <system:String x:Key="rememberLastLocation">Recordar última posición del Launcher</system:String>
+    <system:String x:Key="rememberLastLocation">Recordar última posición de Flow Launcher</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostrar/Ocultar resultados anteriores cuando Flow Launcher es reactivado.</system:String>
@@ -39,11 +39,11 @@
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de acceso directo en modo pantalla completa</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactivar Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactiva Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos por defecto</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Seleccionar el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web por defecto</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Configuración para Nueva Pestaña, Nueva Ventana, Modo Privado.</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Configura navegador, nueva pestaña, nueva ventana, modo privado.</system:String>
     <system:String x:Key="pythonDirectory">Carpeta de Python</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="selectPythonDirectory">Seleccionar</system:String>
@@ -162,23 +162,23 @@
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Seleccionar gestor de archivos</system:String>
-    <system:String x:Key="fileManager_tips">Por favor, especifique la ubicación del gestor de archivos que utilice y añada argumentos si es necesario. El argumento por defecto es &quot;%d&quot;, introduciendo una ruta en esa ubicación. Por ejemplo, si se requiere un comando como &quot;totalcmd.exe /A c:\windows&quot;, el argumento es /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con gestores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Arg para archivo&quot;. Si el gestor de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_name">Gestor de archivos</system:String>
+    <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
+    <system:String x:Key="fileManager_tips">Por favor, especifique la ubicación del administrador de archivos que desea utilizar y añada argumentos si es necesario. El argumento por defecto es &quot;%d&quot;, introduciendo una ruta en esa ubicación. Por ejemplo, si se requiere un comando como &quot;totalcmd.exe /A c:\windows&quot;, el argumento es /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con administradores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Arg para archivo&quot;. Si el administrador de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
     <system:String x:Key="fileManager_profile_name">Nombre de perfil</system:String>
-    <system:String x:Key="fileManager_path">Ruta del gestor de archivos</system:String>
+    <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg para la carpeta</system:String>
     <system:String x:Key="fileManager_file_arg">Arg para archivo</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web por defecto</system:String>
-    <system:String x:Key="defaultBrowser_tips">La configuración por defecto utiliza el navegador predeterminado del sistema operativo. Si se especifica por separado, Flow Launcher utiliza este otro navegador.</system:String>
+    <system:String x:Key="defaultBrowser_tips">La configuración por defecto utiliza el navegador predeterminado del sistema operativo. Si se indica uno específicamente, Flow Launcher utilizará este otro navegador.</system:String>
     <system:String x:Key="defaultBrowser_name">Navegador</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nombre del navegador</system:String>
     <system:String x:Key="defaultBrowser_path">Ruta del navegador</system:String>
     <system:String x:Key="defaultBrowser_newWindow">Nueva ventana</system:String>
-    <system:String x:Key="defaultBrowser_newTab">Nueva Pestaña</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nueva pestaña</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
 
     <!--  Priority Setting Dialog  -->
