@@ -14,6 +14,7 @@
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Ak to chcete opraviť, spustite službu Windows Search. Ak chcete odstrániť toto upozornenie, kliknite sem</system:String>
     <system:String x:Key="plugin_explorer_alternative">Upozornenie bolo vypnuté. Chceli by ste ako alternatívu na vyhľadávanie súborov a priečinkov nainštalovať plugin Everything?{0}{0}Ak chcete nainštalovať plugin Everything, zvoľte 'Áno', pre návrat zvoľte 'Nie'</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternatíva pre Preskumníka</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">Odstrániť</system:String>
@@ -22,6 +23,8 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Cesta vyhľadávania:</system:String>
