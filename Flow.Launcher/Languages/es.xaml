@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Error al registrar el atajo de teclado: {0}</system:String>
-    <system:String x:Key="couldnotStartCmd">No se pudo iniciar {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del plugin de Flow Launcher inválido</system:String>
+    <system:String x:Key="registerHotkeyFailed">No se ha podido registrar la tecla de acceso directo: {0}</system:String>
+    <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del plugin Flow Launcher no válido</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Establecer como primer resultado en esta consulta</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Cancelar como primer resultado en esta consulta</system:String>
     <system:String x:Key="executeQuery">Ejecutar consulta: {0}</system:String>
