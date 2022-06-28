@@ -39,36 +39,36 @@
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de acceso directo en modo pantalla completa</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deshabilita la activación de Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
-    <system:String x:Key="defaultFileManager">Gestor de archivos por defecto</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Selecciona el gestor de archivos a utilizar al abrir carpetas.</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactivar Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
+    <system:String x:Key="defaultFileManager">Administrador de archivos por defecto</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">Seleccionar el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web por defecto</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Ajuste para Nueva Pestaña, Nueva Ventana y Modo privado.</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Configuración para Nueva Pestaña, Nueva Ventana, Modo Privado.</system:String>
     <system:String x:Key="pythonDirectory">Carpeta de Python</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="selectPythonDirectory">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
-    <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja</system:String>
-    <system:String x:Key="querySearchPrecision">Precisión de búsqueda</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Establece la puntuación mínima requerida en la comparación con los resultados.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Permite usar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizada para traducir chino</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no se puede usar si el tema actual hace uso del efecto de desenfoque</system:String>
+    <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja del sistema</system:String>
+    <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
+    <system:String x:Key="ShouldUsePinyin">Debe utilizar Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Complemento</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
-    <system:String x:Key="enable">On</system:String>
-    <system:String x:Key="disable">Off</system:String>
-    <system:String x:Key="actionKeywordsTitle">Ajuste de palabra clave</system:String>
+    <system:String x:Key="enable">Activar</system:String>
+    <system:String x:Key="disable">Desactivar</system:String>
+    <system:String x:Key="actionKeywordsTitle">Configuración de la palabra clave de acción</system:String>
     <system:String x:Key="actionKeywords">Palabra clave de acción</system:String>
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
-    <system:String x:Key="newActionKeyword">Nueva palabra clave de la acción</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Cambiar palabras clave de la acción</system:String>
+    <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Cambiar palabras clave de acción</system:String>
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
-    <system:String x:Key="pluginDirectory">Carpeta de complementos</system:String>
+    <system:String x:Key="pluginDirectory">Directorio de complementos</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
     <system:String x:Key="plugin_query_time">Tiempo de consulta:</system:String>
@@ -78,7 +78,7 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
-    <system:String x:Key="refresh">Recargar</system:String>
+    <system:String x:Key="refresh">Refrescar</system:String>
     <system:String x:Key="install">Instalar</system:String>
 
     <!--  Setting Theme  -->
@@ -86,7 +86,7 @@
     <system:String x:Key="browserMoreThemes">Galería de temas</system:String>
     <system:String x:Key="howToCreateTheme">Cómo crear un tema</system:String>
     <system:String x:Key="hiThere">Hola</system:String>
-    <system:String x:Key="queryBoxFont">Fuente de la caja de búsqueda</system:String>
+    <system:String x:Key="queryBoxFont">Fuente del cuadro de consulta</system:String>
     <system:String x:Key="resultItemFont">Fuente de los resultados</system:String>
     <system:String x:Key="windowMode">Modo ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
@@ -101,17 +101,17 @@
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproducir un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
-    <system:String x:Key="AnimationTip">Usar animación en la IU</system:String>
+    <system:String x:Key="AnimationTip">Utilizar animación en la Interfaz de Usuario</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Atajo de teclado</system:String>
-    <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
-    <system:String x:Key="openResultModifiers">Tecla modificadora de apertura de resultado</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
-    <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar atajo de apertura en los resultados.</system:String>
-    <system:String x:Key="customQueryHotkey">Atajos de búsqueda personalizada</system:String>
+    <system:String x:Key="hotkey">Tecla de acceso directo</system:String>
+    <system:String x:Key="flowlauncherHotkey">Tecla de acceso directo de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Introducir acceso directo para mostrar/ocultar Flow Launcher.</system:String>
+    <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Seleccionar tecla modificadora para abrir el resultado seleccionado mediante el teclado.</system:String>
+    <system:String x:Key="showOpenResultHotkey">Mostrar tecla de acceso directo</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de acceso directo de selección en los resultados.</system:String>
+    <system:String x:Key="customQueryHotkey">Tecla de acceso directo a la consulta personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="delete">Borrar</system:String>
     <system:String x:Key="edit">Editar</system:String>
