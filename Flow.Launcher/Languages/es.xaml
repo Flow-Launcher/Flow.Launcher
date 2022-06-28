@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">No se ha podido registrar la tecla de acceso directo: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del plugin Flow Launcher no válido</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Establecer como primer resultado en esta consulta</system:String>
@@ -20,7 +20,7 @@
     <system:String x:Key="folderTitle">Carpeta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
     <system:String x:Key="GameMode">Modo Juego</system:String>
-    <system:String x:Key="GameModeToolTip">Suspender el uso de teclas de acceso directo.</system:String>
+    <system:String x:Key="GameModeToolTip">Suspender el uso de atajos de teclado.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
@@ -33,12 +33,12 @@
     <system:String x:Key="rememberLastLocation">Recordar última posición de Flow Launcher</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Mostrar/Ocultar resultados anteriores cuando Flow Launcher es reactivado.</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
     <system:String x:Key="LastQueryPreserved">Conservar la última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de acceso directo en modo pantalla completa</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactiva Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos por defecto</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
@@ -101,23 +101,23 @@
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
-    <system:String x:Key="AnimationTip">Utilizar animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="AnimationTip">Utiliza animación en la Interfaz de Usuario</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Tecla de acceso directo</system:String>
-    <system:String x:Key="flowlauncherHotkey">Tecla de acceso directo de Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Introducir acceso directo para mostrar/ocultar Flow Launcher.</system:String>
+    <system:String x:Key="hotkey">Atajos de teclado</system:String>
+    <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Seleccionar tecla modificadora para abrir el resultado seleccionado mediante el teclado.</system:String>
-    <system:String x:Key="showOpenResultHotkey">Mostrar tecla de acceso directo</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de acceso directo de selección en los resultados.</system:String>
-    <system:String x:Key="customQueryHotkey">Tecla de acceso directo a la consulta personalizada</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
+    <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
+    <system:String x:Key="customQueryHotkey">Atajos de teclado de consulta personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="delete">Borrar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">¿Estás seguro de que quieres eliminar el atajo de teclado {0}?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado del complemento {0}?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
@@ -190,7 +190,7 @@
     <system:String x:Key="oldActionKeywords">Palabra clave de acción antigua</system:String>
     <system:String x:Key="newActionKeywords">Palabra clave de acción nueva</system:String>
     <system:String x:Key="cancel">Cancelar</system:String>
-    <system:String x:Key="done">Hecho</system:String>
+    <system:String x:Key="done">Aceptar</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">No se puede encontrar el complemento especificado</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">La nueva palabra clave de acción no puede estar vacía</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta nueva palabra clave de acción ya está asignada a otro complemento, por favor elija una diferente</system:String>
@@ -253,20 +253,20 @@
     <system:String x:Key="Skip">Omitir</system:String>
     <system:String x:Key="Welcome_Page1_Title">Bienvenido a Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Hola, ¡es la primera vez que ejecuta Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Antes de comenzar, este asistente te ayudará a configurar Flow Launcher. Puedes saltártelo si quieres. Por favor, elige un idioma</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Busca y ejecuta los archivos y aplicaciones en tu equipo</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Busca cualquier cosa desde aplicaciones, archivos, marcadores, YouTube, Twitter y mucho más. Todo desde la comodidad de tu teclado sin tocar el ratón.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher se inicia con el atajo de teclado abajo indicado, el cual puedes probar ya mismo. Para cambiarlo, haz clic en la caja de texto y presiona la nueva combinación de teclas.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Atajo de teclado</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Antes de empezar, este asistente le ayudará a configurar Flow Launcher. Puede omitirlo si lo desea. Por favor, elija un idioma</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Busque y ejecute archivos y aplicaciones en el equipo</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Busque todo, desde aplicaciones, archivos, marcadores, YouTube, Twitter y más. Todo desde la comodidad del teclado y sin tener que tocar el ratón.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher se inicia con el atajo de teclado que se muestra a continuación, anímese y pruébelo ahora. Para cambiarlo, haga clic en la caja de texto y presione la nueva combinación de teclas.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Atajos de teclado</system:String>
     <system:String x:Key="Welcome_Page4_Title">Palabra clave de acción y comandos</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Busque en la web, inicie aplicaciones o ejecute diversas funciones mediante los complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción y, si es necesario, pueden utilizarse sin ellas. Pruebe las siguientes consultas en Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Iniciemos Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides el atajo de teclado para empezar :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Finalizado. Disfrute de Flow Launcher. No olvide utilizar el atajo de teclado para iniciar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
     <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú contextual</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Navegación de elementos</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navegación entre elementos</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
@@ -275,7 +275,7 @@
     <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
     <system:String x:Key="HotkeyRunDesc">Abrir / Ejecutar elemento seleccionado</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Abrir ventana de configuración</system:String>
-    <system:String x:Key="HotkeyF5Desc">Recargar datos del complemento</system:String>
+    <system:String x:Key="HotkeyF5Desc">Refrescar datos del complemento</system:String>
 
     <system:String x:Key="RecommendWeather">El tiempo</system:String>
     <system:String x:Key="RecommendWeatherDesc">El tiempo en Google</system:String>
