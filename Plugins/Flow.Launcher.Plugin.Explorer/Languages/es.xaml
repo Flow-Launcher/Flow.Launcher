@@ -24,7 +24,7 @@
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Enlaces de acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utilizar búsqueda indexada para buscar rutas</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Al activar esta opción, los directorios/archivos indexados se mostrarán más rápidamente, pero si un directorio/archivo no está indexado, no se mostrará. Si se ha agregado un directorio/archivo a la Ruta Excluida de Búsqueda por Índice (Index Search Excluded Path), seguirá apareciendo incluso si la opción está activada</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Ruta de búsqueda:</system:String>
