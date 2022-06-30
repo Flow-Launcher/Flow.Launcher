@@ -430,7 +430,7 @@ namespace Flow.Launcher
         private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                RefreshPluginListEventHandler(sender, e);
+                RefreshPluginStoreEventHandler(sender, e);
         }
 
         private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
