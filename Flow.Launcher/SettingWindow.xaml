@@ -878,8 +878,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem
-                    KeyDown="OnPluginSettingKeydown">
+                <TabItem KeyDown="OnPluginSettingKeydown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -925,10 +924,10 @@
                                         HorizontalAlignment="Right"
                                         DockPanel.Dock="Right"
                                         FontSize="14"
-                                        Text=""
-                                        TextAlignment="Left"
+                                        KeyDown="PluginFilterTxb_OnKeyDown"
                                         LostFocus="RefreshPluginListEventHandler"
-                                        KeyDown="PluginFilterTxb_OnKeyDown">
+                                        Text=""
+                                        TextAlignment="Left">
                                         <TextBox.Style>
                                             <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
                                                 <Style.Resources>
@@ -1344,6 +1343,9 @@
                                 HorizontalAlignment="Right"
                                 DockPanel.Dock="Right"
                                 FontSize="14"
+                                Name="pluginStoreFilterTxb"
+                                KeyDown="PluginFilterTxb_OnKeyDown"
+                                LostFocus="RefreshPluginStoreEventHandler"
                                 Text=""
                                 TextAlignment="Left">
                                 <TextBox.Style>

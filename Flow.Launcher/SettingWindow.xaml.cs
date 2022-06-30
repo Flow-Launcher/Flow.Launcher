@@ -59,7 +59,10 @@ namespace Flow.Launcher
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
 
             pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(pluginList.ItemsSource);
-            pluginListView.Filter = PluginFilter;
+            pluginListView.Filter = PluginListFilter;
+
+            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
+            pluginStoreView.Filter = PluginStoreFilter;
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
@@ -381,8 +384,9 @@ namespace Flow.Launcher
         }
 
         private CollectionView pluginListView;
+        private CollectionView pluginStoreView;
 
-        private bool PluginFilter(object item)
+        private bool PluginListFilter(object item)
         {
             if (string.IsNullOrEmpty(pluginFilterTxb.Text))
                 return true;
@@ -392,18 +396,44 @@ namespace Flow.Launcher
             }
             return false;
         }
+        private bool PluginStoreFilter(object item)
+        {
+            if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
+                return true;
+            if (item is UserPlugin model)
+            {
+                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet();
+            }
+            return false;
+        }
 
-        private string lastSearch = "";
+        private string lastPluginListSearch = "";
+        private string lastPluginStoreSearch = "";
 
         private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
         {
-            if (pluginFilterTxb.Text != lastSearch)
+            if (pluginFilterTxb.Text != lastPluginListSearch)
             {
-                lastSearch = pluginFilterTxb.Text;
+                lastPluginListSearch = pluginFilterTxb.Text;
                 pluginListView.Refresh();
             }
         }
+
+        private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
+            {
+                lastPluginStoreSearch = pluginStoreFilterTxb.Text;
+                pluginStoreView.Refresh();
+            }
+        }
         private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginListEventHandler(sender, e);
+        }
+
+        private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
                 RefreshPluginListEventHandler(sender, e);
