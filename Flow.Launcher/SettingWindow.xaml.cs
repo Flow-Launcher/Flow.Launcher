@@ -240,7 +240,7 @@ namespace Flow.Launcher
                     var uri = new Uri(website);
                     if (Uri.CheckSchemeName(uri.Scheme))
                     {
-                        website.NewTabInBrowser();
+                        website.OpenInBrowserTab();
                     }
                 }
             }

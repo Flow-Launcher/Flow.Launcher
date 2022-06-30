@@ -1,0 +1,67 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--Dialogues-->
+    <system:String x:Key="plugin_explorer_make_selection_warning">Por favor, seleccione primero</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">¿Estás seguro de que quieres eliminar {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Estás seguro que quieres eliminar permanentemente este {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminado correctamente</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">El {0} fué eliminado correctamente</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Asignar una palabra clave para acciones global podría mostrar demasiados resultados en las búsquedas. Por favor, seleccione una palabra clave específica</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">El acceso rápido no puede usar la palabra clave para acciones global cuando está habilitado. Por favor, elija una palabra clave específica</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">El servicio requerido de indexación de búsqueda de Windows no parece estar ejecutándose</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Para solventarlo, inicia el servicio de búsqueda de Windows. Selecciona aquí para eliminar esta advertencia</system:String>
+    <system:String x:Key="plugin_explorer_alternative">El mensaje de advertencia se ha desactivado. Como alternativa para buscar archivos y carpetas, ¿te gustaría instalar el complemento Everything?{0}{0}Selecciona 'Sí' para instalar el complemento Everythong, o 'No' para volver</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Explorador alternativo</system:String>
+
+    <!--Controls-->
+    <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
+    <system:String x:Key="plugin_explorer_edit">Editar</system:String>
+    <system:String x:Key="plugin_explorer_add">Añadir</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palabras clave de acción</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Enlaces de acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Ruta de búsqueda:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Búsqueda de contenido de archivo:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Buscar índice:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Acceso rápido:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Palabra clave de acción actual</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Listo</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Activado</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Cuando esté deshabilitado Flow no ejecutará la opción de búsqueda, y además usará '*' para no dejar en uso la palabra clave de la acción</system:String>
+
+    <!--Plugin Infos-->
+    <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Busca y gestiona archivos y carpetas. El explorador utiliza el índice de búsqueda de Windows</system:String>
+
+    <!--Context menu items-->
+    <system:String x:Key="plugin_explorer_copypath">Copiar ruta</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Eliminar</system:String>
+    <system:String x:Key="plugin_explorer_path">Ruta:</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Eliminar el seleccionado</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">Ejecutar como usuario diferente</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecutar lo seleccionado usando una cuenta de usuario diferente</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación del archivo o carpeta</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir la carpeta actual y sus subcarpetas del índice de búsqueda</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluido del índice de búsqueda</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opciones de indexación de Windows</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Administrar archivos y carpetas indexados</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Error al abrir las opciones de indexación de Windows</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Añadir al acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añadir el {0} actual al acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Añadido correctamente</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Añadido correctamente al acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Eliminado correctamente</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Eliminado correctamente del acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Añadir al acceso rápido para que se pueda abrir con la palabra clave de acción de la búsqueda del explorador de windows</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Eliminar del acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Eliminar el {0} actual del acceso rápido</system:String>
+
+</ResourceDictionary>

@@ -25,7 +25,7 @@ namespace Flow.Launcher.Helper
 
         internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            if (!mainViewModel.GameModeStatus)
+            if (!mainViewModel.ShouldIgnoreHotkeys() && !mainViewModel.GameModeStatus)
                 mainViewModel.ToggleFlowLauncher();
         }
 

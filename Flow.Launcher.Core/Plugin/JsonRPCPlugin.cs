@@ -354,7 +354,9 @@ namespace Flow.Launcher.Core.Plugin
             this.context = context;
             await InitSettingAsync();
         }
-        private static readonly Thickness settingControlMargin = new(10);
+        private static readonly Thickness settingControlMargin = new(10, 4, 10, 4);
+        private static readonly Thickness settingPanelMargin = new(15, 20, 15, 20);
+        private static readonly Thickness settingTextBlockMargin = new(10, 4, 10, 4);
         private JsonRpcConfigurationModel _settingsTemplate;
         public Control CreateSettingPanel()
         {
@@ -363,7 +365,7 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new StackPanel
             {
-                Margin = settingControlMargin,
+                Margin = settingPanelMargin,
                 Orientation = Orientation.Vertical
             };
             settingWindow.Content = mainPanel;
@@ -375,10 +377,13 @@ namespace Flow.Launcher.Core.Plugin
                     Orientation = Orientation.Horizontal,
                     Margin = settingControlMargin
                 };
-                var name = new Label()
+                var name = new TextBlock()
                 {
-                    Content = attribute.Label,
-                    Margin = settingControlMargin
+                    Text = attribute.Label,
+                    Width = 120,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = settingControlMargin,
+                    TextWrapping = TextWrapping.WrapWithOverflow
                 };
 
                 FrameworkElement contentControl;
@@ -390,8 +395,8 @@ namespace Flow.Launcher.Core.Plugin
                             contentControl = new TextBlock
                             {
                                 Text = attribute.Description.Replace("\\r\\n", "\r\n"),
-                                Margin = settingControlMargin,
-                                MaxWidth = 400,
+                                Margin = settingTextBlockMargin,
+                                MaxWidth = 500,
                                 TextWrapping = TextWrapping.WrapWithOverflow
                             };
                             break;
