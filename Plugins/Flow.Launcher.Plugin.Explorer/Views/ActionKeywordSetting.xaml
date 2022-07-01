@@ -96,7 +96,7 @@
                         Name="ChkActionKeywordEnabled"
                         Width="auto"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding Enabled}"
+                        IsChecked="{Binding KeywordEnabled}"
                         ToolTip="{DynamicResource plugin_explorer_actionkeyword_enabled_tooltip}" />
                 </StackPanel>
             </StackPanel>

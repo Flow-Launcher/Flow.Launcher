@@ -5,6 +5,7 @@ using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -14,14 +15,14 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         public int MaxResult { get; set; } = 100;
 
-        public List<AccessLink> QuickAccessLinks { get; set; } = new List<AccessLink>();
+        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new ();
 
         // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
-        public List<AccessLink> QuickFolderAccessLinks { get; set; } = new List<AccessLink>();
+        public ObservableCollection<AccessLink> QuickFolderAccessLinks { get; set; } = new ();
 
         public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
 
-        public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
+        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 

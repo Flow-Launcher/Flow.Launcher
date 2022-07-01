@@ -81,7 +81,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             string searchString,
             Func<CSearchQueryHelper> createQueryHelper,
             Func<string, string> constructQuery,
-            List<AccessLink> exclusionList,
+            IEnumerable<AccessLink> exclusionList,
             CancellationToken token)
         {
             var regexMatch = Regex.Match(searchString, ReservedStringPattern);

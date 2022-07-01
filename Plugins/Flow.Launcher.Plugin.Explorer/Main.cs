@@ -44,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer
             if (Settings.QuickFolderAccessLinks.Any())
             {
                 Settings.QuickAccessLinks = Settings.QuickFolderAccessLinks;
-                Settings.QuickFolderAccessLinks = new List<AccessLink>();
+                Settings.QuickFolderAccessLinks = new();
             }
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
