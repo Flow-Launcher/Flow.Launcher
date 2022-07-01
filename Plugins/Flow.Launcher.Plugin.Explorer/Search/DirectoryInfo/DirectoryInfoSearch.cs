@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -81,8 +81,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                Log.Exception("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
-                throw;
+                Log.Exception(nameof(DirectoryInfoSearch), "Error occured while searching path", e);
+                
+                results.Add(
+                    new Result
+                    {
+                        Title = string.Format(SearchManager.Context.API.GetTranslation(
+                                                "plugin_explorer_directoryinfosearch_error"),
+                                                e.Message),
+                        Score = 501, 
+                        IcoPath = Constants.ExplorerIconImagePath
+                    });
+
+                return results;
             }
 
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.

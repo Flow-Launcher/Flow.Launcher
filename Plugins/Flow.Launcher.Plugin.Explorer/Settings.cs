@@ -20,7 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer
         // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
         public ObservableCollection<AccessLink> QuickFolderAccessLinks { get; set; } = new ();
 
-        public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
+        public bool UseWindowsIndexForDirectorySearch { get; set; } = false;
 
         public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 

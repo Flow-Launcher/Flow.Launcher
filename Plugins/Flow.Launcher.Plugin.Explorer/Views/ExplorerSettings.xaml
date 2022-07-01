@@ -64,6 +64,12 @@
                 <Expander 
                     Header="{DynamicResource plugin_explorer_generalsetting_header}">
                     <StackPanel Orientation="Vertical">
+                        <CheckBox
+                            Name="UseWindowsIndexForDirectorySearch"
+                            Margin="12,10,0,0"
+                            Content="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch}"
+                            IsChecked="{Binding UseWindowsIndexForDirectorySearch}"
+                            ToolTip="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch_tooltip}" />
                         <ComboBox
                             Width="200"
                             ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
@@ -135,6 +141,8 @@
                             Name="lbxExcludedPaths"
                             AllowDrop="True"
                             DockPanel.Dock="Top"
+                            DragEnter="lbxAccessLinks_DragEnter"
+                            Drop="lbxAccessLinks_Drop"
                             ItemTemplate="{StaticResource ListViewActionKeywords}"
                             ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
                             SelectedItem="{Binding SelectedIndexSearchExcludedPath}" />
