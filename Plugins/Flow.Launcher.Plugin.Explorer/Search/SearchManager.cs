@@ -53,9 +53,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (string.IsNullOrEmpty(query.Search))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
 
-                var quickaccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+                var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
-                results.UnionWith(quickaccessLinks);
+                results.UnionWith(quickAccessLinks);
             }
 
             IEnumerable<SearchResult> searchResults;
@@ -164,7 +164,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var recursiveIndicatorIndex = query.Search.IndexOf('>');
 
-            if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathTraversalEngineOption.Direct)
+            if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathEnumerationEngineOption.Direct)
             {
                 directoryResult =
                     await Settings.PathEnumerator.EnumerateAsync(query.Search[..recursiveIndicatorIndex],
@@ -176,7 +176,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
             else
             {
-                directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token);
+                try
+                {
+                    directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token);
+                }
+                catch (Exception e)
+                {
+                    results.Add(
+                        new Result
+                        {
+                            Title = string.Format(SearchManager.Context.API.GetTranslation(
+                                    "plugin_explorer_directoryinfosearch_error"),
+                                e.Message),
+                            Score = 501, 
+                            IcoPath = Constants.ExplorerIconImagePath
+                        });
+                    directoryResult = new List<SearchResult>();
+                }
             }
 
 

@@ -83,17 +83,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             {
                 Log.Exception(nameof(DirectoryInfoSearch), "Error occured while searching path", e);
                 
-                results.Add(
-                    new Result
-                    {
-                        Title = string.Format(SearchManager.Context.API.GetTranslation(
-                                                "plugin_explorer_directoryinfosearch_error"),
-                                                e.Message),
-                        Score = 501, 
-                        IcoPath = Constants.ExplorerIconImagePath
-                    });
-
-                return results;
+                throw;
             }
 
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.

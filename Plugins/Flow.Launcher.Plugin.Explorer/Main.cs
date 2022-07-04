@@ -1,4 +1,5 @@
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
@@ -16,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer
 {
     public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
     {
-        internal PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; }
 
         internal Settings Settings;
 
@@ -50,6 +51,9 @@ namespace Flow.Launcher.Plugin.Explorer
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
+
+            SortOptionTranslationHelper.API = context.API;
+            
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "Everything64.dll" : "Everything86.dll"));
             return Task.CompletedTask;

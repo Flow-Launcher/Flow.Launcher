@@ -1,27 +1,41 @@
 ﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Views;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
-    public class SettingsViewModel
+    public class SettingsViewModel : BaseModel
     {
         public Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
 
+        public IReadOnlyList<EnumBindingModel<Settings.IndexSearchEngineOption>> IndexSearchEngines { get; set; }
+        public IReadOnlyList<EnumBindingModel<Settings.ContentIndexSearchEngineOption>> ContentIndexSearchEngines { get; set; }
+        public IReadOnlyList<EnumBindingModel<Settings.PathEnumerationEngineOption>> PathEnumerationEngines { get; set; }
+
         public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
+
+            InitializeEngineSelection();
+            InitializeActionKeywordModels();
         }
 
 
@@ -30,16 +44,83 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Context.API.SaveSettingJsonStorage<Settings>();
         }
 
+        #region Engine Selection
 
-        public AccessLink SelectedQuickAccessLink { get; set; }
-        public AccessLink SelectedIndexSearchExcludedPath { get; set; }
+        private EnumBindingModel<Settings.IndexSearchEngineOption> _selectedIndexSearchEngine;
+        private EnumBindingModel<Settings.ContentIndexSearchEngineOption> _selectedContentSearchEngine;
+        private EnumBindingModel<Settings.PathEnumerationEngineOption> _selectedPathEnumerationEngine;
+
+
+        public EnumBindingModel<Settings.IndexSearchEngineOption> SelectedIndexSearchEngine
+        {
+            get => _selectedIndexSearchEngine;
+            set
+            {
+                _selectedIndexSearchEngine = value;
+                Settings.IndexSearchEngine = value.Value;
+                OnPropertyChanged();
+            }
+        }
+
+        public EnumBindingModel<Settings.ContentIndexSearchEngineOption> SelectedContentSearchEngine
+        {
+            get => _selectedContentSearchEngine;
+            set
+            {
+                _selectedContentSearchEngine = value;
+                Settings.ContentSearchEngine = value.Value;
+                OnPropertyChanged();
+            }
+        }
+
+        public EnumBindingModel<Settings.PathEnumerationEngineOption> SelectedPathEnumerationEngine
+        {
+            get => _selectedPathEnumerationEngine;
+            set
+            {
+                _selectedPathEnumerationEngine = value;
+                Settings.PathEnumerationEngine = value.Value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void InitializeEngineSelection()
+        {
+            IndexSearchEngines = EnumBindingModel<Settings.IndexSearchEngineOption>.CreateList();
+            ContentIndexSearchEngines = EnumBindingModel<Settings.ContentIndexSearchEngineOption>.CreateList();
+            PathEnumerationEngines = EnumBindingModel<Settings.PathEnumerationEngineOption>.CreateList();
+
+            SelectedIndexSearchEngine = IndexSearchEngines.FirstOrDefault(x => x.Value == Settings.IndexSearchEngine);
+            _selectedContentSearchEngine = ContentIndexSearchEngines.FirstOrDefault(x => x.Value == Settings.ContentSearchEngine);
+            _selectedPathEnumerationEngine = PathEnumerationEngines.FirstOrDefault(x => x.Value == Settings.PathEnumerationEngine);
+        }
+
+        #endregion
+
+
+
+        #region ActionKeyword
+
+        private void InitializeActionKeywordModels()
+        {
+            ActionKeywordsModels = new List<ActionKeywordModel>
+            {
+                new(Settings.ActionKeyword.SearchActionKeyword,
+                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_search")),
+                new(Settings.ActionKeyword.FileContentSearchActionKeyword,
+                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch")),
+                new(Settings.ActionKeyword.PathSearchActionKeyword,
+                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_pathsearch")),
+                new(Settings.ActionKeyword.IndexSearchActionKeyword,
+                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexsearch")),
+                new(Settings.ActionKeyword.QuickAccessActionKeyword,
+                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_quickaccess"))
+            };
+        }
+
+        public IReadOnlyList<ActionKeywordModel> ActionKeywordsModels { get; set; }
+
         public ActionKeywordModel SelectedActionKeyword { get; set; }
-
-
-
-        public ICommand RemoveLinkCommand => new RelayCommand(RemoveLink);
-        public ICommand EditLinkCommand => new RelayCommand(EditLink);
-        public ICommand AddLinkCommand => new RelayCommand(AddLink);
 
         public ICommand EditActionKeywordCommand => new RelayCommand(EditActionKeyword);
 
@@ -53,130 +134,116 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
             var actionKeywordWindow = new ActionKeywordSetting(actionKeyword, Context.API);
 
-            if (actionKeywordWindow.ShowDialog() ?? false)
+            if (!(actionKeywordWindow.ShowDialog() ?? false))
             {
-                if (actionKeyword.Enabled && !actionKeywordWindow.KeywordEnabled)
-                {
+                return;
+            }
+
+            switch (actionKeyword.Enabled, actionKeywordWindow.KeywordEnabled)
+            {
+                case (true, false):
                     Context.API.RemoveActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
-                }
-                else if (!actionKeyword.Enabled && actionKeywordWindow.KeywordEnabled)
-                {
-                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
-                }
-                else if (actionKeyword.Enabled && actionKeywordWindow.KeywordEnabled)
-                {
+                    break;
+                case (true, true):
                     // same keyword will have dialog result false
                     Context.API.RemoveActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
                     Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeywordWindow.ActionKeyword);
-                }
-
-                (actionKeyword.Keyword, actionKeyword.Enabled) = (actionKeywordWindow.ActionKeyword, actionKeywordWindow.KeywordEnabled);
+                    break;
+                case (false, true):
+                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
+                    break;
+                case (false, false):
+                    throw new ArgumentException(
+                        $"Both false in {nameof(actionKeyword)}.{nameof(actionKeyword.Enabled)} and {nameof(actionKeywordWindow)}.{nameof(actionKeywordWindow.KeywordEnabled)} should suggest that the ShowDialog() result is false");
             }
+
+            (actionKeyword.Keyword, actionKeyword.Enabled) = (actionKeywordWindow.ActionKeyword, actionKeywordWindow.KeywordEnabled);
 
         }
 
-        private AccessLink? PromptUserSelectPath(ResultType type, string initialDirectory = null)
+        #endregion
+
+        #region AccessLinks
+
+        public AccessLink SelectedQuickAccessLink { get; set; }
+        public AccessLink SelectedIndexSearchExcludedPath { get; set; }
+
+
+
+        public ICommand RemoveLinkCommand => new RelayCommand(RemoveLink);
+        public ICommand EditLinkCommand => new RelayCommand(EditLink);
+        public ICommand AddLinkCommand => new RelayCommand(AddLink);
+
+        public void AppendLink(string containerName, AccessLink link)
         {
-            AccessLink newAccessLink = null;
-
-            if (type is ResultType.Folder)
+            var container = containerName switch
             {
-                var folderBrowserDialog = new FolderBrowserDialog();
-
-                if (initialDirectory is not null)
-                    folderBrowserDialog.InitialDirectory = initialDirectory;
-
-                if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
-                    return newAccessLink;
-
-                newAccessLink = new AccessLink { Path = folderBrowserDialog.SelectedPath };
-            }
-            else if (type is ResultType.File)
-            {
-                var openFileDialog = new OpenFileDialog();
-                if (initialDirectory is not null)
-                    openFileDialog.InitialDirectory = initialDirectory;
-
-                if (openFileDialog.ShowDialog() != DialogResult.OK)
-                    return newAccessLink;
-
-                newAccessLink = new AccessLink { Path = openFileDialog.FileName };
-            }
-            return newAccessLink;
+                "QuickAccessLink" => Settings.QuickAccessLinks,
+                "IndexSearchExcludedPath" => Settings.IndexSearchExcludedSubdirectoryPaths,
+                _ => throw new ArgumentException($"Unknown container name: {containerName}")
+            };
+            container.Add(link);
         }
 
-        private void EditLink(object obj)
+        private void EditLink(object commandParameter)
         {
-            if (obj is not string container) return;
-
-            AccessLink selectedLink;
-            ObservableCollection<AccessLink> collection;
-
-            switch (container)
+            (AccessLink selectedLink, ObservableCollection<AccessLink> collection) = commandParameter switch
             {
-                case "QuickAccessLink":
-                    if (SelectedQuickAccessLink == null)
-                    {
-                        ShowUnselectedMessage();
-                        return;
-                    }
-                    selectedLink = SelectedQuickAccessLink;
-                    collection = Settings.QuickAccessLinks;
-                    break;
-                case "IndexSearchExcludedPaths":
-                    if (SelectedIndexSearchExcludedPath == null)
-                    {
-                        ShowUnselectedMessage();
-                        return;
-                    }
-                    selectedLink = SelectedIndexSearchExcludedPath;
-                    collection = Settings.IndexSearchExcludedSubdirectoryPaths;
-                    break;
-                default:
-                    return;
+                "QuickAccessLink" => (SelectedQuickAccessLink, Settings.QuickAccessLinks),
+                "IndexSearchExcludedPath" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
+                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
+            };
+
+            if (selectedLink is null)
+            {
+                ShowUnselectedMessage();
+                return;
             }
 
-            var link = PromptUserSelectPath(selectedLink.Type,
+            var path = PromptUserSelectPath(selectedLink.Type,
                 selectedLink.Type == ResultType.Folder
                     ? selectedLink.Path
                     : Path.GetDirectoryName(selectedLink.Path));
 
-            if (link is null)
+            if (path is null)
                 return;
 
             collection.Remove(selectedLink);
-            collection.Add(link);
+            collection.Add(new AccessLink
+            {
+                Path = path, Type = selectedLink.Type,
+            });
         }
 
         private void ShowUnselectedMessage()
         {
-            string warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
             MessageBox.Show(warning);
         }
 
-        private void AddLink(object obj)
+
+        private void AddLink(object commandParameter)
         {
-            if (obj is not string container) return;
+            var container = commandParameter switch
+            {
+                "QuickAccessLink" => Settings.QuickAccessLinks,
+                "IndexSearchExcludedPaths" => Settings.IndexSearchExcludedSubdirectoryPaths,
+                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
+            };
+
+            ArgumentNullException.ThrowIfNull(container);
 
             var folderBrowserDialog = new FolderBrowserDialog();
 
             if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            var newAccessLink = new AccessLink { Path = folderBrowserDialog.SelectedPath };
-
-
-            switch (container)
+            var newAccessLink = new AccessLink
             {
-                case "QuickAccessLink":
-                    if (SelectedQuickAccessLink == null) return;
-                    Settings.QuickAccessLinks.Add(newAccessLink);
-                    break;
-                case "IndexSearchExcludedPaths":
-                    if (SelectedIndexSearchExcludedPath == null) return;
-                    Settings.IndexSearchExcludedSubdirectoryPaths.Add(newAccessLink);
-                    break;
-            }
+                Path = folderBrowserDialog.SelectedPath
+            };
+
+            container.Add(newAccessLink);
         }
 
         private void RemoveLink(object obj)
@@ -197,11 +264,38 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Save();
         }
 
+        #endregion
 
+        private string? PromptUserSelectPath(ResultType type, string initialDirectory = null)
+        {
+            string path = null;
 
-        internal void RemoveLinkFromQuickAccess(AccessLink selectedRow) => Settings.QuickAccessLinks.Remove(selectedRow);
+            if (type is ResultType.Folder)
+            {
+                var folderBrowserDialog = new FolderBrowserDialog();
 
-        internal void RemoveAccessLinkFromExcludedIndexPaths(AccessLink selectedRow) => Settings.IndexSearchExcludedSubdirectoryPaths.Remove(selectedRow);
+                if (initialDirectory is not null)
+                    folderBrowserDialog.InitialDirectory = initialDirectory;
+
+                if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
+                    return path;
+
+                path = folderBrowserDialog.SelectedPath;
+            }
+            else if (type is ResultType.File)
+            {
+                var openFileDialog = new OpenFileDialog();
+                if (initialDirectory is not null)
+                    openFileDialog.InitialDirectory = initialDirectory;
+
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
+                    return path;
+
+                path = openFileDialog.FileName;
+            }
+            return path;
+        }
+
 
         internal static void OpenWindowsIndexingOptions()
         {
@@ -215,22 +309,69 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        internal void UpdateActionKeyword(Settings.ActionKeyword modifiedActionKeyword, string newActionKeyword, string oldActionKeyword) =>
-            PluginManager.ReplaceActionKeyword(Context.CurrentPluginMetadata.ID, oldActionKeyword, newActionKeyword);
+        public bool UseWindowsIndexForDirectorySearch
+        {
+            get => Settings.UseWindowsIndexForDirectorySearch;
+            set => Settings.UseWindowsIndexForDirectorySearch = value;
+        }
+        public ICommand OpenEditorPath => new RelayCommand(_ =>
+        {
+            var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
+            if (path is null)
+                return;
 
-        internal bool IsActionKeywordAlreadyAssigned(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+            EditorPath = path;
+        });
 
-        internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
-
-        public bool UseWindowsIndexForDirectorySearch {
-            get
-            {
-                return Settings.UseWindowsIndexForDirectorySearch;
-            }
+        public string EditorPath
+        {
+            get => Settings.EditorPath;
             set
             {
-                Settings.UseWindowsIndexForDirectorySearch = value;
+                Settings.EditorPath = value;
+                OnPropertyChanged();
             }
         }
+
+
+        #region Everything FastSortWarning
+
+        public Visibility FastSortWarningVisibility
+        {
+            get
+            {
+                try
+                {
+                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? Visibility.Collapsed : Visibility.Visible;
+                }
+                catch (IPCErrorException)
+                {
+                    // this error occurs if the Everything service is not running, in this instance show the warning and
+                    // update the message to let user know in the settings panel.
+                    return Visibility.Visible;
+                }
+            }
+        }
+        public string SortOptionWarningMessage
+        {
+            get
+            {
+                try
+                {
+                    // this method is used to determine if Everything service is running because as at Everything v1.4.1
+                    // the sdk does not provide a dedicated interface to determine if it is running.
+                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? string.Empty
+                        : Context.API.GetTranslation("flowlauncher_plugin_everything_nonfastsort_warning");
+                }
+                catch (IPCErrorException)
+                {
+                    return Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running");
+                }
+            }
+        }
+
+        #endregion
+
+
     }
 }

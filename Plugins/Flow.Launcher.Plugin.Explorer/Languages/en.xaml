@@ -24,7 +24,12 @@
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as executable working directory</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
@@ -37,7 +42,11 @@
     <system:String x:Key="plugin_explorer_actionkeyword_done">Done</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
-
+    <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    
+    
     <!--Plugin Infos-->
     <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Search and manage files and folders. Explorer utilises Windows Index Search</system:String>

@@ -6,6 +6,7 @@ using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -15,14 +16,22 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         public int MaxResult { get; set; } = 100;
 
-        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new ();
+        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
 
         // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
-        public ObservableCollection<AccessLink> QuickFolderAccessLinks { get; set; } = new ();
+        public ObservableCollection<AccessLink> QuickFolderAccessLinks { get; set; } = new();
+
+        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
+
+        public string EditorPath { get; set; } = "";
+
+
+        public bool UseLocationAsWorkingDir { get; set; } = false;
+
+        public bool ShowWindowsContextMenu { get; set; } = true;
 
         public bool UseWindowsIndexForDirectorySearch { get; set; } = false;
 
-        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
@@ -44,76 +53,86 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool QuickAccessKeywordEnabled { get; set; }
 
+        public bool LaunchHidden { get; set; } = false;
+
+
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
-        private IReadOnlyList<IIndexProvider> _indexProviders;
-        private IReadOnlyList<IContentIndexProvider> _fileContentIndexProviders;
-        private IReadOnlyList<IPathEnumerable> _pathEnumerables;
-        public Settings()
-        {
-            var everythingManager = new EverythingSearchManager(this);
-            var windowsIndexManager = new WindowsIndexSearchManager(this);
-            
-            _indexProviders = new List<IIndexProvider>()
-            {
-                everythingManager,
-                windowsIndexManager
-            };
+        private EverythingSearchManager _everythingManagerInstance;
+        private WindowsIndexSearchManager _windowsIndexSearchManager;
 
-            _pathEnumerables = new List<IPathEnumerable>()
-            {
-                everythingManager,
-                windowsIndexManager
-            };
+        #region SearchEngine
 
-            _fileContentIndexProviders = new List<IContentIndexProvider>
-            {
-                windowsIndexManager,
-                everythingManager,
-            };
-        }
-        
+        public PathEnumerationEngineOption PathEnumerationEngine { get; set; }
+
+        private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
+        private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
+
+
         public IndexSearchEngineOption IndexSearchEngine { get; set; }
         [JsonIgnore]
-        public IIndexProvider IndexProvider => _indexProviders[(int)IndexSearchEngine];
-        
-        public PathTraversalEngineOption PathEnumerationEngine { get; set; }
+        public IIndexProvider IndexProvider => IndexSearchEngine switch
+        {
+            IndexSearchEngineOption.Everything => EverythingManagerInstance,
+            IndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
+            _ => throw new ArgumentOutOfRangeException(nameof(IndexSearchEngine))
+        };
+
         [JsonIgnore]
-        public IPathEnumerable PathEnumerator => _pathEnumerables[(int)PathEnumerationEngine];
+        public IPathEnumerable PathEnumerator => PathEnumerationEngine switch
+        {
+            PathEnumerationEngineOption.Everything => EverythingManagerInstance,
+            PathEnumerationEngineOption.WindowsIndex => WindowsIndexSearchManager,
+            _ => throw new ArgumentOutOfRangeException(nameof(PathEnumerationEngine))
+        };
 
         public ContentIndexSearchEngineOption ContentSearchEngine { get; set; }
         [JsonIgnore]
-        public IContentIndexProvider ContentIndexProvider => _fileContentIndexProviders[(int)ContentSearchEngine];
-        
-        public enum PathTraversalEngineOption
+        public IContentIndexProvider ContentIndexProvider => ContentSearchEngine switch
         {
+            ContentIndexSearchEngineOption.Everything => EverythingManagerInstance,
+            ContentIndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
+            _ => throw new ArgumentOutOfRangeException(nameof(ContentSearchEngine))
+        };
+
+        public enum PathEnumerationEngineOption
+        {
+            [Description("plugin_explorer_engine_everything")]
             Everything,
+            [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex,
+            [Description("plugin_explorer_path_enumeration_engine_none")]
             Direct
         }
 
         public enum IndexSearchEngineOption
         {
+            [Description("plugin_explorer_engine_everything")]
             Everything,
+            [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex
         }
-        
+
         public enum ContentIndexSearchEngineOption
         {
+            [Description("plugin_explorer_engine_everything")]
             Everything,
+            [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex
         }
-        
-        public bool LaunchHidden { get; set; } = false;
+
+        #endregion
+
 
         #region Everything Settings
-        
+
         public string EverythingInstalledPath { get; set; }
 
+        [JsonIgnore]
         public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();
 
         public SortOption SortOption { get; set; } = SortOption.NAME_ASCENDING;
-        
+
         public bool EnableEverythingContentSearch { get; set; } = false;
 
         #endregion

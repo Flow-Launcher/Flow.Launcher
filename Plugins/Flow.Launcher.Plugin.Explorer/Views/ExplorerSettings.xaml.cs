@@ -6,10 +6,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
+using ListView = System.Windows.Controls.ListView;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
@@ -23,6 +27,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private List<ActionKeywordModel> actionKeywordsListView;
 
+
         public ExplorerSettings(SettingsViewModel viewModel)
         {
             DataContext = viewModel;
@@ -33,102 +38,33 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             DataContext = viewModel;
 
-            lbxAccessLinks.ItemsSource = this.viewModel.Settings.QuickAccessLinks;
-
-            lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
-
-            actionKeywordsListView = new List<ActionKeywordModel>
-            {
-                new(Settings.ActionKeyword.SearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_search")),
-                new(Settings.ActionKeyword.FileContentSearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch")),
-                new(Settings.ActionKeyword.PathSearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_pathsearch")),
-                new(Settings.ActionKeyword.IndexSearchActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexsearch")),
-                new(Settings.ActionKeyword.QuickAccessActionKeyword,
-                    viewModel.Context.API.GetTranslation("plugin_explorer_actionkeywordview_quickaccess"))
-            };
-
-            lbxActionKeywords.ItemsSource = actionKeywordsListView;
-
             ActionKeywordModel.Init(viewModel.Settings);
 
             lbxAccessLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
 
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
         }
- 
 
-        private void expActionKeywords_Click(object sender, RoutedEventArgs e)
+
+        
+        private void AccessLinkDragDrop(string containerName, DragEventArgs e)
         {
-            if (expExcludedPaths.IsExpanded)
-                expExcludedPaths.IsExpanded = false;
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (expAccessLinks.IsExpanded)
-                expAccessLinks.IsExpanded = false;
-        }
-
-
-        private void expAccessLinks_Click(object sender, RoutedEventArgs e)
-        {
-            if (expExcludedPaths.IsExpanded)
-                expExcludedPaths.IsExpanded = false;
-
-            if (expActionKeywords.IsExpanded)
-                expActionKeywords.IsExpanded = false;
-        }
-
-        private void expExcludedPaths_Click(object sender, RoutedEventArgs e)
-        {
-            if (expAccessLinks.IsExpanded)
-                expAccessLinks.IsExpanded = false;
-
-            if (expActionKeywords.IsExpanded)
-                expActionKeywords.IsExpanded = false;
-        }
-
-
-        private void lbxAccessLinks_Drop(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            if (files != null && files.Count() > 0)
+            if (files == null || !files.Any())
             {
-                if (expAccessLinks.IsExpanded && viewModel.Settings.QuickAccessLinks == null)
-                    viewModel.Settings.QuickAccessLinks = new();
-
-                foreach (string s in files)
+                return;
+            }
+            foreach (var s in files)
+            {
+                if (Directory.Exists(s))
                 {
-                    if (Directory.Exists(s))
+                    var newFolderLink = new AccessLink
                     {
-                        var newFolderLink = new AccessLink { Path = s };
-
-                        AddAccessLink(newFolderLink);
-                    }
+                        Path = s
+                    };
+                    viewModel.AppendLink(containerName, newFolderLink);
                 }
-            }
-        }
-
-        private void AddAccessLink(AccessLink newAccessLink)
-        {
-            if (expAccessLinks.IsExpanded
-                && !viewModel.Settings.QuickAccessLinks.Any(x => x.Path == newAccessLink.Path))
-            {
-                if (viewModel.Settings.QuickAccessLinks == null)
-                    viewModel.Settings.QuickAccessLinks = new();
-
-                viewModel.Settings.QuickAccessLinks.Add(newAccessLink);
-            }
-
-            if (expExcludedPaths.IsExpanded
-                && !viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == newAccessLink.Path))
-            {
-                if (viewModel.Settings.IndexSearchExcludedSubdirectoryPaths == null)
-                    viewModel.Settings.IndexSearchExcludedSubdirectoryPaths = new ();
-
-                viewModel.Settings.IndexSearchExcludedSubdirectoryPaths.Add(newAccessLink);
             }
         }
 
@@ -147,6 +83,54 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void btnOpenIndexingOptions_Click(object sender, RoutedEventArgs e)
         {
             SettingsViewModel.OpenWindowsIndexingOptions();
+        }
+        private void EverythingSortOptionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbFastSortWarning is not null)
+            {
+                tbFastSortWarning.Visibility = viewModel.FastSortWarningVisibility;
+                tbFastSortWarning.Text = viewModel.SortOptionWarningMessage;
+            }
+        }
+        private void SettingExpander_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Expander expander)
+                return;
+
+            var parentContainer = VisualTreeHelper.GetParent(expander);
+
+            if (parentContainer is not StackPanel stackPanel)
+                return;
+
+            foreach (UIElement child in stackPanel.Children)
+            {
+                if (child != expander)
+                    child.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void SettingExpander_OnCollapsed(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Expander expander)
+                return;
+
+            var parentContainer = VisualTreeHelper.GetParent(expander);
+
+            if (parentContainer is not StackPanel stackPanel)
+                return;
+
+            foreach (UIElement child in stackPanel.Children)
+            {
+                if (child != expander)
+                    child.Visibility = Visibility.Visible;
+            }
+        }
+        private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)
+        {
+            AccessLinkDragDrop("QuickAccessLink", e);
+        }
+        private void LbxExcludedPaths_OnDrop(object sender, DragEventArgs e)
+        {
+            AccessLinkDragDrop("IndexSearchExcludedPath", e);
         }
     }
 }

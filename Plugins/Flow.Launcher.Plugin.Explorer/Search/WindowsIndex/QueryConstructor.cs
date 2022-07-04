@@ -104,6 +104,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string QueryForAllFilesAndFolders(string userSearchString)
         {
+            if (string.IsNullOrEmpty(userSearchString))
+                userSearchString = "*";
+            
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
             return CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString) + " AND " + QueryWhereRestrictionsForAllFilesAndFoldersSearch
                 + QueryOrderByFileNameRestriction;

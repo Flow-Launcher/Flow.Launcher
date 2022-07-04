@@ -7,6 +7,7 @@
     xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
     xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
+    xmlns:converters="clr-namespace:Flow.Launcher.Plugin.Explorer.Views.Converters"
     d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -15,7 +16,7 @@
         <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
             <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
-        <DataTemplate x:Key="ListViewActionKeywords" DataType="views:ActionKeywordView">
+        <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type views:ActionKeywordModel}">
             <Grid>
                 <TextBlock
                     Margin="0,5,0,0"
@@ -53,6 +54,7 @@
                 </TextBlock>
             </Grid>
         </DataTemplate>
+        <converters:EnumNameConverter x:Key="EnumNameConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -61,32 +63,145 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="20,35,0,0">
             <StackPanel>
-                <Expander 
-                    Header="{DynamicResource plugin_explorer_generalsetting_header}">
+                <Expander
+                    Margin="15"
+                    Header="{DynamicResource plugin_explorer_generalsetting_header}"
+                    Expanded="SettingExpander_OnExpanded"
+                    Collapsed="SettingExpander_OnCollapsed">
                     <StackPanel Orientation="Vertical">
+                        <StackPanel.Resources>
+                            <DataTemplate x:Key="EnumBindingModelItemTemplate">
+                                <TextBlock Text="{Binding Description}" />
+                            </DataTemplate>
+                        </StackPanel.Resources>
                         <CheckBox
-                            Name="UseWindowsIndexForDirectorySearch"
                             Margin="12,10,0,0"
                             Content="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch}"
                             IsChecked="{Binding UseWindowsIndexForDirectorySearch}"
                             ToolTip="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch_tooltip}" />
-                        <ComboBox
-                            Width="200"
-                            ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
-                            SelectedItem="{Binding Settings.SortOption}" />
+                        <CheckBox
+                            Margin="12,10,0,0"
+                            HorizontalAlignment="Left"
+                            Content="{DynamicResource plugin_explorer_use_location_as_working_dir}"
+                            IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
+                        <CheckBox
+                            Margin="12,10,0,0"
+                            HorizontalAlignment="Left"
+                            Content="{DynamicResource plugin_explorer_launch_hidden}"
+                            IsChecked="{Binding Settings.LaunchHidden}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="10,6,6,6"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{DynamicResource plugin_explorer_editor_path}" />
+                            <TextBox
+                                Margin="15"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                TextWrapping="NoWrap"
+                                MaxWidth="250"
+                                Text="{Binding EditorPath}" />
+                            <Button
+                                MinWidth="50"
+                                HorizontalAlignment="Left"
+                                Margin="15"
+                                Command="{Binding OpenEditorPath}"
+                                Content="..." />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Index Search Engine" />
+                            <ComboBox
+                                Margin="15"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Width="250"
+                                ItemsSource="{Binding IndexSearchEngines }"
+                                SelectedItem="{Binding SelectedIndexSearchEngine}"
+                                ItemTemplate="{StaticResource EnumBindingModelItemTemplate}">
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Content Search Engine" />
+                            <ComboBox
+                                Margin="15"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Width="250"
+                                ItemsSource="{Binding ContentIndexSearchEngines }"
+                                SelectedItem="{Binding SelectedContentSearchEngine}"
+                                ItemTemplate="{StaticResource EnumBindingModelItemTemplate}">
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Path Enumeration Engine" />
+                            <ComboBox
+                                Margin="15"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Width="250"
+                                ItemsSource="{Binding PathEnumerationEngines }"
+                                SelectedItem="{Binding SelectedPathEnumerationEngine}"
+                                ItemTemplate="{StaticResource EnumBindingModelItemTemplate}">
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button 
+                                Margin="15"
+                                Content="Open Window Index Option" 
+                                Click="btnOpenIndexingOptions_Click"/>
+                        </StackPanel>
                     </StackPanel>
                 </Expander>
                 <Expander
-                    Name="expActionKeywords"
+                    Margin="15"
+                    Header="{DynamicResource plugin_explorer_everything_setting_header}"
+                    Expanded="SettingExpander_OnExpanded"
+                    Collapsed="SettingExpander_OnCollapsed">
+                    <DockPanel>
+                        <TextBlock
+                            Text="{DynamicResource plugin_explorer_everything_sort_option}"
+                            Margin="15" />
+                        <ComboBox
+                            DockPanel.Dock="Left"
+                            Width="200"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
+                            SelectedItem="{Binding Settings.SortOption}"
+                            SelectionChanged="EverythingSortOptionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock
+                            Name="tbFastSortWarning"
+                            DockPanel.Dock="Right"
+                            Margin="0 0 10 0"
+                            VerticalAlignment="Center"
+                            Foreground="Orange"
+                            Text="{Binding SortOptionWarningMessage, Mode=OneTime}"
+                            TextAlignment="Left"
+                            TextWrapping="Wrap"
+                            Visibility="{Binding FastSortWarningVisibility, Mode=OneTime}" />
+                    </DockPanel>
+                </Expander>
+                <Expander
+                    Margin="15"
                     Height="auto"
-                    Expanded="expActionKeywords_Click"
+                    Expanded="SettingExpander_OnExpanded"
+                    Collapsed="SettingExpander_OnCollapsed"
                     Header="{DynamicResource plugin_explorer_manageactionkeywords_header}">
                     <DockPanel HorizontalAlignment="Stretch">
                         <ListView
-                            x:Name="lbxActionKeywords"
                             DockPanel.Dock="Top"
                             ItemTemplate="{StaticResource ListViewActionKeywords}"
-                            SelectedItem="{Binding SelectedActionKeyword}"/>
+                            ItemsSource="{Binding ActionKeywordsModels}"
+                            SelectedItem="{Binding SelectedActionKeyword}" />
                         <Button
                             MinWidth="100"
                             Margin="10"
@@ -95,81 +210,89 @@
                     </DockPanel>
                 </Expander>
                 <Expander
+                    Margin="15"
+                    Expanded="SettingExpander_OnExpanded"
+                    Collapsed="SettingExpander_OnCollapsed"
                     Name="expAccessLinks"
-                    Margin="0,10,0,0"
                     Header="{DynamicResource plugin_explorer_quickaccesslinks_header}">
-                    <DockPanel HorizontalAlignment="Stretch">
-                        <ListView
-                            x:Name="lbxAccessLinks"
-                            Height="200"
-                            AllowDrop="True"
-                            DockPanel.Dock="Top"
-                            ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
-                            ItemsSource="{Binding Settings.QuickAccessLinks}"
-                            SelectedItem="{Binding SelectedQuickAccessLink}" />
-                        <StackPanel
-                            HorizontalAlignment="Right"
-                            DockPanel.Dock="Bottom"
-                            Orientation="Horizontal">
-                            <Button
-                                MinWidth="100"
-                                Margin="10"
-                                Command="{Binding RemoveLinkCommand}"
-                                CommandParameter="QuickAccessLink"
-                                Content="{DynamicResource plugin_explorer_delete}" />
-                            <Button
-                                MinWidth="100"
-                                Margin="10"
-                                Command="{Binding EditLinkCommand}"
-                                CommandParameter="QuickAccessLink"
-                                Content="{DynamicResource plugin_explorer_edit}" />
-                            <Button
-                                MinWidth="100"
-                                Margin="10"
-                                Command="{Binding AddLinkCommand}"
-                                CommandParameter="QuickAccessLink"
-                                Content="{DynamicResource plugin_explorer_add}" />
-                        </StackPanel>
-                    </DockPanel>
+                    <ScrollViewer>
+                        <DockPanel HorizontalAlignment="Stretch">
+                            <ListView
+                                x:Name="lbxAccessLinks"
+                                Height="200"
+                                AllowDrop="True"
+                                DragEnter="lbxAccessLinks_DragEnter"
+                                Drop="LbxAccessLinks_OnDrop"
+                                DockPanel.Dock="Top"
+                                ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
+                                ItemsSource="{Binding Settings.QuickAccessLinks}"
+                                SelectedItem="{Binding SelectedQuickAccessLink}" />
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Bottom"
+                                Orientation="Horizontal">
+                                <Button
+                                    MinWidth="100"
+                                    Margin="10"
+                                    Command="{Binding RemoveLinkCommand}"
+                                    CommandParameter="QuickAccessLink"
+                                    Content="{DynamicResource plugin_explorer_delete}" />
+                                <Button
+                                    MinWidth="100"
+                                    Margin="10"
+                                    Command="{Binding EditLinkCommand}"
+                                    CommandParameter="QuickAccessLink"
+                                    Content="{DynamicResource plugin_explorer_edit}" />
+                                <Button
+                                    MinWidth="100"
+                                    Margin="10"
+                                    Command="{Binding AddLinkCommand}"
+                                    CommandParameter="QuickAccessLink"
+                                    Content="{DynamicResource plugin_explorer_add}" />
+                            </StackPanel>
+                        </DockPanel></ScrollViewer>
                 </Expander>
                 <Expander
-                    x:Name="expExcludedPaths"
-                    Margin="0,10,0,0"
+                    Margin="15"
+                    Expanded="SettingExpander_OnExpanded"
+                    Collapsed="SettingExpander_OnCollapsed"
                     Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}">
-                    <DockPanel HorizontalAlignment="Stretch">
-                        <ListView
-                            Name="lbxExcludedPaths"
-                            AllowDrop="True"
-                            DockPanel.Dock="Top"
-                            DragEnter="lbxAccessLinks_DragEnter"
-                            Drop="lbxAccessLinks_Drop"
-                            ItemTemplate="{StaticResource ListViewActionKeywords}"
-                            ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
-                            SelectedItem="{Binding SelectedIndexSearchExcludedPath}" />
-                        <StackPanel
-                            HorizontalAlignment="Right"
-                            DockPanel.Dock="Bottom"
-                            Orientation="Horizontal">
-                            <Button
-                                MinWidth="100"
-                                Margin="10"
-                                Command="{Binding RemoveLinkCommand}"
-                                CommandParameter="IndexSearchExcludedPaths"
-                                Content="{DynamicResource plugin_explorer_delete}" />
-                            <Button
-                                MinWidth="100"
-                                Margin="10"
-                                Command="{Binding EditLinkCommand}"
-                                CommandParameter="IndexSearchExcludedPaths"
-                                Content="{DynamicResource plugin_explorer_edit}" />
-                            <Button
-                                MinWidth="100"
-                                Margin="10"
-                                Command="{Binding AddLinkCommand}"
-                                CommandParameter="IndexSearchExcludedPaths"
-                                Content="{DynamicResource plugin_explorer_add}" />
-                        </StackPanel>
-                    </DockPanel>
+                    <ScrollViewer>
+                        <DockPanel HorizontalAlignment="Stretch">
+                            <ListView
+                                Name="lbxExcludedPaths"
+                                AllowDrop="True"
+                                DockPanel.Dock="Top"
+                                DragEnter="lbxAccessLinks_DragEnter"
+                                Drop="LbxExcludedPaths_OnDrop"
+                                ItemTemplate="{StaticResource ListViewActionKeywords}"
+                                ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
+                                SelectedItem="{Binding SelectedIndexSearchExcludedPath}" />
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Bottom"
+                                Orientation="Horizontal">
+                                <Button
+                                    MinWidth="100"
+                                    Margin="10"
+                                    Command="{Binding RemoveLinkCommand}"
+                                    CommandParameter="IndexSearchExcludedPaths"
+                                    Content="{DynamicResource plugin_explorer_delete}" />
+                                <Button
+                                    MinWidth="100"
+                                    Margin="10"
+                                    Command="{Binding EditLinkCommand}"
+                                    CommandParameter="IndexSearchExcludedPaths"
+                                    Content="{DynamicResource plugin_explorer_edit}" />
+                                <Button
+                                    MinWidth="100"
+                                    Margin="10"
+                                    Command="{Binding AddLinkCommand}"
+                                    CommandParameter="IndexSearchExcludedPaths"
+                                    Content="{DynamicResource plugin_explorer_add}" />
+                            </StackPanel>
+                        </DockPanel>
+                    </ScrollViewer>
                 </Expander>
             </StackPanel>
         </StackPanel>
