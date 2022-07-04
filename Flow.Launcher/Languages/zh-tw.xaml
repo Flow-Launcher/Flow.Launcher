@@ -254,21 +254,21 @@
     <system:String x:Key="Welcome_Page1_Title">歡迎使用 Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">你好，這是你第一次運行 Flow Launcher！</system:String>
     <system:String x:Key="Welcome_Page1_Text02">在開始之前，此嚮導將幫助設定 Flow Launcher。如果你想，你可以跳過這個。請選擇一種語言</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">在PC上搜尋並執行所有文件和應用程式</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">只需使用鍵盤搜尋應用程式、文件、書籤、Youtube、Twitter等</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 需要搭配快捷鍵使用，請馬上試試吧! 如果想更改它，請點擊&quot;輸入&quot;並輸入你想要的快捷鍵。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷鍵</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
+    <system:String x:Key="Welcome_Page4_Title">關鍵字與指令</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Welcome_Page5_Title">開始使用 Flow Launcher吧!</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">大功告成! 別忘了使用快捷鍵以開始 :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">返回 / 快捷選單</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">打開選單</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">開啟檔案位置</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理員身分執行</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查詢歷史</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
