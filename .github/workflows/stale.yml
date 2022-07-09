@@ -22,3 +22,4 @@ jobs:
           exempt-all-milestones: true
           close-issue-message: 'This issue was closed because it has been stale for 5 days with no activity. If you feel this issue still needs attention please feel free to reopen.'
           stale-pr-label: 'no-pr-activity'
+          exempt-issue-labels: 'keep-fresh'
