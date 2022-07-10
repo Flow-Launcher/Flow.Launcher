@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
+﻿using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
 using System.Collections.Generic;
@@ -36,8 +37,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-
-            await pluginManager.UpdateManifestAsync();
+            await PluginsManifest.UpdateManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -53,9 +53,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return query.FirstSearch.ToLower() switch
             {
                 //search could be url, no need ToLower() when passed in
-                Settings.InstallCommand => await pluginManager.RequestInstallOrUpdate(query.SecondToEndSearch, token),
+                Settings.ListCommand => await pluginManager.RequestListAsync(query.SecondToEndSearch, token),
+                Settings.InstallCommand => await pluginManager.RequestInstallAsync(query.SecondToEndSearch),
                 Settings.UninstallCommand => pluginManager.RequestUninstall(query.SecondToEndSearch),
-                Settings.UpdateCommand => await pluginManager.RequestUpdate(query.SecondToEndSearch, token),
+                Settings.UpdateCommand => await pluginManager.RequestUpdateAsync(query.SecondToEndSearch, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(query.Search, hotkey.Title).Score;

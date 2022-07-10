@@ -20,26 +20,31 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; } = new List<UserPlugin>();
 
-        public static async Task UpdateManifestAsync(CancellationToken token = default)
+        public static async Task UpdateManifestAsync()
         {
             try
             {
-                await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
+                if (manifestUpdateLock.CurrentCount == 0)
+                {
+                    await manifestUpdateLock.WaitAsync();
+                    manifestUpdateLock.Release();
+                    return;
+                }
 
                 var request = new HttpRequestMessage(HttpMethod.Get, manifestFileUrl);
                 request.Headers.Add("If-None-Match", latestEtag);
 
-                var response = await Http.SendAsync(request, token).ConfigureAwait(false);
+                var response = await Http.SendAsync(request).ConfigureAwait(false);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     Log.Info($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Fetched plugins from manifest repo");
 
-                    var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
+                    var json = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
-                    UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json, cancellationToken: token).ConfigureAwait(false);
+                    UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json).ConfigureAwait(false);
 
-                    latestEtag = response.Headers.ETag.Tag;
+                    latestEtag = response.Headers.ETag?.Tag;
                 }
                 else if (response.StatusCode != HttpStatusCode.NotModified)
                 {

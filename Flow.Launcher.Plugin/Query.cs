@@ -79,7 +79,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
-        public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
+        public string SecondToEndSearch => SearchTerms.Length > 1 ? _secondToEndSearch ??= string.Join(' ', SearchTerms[1..]) : "";
 
         /// <summary>
         /// Return second search split by space if it has
