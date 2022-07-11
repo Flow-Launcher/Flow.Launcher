@@ -16,8 +16,11 @@ jobs:
       - uses: actions/stale@v4
         with:
           stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.'
-          days-before-stale: 30
-          days-before-close: 5
+          days-before-stale: 45
+          days-before-close: 7
           days-before-pr-close: -1
           exempt-all-milestones: true
           close-issue-message: 'This issue was closed because it has been stale for 5 days with no activity. If you feel this issue still needs attention please feel free to reopen.'
+          stale-pr-label: 'no-pr-activity'
+          exempt-issue-labels: 'keep-fresh'
+          exempt-pr-labels: 'keep-fresh,awaiting-approval,work-in-progress'
