@@ -20,9 +20,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.Runtime.InteropServices;
-using System.Text;
-using SHDocVw;
 
 namespace Flow.Launcher.ViewModel
 {
