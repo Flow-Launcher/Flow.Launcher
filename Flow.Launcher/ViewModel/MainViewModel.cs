@@ -722,68 +722,6 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        private static string GetActiveExplorerPath()
-        {
-            // get the active window
-            IntPtr handle = GetForegroundWindow();
-
-            // Required ref: SHDocVw (Microsoft Internet Controls COM Object) - C:\Windows\system32\ShDocVw.dll
-            ShellWindows shellWindows = new SHDocVw.ShellWindows();
-
-            // loop through all windows
-            foreach (var window in shellWindows)
-            {
-                if (window is not SHDocVw.InternetExplorer)
-                {
-                    continue;
-                }
-
-                var explorerWindow = (SHDocVw.InternetExplorer)window;
-                // match active window
-                if (explorerWindow.HWND == (int)handle)
-                {
-                    // Required ref: Shell32 - C:\Windows\system32\Shell32.dll
-                    var shellWindow = explorerWindow.Document as Shell32.IShellFolderViewDual2;
-
-                    // will be null if you are in Internet Explorer for example
-                    if (shellWindow != null)
-                    {
-                        // Item without an index returns the current object
-                        var currentFolder = shellWindow.Folder.Items().Item();
-
-                        // special folder - use window title
-                        // for some reason on "Desktop" gives null
-                        if (currentFolder == null || currentFolder.Path.StartsWith("::"))
-                        {
-                            // Get window title instead
-                            const int nChars = 256;
-                            StringBuilder Buff = new StringBuilder(nChars);
-                            if (GetWindowText(handle, Buff, nChars) > 0)
-                            {
-                                return Buff.ToString();
-                            }
-                        }
-                        else
-                        {
-                            return currentFolder.Path;
-                        }
-                    }
-
-                    break;
-                }
-            }
-
-            return null;
-        }
-
-        // COM Imports
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
         public void ToggleFlowLauncher()
         {
             if (!MainWindowVisibilityStatus)
@@ -798,7 +736,7 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            string _explorerPath = GetActiveExplorerPath();
+            string _explorerPath = FileExplorerHelper.GetActiveExplorerPath();
 
             
             if (_settings.UseSound)
@@ -816,7 +754,7 @@ namespace Flow.Launcher.ViewModel
                 ((MainWindow)Application.Current.MainWindow).WindowAnimator();
             
             MainWindowOpacity = 1;
-            if (_explorerPath != null && _explorerPath != "File Explorer")
+            if (_explorerPath != null)
             {
                 ChangeQueryText($"{_explorerPath}\\>");
             }
