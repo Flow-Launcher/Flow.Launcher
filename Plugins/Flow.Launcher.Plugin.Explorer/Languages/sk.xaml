@@ -14,6 +14,7 @@
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Ak to chcete opraviť, spustite službu Windows Search. Ak chcete odstrániť toto upozornenie, kliknite sem</system:String>
     <system:String x:Key="plugin_explorer_alternative">Upozornenie bolo vypnuté. Chceli by ste ako alternatívu na vyhľadávanie súborov a priečinkov nainštalovať plugin Everything?{0}{0}Ak chcete nainštalovať plugin Everything, zvoľte 'Áno', pre návrat zvoľte 'Nie'</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternatíva pre Preskumníka</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Počas vyhľadávania došlo k chybe: {0}</system:String>
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">Odstrániť</system:String>
@@ -22,6 +23,8 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použite vyhľadávanie v indexe</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Zapnutím tejto funkcie sa zrýchli odozva indexovaných priečinkov/súborov, ale ak priečinok/súbor nie je indexovaný, nezobrazí sa. Ak bol priečinok/súbor pridaný do Vylúčené umiestnenia indexovania, zobrazí sa, aj keď je táto možnosť zapnutá</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Cesta vyhľadávania:</system:String>
@@ -61,7 +64,7 @@
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Úspešne odstránené z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Pridať do Rýchleho prístupu, aby ho bolo možné otvoriť pomocou aktivačného príkazu pluginu Prieskumník</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Odstráni z Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstrániť z Rýchleho prístupu</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstráni {0} z Rýchleho prístupu</system:String>
 
 </ResourceDictionary>

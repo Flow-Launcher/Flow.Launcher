@@ -1,7 +1,5 @@
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">단축키 등록 실패: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
@@ -15,9 +13,12 @@
     <system:String x:Key="iconTrayAbout">정보</system:String>
     <system:String x:Key="iconTrayExit">종료</system:String>
     <system:String x:Key="closeWindow">닫기</system:String>
-    <system:String x:Key="copy">복사</system:String>
+    <system:String x:Key="copy">복사하기</system:String>
     <system:String x:Key="cut">잘라내기</system:String>
     <system:String x:Key="paste">붙여넣기</system:String>
+    <system:String x:Key="fileTitle">File</system:String>
+    <system:String x:Key="folderTitle">Folder</system:String>
+    <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
 
@@ -42,7 +43,7 @@
     <system:String x:Key="defaultFileManager">기본 파일관리자</system:String>
     <system:String x:Key="defaultFileManagerToolTip">폴더를 열 때 사용할 파일관리자를 선택하세요.</system:String>
     <system:String x:Key="defaultBrowser">기본 웹 브라우저</system:String>
-    <system:String x:Key="defaultBrowserToolTip">새 탭, 새 창, 프라이빗 모드 설정</system:String>
+    <system:String x:Key="defaultBrowserToolTip">새 탭, 새  창, 사생활 보호 모드</system:String>
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="selectPythonDirectory">선택</system:String>
@@ -59,9 +60,11 @@
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
     <system:String x:Key="enable">켬</system:String>
     <system:String x:Key="disable">끔</system:String>
+    <system:String x:Key="actionKeywordsTitle">액션 키워드 설정</system:String>
     <system:String x:Key="actionKeywords">액션 키워드</system:String>
     <system:String x:Key="currentActionKeywords">현재 액션 키워드</system:String>
     <system:String x:Key="newActionKeyword">새 액션 키워드</system:String>
+    <system:String x:Key="actionKeywordsTooltip">액션 키워드 변경</system:String>
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
@@ -77,7 +80,6 @@
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
     <system:String x:Key="refresh">새로고침</system:String>
     <system:String x:Key="install">설치</system:String>
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
@@ -171,18 +173,19 @@
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">기본 웹 브라우저r</system:String>
-    <system:String x:Key="defaultBrowser_tips">기본 설정은 OS의 브라우저 설정을 따릅니다. 별도 설정시 Flow Launcher가 해당 브라우저를 사용합니다.</system:String>
+    <system:String x:Key="defaultBrowser_tips">기본 설정은 OS의 기본 브라우저 설정을 따릅니다. 특정 브라우저를 지정할 경우, Flow는 해당 브라우저를 사용합니다.</system:String>
     <system:String x:Key="defaultBrowser_name">브라우저</system:String>
     <system:String x:Key="defaultBrowser_profile_name">브라우저 이름</system:String>
     <system:String x:Key="defaultBrowser_path">브라우저 경로</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">새 창</system:String>
-    <system:String x:Key="defaultBrowser_newTab">새 탭</system:String>
-    <system:String x:Key="defaultBrowser_parameter">프라이빗 모드</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
+    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_parameter">사생활 보호 모드</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">중요도 변경</system:String>
     <system:String x:Key="priority_tips">높은 수를 넣을수록 상위 결과에 표시됩니다. 5를 시도해보세요. 다른 플러그인 보다 결과를 낮춰 표시하고 싶다면, 그보다 낮은 수를 입력하세요.</system:String>
     <system:String x:Key="invalidPriority">중요도에 올바른 정수를 입력하세요.</system:String>
+
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">예전 액션 키워드</system:String>
     <system:String x:Key="newActionKeywords">새 액션 키워드</system:String>
@@ -196,7 +199,7 @@
     <system:String x:Key="actionkeyword_tips">플러그인을 시작하는데 필요한 액션 키워드를 입력하세요. 액션 키워드를 지정하지 않으려면 *를 사용하세요. 이 경우 키워드를 입력하지 않아도 동작합니다.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">커스텀 플러그인 단축키</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customeQueryHotkeyTips">단축키를 지정하여 특정 쿼리를 자동으로 입력할 수 있습니다. 사용하고 싶은 단축키를 눌러 지정한 후, 사용할 쿼리를 입력하세요.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
@@ -224,9 +227,9 @@
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>
+
     <!--  update  -->
     <system:String x:Key="update_flowlauncher_update_check">새 업데이트 확인 중</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">새 Flow Launcher 버전({0})을 사용할 수 있습니다.</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">이미 가장 최신 버전의 Flow Launcher를 사용중입니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_found">업데이트 발견</system:String>
     <system:String x:Key="update_flowlauncher_updating">업데이트 중...</system:String>
@@ -235,6 +238,7 @@
         프로필 데이터 폴더를 수동으로 {0} 에서 {1}로 옮겨주세요.
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">새 업데이트</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">새 Flow Launcher 버전({0})을 사용할 수 있습니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_error">소프트웨어 업데이트를 설치하는 중에 오류가 발생했습니다.</system:String>
     <system:String x:Key="update_flowlauncher_update">업데이트</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">취소</system:String>
@@ -244,7 +248,6 @@
     <system:String x:Key="update_flowlauncher_update_update_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_files">업데이트 파일</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">업데이트 설명</system:String>
-
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">건너뛰기</system:String>
@@ -269,6 +272,7 @@
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">관리자 권한으로 실행</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">검색 기록</system:String>
     <system:String x:Key="HotkeyESCDesc">콘텍스트 메뉴에서 뒤로 가기</system:String>
+    <system:String x:Key="HotkeyTabDesc">자동완성</system:String>
     <system:String x:Key="HotkeyRunDesc">선택한 아이템 열기</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">설정창 열기</system:String>
     <system:String x:Key="HotkeyF5Desc">플러그인 데이터 새로고침</system:String>

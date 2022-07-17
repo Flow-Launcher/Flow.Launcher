@@ -29,6 +29,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             this.viewModel = viewModel;
 
+            DataContext = viewModel;
+
             lbxAccessLinks.ItemsSource = this.viewModel.Settings.QuickAccessLinks;
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;

@@ -13,21 +13,27 @@
     <system:String x:Key="iconTrayAbout">关于</system:String>
     <system:String x:Key="iconTrayExit">退出</system:String>
     <system:String x:Key="closeWindow">关闭</system:String>
+    <system:String x:Key="copy">复制</system:String>
+    <system:String x:Key="cut">剪切</system:String>
+    <system:String x:Key="paste">粘贴</system:String>
+    <system:String x:Key="fileTitle">文件</system:String>
+    <system:String x:Key="folderTitle">目录</system:String>
+    <system:String x:Key="textTitle">文本</system:String>
     <system:String x:Key="GameMode">游戏模式</system:String>
     <system:String x:Key="GameModeToolTip">暂停使用快捷键。</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Flow Launcher设置</system:String>
+    <system:String x:Key="flowlauncher_settings">Flow Launcher 设置</system:String>
     <system:String x:Key="general">通用</system:String>
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">开机自启</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏Flow Launcher</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
     <system:String x:Key="language">语言</system:String>
     <system:String x:Key="lastQueryMode">再次激活时</system:String>
-    <system:String x:Key="lastQueryModeToolTip">重启Flow Launcher时显示/隐藏以前的结果。</system:String>
+    <system:String x:Key="lastQueryModeToolTip">重启 Flow Launcher 时显示/隐藏以前的结果。</system:String>
     <system:String x:Key="LastQueryPreserved">保留上次搜索关键字</system:String>
     <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
@@ -36,6 +42,8 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键。</system:String>
     <system:String x:Key="defaultFileManager">默认文件管理器</system:String>
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
+    <system:String x:Key="defaultBrowser">默认浏览器</system:String>
+    <system:String x:Key="defaultBrowserToolTip">新标签/窗口及隐身模式设置。</system:String>
     <system:String x:Key="pythonDirectory">Python 路径</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
     <system:String x:Key="selectPythonDirectory">选择</system:String>
@@ -56,6 +64,7 @@
     <system:String x:Key="actionKeywords">触发关键字</system:String>
     <system:String x:Key="currentActionKeywords">当前触发关键字</system:String>
     <system:String x:Key="newActionKeyword">新触发关键字</system:String>
+    <system:String x:Key="actionKeywordsTooltip">更改触发关键字</system:String>
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
@@ -96,8 +105,8 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher激活热键</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏Flow Launcher的快捷键。</system:String>
+    <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
     <system:String x:Key="openResultModifiers">开放结果修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">指定修饰符用于打开指定的选项。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
@@ -112,7 +121,7 @@
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口宽度</system:String>
-    <system:String x:Key="useGlyphUI">使用Segoe Fluent图标</system:String>
+    <system:String x:Key="useGlyphUI">使用 Segoe Fluent 图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
 
     <!--  Setting Proxy  -->
@@ -133,11 +142,11 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">关于</system:String>
-    <system:String x:Key="website">网站</system:String>
+    <system:String x:Key="website">官方网站</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">文档</system:String>
     <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="about_activate_times">你已经激活了Flow Launcher {0} 次</system:String>
+    <system:String x:Key="about_activate_times">你已经激活了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">检查更新</system:String>
     <system:String x:Key="newVersionTips">发现新版本 {0} , 请重启 Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">下载更新失败，请检查您与 api.github.com 的连接状态或检查代理设置</system:String>
@@ -162,6 +171,16 @@
     <system:String x:Key="fileManager_directory_arg">文件夹路径参数</system:String>
     <system:String x:Key="fileManager_file_arg">选中文件路径参数</system:String>
 
+    <!--  DefaultBrowser Setting Dialog  -->
+    <system:String x:Key="defaultBrowserTitle">默认浏览器</system:String>
+    <system:String x:Key="defaultBrowser_tips">默认设置遵循操作系统默认浏览器设置。如果单独指定，Flow 会使用该浏览器。</system:String>
+    <system:String x:Key="defaultBrowser_name">浏览器</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">浏览器名称</system:String>
+    <system:String x:Key="defaultBrowser_path">浏览器路径</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">新窗户</system:String>
+    <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
+    <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
+
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改优先级</system:String>
     <system:String x:Key="priority_tips">数字越大，结果排名越高。如果你想要结果比任何其他插件的低，请使用负数</system:String>
@@ -180,7 +199,7 @@
     <system:String x:Key="actionkeyword_tips">如果你不想设置触发关键字，可以使用*代替</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">自定义插件热键</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">自定义查询热键</system:String>
     <system:String x:Key="customeQueryHotkeyTips">按下自定义快捷键激活Flow Launcher并插入指定的查询前缀。</system:String>
     <system:String x:Key="preview">预览</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
@@ -196,7 +215,7 @@
     <system:String x:Key="reportWindow_reproduce">请告诉我们如何重现此问题，以便我们进行修复</system:String>
     <system:String x:Key="reportWindow_send_report">发送报告</system:String>
     <system:String x:Key="reportWindow_cancel">取消</system:String>
-    <system:String x:Key="reportWindow_general">基本信息</system:String>
+    <system:String x:Key="reportWindow_general">通用</system:String>
     <system:String x:Key="reportWindow_exceptions">异常信息</system:String>
     <system:String x:Key="reportWindow_exception_type">异常类型</system:String>
     <system:String x:Key="reportWindow_source">异常源</system:String>
@@ -204,45 +223,45 @@
     <system:String x:Key="reportWindow_sending">发送中</system:String>
     <system:String x:Key="reportWindow_report_succeed">发送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher出错啦</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出错啦</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>
 
     <!--  update  -->
     <system:String x:Key="update_flowlauncher_update_check">检查新的更新</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">您已经拥有最新的Flow Launcher版本</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">您已经拥有最新的 Flow Launcher 版本</system:String>
     <system:String x:Key="update_flowlauncher_update_found">检查到更新</system:String>
     <system:String x:Key="update_flowlauncher_updating">更新中...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher无法将您的用户配置文件数据移动到新的更新版本中。
-        请手动将您的用户配置文件数据文件夹从 {0} 到 {1}
+        Flow Launcher 无法将您的用户配置文件数据移动到新的更新版本中。
+        请手动将您的用户配置文件数据文件夹从 {0} 移动到 {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">新的更新</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">发现Flow Launcher新版本 V{0}</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">发现 Flow Launcher 新版本 V{0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">尝试安装软件更新时发生错误</system:String>
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
     <system:String x:Key="update_flowlauncher_fail">更新失败</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">检查网络是否可以连接至github-cloud.s3.amazonaws.com.</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此次更新需要重启Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此次更新需要重启 Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">下列文件会被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新文件</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">更新日志</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">跳过</system:String>
-    <system:String x:Key="Welcome_Page1_Title">欢迎使用Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">你好，这是你第一次运行Flow Launcher！</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">在启动前，这个向导将有助于设置Flow Launcher。如果您愿意，您可以跳过。请选择一种语言</system:String>
+    <system:String x:Key="Welcome_Page1_Title">欢迎使用 Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">你好，这是你第一次运行 Flow Launcher！</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">在启动前，这个向导将有助于设置 Flow Launcher。如果您愿意，您可以跳过。请选择一种语言</system:String>
     <system:String x:Key="Welcome_Page2_Title">搜索并运行您PC上的文件和应用程序</system:String>
     <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要触摸鼠标。</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher默认使用下面的快捷键激活。 要更改它，请点击输入并按键盘上所需的热键。</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 默认使用下面的快捷键激活。 要更改它，请点击输入并按键盘上所需的热键。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷键</system:String>
     <system:String x:Key="Welcome_Page4_Title">动作关键词和命令</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">通过Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。 某些函数起始于一个动作关键词，如有必要，它们可以在没有动作关键词的情况下使用。欢迎尝试一下的查询语句。</system:String>
-    <system:String x:Key="Welcome_Page5_Title">开始使用Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">完成了！享受Flow Launcher。不要忘记激活快捷键 :)</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。 某些函数起始于一个动作关键词，如有必要，它们可以在没有动作关键词的情况下使用。欢迎尝试一下的查询语句。</system:String>
+    <system:String x:Key="Welcome_Page5_Title">开始使用 Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">完成了！享受 Flow Launcher。不要忘记激活快捷键 :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
@@ -253,6 +272,7 @@
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理员身份运行</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查询历史</system:String>
     <system:String x:Key="HotkeyESCDesc">返回查询界面</system:String>
+    <system:String x:Key="HotkeyTabDesc">自动补全</system:String>
     <system:String x:Key="HotkeyRunDesc">打开/运行选中项目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">打开设置窗口</system:String>
     <system:String x:Key="HotkeyF5Desc">重新加载插件数据</system:String>

@@ -39,7 +39,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Spustiť ako správca</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Otvoriť umiestnenie súboru</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Zakázať zobrazovanie tohto programu</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>

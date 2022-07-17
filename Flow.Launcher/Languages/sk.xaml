@@ -16,6 +16,9 @@
     <system:String x:Key="copy">Kopírovať</system:String>
     <system:String x:Key="cut">Vystrihnúť</system:String>
     <system:String x:Key="paste">Prilepiť</system:String>
+    <system:String x:Key="fileTitle">Súbor</system:String>
+    <system:String x:Key="folderTitle">Priečinok</system:String>
+    <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
 
@@ -55,8 +58,8 @@
     <!--  Setting Plugin  -->
     <system:String x:Key="plugin">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
-    <system:String x:Key="enable">Zap.</system:String>
-    <system:String x:Key="disable">Vyp.</system:String>
+    <system:String x:Key="enable">Zapnuté</system:String>
+    <system:String x:Key="disable">Vypnuté</system:String>
     <system:String x:Key="actionKeywordsTitle">Nastavenie akčného príkazu</system:String>
     <system:String x:Key="actionKeywords">Aktivačný príkaz</system:String>
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
