@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Flow.Launcher.Plugin.WindowsSettings.Classes;
 using Flow.Launcher.Plugin.WindowsSettings.Properties;
@@ -40,7 +41,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
                 if (string.IsNullOrEmpty(type))
                 {
-                    Log.Warn($"Resource string for [{settings.Name}] not found", typeof(Main));
+                    Log.Warn($"Resource string for [{settings.Type}] not found", typeof(Main));
                 }
 
 
@@ -48,10 +49,6 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                 if (!string.IsNullOrEmpty(settings.Note))
                 {
                     var note = Resources.ResourceManager.GetString(settings.Note);
-                    if (string.IsNullOrEmpty(note))
-                    {
-                        Log.Warn($"Resource string for [{settings.Note}] not found", typeof(Main));
-                    }
 
                     settings.Note = note ?? settings.Note ?? string.Empty;
                 }
@@ -67,10 +64,6 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                         }
 
                         var translatedAltName = Resources.ResourceManager.GetString(altName);
-                        if (string.IsNullOrEmpty(translatedAltName))
-                        {
-                            Log.Warn($"Resource string for [{altName}] not found", typeof(Main));
-                        }
 
                         translatedAltNames.Add(translatedAltName ?? altName);
                     }

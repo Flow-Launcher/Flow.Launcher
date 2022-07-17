@@ -57,7 +57,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Classes
         /// <summary>
         /// Gets or sets the Glyph of this setting
         /// </summary>
-        public string? glyph { get; set; }
+        public GlyphInfo? IconGlyph { get; set; }
 
         /// <summary>
         /// Gets or sets a additional note of this settings.
