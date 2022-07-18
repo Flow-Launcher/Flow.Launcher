@@ -130,7 +130,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Accessory apps</value>
+    <value> </value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
@@ -654,7 +654,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value> </value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -831,7 +831,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
-    <value>Light color</value>
+    <value> </value>
   </data>
   <data name="LightMode" xml:space="preserve">
     <value>Svetlý režim</value>
@@ -982,7 +982,7 @@
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Night light</value>
+    <value> </value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
     <value>Nastavenia nočného osvetlenia</value>
@@ -1004,7 +1004,7 @@
     <value>Zastarané v systéme Windows 10, verzia 1809 (zostava 17763) a novších.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value> </value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
     <value>Dostupné iba vtedy, ak je povolený DirectAccess.</value>
@@ -1031,7 +1031,7 @@
     <value>Dostupné iba v prípade, že je nainštalovaná aplikácia Mixed Reality Portal.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value> </value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
     <value>Pridané v systéme Windows 10, verzia 1903 (zostava 18362).</value>
@@ -1052,7 +1052,7 @@
     <value>Zariadenie musí podporovať Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Only available if enterprise has deployed a provisioning package.</value>
+    <value> </value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Oznámenia</value>
@@ -1271,7 +1271,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value>Quiet moments game</value>
+    <value> </value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Vysielače</value>
@@ -1297,7 +1297,7 @@
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
-    <value>Red week</value>
+    <value> </value>
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
@@ -1427,7 +1427,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
-    <value>Start places</value>
+    <value> </value>
   </data>
   <data name="StartupApps" xml:space="preserve">
     <value>Aplikácie pri spustení</value>
@@ -1595,7 +1595,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value> </value>
   </data>
   <data name="Vpn" xml:space="preserve">
     <value>VPN</value>
@@ -1758,7 +1758,7 @@
     <value>Find and fix keyboard problems</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>Použiť čítanie obrazovky</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
     <value>Show which workgroup this computer is on</value>
