@@ -1737,19 +1737,19 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>Zmeniť nastavenie inštalácie zariadení</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>Vypnúť obrázky pozadia</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Navigation properties</value>
+    <value>Vlastnosti navigácie</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Možnosti streamovania médií</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>Nastaviť typ súboru tak, aby sa vždy otváral v určitom programe</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
     <value>Change the Narrator’s voice</value>
@@ -1902,7 +1902,7 @@
     <value>Preview, delete, show or hide fonts</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Microsoft Quick Settings</value>
+    <value>Nastavenie metódy vstupu Microsoft (rýchle)</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
     <value>View reliability history</value>
@@ -2022,13 +2022,13 @@
     <value>Use audio description for video</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>Zmeniť názov pracovnej skupiny</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>Nájsť a opraviť problémy s tlačou</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>Zmeniť čas prechodu počítača do režimu spánku</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
     <value>Set up a virtual private network (VPN) connection</value>
