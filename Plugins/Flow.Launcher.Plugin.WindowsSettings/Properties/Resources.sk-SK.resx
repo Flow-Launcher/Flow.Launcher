@@ -2473,34 +2473,34 @@
     <value>Plánovať úlohy</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
-    <value>Ignore repeated keystrokes using FilterKeys</value>
+    <value>Ignorovať opakované stlačenia klávesov pomocou funkcie Filtrovanie klávesov</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>Nájsť a opraviť problémy s modrou obrazovkou</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Hear a tone when keys are pressed</value>
+    <value>Prehrať tón pri stlačení klávesu</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
-    <value>Delete browsing history</value>
+    <value>Odstrániť históriu prehľadávania</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
-    <value>Change what the power buttons do</value>
+    <value>Zmeniť funkciu tlačidla napájania</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Create standard user account</value>
+    <value>Vytvoriť štandardné konto používateľa</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
-    <value>Take speech tutorials</value>
+    <value>Absolvovať kurzy hlasovej komunikácie s počítačom</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
-    <value>View system resource usage in Task Manager</value>
+    <value>Zobraziť využitie systémových prostriedkov v Správcovi úloh</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
-    <value>Create an account</value>
+    <value>Vytvoriť konto</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
-    <value>Get more features with a new edition of Windows</value>
+    <value>Získať viac funkcií s novým vydaním systému Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
     <value>Ovládací panel</value>
