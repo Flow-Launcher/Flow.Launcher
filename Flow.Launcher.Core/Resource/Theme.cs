@@ -85,10 +85,13 @@ namespace Flow.Launcher.Core.Resource
 
                 Settings.Theme = theme;
 
+                // #625, #637 - reload all resources even if the theme itself hasn't changed in order to pickup changes
+                // to things like fonts
+                UpdateResourceDictionary(GetResourceDictionary());
+
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
-                    UpdateResourceDictionary(GetResourceDictionary());
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
