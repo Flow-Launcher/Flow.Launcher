@@ -573,7 +573,7 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);

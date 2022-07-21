@@ -17,7 +17,7 @@ namespace Flow.Launcher.Test
 
             Query q = QueryBuilder.Build(">   file.txt    file2 file3", nonGlobalPlugins);
 
-            Assert.AreEqual("file.txt file2 file3", q.Search);
+            Assert.AreEqual("file.txt    file2 file3", q.Search);
             Assert.AreEqual(">", q.ActionKeyword);
         }
 
@@ -31,7 +31,7 @@ namespace Flow.Launcher.Test
 
             Query q = QueryBuilder.Build(">   file.txt    file2 file3", nonGlobalPlugins);
 
-            Assert.AreEqual("> file.txt file2 file3", q.Search);
+            Assert.AreEqual(">   file.txt    file2 file3", q.Search);
         }
 
         [Test]
