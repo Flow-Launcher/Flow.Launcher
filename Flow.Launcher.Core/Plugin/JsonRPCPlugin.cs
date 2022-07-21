@@ -241,7 +241,7 @@ namespace Flow.Launcher.Core.Plugin
         protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
             Process process = null;
-            bool disposed = false;
+            using var exitTokenSource = new CancellationTokenSource();
             try
             {
                 process = Process.Start(startInfo);
@@ -251,6 +251,7 @@ namespace Flow.Launcher.Core.Plugin
                     return Stream.Null;
                 }
 
+
                 await using var source = process.StandardOutput.BaseStream;
 
                 var buffer = BufferManager.GetStream();
@@ -259,7 +260,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     // ReSharper disable once AccessToModifiedClosure
                     // Manually Check whether disposed
-                    if (!disposed && !process.HasExited)
+                    if (!exitTokenSource.IsCancellationRequested && !process.HasExited)
                         process.Kill();
                 });
 
@@ -302,8 +303,8 @@ namespace Flow.Launcher.Core.Plugin
             }
             finally
             {
+                exitTokenSource.Cancel();
                 process?.Dispose();
-                disposed = true;
             }
         }
 
