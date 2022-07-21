@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
@@ -86,6 +87,14 @@ namespace Flow.Launcher.Plugin
         public Func<ActionContext, bool> Action { get; set; }
 
         /// <summary>
+        /// Delegate. An Async action to take in the form of a function call when the result has been selected
+        /// <returns>
+        /// true to hide flowlauncher after select result
+        /// </returns>
+        /// </summary>
+        public Func<ActionContext, ValueTask<bool>> AsyncAction { get; set; }
+
+        /// <summary>
         /// Priority of the current result
         /// <value>default: 0</value>
         /// </summary>
@@ -169,5 +178,10 @@ namespace Flow.Launcher.Plugin
         /// Show message as ToolTip on result SubTitle hover over
         /// </summary>
         public string SubTitleToolTip { get; set; }
+    
+        public ValueTask<bool> ExecuteAsync(ActionContext context)
+        {
+            return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
+        }
     }
 }

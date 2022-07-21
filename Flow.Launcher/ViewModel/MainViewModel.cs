@@ -194,37 +194,38 @@ namespace Flow.Launcher.ViewModel
                 PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
-            OpenResultCommand = new RelayCommand(index =>
+            OpenResultCommand = new RelayCommand(async index =>
             {
                 var results = SelectedResults;
 
                 if (index != null)
                 {
-                    results.SelectedIndex = int.Parse(index.ToString());
+                    results.SelectedIndex = int.Parse(index.ToString()!);
                 }
 
                 var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result == null)
                 {
-                    bool hideWindow = result.Action != null && result.Action(new ActionContext
-                    {
-                        SpecialKeyState = GlobalHotkey.CheckModifiers()
-                    });
+                    return;
+                }
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
 
-                    if (hideWindow)
-                    {
-                        Hide();
-                    }
+                if (hideWindow)
+                {
+                    Hide();
+                }
 
-                    if (SelectedIsFromQueryResults())
-                    {
-                        _userSelectedRecord.Add(result);
-                        _history.Add(result.OriginQuery.RawQuery);
-                    }
-                    else
-                    {
-                        SelectedResults = Results;
-                    }
+                if (SelectedIsFromQueryResults())
+                {
+                    _userSelectedRecord.Add(result);
+                    _history.Add(result.OriginQuery.RawQuery);
+                }
+                else
+                {
+                    SelectedResults = Results;
                 }
             });
 
