@@ -2236,19 +2236,19 @@
     <value>Zobraziť základné informácie o počítači</value>
   </data>
   <data name="ChooseHowYouOpenLinks" xml:space="preserve">
-    <value>Choose how you open links</value>
+    <value>Vybrať spôsob otvárania prepojení</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
-    <value>Allow Remote Assistance invitations to be sent from this computer</value>
+    <value>Povoliť zasielanie žiadostí o pomoc na diaľku z tohto počítača</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager</value>
+    <value>Správca úloh</value>
   </data>
   <data name="TurnFlicksOnOrOff" xml:space="preserve">
-    <value>Turn flicks on or off</value>
+    <value>Zapnutie alebo vypnutie rýchlych pohybov</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Add a language</value>
+    <value>Pridať jazyk</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
     <value>View network status and tasks</value>
