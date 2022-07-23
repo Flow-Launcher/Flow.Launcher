@@ -90,7 +90,6 @@ namespace Flow.Launcher.Plugin.Caculator
                             IcoPath = "Images/calculator.png",
                             Score = 300,
                             SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
-                            CopyText = newResult,
                             Action = c =>
                             {
                                 try
