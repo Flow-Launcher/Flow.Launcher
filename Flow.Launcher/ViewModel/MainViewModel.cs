@@ -625,7 +625,7 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query)
         {
-            if (_lastQuery.ActionKeyword != query.ActionKeyword)
+            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 Results.Clear();
             }
