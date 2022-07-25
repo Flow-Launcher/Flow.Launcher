@@ -1796,7 +1796,8 @@
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedQueryBoxFont}" />
+                                                            SelectedItem="{Binding SelectedQueryBoxFont}"
+                                                            IsSynchronizedWithCurrentItem="False" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,0,0,0"
@@ -1846,7 +1847,8 @@
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedResultFont}" />
+                                                            SelectedItem="{Binding SelectedResultFont}"
+                                                            IsSynchronizedWithCurrentItem="False" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,-2,0,0"
