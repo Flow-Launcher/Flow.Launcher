@@ -32,7 +32,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_done">Done</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Hecho</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
 
