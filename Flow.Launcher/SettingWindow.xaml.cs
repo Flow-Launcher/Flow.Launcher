@@ -4,6 +4,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -70,24 +71,43 @@ namespace Flow.Launcher
 
         public static void SetStartup()
         {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
+            try
+            {
+              using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+              key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
+            }
+            catch (Exception e)
+            {
+              Log.Error("SettingsWindow", $"Ignoring non-critical registry error (user permissions?): {e}");
+            }
         }
 
         private void RemoveStartup()
         {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.DeleteValue(Constant.FlowLauncher, false);
+            try
+            {
+              using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+              key?.DeleteValue(Constant.FlowLauncher, false);
+            }
+            catch (Exception e)
+            {
+              Log.Error("SettingsWindow", $"Ignoring non-critical registry error (user permissions?): {e}");
+            }
         }
 
         public static bool StartupSet()
         {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            var path = key?.GetValue(Constant.FlowLauncher) as string;
-            if (path != null)
+            try
             {
+                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+                var path = key?.GetValue(Constant.FlowLauncher) as string;
                 return path == Constant.ExecutablePath;
             }
+            catch (Exception e)
+            {
+                Log.Error("SettingsWindow", $"Ignoring non-critical registry error (user permissions?): {e}");
+            }
+
             return false;
         }
 
