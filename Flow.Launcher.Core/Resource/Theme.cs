@@ -85,7 +85,7 @@ namespace Flow.Launcher.Core.Resource
 
                 Settings.Theme = theme;
 
-                // #625, #637 - reload all resources even if the theme itself hasn't changed in order to pickup changes
+                // reload all resources even if the theme itself hasn't changed in order to pickup changes
                 // to things like fonts
                 UpdateResourceDictionary(GetResourceDictionary());
 
