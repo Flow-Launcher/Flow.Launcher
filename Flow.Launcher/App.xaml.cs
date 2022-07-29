@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,15 +104,11 @@ namespace Flow.Launcher
             });
         }
 
-
         private void AutoStartup()
         {
-            if (_settings.StartFlowLauncherOnSystemStartup)
+            if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
             {
-                if (!SettingWindow.StartupSet())
-                {
-                    SettingWindow.SetStartup();
-                }
+                Helper.AutoStartup.Enable();
             }
         }
 

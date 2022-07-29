@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -214,6 +214,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        #endregion
+
+        #region startup
+
+        public void SetStartup()
+        {
+            AutoStartup.Enable();
+        }
+
+        public void RemoveStartup()
+        {
+            AutoStartup.Disable();
+        }
         #endregion
 
         #region plugin

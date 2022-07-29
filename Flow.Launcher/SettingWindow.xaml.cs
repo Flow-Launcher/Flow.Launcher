@@ -1,4 +1,4 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -31,8 +31,6 @@ namespace Flow.Launcher
 {
     public partial class SettingWindow
     {
-        private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
@@ -61,54 +59,12 @@ namespace Flow.Launcher
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
         {
-            SetStartup();
+            viewModel.SetStartup();
         }
 
         private void OnAutoStartupUncheck(object sender, RoutedEventArgs e)
         {
-            RemoveStartup();
-        }
-
-        public static void SetStartup()
-        {
-            try
-            {
-              using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-              key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
-            }
-            catch (Exception e)
-            {
-              Log.Error("SettingsWindow", $"Ignoring non-critical registry error (user permissions?): {e}");
-            }
-        }
-
-        private void RemoveStartup()
-        {
-            try
-            {
-              using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-              key?.DeleteValue(Constant.FlowLauncher, false);
-            }
-            catch (Exception e)
-            {
-              Log.Error("SettingsWindow", $"Ignoring non-critical registry error (user permissions?): {e}");
-            }
-        }
-
-        public static bool StartupSet()
-        {
-            try
-            {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                var path = key?.GetValue(Constant.FlowLauncher) as string;
-                return path == Constant.ExecutablePath;
-            }
-            catch (Exception e)
-            {
-                Log.Error("SettingsWindow", $"Ignoring non-critical registry error (user permissions?): {e}");
-            }
-
-            return false;
+            viewModel.RemoveStartup();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
