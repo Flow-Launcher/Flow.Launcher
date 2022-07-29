@@ -17,6 +17,11 @@
             get { return "FSHARP"; }
         }
 
+        public static string Http
+        {
+            get { return "HTTP"; }
+        }
+
         public static string Executable
         {
             get { return "EXECUTABLE"; }
@@ -32,7 +37,8 @@
         {
             return IsDotNet(language)
                 || language.ToUpper() == Python.ToUpper()
-                || language.ToUpper() == Executable.ToUpper();
+                || language.ToUpper() == Executable.ToUpper()
+                || language.ToUpper() == Http.ToUpper();
         }
     }
 }

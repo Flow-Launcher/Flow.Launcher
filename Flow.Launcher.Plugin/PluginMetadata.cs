@@ -16,7 +16,10 @@ namespace Flow.Launcher.Plugin
         public string Description { get; set; }
         public string Website { get; set; }
         public bool Disabled { get; set; }
-        public string ExecuteFilePath { get; private set;}
+
+        public string ApiEndpoint { get; set; }
+
+        public string ExecuteFilePath { get; private set; }
 
         public string ExecuteFileName { get; set; }
 
@@ -35,8 +38,8 @@ namespace Flow.Launcher.Plugin
 
         public List<string> ActionKeywords { get; set; }
 
-        public string IcoPath { get; set;}
-        
+        public string IcoPath { get; set; }
+
         public override string ToString()
         {
             return Name;
