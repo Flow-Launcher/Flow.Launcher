@@ -1737,40 +1737,40 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>Alterar definições de instalação do dispositivo</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>Desativar imagens de fundo</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Navigation properties</value>
+    <value>Propriedades de navegação</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Opções de transmissão multimédia</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
     <value>Make a file type always open in a specific program</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>Alterar voz do narrador</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Find and fix keyboard problems</value>
+    <value>Encontrar e corrigir problemas com o teclado</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>Utilizar leitor de ecrã</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Mostrar em qual grupo de trabalho o computador está ligado</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Change mouse wheel settings</value>
+    <value>Alterar definições da roda do rato</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Manage computer certificates</value>
+    <value>Gerir certificados do computador</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Find and fix problems</value>
+    <value>Encontrar e corrigir problemas</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
     <value>Change settings for content received using Tap and send</value>
@@ -1782,7 +1782,7 @@
     <value>Print the speech reference card</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
-    <value>Calibrate display colour</value>
+    <value>Calibrar ecrã</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
     <value>Manage file encryption certificates</value>
@@ -1794,7 +1794,7 @@
     <value>Give other users access to this computer</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Show hidden files and folders</value>
+    <value>Mostrar ficheiros e pastas ocultas</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
     <value>Change Windows To Go start-up options</value>
@@ -1809,10 +1809,10 @@
     <value>Add clocks for different time zones</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>Adicionar um dispositivo Bluetooth</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Customise the mouse buttons</value>
+    <value>Personalizar botões do rato</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
     <value>Set tablet buttons to perform certain tasks</value>
@@ -1833,10 +1833,10 @@
     <value>Check processor speed</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Check firewall status</value>
+    <value>Verificar estado da firewall</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Send or receive a file</value>
+    <value>Enviar ou receber um ficheiro</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
     <value>Add or remove user accounts</value>
