@@ -220,12 +220,29 @@ namespace Flow.Launcher.ViewModel
 
         public void SetStartup()
         {
-            AutoStartup.Enable();
+            try
+            {
+                AutoStartup.Enable();
+            }
+            catch (Exception e)
+            {
+                Notification.Show(InternationalizationManager.Instance.GetTranslation("registerAutoStartFailed"), e.Message);
+            }
         }
 
         public void RemoveStartup()
         {
-            AutoStartup.Disable();
+            if (AutoStartup.IsEnabled)
+            {
+                try
+                {
+                    AutoStartup.Disable();
+                }
+                catch (Exception e)
+                {
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("deregisterAutoStartFailed"), e.Message);
+                }
+            }
         }
         #endregion
 

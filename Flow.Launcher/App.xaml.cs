@@ -106,9 +106,21 @@ namespace Flow.Launcher
 
         private void AutoStartup()
         {
+            // we try to enable auto-startup on first launch, or reenable if it was removed
+            // but the user still has the setting set
             if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
             {
-                Helper.AutoStartup.Enable();
+                try
+                {
+                    Helper.AutoStartup.Enable();
+                }
+                catch (Exception e)
+                {
+                    // but if it fails (permissions, etc) then don't keep retrying
+                    // this also gives the user a visual indication in the Settings widget
+                    _settings.StartFlowLauncherOnSystemStartup = false;
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("registerAutoStartFailed"), e.Message);
+                }
             }
         }
 

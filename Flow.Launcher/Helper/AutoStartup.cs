@@ -25,7 +25,7 @@ namespace Flow.Launcher.Helper
                 }
                 catch (Exception e)
                 {
-                    Log.Error("AutoStartup", $"Ignoring non-critical registry error (user permissions?): {e}");
+                    Log.Error("AutoStartup", $"Ignoring non-critical registry error (querying if enabled): {e}");
                 }
 
                 return false;
@@ -41,7 +41,8 @@ namespace Flow.Launcher.Helper
             }
             catch (Exception e)
             {
-                Log.Error("AutoStartup", $"Ignoring non-critical registry error (user permissions?): {e}");
+                Log.Error("AutoStartup", $"Failed to disable auto-startup: {e}");
+                throw;
             }
         }
 
@@ -54,9 +55,9 @@ namespace Flow.Launcher.Helper
             }
             catch (Exception e)
             {
-                Log.Error("AutoStartup", $"Ignoring non-critical registry error (user permissions?): {e}");
+                Log.Error("AutoStartup", $"Failed to enable auto-startup: {e}");
+                throw;
             }
-
         }
     }
 }

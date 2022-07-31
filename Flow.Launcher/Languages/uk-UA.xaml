@@ -28,6 +28,8 @@
     <system:String x:Key="portableMode">Портативний режим</system:String>
     <system:String x:Key="portableModeToolTIp">Зберігати всі налаштування і дані користувача в одній теці (буде корисно при видаленні дисків або хмарних сервісах).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускати Flow Launcher при запуску системи</system:String>
+    <system:String x:Key="registerAutoStartFailed">Error enabling launch on startup</system:String>
+    <system:String x:Key="deregisterAutoStartFailed">Error disabling launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher, якщо втрачено фокус</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не повідомляти про доступні нові версії</system:String>
     <system:String x:Key="rememberLastLocation">Запам'ятати останнє місце запуску</system:String>
