@@ -598,10 +598,8 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                                     </StackPanel>
                                     <CheckBox
-                                        Checked="OnAutoStartupChecked"
                                         IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
-                                        Style="{DynamicResource SideControlCheckBox}"
-                                        Unchecked="OnAutoStartupUncheck" />
+                                        Style="{DynamicResource SideControlCheckBox}"/>
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
