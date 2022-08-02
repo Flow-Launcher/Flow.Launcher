@@ -1887,22 +1887,22 @@
     <value>Crear una unidad de recuperación</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
-    <value>Microsoft New Phonetic Settings</value>
+    <value>Nueva Configuración fonética</value>
   </data>
   <data name="GenerateASystemHealthReport" xml:space="preserve">
-    <value>Generate a system health report</value>
+    <value>Generar informe de salud del sistema</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
-    <value>Fix problems with your computer</value>
+    <value>Corrige problemas con tu ordenador</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Back up and Restore (Windows 7)</value>
+    <value>Respaldar y Restaurar (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
-    <value>Preview, delete, show or hide fonts</value>
+    <value>Previsualizar, eliminar, mostrar u ocultar fuentes</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Microsoft Quick Settings</value>
+    <value>Ajustes rápidos</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
     <value>View reliability history</value>
@@ -1911,16 +1911,16 @@
     <value>Access RemoteApp and desktops</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
-    <value>Set up ODBC data sources</value>
+    <value>Configurar fuentes de datos de ODBC</value>
   </data>
   <data name="ResetSecurityPolicies" xml:space="preserve">
-    <value>Reset Security Policies</value>
+    <value>Restablecer las políticas de seguridad</value>
   </data>
   <data name="BlockOrAllowPopUps" xml:space="preserve">
-    <value>Block or allow pop-ups</value>
+    <value>Bloquear o permitir ventanas emergentes</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
-    <value>Turn autocomplete in Internet Explorer on or off</value>
+    <value>Activar o desactivar el autocompletado de Internet Explorer</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
     <value>Microsoft Pinyin SimpleFast Options</value>
@@ -1929,10 +1929,10 @@
     <value>Change what closing the lid does</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>Desactivar animaciones innecesarias</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
-    <value>Create a restore point</value>
+    <value>Crear un punto de restauración</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
     <value>Turn off automatic window arrangement</value>
