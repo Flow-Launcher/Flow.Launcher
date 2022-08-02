@@ -1935,7 +1935,7 @@
     <value>Crear un punto de restauración</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
-    <value>Turn off automatic window arrangement</value>
+    <value>Desactivar la distribución automática de ventanas</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
     <value>Troubleshooting History</value>
