@@ -42,7 +42,8 @@ Dedicated to making your workflow flow more seamless. Search everything from app
        <a href="#Hotkeys">Hotkeys</a> •
   <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
   <a href="#Development">Development</a> •
-  <a href="https://flowlauncher.com/docs">Docs</a>
+  <a href="https://flowlauncher.com/docs">Docs</a> •
+  <a href="#Sponsors">Sponsors</a>
 </h4>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -283,3 +284,11 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 - Install Visual Studio 2022
 
 - Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)
+
+## Sponsors
+
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
+  </a>
+</p>
