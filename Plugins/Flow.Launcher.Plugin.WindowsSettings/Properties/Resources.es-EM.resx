@@ -1905,10 +1905,10 @@
     <value>Ajustes rápidos</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
-    <value>View reliability history</value>
+    <value>Ver historial de fiabilidad</value>
   </data>
   <data name="AccessRemoteappAndDesktops" xml:space="preserve">
-    <value>Access RemoteApp and desktops</value>
+    <value>Acceder a RemoteApp y a los escritorios</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
     <value>Configurar fuentes de datos de ODBC</value>
@@ -1923,10 +1923,10 @@
     <value>Activar o desactivar el autocompletado de Internet Explorer</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
-    <value>Microsoft Pinyin SimpleFast Options</value>
+    <value>Opciones de Microsoft Pinyin SimpleFast</value>
   </data>
   <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
-    <value>Change what closing the lid does</value>
+    <value>Cambiar la acción que se realiza al cerrar la tapa</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
     <value>Desactivar animaciones innecesarias</value>
@@ -1938,79 +1938,79 @@
     <value>Desactivar la distribución automática de ventanas</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>Historial de solución de problemas</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnose your computer's memory problems</value>
+    <value>Diagnosticar los problemas de memoria del ordenador</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
-    <value>View recommended actions to keep Windows running smoothly</value>
+    <value>Ver las acciones recomendadas para mantener Windows funcionando sin problemas</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Change cursor blink rate</value>
+    <value>Cambiar velocidad de parpadeo del cursor</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
-    <value>Add or remove programs</value>
+    <value>Añadir o eliminar programas</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
-    <value>Create a password reset disk</value>
+    <value>Crear un disco para restablecer contraseña</value>
   </data>
   <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
-    <value>Configure advanced user profile properties</value>
+    <value>Configurar propiedades avanzadas del perfil de usuario</value>
   </data>
   <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
-    <value>Start or stop using AutoPlay for all media and devices</value>
+    <value>Iniciar o detener el uso de AutoPlay para todos los medios y dispositivos</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Change Automatic Maintenance settings</value>
+    <value>Cambiar automáticamente la configuración de mantenimiento</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
-    <value>Specify single- or double-click to open</value>
+    <value>Especificar un solo clic o doble clic para abrir</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Seleccionar usuarios que pueden usar el escritorio remoto</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
-    <value>Show which programs are installed on your computer</value>
+    <value>Mostrar qué programas están instalados en el ordenador</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>Permitir el acceso remoto al ordenador</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
-    <value>View advanced system settings</value>
+    <value>Ver configuración avanzada del sistema</value>
   </data>
   <data name="HowToInstallAProgram" xml:space="preserve">
-    <value>How to install a program</value>
+    <value>Cómo instalar un programa</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
-    <value>Change how your keyboard works</value>
+    <value>Cambiar cómo funciona el teclado</value>
   </data>
   <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
-    <value>Automatically adjust for daylight saving time</value>
+    <value>Ajustar automáticamente el horario de verano</value>
   </data>
   <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
-    <value>Change the order of Windows SideShow gadgets</value>
+    <value>Cambiar el orden de los gadgets de Windows SideShow</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>Comprobar estado del teclado</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>Controlar el ordenador sin el ratón o el teclado</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>Cambiar o eliminar un programa</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
-    <value>Change multi-touch gesture settings</value>
+    <value>Cambiar configuración de gestos multitáctiles</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (64-bit)</value>
+    <value>Configurar fuentes de datos ODBC (64 bits)</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
-    <value>Configure proxy server</value>
+    <value>Configurar servidor proxy</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
-    <value>Change your homepage</value>
+    <value>Cambiar página de inicio</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
     <value>Group similar windows on the taskbar</value>
