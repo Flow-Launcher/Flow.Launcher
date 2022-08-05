@@ -292,3 +292,9 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
     <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
   </a>
 </p>
+
+<p align="left">
+  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
+    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+  </a>
+</p>
