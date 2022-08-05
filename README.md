@@ -38,12 +38,14 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 <h4 align="center">
-  <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
-       <a href="#Hotkeys">Hotkeys</a> •
-  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
-  <a href="#Development">Development</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-plugins">Plugins</a> •
+  <a href="#%EF%B8%8F-hotkeys">Hotkeys</a> •
+  <a href="#-questionssuggestions">Questions/Suggestions</a> •
+  <a href="#development">Development</a> •
   <a href="https://flowlauncher.com/docs">Docs</a> •
-  <a href="#Sponsors">Sponsors</a>
+  <a href="#sponsors">Sponsors</a>
 </h4>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -267,6 +269,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## Development
 
 ### Contributing
@@ -284,6 +288,8 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 - Install Visual Studio 2022
 
 - Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Sponsors
 
