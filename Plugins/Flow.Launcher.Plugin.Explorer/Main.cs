@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IPathSelected
     {
         internal PluginInitContext Context { get; set; }
 
@@ -26,6 +26,14 @@ namespace Flow.Launcher.Plugin.Explorer
         public Control CreateSettingPanel()
         {
             return new ExplorerSettings(viewModel);
+        }
+
+        public Task PathSelected(string path, string hotkey)
+        {
+            //checked the hotkey if is ctrl+c, then 
+            //copy file to clipboard.
+            Context.API.ShowMsg("Success", string.Format("You have selected path \"{0}\", with hotkey \"{1}\"", path, hotkey));
+            return Task.CompletedTask;
         }
 
         public Task InitAsync(PluginInitContext context)

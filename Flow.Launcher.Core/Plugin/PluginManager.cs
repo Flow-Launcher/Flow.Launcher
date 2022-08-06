@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +26,6 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IPublicAPI API { private set; get; }
 
-        // todo happlebao, this should not be public, the indicator function should be embeded 
         public static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
 
@@ -177,6 +176,20 @@ namespace Flow.Launcher.Core.Plugin
             {
                 return GlobalPlugins;
             }
+        }
+
+        public static async Task PublishPathSelectedFromResult(string selectedPath, string hotkey)
+        {
+            await Task.WhenAll(AllPlugins.Select(pluginPair => pluginPair.Plugin switch
+            {
+                IPathSelected p
+                    when pluginPair
+                            .Metadata
+                            .Listeners
+                            .Any(x => x.ContainsKey(hotkey) && x.ContainsValue("IPathSelected"))
+                  => p.PathSelected(selectedPath, hotkey),
+                _ => Task.CompletedTask,
+            }));
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
