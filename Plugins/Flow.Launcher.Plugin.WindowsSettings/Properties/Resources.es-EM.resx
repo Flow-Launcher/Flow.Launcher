@@ -2013,25 +2013,25 @@
     <value>Cambiar página de inicio</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
-    <value>Group similar windows on the taskbar</value>
+    <value>Agrupar ventanas similares en la barra de tareas</value>
   </data>
   <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
-    <value>Change Windows SideShow settings</value>
+    <value>Cambiar la configuración de Windows SideShow</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
-    <value>Use audio description for video</value>
+    <value>Usar descripción de audio para vídeo</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>Cambiar nombre del grupo de trabajo</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>Buscar y solucionar problemas de impresión</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>Cambiar cuando el equipo está en suspensión</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
-    <value>Set up a virtual private network (VPN) connection</value>
+    <value>Configurar una conexión de red privada virtual (VPN)</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
     <value>Accommodate learning abilities</value>
