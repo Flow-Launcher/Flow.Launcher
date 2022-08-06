@@ -2094,13 +2094,13 @@
     <value>Cambiar el funcionamiento del ratón</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
-    <value>Show how much RAM is on this computer</value>
+    <value>Mostrar cuánta RAM tiene este equipo</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
-    <value>Edit power plan</value>
+    <value>Modificar plan de energía</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
-    <value>Adjust system volume</value>
+    <value>Ajustar volumen del sistema</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
     <value>Defragment and optimise your drives</value>
