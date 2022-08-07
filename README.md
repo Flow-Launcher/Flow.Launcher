@@ -42,10 +42,10 @@ Dedicated to making your workflow flow more seamless. Search everything from app
   <a href="#-features">Features</a> •
   <a href="#-plugins">Plugins</a> •
   <a href="#%EF%B8%8F-hotkeys">Hotkeys</a> •
+  <a href="#sponsors">Sponsors</a> •
   <a href="#-questionssuggestions">Questions/Suggestions</a> •
   <a href="#development">Development</a> •
-  <a href="https://flowlauncher.com/docs">Docs</a> •
-  <a href="#sponsors">Sponsors</a>
+  <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -265,6 +265,22 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
+## Sponsors
+
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
+    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+  </a>
+</p>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## ❔ Questions/Suggestions
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
@@ -288,19 +304,3 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 - Install Visual Studio 2022
 
 - Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)
-
-<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
-
-## Sponsors
-
-<p align="center">
-  <a href="https://appwrite.io">
-    <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
-  </a>
-</p>
-
-<p align="left">
-  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
-    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
-  </a>
-</p>
