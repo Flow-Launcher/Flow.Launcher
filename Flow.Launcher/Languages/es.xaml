@@ -122,7 +122,7 @@
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
     <system:String x:Key="useGlyphUI">Utilizar iconos Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatible</system:String>
+    <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -144,9 +144,9 @@
     <system:String x:Key="about">Acerca de</system:String>
     <system:String x:Key="website">Sitio web</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="docs">Documentación</system:String>
     <system:String x:Key="version">Versión</system:String>
-    <system:String x:Key="about_activate_times">Has activado Flow Launcher {0} veces</system:String>
+    <system:String x:Key="about_activate_times">Flow Launcher ha sido activado {0} veces</system:String>
     <system:String x:Key="checkUpdates">Buscar actualizaciones</system:String>
     <system:String x:Key="newVersionTips">La nueva versión {0} está disponible, ¿desea reiniciar Flow Launcher para actualizar?</system:String>
     <system:String x:Key="checkUpdatesFailed">Falló la comprobación de actualizaciones, compruebe su conexión y cambie la configuración de proxy a api.github.com.</system:String>
@@ -158,7 +158,7 @@
     <system:String x:Key="documentation">Consejos de uso</system:String>
     <system:String x:Key="devtool">Herramientas de desarrolador</system:String>
     <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
-    <system:String x:Key="logfolder">Carpeta de logs</system:String>
+    <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
@@ -166,10 +166,10 @@
     <system:String x:Key="fileManager_tips">Por favor, especifique la ubicación del administrador de archivos que desea utilizar y añada argumentos si es necesario. El argumento por defecto es &quot;%d&quot;, introduciendo una ruta en esa ubicación. Por ejemplo, si se requiere un comando como &quot;totalcmd.exe /A c:\windows&quot;, el argumento es /A &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con administradores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Arg para archivo&quot;. Si el administrador de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
-    <system:String x:Key="fileManager_profile_name">Nombre de perfil</system:String>
+    <system:String x:Key="fileManager_profile_name">Nombre del perfil</system:String>
     <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg para la carpeta</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg para archivo</system:String>
+    <system:String x:Key="fileManager_directory_arg">Argumentos de la carpeta</system:String>
+    <system:String x:Key="fileManager_file_arg">Argumentos del archivo</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web por defecto</system:String>
