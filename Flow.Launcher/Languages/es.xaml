@@ -68,7 +68,7 @@
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
-    <system:String x:Key="pluginDirectory">Directorio de complementos</system:String>
+    <system:String x:Key="pluginDirectory">Carpeta de complementos</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
     <system:String x:Key="plugin_query_time">Tiempo de consulta:</system:String>
@@ -101,7 +101,7 @@
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
-    <system:String x:Key="AnimationTip">Utiliza animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="AnimationTip">Utilizar animación en la Interfaz de Usuario</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajos de teclado</system:String>
@@ -183,20 +183,20 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar prioridad</system:String>
-    <system:String x:Key="priority_tips">A mayor número, más alto aparecerá el resultado. Intentalo con 5. Si quieres que los resultados aparezcan más abajo que los de cualquier otro complemento, usa un número negativo</system:String>
-    <system:String x:Key="invalidPriority">¡Por favor, proporcione un entero válido para la prioridad!</system:String>
+    <system:String x:Key="priority_tips">A mayor número, más alto aparecerá el resultado. Inténtelo con 5. Si quiere que los resultados aparezcan más abajo que los de cualquier otro complemento, utilice un número negativo</system:String>
+    <system:String x:Key="invalidPriority">¡Por favor, proporcione un número entero válido para la prioridad!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Palabra clave de acción antigua</system:String>
-    <system:String x:Key="newActionKeywords">Palabra clave de acción nueva</system:String>
+    <system:String x:Key="oldActionKeywords">Antigua palabra clave de acción</system:String>
+    <system:String x:Key="newActionKeywords">Nueva palabra clave de acción</system:String>
     <system:String x:Key="cancel">Cancelar</system:String>
     <system:String x:Key="done">Aceptar</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">No se puede encontrar el complemento especificado</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">La nueva palabra clave de acción no puede estar vacía</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta nueva palabra clave de acción ya está asignada a otro complemento, por favor elija una diferente</system:String>
-    <system:String x:Key="success">Éxito</system:String>
-    <system:String x:Key="completedSuccessfully">Completado correctamente</system:String>
-    <system:String x:Key="actionkeyword_tips">Introduce la palabra clave que deseas utilizar para iniciar el complemento. Utiliza * si no deseas especificar ninguna, y el complemento se activará sin ninguna palabra clave.</system:String>
+    <system:String x:Key="success">Correcto</system:String>
+    <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
+    <system:String x:Key="actionkeyword_tips">Introduzca la palabra clave que desea utilizar para iniciar el complemento. Utilice * si no desea especificar ninguna, y el complemento se activará sin ninguna palabra clave.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajos de búsqueda personalizada</system:String>
@@ -219,23 +219,23 @@
     <system:String x:Key="reportWindow_exceptions">Excepciones</system:String>
     <system:String x:Key="reportWindow_exception_type">Tipo de excepción</system:String>
     <system:String x:Key="reportWindow_source">Origen</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Traza de Pila</system:String>
+    <system:String x:Key="reportWindow_stack_trace">Rastreo de Pila</system:String>
     <system:String x:Key="reportWindow_sending">Enviando</system:String>
     <system:String x:Key="reportWindow_report_succeed">Informe enviado correctamente</system:String>
     <system:String x:Key="reportWindow_report_failed">No se pudo enviar el informe</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher ha tenido un error</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Por favor, espera...</system:String>
+    <system:String x:Key="pleaseWait">Por favor espere...</system:String>
 
     <!--  update  -->
     <system:String x:Key="update_flowlauncher_update_check">Comprobando actualizaciones</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">Ya tienes la versión más reciente de Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Ya tiene la última versión de Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Actualización encontrada</system:String>
     <system:String x:Key="update_flowlauncher_updating">Actualizando...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher no pudo migrar los datos de su perfil de usuario de la antigua versión a la nueva.
-        Por favor, mueve manualmente la carpeta de datos de tu perfil de {0} a {1}
+        Flow Launcher no pudo mover sus datos de perfil de usuario a la nueva versión de actualización.
+        Por favor, mueva manualmente la carpeta de datos de su perfil de {0} a {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nueva actualización</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">La nueva versión {0} de Flow Launcher está disponible</system:String>
@@ -252,7 +252,7 @@
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Omitir</system:String>
     <system:String x:Key="Welcome_Page1_Title">Bienvenido a Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hola, ¡es la primera vez que ejecuta Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Hola, ¡Esta es la primera vez que ejecuta Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Antes de empezar, este asistente le ayudará a configurar Flow Launcher. Puede omitirlo si lo desea. Por favor, elija un idioma</system:String>
     <system:String x:Key="Welcome_Page2_Title">Busque y ejecute archivos y aplicaciones en el equipo</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Busque todo, desde aplicaciones, archivos, marcadores, YouTube, Twitter y más. Todo desde la comodidad del teclado y sin tener que tocar el ratón.</system:String>
