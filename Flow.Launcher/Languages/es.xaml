@@ -164,7 +164,7 @@
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
     <system:String x:Key="fileManager_tips">Por favor, especifique la ubicación del administrador de archivos que desea utilizar y añada argumentos si es necesario. El argumento por defecto es &quot;%d&quot;, introduciendo una ruta en esa ubicación. Por ejemplo, si se requiere un comando como &quot;totalcmd.exe /A c:\windows&quot;, el argumento es /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con administradores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Arg para archivo&quot;. Si el administrador de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con administradores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Argumentos del archivo&quot;. Si el administrador de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
     <system:String x:Key="fileManager_profile_name">Nombre del perfil</system:String>
     <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>
