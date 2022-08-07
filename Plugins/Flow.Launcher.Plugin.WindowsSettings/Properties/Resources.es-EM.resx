@@ -2491,7 +2491,7 @@
     <value>Crear una cuenta de usuario estándar</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
-    <value>Tomar tutoriales de habla</value>
+    <value>Realizar tutoriales de conversación</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
     <value>Ver uso de recursos del sistema en el Administrador de tareas</value>
