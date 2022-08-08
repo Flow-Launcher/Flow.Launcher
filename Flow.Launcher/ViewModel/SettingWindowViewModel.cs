@@ -60,7 +60,13 @@ namespace Flow.Launcher.ViewModel
                 Settings.AutoUpdates = value;
 
                 if (value)
+                {
                     UpdateApp();
+                    SetStartup();
+                } else 
+                {
+                    RemoveStartup();
+                }
             }
         }
 
