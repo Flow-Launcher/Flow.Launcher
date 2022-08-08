@@ -376,9 +376,9 @@ namespace Flow.Launcher.Plugin.Shell
                 new Result
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
-                    Action = c =>
+                    AsyncAction = async c =>
                     {
-                        _ = Task.Run(() => Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
+                        Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
                         return true;
                     },
                     IcoPath = "Images/user.png"

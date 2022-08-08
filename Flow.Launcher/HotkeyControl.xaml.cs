@@ -101,7 +101,7 @@ namespace Flow.Launcher
             }
         }
 
-        public void SetHotkey(string keyStr, bool triggerValidate = true)
+        public async Task SetHotkey(string keyStr, bool triggerValidate = true)
         {
             _ = SetHotkey(new HotkeyModel(keyStr), triggerValidate);
         }

@@ -94,7 +94,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                                    keyword == Settings.IndexSearchActionKeyword,
                 Settings.ActionKeyword.QuickAccessActionKeyword => Settings.QuickAccessKeywordEnabled &&
                                                                         keyword == Settings.QuickAccessActionKeyword,
-                _ => false
+                _ => throw new NotImplementedException()
             };
         }
 
