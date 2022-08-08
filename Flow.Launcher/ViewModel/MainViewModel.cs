@@ -306,8 +306,8 @@ namespace Flow.Launcher.ViewModel
                         {
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
+                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
+                                );
                         }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
