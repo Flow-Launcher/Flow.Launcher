@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -60,7 +60,30 @@ namespace Flow.Launcher.ViewModel
                 Settings.AutoUpdates = value;
 
                 if (value)
+                {
                     UpdateApp();
+                }
+            }
+        }
+
+        public bool StartFlowLauncherOnSystemStartup
+        {
+            get => Settings.StartFlowLauncherOnSystemStartup;
+            set
+            {
+                Settings.StartFlowLauncherOnSystemStartup = value;
+
+                try
+                {
+                    if (value)
+                        AutoStartup.Enable();
+                    else
+                        AutoStartup.Disable();
+                }
+                catch (Exception e)
+                {
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
+                }
             }
         }
 
@@ -273,7 +296,7 @@ namespace Flow.Launcher.ViewModel
 
         #region theme
 
-        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
+        public static string Theme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
 
         public string SelectedTheme
         {

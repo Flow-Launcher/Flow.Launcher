@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -209,21 +209,53 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
-        public void OpenUrl(string url, bool? inPrivate = null)
+        private void OpenUri(Uri uri, bool? inPrivate = null)
         {
-            var browserInfo = _settingsVM.Settings.CustomBrowser;
-
-            var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
-
-            if (browserInfo.OpenInTab)
+            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                var browserInfo = _settingsVM.Settings.CustomBrowser;
+
+                var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
+
+                if (browserInfo.OpenInTab)
+                {
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
+                else
+                {
+                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
             }
             else
             {
-                url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
-            }
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = uri.AbsoluteUri,
+                    UseShellExecute = true
+                })?.Dispose();
 
+                return;
+            }
+        }
+
+        public void OpenUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(new Uri(url), inPrivate);
+        }
+
+        public void OpenUrl(Uri url, bool? inPrivate = null)
+        {
+            OpenUri(url, inPrivate);
+        }
+
+        public void OpenAppUri(string appUri)
+        {
+            OpenUri(new Uri(appUri));
+        }
+
+        public void OpenAppUri(Uri appUri)
+        {
+            OpenUri(appUri);
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

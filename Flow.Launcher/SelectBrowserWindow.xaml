@@ -86,8 +86,8 @@
                         Text="{DynamicResource defaultBrowser_name}" />
                     <ComboBox
                         Name="comboBox"
-                        Width="200"
                         Height="35"
+                        MinWidth="200"
                         Margin="14,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -121,8 +121,8 @@
                     Orientation="Horizontal">
                     <Grid Width="480">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -133,7 +133,7 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            Margin="14,5,0,0"
+                            Margin="14,5,10,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -143,7 +143,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Width="Auto"
-                            Margin="10,5,15,0"
+                            Margin="10,5,0,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             IsEnabled="{Binding Editable}"
@@ -156,21 +156,13 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource defaultBrowser_path}" />
-                        <StackPanel
+                        <DockPanel
                             Grid.Row="1"
                             Grid.Column="1"
-                            Orientation="Horizontal">
-                            <TextBox
-                                x:Name="PathTextBox"
-                                Width="220"
-                                Margin="10,10,5,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                IsEnabled="{Binding Editable}"
-                                Text="{Binding Path}" />
+                            HorizontalAlignment="Stretch"
+                            LastChildFill="True">
                             <Button
                                 Name="btnBrowseFile"
-                                Width="80"
                                 Margin="0,10,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
@@ -187,7 +179,14 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                        </StackPanel>
+                            <TextBox
+                                x:Name="PathTextBox"
+                                Margin="10,10,5,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                IsEnabled="{Binding Editable}"
+                                Text="{Binding Path}" />
+                        </DockPanel>
 
                         <StackPanel
                             Grid.Row="2"
@@ -196,8 +195,10 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-                            <RadioButton IsChecked="{Binding OpenInTab}">New Tab</RadioButton>
-                            <RadioButton IsChecked="{Binding OpenInNewWindow, Mode=OneTime}">New Window</RadioButton>
+                            <RadioButton IsChecked="{Binding OpenInTab}" 
+                                         Content="{DynamicResource defaultBrowser_newTab}"></RadioButton>
+                            <RadioButton IsChecked="{Binding OpenInNewWindow, Mode=OneTime}"
+                                         Content="{DynamicResource defaultBrowser_newWindow}"></RadioButton>
                         </StackPanel>
                         <TextBlock
                             Grid.Row="3"

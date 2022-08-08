@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin.Explorer
         // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
         public List<AccessLink> QuickFolderAccessLinks { get; set; } = new List<AccessLink>();
 
-        public bool UseWindowsIndexForDirectorySearch { get; set; } = true;
+        public bool UseWindowsIndexForDirectorySearch { get; set; } = false;
 
         public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
 

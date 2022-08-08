@@ -52,5 +52,16 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         internal bool IsNewActionKeywordGlobal(string newActionKeyword) => newActionKeyword == Query.GlobalPluginWildcardSign;
+
+        public bool UseWindowsIndexForDirectorySearch {
+            get
+            {
+                return Settings.UseWindowsIndexForDirectorySearch;
+            }
+            set
+            {
+                Settings.UseWindowsIndexForDirectorySearch = value;
+            }
+        }
     }
 }

@@ -91,8 +91,9 @@ namespace Flow.Launcher.Core
             catch (Exception e) when (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
-                api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
-                    api.GetTranslation("update_flowlauncher_check_connection"));
+                if (!silentUpdate)
+                    api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
+                        api.GetTranslation("update_flowlauncher_check_connection"));
             }
             finally
             {
@@ -124,7 +125,7 @@ namespace Flow.Launcher.Core
             var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
-            
+
             var client = new WebClient
             {
                 Proxy = Http.WebProxy

@@ -87,46 +87,20 @@
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="100"
+                    MinWidth="140"
                     Margin="0,0,5,0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
 
                 <Button
-                    Width="100"
+                    MinWidth="140"
                     Margin="5,0,0,0"
                     HorizontalAlignment="Right"
                     Click="ButtonAdd_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_update}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_update}"
+                    Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
     </Grid>
-    <!--
-    <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <Label Margin="15,10" Content="{DynamicResource flowlauncher_plugin_program_directory}" />
-            <TextBox
-                Name="Directory"
-                Width="278"
-                Margin="10,7"
-                VerticalAlignment="Center" />
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button
-                Width="70"
-                Height="31"
-                Margin="10"
-                HorizontalAlignment="Right"
-                Click="BrowseButton_Click"
-                Content="{DynamicResource flowlauncher_plugin_program_browse}" />
-            <Button
-                Width="70"
-                Height="31"
-                Margin="10"
-                HorizontalAlignment="Right"
-                Click="ButtonAdd_OnClick"
-                Content="{DynamicResource flowlauncher_plugin_program_update}" />
-        </StackPanel>
-    </StackPanel>
-    -->
+
 </Window>
