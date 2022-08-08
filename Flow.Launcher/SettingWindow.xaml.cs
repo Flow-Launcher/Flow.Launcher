@@ -1,9 +1,10 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -30,8 +31,6 @@ namespace Flow.Launcher
 {
     public partial class SettingWindow
     {
-        private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
@@ -56,39 +55,6 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
-        }
-
-        private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
-        {
-            SetStartup();
-        }
-
-        private void OnAutoStartupUncheck(object sender, RoutedEventArgs e)
-        {
-            RemoveStartup();
-        }
-
-        public static void SetStartup()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
-        }
-
-        private void RemoveStartup()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.DeleteValue(Constant.FlowLauncher, false);
-        }
-
-        public static bool StartupSet()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            var path = key?.GetValue(Constant.FlowLauncher) as string;
-            if (path != null)
-            {
-                return path == Constant.ExecutablePath;
-            }
-            return false;
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)

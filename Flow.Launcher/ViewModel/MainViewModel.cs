@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -306,8 +306,8 @@ namespace Flow.Launcher.ViewModel
                         {
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
+                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
+                                );
                         }))
                     .ConfigureAwait(false);
             });
