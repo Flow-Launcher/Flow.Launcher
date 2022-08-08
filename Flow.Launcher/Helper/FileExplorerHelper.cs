@@ -44,7 +44,8 @@ namespace Flow.Launcher.Helper
 
                 // find the desired window and make sure that it is indeed a file explorer
                 // we don't want the Internet Explorer or the classic control panel
-                if (Path.GetFileName((string)window.FullName) == "explorer.exe" && new IntPtr(window.HWND) == handle)
+                // ToLower() is needed, because Windows can report the path as "C:\\Windows\\Explorer.EXE"
+                if (Path.GetFileName((string)window.FullName).ToLower() == "explorer.exe" && new IntPtr(window.HWND) == handle)
                 {
                     return window;
                 }
@@ -52,8 +53,6 @@ namespace Flow.Launcher.Helper
 
             return null;
         }
-
-        // COM Imports
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
