@@ -14,7 +14,7 @@ namespace Flow.Launcher.Helper
         public static string GetActiveExplorerPath()
         {
             var explorerWindow = GetActiveExplorer();
-            string locationUrl = explorerWindow.LocationURL;
+            string locationUrl = explorerWindow?.LocationURL;
             if (!string.IsNullOrEmpty(locationUrl))
             {
                 return new Uri(locationUrl).LocalPath;
@@ -28,31 +28,25 @@ namespace Flow.Launcher.Helper
         /// <summary>
         /// Gets the file explorer that is currently in the foreground
         /// </summary>
-        private static SHDocVw.InternetExplorer GetActiveExplorer()
+        private static dynamic GetActiveExplorer()
         {
             // get the active window
             IntPtr handle = GetForegroundWindow();
 
-            // Required ref: SHDocVw (Microsoft Internet Controls COM Object) - C:\Windows\system32\ShDocVw.dll
-            var shellWindows = new SHDocVw.ShellWindows();
-
-            // loop through all windows
-            foreach (var window in shellWindows)
+            Type type = Type.GetTypeFromProgID("Shell.Application");
+            if (type == null) return null;
+            dynamic shell = Activator.CreateInstance(type);
+            var openWindows = shell.Windows();
+            for (int i = 0; i < openWindows.Count; i++)
             {
-                if (window is SHDocVw.InternetExplorer explorerWindow && new IntPtr(explorerWindow.HWND) == handle)
-                {
-                    // we have found the desired window, now let's make sure that it is indeed a file explorer
-                    // we don't want the Internet Explorer or the classic control panel
-                    if (explorerWindow.Document is not Shell32.IShellFolderViewDual2)
-                    {
-                        return null;
-                    }
-                    if (Path.GetFileName(explorerWindow.FullName) != "explorer.exe")
-                    {
-                        return null;
-                    }
+                var window = openWindows.Item(i);
+                if (window == null) continue;
 
-                    return explorerWindow;
+                // find the desired window and make sure that it is indeed a file explorer
+                // we don't want the Internet Explorer or the classic control panel
+                if (Path.GetFileName((string)window.FullName) == "explorer.exe" && new IntPtr(window.HWND) == handle)
+                {
+                    return window;
                 }
             }
 
