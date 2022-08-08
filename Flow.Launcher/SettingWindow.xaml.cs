@@ -1,4 +1,4 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -35,7 +35,6 @@ namespace Flow.Launcher
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
-        private static MainViewModel mainViewModel;
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
@@ -264,7 +263,7 @@ namespace Flow.Launcher
 
         #endregion
 
-        private async void OnCheckUpdates(object sender, RoutedEventArgs e)
+        private void OnCheckUpdates(object sender, RoutedEventArgs e)
         {
             viewModel.UpdateApp(); // TODO: change to command
         }

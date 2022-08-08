@@ -69,7 +69,7 @@ namespace Flow.Launcher.Helper
             //get current active window
             IntPtr hWnd = GetForegroundWindow();
 
-            if (hWnd != null && !hWnd.Equals(IntPtr.Zero))
+            if (!hWnd.Equals(IntPtr.Zero))
             {
                 //if current active window is NOT desktop or shell
                 if (!(hWnd.Equals(HWND_DESKTOP) || hWnd.Equals(HWND_SHELL)))
@@ -98,7 +98,7 @@ namespace Flow.Launcher.Helper
                     {
                         IntPtr hWndDesktop = FindWindowEx(hWnd, IntPtr.Zero, "SHELLDLL_DefView", null);
                         hWndDesktop = FindWindowEx(hWndDesktop, IntPtr.Zero, "SysListView32", "FolderView");
-                        if (hWndDesktop != null && !hWndDesktop.Equals(IntPtr.Zero))
+                        if (!hWndDesktop.Equals(IntPtr.Zero))
                         {
                             return false;
                         }

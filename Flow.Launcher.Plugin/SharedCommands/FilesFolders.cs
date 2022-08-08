@@ -53,10 +53,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     CopyAll(subdir.FullName, temppath);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
                 RemoveFolderIfExists(targetPath);
@@ -80,10 +80,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
@@ -99,10 +99,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (Directory.Exists(path))
                     Directory.Delete(path, true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
@@ -127,10 +127,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
                     Process.Start(psi);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif

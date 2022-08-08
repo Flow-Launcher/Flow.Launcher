@@ -166,7 +166,7 @@ namespace Flow.Launcher.Infrastructure.Exception
                 }
                 return result;
             }
-            catch (System.Exception e)
+            catch
             {
                 return new List<string>();
             }

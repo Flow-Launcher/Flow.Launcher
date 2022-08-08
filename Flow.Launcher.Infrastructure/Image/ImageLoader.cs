@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 ImageCache[icon] = img;
             }
 
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {

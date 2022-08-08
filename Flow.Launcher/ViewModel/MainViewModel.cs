@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -299,7 +299,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
 
-                PluginManager
+                _ = PluginManager
                     .ReloadData()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
@@ -308,7 +308,7 @@ namespace Flow.Launcher.ViewModel
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
                                 "");
-                        }))
+                        }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
         }

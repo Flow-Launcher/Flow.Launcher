@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -98,7 +98,7 @@ namespace Flow.Launcher.Core.Plugin
                                    + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
                                    + "errored and cannot be loaded:";
 
-                Task.Run(() =>
+                _ = Task.Run(() =>
                 {
                     MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +

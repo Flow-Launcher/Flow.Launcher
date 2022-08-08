@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -99,7 +99,7 @@ namespace Flow.Launcher.Core.Resource
 
                 SetBlurForWindow();
             }
-            catch (DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
@@ -109,7 +109,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 return false;
             }
-            catch (XamlParseException e)
+            catch (XamlParseException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)

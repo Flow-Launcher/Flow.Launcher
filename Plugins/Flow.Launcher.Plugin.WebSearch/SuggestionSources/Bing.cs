@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             {
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
                 
-                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
 
                 using var json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token));
                 var root = json.RootElement.GetProperty("AS");
