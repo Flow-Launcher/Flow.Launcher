@@ -62,10 +62,6 @@ namespace Flow.Launcher.ViewModel
                 if (value)
                 {
                     UpdateApp();
-                    SetStartup();
-                } else 
-                {
-                    RemoveStartup();
                 }
             }
         }
