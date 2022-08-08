@@ -38,10 +38,13 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 <h4 align="center">
-  <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
-       <a href="#Hotkeys">Hotkeys</a> •
-  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
-  <a href="#Development">Development</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-plugins">Plugins</a> •
+  <a href="#%EF%B8%8F-hotkeys">Hotkeys</a> •
+  <a href="#sponsors">Sponsors</a> •
+  <a href="#-questionssuggestions">Questions/Suggestions</a> •
+  <a href="#development">Development</a> •
   <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
 
@@ -262,9 +265,27 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
+## Sponsors
+
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
+    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+  </a>
+</p>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## ❔ Questions/Suggestions
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Development
 
