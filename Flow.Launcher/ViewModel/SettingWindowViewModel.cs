@@ -64,6 +64,27 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool StartFlowLauncherOnSystemStartup
+        {
+            get => Settings.StartFlowLauncherOnSystemStartup;
+            set
+            {
+                Settings.StartFlowLauncherOnSystemStartup = value;
+
+                try
+                {
+                    if (value)
+                        AutoStartup.Enable();
+                    else
+                        AutoStartup.Disable();
+                }
+                catch (Exception e)
+                {
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
+                }
+            }
+        }
+
         // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
         private bool _portableMode = DataLocation.PortableDataLocationInUse();
         public bool PortableMode
@@ -214,36 +235,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        #endregion
-
-        #region startup
-
-        public void SetStartup()
-        {
-            try
-            {
-                AutoStartup.Enable();
-            }
-            catch (Exception e)
-            {
-                Notification.Show(InternationalizationManager.Instance.GetTranslation("registerAutoStartFailed"), e.Message);
-            }
-        }
-
-        public void RemoveStartup()
-        {
-            if (AutoStartup.IsEnabled)
-            {
-                try
-                {
-                    AutoStartup.Disable();
-                }
-                catch (Exception e)
-                {
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("deregisterAutoStartFailed"), e.Message);
-                }
-            }
-        }
         #endregion
 
         #region plugin

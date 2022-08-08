@@ -18,8 +18,6 @@
     <system:String x:Key="flowlauncher_settings">Flow Launcher-innstillinger</system:String>
     <system:String x:Key="general">Generelt</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher ved systemstart</system:String>
-    <system:String x:Key="registerAutoStartFailed">Error enabling launch on startup</system:String>
-    <system:String x:Key="deregisterAutoStartFailed">Error disabling launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skjul Flow Launcher ved mistet fokus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsel om ny versjon</system:String>
     <system:String x:Key="rememberLastLocation">Husk siste plassering</system:String>

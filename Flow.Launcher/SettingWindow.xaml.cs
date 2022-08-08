@@ -57,16 +57,6 @@ namespace Flow.Launcher
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
         }
 
-        private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
-        {
-            viewModel.SetStartup();
-        }
-
-        private void OnAutoStartupUncheck(object sender, RoutedEventArgs e)
-        {
-            viewModel.RemoveStartup();
-        }
-
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
         {
             var dlg = new FolderBrowserDialog
