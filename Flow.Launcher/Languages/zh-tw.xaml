@@ -28,6 +28,7 @@
     <system:String x:Key="portableMode">Portable Mode</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
+    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">記住上次啟動位置</system:String>
