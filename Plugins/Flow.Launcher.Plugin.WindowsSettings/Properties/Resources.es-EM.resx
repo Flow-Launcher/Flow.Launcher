@@ -134,7 +134,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Acceso a trabajo o escuela</value>
+    <value>Acceder a trabajo o escuela</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
@@ -166,7 +166,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
-    <value>Añade tu teléfono</value>
+    <value>Añadir tu teléfono</value>
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
@@ -174,7 +174,7 @@
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Configuración de pantalla avanzada</value>
+    <value>Configuración avanzada de pantalla</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
@@ -1974,7 +1974,7 @@
     <value>Mostrar qué programas están instalados en el ordenador</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Permitir el acceso remoto al ordenador</value>
+    <value>Permitir acceso remoto a su equipo</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
     <value>Ver configuración avanzada del sistema</value>
@@ -2034,7 +2034,7 @@
     <value>Configurar una conexión de red privada virtual (VPN)</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
-    <value>Adaptar las capacidades de aprendizaje</value>
+    <value>Acomodar capacidades de aprendizaje</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
     <value>Establecer una conexión de marcación</value>
@@ -2158,7 +2158,7 @@
     <value>Entrenar al ordenador para reconocer tu voz</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
-    <value>Configuración de impresora avanzada</value>
+    <value>Configuración avanzada de impresora</value>
   </data>
   <data name="ChangeDefaultPrinter" xml:space="preserve">
     <value>Cambiar la impresora predeterminada</value>
@@ -2239,7 +2239,7 @@
     <value>Elige cómo abrir vínculos</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
-    <value>Permitir que este equipo envíe invitaciones de Asistencia Remota</value>
+    <value>Permitir que el equipo envíe invitaciones de Asistencia Remota</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
     <value>Administrador de Tareas</value>
@@ -2248,7 +2248,7 @@
     <value>Activar o desactivar los gestos</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Agregar un idioma</value>
+    <value>Añadir un idioma</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
     <value>Ver el estado y las tareas de red</value>
@@ -2314,7 +2314,7 @@
     <value>Ver todos los informes de problemas</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>Compatibilidad con aplicaciones de 16 bits</value>
+    <value>Soporte de aplicaciones de 16 Bits</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
     <value>Configurar reglas de marcado</value>
@@ -2335,7 +2335,7 @@
     <value>Cambiar configuración de dispositivo compatible con Windows SideShow</value>
   </data>
   <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
-    <value>Configurar ajustes de movilidad comunes</value>
+    <value>Ajustar configuración de movilidad utilizada habitualmente</value>
   </data>
   <data name="ChangeTextToSpeechSettings" xml:space="preserve">
     <value>Cambiar la configuración de texto a voz</value>
@@ -2383,7 +2383,7 @@
     <value>Unirse a un dominio</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
-    <value>Agregar un dispositivo</value>
+    <value>Añadir un dispositivo</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
     <value>Buscar y solucionar problemas con Windows Search</value>
@@ -2443,7 +2443,7 @@
     <value>Cambiar las opciones de búsqueda para archivos y carpetas</value>
   </data>
   <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
-    <value>Cambiar los ajustes antes de hacer una presentación</value>
+    <value>Ajustar configuración antes de hacer una presentación</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
     <value>Escanear un documento o imagen</value>
