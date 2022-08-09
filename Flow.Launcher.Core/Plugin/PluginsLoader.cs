@@ -40,16 +40,6 @@ namespace Flow.Launcher.Core.Plugin
                 var milliseconds = Stopwatch.Debug(
                     $"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
                     {
-#if DEBUG
-                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
-                        var assembly = assemblyLoader.LoadAssemblyAndDependencies();
-                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
-                            typeof(IAsyncPlugin));
-#pragma warning disable IDE0019 // "Use Pattern Matching" - disabled because the pattern is useful for RELEASE
-                        var plugin = Activator.CreateInstance(type) as IAsyncPlugin;
-#pragma warning restore IDE0019
-
-#else
                         Assembly assembly = null;
                         IAsyncPlugin plugin = null;
 
@@ -63,6 +53,12 @@ namespace Flow.Launcher.Core.Plugin
 
                             plugin = Activator.CreateInstance(type) as IAsyncPlugin;
                         }
+#if DEBUG
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
+#else
                         catch (Exception e) when (assembly == null)
                         {
                             Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
@@ -80,6 +76,7 @@ namespace Flow.Launcher.Core.Plugin
                             Log.Exception($"|PluginsLoader.DotNetPlugins|The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
                         }
 #endif
+
                         if (plugin == null)
                         {
                             erroredPlugins.Add(metadata.Name);
