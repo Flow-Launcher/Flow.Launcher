@@ -25,7 +25,7 @@
 
     <!--Dialogs-->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Éxito</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Se guardaron todos los ajustes de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Toda la configuración de Flow Launcher ha sido guardada</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Se recargaron todos los datos del complemento</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">¿Está seguro de que desea apagar el equipo?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">¿Está seguro de que desea reiniciar el equipo?</system:String>
