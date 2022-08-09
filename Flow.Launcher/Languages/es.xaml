@@ -240,7 +240,7 @@
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nueva actualización</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">La nueva versión {0} de Flow Launcher está disponible</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">Ocurrió un error mientras se trataba de actualizar</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Se ha producido un error al intentar instalar actualizaciones de software</system:String>
     <system:String x:Key="update_flowlauncher_update">Actualizar</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Cancelar</system:String>
     <system:String x:Key="update_flowlauncher_fail">Actualización fallida</system:String>
