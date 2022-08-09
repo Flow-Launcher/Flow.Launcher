@@ -114,5 +114,5 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
         }
     }
-#pragma warning enable SYSLIB0011
+#pragma warning restore SYSLIB0011
 }
