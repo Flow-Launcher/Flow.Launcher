@@ -202,11 +202,11 @@
     <value>Color de aplicación</value>
   </data>
   <data name="AppDiagnostics" xml:space="preserve">
-    <value>Diagnóstico de aplicaciones</value>
+    <value>Diagnósticos de la aplicación</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AppFeatures" xml:space="preserve">
-    <value>Características de aplicación</value>
+    <value>Características de la aplicación</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Application" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>Preferencias de volumen de aplicación y dispositivo</value>
+    <value>Preferencias del dispositivo y volumen de la aplicación</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -245,7 +245,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Apariencia y Personalización</value>
+    <value>Apariencia y personalización</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
     <value>Aplicaciones</value>
@@ -324,7 +324,7 @@
     <value>Alertas de sonido</value>
   </data>
   <data name="AudioAndSpeech" xml:space="preserve">
-    <value>Audio y voz</value>
+    <value>Sonido y voz</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="AutomaticFileDownloads" xml:space="preserve">
@@ -356,7 +356,7 @@
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverSettings" xml:space="preserve">
-    <value>Ajustes de ahorro de batería</value>
+    <value>Configuración de ahorro de batería</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverUsageDetails" xml:space="preserve">
@@ -375,7 +375,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>Luz azul</value>
+    <value>Azul claro</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
     <value>Bluetooth</value>
@@ -1019,13 +1019,13 @@
     <value>Requiere hardware de seguimiento ocular.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Disponible si se instala el editor de métodos de entrada de Japonés de Microsoft.</value>
+    <value>Disponible si está instalado el editor de métodos de entrada Japonés de Microsoft.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Disponible si el editor de métodos de entrada Pinyin de Microsoft está instalado.</value>
+    <value>Disponible si está instalado el editor de métodos de entrada Pinyin de Microsoft.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Disponible si el editor de métodos de entrada Wubi de Microsoft está instalado.</value>
+    <value>Disponible si está instalado el editor de métodos de entrada Wubi de Microsoft.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
     <value>Sólo disponible si la aplicación de Realidad Mixta está instalada.</value>
@@ -1896,7 +1896,7 @@
     <value>Corrige problemas con tu ordenador</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Respaldar y Restaurar (Windows 7)</value>
+    <value>Copia de seguridad y restauración (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
     <value>Previsualizar, eliminar, mostrar u ocultar fuentes</value>
