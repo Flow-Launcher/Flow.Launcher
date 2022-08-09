@@ -4,11 +4,11 @@
     <!--Dialogues-->
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor, seleccione primero</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">¿Estás seguro de que quieres eliminar {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Estás seguro que quieres eliminar permanentemente este {0}?</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro que desea eliminar {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Está seguro de que desea eliminar permanentemente este {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminado correctamente</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">El {0} fué eliminado correctamente</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Asignar una palabra clave para acciones global podría mostrar demasiados resultados en las búsquedas. Por favor, seleccione una palabra clave específica</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Asignar la palabra clave de acción global podría generar demasiados resultados durante la búsqueda. Por favor, elija una palabra clave de acción específica</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">El acceso rápido no puede usar la palabra clave para acciones global cuando está habilitado. Por favor, elija una palabra clave específica</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">El servicio requerido de indexación de búsqueda de Windows no parece estar ejecutándose</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Para solventarlo, inicia el servicio de búsqueda de Windows. Selecciona aquí para eliminar esta advertencia</system:String>
