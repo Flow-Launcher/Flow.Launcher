@@ -62,7 +62,7 @@
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Añadido correctamente al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Eliminado correctamente</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Eliminado correctamente del acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Añadir al acceso rápido para que se pueda abrir con la palabra clave de acción de la búsqueda del explorador de windows</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Añade al acceso rápido para que se pueda abrir con la palabra clave de acción que activa la búsqueda del explorador</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Eliminar el {0} actual del acceso rápido</system:String>
