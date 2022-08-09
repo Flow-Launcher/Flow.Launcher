@@ -400,6 +400,7 @@ namespace Flow.Launcher.Helper
             /// to ensure that lease never expires.
             /// </summary>
             /// <returns>Always null.</returns>
+            [Obsolete] // overrides an obsolete method, so also needs to be obsolete
             public override object InitializeLifetimeService()
             {
                 return null;

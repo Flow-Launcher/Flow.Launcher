@@ -1,5 +1,6 @@
 ﻿namespace Flow.Launcher.Plugin
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static class AllowedLanguage
     {
         public static string Python
@@ -35,4 +36,5 @@
                 || language.ToUpper() == Executable.ToUpper();
         }
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -13,11 +13,11 @@ namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
-        private static readonly ImageCache ImageCache = new ImageCache();
+        private static readonly ImageCache ImageCache = new();
         private static BinaryStorage<Dictionary<string, int>> _storage;
-        private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
-        private static bool EnableImageHash = true;
+        private static readonly bool EnableImageHash = true;
         public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
 
 
@@ -242,7 +242,6 @@ namespace Flow.Launcher.Infrastructure.Image
                 // update cache
                 ImageCache[path] = img;
             }
-
 
             return img;
         }

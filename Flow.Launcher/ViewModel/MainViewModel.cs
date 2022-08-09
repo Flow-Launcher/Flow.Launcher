@@ -300,7 +300,7 @@ namespace Flow.Launcher.ViewModel
                 Hide();
 
                 _ = PluginManager
-                    .ReloadData()
+                    .ReloadDataAsync()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {

@@ -74,7 +74,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static async Task ReloadData()
+        public static async Task ReloadDataAsync()
         {
             await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
             {

@@ -45,8 +45,10 @@ namespace Flow.Launcher.Core.Plugin
                         var assembly = assemblyLoader.LoadAssemblyAndDependencies();
                         var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
                             typeof(IAsyncPlugin));
-
+#pragma warning disable IDE0019 // "Use Pattern Matching" - disabled because the pattern is useful for RELEASE
                         var plugin = Activator.CreateInstance(type) as IAsyncPlugin;
+#pragma warning restore IDE0019
+
 #else
                         Assembly assembly = null;
                         IAsyncPlugin plugin = null;

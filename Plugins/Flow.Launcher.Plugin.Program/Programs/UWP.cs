@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -157,8 +157,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and "
-                                                        + $"unable to convert Package to UWP for {p.Id.FullName}", e);
+                        _ = ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and " + $"unable to convert Package to UWP for {p.Id.FullName}", e);
                         return new Application[] { };
                     }
 #endif
@@ -397,7 +396,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
+                        _ = appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -428,10 +427,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 manifestApp.GetAppUserModelId(out string tmpUserModelId);
                 manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
-                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
-                manifestApp.GetStringValue("Description", out string tmpDescription);
-                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
-                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
+                _ = manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+                _ = manifestApp.GetStringValue("Description", out string tmpDescription);
+                _ = manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+                _ = manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
 
                 UserModelId = tmpUserModelId;
                 UniqueIdentifier = tmpUniqueIdentifier;
@@ -540,7 +539,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
                     var key = logoKeyFromVersion[Package.Version];
-                    app.GetStringValue(key, out string logoUri);
+                    _ = app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else

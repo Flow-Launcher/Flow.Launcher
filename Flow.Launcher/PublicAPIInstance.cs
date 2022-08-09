@@ -82,7 +82,7 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData() => PluginManager.ReloadData();
+        public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
