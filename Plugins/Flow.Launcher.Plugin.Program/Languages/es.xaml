@@ -25,7 +25,7 @@
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidad máxima</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_directory">Carpeta</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_browse">Buscar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_browse">Navegar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_file_suffixes">Extensiones de archivo:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Profundidad de búsqueda máxima (-1 es sin límite):</system:String>
 
