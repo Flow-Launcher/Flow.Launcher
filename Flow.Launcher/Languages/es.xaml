@@ -41,9 +41,9 @@
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactiva Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
-    <system:String x:Key="defaultFileManager">Administrador de archivos por defecto</system:String>
+    <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
-    <system:String x:Key="defaultBrowser">Navegador web por defecto</system:String>
+    <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
     <system:String x:Key="defaultBrowserToolTip">Configura navegador, nueva pestaña, nueva ventana, modo privado.</system:String>
     <system:String x:Key="pythonDirectory">Carpeta de Python</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
@@ -114,7 +114,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
-    <system:String x:Key="delete">Borrar</system:String>
+    <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
@@ -173,7 +173,7 @@
     <system:String x:Key="fileManager_file_arg">Argumentos del archivo</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Navegador web por defecto</system:String>
+    <system:String x:Key="defaultBrowserTitle">Navegador web predeterminado</system:String>
     <system:String x:Key="defaultBrowser_tips">La configuración por defecto utiliza el navegador predeterminado del sistema operativo. Si se indica uno específicamente, Flow Launcher utilizará este otro navegador.</system:String>
     <system:String x:Key="defaultBrowser_name">Navegador</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nombre del navegador</system:String>
