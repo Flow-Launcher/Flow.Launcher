@@ -44,5 +44,5 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visite el repositorio PluginsManifest para ver complementos hechos por la comunidad</system:String>
 
     <!--Settings menu items-->
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Aviso de instalación de fuentes desconocidas</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Aviso de instalación desde fuentes desconocidas</system:String>
 </ResourceDictionary>
