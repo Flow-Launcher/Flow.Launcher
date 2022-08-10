@@ -11,7 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nueva ventana</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva Pestaña</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Establecer navegador desde ruta:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elige</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elegir</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar enlace</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar enlace del marcador al portapapeles</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Iniciar navegador desde:</system:String>
