@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Datos de marcador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir marcadores en:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nueva ventana</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva Pestaña</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva pestaña</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Establecer navegador desde ruta:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elegir</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar url</system:String>
