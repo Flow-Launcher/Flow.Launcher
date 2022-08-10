@@ -483,7 +483,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana en todos mis dispositivos</value>
+    <value>Cortana en todos los dispositivos</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
@@ -1953,7 +1953,7 @@
     <value>Añadir o eliminar programas</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
-    <value>Crear un disco para restablecer contraseña</value>
+    <value>Crear un disco para restablecer la contraseña</value>
   </data>
   <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
     <value>Configurar propiedades avanzadas del perfil de usuario</value>
@@ -2070,7 +2070,7 @@
     <value>Cambiar la configuración temporal de archivos de Internet</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
-    <value>Conectar a internet</value>
+    <value>Conectarse a Internet</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
     <value>Buscar y solucionar problemas de reproducción de audio</value>
@@ -2179,7 +2179,7 @@
     <value>Permitir a Windows sugerir ajustes de acceso fácil</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
-    <value>Liberar espacio en disco por medio de la eliminación de archivos no necesarios</value>
+    <value>Limpiar espacio en disco eliminando archivos innecesarios</value>
   </data>
   <data name="ViewDevicesAndPrinters" xml:space="preserve">
     <value>Ver dispositivos e impresoras</value>
@@ -2326,7 +2326,7 @@
     <value>Dar permisos administrativos a un usuario de dominio</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
-    <value>Elija cuándo apagar la pantalla</value>
+    <value>Elegir cuándo apagar la pantalla</value>
   </data>
   <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
     <value>Mover el puntero con el teclado numérico mediante MouseKeys</value>
@@ -2488,7 +2488,7 @@
     <value>Cambiar las acciones de los botones de inicio/apagado</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Crear una cuenta de usuario estándar</value>
+    <value>Crear cuenta estándar de usuario</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
     <value>Realizar tutoriales de conversación</value>
