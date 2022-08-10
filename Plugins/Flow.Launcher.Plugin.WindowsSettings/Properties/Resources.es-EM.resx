@@ -1075,15 +1075,15 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>Administrador de fuentes de datos ODBC (32 bits)</value>
+    <value>Administrador de origen de datos ODBC (32 bits)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>Administrador de fuentes de datos ODBC (64 bits)</value>
+    <value>Administrador de origen de datos ODBC (64 bits)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Archivos sin conexión</value>
+    <value>Archivos fuera de línea</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
