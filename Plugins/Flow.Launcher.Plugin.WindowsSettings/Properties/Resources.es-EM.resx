@@ -1737,7 +1737,7 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Cambiar configuración de instalación del dispositivo</value>
+    <value>Cambiar la configuración de instalación del dispositivo</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
     <value>Desactivar imágenes de fondo</value>
@@ -1764,7 +1764,7 @@
     <value>Mostrar en qué grupo de trabajo se encuentra este ordenador</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Cambiar configuración de la rueda del ratón</value>
+    <value>Cambiar la configuración de la rueda del ratón</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
     <value>Administrar certificados del ordenador</value>
@@ -1797,7 +1797,7 @@
     <value>Mostrar archivos y carpetas ocultos</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
-    <value>Cambiar opciones de inicio de Windows To Go</value>
+    <value>Cambiar las opciones de inicio de Windows To Go</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
     <value>Ver qué procesos se inician automáticamente al iniciar Windows</value>
@@ -1851,7 +1851,7 @@
     <value>Ocultar automáticamente la barra de tareas</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Cambiar configuración de la tarjeta de sonido</value>
+    <value>Cambiar la configuración de la tarjeta de sonido</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
     <value>Hacer cambios en las cuentas</value>
@@ -1947,7 +1947,7 @@
     <value>Ver las acciones recomendadas para mantener Windows funcionando sin problemas</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Cambiar velocidad de parpadeo del cursor</value>
+    <value>Cambiar la velocidad de parpadeo del cursor</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
     <value>Añadir o eliminar programas</value>
@@ -1983,7 +1983,7 @@
     <value>Cómo instalar un programa</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
-    <value>Cambiar cómo funciona el teclado</value>
+    <value>Cambiar el funcionamiento del teclado</value>
   </data>
   <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
     <value>Ajustar automáticamente el horario de verano</value>
@@ -2001,7 +2001,7 @@
     <value>Cambiar o eliminar un programa</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
-    <value>Cambiar configuración de gestos multitáctiles</value>
+    <value>Cambiar la configuración de los gestos multitáctiles</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
     <value>Configurar fuentes de datos ODBC (64 bits)</value>
@@ -2010,7 +2010,7 @@
     <value>Configurar servidor proxy</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
-    <value>Cambiar página de inicio</value>
+    <value>Cambiar la página de inicio</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
     <value>Agrupar ventanas similares en la barra de tareas</value>
@@ -2022,7 +2022,7 @@
     <value>Usar descripción de audio para vídeo</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Cambiar nombre del grupo de trabajo</value>
+    <value>Cambiar el nombre del grupo de trabajo</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
     <value>Buscar y solucionar problemas de impresión</value>
@@ -2088,7 +2088,7 @@
     <value>Ver configuración de accesibilidad actual</value>
   </data>
   <data name="ChangeTabletPenSettings" xml:space="preserve">
-    <value>Cambiar configuración del lápiz de la tableta</value>
+    <value>Cambiar la configuración del lápiz de la tableta</value>
   </data>
   <data name="ChangeHowYourMouseWorks" xml:space="preserve">
     <value>Cambiar el funcionamiento del ratón</value>
@@ -2109,7 +2109,7 @@
     <value>Configurar fuentes de datos ODBC (32 bits)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Cambiar configuración de fuente</value>
+    <value>Cambiar la configuración de la fuente</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
     <value>Aumenta porciones de la pantalla usando la lupa</value>
@@ -2127,10 +2127,10 @@
     <value>Establecer un micrófono</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
-    <value>Cambiar el aspecto del puntero del ratón</value>
+    <value>Cambiar la apariencia del puntero del ratón</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
-    <value>Cambiar opciones de ahorro de energía</value>
+    <value>Cambiar las opciones de ahorro de energía</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
     <value>Optimizar para ciegos</value>
@@ -2170,10 +2170,10 @@
     <value>Optimizar imagen de pantalla</value>
   </data>
   <data name="ChangeMouseClickSettings" xml:space="preserve">
-    <value>Cambiar la configuración de clic del ratón</value>
+    <value>Cambiar la configuración del clic del ratón</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
-    <value>Cambia la configuración avanzada de administración del color para pantallas, escáneres e impresoras</value>
+    <value>Cambiar la configuración avanzada del administrador del color para pantallas, escáneres e impresoras</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
     <value>Permitir a Windows sugerir ajustes de acceso fácil</value>
@@ -2206,7 +2206,7 @@
     <value>Elegir orden de giro de la pantalla</value>
   </data>
   <data name="ChangeHowWindowsSearches" xml:space="preserve">
-    <value>Cambiar cómo realiza búsquedas Windows</value>
+    <value>Cambiar el modo de búsqueda de Windows</value>
   </data>
   <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
     <value>Establecer gestos para realizar ciertas tareas</value>
@@ -2236,7 +2236,7 @@
     <value>Ver información básica acerca del equipo</value>
   </data>
   <data name="ChooseHowYouOpenLinks" xml:space="preserve">
-    <value>Elige cómo abrir vínculos</value>
+    <value>Elegir cómo abrir vínculos</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
     <value>Permitir que el equipo envíe invitaciones de Asistencia Remota</value>
@@ -2275,7 +2275,7 @@
     <value>Cambiar la forma en que se muestra la hora</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Cambiar la forma en que las páginas web se muestran en las pestañas</value>
+    <value>Cambiar la forma en que se muestran las páginas web en las pestañas</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
     <value>Cambiar la forma en que se muestran las fechas y las listas</value>
@@ -2284,7 +2284,7 @@
     <value>Administrar dispositivos de audio</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Cambiar configuración de seguridad</value>
+    <value>Cambiar la configuración de seguridad</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
     <value>Comprobar el estado de seguridad</value>
@@ -2296,7 +2296,7 @@
     <value>Especificar la mano con la que se escribe</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
-    <value>Cambiar la configuración de entrada táctil</value>
+    <value>Cambiar la configuración de la entrada táctil</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
     <value>Cómo cambiar el tamaño de la memoria virtual</value>
@@ -2332,7 +2332,7 @@
     <value>Mover el puntero con el teclado numérico mediante MouseKeys</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
-    <value>Cambiar configuración de dispositivo compatible con Windows SideShow</value>
+    <value>Cambiar la configuración del dispositivo compatible con Windows SideShow</value>
   </data>
   <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
     <value>Ajustar configuración de movilidad utilizada habitualmente</value>
@@ -2344,10 +2344,10 @@
     <value>Configurar la hora y fecha</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
-    <value>Cambiar ajustes de ubicación</value>
+    <value>Cambiar la configuración de la ubicación</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
-    <value>Configuración del ratón</value>
+    <value>Cambiar la configuración del ratón</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
     <value>Administrar espacios de almacenamiento</value>
@@ -2359,7 +2359,7 @@
     <value>Permitir una aplicación a través del Firewall de Windows</value>
   </data>
   <data name="ChangeSystemSounds" xml:space="preserve">
-    <value>Cambiar sonidos del sistema</value>
+    <value>Cambiar los sonidos del sistema</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
     <value>Ajustar texto ClearType</value>
@@ -2392,7 +2392,7 @@
     <value>Elegir un plan de energía</value>
   </data>
   <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
-    <value>Cambia el aspecto del puntero del ratón en movimiento</value>
+    <value>Cambia la apariencia del puntero del ratón cuando se mueve</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
     <value>Desinstalar un programa</value>
@@ -2401,7 +2401,7 @@
     <value>Crear y formatear particiones del disco duro</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Cambiar formatos de fecha, hora o número</value>
+    <value>Cambiar los formatos de fecha, hora o número</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
     <value>Cambiar la configuración de despertar del equipo</value>
@@ -2416,7 +2416,7 @@
     <value>Administrar configuración avanzada de uso compartido</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Cambiar configuración de batería</value>
+    <value>Cambiar la configuración de la batería</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
     <value>Cambiar el nombre de este equipo</value>
@@ -2449,7 +2449,7 @@
     <value>Escanear un documento o imagen</value>
   </data>
   <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
-    <value>Cambiar la presentación de las medidas</value>
+    <value>Cambiar la forma en que se muestran las unidades de medida</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
     <value>Pulse las combinaciones de teclas una a la vez</value>
