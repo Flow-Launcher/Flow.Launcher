@@ -611,7 +611,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>Correo electrónico y cuentas</value>
+    <value>Cuentas de correo electrónico y aplicaciones</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
@@ -2097,7 +2097,7 @@
     <value>Mostrar cuánta RAM tiene este equipo</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
-    <value>Modificar plan de energía</value>
+    <value>Editar plan de energía</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
     <value>Ajustar volumen del sistema</value>
@@ -2152,7 +2152,7 @@
     <value>Administrar carpetas de trabajo</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
-    <value>Cifrar tus archivos sin conexión</value>
+    <value>Cifrar archivos fuera de línea</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
     <value>Entrenar al ordenador para reconocer tu voz</value>
@@ -2227,7 +2227,7 @@
     <value>Identificar y reparar problemas de red</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
-    <value>Encuentre y solucione problemas de red y conexión</value>
+    <value>Buscar y solucionar problemas de red y conexión</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
     <value>Reproducir CDs u otros medios automáticamente</value>
