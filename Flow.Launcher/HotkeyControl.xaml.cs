@@ -101,9 +101,9 @@ namespace Flow.Launcher
             }
         }
 
-        public async Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
+        public Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
         {
-            await SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
+            return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
         private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
