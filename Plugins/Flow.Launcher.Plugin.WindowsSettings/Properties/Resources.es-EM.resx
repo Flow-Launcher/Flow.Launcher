@@ -275,7 +275,7 @@
     <value>Hardware y Sonido</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Inicio</value>
+    <value>Página de inicio</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
     <value>Realidad mixta</value>
@@ -669,11 +669,11 @@
     <value>Cortafuegos</value>
   </data>
   <data name="FocusAssistQuietHours" xml:space="preserve">
-    <value>Asistente de concentración - Horas tranquilas</value>
+    <value>Asistente de concentración - Horas de silencio</value>
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Asistente de concentración - Momentos tranquilos</value>
+    <value>Asistente de concentración - Momentos de silencio</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
@@ -689,23 +689,23 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="GameBar" xml:space="preserve">
-    <value>Barra de juego</value>
+    <value>Barra de juegos</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameControllers" xml:space="preserve">
-    <value>Mandos de juego</value>
+    <value>Controles de juegos</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
-    <value>Juego DVR</value>
+    <value>DVR de juegos</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Modo de juego</value>
+    <value>Modo Juego</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Gateway</value>
+    <value>Puerta de enlace</value>
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
@@ -736,7 +736,7 @@
     <comment>Mean you don't can see green colors</comment>
   </data>
   <data name="HeadsetDisplay" xml:space="preserve">
-    <value>Pantalla del casco</value>
+    <value>Mostrar auriculares</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="HighContrast" xml:space="preserve">
@@ -744,16 +744,16 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
-    <value>Audio Holográfico</value>
+    <value>Audio holográfico</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
     <value>Entorno Holográfico</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
-    <value>Equipo holográfico</value>
+    <value>Auriculares holográficos</value>
   </data>
   <data name="HolographicManagement" xml:space="preserve">
-    <value>Administración Holográfica</value>
+    <value>Administración holográfica</value>
   </data>
   <data name="HomeGroup" xml:space="preserve">
     <value>Grupo local</value>
@@ -801,7 +801,7 @@
     <value>Navegación aislada</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
-    <value>Ajustes de entrada IME de Japonés</value>
+    <value>Configuración IME de Japón</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
   <data name="joy.cpl" xml:space="preserve">
@@ -821,7 +821,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Keypad" xml:space="preserve">
-    <value>Keypad</value>
+    <value>Teclado numérico</value>
   </data>
   <data name="Keys" xml:space="preserve">
     <value>Teclas</value>
@@ -849,7 +849,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>Correo - Mensajes de Microsoft Exchange o Windows</value>
+    <value>Correo - Microsoft Exchange o Windows Messaging</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
@@ -876,7 +876,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Oficina postal de Microsoft Mail</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -891,7 +891,7 @@
     <value>Dispositivos móviles</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
-    <value>Zona con cobertura inalámbrica móvil</value>
+    <value>Punto de acceso móvil</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="modem.cpl" xml:space="preserve">
@@ -1767,7 +1767,7 @@
     <value>Cambiar la configuración de la rueda del ratón</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Administrar certificados del ordenador</value>
+    <value>Administrar certificados del equipo</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
     <value>Buscar y solucionar problemas</value>
@@ -1791,7 +1791,7 @@
     <value>Ver mensajes recientes en relación con el ordenador</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
-    <value>Permitir que otros ususarios accedan a este ordenador</value>
+    <value>Dar acceso a otros usuarios a este equipo</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
     <value>Mostrar archivos y carpetas ocultos</value>
@@ -1887,13 +1887,13 @@
     <value>Crear una unidad de recuperación</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
-    <value>Nueva Configuración fonética</value>
+    <value>Nueva Configuración fonética Microsoft</value>
   </data>
   <data name="GenerateASystemHealthReport" xml:space="preserve">
-    <value>Generar informe de salud del sistema</value>
+    <value>Generar un informe de salud del sistema</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
-    <value>Corrige problemas con tu ordenador</value>
+    <value>Solucionar los problemas del equipo</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
     <value>Copia de seguridad y restauración (Windows 7)</value>
@@ -1902,7 +1902,7 @@
     <value>Previsualizar, eliminar, mostrar u ocultar fuentes</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Ajustes rápidos</value>
+    <value>Configuración rápida de Microsoft</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
     <value>Ver historial de fiabilidad</value>
@@ -2055,7 +2055,7 @@
     <value>Acomodar visión reducida</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Gestionar archivos sin conexión</value>
+    <value>Administrar archivos sin conexión</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
     <value>Revisar el estado del equipo y resolver problemas</value>
@@ -2176,7 +2176,7 @@
     <value>Cambiar la configuración avanzada del administrador del color para pantallas, escáneres e impresoras</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Permitir a Windows sugerir ajustes de acceso fácil</value>
+    <value>Permitir a Windows sugerir ajustes de accesibilidad</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Limpiar espacio en disco eliminando archivos innecesarios</value>
@@ -2302,7 +2302,7 @@
     <value>Cómo cambiar el tamaño de la memoria virtual</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Oír texto leído en voz alta con el Narrator</value>
+    <value>Escuchar texto leído en voz alta con Narrator</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
     <value>Configurar dispositivos de juego USB</value>
@@ -2473,13 +2473,13 @@
     <value>Programar tareas</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
-    <value>Omitir pulsaciones repetidas usando FilterKeys</value>
+    <value>Ignorar pulsaciones repetidas usando FilterKeys</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
     <value>Buscar y solucionar problemas de pantalla azul</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Oír un tono al presionar teclas</value>
+    <value>Escuchar un tono al presionar las teclas</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
     <value>Eliminar historial de navegación</value>
@@ -2500,7 +2500,7 @@
     <value>Crear una cuenta</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
-    <value>Obtén más características con una nueva edición de Windows</value>
+    <value>Obtener más características con una nueva edición de Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
     <value>Panel de control</value>
