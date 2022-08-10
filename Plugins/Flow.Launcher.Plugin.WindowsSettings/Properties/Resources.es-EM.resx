@@ -1776,7 +1776,7 @@
     <value>Cambiar la configuración del contenido recibido mediante Tocar y enviar</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Cambiar la configuración por defecto para medios o dispositivos</value>
+    <value>Cambiar la configuración predeterminada para medios o dispositivos</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
     <value>Imprimir la tarjeta de referencia de voz</value>
@@ -1962,7 +1962,7 @@
     <value>Iniciar o detener el uso de AutoPlay para todos los medios y dispositivos</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Cambiar automáticamente la configuración de mantenimiento</value>
+    <value>Cambiar la configuración de mantenimiento automático</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
     <value>Especificar un solo clic o doble clic para abrir</value>
@@ -2109,7 +2109,7 @@
     <value>Configurar fuentes de datos ODBC (32 bits)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Cambiar ajustes de fuente</value>
+    <value>Cambiar configuración de fuente</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
     <value>Aumenta porciones de la pantalla usando la lupa</value>
