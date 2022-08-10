@@ -50,7 +50,7 @@
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Explorador personalizado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Argumentos</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Puedes cambiar el explorador usado para abrir la carpeta contenedora introduciendo una variable del entorno que contenga el comando para abrir del explorador que quieres usar. Para probar la variable del entorno puedes usar CMD.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduce los parámetros personalizados que deseas añadir para tu explorador. %s para la carpeta padre, %f para la ruta absoluta (que sólo funciona con win32). Revisa la página web del explorador para más detalles.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduzca los argumentos personalizados que desea agregar para el explorador personalizado. %s para carpeta contenedora, %f para ruta completa (solo funciona para win32). Consulte la página web del explorador para obtener más detalles.</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Éxito</system:String>
