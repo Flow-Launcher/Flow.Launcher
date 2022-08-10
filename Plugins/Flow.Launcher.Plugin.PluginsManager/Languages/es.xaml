@@ -4,7 +4,7 @@
     <!--Dialogues-->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Descargando complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Descargado con éxito</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_error">Error: No se pudo descargar el plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">Error: No se puede descargar el complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} por {1} {2}{3}¿Desea desinstalar este complemento? Después de la desinstalación Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} por {1} {2}{3}¿Desea instalar este complemento? Después de la instalación Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Instalar complemento</system:String>
@@ -12,17 +12,17 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se puede encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un plugin que tiene la misma o mayor versión con {0}.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_title">Error al instalar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Ocurrió un error al intentar instalar {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_title">Error al instalar el complemento</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Se ha producido un error al intentar instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Ninguna actualización disponible</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Todos los complementos están actualizados</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} por {1} {2}{3}¿Desea actualizar este complemento? Después de la actualización Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Actualización del complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Este complemento tiene una actualización, ¿te gustaría verla?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Error al descargar el manifiesto del complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, comprueba que puedes establecer conexión con github.com. Este error significa que es posible que no puedas instalar o actualizar complementos.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, compruebe que puede establecer conexión con github.com. Este error significa que es posible que no pueda instalar o actualizar complementos.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalando desde una fuente desconocida</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">¡Estás instalando este complemento desde una fuente desconocida y puede contener riesgos potenciales!{0}{0}Por favor, asegúrate de saber de dónde procede este complemento y de que es seguro.{0}{0}¿Aún así te gustaría continuar?{0}{0}(Puede apagar esta advertencia en la configuración)</system:String>
 
