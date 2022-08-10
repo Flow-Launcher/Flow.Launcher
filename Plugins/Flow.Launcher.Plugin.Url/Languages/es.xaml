@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_new_tab">Nueva pestaña</system:String>
     
     <system:String x:Key="flowlauncher_plugin_url_open_url">Abrir enlace:{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">No se puede abrir el enlace:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">No se puede abrir la url:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">Enlace</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Abre los enlaces web escritos desde Flow Launcher</system:String>
