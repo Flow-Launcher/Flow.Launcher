@@ -531,7 +531,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
-    <value>Ubicaciones de guardado por defecto</value>
+    <value>Ubicaciones de guardado predeterminadas</value>
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
@@ -543,7 +543,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="DesktopThemes" xml:space="preserve">
-    <value>Temas de escritorio</value>
+    <value>Temas del escritorio</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
@@ -1941,7 +1941,7 @@
     <value>Historial de solución de problemas</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnosticar los problemas de memoria del ordenador</value>
+    <value>Diagnosticar los problemas de memoria del equipo</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
     <value>Ver las acciones recomendadas para mantener Windows funcionando sin problemas</value>
@@ -2482,7 +2482,7 @@
     <value>Oír un tono al presionar teclas</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
-    <value>Borrar historial de navegación</value>
+    <value>Eliminar historial de navegación</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
     <value>Cambiar las acciones de los botones de inicio/apagado</value>
