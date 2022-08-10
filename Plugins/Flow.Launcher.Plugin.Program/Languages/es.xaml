@@ -20,7 +20,7 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para archivos ejecutables como UWP o lnk, oculta la ruta del archivo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Buscar en la descripción del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Desactivar esto también evitará que Flow busque en la descripción del programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Si se desactiva, también se evitará que Flow busque a través de la descripción del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Extensiones</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidad máxima</system:String>
 
@@ -40,7 +40,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Ejecutar como administrador</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Esconde este programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Desactivar la visualización de este programa</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Busca programas en Flow Launcher</system:String>
