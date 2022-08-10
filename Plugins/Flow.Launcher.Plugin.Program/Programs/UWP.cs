@@ -427,10 +427,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 manifestApp.GetAppUserModelId(out string tmpUserModelId);
                 manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
-                _ = manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
-                _ = manifestApp.GetStringValue("Description", out string tmpDescription);
-                _ = manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
-                _ = manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
+                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+                manifestApp.GetStringValue("Description", out string tmpDescription);
+                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
 
                 UserModelId = tmpUserModelId;
                 UniqueIdentifier = tmpUniqueIdentifier;

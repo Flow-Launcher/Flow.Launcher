@@ -94,9 +94,6 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (output == Stream.Null) return null;
 
-            var temp = System.Text.Encoding.UTF8.GetString(((MemoryStream)output).ToArray());
-            System.Diagnostics.Debug.WriteLine(temp);
-
             var queryResponseModel =
                 await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
