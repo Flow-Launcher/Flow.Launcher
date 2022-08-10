@@ -112,7 +112,7 @@
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
-    <system:String x:Key="customQueryHotkey">Atajos de teclado de consulta personalizada</system:String>
+    <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="delete">Borrar</system:String>
     <system:String x:Key="edit">Editar</system:String>
@@ -200,7 +200,7 @@
     <system:String x:Key="actionkeyword_tips">Introduzca la palabra clave que desea utilizar para iniciar el complemento. Utilice * si no desea especificar ninguna, y el complemento se activará sin ninguna palabra clave.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">Atajos de búsqueda personalizada</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Presione el atajo de teclado personalizado para iniciar automáticamente la búsqueda especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor selecciona uno nuevo</system:String>
