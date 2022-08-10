@@ -101,7 +101,7 @@ namespace Flow.Launcher
 
         private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
         {
-            _ = HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
+            _ = HotkeyControl.SetHotkeyAsync(viewModel.Settings.Hotkey, false);
         }
 
         private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)

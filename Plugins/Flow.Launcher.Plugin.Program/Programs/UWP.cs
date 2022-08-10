@@ -407,7 +407,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            private async void LaunchElevated()
+            private void LaunchElevated()
             {
                 string command = "shell:AppsFolder\\" + UniqueIdentifier;
                 command = Environment.ExpandEnvironmentVariables(command.Trim());

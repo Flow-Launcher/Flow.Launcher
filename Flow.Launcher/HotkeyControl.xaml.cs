@@ -65,11 +65,11 @@ namespace Flow.Launcher
             {
                 await Task.Delay(500, token);
                 if (!token.IsCancellationRequested)
-                    await SetHotkey(hotkeyModel);
+                    await SetHotkeyAsync(hotkeyModel);
             });
         }
 
-        public async Task SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
+        public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
         {
             CurrentHotkey = keyModel;
 
@@ -101,9 +101,9 @@ namespace Flow.Launcher
             }
         }
 
-        public async Task SetHotkey(string keyStr, bool triggerValidate = true)
+        public async Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
         {
-            _ = SetHotkey(new HotkeyModel(keyStr), triggerValidate);
+            await SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
         private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
