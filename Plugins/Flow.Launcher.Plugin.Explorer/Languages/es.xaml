@@ -32,7 +32,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Buscar índice:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Acceso rápido:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Palabra clave de acción actual</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_done">Listo</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Aceptar</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Activado</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Cuando esté deshabilitado Flow no ejecutará la opción de búsqueda, y además usará '*' para no dejar en uso la palabra clave de la acción</system:String>
 
