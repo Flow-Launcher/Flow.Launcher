@@ -47,7 +47,7 @@
     <system:String x:Key="plugin_explorer_path">Ruta:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Eliminar el seleccionado</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Ejecutar como usuario diferente</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecutar lo seleccionado usando una cuenta de usuario diferente</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecutar la selección usando una cuenta de usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el archivo o carpeta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
