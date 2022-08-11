@@ -1458,7 +1458,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
-    <value>Sincroniza tu configuración</value>
+    <value>Sincronizar configuración</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="sysdm.cpl" xml:space="preserve">
@@ -1470,7 +1470,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
-    <value>Propiedades del sistema y añadir nuevo asistente de hardware</value>
+    <value>Propiedades del sistema y asistente para añadir nuevo hardware</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Tab" xml:space="preserve">
@@ -1489,7 +1489,7 @@
     <value>Hablar</value>
   </data>
   <data name="TalkToCortana" xml:space="preserve">
-    <value>Habla con Cortana</value>
+    <value>Hablar con Cortana</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
@@ -1537,7 +1537,7 @@
     <value>Respuesta al toque</value>
   </data>
   <data name="Touchpad" xml:space="preserve">
-    <value>Touchpad</value>
+    <value>Panel táctil</value>
     <comment>Area Device</comment>
   </data>
   <data name="Transparency" xml:space="preserve">
@@ -1548,7 +1548,7 @@
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
-    <value>Solución de Problemas</value>
+    <value>Solución de problemas</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="TruePlay" xml:space="preserve">
@@ -1935,7 +1935,7 @@
     <value>Crear un punto de restauración</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
-    <value>Desactivar la distribución automática de ventanas</value>
+    <value>Desactivar la disposición automática de ventanas</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
     <value>Historial de solución de problemas</value>
@@ -2155,7 +2155,7 @@
     <value>Cifrar archivos fuera de línea</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
-    <value>Entrenar al ordenador para reconocer tu voz</value>
+    <value>Entrenar al equipo para reconocer su voz</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
     <value>Configuración avanzada de impresora</value>
@@ -2269,7 +2269,7 @@
     <value>Administrar espacio de almacenamiento usado por los archivos locales</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Activar o desactivar el Contraste alto</value>
+    <value>Activar o desactivar el contraste alto</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
     <value>Cambiar la forma en que se muestra la hora</value>
