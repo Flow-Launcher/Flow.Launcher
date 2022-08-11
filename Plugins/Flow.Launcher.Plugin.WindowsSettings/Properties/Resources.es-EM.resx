@@ -1004,13 +1004,13 @@
     <value>Obsoleto en Windows 10, versión 1809 (build 17763) y posterior.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Sólo disponible si Dial está emparejado.</value>
+    <value>Sólo está disponible si el dial está emparejado.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
     <value>Sólo disponible si DirectAccess está habilitado.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones de pantalla avanzada.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de pantalla.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
     <value>Sólo presente si el usuario está inscrito en el Programa de Windows Insider.</value>
@@ -1043,7 +1043,7 @@
     <value>Sólo disponible si las "aplicaciones de configuración" están instaladas, por ejemplo, por un tercero.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Sólo disponible si el hardware del touchpad está presente.</value>
+    <value>Sólo disponible si el hardware del panel táctil está presente.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
     <value>Sólo disponible si el dispositivo tiene un adaptador Wi-Fi.</value>
@@ -1052,7 +1052,7 @@
     <value>El dispositivo debe ser compatible con Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Sólo disponible si la empresa ha desplegado un paquete para ello.</value>
+    <value>Solo disponible si la empresa ha implementado un paquete de aprovisionamiento.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Notificaciones</value>
