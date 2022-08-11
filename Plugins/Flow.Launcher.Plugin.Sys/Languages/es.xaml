@@ -16,8 +16,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Suspender el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Vaciar papelera de reciclaje</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernar el equipo</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Guardar todos los ajustes de Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Recarga los datos del complemento con nuevo contenido</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Guardar configuración de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Refresca los datos del complemento con nuevo contenido</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Abrir ubicación de los archivos de registro de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Buscar actualizaciones de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visita la documentación de Flow Launcher para más ayuda y consejos de uso</system:String>
