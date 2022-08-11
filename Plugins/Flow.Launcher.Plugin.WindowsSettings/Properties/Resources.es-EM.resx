@@ -1305,7 +1305,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalLanguage" xml:space="preserve">
-    <value>Idioma Regional</value>
+    <value>Idioma regional</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalSettingsProperties" xml:space="preserve">
@@ -1362,7 +1362,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="SecureDNS" xml:space="preserve">
-    <value>SecureDNS</value>
+    <value>DNS seguro</value>
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
@@ -1761,7 +1761,7 @@
     <value>Utilizar lector de pantalla</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Mostrar en qué grupo de trabajo se encuentra este ordenador</value>
+    <value>Mostrar en qué grupo de trabajo se encuentra el equipo</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
     <value>Cambiar la configuración de la rueda del ratón</value>
@@ -1872,7 +1872,7 @@
     <value>Registrar Palabra Microsoft IME (Japonés)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restablecer archivos mediante el Historial de Archivos</value>
+    <value>Restaurar los archivos con el historial de archivos</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
     <value>Activar o desactivar el teclado en pantalla</value>
@@ -1911,7 +1911,7 @@
     <value>Acceder a RemoteApp y a los escritorios</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
-    <value>Configurar fuentes de datos de ODBC</value>
+    <value>Configurar origenes de datos ODBC</value>
   </data>
   <data name="ResetSecurityPolicies" xml:space="preserve">
     <value>Restablecer las políticas de seguridad</value>
@@ -1971,7 +1971,7 @@
     <value>Seleccionar usuarios que pueden usar el escritorio remoto</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
-    <value>Mostrar qué programas están instalados en el ordenador</value>
+    <value>Mostrar qué programas están instalados en el equipo</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
     <value>Permitir acceso remoto a su equipo</value>
@@ -2004,7 +2004,7 @@
     <value>Cambiar la configuración de los gestos multitáctiles</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
-    <value>Configurar fuentes de datos ODBC (64 bits)</value>
+    <value>Configurar origenes de datos ODBC (64 bits)</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
     <value>Configurar servidor proxy</value>
@@ -2037,10 +2037,10 @@
     <value>Acomodar capacidades de aprendizaje</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
-    <value>Establecer una conexión de marcación</value>
+    <value>Configurar una conexión de marcación</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
-    <value>Establecer una conexión o red</value>
+    <value>Configurar una conexión o red</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
     <value>Cómo cambiar la contraseña de Windows</value>
@@ -2049,7 +2049,7 @@
     <value>Hacer que sea más fácil ver el puntero del ratón</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
-    <value>Establecer iniciador iSCSI</value>
+    <value>Configurar iniciador iSCSI</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
     <value>Acomodar visión reducida</value>
@@ -2106,7 +2106,7 @@
     <value>Desfragmentar y optimizar tus unidades</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
-    <value>Configurar fuentes de datos ODBC (32 bits)</value>
+    <value>Configurar origenes de datos ODBC (32 bits)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
     <value>Cambiar la configuración de la fuente</value>
@@ -2124,7 +2124,7 @@
     <value>Administrar credenciales de Windows</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
-    <value>Establecer un micrófono</value>
+    <value>Configurar micrófono</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
     <value>Cambiar la apariencia del puntero del ratón</value>
@@ -2143,7 +2143,7 @@
     <value>Activar o desactivar características de Windows</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Muestra qué sistema operativo está ejecutando tu equipo</value>
+    <value>Muestra qué sistema operativo está ejecutando el equipo</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
     <value>Ver servicios locales</value>
@@ -2188,7 +2188,7 @@
     <value>Editor de caracteres privados</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
-    <value>Registre los pasos para reproducir un problema</value>
+    <value>Registrar pasos para reproducir un problema</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
     <value>Ajustar la apariencia y rendimiento de Windows</value>
@@ -2257,7 +2257,7 @@
     <value>Activar o desactivar la lupa</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>Mostrar el nombre de este equipo</value>
+    <value>Ver el nombre del equipo</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
     <value>Ver conexiones de red</value>
@@ -2305,7 +2305,7 @@
     <value>Escuchar texto leído en voz alta con Narrator</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
-    <value>Configurar dispositivos de juego USB</value>
+    <value>Configurar controladores de juego USB</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
     <value>Mostrar el dominio al que pertenece el equipo</value>
@@ -2341,7 +2341,7 @@
     <value>Cambiar la configuración de texto a voz</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
-    <value>Configurar la hora y fecha</value>
+    <value>Establecer fecha y hora</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
     <value>Cambiar la configuración de la ubicación</value>
@@ -2455,13 +2455,13 @@
     <value>Pulsar las combinaciones de teclas de una en una</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
-    <value>Restaurar el equipo, los archivos o los datos de copia de seguridad (Windows 7)</value>
+    <value>Restaurar datos, archivos o equipo desde la copia de seguridad (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Establece tus programas por defecto</value>
+    <value>Establecer programas predeterminados</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Establecer una conexión de banda ancha</value>
+    <value>Configurar una conexión de banda ancha</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
     <value>Calibrar la pantalla para entrada de lápiz o pantalla táctil</value>
