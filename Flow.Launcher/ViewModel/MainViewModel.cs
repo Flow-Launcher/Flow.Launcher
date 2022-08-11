@@ -299,8 +299,8 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
 
-                PluginManager
-                    .ReloadData()
+                _ = PluginManager
+                    .ReloadDataAsync()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
@@ -308,7 +308,7 @@ namespace Flow.Launcher.ViewModel
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
                                 );
-                        }))
+                        }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
         }

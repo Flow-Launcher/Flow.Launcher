@@ -1,6 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -87,7 +89,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <summary>
         /// Runs a windows command using the provided ProcessStartInfo using a custom execute command function
         /// </summary>
-        /// <param name="Func startProcess">allows you to pass in a custom command execution function</param>
+        /// <param name="startProcess">allows you to pass in a custom command execution function</param>
+        /// <param name="info">allows you to pass in the info that will be passed to startProcess</param>
         /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
         /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
         public static void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)

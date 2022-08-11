@@ -3,9 +3,24 @@ using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin
 {
+    /// <summary>
+    /// Delegate for key down event
+    /// </summary>
+    /// <param name="e"></param>
     public delegate void FlowLauncherKeyDownEventHandler(FlowLauncherKeyDownEventArgs e);
+
+    /// <summary>
+    /// Delegate for query event
+    /// </summary>
+    /// <param name="e"></param>
     public delegate void AfterFlowLauncherQueryEventHandler(FlowLauncherQueryEventArgs e);
 
+    /// <summary>
+    /// Delegate for drop events [unused?]
+    /// </summary>
+    /// <param name="result"></param>
+    /// <param name="dropObject"></param>
+    /// <param name="e"></param>
     public delegate void ResultItemDropEventHandler(Result result, IDataObject dropObject, DragEventArgs e);
 
     /// <summary>
@@ -17,14 +32,30 @@ namespace Flow.Launcher.Plugin
     /// <returns>return true to continue handling, return false to intercept system handling</returns>
     public delegate bool FlowLauncherGlobalKeyboardEventHandler(int keyevent, int vkcode, SpecialKeyState state);
 
+    /// <summary>
+    /// Arguments container for the Key Down event
+    /// </summary>
     public class FlowLauncherKeyDownEventArgs
     {
+        /// <summary>
+        /// The actual query
+        /// </summary>
         public string Query { get; set; }
+
+        /// <summary>
+        /// Relevant key events for this event
+        /// </summary>
         public KeyEventArgs keyEventArgs { get; set; }
     }
 
+    /// <summary>
+    /// Arguments container for the Query event
+    /// </summary>
     public class FlowLauncherQueryEventArgs
     {
+        /// <summary>
+        /// The actual query
+        /// </summary>
         public Query Query { get; set; }
     }
 }

@@ -34,7 +34,6 @@ namespace Flow.Launcher
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
-        private static MainViewModel mainViewModel;
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
@@ -102,7 +101,7 @@ namespace Flow.Launcher
 
         private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
         {
-            HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
+            _ = HotkeyControl.SetHotkeyAsync(viewModel.Settings.Hotkey, false);
         }
 
         private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
@@ -230,7 +229,7 @@ namespace Flow.Launcher
 
         #endregion
 
-        private async void OnCheckUpdates(object sender, RoutedEventArgs e)
+        private void OnCheckUpdates(object sender, RoutedEventArgs e)
         {
             viewModel.UpdateApp(); // TODO: change to command
         }

@@ -69,7 +69,13 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
+#pragma warning disable SYSLIB0020 
+            // IgnoreNullValues is obsolete, but the replacement JsonIgnoreCondition.WhenWritingNull still 
+            // deserializes null, instead of ignoring it and leaving the default (empty list). We can change the behaviour
+            // to accept null and fallback to a default etc, or just keep IgnoreNullValues for now
+            // see: https://github.com/dotnet/runtime/issues/39152
             IgnoreNullValues = true,
+#pragma warning restore SYSLIB0020 // Type or member is obsolete
             Converters =
             {
                 new JsonObjectConverter()
@@ -82,7 +88,7 @@ namespace Flow.Launcher.Core.Plugin
         };
         private Dictionary<string, object> Settings { get; set; }
 
-        private Dictionary<string, FrameworkElement> _settingControls = new();
+        private readonly Dictionary<string, FrameworkElement> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {

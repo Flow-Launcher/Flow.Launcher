@@ -61,7 +61,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="InputSimulator" Version="1.0.4" />
+    <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" />
   </ItemGroup>
   
 </Project>

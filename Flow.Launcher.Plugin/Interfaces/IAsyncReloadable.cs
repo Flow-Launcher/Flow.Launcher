@@ -15,6 +15,10 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public interface IAsyncReloadable : IFeatures
     {
+        /// <summary>
+        /// Reload plugin data
+        /// </summary>
+        /// <returns></returns>
         Task ReloadDataAsync();
     }
 }

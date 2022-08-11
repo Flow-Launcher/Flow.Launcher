@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -6,7 +6,9 @@ using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
 {
-
+    /// <summary>
+    /// Describes the result of a plugin
+    /// </summary>
     public class Result
     {
 
@@ -65,6 +67,10 @@ namespace Flow.Launcher.Plugin
             }
         }
 
+        /// <summary>
+        /// Delegate function, see <see cref="Icon"/>
+        /// </summary>
+        /// <returns></returns>
         public delegate ImageSource IconDelegate();
 
         /// <summary>
@@ -105,6 +111,9 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public IList<int> TitleHighlightData { get; set; }
 
+        /// <summary>
+        /// Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered
+        /// </summary>
         [Obsolete("Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered")]
         public IList<int> SubTitleHighlightData { get; set; }
 
@@ -178,7 +187,12 @@ namespace Flow.Launcher.Plugin
         /// Show message as ToolTip on result SubTitle hover over
         /// </summary>
         public string SubTitleToolTip { get; set; }
-    
+
+        /// <summary>
+        /// Run this result, asynchronously
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public ValueTask<bool> ExecuteAsync(ActionContext context)
         {
             return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -202,7 +202,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
-                                Task.Run(() => ShellCommand.RunAsDifferentUser(record.FullPath.SetProcessStartInfo()));
+                                _ = Task.Run(() => ShellCommand.RunAsDifferentUser(record.FullPath.SetProcessStartInfo()));
                             }
                             catch (FileNotFoundException e)
                             {
