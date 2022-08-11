@@ -52,7 +52,7 @@
     <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja del sistema</system:String>
     <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Iniciar búsqueda con Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
@@ -147,7 +147,7 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Documentación</system:String>
     <system:String x:Key="version">Versión</system:String>
-    <system:String x:Key="about_activate_times">Flow Launcher ha sido activado {0} veces</system:String>
+    <system:String x:Key="about_activate_times">Ha activado Flow Launcher {0} veces</system:String>
     <system:String x:Key="checkUpdates">Buscar actualizaciones</system:String>
     <system:String x:Key="newVersionTips">La nueva versión {0} está disponible, ¿desea reiniciar Flow Launcher para actualizar?</system:String>
     <system:String x:Key="checkUpdatesFailed">La comprobación de las actualizaciones ha fallado, por favor, compruebe la configuración de su proxy y conexión a api.github.com.</system:String>
@@ -262,7 +262,7 @@
     <system:String x:Key="Welcome_Page4_Title">Palabra clave de acción y comandos</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Busque en la web, inicie aplicaciones o ejecute diversas funciones mediante los complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción y, si es necesario, pueden utilizarse sin ellas. Pruebe las siguientes consultas en Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Iniciemos Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finalizado. Disfrute de Flow Launcher. No olvide utilizar el atajo de teclado para iniciar :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides el atajo de teclado para empezar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
