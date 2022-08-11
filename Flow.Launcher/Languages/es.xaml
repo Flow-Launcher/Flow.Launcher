@@ -20,7 +20,7 @@
     <system:String x:Key="folderTitle">Carpeta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
     <system:String x:Key="GameMode">Modo Juego</system:String>
-    <system:String x:Key="GameModeToolTip">Suspender el uso de atajos de teclado.</system:String>
+    <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
@@ -212,7 +212,7 @@
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versión</system:String>
-    <system:String x:Key="reportWindow_time">Fecha</system:String>
+    <system:String x:Key="reportWindow_time">Hora</system:String>
     <system:String x:Key="reportWindow_reproduce">Por favor, informe del fallo de la aplicación para poder solucionarlo</system:String>
     <system:String x:Key="reportWindow_send_report">Enviar informe</system:String>
     <system:String x:Key="reportWindow_cancel">Cancelar</system:String>
