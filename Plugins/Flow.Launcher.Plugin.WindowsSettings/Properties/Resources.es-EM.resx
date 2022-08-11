@@ -134,7 +134,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Acceder a trabajo o escuela</value>
+    <value>Acceso a trabajo o escuela</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
@@ -174,7 +174,7 @@
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Configuración avanzada de pantalla</value>
+    <value>Configuración de pantalla avanzada</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
@@ -995,7 +995,7 @@
     <value>Sólo disponible cuando haya conectado un dispositivo móvil a su dispositivo.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de gráficos.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones de gráficos avanzados.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
     <value>Sólo disponible en dispositivos que tienen batería, como una tableta.</value>
@@ -1004,13 +1004,13 @@
     <value>Obsoleto en Windows 10, versión 1809 (build 17763) y posterior.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Sólo está disponible si el dial está emparejado.</value>
+    <value>Sólo disponible si Dial está emparejado.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
     <value>Sólo disponible si DirectAccess está habilitado.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de pantalla.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones de pantalla avanzada.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
     <value>Sólo presente si el usuario está inscrito en el programa de Windows Insider.</value>
@@ -2109,7 +2109,7 @@
     <value>Configurar origenes de datos ODBC (32 bits)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Cambiar la configuración de la fuente</value>
+    <value>Cambiar configuración de fuente</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
     <value>Aumenta porciones de la pantalla usando la lupa</value>
@@ -2133,7 +2133,7 @@
     <value>Cambiar las opciones de ahorro de energía</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimizar para la ceguera</value>
+    <value>Optimizar para discapacidad visual</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
@@ -2155,7 +2155,7 @@
     <value>Cifrar archivos fuera de línea</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
-    <value>Entrenar al equipo para reconocer su voz</value>
+    <value>Entrenar al equipo para que reconozca mi voz</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
     <value>Configuración avanzada de impresora</value>
