@@ -77,7 +77,7 @@ namespace Flow.Launcher.Core.Plugin
 
                         // If metadata's version greater than each duplicate's version, CompareTo > 0
                         var count = group.Where(x => metadata.Version.CompareTo(x.Version) > 0).Count();
-                        
+
                         // Only add if the meatadata's version is the highest of all duplicates in the group
                         if (count == group.Count() - 1)
                         {
@@ -89,7 +89,7 @@ namespace Flow.Launcher.Core.Plugin
                         }
                     }
                 }
-                
+
                 if (!duplicatesExist)
                     unique_list.Add(metadata);
             }
@@ -128,10 +128,21 @@ namespace Flow.Launcher.Core.Plugin
                 return null;
             }
 
-            if (!File.Exists(metadata.ExecuteFilePath))
+            if (metadata.Language.Equals(AllowedLanguage.Http, StringComparison.OrdinalIgnoreCase))
             {
-                Log.Error($"|PluginConfig.GetPluginMetadata|execute file path didn't exist <{metadata.ExecuteFilePath}> for conifg <{configPath}");
-                return null;
+                if (!string.IsNullOrEmpty(metadata.ApiEndpoint))
+                {
+                    Log.Error($"|PluginConfig.GetPluginMetadata|api endpoint didn't exist <{metadata.ApiEndpoint}> for config <{configPath}");
+                    return null;
+                }
+            }
+            else
+            {
+                if (!File.Exists(metadata.ExecuteFilePath))
+                {
+                    Log.Error($"|PluginConfig.GetPluginMetadata|execute file path didn't exist <{metadata.ExecuteFilePath}> for config <{configPath}");
+                    return null;
+                }
             }
 
             return metadata;

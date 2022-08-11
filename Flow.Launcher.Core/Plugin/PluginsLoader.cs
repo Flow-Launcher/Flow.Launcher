@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Droplex;
@@ -11,7 +10,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Core.Plugin
@@ -25,7 +23,8 @@ namespace Flow.Launcher.Core.Plugin
             var dotnetPlugins = DotNetPlugins(metadatas);
             var pythonPlugins = PythonPlugins(metadatas, settings);
             var executablePlugins = ExecutablePlugins(metadatas);
-            var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
+            var httpPlugins = HttpPlugins(metadatas);
+            var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).Concat(httpPlugins).ToList();
             return plugins;
         }
 
@@ -85,7 +84,7 @@ namespace Flow.Launcher.Core.Plugin
                             return;
                         }
 
-                        plugins.Add(new PluginPair {Plugin = plugin, Metadata = metadata});
+                        plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
                     });
                 metadata.InitTime += milliseconds;
             }
@@ -119,7 +118,7 @@ namespace Flow.Launcher.Core.Plugin
                 return SetPythonPathForPluginPairs(source, Path.Combine(settings.PythonDirectory, PythonExecutable));
 
             var pythonPath = string.Empty;
-            
+
             if (MessageBox.Show("Flow detected you have installed Python plugins, which " +
                                 "will need Python to run. Would you like to download Python? " +
                                 Environment.NewLine + Environment.NewLine +
@@ -188,22 +187,35 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(List<PluginMetadata> source, string pythonPath)
-            =>  source
+            => source
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new PythonPlugin(pythonPath), 
+                    Plugin = new PythonPlugin(pythonPath),
                     Metadata = metadata
                 })
                 .ToList();
 
-    public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
+                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                    Metadata = metadata
+                });
+        }
+
+
+        public static IEnumerable<PluginPair> HttpPlugins(List<PluginMetadata> source)
+        {
+            return source
+                .Where(o => o.Language.ToUpper() == AllowedLanguage.Http)
+                .Select(metadata => new PluginPair
+                {
+                    Plugin = new HttpPlugin(metadata.ApiEndpoint),
+                    Metadata = metadata
                 });
         }
     }
