@@ -10,7 +10,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_title">Instalar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se puede encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error al instalar el complemento</system:String>
@@ -18,7 +18,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No hay actualizaciones disponibles</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Todos los complementos están actualizados</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} por {1} {2}{3}¿Desea actualizar este complemento? Después de la actualización Flow se reiniciará automáticamente.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_title">Actualización del complemento</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_title">Actualizar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Este complemento tiene una actualización, ¿te gustaría verla?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
