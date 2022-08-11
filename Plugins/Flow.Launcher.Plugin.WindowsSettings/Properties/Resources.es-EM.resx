@@ -287,13 +287,13 @@
     <value>Personalización</value>
   </data>
   <data name="AreaPhone" xml:space="preserve">
-    <value>Tu teléfono</value>
+    <value>Teléfono</value>
   </data>
   <data name="AreaPrivacy" xml:space="preserve">
     <value>Privacidad</value>
   </data>
   <data name="AreaPrograms" xml:space="preserve">
-    <value>Aplicaciones</value>
+    <value>Programas</value>
   </data>
   <data name="AreaSurfaceHub" xml:space="preserve">
     <value>SurfaceHub</value>
@@ -389,7 +389,7 @@
     <value>Azul-amarillo</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
-    <value>Bopomofo IME</value>
+    <value>IME Bopomofo</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="bpmf" xml:space="preserve">
@@ -416,7 +416,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="CangjieIme" xml:space="preserve">
-    <value>Cangjie IME</value>
+    <value>IME Cangjie</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="CapsLock" xml:space="preserve">
@@ -801,7 +801,7 @@
     <value>Navegación aislada</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
-    <value>Configuración IME de Japón</value>
+    <value>Configuración IME Japonés</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
   <data name="joy.cpl" xml:space="preserve">
@@ -995,7 +995,7 @@
     <value>Sólo disponible cuando haya conectado un dispositivo móvil a su dispositivo.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones de gráficos avanzados.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de gráficos.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
     <value>Sólo disponible en dispositivos que tienen batería, como una tableta.</value>
@@ -1013,7 +1013,7 @@
     <value>Sólo disponible en dispositivos que soporten opciones avanzadas de pantalla.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Sólo presente si el usuario está inscrito en el Programa de Windows Insider.</value>
+    <value>Sólo presente si el usuario está inscrito en el programa de Windows Insider.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
     <value>Requiere hardware de seguimiento ocular.</value>
@@ -1031,7 +1031,7 @@
     <value>Sólo disponible si la aplicación de Realidad Mixta está instalada.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Sólo disponible para móviles y si la empresa ha desplegado un paquete para ello.</value>
+    <value>Sólo disponible para móviles y si la empresa ha implementado un paquete de aprovisionamiento.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
     <value>Añadido en Windows 10, versión 1903 (build 18362).</value>
@@ -1124,7 +1124,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PasswordProperties" xml:space="preserve">
-    <value>Propiedades de contraseña</value>
+    <value>Propiedades de la contraseña</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndInputDevices" xml:space="preserve">
@@ -1156,7 +1156,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Tu teléfono</value>
+    <value>Teléfono</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
@@ -1183,19 +1183,19 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
-    <value>Ajustes de entrada IME de Pinyin</value>
+    <value>Configuración IME Pinyin</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Pinyin input method editor is installed</comment>
   </data>
   <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
-    <value>Ajustes de entrada IME de Pinyin - Diccionario</value>
+    <value>Configuración IME Pinyin - Diccionario</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
-    <value>Ajustes de entrada IME de Pinyin - Configuración de teclado</value>
+    <value>Configuración IME Pinyin - Configuración de teclado</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsUdp" xml:space="preserve">
-    <value>Ajustes de entrada IME de Pinyin - Frases de usuario</value>
+    <value>Configuración IME Pinyin - Frases de usuario</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PlayingGameFullScreen" xml:space="preserve">
@@ -1203,7 +1203,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Complemento para buscar ajustes de Windows</value>
+    <value>Complemento para buscar configuración de Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
     <value>Configuración de Windows</value>
@@ -1232,7 +1232,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="PrintScreen" xml:space="preserve">
-    <value>Imprimir pantalla</value>
+    <value>Captura de pantalla</value>
     <comment>Mean the "Print screen" key</comment>
   </data>
   <data name="ProblemReportsAndSolutions" xml:space="preserve">
@@ -2133,7 +2133,7 @@
     <value>Cambiar las opciones de ahorro de energía</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimizar para ciegos</value>
+    <value>Optimizar para la ceguera</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
@@ -2185,7 +2185,7 @@
     <value>Ver dispositivos e impresoras</value>
   </data>
   <data name="PrivateCharacterEditor" xml:space="preserve">
-    <value>Editor de caracteres privado</value>
+    <value>Editor de caracteres privados</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
     <value>Registre los pasos para reproducir un problema</value>
@@ -2263,7 +2263,7 @@
     <value>Ver conexiones de red</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
-    <value>Realice automáticamente las tareas de mantenimiento recomendadas</value>
+    <value>Realizar automáticamente las tareas de mantenimiento recomendadas</value>
   </data>
   <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
     <value>Administrar espacio de almacenamiento usado por los archivos locales</value>
@@ -2452,7 +2452,7 @@
     <value>Cambiar la forma en que se muestran las unidades de medida</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Pulse las combinaciones de teclas una a la vez</value>
+    <value>Pulsar las combinaciones de teclas de una en una</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
     <value>Restaurar el equipo, los archivos o los datos de copia de seguridad (Windows 7)</value>
