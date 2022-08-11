@@ -12,21 +12,21 @@
     <system:String x:Key="iconTraySettings">Ustawienia</system:String>
     <system:String x:Key="iconTrayAbout">O programie</system:String>
     <system:String x:Key="iconTrayExit">Wyjdź</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
+    <system:String x:Key="closeWindow">Zamknij</system:String>
     <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
+    <system:String x:Key="cut">Wytnij</system:String>
+    <system:String x:Key="paste">Wklej</system:String>
     <system:String x:Key="fileTitle">File</system:String>
     <system:String x:Key="folderTitle">Folder</system:String>
     <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
-    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
+    <system:String x:Key="GameMode">Tryb grania</system:String>
+    <system:String x:Key="GameModeToolTip">Wstrzymaj używanie skrótów.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ustawienia Flow Launcher</system:String>
     <system:String x:Key="general">Ogólne</system:String>
-    <system:String x:Key="portableMode">Portable Mode</system:String>
-    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
+    <system:String x:Key="portableMode">Tryb przenośny</system:String>
+    <system:String x:Key="portableModeToolTIp">Przechowuj wszystkie ustawienia i dane użytkownika w jednym folderze (Przydatne, gdy używane na dyskach wymiennych lub usługach chmurowych).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Uruchamiaj Flow Launcher przy starcie systemu</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
@@ -40,16 +40,16 @@
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoruj skróty klawiszowe w trybie pełnego ekranu</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
-    <system:String x:Key="defaultFileManager">Default File Manager</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
-    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Wyłącz aktywowanie Flow Launcher, gdy uruchomiona jest aplikacja pełnoekranowa (Zalecane dla gier).</system:String>
+    <system:String x:Key="defaultFileManager">Domyślny menedżer plików</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">Wybierz menedżer plików używany do otwierania folderów.</system:String>
+    <system:String x:Key="defaultBrowser">Domyślna przeglądarka</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Ustawienie dla nowej karty, nowego okna i trybu prywatnego.</system:String>
     <system:String x:Key="pythonDirectory">Folder biblioteki Python</system:String>
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
     <system:String x:Key="selectPythonDirectory">Wybierz</system:String>
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
-    <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIcon">Ukryj ikonę zasobnika</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
@@ -173,7 +173,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
