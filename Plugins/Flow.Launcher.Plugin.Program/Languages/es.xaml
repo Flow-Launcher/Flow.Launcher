@@ -53,8 +53,8 @@
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduzca los argumentos personalizados que desea agregar para el explorador personalizado. %s para carpeta contenedora, %f para ruta completa (solo funciona para win32). Consulte la página web del explorador para obtener más detalles.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Éxito</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Se escondió el programa en las búsquedas correctamente</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Correcto</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Programa desactivado correctamente en las búsquedas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Esta aplicación no fué diseñada para ser ejecutada como administrador</system:String>
 
 </ResourceDictionary>
