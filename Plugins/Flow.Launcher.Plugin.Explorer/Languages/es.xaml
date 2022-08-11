@@ -11,8 +11,8 @@
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Asignar la palabra clave de acción global podría generar demasiados resultados durante la búsqueda. Por favor, elija una palabra clave de acción específica</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">El acceso rápido no puede usar la palabra clave de acción global cuando está habilitado. Por favor, elija una palabra clave específica</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">El servicio requerido de indexación de búsqueda de Windows no parece estar ejecutándose</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Para solventarlo, inicia el servicio de búsqueda de Windows. Selecciona aquí para eliminar esta advertencia</system:String>
-    <system:String x:Key="plugin_explorer_alternative">El mensaje de advertencia se ha desactivado. Como alternativa para buscar archivos y carpetas, ¿te gustaría instalar el complemento Everything?{0}{0}Selecciona 'Sí' para instalar el complemento Everythong, o 'No' para volver</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Para solucionar esto, inicie el servicio de búsqueda de Windows. Seleccione aquí para eliminar esta advertencia</system:String>
+    <system:String x:Key="plugin_explorer_alternative">El mensaje de advertencia se ha desactivado. Como alternativa para buscar archivos y carpetas, ¿le gustaría instalar el complemento Everything?{0}{0}Seleccione 'Sí' para instalar el complemento Everything, o 'No' para volver</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorador alternativo</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Se ha producido un error durante la búsqueda: {0}</system:String>
 
@@ -24,7 +24,7 @@
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Enlaces de acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utilizar búsqueda indexada para buscar rutas</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Al activar esta opción, los directorios/archivos indexados se mostrarán más rápidamente, pero si un directorio/archivo no está indexado, no se mostrará. Si se ha agregado un directorio/archivo a la Ruta Excluida de Búsqueda por Índice (Index Search Excluded Path), seguirá apareciendo incluso si la opción está activada</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Al activar esta opción, los directorios/archivos indexados se mostrarán más rápidamente, pero si un directorio/archivo no está indexado, no se mostrará. Si se ha agregado un directorio/archivo a la ruta de exclusión del índice de búsqueda se seguirá mostrando incluso si la opción está activada</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Ruta de búsqueda:</system:String>
