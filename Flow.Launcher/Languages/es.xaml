@@ -35,7 +35,7 @@
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
-    <system:String x:Key="LastQueryPreserved">Conservar la última consulta</system:String>
+    <system:String x:Key="LastQueryPreserved">Mantener la última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
@@ -57,7 +57,7 @@
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Complementos</system:String>
+    <system:String x:Key="plugin">Complemento</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
     <system:String x:Key="disable">Desactivado</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="browserMoreThemes">Galería de temas</system:String>
     <system:String x:Key="howToCreateTheme">Cómo crear un tema</system:String>
     <system:String x:Key="hiThere">Hola</system:String>
-    <system:String x:Key="queryBoxFont">Fuente del cuadro de consulta</system:String>
+    <system:String x:Key="queryBoxFont">Fuente del texto del cuadro de consulta</system:String>
     <system:String x:Key="resultItemFont">Fuente de los resultados</system:String>
     <system:String x:Key="windowMode">Modo ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
@@ -119,7 +119,7 @@
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado del complemento {0}?</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
     <system:String x:Key="useGlyphUI">Utilizar iconos Segoe Fluent</system:String>
@@ -201,7 +201,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Presione el atajo de teclado personalizado para iniciar automáticamente la búsqueda especificada.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para insertar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
     <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>
@@ -213,7 +213,7 @@
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versión</system:String>
     <system:String x:Key="reportWindow_time">Fecha</system:String>
-    <system:String x:Key="reportWindow_reproduce">Por favor, díganos cómo falló la aplicación para que podamos arreglarla</system:String>
+    <system:String x:Key="reportWindow_reproduce">Por favor, informe del fallo de la aplicación para poder solucionarlo</system:String>
     <system:String x:Key="reportWindow_send_report">Enviar informe</system:String>
     <system:String x:Key="reportWindow_cancel">Cancelar</system:String>
     <system:String x:Key="reportWindow_general">General</system:String>
@@ -271,7 +271,7 @@
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Historial de búsquedas</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Historial de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al resultado en menú contextual</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
     <system:String x:Key="HotkeyRunDesc">Abrir / Ejecutar elemento seleccionado</system:String>
