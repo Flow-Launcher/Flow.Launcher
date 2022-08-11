@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reiniciar el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reiniciar el equipo con opciones avanzadas de arranque para el modo seguro y de depuración, entre otras opciones</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Cerrar sesión</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquear este equipo</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquear el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Cerrar Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Reiniciar Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting">Configurar esta app</system:String>
@@ -18,7 +18,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernar el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Guardar todos los ajustes de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Recarga los datos del complemento con nuevo contenido</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Abrir ubicación de los logs de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Abrir ubicación de los archivos de registro de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Buscar actualizaciones de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visita la documentación de Flow Launcher para más ayuda y consejos de uso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abrir la ubicación donde se almacena la configuración de Flow Launcher</system:String>
@@ -32,6 +32,6 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">¿Está seguro de que desea reiniciar el equipo con opciones de arranque avanzadas?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos del sistema</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Ofrece comandos del sistema. Por ejemplo, apagar, bloquear, configuración, etc.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Proporciona comandos relacionados con el sistema. Por ejemplo, apagar, bloquear, configurar, etc.</system:String>
 
 </ResourceDictionary>
