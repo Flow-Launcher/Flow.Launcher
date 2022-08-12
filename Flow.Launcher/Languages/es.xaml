@@ -89,7 +89,7 @@
     <system:String x:Key="hiThere">Hola</system:String>
     <system:String x:Key="queryBoxFont">Fuente del texto del cuadro de consulta</system:String>
     <system:String x:Key="resultItemFont">Fuente del texto de los resultados</system:String>
-    <system:String x:Key="windowMode">Modo ventana</system:String>
+    <system:String x:Key="windowMode">Modo Ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">El tema {0} no existe, activando el tema por defecto</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Fallo al cargar el tema {0}, activando el tema predeterminado</system:String>
@@ -121,9 +121,9 @@
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado del complemento {0}?</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
-    <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
+    <system:String x:Key="windowWidthSize">Tamaño del ancho de la ventana</system:String>
     <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
+    <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -279,7 +279,7 @@
     <system:String x:Key="HotkeyF5Desc">Recargar datos del complemento</system:String>
 
     <system:String x:Key="RecommendWeather">El tiempo</system:String>
-    <system:String x:Key="RecommendWeatherDesc">El tiempo en Google</system:String>
+    <system:String x:Key="RecommendWeatherDesc">El tiempo en los resultados de Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Comando de terminal</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
