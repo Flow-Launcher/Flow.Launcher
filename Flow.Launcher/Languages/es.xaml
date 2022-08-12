@@ -102,7 +102,7 @@
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
-    <system:String x:Key="AnimationTip">Utilizar animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="AnimationTip">Usar animación en la Interfaz de Usuario</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
@@ -122,7 +122,7 @@
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de ancho de ventana</system:String>
-    <system:String x:Key="useGlyphUI">Utilizar iconos Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
 
     <!--  Setting Proxy  -->
@@ -248,7 +248,7 @@
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Esta actualización reiniciará Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Se actualizarán los siguientes archivos</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Actualizar archivos</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_description">Modificar descripción</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Actualizar descripción</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Omitir</system:String>
