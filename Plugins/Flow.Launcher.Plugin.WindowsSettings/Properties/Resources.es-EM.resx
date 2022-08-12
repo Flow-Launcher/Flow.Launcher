@@ -1556,7 +1556,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
-    <value>Escritura</value>
+    <value>Escribir</value>
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
@@ -1758,7 +1758,7 @@
     <value>Buscar y solucionar problemas de teclado</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Utilizar lector de pantalla</value>
+    <value>Usar lector de pantalla</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
     <value>Mostrar en qué grupo de trabajo se encuentra el equipo</value>
@@ -2221,7 +2221,7 @@
     <value>Cambiar la configuración de control de cuentas de usuario</value>
   </data>
   <data name="TurnOnEasyAccessKeys" xml:space="preserve">
-    <value>Activar las teclas de acceso fácil</value>
+    <value>Activar las teclas de fácil acceso</value>
   </data>
   <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
     <value>Identificar y reparar problemas de red</value>
@@ -2365,7 +2365,7 @@
     <value>Ajustar texto ClearType</value>
   </data>
   <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
-    <value>Activar o desactivar el protector de pantallas</value>
+    <value>Activar o desactivar el salvapantallas</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
     <value>Buscar y solucionar problemas de Windows Update</value>
