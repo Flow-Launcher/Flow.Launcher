@@ -11,12 +11,12 @@
     <system:String x:Key="flowlauncher_plugin_program_location">Ubicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos los programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">Extensiones de archivo</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_reindex">Volver a indexar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">Re-indexar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexando</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Indexar menú de inicio</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando está activo, Flow cargará los programas desde el menú de inicio</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando esté activado, Flow cargará los programas desde el menú de inicio</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexar registro</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Cuando está activo, Flow cargará los programas desde el registro</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Cuando esté activado, Flow cargará los programas desde el registro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para los archivos ejecutables como UWP o lnk, ocultar la ruta del archivo para que no sea visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Busca en la descripción del programa</system:String>
