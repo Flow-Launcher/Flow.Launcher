@@ -1721,7 +1721,7 @@
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Configuración Wubi IME - Frases de usuario</value>
+    <value>Configuración IME Wubi - Frases de usuario</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
