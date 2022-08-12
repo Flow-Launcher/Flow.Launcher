@@ -1920,7 +1920,7 @@
     <value>Bloquear o permitir ventanas emergentes</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
-    <value>Activar o desactivar el autocompletado de Internet Explorer</value>
+    <value>Activar o desactivar autocompletar en Internet Explorer</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
     <value>Opciones de Microsoft Pinyin SimpleFast</value>
