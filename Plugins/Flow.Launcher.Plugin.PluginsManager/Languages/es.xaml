@@ -11,7 +11,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se puede encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se ha podido encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error al instalar el complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Se ha producido un error al intentar instalar {0}</system:String>
@@ -19,12 +19,12 @@
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Todos los complementos están actualizados</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} por {1} {2}{3}¿Desea actualizar este complemento? Después de la actualización Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Actualizar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Este complemento tiene una actualización, ¿le gustaría verla?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_exists">Este complemento tiene una actualización, ¿desea verla?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, compruebe que puede establecer conexión con github.com. Este error significa que es posible que no pueda instalar o actualizar complementos.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalando desde una fuente desconocida</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">¡Estás instalando este complemento desde una fuente desconocida y puede contener riesgos potenciales!{0}{0}Por favor, asegúrate de saber de dónde procede este complemento y de que es seguro.{0}{0}¿Aún así te gustaría continuar?{0}{0}(Puede apagar esta advertencia en la configuración)</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">¡Está instalando este complemento desde una fuente desconocida y puede contener riesgos potenciales!{0}{0}Por favor, asegúrese de saber de dónde procede este complemento y de que es seguro.{0}{0}¿Aún así desea continuar?{0}{0}(Puede desactivar esta advertencia en la configuración)</system:String>
 
     <!--Controls-->
     
