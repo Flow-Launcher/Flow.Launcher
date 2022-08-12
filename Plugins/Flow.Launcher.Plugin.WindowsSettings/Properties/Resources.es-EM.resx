@@ -1632,14 +1632,14 @@
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>Ajustes de Wi-Fi</value>
+    <value>Configuración de Wi-Fi</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
     <value>Borde de ventana</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
-    <value>Windows Anytime Upgrade</value>
+    <value>Actualización en cualquier momento de Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsAnywhere" xml:space="preserve">
@@ -1651,7 +1651,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsDefender" xml:space="preserve">
-    <value>Windows Defender</value>
+    <value>Seguridad de Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsFirewall" xml:space="preserve">
@@ -1659,11 +1659,11 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
-    <value>Configuración de Windows Hola - Cara</value>
+    <value>Configuración de Windows Hello - Cara</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Configuración de Windows Hola - Huella digital</value>
+    <value>Configuración de Windows Hello - Huella digital</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
@@ -1717,11 +1717,11 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Configuración de Wubi IME</value>
+    <value>Configuración IME Wubi</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Configuración de Wubi IME - Frases de usuario</value>
+    <value>Configuración Wubi IME - Frases de usuario</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
@@ -1788,7 +1788,7 @@
     <value>Administrar certificados de cifrado de archivos</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
-    <value>Ver mensajes recientes en relación con el ordenador</value>
+    <value>Ver mensajes recientes en relación con el equipo</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
     <value>Dar acceso a otros usuarios a este equipo</value>
@@ -1860,7 +1860,7 @@
     <value>Editar usuarios y grupos locales</value>
   </data>
   <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
-    <value>Ver ordenadores y dispositivos de red</value>
+    <value>Ver equipos y dispositivos de red</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
     <value>Instalar un programa desde la red</value>
@@ -2085,7 +2085,7 @@
     <value>Guardar copias de seguridad de los archivos con el Historial de Archivos</value>
   </data>
   <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
-    <value>Ver configuración de accesibilidad actual</value>
+    <value>Ver configuración actual de accesibilidad</value>
   </data>
   <data name="ChangeTabletPenSettings" xml:space="preserve">
     <value>Cambiar la configuración del lápiz de la tableta</value>
@@ -2437,7 +2437,7 @@
     <value>Ver actualizaciones instaladas</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
-    <value>¿Qué ocurrió con la barra de herramientas Inicio rápido?</value>
+    <value>¿Qué ha pasado con la barra de herramientas de inicio rápido?</value>
   </data>
   <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
     <value>Cambiar las opciones de búsqueda para archivos y carpetas</value>
