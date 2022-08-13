@@ -54,7 +54,7 @@
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir la carpeta actual y sus subcarpetas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluido del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opciones de indexación de Windows</system:String>
-    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Administrar archivos y carpetas indexados</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Administra archivos y carpetas indexados</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">No se ha podido abrir las opciones de indexación de Windows</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Añadir al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añadir el {0} actual al acceso rápido</system:String>
