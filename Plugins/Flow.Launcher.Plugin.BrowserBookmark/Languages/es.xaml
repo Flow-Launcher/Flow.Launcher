@@ -13,7 +13,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Establecer navegador desde ruta:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elegir</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar url</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar la url del marcador al portapapeles</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copia la url del marcador al portapapeles</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Cargar navegador desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nombre del navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ruta del directorio de datos</system:String>
