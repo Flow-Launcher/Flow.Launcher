@@ -45,9 +45,9 @@
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Eliminar</system:String>
     <system:String x:Key="plugin_explorer_path">Ruta:</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Eliminar el seleccionado</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Elimina el seleccionado</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Ejecutar como usuario diferente</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecutar la selección usando una cuenta de usuario diferente</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecuta la selección usando una cuenta de usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el archivo o carpeta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
@@ -57,7 +57,7 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Administra archivos y carpetas indexados</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">No se ha podido abrir las opciones de indexación de Windows</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Añadir al acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añadir el {0} actual al acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añade el {0} actual al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Añadido correctamente</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Añadido correctamente al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Eliminado correctamente</system:String>
@@ -65,6 +65,6 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Añade al acceso rápido para que se pueda abrir con la palabra clave de acción que activa la búsqueda del explorador</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Eliminar el {0} actual del acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina el {0} actual del acceso rápido</system:String>
 
 </ResourceDictionary>
