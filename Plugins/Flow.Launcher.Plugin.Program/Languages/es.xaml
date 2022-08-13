@@ -18,7 +18,7 @@
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexar registro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Cuando esté activado, Flow cargará los programas desde el registro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para los archivos ejecutables como UWP o lnk, ocultar la ruta del archivo para que no sea visible</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para los archivos ejecutables como UWP o lnk, oculta la ruta del archivo para que no sea visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Busca en la descripción del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Si se desactiva, también se evitará que Flow busque a través de la descripción del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Extensiones</system:String>
