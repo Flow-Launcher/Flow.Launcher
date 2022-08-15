@@ -39,7 +39,7 @@
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略熱鍵</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">全螢幕模式下停用快捷鍵（推薦用於遊戲時）。</system:String>
     <system:String x:Key="defaultFileManager">預設檔案管理器</system:String>
     <system:String x:Key="defaultFileManagerToolTip">選擇打開資料夾時要使用的檔案管理器。</system:String>
@@ -78,7 +78,7 @@
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">插件商店</system:String>
+    <system:String x:Key="pluginStore">外掛商店</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
     <system:String x:Key="install">安裝</system:String>
 
@@ -118,7 +118,7 @@
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>
     <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的熱鍵嗎？</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的快捷鍵嗎？</system:String>
     <system:String x:Key="queryWindowShadowEffect">查詢窗口陰影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
@@ -169,8 +169,8 @@
     <system:String x:Key="fileManager_name">檔案管理器</system:String>
     <system:String x:Key="fileManager_profile_name">檔案名稱</system:String>
     <system:String x:Key="fileManager_path">檔案管理器路徑</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManager_directory_arg">資料夾參數</system:String>
+    <system:String x:Key="fileManager_file_arg">檔案參數</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">預設瀏覽器</system:String>
@@ -184,7 +184,7 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改優先度</system:String>
-    <system:String x:Key="priority_tips">數字越大，查詢結過會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他插件，請提供負數</system:String>
+    <system:String x:Key="priority_tips">數字越大，查詢結果會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他外掛，請提供負數</system:String>
     <system:String x:Key="invalidPriority">請為優先度提供一個有效的整數！</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
@@ -200,15 +200,15 @@
     <system:String x:Key="actionkeyword_tips">如果不想設定觸發關鍵字，可以使用*代替</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">自定義熱鍵查詢</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">自定義快捷鍵查詢</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
     <system:String x:Key="preview">預覽</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">熱鍵不存在，請設定一個新的熱鍵</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">快捷鍵不存在，請設定一個新的快捷鍵</system:String>
     <system:String x:Key="invalidPluginHotkey">外掛熱鍵無法使用</system:String>
     <system:String x:Key="update">更新</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">熱鍵無法使用</system:String>
+    <system:String x:Key="hotkeyUnavailable">快捷鍵無法使用</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -276,7 +276,7 @@
     <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
     <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">開啟視窗設定</system:String>
-    <system:String x:Key="HotkeyF5Desc">充新載入插件數據</system:String>
+    <system:String x:Key="HotkeyF5Desc">重新載入外掛資料</system:String>
 
     <system:String x:Key="RecommendWeather">天氣</system:String>
     <system:String x:Key="RecommendWeatherDesc">Google 搜索的天氣結果</system:String>
