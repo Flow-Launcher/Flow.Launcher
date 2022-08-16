@@ -8,6 +8,7 @@
     <RootNamespace>Flow.Launcher.Plugin.Shell</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.Shell</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
+    <UseWpf>true</UseWpf>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
@@ -54,10 +55,6 @@
     <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	  <Page Include="ShellSetting.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		  <SubType>Designer</SubType>
-	  </Page>
   </ItemGroup>
   
   <ItemGroup>
