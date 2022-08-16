@@ -14,6 +14,7 @@
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
     <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">刪除</system:String>
@@ -22,32 +23,34 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
-    <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">索引選項</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">搜尋:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">確</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">已啟用</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
 
     <!--Plugin Infos-->
-    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
+    <system:String x:Key="plugin_explorer_plugin_name">檔案總管</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Search and manage files and folders. Explorer utilises Windows Index Search</system:String>
 
     <!--Context menu items-->
-    <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
+    <system:String x:Key="plugin_explorer_copypath">複製路徑</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">複製</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">刪除</system:String>
-    <system:String x:Key="plugin_explorer_path">Path:</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
+    <system:String x:Key="plugin_explorer_path">路徑:</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">刪除所選內容</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">開啟檔案位置</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">在編輯器中開啟:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>

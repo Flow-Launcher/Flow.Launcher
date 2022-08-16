@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Acerca</value>
+    <value>정보</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -126,66 +126,66 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Opções de acessibilidade</value>
+    <value>접근성 옵션</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Aplicações de acessórios</value>
+    <value>액세서리 앱</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Aceder a trabalho ou escola</value>
+    <value>회사 또는 학교 액세스</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
-    <value>Informações da conta</value>
+    <value>계정 정보</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Contas</value>
+    <value>계정</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="ActionCenter" xml:space="preserve">
-    <value>Centro de ação</value>
+    <value>알림 센터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Activation" xml:space="preserve">
-    <value>Ativação</value>
+    <value>활성화</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
-    <value>Histórico de atividade</value>
+    <value>활동 기록</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
-    <value>Adicionar hardware</value>
+    <value>하드웨어 추가</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Adicionar/remover programas</value>
+    <value>프로그램 추가/제거</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
-    <value>Adicionar o seu telemóvel</value>
+    <value>휴대폰 추가</value>
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
-    <value>Ferramentas administrativas</value>
+    <value>관리 도구</value>
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Definições avançadas de exibição</value>
+    <value>고급 디스플레이 설정</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
-    <value>Gráficos avançados</value>
+    <value>고급 그래픽</value>
   </data>
   <data name="AdvertisingId" xml:space="preserve">
-    <value>ID de publicidade</value>
+    <value>광고 ID</value>
     <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="AirplaneMode" xml:space="preserve">
-    <value>Modo avião</value>
+    <value>비행기 모드</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
@@ -193,40 +193,40 @@
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
-    <value>Nomes alternativos</value>
+    <value>대체 이름</value>
   </data>
   <data name="Animations" xml:space="preserve">
-    <value>Animações</value>
+    <value>애니메이션</value>
   </data>
   <data name="AppColor" xml:space="preserve">
-    <value>Cor da aplicação</value>
+    <value>앱 색</value>
   </data>
   <data name="AppDiagnostics" xml:space="preserve">
-    <value>Diagnóstico de aplicações</value>
+    <value>앱 진단</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AppFeatures" xml:space="preserve">
-    <value>Funcionalidades da aplicação</value>
+    <value>앱 기능</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>Aplicação</value>
+    <value>앱</value>
     <comment>Short/modern name for application</comment>
   </data>
   <data name="AppsAndFeatures" xml:space="preserve">
-    <value>Aplicações e funcionalidades</value>
+    <value>앱 및 기능</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
-    <value>Definições do sistema</value>
+    <value>시스템 설정</value>
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
-    <value>Aplicações para sites</value>
+    <value>웹 사이트용 앱</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>Volume das aplicações e preferências do dispositivo</value>
+    <value>앱 볼륨 및 디바이스 기본 설정</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -234,162 +234,162 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Área</value>
+    <value>영역</value>
     <comment>Mean the settings area or settings category</comment>
   </data>
   <data name="AreaAccounts" xml:space="preserve">
-    <value>Contas</value>
+    <value>계정</value>
   </data>
   <data name="AreaAdministrativeTools" xml:space="preserve">
-    <value>Ferramentas administrativas</value>
+    <value>관리 도구</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Aparência e personalização</value>
+    <value>모양 및 개인 설정</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
-    <value>Aplicações</value>
+    <value>앱</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
-    <value>Relógio e região</value>
+    <value>시계 및 지역</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Painel de controlo</value>
+    <value>Control Panel</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
   </data>
   <data name="AreaDevices" xml:space="preserve">
-    <value>Dispositivos</value>
+    <value>디바이스</value>
   </data>
   <data name="AreaEaseOfAccess" xml:space="preserve">
-    <value>Facilidade de acesso</value>
+    <value>접근성</value>
   </data>
   <data name="AreaExtras" xml:space="preserve">
-    <value>Extras</value>
+    <value>추가</value>
   </data>
   <data name="AreaGaming" xml:space="preserve">
-    <value>Jogos</value>
+    <value>게임</value>
   </data>
   <data name="AreaHardwareAndSound" xml:space="preserve">
-    <value>Hardware e som</value>
+    <value>하드웨어 및 소리</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Página inicial</value>
+    <value>홈페이지</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
-    <value>Realidade mista</value>
+    <value>Mixed Reality</value>
   </data>
   <data name="AreaNetworkAndInternet" xml:space="preserve">
-    <value>Rede e Internet</value>
+    <value>네트워크 및 인터넷</value>
   </data>
   <data name="AreaPersonalization" xml:space="preserve">
-    <value>Personalização</value>
+    <value>개인 설정</value>
   </data>
   <data name="AreaPhone" xml:space="preserve">
-    <value>Telefone</value>
+    <value>전화</value>
   </data>
   <data name="AreaPrivacy" xml:space="preserve">
-    <value>Privacidade</value>
+    <value>개인 정보</value>
   </data>
   <data name="AreaPrograms" xml:space="preserve">
-    <value>Programas</value>
+    <value>프로그램</value>
   </data>
   <data name="AreaSurfaceHub" xml:space="preserve">
     <value>SurfaceHub</value>
   </data>
   <data name="AreaSystem" xml:space="preserve">
-    <value>Sistema</value>
+    <value>시스템</value>
   </data>
   <data name="AreaSystemAndSecurity" xml:space="preserve">
-    <value>Sistema e segurança</value>
+    <value>시스템 및 보안</value>
   </data>
   <data name="AreaTimeAndLanguage" xml:space="preserve">
-    <value>Hora e idioma</value>
+    <value>시간 및 언어</value>
   </data>
   <data name="AreaUpdateAndSecurity" xml:space="preserve">
-    <value>Atualização e segurança</value>
+    <value>업데이트 및 보안</value>
   </data>
   <data name="AreaUserAccounts" xml:space="preserve">
-    <value>Contas de utilizador</value>
+    <value>사용자 계정</value>
   </data>
   <data name="AssignedAccess" xml:space="preserve">
-    <value>Acesso atribuído</value>
+    <value>할당된 액세스 권한</value>
   </data>
   <data name="Audio" xml:space="preserve">
-    <value>Áudio</value>
+    <value>오디오</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="AudioAlerts" xml:space="preserve">
-    <value>Alertas de áudio</value>
+    <value>오디오 경고</value>
   </data>
   <data name="AudioAndSpeech" xml:space="preserve">
-    <value>Áudio e voz</value>
+    <value>오디오 및 음성</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="AutomaticFileDownloads" xml:space="preserve">
-    <value>Descargas automáticas de ficheiros</value>
+    <value>자동 파일 다운로드</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AutoPlay" xml:space="preserve">
-    <value>Reprodução automática</value>
+    <value>자동 재생</value>
     <comment>Area Device</comment>
   </data>
   <data name="Background" xml:space="preserve">
-    <value>Fundo</value>
+    <value>배경</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="BackgroundApps" xml:space="preserve">
-    <value>Aplicações em segundo plano</value>
+    <value>배경 앱</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Cópia de segurança</value>
+    <value>백업</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="BackupAndRestore" xml:space="preserve">
-    <value>Backup e restauro</value>
+    <value>백업 및 복원</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BatterySaver" xml:space="preserve">
-    <value>Poupança de bateria</value>
+    <value>배터리 절약 모드</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverSettings" xml:space="preserve">
-    <value>Definições de poupança de bateria</value>
+    <value>배터리 절약 모드 설정</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverUsageDetails" xml:space="preserve">
-    <value>Detalhes de utilização da poupança de bateria</value>
+    <value>배터리 절약 모드 사용량 세부 정보</value>
   </data>
   <data name="BatteryUse" xml:space="preserve">
-    <value>Utilização da bateria</value>
+    <value>배터리 사용</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BiometricDevices" xml:space="preserve">
-    <value>Dispositivos biométricos</value>
+    <value>생체 인식 디바이스</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BitLockerDriveEncryption" xml:space="preserve">
-    <value>Encriptação BitLocker</value>
+    <value>BitLocker 드라이브 암호화</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>Luz azul</value>
+    <value>블루 라이트</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
-    <value>Bluetooth</value>
+    <value>블루투스</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
-    <value>Dispositivos Bluetooth</value>
+    <value>Bluetooth 장치</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueYellow" xml:space="preserve">
-    <value>Azul-amarelo</value>
+    <value>파란색-노란색</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
-    <value>IME Bopomofo</value>
+    <value>Bopomofo IME</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="bpmf" xml:space="preserve">
@@ -397,85 +397,85 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Broadcasting" xml:space="preserve">
-    <value>Transmissão</value>
+    <value>브로드캐스팅</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Calendar" xml:space="preserve">
-    <value>Calendário</value>
+    <value>일정</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CallHistory" xml:space="preserve">
-    <value>Histórico de chamadas</value>
+    <value>통화 기록</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
-    <value>chamadas</value>
+    <value>호출</value>
   </data>
   <data name="Camera" xml:space="preserve">
-    <value>Câmara</value>
+    <value>카메라</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CangjieIme" xml:space="preserve">
-    <value>IME Cangjie</value>
+    <value>창힐 IME</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="CapsLock" xml:space="preserve">
-    <value>Caps Lock</value>
+    <value>Caps lock</value>
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Celular e SIM</value>
+    <value>셀룰러 및 SIM</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Escolha as pastas que irão aparecer no Início</value>
+    <value>시작 화면에 표시되는 폴더 선택</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
-    <value>Cliente para NetWare</value>
+    <value>NetWare용 클라이언트 서비스</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Área de transferência</value>
+    <value>클립보드</value>
     <comment>Area System</comment>
   </data>
   <data name="ClosedCaptions" xml:space="preserve">
-    <value>Legendas ocultas</value>
+    <value>닫은 캡션</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorFilters" xml:space="preserve">
-    <value>Filtros de cor</value>
+    <value>색 필터</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorManagement" xml:space="preserve">
-    <value>Gestão de cores</value>
+    <value>색 관리</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Cores</value>
+    <value>색</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Comando</value>
+    <value>명령어</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
-    <value>Dispositivos ligados</value>
+    <value>연결된 디바이스</value>
     <comment>Area Device</comment>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contactos</value>
+    <value>연락처</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Painel de controlo</value>
+    <value>Control Panel</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
-    <value>Copiar comando</value>
+    <value>복사 명령</value>
   </data>
   <data name="CoreIsolation" xml:space="preserve">
-    <value>Isolamento de núcleo</value>
+    <value>코어 격리</value>
     <comment>Means the protection of the system core</comment>
   </data>
   <data name="Cortana" xml:space="preserve">
@@ -483,59 +483,59 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana nos meus dispositivos</value>
+    <value>내 장치에서 Cortana</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
-    <value>Cortana - Idioma</value>
+    <value>Cortana - 언어</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CredentialManager" xml:space="preserve">
-    <value>Gestor de credenciais</value>
+    <value>자격 증명 관리자</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Crossdevice" xml:space="preserve">
-    <value>Vários dispositivos</value>
+    <value>장치 간</value>
   </data>
   <data name="CustomDevices" xml:space="preserve">
-    <value>Dispositivos personalizados</value>
+    <value>사용자 지정 디바이스</value>
   </data>
   <data name="DarkColor" xml:space="preserve">
-    <value>Cor escura</value>
+    <value>어두운 색</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
-    <value>Modo escuro</value>
+    <value>다크 모드</value>
   </data>
   <data name="DataUsage" xml:space="preserve">
-    <value>Utilização de dados</value>
+    <value>데이터 사용량</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DateAndTime" xml:space="preserve">
-    <value>Data e hora</value>
+    <value>날짜 및 시간</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
-    <value>Aplicações predefinidas</value>
+    <value>기본 앱</value>
     <comment>Area Apps</comment>
   </data>
   <data name="DefaultCamera" xml:space="preserve">
-    <value>Câmara predefinida</value>
+    <value>기본 카메라</value>
     <comment>Area Device</comment>
   </data>
   <data name="DefaultLocation" xml:space="preserve">
-    <value>Localização predefinida</value>
+    <value>기본 위치</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultPrograms" xml:space="preserve">
-    <value>Programas predefinidos</value>
+    <value>기본 프로그램</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
-    <value>Localizações predefinidas</value>
+    <value>기본 저장 위치</value>
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
-    <value>Otimização de entrega</value>
+    <value>제공 최적화</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="desk.cpl" xml:space="preserve">
@@ -543,7 +543,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="DesktopThemes" xml:space="preserve">
-    <value>Temas do ambiente de trabalho</value>
+    <value>데스크톱 테마</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
@@ -551,11 +551,11 @@
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
-    <value>Gestor de dispositivos</value>
+    <value>디바이스 관리자</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DevicesAndPrinters" xml:space="preserve">
-    <value>Dispositivos e impressoras</value>
+    <value>장치 및 프린터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Dhcp" xml:space="preserve">
@@ -563,23 +563,23 @@
     <comment>Should not translated</comment>
   </data>
   <data name="DialUp" xml:space="preserve">
-    <value>Ligações</value>
+    <value>전화걸기</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DirectAccess" xml:space="preserve">
-    <value>Acesso direto</value>
+    <value>직접 액세스</value>
     <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
   </data>
   <data name="DirectOpenYourPhone" xml:space="preserve">
-    <value>Abrir diretamente o telefone</value>
+    <value>휴대폰 직접 열기</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Ecrã</value>
+    <value>표시</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="DisplayProperties" xml:space="preserve">
-    <value>Propriedades de exibição</value>
+    <value>속성 표시</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DNS" xml:space="preserve">
@@ -587,70 +587,70 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Documents" xml:space="preserve">
-    <value>Documentos</value>
+    <value>문서</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="DuplicatingMyDisplay" xml:space="preserve">
-    <value>Duplicar o ecrã</value>
+    <value>내 디스플레이 복제 중</value>
     <comment>Area System</comment>
   </data>
   <data name="DuringTheseHours" xml:space="preserve">
-    <value>Durante estas horas</value>
+    <value>이 시간 동안</value>
     <comment>Area System</comment>
   </data>
   <data name="EaseOfAccessCenter" xml:space="preserve">
-    <value>Centro de facilidade de acesso</value>
+    <value>접근성 센터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Edition" xml:space="preserve">
-    <value>Edição</value>
+    <value>버전</value>
     <comment>Means the "Windows Edition"</comment>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
+    <value>메일</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>Contas de e-mail e aplicações</value>
+    <value>전자 메일 및 앱 계정</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
-    <value>Encriptação</value>
+    <value>암호화</value>
     <comment>Area System</comment>
   </data>
   <data name="Environment" xml:space="preserve">
-    <value>Ambiente</value>
+    <value>환경</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Ethernet" xml:space="preserve">
-    <value>Ethernet</value>
+    <value>이더넷</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ExploitProtection" xml:space="preserve">
-    <value>Proteção 'exploit'</value>
+    <value>Exploit Protection</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Extras</value>
+    <value>추가</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
-    <value>Controlo ocular</value>
+    <value>시선 제어</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="EyeTracker" xml:space="preserve">
-    <value>Rastreador ocular</value>
+    <value>시선 추적기</value>
     <comment>Area Privacy, requires eyetracker hardware</comment>
   </data>
   <data name="FamilyAndOtherPeople" xml:space="preserve">
-    <value>Família e outras pessoas</value>
+    <value>가족 및 기타 사용자</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="FeedbackAndDiagnostics" xml:space="preserve">
-    <value>Feedback e diagnósticos</value>
+    <value>피드백 및 진단</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FileSystem" xml:space="preserve">
-    <value>Sistema de ficheiros</value>
+    <value>파일 시스템</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
@@ -662,101 +662,101 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="FindMyDevice" xml:space="preserve">
-    <value>Localizar dispositivo</value>
+    <value>내 장치 찾기</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>방화벽</value>
   </data>
   <data name="FocusAssistQuietHours" xml:space="preserve">
-    <value>Auxiliar de concentração – Horas de descanso</value>
+    <value>집중 지원 - 조용한 시간</value>
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Auxiliar de concentração – Momentos de pausa</value>
+    <value>집중 지원 - 조용한 순간</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
-    <value>Opções de pasta</value>
+    <value>폴더 옵션</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Fonts" xml:space="preserve">
-    <value>Tipos de letra</value>
+    <value>글꼴</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ForDevelopers" xml:space="preserve">
-    <value>Para programadores</value>
+    <value>개발자용</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="GameBar" xml:space="preserve">
-    <value>Barra de jogo</value>
+    <value>게임 바</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameControllers" xml:space="preserve">
-    <value>Controladores de jogo</value>
+    <value>게임 컨트롤러</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
-    <value>Gravador de jogo</value>
+    <value>게임 DVR</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Modo de jogo</value>
+    <value>게임 모드</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Gateway</value>
+    <value>게이트웨이</value>
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
-    <value>Geral</value>
+    <value>일반</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="GetPrograms" xml:space="preserve">
-    <value>Obter programas</value>
+    <value>프로그램 가져오기</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GettingStarted" xml:space="preserve">
-    <value>Introdução</value>
+    <value>시작</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Reprodução Automática</value>
+    <value>Glance</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
-    <value>Definições de gráficos</value>
+    <value>그래픽 설정</value>
     <comment>Area System</comment>
   </data>
   <data name="Grayscale" xml:space="preserve">
-    <value>Escala de cinzentos</value>
+    <value>회색조</value>
   </data>
   <data name="GreenWeek" xml:space="preserve">
-    <value>Semana verde</value>
+    <value>녹색 주</value>
     <comment>Mean you don't can see green colors</comment>
   </data>
   <data name="HeadsetDisplay" xml:space="preserve">
-    <value>Ecrã de realidade mista</value>
+    <value>헤드셋 디스플레이</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="HighContrast" xml:space="preserve">
-    <value>Alto contraste</value>
+    <value>고대비</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
-    <value>Áudio holográfico</value>
+    <value>홀로그램 오디오</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
-    <value>Ambiente holográfico</value>
+    <value>홀로그램 환경</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
-    <value>Auscultador holográfico</value>
+    <value>홀로그램 헤드셋</value>
   </data>
   <data name="HolographicManagement" xml:space="preserve">
-    <value>Gestão holográfica</value>
+    <value>홀로그램 관리</value>
   </data>
   <data name="HomeGroup" xml:space="preserve">
-    <value>Grupo doméstico</value>
+    <value>홈 그룹</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Id" xml:space="preserve">
@@ -764,10 +764,10 @@
     <comment>MEans The "Windows Identifier"</comment>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Imagem</value>
+    <value>이미지</value>
   </data>
   <data name="IndexingOptions" xml:space="preserve">
-    <value>Opções de indexação</value>
+    <value>인덱싱 옵션</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="inetcpl.cpl" xml:space="preserve">
@@ -775,15 +775,15 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Infrared" xml:space="preserve">
-    <value>Infravermelhos</value>
+    <value>적외선</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="InkingAndTyping" xml:space="preserve">
-    <value>Tinta digital e escrita</value>
+    <value>수동 입력 및 입력</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="InternetOptions" xml:space="preserve">
-    <value>Opções de Internet</value>
+    <value>인터넷 옵션</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="intl.cpl" xml:space="preserve">
@@ -791,17 +791,17 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="InvertedColors" xml:space="preserve">
-    <value>Cores invertidas</value>
+    <value>반전된 색</value>
   </data>
   <data name="Ip" xml:space="preserve">
     <value>IP</value>
     <comment>Should not translated</comment>
   </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
-    <value>Navegação isolada</value>
+    <value>격리된 검색</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
-    <value>Definições de IME em japonês</value>
+    <value>일본 IME 설정</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
   <data name="joy.cpl" xml:space="preserve">
@@ -809,7 +809,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="JoystickProperties" xml:space="preserve">
-    <value>Propriedades do joystick</value>
+    <value>조이스틱 속성</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="jpnime" xml:space="preserve">
@@ -817,39 +817,39 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Teclado</value>
+    <value>키보드</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Keypad" xml:space="preserve">
-    <value>Teclado numérico</value>
+    <value>키패드</value>
   </data>
   <data name="Keys" xml:space="preserve">
-    <value>Teclas</value>
+    <value>키</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Idioma</value>
+    <value>언어</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
-    <value>Cor clara</value>
+    <value>밝은 색</value>
   </data>
   <data name="LightMode" xml:space="preserve">
-    <value>Modo claro</value>
+    <value>광원 모드</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Localização</value>
+    <value>위치</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
-    <value>Ecrã de bloqueio</value>
+    <value>화면 잠금</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Magnifier" xml:space="preserve">
-    <value>Lupa</value>
+    <value>돋보기</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>Correio – Microsoft Exchange ou Windows Messaging</value>
+    <value>메일 - Microsoft Exchange 또는 Windows 메시지</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
@@ -857,22 +857,22 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
-    <value>Gerir redes conhecidas</value>
+    <value>알려진 네트워크 관리</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ManageOptionalFeatures" xml:space="preserve">
-    <value>Gerir funcionalidades opcionais</value>
+    <value>선택적 기능 관리</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Mensagens</value>
+    <value>Messaging</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
-    <value>Ligações limitadas</value>
+    <value>데이터 통신 연결</value>
   </data>
   <data name="Microphone" xml:space="preserve">
-    <value>Microfone</value>
+    <value>마이크</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
@@ -888,10 +888,10 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="MobileDevices" xml:space="preserve">
-    <value>Dispositivos móveis</value>
+    <value>모바일 장치</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
-    <value>Hotspot móvel</value>
+    <value>모바일 핫스팟</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="modem.cpl" xml:space="preserve">
@@ -902,43 +902,43 @@
     <value>Mono</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
-    <value>Mais detalhes</value>
+    <value>자세한 내용</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
-    <value>Movimento</value>
+    <value>동작</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Mouse" xml:space="preserve">
-    <value>Rato</value>
+    <value>마우스</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MouseAndTouchpad" xml:space="preserve">
-    <value>Rato e painel de toque</value>
+    <value>마우스 및 터치 패드</value>
     <comment>Area Device</comment>
   </data>
   <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
-    <value>Rato, tipos de letra, teclado e propriedades de impressoras</value>
+    <value>마우스, 글꼴, 키보드 및 프린터 속성</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
-    <value>Ponteiro do rato</value>
+    <value>마우스 포인터</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MultimediaProperties" xml:space="preserve">
-    <value>Propriedades multimédia</value>
+    <value>멀티미디어 속성</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Multitasking" xml:space="preserve">
-    <value>Multitarefas</value>
+    <value>멀티태스킹</value>
     <comment>Area System</comment>
   </data>
   <data name="Narrator" xml:space="preserve">
-    <value>Narrador</value>
+    <value>내레이터</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="NavigationBar" xml:space="preserve">
-    <value>Barra de navegação</value>
+    <value>탐색 모음</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="netcpl.cpl" xml:space="preserve">
@@ -950,27 +950,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Rede</value>
+    <value>네트워크</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NetworkAndSharingCenter" xml:space="preserve">
-    <value>Centro de rede e partilha</value>
+    <value>네트워크 및 공유 센터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Ligação de rede</value>
+    <value>네트워크 연결</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkProperties" xml:space="preserve">
-    <value>Propriedades da rede</value>
+    <value>네트워크 속성</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkSetupWizard" xml:space="preserve">
-    <value>Assistente de configuração de redes</value>
+    <value>네트워크 설치 마법사</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Estado da rede</value>
+    <value>네트워크 상태</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFC" xml:space="preserve">
@@ -978,92 +978,92 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFCTransactions" xml:space="preserve">
-    <value>Transações NFC</value>
+    <value>NFC 트랜잭션</value>
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Luz noturna</value>
+    <value>야간 모드</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
-    <value>Definições de luz noturna</value>
+    <value>야간 모드 설정</value>
     <comment>Area System</comment>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Nota</value>
+    <value>참고</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Disponível apenas quando tiver ligado um dispositivo móvel ao seu dispositivo.</value>
+    <value>모바일 장치를 장치에 연결한 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Disponível apenas em dispositivos com suporte a opções avançadas de gráficos.</value>
+    <value>고급 그래픽 옵션을 지원하는 장치에서만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Disponível apenas em dispositivos com bateria, como um tablet.</value>
+    <value>배터리가 있는 장치(예: 태블릿)에서만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Descontinuada no Windows 10, versão 1809 (compilação 17763) e posterior.</value>
+    <value>Windows 10, 버전 1809(빌드 17763) 이상에서는 사용되지 않습니다.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Disponível apenas com emparelhamento.</value>
+    <value>Dial이 페어링된 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Disponível apenas se DirectAccess estiver ativo.</value>
+    <value>DirectAccess를 사용하도록 설정한 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Disponível apenas em dispositivos com suporte a opções avançadas de exibição.</value>
+    <value>고급 디스플레이 옵션을 지원하는 장치에서만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Apenas se o utilizador estiver inscrito no WIP.</value>
+    <value>사용자가 WIP에 등록된 경우에만 존재합니다.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requer hardware de rastreio ocular.</value>
+    <value>아이 트래커 하드웨어가 필요합니다.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Disponível se o editor de métodos de entrada do Japão da Microsoft estiver instalado.</value>
+    <value>Microsoft Japan 입력기가 설치된 경우 사용할 수 있습니다.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Disponível se o editor de métodos de entrada Pinyin da Microsoft estiver instalado.</value>
+    <value>Microsoft Pinyin 입력기가 설치된 경우 사용할 수 있습니다.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Disponível se o editor de métodos de entrada Wubi da Microsoft estiver instalado.</value>
+    <value>Microsoft Wubi 입력기가 설치된 경우 사용할 수 있습니다.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Disponível apenas se a aplicação Mixed Reality Portal estiver instalada.</value>
+    <value>Mixed Reality 포털 앱이 설치된 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Disponível apenas em dispositivos móveis e se a empresa tiver implementado um pacote de aprovisionamento.</value>
+    <value>모바일에서만 사용할 수 있으며 엔터프라이즈에서 프로비전 패키지를 배포한 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
-    <value>Adicionado no Windows 10, versão 1903 (compilação 18362).</value>
+    <value>Windows 10 버전 1903(빌드 18362)에서 추가되었습니다.</value>
   </data>
   <data name="NoteSince19041" xml:space="preserve">
-    <value>Adicionado no Windows 10, versão 2004 (compilação 19041).</value>
+    <value>Windows 10 버전 2004(빌드 19041)에서 추가되었습니다.</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Disponível se estiverem instaladas “aplicações de definições” de terceiros.</value>
+    <value>예를 들어, 타사에서 "설정 앱"이 설치된 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Disponível apenas se estiver presente um painel de toque.</value>
+    <value>터치 패드 하드웨어가 있는 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Disponível apenas se o dispositivo tiver um adaptador Wi-Fi.</value>
+    <value>디바이스에 Wi-Fi 어댑터가 있는 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>O dispositivo deve ter a capacidade Windows Anywhere.</value>
+    <value>디바이스는 외부에서 Windows 사용이 지원되어야 합니다.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Disponível apenas se a empresa tiver implementado um pacote de aprovisionamento.</value>
+    <value>엔터프라이즈에서 프로비전 패키지를 배포한 경우에만 사용할 수 있습니다.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notificações</value>
+    <value>알림</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
-    <value>Notificações e ações</value>
+    <value>알림 및 작업</value>
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
-    <value>Bloqueio Numérico</value>
+    <value>숫자 잠금</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
   <data name="nwc.cpl" xml:space="preserve">
@@ -1075,141 +1075,141 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>Administrador da origem de dados ODBC (32 bits)</value>
+    <value>ODBC 데이터 원본 관리자(32비트)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>Administrador da origem de dados ODBC (64 bits)</value>
+    <value>ODBC 데이터 원본 관리자(64비트)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Ficheiros offline</value>
+    <value>오프라인 파일</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Mapas offline</value>
+    <value>오프라인 맵</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Mapas offline – Descarregar mapas</value>
+    <value>오프라인 지도 - 맵 다운로드</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>No ecrã</value>
+    <value>화면에</value>
   </data>
   <data name="Os" xml:space="preserve">
-    <value>SO</value>
+    <value>OS</value>
     <comment>Means the "Operating System"</comment>
   </data>
   <data name="OtherDevices" xml:space="preserve">
-    <value>Outros dispositivos</value>
+    <value>기타 장치</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="OtherOptions" xml:space="preserve">
-    <value>Outras opções</value>
+    <value>기타 옵션</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
-    <value>Outros utilizadores</value>
+    <value>다른 사용자</value>
   </data>
   <data name="ParentalControls" xml:space="preserve">
-    <value>Controlos parentais</value>
+    <value>자녀 보호</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Palavra-passe</value>
+    <value>패스워드</value>
   </data>
   <data name="password.cpl" xml:space="preserve">
     <value>password.cpl</value>
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PasswordProperties" xml:space="preserve">
-    <value>Propriedades da palavra-passe</value>
+    <value>암호 속성</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndInputDevices" xml:space="preserve">
-    <value>Dispositivos de caneta e entrada</value>
+    <value>펜 및 입력 장치</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndTouch" xml:space="preserve">
-    <value>Caneta e toque</value>
+    <value>펜 및 터치</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndWindowsInk" xml:space="preserve">
-    <value>Caneta e Windows Ink</value>
+    <value>펜 및 Windows Ink</value>
     <comment>Area Device</comment>
   </data>
   <data name="PeopleNearMe" xml:space="preserve">
-    <value>Pessoas na vizinhança</value>
+    <value>주변 사용자 찾기</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PerformanceInformationAndTools" xml:space="preserve">
-    <value>Informações e ferramentas de desempenho</value>
+    <value>성능 정보 및 도구</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PermissionsAndHistory" xml:space="preserve">
-    <value>Permissões e histórico</value>
+    <value>사용 권한 및 기록</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="PersonalizationCategory" xml:space="preserve">
-    <value>Personalização (categoria)</value>
+    <value>개인 설정(범주)</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Telefone</value>
+    <value>전화</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
-    <value>Telefone e modem</value>
+    <value>전화 및 모뎀</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneAndModemOptions" xml:space="preserve">
-    <value>Telefone e modem – Opções</value>
+    <value>전화 및 모뎀 - 옵션</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneCalls" xml:space="preserve">
-    <value>Chamadas telefónicas</value>
+    <value>전화 통화</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PhoneDefaultApps" xml:space="preserve">
-    <value>Telefone – Aplicações predefinidas</value>
+    <value>전화 - 기본 앱</value>
     <comment>Area System</comment>
   </data>
   <data name="Picture" xml:space="preserve">
-    <value>Imagem</value>
+    <value>그림</value>
   </data>
   <data name="Pictures" xml:space="preserve">
-    <value>Imagens</value>
+    <value>그림</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
-    <value>Definições IME Pinyin</value>
+    <value>Pinyin IME 설정</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Pinyin input method editor is installed</comment>
   </data>
   <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
-    <value>Definições de IME Pinyin – léxico de domínio</value>
+    <value>Pinyin IME 설정 - 도메인 어휘집</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
-    <value>Definições de IME Pinyin – Configuração de teclas</value>
+    <value>Pinyin IME 설정 - 키 구성</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsUdp" xml:space="preserve">
-    <value>Definições IME Pinyin – UDP</value>
+    <value>Pinyin IME 설정 - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PlayingGameFullScreen" xml:space="preserve">
-    <value>Jogos em ecrã completo</value>
+    <value>게임 전체 화면 재생</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Plug-in para pesquisar nas definições do Windows</value>
+    <value>Windows 설정을 검색하는 플러그 인</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Definições do Windows</value>
+    <value>Windows Settings</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
-    <value>Energia e suspensão</value>
+    <value>전원 및 절전 모드</value>
     <comment>Area System</comment>
   </data>
   <data name="powercfg.cpl" xml:space="preserve">
@@ -1217,37 +1217,37 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PowerOptions" xml:space="preserve">
-    <value>Opções de energia</value>
+    <value>전원 옵션</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Presentation" xml:space="preserve">
-    <value>Apresentação</value>
+    <value>프레젠테이션</value>
   </data>
   <data name="Printers" xml:space="preserve">
-    <value>Impressoras</value>
+    <value>프린터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PrintersAndScanners" xml:space="preserve">
-    <value>Impressoras e scanners</value>
+    <value>프린터 및 스캐너</value>
     <comment>Area Device</comment>
   </data>
   <data name="PrintScreen" xml:space="preserve">
-    <value>Tecla Print Screen</value>
+    <value>인쇄 화면</value>
     <comment>Mean the "Print screen" key</comment>
   </data>
   <data name="ProblemReportsAndSolutions" xml:space="preserve">
-    <value>Relatórios e soluções de problemas</value>
+    <value>문제 보고서 및 해결 방법</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Processor" xml:space="preserve">
-    <value>Processador</value>
+    <value>프로세서</value>
   </data>
   <data name="ProgramsAndFeatures" xml:space="preserve">
-    <value>Programas e funcionalidades</value>
+    <value>프로그램 및 기능</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ProjectingToThisPc" xml:space="preserve">
-    <value>Projetar neste PC</value>
+    <value>이 PC에 프로젝팅</value>
     <comment>Area System</comment>
   </data>
   <data name="protanopia" xml:space="preserve">
@@ -1255,26 +1255,26 @@
     <comment>Medical: Mean you don't can see green colors</comment>
   </data>
   <data name="Provisioning" xml:space="preserve">
-    <value>Aprovisionamento</value>
+    <value>프로비전</value>
     <comment>Area UserAccounts, only available if enterprise has deployed a provisioning package</comment>
   </data>
   <data name="Proximity" xml:space="preserve">
-    <value>Proximidade</value>
+    <value>근접 연결</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Proxy" xml:space="preserve">
-    <value>Proxy</value>
+    <value>프록시</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Quickime" xml:space="preserve">
-    <value>QuickTime</value>
+    <value>빠른 입력</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value>Jogo de momentos de pausa</value>
+    <value>조용한 순간 게임</value>
   </data>
   <data name="Radios" xml:space="preserve">
-    <value>Rádios</value>
+    <value>라디오</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Ram" xml:space="preserve">
@@ -1282,53 +1282,53 @@
     <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
   </data>
   <data name="Recognition" xml:space="preserve">
-    <value>Reconhecimento</value>
+    <value>인식</value>
   </data>
   <data name="Recovery" xml:space="preserve">
-    <value>Recuperação</value>
+    <value>복구</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="RedEye" xml:space="preserve">
-    <value>Olhos vermelhos</value>
+    <value>적목 현상</value>
     <comment>Mean red eye effect by over-the-night flights</comment>
   </data>
   <data name="RedGreen" xml:space="preserve">
-    <value>Vermelho-verde</value>
+    <value>빨간색-녹색</value>
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
-    <value>Semana vermelha</value>
+    <value>빨강 주</value>
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Região</value>
+    <value>영역</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalLanguage" xml:space="preserve">
-    <value>Configuração regional</value>
+    <value>지역 언어</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalSettingsProperties" xml:space="preserve">
-    <value>Propriedades de configurações regionais</value>
+    <value>지역별 설정 속성</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionAndLanguage" xml:space="preserve">
-    <value>Região e idioma</value>
+    <value>지역 및 언어</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionFormatting" xml:space="preserve">
-    <value>Formatos regionais</value>
+    <value>지역 서식 지정</value>
   </data>
   <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
-    <value>Ligações remotas</value>
+    <value>RemoteApp 및 데스크톱 연결</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Ambiente de trabalho remoto</value>
+    <value>원격 데스크톱</value>
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
-    <value>Scanners e câmaras</value>
+    <value>스캐너 및 카메라</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="schedtasks" xml:space="preserve">
@@ -1336,21 +1336,21 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
-    <value>Agendadas</value>
+    <value>일정</value>
   </data>
   <data name="ScheduledTasks" xml:space="preserve">
-    <value>Tarefas agendadas</value>
+    <value>예약된 작업</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
-    <value>Rotação do ecrã</value>
+    <value>화면 회전</value>
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
-    <value>Barras de deslocamento</value>
+    <value>스크롤 막대</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
-    <value>Bloqueio de deslocamento</value>
+    <value>스크롤 잠금</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
   <data name="Sdns" xml:space="preserve">
@@ -1358,7 +1358,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SearchingWindows" xml:space="preserve">
-    <value>Pesquisar no Windows</value>
+    <value>Windows 검색 중</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="SecureDNS" xml:space="preserve">
@@ -1366,71 +1366,71 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Centro de segurança</value>
+    <value>Security Center</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
-    <value>Processador de segurança</value>
+    <value>보안 프로세서</value>
   </data>
   <data name="SessionCleanup" xml:space="preserve">
-    <value>Limpeza de sessões</value>
+    <value>세션 정리</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="SettingsHomePage" xml:space="preserve">
-    <value>Página inicial de definições</value>
+    <value>설정 홈페이지</value>
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
-    <value>Configurar um 'kiosk'</value>
+    <value>키오스크 설정</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SharedExperiences" xml:space="preserve">
-    <value>Experiências partilhadas</value>
+    <value>공유 환경</value>
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Atalhos</value>
+    <value>바로 가기</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>Wi-Fi</value>
     <comment>dont translate this, is a short term to find entries</comment>
   </data>
   <data name="SignInOptions" xml:space="preserve">
-    <value>Opções de início de sessão</value>
+    <value>로그인 옵션</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SignInOptionsDynamicLock" xml:space="preserve">
-    <value>Opções de início de sessão – Bloqueio dinâmico</value>
+    <value>로그인 옵션 - 동적 잠금</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Tamanho</value>
+    <value>크기</value>
     <comment>Size for text and symbols</comment>
   </data>
   <data name="Sound" xml:space="preserve">
-    <value>Som</value>
+    <value>사운드</value>
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Voz</value>
+    <value>음성</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
-    <value>Reconhecimento de voz</value>
+    <value>음성 인식</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SpeechTyping" xml:space="preserve">
-    <value>Escrita por voz</value>
+    <value>음성 입력</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>Iniciar</value>
+    <value>시작</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
-    <value>Locais de início</value>
+    <value>시작 위치</value>
   </data>
   <data name="StartupApps" xml:space="preserve">
-    <value>Aplicações de arranque</value>
+    <value>시작 앱</value>
     <comment>Area Apps</comment>
   </data>
   <data name="sticpl.cpl" xml:space="preserve">
@@ -1438,27 +1438,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Storage" xml:space="preserve">
-    <value>Armazenamento</value>
+    <value>저장소</value>
     <comment>Area System</comment>
   </data>
   <data name="StoragePolicies" xml:space="preserve">
-    <value>Políticas de armazenamento</value>
+    <value>저장소 정책</value>
     <comment>Area System</comment>
   </data>
   <data name="StorageSense" xml:space="preserve">
-    <value>Sensor de armazenamento</value>
+    <value>저장 공간 센스</value>
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
-    <value>nas</value>
+    <value>in</value>
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
-    <value>Centro de sincronização</value>
+    <value>동기화 센터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
-    <value>Sincronizar as definições</value>
+    <value>설정 동기화</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="sysdm.cpl" xml:space="preserve">
@@ -1466,57 +1466,57 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="System" xml:space="preserve">
-    <value>Sistema</value>
+    <value>시스템</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
-    <value>Propriedades do sistema e assistente para adicionar hardware</value>
+    <value>시스템 속성 및 새 하드웨어 추가 마법사</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Tab" xml:space="preserve">
-    <value>Separador</value>
+    <value>탭</value>
     <comment>Means the key "Tabulator" on the keyboard</comment>
   </data>
   <data name="TabletMode" xml:space="preserve">
-    <value>Modo tablet</value>
+    <value>태블릿 모드</value>
     <comment>Area System</comment>
   </data>
   <data name="TabletPcSettings" xml:space="preserve">
-    <value>Definições do tablet PC</value>
+    <value>태블릿 PC 설정</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Talk" xml:space="preserve">
-    <value>Conversa</value>
+    <value>이야기</value>
   </data>
   <data name="TalkToCortana" xml:space="preserve">
-    <value>Falar com a Cortana</value>
+    <value>Cortana에 말하기</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
-    <value>Barra de tarefas</value>
+    <value>작업 표시줄</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
-    <value>Cor da barra de tarefas</value>
+    <value>작업 표시줄 색</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Tarefas</value>
+    <value>작업</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Conferência de equipas</value>
+    <value>팀 회의</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
-    <value>Gestão de dispositivos da equipa</value>
+    <value>팀 장치 관리</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
-    <value>Conversão de texto em voz</value>
+    <value>텍스트 음성 변환</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Themes" xml:space="preserve">
-    <value>Temas</value>
+    <value>테마</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="themes.cpl" xml:space="preserve">
@@ -1528,27 +1528,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Timeline" xml:space="preserve">
-    <value>Cronologia</value>
+    <value>타임라인</value>
   </data>
   <data name="Touch" xml:space="preserve">
-    <value>Toque</value>
+    <value>터치</value>
   </data>
   <data name="TouchFeedback" xml:space="preserve">
-    <value>Feedback de toque</value>
+    <value>터치 피드백</value>
   </data>
   <data name="Touchpad" xml:space="preserve">
-    <value>Painel de toque</value>
+    <value>터치 패드</value>
     <comment>Area Device</comment>
   </data>
   <data name="Transparency" xml:space="preserve">
-    <value>Transparência</value>
+    <value>투명도</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
     <value>tritanopia</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
-    <value>Resolução de problemas</value>
+    <value>문제 해결</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="TruePlay" xml:space="preserve">
@@ -1556,11 +1556,11 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
-    <value>Escrita</value>
+    <value>입력</value>
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
-    <value>Desinstalar</value>
+    <value>제거</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Usb" xml:space="preserve">
@@ -1568,51 +1568,51 @@
     <comment>Area Device</comment>
   </data>
   <data name="UserAccounts" xml:space="preserve">
-    <value>Contas de utilizador</value>
+    <value>사용자 계정</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Versão</value>
+    <value>버</value>
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
-    <value>Reprodução de vídeo</value>
+    <value>비디오 재생</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Videos" xml:space="preserve">
-    <value>Vídeos</value>
+    <value>비디오</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="VirtualDesktops" xml:space="preserve">
-    <value>Ambientes de trabalho virtuais</value>
+    <value>가상 데스크톱</value>
   </data>
   <data name="Virus" xml:space="preserve">
-    <value>Vírus</value>
+    <value>바이러스</value>
     <comment>Means the virus in computers and software</comment>
   </data>
   <data name="VoiceActivation" xml:space="preserve">
-    <value>Ativação por voz</value>
+    <value>음성 활성화</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value>볼륨</value>
   </data>
   <data name="Vpn" xml:space="preserve">
     <value>VPN</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Wallpaper" xml:space="preserve">
-    <value>Papel de parede</value>
+    <value>배경 화면</value>
   </data>
   <data name="WarmerColor" xml:space="preserve">
-    <value>Cor mais quente</value>
+    <value>워머 색</value>
   </data>
   <data name="WelcomeCenter" xml:space="preserve">
-    <value>Centro de boas-vindas</value>
+    <value>시작 센터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WelcomeScreen" xml:space="preserve">
-    <value>Ecrã de boas-vindas</value>
+    <value>시작 화면</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="wgpocpl.cpl" xml:space="preserve">
@@ -1620,7 +1620,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Wheel" xml:space="preserve">
-    <value>Roda</value>
+    <value>휠</value>
     <comment>Area Device</comment>
   </data>
   <data name="WiFi" xml:space="preserve">
@@ -1628,18 +1628,18 @@
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiCalling" xml:space="preserve">
-    <value>Chamadas Wi-Fi</value>
+    <value>Wi-Fi 통화</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>Definições Wi-Fi</value>
+    <value>Wi-Fi 설정</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
-    <value>Limite da janela</value>
+    <value>창 테두리</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
-    <value>Atualizações Windows Anytime</value>
+    <value>Windows Anytime Upgrade</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsAnywhere" xml:space="preserve">
@@ -1655,122 +1655,122 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsFirewall" xml:space="preserve">
-    <value>Firewall do Windows</value>
+    <value>Windows 방화벽</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
-    <value>Configuração do Windows Hello – Face</value>
+    <value>Windows Hello 설정 - Face</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Configuração do Windows Hello – Impressão digital</value>
+    <value>Windows Hello 설정 - 지문</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
-    <value>Programa Windows Insider</value>
+    <value>Windows 참가자 프로그램</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
-    <value>Centro de mobilidade do Windows</value>
+    <value>Windows 모바일 센터</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsSearch" xml:space="preserve">
-    <value>Pesquisa Windows</value>
+    <value>Windows Search</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="WindowsSecurity" xml:space="preserve">
-    <value>Segurança do Windows</value>
+    <value>Windows 보안</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
-    <value>Windows Update</value>
+    <value>Windows 업데이트</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
-    <value>Windows Update – Opções avançadas</value>
+    <value>Windows 업데이트 - 고급 옵션</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update – Procurar atualizações</value>
+    <value>Windows 업데이트 - 업데이트 확인</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
-    <value>Windows Update – Opções de reinício</value>
+    <value>Windows 업데이트 - 다시 시작 옵션</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update – Ver atualizações opcionais</value>
+    <value>Windows 업데이트 - 선택적 업데이트 보기</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update – Ver histórico de atualizações</value>
+    <value>Windows 업데이트 - 업데이트 기록 보기</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
-    <value>Sem fios</value>
+    <value>무선</value>
   </data>
   <data name="Workplace" xml:space="preserve">
-    <value>Local de trabalho</value>
+    <value>작업 공간</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
-    <value>Aprovisionamento do local de trabalho</value>
+    <value>작업 공간 프로비전</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Definições IME Wubi</value>
+    <value>Wubi IME 설정</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Definições Wubi IME – UDP</value>
+    <value>Wubi IME 설정 - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
-    <value>Rede Xbox</value>
+    <value>Xbox 네트워킹</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
-    <value>As suas informações</value>
+    <value>사용자 정보</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Ampliar</value>
+    <value>확대/축소</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Alterar definições de instalação do dispositivo</value>
+    <value>Change device installation settings</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Desativar imagens de fundo</value>
+    <value>Turn off background images</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Propriedades de navegação</value>
+    <value>Navigation properties</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Opções de transmissão multimédia</value>
+    <value>Media streaming options</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
     <value>Make a file type always open in a specific program</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Alterar voz do narrador</value>
+    <value>Change the Narrator’s voice</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Encontrar e corrigir problemas com o teclado</value>
+    <value>Find and fix keyboard problems</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Utilizar leitor de ecrã</value>
+    <value>Use screen reader</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Mostrar em qual grupo de trabalho o computador está ligado</value>
+    <value>Show which workgroup this computer is on</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Alterar definições da roda do rato</value>
+    <value>Change mouse wheel settings</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Gerir certificados do computador</value>
+    <value>Manage computer certificates</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Encontrar e corrigir problemas</value>
+    <value>Find and fix problems</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
     <value>Change settings for content received using Tap and send</value>
@@ -1782,19 +1782,19 @@
     <value>Print the speech reference card</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
-    <value>Calibrar ecrã</value>
+    <value>Calibrate display colour</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
     <value>Manage file encryption certificates</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
-    <value>Ver mensagens recentes sobre o computador</value>
+    <value>View recent messages about your computer</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
-    <value>Dar a outros utilizadores o acesso a este computador</value>
+    <value>Give other users access to this computer</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Mostrar ficheiros e pastas ocultas</value>
+    <value>Show hidden files and folders</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
     <value>Change Windows To Go start-up options</value>
@@ -1806,19 +1806,19 @@
     <value>Tell if an RSS feed is available on a website</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
-    <value>Adicionar relógios para diferentes fusos horários</value>
+    <value>Add clocks for different time zones</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Adicionar um dispositivo Bluetooth</value>
+    <value>Add a Bluetooth device</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Personalizar botões do rato</value>
+    <value>Customise the mouse buttons</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
     <value>Set tablet buttons to perform certain tasks</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
-    <value>Ver tipos de letra instalados</value>
+    <value>View installed fonts</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
     <value>Change the way currency is displayed</value>
@@ -1827,40 +1827,40 @@
     <value>Edit group policy</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
-    <value>Gerir extensões do navegador</value>
+    <value>Manage browser add-ons</value>
   </data>
   <data name="CheckProcessorSpeed" xml:space="preserve">
-    <value>Verificar velocidade do processador</value>
+    <value>Check processor speed</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Verificar estado da firewall</value>
+    <value>Check firewall status</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Enviar ou receber um ficheiro</value>
+    <value>Send or receive a file</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Adicionar ou remover contas de utilizador</value>
+    <value>Add or remove user accounts</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
-    <value>Editar variáveis de ambiente do sistema</value>
+    <value>Edit the system environment variables</value>
   </data>
   <data name="ManageBitlocker" xml:space="preserve">
-    <value>Gerir BitLocker</value>
+    <value>Manage BitLocker</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Ocultar automaticamente a barra de tarefas</value>
+    <value>Auto-hide the taskbar</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Alterar definições da placa de som</value>
+    <value>Change sound card settings</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
-    <value>Efetuar alterações às contas</value>
+    <value>Make changes to accounts</value>
   </data>
   <data name="EditLocalUsersAndGroups" xml:space="preserve">
-    <value>Editar utilizadores locais e grupos</value>
+    <value>Edit local users and groups</value>
   </data>
   <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
-    <value>Ver computadores e dispositivos de rede</value>
+    <value>View network computers and devices</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
     <value>Install a program from the network</value>
@@ -1878,25 +1878,25 @@
     <value>Turn On-Screen keyboard on or off</value>
   </data>
   <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
-    <value>Bloquear ou permitir cookies de terceiros</value>
+    <value>Block or allow third-party cookies</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Localizar e corrigir problemas com gravação de áudio</value>
+    <value>Find and fix audio recording problems</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
-    <value>Criar uma unidade de recuperação</value>
+    <value>Create a recovery drive</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
     <value>Microsoft New Phonetic Settings</value>
   </data>
   <data name="GenerateASystemHealthReport" xml:space="preserve">
-    <value>Gerer relatório de saúde do sistema</value>
+    <value>Generate a system health report</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
-    <value>Corrigir problemas com o computador</value>
+    <value>Fix problems with your computer</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Cópia de segurança e restauro (Windows 7)</value>
+    <value>Back up and Restore (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
     <value>Preview, delete, show or hide fonts</value>
@@ -1911,16 +1911,16 @@
     <value>Access RemoteApp and desktops</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
-    <value>Configurar fontes de dados ODBC</value>
+    <value>Set up ODBC data sources</value>
   </data>
   <data name="ResetSecurityPolicies" xml:space="preserve">
-    <value>Repor políticas de segurança</value>
+    <value>Reset Security Policies</value>
   </data>
   <data name="BlockOrAllowPopUps" xml:space="preserve">
-    <value>Bloquear ou permitir pop-ups</value>
+    <value>Block or allow pop-ups</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
-    <value>Ativar ou desativar conclusão automática no Internet Explorer</value>
+    <value>Turn autocomplete in Internet Explorer on or off</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
     <value>Microsoft Pinyin SimpleFast Options</value>
@@ -1998,7 +1998,7 @@
     <value>Control the computer without the mouse or keyboard</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Alterar ou remover um programa</value>
+    <value>Change or remove a program</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
     <value>Change multi-touch gesture settings</value>
@@ -2007,10 +2007,10 @@
     <value>Set up ODBC data sources (64-bit)</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
-    <value>Configurar servidor proxy</value>
+    <value>Configure proxy server</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
-    <value>Alterar página inicial</value>
+    <value>Change your homepage</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
     <value>Group similar windows on the taskbar</value>
@@ -2022,10 +2022,10 @@
     <value>Use audio description for video</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Alterar nome do grupo de trabalho</value>
+    <value>Change workgroup name</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Encontrar e corrigir problemas de impressão</value>
+    <value>Find and fix printing problems</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
     <value>Change when the computer sleeps</value>
@@ -2097,16 +2097,16 @@
     <value>Show how much RAM is on this computer</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
-    <value>Editar plano de energia</value>
+    <value>Edit power plan</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
-    <value>Ajustar volume do sistema</value>
+    <value>Adjust system volume</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
-    <value>Desfragmentar e otimizar as suas unidades</value>
+    <value>Defragment and optimise your drives</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
-    <value>Configurar fontes de dados ODBC (32-bit)</value>
+    <value>Set up ODBC data sources (32-bit)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
     <value>Change Font Settings</value>
@@ -2124,7 +2124,7 @@
     <value>Manage Windows Credentials</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
-    <value>Configurar um microfone</value>
+    <value>Set up a microphone</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
     <value>Change how the mouse pointer looks</value>
@@ -2146,10 +2146,10 @@
     <value>Show which operating system your computer is running</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
-    <value>Ver serviços locais</value>
+    <value>View local services</value>
   </data>
   <data name="ManageWorkFolders" xml:space="preserve">
-    <value>Gerir pastas de trabalho</value>
+    <value>Manage Work Folders</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
     <value>Encrypt your offline files</value>
@@ -2212,10 +2212,10 @@
     <value>Set flicks to perform certain tasks</value>
   </data>
   <data name="ChangeAccountType" xml:space="preserve">
-    <value>Alterar tipo de conta</value>
+    <value>Change account type</value>
   </data>
   <data name="ChangeScreenSaver" xml:space="preserve">
-    <value>Alterar proteção de cerã</value>
+    <value>Change screen saver</value>
   </data>
   <data name="ChangeUserAccountControlSettings" xml:space="preserve">
     <value>Change User Account Control settings</value>
@@ -2242,13 +2242,13 @@
     <value>Allow Remote Assistance invitations to be sent from this computer</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Gestor de tarefas</value>
+    <value>Task Manager</value>
   </data>
   <data name="TurnFlicksOnOrOff" xml:space="preserve">
     <value>Turn flicks on or off</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Adicionar um idioma</value>
+    <value>Add a language</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
     <value>View network status and tasks</value>
@@ -2260,7 +2260,7 @@
     <value>See the name of this computer</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
-    <value>Ver ligações de rede</value>
+    <value>View network connections</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
     <value>Perform recommended maintenance tasks automatically</value>
@@ -2281,16 +2281,16 @@
     <value>Change the way dates and lists are displayed</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
-    <value>Gerir dispositivos de áudio</value>
+    <value>Manage audio devices</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Alterar definições de segurança</value>
+    <value>Change security settings</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
-    <value>Verificar estado de segurança</value>
+    <value>Check security status</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Apagar cookies ou ficheiros temporários</value>
+    <value>Delete cookies or temporary files</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
     <value>Specify which hand you write with</value>
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Painel de controlo</value>
+    <value>Control Panel</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
