@@ -23,9 +23,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         public List<Result> Query(Query query)
         {
-            var termToSearch = query.Terms.Length <= 1
-                ? null
-                : string.Join(Plugin.Query.TermSeperater, query.Terms.Skip(1)).ToLower();
+            var termToSearch = query.Search;
 
             var processlist = processHelper.GetMatchingProcesses(termToSearch);
 
@@ -90,6 +88,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
                     ContextData = p.ProcessName,
+                    AutoCompleteText = $"{_context.CurrentPluginMetadata.ActionKeyword}{Plugin.Query.TermSeparator}{p.ProcessName}",
                     Action = (c) =>
                     {
                         processHelper.TryKill(p);

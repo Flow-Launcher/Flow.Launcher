@@ -1,52 +1,56 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Dialogues-->
     <system:String x:Key="plugin_explorer_make_selection_warning">Najprv vyberte položku</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na priečinok</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Naozaj chcete odstrániť {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Naozaj chcete natrvalo odstrániť túto položku {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Naozaj chcete natrvalo odstrániť {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Odstránenie bolo úspešné</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Úspešne odstránené {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Priradenie globálnej skratky akcie by mohlo počas vyhľadávania poskytnúť príliš veľa výsledkov. Vyberte si konkrétne kľúčové slovo akcie</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Úspešne odstránený {0}</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Priradenie globálneho aktivačného príkazu by mohlo počas vyhľadávania poskytnúť príliš veľa výsledkov. Vyberte si konkrétny aktivačný príkaz</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Ak je rýchly prístup povolený, nemôže byť nastavený globálny aktivačný príkaz. Prosím, vyberte konkrétny aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Zdá sa, že požadovaná služba Windows Index Search nie je spustená</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Ak to chcete opraviť, spustite službu Windows Search. Ak chcete odstrániť toto upozornenie, kliknite sem</system:String>
     <system:String x:Key="plugin_explorer_alternative">Upozornenie bolo vypnuté. Chceli by ste ako alternatívu na vyhľadávanie súborov a priečinkov nainštalovať plugin Everything?{0}{0}Ak chcete nainštalovať plugin Everything, zvoľte 'Áno', pre návrat zvoľte 'Nie'</system:String>
-    <system:String x:Key="plugin_explorer_alternative_title">Alternatíva pre Explorer</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Alternatíva pre Preskumníka</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Počas vyhľadávania došlo k chybe: {0}</system:String>
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">Odstrániť</system:String>
     <system:String x:Key="plugin_explorer_edit">Upraviť</system:String>
     <system:String x:Key="plugin_explorer_add">Pridať</system:String>
-    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť skratku akcie</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použite vyhľadávanie v indexe</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Zapnutím tejto funkcie sa zrýchli odozva indexovaných priečinkov/súborov, ale ak priečinok/súbor nie je indexovaný, nezobrazí sa. Ak bol priečinok/súbor pridaný do Vylúčené umiestnenia indexovania, zobrazí sa, aj keď je táto možnosť zapnutá</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Vyhľadávanie umiestnenia:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Vyhľadávanie obsahu súborov:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Cesta vyhľadávania:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Vyhľadávanie v obsahu súborov:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Vyhľadávanie v indexe:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuálna skratka:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Rýchly prístup:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Hotovo</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Povolené</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Ak je vypnuté, Flow túto možnosť vyhľadávania nevykoná a následne sa vráti späť na "*", aby sa uvoľnila skratka akcie.</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Ak je vypnuté, Flow túto možnosť vyhľadávania nevykoná a následne sa vráti späť na &quot;*&quot;, aby sa uvoľnila skratka akcie</system:String>
 
     <!--Plugin Infos-->
-    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva a spravuje súbory a priečinky. Explorer používa indexovanie vyhľadávania vo Windowse</system:String>
+    <system:String x:Key="plugin_explorer_plugin_name">Prieskumník</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva a spravuje súbory a priečinky. Prieskumník používa indexovanie vyhľadávania vo Windowse</system:String>
 
     <!--Context menu items-->
     <system:String x:Key="plugin_explorer_copypath">Kopírovať cestu</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopírovať</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Odstrániť</system:String>
-    <system:String x:Key="plugin_explorer_path">Umiestnenie:</system:String>
+    <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybrané</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otvorí umiestnenie, ktoré obsahuje súbor alebo priečinok</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť editorom:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť v editore:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Vylúčiť položku a jej podpriečinky z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Vylúčiť z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Otvoriť možnosti vyhľadávania vo Windowse</system:String>
@@ -58,9 +62,9 @@
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Úspešne pridané do Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Úspešne odstránené</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Úspešne odstránené z Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Pridať do Rýchleho prístupu, aby ho bolo možné otvoriť pomocou skratky akcie pluginu Explorer</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Pridať do Rýchleho prístupu, aby ho bolo možné otvoriť pomocou aktivačného príkazu pluginu Prieskumník</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Odstráni z Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstrániť z Rýchleho prístupu</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstráni {0} z Rýchleho prístupu</system:String>
 
 </ResourceDictionary>

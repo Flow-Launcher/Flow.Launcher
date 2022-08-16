@@ -9,6 +9,8 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using System.Globalization;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -94,9 +96,13 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            UpdatePluginMetadataTranslations();
             Settings.Language = language.LanguageCode;
-
+            CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
+            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+            _ = Task.Run(() =>
+            {
+                UpdatePluginMetadataTranslations();
+            });
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
@@ -176,6 +182,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
                 {

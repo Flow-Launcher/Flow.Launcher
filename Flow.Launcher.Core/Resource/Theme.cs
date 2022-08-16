@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -85,10 +85,13 @@ namespace Flow.Launcher.Core.Resource
 
                 Settings.Theme = theme;
 
+                // reload all resources even if the theme itself hasn't changed in order to pickup changes
+                // to things like fonts
+                UpdateResourceDictionary(GetResourceDictionary());
+
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
-                    UpdateResourceDictionary(GetResourceDictionary());
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
@@ -99,7 +102,7 @@ namespace Flow.Launcher.Core.Resource
 
                 SetBlurForWindow();
             }
-            catch (DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
@@ -109,7 +112,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 return false;
             }
-            catch (XamlParseException e)
+            catch (XamlParseException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
@@ -189,22 +192,11 @@ namespace Flow.Launcher.Core.Resource
                     new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
-
+            /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
-
-            var width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
-                .Select(x => x.Value).FirstOrDefault();
-
-            if (width == null)
-            {
-                windowStyle = dict["BaseWindowStyle"] as Style;
-
-                width = windowStyle?.Setters.OfType<Setter>().Where(x => x.Property.Name == "Width")
-                .Select(x => x.Value).FirstOrDefault();
-            }
-
+            var width = Settings.WindowSize;
+            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
             mainWindowWidth = (double)width;
-
             return dict;
         }
 
@@ -375,8 +367,6 @@ namespace Flow.Launcher.Core.Resource
         {
             var windowHelper = new WindowInteropHelper(w);
 
-            // this determines the width of the main query window
-            w.Width = mainWindowWidth;
             windowHelper.EnsureHandle();
 
             var accent = new AccentPolicy { AccentState = state };

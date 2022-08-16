@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -66,14 +66,9 @@ namespace Flow.Launcher.Plugin.Sys
                 if (score > 0)
                 {
                     c.Score = score;
+
                     if (score == titleMatch.Score)
-                    {
                         c.TitleHighlightData = titleMatch.MatchData;
-                    }
-                    else
-                    {
-                        c.SubTitleHighlightData = subTitleMatch.MatchData;
-                    }
 
                     results.Add(c);
                 }
@@ -190,8 +185,8 @@ namespace Flow.Launcher.Plugin.Sys
                         var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
                         info.WindowStyle = ProcessWindowStyle.Hidden;
                         info.UseShellExecute = true;
-                        
-                        Process.Start(info);
+
+                        ShellCommand.Execute(info);
                         
                         return true;
                     }
@@ -275,11 +270,12 @@ namespace Flow.Launcher.Plugin.Sys
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Application.Current.MainWindow.Hide();
 
-                        context.API.ReloadAllPluginData().ContinueWith(_ =>
+                        _ = context.API.ReloadAllPluginData().ContinueWith(_ =>
                             context.API.ShowMsg(
                                 context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
                                 context.API.GetTranslation(
-                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")));
+                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")),
+                            System.Threading.Tasks.TaskScheduler.Current);
                         
                         return true;
                     }
@@ -304,7 +300,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-                        FilesFolders.OpenPath(logPath);
+                        context.API.OpenDirectory(logPath);
                         return true;
                     }
                 },
@@ -315,7 +311,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        SearchWeb.NewTabInBrowser(Constant.Documentation);
+                        context.API.OpenUrl(Constant.Documentation);
                         return true;
                     }
                 },
@@ -326,7 +322,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        FilesFolders.OpenPath(DataLocation.DataDirectory());
+                        context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 }

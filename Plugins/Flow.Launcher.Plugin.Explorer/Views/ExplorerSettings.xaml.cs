@@ -29,6 +29,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             this.viewModel = viewModel;
 
+            DataContext = viewModel;
+
             lbxAccessLinks.ItemsSource = this.viewModel.Settings.QuickAccessLinks;
 
             lbxExcludedPaths.ItemsSource = this.viewModel.Settings.IndexSearchExcludedSubdirectoryPaths;
@@ -60,9 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
 
-            btnDelete.Visibility = Visibility.Hidden;
-            btnEdit.Visibility = Visibility.Hidden;
-            btnAdd.Visibility = Visibility.Hidden;
+            SetButtonVisibilityToHidden();
 
             if (expAccessLinks.IsExpanded || expExcludedPaths.IsExpanded || expActionKeywords.IsExpanded)
             {
@@ -123,8 +123,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void expActionKeywords_Collapsed(object sender, RoutedEventArgs e)
         {
-            if (!expActionKeywords.IsExpanded)
-                expActionKeywords.Height = double.NaN;
+            expActionKeywords.Height = double.NaN;
+            SetButtonVisibilityToHidden();
         }
 
         private void expAccessLinks_Click(object sender, RoutedEventArgs e)
@@ -143,8 +143,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void expAccessLinks_Collapsed(object sender, RoutedEventArgs e)
         {
-            if (!expAccessLinks.IsExpanded)
-                expAccessLinks.Height = double.NaN;
+            expAccessLinks.Height = double.NaN;
+            SetButtonVisibilityToHidden();
         }
 
         private void expExcludedPaths_Click(object sender, RoutedEventArgs e)
@@ -159,6 +159,11 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 expActionKeywords.IsExpanded = false;
 
             RefreshView();
+        }
+
+        private void expExcludedPaths_Collapsed(object sender, RoutedEventArgs e)
+        {
+            SetButtonVisibilityToHidden();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -309,6 +314,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             viewModel.OpenWindowsIndexingOptions();
         }
+
+        public void SetButtonVisibilityToHidden()
+        {
+            btnDelete.Visibility = Visibility.Hidden;
+            btnEdit.Visibility = Visibility.Hidden;
+            btnAdd.Visibility = Visibility.Hidden;
+        }
     }
 
     public class ActionKeywordView
@@ -327,7 +339,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
         public string Description { get; private init; }
-        public string Color => Enabled ? "Black" : "Gray";
 
         internal Settings.ActionKeyword KeywordProperty { get; }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +11,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Core.Plugin
@@ -41,14 +40,6 @@ namespace Flow.Launcher.Core.Plugin
                 var milliseconds = Stopwatch.Debug(
                     $"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
                     {
-#if DEBUG
-                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
-                        var assembly = assemblyLoader.LoadAssemblyAndDependencies();
-                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
-                            typeof(IAsyncPlugin));
-
-                        var plugin = Activator.CreateInstance(type) as IAsyncPlugin;
-#else
                         Assembly assembly = null;
                         IAsyncPlugin plugin = null;
 
@@ -62,6 +53,12 @@ namespace Flow.Launcher.Core.Plugin
 
                             plugin = Activator.CreateInstance(type) as IAsyncPlugin;
                         }
+#if DEBUG
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
+#else
                         catch (Exception e) when (assembly == null)
                         {
                             Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
@@ -79,6 +76,7 @@ namespace Flow.Launcher.Core.Plugin
                             Log.Exception($"|PluginsLoader.DotNetPlugins|The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
                         }
 #endif
+
                         if (plugin == null)
                         {
                             erroredPlugins.Add(metadata.Name);
@@ -98,7 +96,7 @@ namespace Flow.Launcher.Core.Plugin
                                    + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
                                    + "errored and cannot be loaded:";
 
-                Task.Run(() =>
+                _ = Task.Run(() =>
                 {
                     MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +

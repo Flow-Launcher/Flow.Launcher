@@ -30,7 +30,20 @@ namespace Flow.Launcher.Plugin.Program.Views
         public bool EnableDescription
         {
             get => _settings.EnableDescription;
-            set => _settings.EnableDescription = value;
+            set
+            {
+                Main.ResetCache();
+                _settings.EnableDescription = value;
+            }
+        }
+        public bool HideAppsPath
+        {
+            get => _settings.HideAppsPath;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideAppsPath = value;
+            }
         }
 
         public bool EnableRegistrySource
@@ -105,9 +118,8 @@ namespace Flow.Launcher.Plugin.Program.Views
         private async void ReIndexing()
         {
             ViewRefresh();
-
             indexingPanel.Visibility = Visibility.Visible;
-            await Main.IndexPrograms();
+            await Main.IndexProgramsAsync();
             indexingPanel.Visibility = Visibility.Hidden;
         }
 
@@ -346,16 +358,6 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 btnProgramSourceStatus.Content = "Enable";
             }
-        }
-
-        private void CustomizeExplorer(object sender, TextChangedEventArgs e)
-        {
-            _settings.CustomizedExplorer = CustomizeExplorerBox.Text;
-        }
-
-        private void CustomizeExplorerArgs(object sender, TextChangedEventArgs e)
-        {
-            _settings.CustomizedArgs = CustomizeArgsBox.Text;
         }
     }
 }

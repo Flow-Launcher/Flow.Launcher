@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             }
             return bookmarks;
         }
-        
+
         protected List<Bookmark> LoadBookmarksFromFile(string path, string source)
         {
             if (!File.Exists(path))
@@ -37,14 +37,17 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 return new();
             foreach (var folder in rootElement.EnumerateObject())
             {
-                EnumerateFolderBookmark(folder.Value, bookmarks, source);
+                if (folder.Value.ValueKind == JsonValueKind.Object)
+                    EnumerateFolderBookmark(folder.Value, bookmarks, source);
             }
             return bookmarks;
         }
 
         private void EnumerateFolderBookmark(JsonElement folderElement, List<Bookmark> bookmarks, string source)
         {
-            foreach (var subElement in folderElement.GetProperty("children").EnumerateArray())
+            if (!folderElement.TryGetProperty("children", out var childrenElement))
+                return;
+            foreach (var subElement in childrenElement.EnumerateArray())
             {
                 switch (subElement.GetProperty("type").GetString())
                 {

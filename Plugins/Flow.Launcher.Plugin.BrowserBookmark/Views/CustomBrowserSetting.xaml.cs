@@ -31,20 +31,26 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             };
         }
 
-        private void ConfirmEditCustomBrowser(object sender, RoutedEventArgs e)
+        private void ConfirmCancelEditCustomBrowser(object sender, RoutedEventArgs e)
         {
-            if (DataContext is CustomBrowser editedBrowser)
+            if (DataContext is CustomBrowser editBrowser && e.Source is Button button)
             {
-                currentCustomBrowser.Name = editedBrowser.Name;
-                currentCustomBrowser.DataDirectoryPath = editedBrowser.DataDirectoryPath;
+                if (button.Name == "btnConfirm")
+                {
+                    currentCustomBrowser.Name = editBrowser.Name;
+                    currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
+                    Close();
+                }
             }
+
             Close();
         }
+
         private void WindowKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                ConfirmEditCustomBrowser(sender, e);
+                ConfirmCancelEditCustomBrowser(sender, e);
             }
         }
     }

@@ -1,0 +1,12 @@
+{
+  "ID": "5043CETYU6A748679OPA02D27D99677A",
+  "ActionKeyword": "*",
+  "Description": "Search settings inside Control Panel and Settings App",
+  "Name": "Windows Settings",
+  "Author": "TobiasSekan",
+  "Version": "2.1.0",
+  "Language": "csharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+  "ExecuteFileName": "Flow.Launcher.Plugin.WindowsSettings.dll",
+  "IcoPath": "Images\\WindowsSettings.light.png"
+}

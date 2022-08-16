@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
@@ -20,7 +19,8 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.Windows.Threading;
+using System.IO;
+using System.Collections.Specialized;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -61,6 +61,13 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = new Query();
 
             _settings = settings;
+            _settings.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(Settings.WindowSize))
+                {
+                    OnPropertyChanged(nameof(MainWindowWidth));
+                }
+            };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -108,7 +115,9 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
-            };
+            }
+
+            ;
 
             void continueAction(Task t)
             {
@@ -145,7 +154,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-
         private void InitializeKeyCommands()
         {
             EscCommand = new RelayCommand(_ =>
@@ -156,7 +164,18 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    MainWindowVisibility = Visibility.Collapsed;
+                    Hide();
+                }
+            });
+
+            ClearQueryCommand = new RelayCommand(_ =>
+            {
+                if (!string.IsNullOrEmpty(QueryText))
+                {
+                    ChangeQueryText(string.Empty);
+
+                    // Push Event to UI SystemQuery has changed
+                    //OnPropertyChanged(nameof(SystemQueryText));
                 }
             });
 
@@ -172,41 +191,80 @@ namespace Flow.Launcher.ViewModel
 
             StartHelpCommand = new RelayCommand(_ =>
             {
-                SearchWeb.NewTabInBrowser("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
-
-            OpenResultCommand = new RelayCommand(index =>
+            OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
+            OpenResultCommand = new RelayCommand(async index =>
             {
                 var results = SelectedResults;
 
                 if (index != null)
                 {
-                    results.SelectedIndex = int.Parse(index.ToString());
+                    results.SelectedIndex = int.Parse(index.ToString()!);
                 }
 
                 var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result == null)
                 {
-                    bool hideWindow = result.Action != null && result.Action(new ActionContext
-                    {
-                        SpecialKeyState = GlobalHotkey.Instance.CheckModifiers()
-                    });
-
-                    if (hideWindow)
-                    {
-                        MainWindowVisibility = Visibility.Collapsed;
-                    }
-
-                    if (SelectedIsFromQueryResults())
-                    {
-                        _userSelectedRecord.Add(result);
-                        _history.Add(result.OriginQuery.RawQuery);
-                    }
-                    else
-                    {
-                        SelectedResults = Results;
-                    }
+                    return;
                 }
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
+
+                if (hideWindow)
+                {
+                    Hide();
+                }
+
+                if (SelectedIsFromQueryResults())
+                {
+                    _userSelectedRecord.Add(result);
+                    _history.Add(result.OriginQuery.RawQuery);
+                }
+                else
+                {
+                    SelectedResults = Results;
+                }
+            });
+
+            AutocompleteQueryCommand = new RelayCommand(_ =>
+            {
+                var result = SelectedResults.SelectedItem?.Result;
+                if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
+                {
+                    var autoCompleteText = result.Title;
+
+                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
+                    {
+                        autoCompleteText = result.AutoCompleteText;
+                    }
+                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                    {
+                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
+                    }
+
+                    var specialKeyState = GlobalHotkey.CheckModifiers();
+                    if (specialKeyState.ShiftPressed)
+                    {
+                        autoCompleteText = result.SubTitle;
+                    }
+
+                    ChangeQueryText(autoCompleteText);
+                }
+            });
+
+            BackspaceCommand = new RelayCommand(index =>
+            {
+                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+
+                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+                var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
+
+                var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
+
+                ChangeQueryText($"{actionKeyword}{path}");
             });
 
             LoadContextMenuCommand = new RelayCommand(_ =>
@@ -239,23 +297,18 @@ namespace Flow.Launcher.ViewModel
 
             ReloadPluginDataCommand = new RelayCommand(_ =>
             {
-                var msg = new Msg
-                {
-                    Owner = Application.Current.MainWindow
-                };
+                Hide();
 
-                MainWindowVisibility = Visibility.Collapsed;
-
-                PluginManager
-                    .ReloadData()
+                _ = PluginManager
+                    .ReloadDataAsync()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            msg.Show(
+                            Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
-                        }))
+                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
+                                );
+                        }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
         }
@@ -265,11 +318,14 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public ResultsViewModel Results { get; private set; }
+        
         public ResultsViewModel ContextMenu { get; private set; }
+        
         public ResultsViewModel History { get; private set; }
 
-        private string _queryText;
+        public bool GameModeStatus { get; set; }
 
+        private string _queryText;
         public string QueryText
         {
             get => _queryText;
@@ -287,10 +343,13 @@ namespace Flow.Launcher.ViewModel
         /// <param name="queryText"></param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            if (QueryText!=queryText) 
+            if (QueryText != queryText)
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
             }
             else if (reQuery)
             {
@@ -343,10 +402,21 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Visibility ProgressBarVisibility { get; set; }
-
         public Visibility MainWindowVisibility { get; set; }
+        public double MainWindowOpacity { get; set; } = 1;
+
+        // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
+        // because it is more accurate and reliable representation than using Visibility as a condition check
+        public bool MainWindowVisibilityStatus { get; set; } = true;
+
+        public Visibility SearchIconVisibility { get; set; }
+
+        public double MainWindowWidth => _settings.WindowSize;
+
+        public string PluginIconPath { get; set; } = null;
 
         public ICommand EscCommand { get; set; }
+        public ICommand BackspaceCommand { get; set; }
         public ICommand SelectNextItemCommand { get; set; }
         public ICommand SelectPrevItemCommand { get; set; }
         public ICommand SelectNextPageCommand { get; set; }
@@ -356,7 +426,13 @@ namespace Flow.Launcher.ViewModel
         public ICommand LoadContextMenuCommand { get; set; }
         public ICommand LoadHistoryCommand { get; set; }
         public ICommand OpenResultCommand { get; set; }
+        public ICommand OpenSettingCommand { get; set; }
         public ICommand ReloadPluginDataCommand { get; set; }
+        public ICommand ClearQueryCommand { get; private set; }
+
+        public ICommand CopyToClipboard { get; set; }
+
+        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -476,6 +552,8 @@ namespace Flow.Launcher.ViewModel
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
+                PluginIconPath = null;
+                SearchIconVisibility = Visibility.Visible;
                 return;
             }
 
@@ -495,7 +573,7 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -503,6 +581,18 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            if (plugins.Count == 1)
+            {
+                PluginIconPath = plugins.Single().Metadata.IcoPath;
+                SearchIconVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                PluginIconPath = null;
+                SearchIconVisibility = Visibility.Visible;
+            }
+            
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -575,7 +665,7 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query)
         {
-            if (_lastQuery.ActionKeyword != query.ActionKeyword)
+            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 Results.Clear();
             }
@@ -594,7 +684,7 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg("Success");
+                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
                         return false;
                     }
                 };
@@ -630,7 +720,7 @@ namespace Flow.Launcher.ViewModel
             var plugin = translator.GetTranslation("plugin");
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
-            var subtitle = $"{author}: {metadata.Author}, {website}: {metadata.Website} {version}: {metadata.Version}";
+            var subtitle = $"{author} {metadata.Author}";
 
             var menu = new Result
             {
@@ -638,7 +728,11 @@ namespace Flow.Launcher.ViewModel
                 IcoPath = icon,
                 SubTitle = subtitle,
                 PluginDirectory = metadata.PluginDirectory,
-                Action = _ => false
+                Action = _ =>
+                {
+                    App.API.OpenUrl(metadata.Website);
+                    return true;
+                }
             };
             return menu;
         }
@@ -668,19 +762,68 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
-        internal void ToggleFlowLauncher()
+        public void ToggleFlowLauncher()
         {
-            if (MainWindowVisibility != Visibility.Visible)
+            if (!MainWindowVisibilityStatus)
             {
-                MainWindowVisibility = Visibility.Visible;
+                Show();
             }
             else
             {
-                MainWindowVisibility = Visibility.Collapsed;
+                Hide();
             }
         }
 
+        public void Show()
+        {
+            MainWindowVisibility = Visibility.Visible;
+
+            MainWindowVisibilityStatus = true;
+
+            MainWindowOpacity = 1;
+        }
+
+        public async void Hide()
+        {
+            // Trick for no delay
+            MainWindowOpacity = 0;
+
+            switch (_settings.LastQueryMode)
+            {
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    await Task.Delay(100); //Time for change to opacity
+                    break;
+                case LastQueryMode.Preserved:
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
+                    LastQuerySelected = true;
+                    break;
+                case LastQueryMode.Selected:
+                    if (_settings.UseAnimation)
+                        await Task.Delay(100);
+                    LastQuerySelected = false;
+                    break;
+                default:
+                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+            }
+
+            MainWindowVisibilityStatus = false;
+            MainWindowVisibility = Visibility.Collapsed;
+        }
+
         #endregion
+
+
+        /// <summary>
+        /// Checks if Flow Launcher should ignore any hotkeys
+        /// </summary>
+        public bool ShouldIgnoreHotkeys()
+        {
+            return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+        }
+
+
 
         #region Public Methods
 
@@ -734,6 +877,52 @@ namespace Flow.Launcher.ViewModel
             }
 
             Results.AddResults(resultsForUpdates, token);
+        }
+
+        /// <summary>
+        /// This is the global copy method for an individual result. If no text is passed, 
+        /// the method will work out what is to be copied based on the result, so plugin can offer the text 
+        /// to be copied via the result model. If the text is a directory/file path, 
+        /// then actual file/folder will be copied instead. 
+        /// The result's subtitle text is the default text to be copied
+        /// </summary>
+        public void ResultCopy(string stringToCopy)
+        {
+            if (string.IsNullOrEmpty(stringToCopy))
+            {
+                var result = Results.SelectedItem?.Result;
+                if (result != null)
+                {
+                    string copyText = string.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
+                    var isFile = File.Exists(copyText);
+                    var isFolder = Directory.Exists(copyText);
+                    if (isFile || isFolder)
+                    {
+                        var paths = new StringCollection();
+                        paths.Add(copyText);
+
+                        Clipboard.SetFileDropList(paths);
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                +" " 
+                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("completedSuccessfully"));
+                    }
+                    else
+                    {
+                        Clipboard.SetDataObject(copyText.ToString());
+                        App.API.ShowMsg(
+                            App.API.GetTranslation("copy") 
+                                + " " 
+                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("completedSuccessfully"));
+                    }
+                }
+
+                return;
+            }
+
+            Clipboard.SetDataObject(stringToCopy);
         }
 
         #endregion

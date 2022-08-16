@@ -1,7 +1,8 @@
-using Flow.Launcher.Plugin.SharedModels;
+﻿using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -28,6 +29,21 @@ namespace Flow.Launcher.Plugin
         /// Restart Flow Launcher
         /// </summary>
         void RestartApp();
+
+        /// <summary>
+        /// Run a shell command
+        /// </summary>
+        /// <param name="cmd">The command or program to run</param>
+        /// <param name="filename">the shell type to run, e.g. powershell.exe</param>
+        /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
+        /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
+        void ShellRun(string cmd, string filename = "cmd.exe");
+        
+        /// <summary>
+        /// Copy Text to clipboard
+        /// </summary>
+        /// <param name="text">Text to save on clipboard</param>
+        public void CopyToClipboard(string text);
 
         /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings
@@ -58,6 +74,11 @@ namespace Flow.Launcher.Plugin
         /// <param name="title">Message title</param>
         /// <param name="subTitle">Optional message subtitle</param>
         void ShowMsgError(string title, string subTitle = "");
+
+        /// <summary>
+        /// Show the MainWindow when hiding
+        /// </summary>
+        void ShowMainWindow();
 
         /// <summary>
         /// Show message box
@@ -99,7 +120,21 @@ namespace Flow.Launcher.Plugin
         /// Fired after global keyboard events
         /// if you want to hook something like Ctrl+R, you should use this event
         /// </summary>
+        [Obsolete("Unable to Retrieve correct return value")]
         event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        
+        /// <summary>
+        /// Register a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+        
+        /// <summary>
+        /// Remove a callback for Global Keyboard Event
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
+
 
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
@@ -129,6 +164,7 @@ namespace Flow.Launcher.Plugin
         /// Download the specific url to a cretain file path
         /// </summary>
         /// <param name="url">URL to download file</param>
+        /// <param name="filePath">path to save downloaded file</param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
@@ -144,7 +180,7 @@ namespace Flow.Launcher.Plugin
         /// Remove ActionKeyword for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
-        /// <param name="newActionKeyword">The actionkeyword that is supposed to be removed</param>
+        /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
         /// <summary>
@@ -185,5 +221,36 @@ namespace Flow.Launcher.Plugin
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
         void SaveSettingJsonStorage<T>() where T : new();
+
+        /// <summary>
+        /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
+        /// </summary>
+        /// <param name="DirectoryPath">Directory Path to open</param>
+        /// <param name="FileName">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileName = null);
+
+        /// <summary>
+        /// Opens the URL with the given Uri object. 
+        /// The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// </summary>
+        public void OpenUrl(Uri url, bool? inPrivate = null);
+
+        /// <summary>
+        /// Opens the URL with the given string. 
+        /// The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// Non-C# plugins should use this method.
+        /// </summary>
+        public void OpenUrl(string url, bool? inPrivate = null);
+
+        /// <summary>
+        /// Opens the application URI with the given Uri object, e.g. obsidian://search-query-example
+        /// </summary>
+        public void OpenAppUri(Uri appUri);
+
+        /// <summary>
+        /// Opens the application URI with the given string, e.g. obsidian://search-query-example
+        /// Non-C# plugins should use this method
+        /// </summary>
+        public void OpenAppUri(string appUri);
     }
 }

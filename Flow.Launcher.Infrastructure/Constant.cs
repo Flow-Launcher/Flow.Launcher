@@ -21,7 +21,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string PreinstalledDirectory = Path.Combine(ProgramDirectory, Plugins);
         public const string Issue = "https://github.com/Flow-Launcher/Flow.Launcher/issues/new";
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
-        public const string Documentation = "https://flow-launcher.github.io/docs/#/usage-tips";
+        public const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
 
         public static readonly int ThumbnailSize = 64;
         private static readonly string ImagesDirectory = Path.Combine(ProgramDirectory, "Images");
@@ -33,10 +33,18 @@ namespace Flow.Launcher.Infrastructure
 
         public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.svg";
 
-        public const string DefaultTheme = "Darker";
+        public const string DefaultTheme = "Win11Light";
+
+        public const string Light = "Light";
+        public const string Dark = "Dark";
+        public const string System = "System";
 
         public const string Themes = "Themes";
+        public const string Settings = "Settings";
+        public const string Logs = "Logs";
 
-        public const string Website = "https://flow-launcher.github.io";
+        public const string Website = "https://flowlauncher.com";
+        public const string GitHub = "https://github.com/Flow-Launcher/Flow.Launcher";
+        public const string Docs = "https://flowlauncher.com/docs";
     }
 }

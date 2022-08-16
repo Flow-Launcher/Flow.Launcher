@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         private List<Bookmark> LoadChromeBookmarks()
         {
             var bookmarks = new List<Bookmark>();
-            String platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             bookmarks.AddRange(LoadBookmarks(Path.Combine(platformPath, @"Google\Chrome\User Data"), "Google Chrome"));
             bookmarks.AddRange(LoadBookmarks(Path.Combine(platformPath, @"Google\Chrome SxS\User Data"), "Google Chrome Canary"));
             bookmarks.AddRange(LoadBookmarks(Path.Combine(platformPath, @"Chromium\User Data"), "Chromium"));

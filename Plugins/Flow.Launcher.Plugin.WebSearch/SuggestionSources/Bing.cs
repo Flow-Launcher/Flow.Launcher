@@ -15,14 +15,14 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     class Bing : SuggestionSource
     {
-        public override async Task<List<string>> Suggestions(string query, CancellationToken token)
+        public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
         {
 
             try
             {
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
                 
-                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+                using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
 
                 using var json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token));
                 var root = json.RootElement.GetProperty("AS");
@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 
 
             }
-            catch (Exception e) when (e is HttpRequestException || e.InnerException is TimeoutException)
+            catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {
                 Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
                 return null;

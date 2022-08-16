@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -40,7 +40,7 @@ namespace Flow.Launcher.Core
                     api.ShowMsg(api.GetTranslation("pleaseWait"),
                         api.GetTranslation("update_flowlauncher_update_check"));
 
-                using var updateManager = await GitHubUpdateManager(GitHubRepository).ConfigureAwait(false);
+                using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
                 var newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
@@ -91,8 +91,9 @@ namespace Flow.Launcher.Core
             catch (Exception e) when (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
             {
                 Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
-                api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
-                    api.GetTranslation("update_flowlauncher_check_connection"));
+                if (!silentUpdate)
+                    api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
+                        api.GetTranslation("update_flowlauncher_check_connection"));
             }
             finally
             {
@@ -114,7 +115,7 @@ namespace Flow.Launcher.Core
         }
 
         /// https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
-        private async Task<UpdateManager> GitHubUpdateManager(string repository)
+        private async Task<UpdateManager> GitHubUpdateManagerAsync(string repository)
         {
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
@@ -124,7 +125,7 @@ namespace Flow.Launcher.Core
             var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
-            
+
             var client = new WebClient
             {
                 Proxy = Http.WebProxy

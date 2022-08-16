@@ -9,6 +9,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete.
     /// <summary>
     /// Stroage object using binary data
     /// Normally, it has better performance, but not readable
@@ -113,4 +114,5 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
         }
     }
+#pragma warning restore SYSLIB0011
 }

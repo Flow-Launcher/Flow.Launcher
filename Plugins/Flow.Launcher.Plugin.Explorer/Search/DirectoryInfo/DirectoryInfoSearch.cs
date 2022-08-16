@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -58,8 +58,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             {
                 var directoryInfo = new System.IO.DirectoryInfo(path);
 
-                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption)
-                )
+                foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption))
                 {
                     if (fileSystemInfo is System.IO.DirectoryInfo)
                     {
@@ -76,8 +75,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                Log.Exception("Flow.Plugin.Explorer.", nameof(DirectoryInfoSearch), e);
-                results.Add(new Result {Title = e.Message, Score = 501});
+                Log.Exception(nameof(DirectoryInfoSearch), "Error occured while searching path", e);
+                
+                results.Add(
+                    new Result
+                    {
+                        Title = string.Format(SearchManager.Context.API.GetTranslation(
+                                                "plugin_explorer_directoryinfosearch_error"),
+                                                e.Message),
+                        Score = 501, 
+                        IcoPath = Constants.ExplorerIconImagePath
+                    });
 
                 return results;
             }

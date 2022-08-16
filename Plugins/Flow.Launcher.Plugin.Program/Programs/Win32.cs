@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var result = new Result
             {
                 Title = title,
-                SubTitle = LnkResolvedPath ?? FullPath,
+                SubTitle = Main._settings.HideAppsPath ? string.Empty : LnkResolvedPath ?? FullPath,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
@@ -177,20 +177,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
                     {
-                        var args = !string.IsNullOrWhiteSpace(Main._settings.CustomizedArgs)
-                            ? Main._settings.CustomizedArgs
-                                .Replace("%s", $"\"{ParentDirectory}\"")
-                                .Replace("%f", $"\"{FullPath}\"")
-                            : Main._settings.CustomizedExplorer == Settings.Explorer
-                                ? $"/select,\"{FullPath}\""
-                                : Settings.ExplorerArgs;
-
-                        Main.StartProcess(Process.Start,
-                            new ProcessStartInfo(
-                                !string.IsNullOrWhiteSpace(Main._settings.CustomizedExplorer)
-                                    ? Main._settings.CustomizedExplorer
-                                    : Settings.Explorer,
-                                args));
+                        Main.Context.API.OpenDirectory(ParentDirectory, FullPath);
 
                         return true;
                     },
@@ -530,9 +517,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return programs.Concat(autoIndexPrograms).Distinct().ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
 #endif
 

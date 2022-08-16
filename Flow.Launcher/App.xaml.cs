@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,20 +69,20 @@ namespace Flow.Launcher
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
-                HotKeyMapper.Initialize(_mainVM);
-
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePlugins(API);
+                await PluginManager.InitializePluginsAsync(API);
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
+                
+                HotKeyMapper.Initialize(_mainVM);
 
                 // happlebao todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
@@ -100,20 +100,26 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-
-                _mainVM.MainWindowVisibility = _settings.HideOnStartup ? Visibility.Hidden : Visibility.Visible;
                 Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
 
-
         private void AutoStartup()
         {
-            if (_settings.StartFlowLauncherOnSystemStartup)
+            // we try to enable auto-startup on first launch, or reenable if it was removed
+            // but the user still has the setting set
+            if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
             {
-                if (!SettingWindow.StartupSet())
+                try
                 {
-                    SettingWindow.SetStartup();
+                    Helper.AutoStartup.Enable();
+                }
+                catch (Exception e)
+                {
+                    // but if it fails (permissions, etc) then don't keep retrying
+                    // this also gives the user a visual indication in the Settings widget
+                    _settings.StartFlowLauncherOnSystemStartup = false;
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }
@@ -155,7 +161,6 @@ namespace Flow.Launcher
             DispatcherUnhandledException += ErrorReporting.DispatcherUnhandledException;
         }
 
-
         /// <summary>
         /// let exception throw as normal is better for Debug
         /// </summary>
@@ -178,7 +183,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Visibility = Visibility.Visible;
+            Current.MainWindow.Show();
         }
     }
 }

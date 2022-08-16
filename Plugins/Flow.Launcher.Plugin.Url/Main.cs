@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -68,18 +68,11 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                if (_settings.OpenInNewBrowserWindow)
-                                {
-                                    raw.NewBrowserWindow(_settings.BrowserPath);
-                                }
-                                else
-                                {
-                                    raw.NewTabInBrowser(_settings.BrowserPath);
-                                }
+                                context.API.OpenUrl(raw);
                                 
                                 return true;
                             }
-                            catch(Exception ex)
+                            catch(Exception)
                             {
                                 context.API.ShowMsg(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_canot_open_url"), raw));
                                 return false;

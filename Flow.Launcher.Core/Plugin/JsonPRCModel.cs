@@ -43,14 +43,18 @@ namespace Flow.Launcher.Core.Plugin
         [JsonPropertyName("result")]
         public new List<JsonRPCResult> Result { get; set; }
 
+        public Dictionary<string, object> SettingsChange { get; set; }
+
         public string DebugMessage { get; set; }
     }
-    
+
     public class JsonRPCRequestModel
     {
         public string Method { get; set; }
 
         public object[] Parameters { get; set; }
+
+        public Dictionary<string, object> Settings { get; set; }
 
         private static readonly JsonSerializerOptions options = new()
         {
@@ -86,5 +90,7 @@ namespace Flow.Launcher.Core.Plugin
     public class JsonRPCResult : Result
     {
         public JsonRPCClientRequestModel JsonRPCAction { get; set; }
+
+        public Dictionary<string, object> SettingsChange { get; set; }
     }
 }
