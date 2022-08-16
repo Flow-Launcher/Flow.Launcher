@@ -27,15 +27,11 @@ body:
       label: To Reproduce
       description: Steps to reproduce the behavior.
       value: >
-        ```markdown
-
         1. ...
 
         2. ...
 
         3. ...
-
-        ```
 
   - type: textarea
     attributes:
