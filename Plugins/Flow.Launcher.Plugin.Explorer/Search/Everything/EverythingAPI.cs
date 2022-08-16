@@ -2,6 +2,8 @@
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -15,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private const int BufferSize = 4096;
 
-        private static readonly object syncObject = new object();
+        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new StringBuilder(BufferSize);
 
@@ -72,17 +74,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         }
 
         /// <summary>
-        /// Resets this instance.
-        /// </summary>
-        private static void Reset()
-        {
-            lock (syncObject)
-            {
-                EverythingApiDllImport.Everything_Reset();
-            }
-        }
-
-        /// <summary>
         /// Checks whether the sort option is Fast Sort.
         /// </summary>
         public static bool IsFastSortOption(SortOption sortOption)
@@ -99,24 +90,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// <summary>
         /// Searches the specified key word and reset the everything API afterwards
         /// </summary>
-        /// <param name="keyword">The key word.</param>
+        /// <param name="option">Search Criteria</param>
         /// <param name="token">when cancelled the current search will stop and exit (and would not reset)</param>
-        /// <param name="parentPath">Search Within a parent folder</param>
-        /// <param name="recursive">Search Within sub folder of the parent folder</param>
-        /// <param name="sortOption">Sort By</param>
-        /// <param name="offset">The offset.</param>
-        /// <param name="maxCount">The max count.</param>
-        /// <returns></returns>
-        public static IEnumerable<SearchResult> SearchAsync(EverythingSearchOption option,
-            CancellationToken token)
+        /// <returns>An IAsyncEnumerable that will enumerate all results searched by the specific query and option</returns>
+        public static async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option,
+            [EnumeratorCancellation] CancellationToken token)
         {
             if (option.Offset < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
 
             if (option.MaxCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
-
-            lock (syncObject)
+            
+            await _semaphore.WaitAsync(token);
+            
+            if (token.IsCancellationRequested)
+                yield break;
+            
+            try
             {
                 if (option.Keyword.StartsWith("@"))
                 {
@@ -140,24 +131,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
 
-                if (token.IsCancellationRequested)
-                {
-                    return null;
-                }
+                if (token.IsCancellationRequested) yield break;
+
 
 
                 if (!EverythingApiDllImport.Everything_QueryW(true))
                 {
                     CheckAndThrowExceptionOnError();
-                    return null;
+                    yield break;
                 }
 
-                var results = new List<SearchResult>();
                 for (var idx = 0; idx < EverythingApiDllImport.Everything_GetNumResults(); ++idx)
                 {
                     if (token.IsCancellationRequested)
                     {
-                        return null;
+                        yield break;
                     }
 
                     EverythingApiDllImport.Everything_GetResultFullPathNameW(idx, buffer, BufferSize);
@@ -170,12 +158,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                             ResultType.Volume
                     };
 
-                    results.Add(result);
+                    yield return result;
                 }
-
-                Reset();
-
-                return results;
+            }
+            finally
+            {
+                EverythingApiDllImport.Everything_Reset();
+                _semaphore.Release();
             }
         }
 
@@ -197,6 +186,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new MemoryErrorException();
                 case StateCode.RegisterClassExError:
                     throw new RegisterClassExException();
+                case StateCode.OK:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

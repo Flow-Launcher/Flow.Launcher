@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -19,66 +20,47 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         // Reserved keywords in oleDB
         private const string ReservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
 
-        private static async Task<List<SearchResult>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, CancellationToken token)
+        private static async IAsyncEnumerable<SearchResult> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, [EnumeratorCancellation] CancellationToken token)
         {
-            var results = new List<SearchResult>();
+            await using var conn = new OleDbConnection(connectionString);
+            await conn.OpenAsync(token);
+            token.ThrowIfCancellationRequested();
 
-            try
+            await using var command = new OleDbCommand(indexQueryString, conn);
+            // Results return as an OleDbDataReader.
+            await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+            token.ThrowIfCancellationRequested();
+
+            if (dataReaderResults is not { HasRows: true })
             {
-                await using var conn = new OleDbConnection(connectionString);
-                await conn.OpenAsync(token);
+                yield break;
+            }
+            while (await dataReaderResults.ReadAsync(token))
+            {
                 token.ThrowIfCancellationRequested();
-
-                await using var command = new OleDbCommand(indexQueryString, conn);
-                // Results return as an OleDbDataReader.
-                await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
-                token.ThrowIfCancellationRequested();
-
-                if (dataReaderResults is { HasRows: true })
+                if (dataReaderResults.GetValue(0) == DBNull.Value || dataReaderResults.GetValue(1) == DBNull.Value)
                 {
-                    while (await dataReaderResults.ReadAsync(token))
-                    {
-                        token.ThrowIfCancellationRequested();
-                        if (dataReaderResults.GetValue(0) != DBNull.Value && dataReaderResults.GetValue(1) != DBNull.Value)
-                        {
-                            // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
-                            var encodedFragmentPath = dataReaderResults
-                                .GetString(1)
-                                .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
-
-                            var path = new Uri(encodedFragmentPath).LocalPath;
-
-                            results.Add(new SearchResult()
-                            {
-                                FullPath = path,
-                                Type = dataReaderResults.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
-                                WindowsIndexed = true
-                            });
-                        }
-                    }
+                    continue;
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                // return empty result when cancelled
-                return results;
-            }
-            catch (InvalidOperationException e)
-            {
-                // Internal error from ExecuteReader(): Connection closed.
-                LogException("Internal error from ExecuteReader()", e);
-            }
-            catch (Exception e)
-            {
-                LogException("General error from performing index search", e);
+                // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
+                var encodedFragmentPath = dataReaderResults
+                    .GetString(1)
+                    .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+
+                var path = new Uri(encodedFragmentPath).LocalPath;
+
+                yield return new SearchResult()
+                {
+                    FullPath = path,
+                    Type = dataReaderResults.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                    WindowsIndexed = true
+                };
             }
 
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
-            return results;
         }
 
-        internal static async ValueTask<List<SearchResult>> WindowsIndexSearchAsync(
-            string searchString,
+        internal static IAsyncEnumerable<SearchResult> WindowsIndexSearchAsync(string searchString,
             Func<CSearchQueryHelper> createQueryHelper,
             Func<string, string> constructQuery,
             IEnumerable<AccessLink> exclusionList,
@@ -87,12 +69,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var regexMatch = Regex.Match(searchString, ReservedStringPattern);
 
             if (regexMatch.Success)
-                return new();
+                return AsyncEnumerable.Empty<SearchResult>();
 
             var constructedQuery = constructQuery(searchString);
 
-            return
-                await ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, token);
+            return ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, token);
         }
 
         private static void RemoveResultsInExclusionList(List<SearchResult> results, IReadOnlyList<AccessLink> exclusionList, CancellationToken token)

@@ -33,10 +33,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             {
                 var indexOfSeparator = search.LastIndexOf(Constants.DirectorySeperator);
 
-                incompleteName = search.Substring(indexOfSeparator + 1).ToLower();
+                incompleteName = search[(indexOfSeparator + 1)..].ToLower();
 
                 if (incompleteName.StartsWith(Constants.AllFilesFolderSearchWildcard))
-                    incompleteName = "*" + incompleteName.Substring(1);
+                    incompleteName = string.Concat("*", incompleteName.AsSpan(1));
             }
 
             incompleteName += "*";

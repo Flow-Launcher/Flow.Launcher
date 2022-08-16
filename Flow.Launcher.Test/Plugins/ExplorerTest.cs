@@ -7,6 +7,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,6 +45,7 @@ namespace Flow.Launcher.Test.Plugins
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\SomeFolder\\", "directory='file:C:\\SomeFolder\\'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
@@ -60,6 +62,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual: {result}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\' ORDER BY System.FileName")]
         [TestCase("C:\\SomeFolder\\", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder\\' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchTypeIsTopLevelDirectorySearch_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
@@ -76,10 +79,11 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\SomeFolder\\flow.launcher.sln", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
-            "FROM SystemIndex WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
-                                        "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033))" +
-                                        " AND directory='file:C:\\SomeFolder' ORDER BY System.FileName")]
+                                                       "FROM SystemIndex WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+                                                       "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033))" +
+                                                       " AND directory='file:C:\\SomeFolder' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
@@ -94,10 +98,11 @@ namespace Flow.Launcher.Test.Plugins
                 $"Expected string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
-
+        
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\SomeFolder\\SomeApp", "(System.FileName LIKE 'SomeApp%' " +
-                    "OR CONTAINS(System.FileName,'\"SomeApp*\"',1033))" +
-                    " AND directory='file:C:\\SomeFolder'")]
+                                             "OR CONTAINS(System.FileName,'\"SomeApp*\"',1033))" +
+                                             " AND directory='file:C:\\SomeFolder'")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryWhereRestrictionsShouldUseDirectoryString(
             string userSearchString, string expectedString)
         {
@@ -113,6 +118,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("scope='file:'")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString)
         {
@@ -125,9 +131,10 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" " +
-            "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
-                                        "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
+                                       "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+                                       "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
@@ -149,49 +156,8 @@ namespace Flow.Launcher.Test.Plugins
                 $"Expected query string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
-
-        [TestCase]
-        public async Task GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldContinueDirectoryInfoClassSearch()
-        {
-            // Given
-            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
-
-            // When
-            var results = await searchManager.TopLevelDirectorySearchBehaviourAsync(
-                                            MethodWindowsIndexSearchReturnsZeroResultsAsync,
-                                            MethodDirectoryInfoClassSearchReturnsTwoResults,
-                                            false,
-                                            new Query(),
-                                            "string not used",
-                                            default);
-
-            // Then
-            Assert.IsTrue(results.Count == 2,
-                $"Expected to have 2 results from DirectoryInfoClassSearch {Environment.NewLine} " +
-                $"Actual number of results is {results.Count} {Environment.NewLine}");
-        }
-
-        [TestCase]
-        public async Task GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
-        {
-            // Given
-            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
-
-            // When
-            var results = await searchManager.TopLevelDirectorySearchBehaviourAsync(
-                                            MethodWindowsIndexSearchReturnsZeroResultsAsync,
-                                            MethodDirectoryInfoClassSearchReturnsTwoResults,
-                                            true,
-                                            new Query(),
-                                            "string not used",
-                                            default);
-
-            // Then
-            Assert.IsTrue(results.Count == 0,
-                $"Expected to have 0 results because location is indexed {Environment.NewLine} " +
-                $"Actual number of results is {results.Count} {Environment.NewLine}");
-        }
-
+        
+        [SupportedOSPlatform("windows7.0")]
         [TestCase(@"some words", @"FREETEXT('some words')")]
         public void GivenWindowsIndexSearch_WhenQueryWhereRestrictionsIsForFileContentSearch_ThenShouldReturnFreeTextString(
             string querySearchString, string expectedString)
@@ -208,6 +174,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("some words", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
                     "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchForFileContent_ThenQueryShouldUseExpectedString(
@@ -233,7 +200,7 @@ namespace Flow.Launcher.Test.Plugins
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var result = searchManager.IsFileContentSearch(query.ActionKeyword);
+            var result = SearchManager.IsFileContentSearch(query.ActionKeyword);
 
             // Then
             Assert.IsTrue(result,
@@ -301,6 +268,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual path string is {returnedPath} {Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("c:\\SomeFolder\\>", "scope='file:c:\\SomeFolder'")]
         [TestCase("c:\\SomeFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' "
                                                + "OR CONTAINS(System.FileName,'\"SomeName*\"',1033)) AND "
@@ -319,6 +287,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("c:\\somefolder\\>somefile", "*somefile*")]
         [TestCase("c:\\somefolder\\somefile", "somefile*")]
         [TestCase("c:\\somefolder\\", "*")]
