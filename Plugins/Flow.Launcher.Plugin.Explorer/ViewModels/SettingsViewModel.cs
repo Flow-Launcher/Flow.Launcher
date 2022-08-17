@@ -395,6 +395,16 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public string EverythingInstalledPath
+        {
+            get => Settings.EverythingInstalledPath;
+            set
+            {
+                Settings.EverythingInstalledPath = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
 

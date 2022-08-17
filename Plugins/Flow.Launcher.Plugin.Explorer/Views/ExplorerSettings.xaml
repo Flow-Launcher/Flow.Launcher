@@ -1,5 +1,4 @@
-<UserControl
-    x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
+<UserControl x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,40 +12,49 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
-            <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
+        <DataTemplate x:Key="ListViewTemplateAccessLinks"
+            DataType="qa:AccessLink">
+            <TextBlock Margin="0,5,0,5"
+                Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
-        <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type views:ActionKeywordModel}">
+        <DataTemplate x:Key="ListViewActionKeywords"
+            DataType="{x:Type views:ActionKeywordModel}">
             <Grid>
-                <TextBlock
-                    Margin="0,5,0,0"
+                <TextBlock Margin="0,5,0,0"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding Description, Mode=OneTime}">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="True">
-                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                <Trigger Property="IsEnabled"
+                                    Value="True">
+                                    <Setter Property="Foreground"
+                                        Value="{DynamicResource Color05B}" />
                                 </Trigger>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Foreground" Value="{DynamicResource Color18B}" />
+                                <Trigger Property="IsEnabled"
+                                    Value="False">
+                                    <Setter Property="Foreground"
+                                        Value="{DynamicResource Color18B}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <TextBlock
-                    Margin="250,5,0,0"
+                <TextBlock Margin="250,5,0,0"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding Keyword}">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="True">
-                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                <Trigger Property="IsEnabled"
+                                    Value="True">
+                                    <Setter Property="Foreground"
+                                        Value="{DynamicResource Color05B}" />
                                 </Trigger>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Foreground" Value="{DynamicResource Color18B}" />
+                                <Trigger Property="IsEnabled"
+                                    Value="False">
+                                    <Setter Property="Foreground"
+                                        Value="{DynamicResource Color18B}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -61,10 +69,10 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Margin="20,35,0,0">
+        <StackPanel Grid.Row="0"
+            Margin="20,35,0,0">
             <StackPanel>
-                <Expander
-                    Margin="15"
+                <Expander Margin="15"
                     Header="{DynamicResource plugin_explorer_generalsetting_header}"
                     Expanded="SettingExpander_OnExpanded"
                     Collapsed="SettingExpander_OnCollapsed">
@@ -74,56 +82,47 @@
                                 <TextBlock Text="{Binding Description}" />
                             </DataTemplate>
                         </StackPanel.Resources>
-                        <CheckBox
-                            Margin="12,10,0,0"
+                        <CheckBox Margin="12,10,0,0"
                             Content="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch}"
                             IsChecked="{Binding UseWindowsIndexForDirectorySearch}"
                             ToolTip="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch_tooltip}" />
-                        <CheckBox
-                            Margin="12,10,0,0"
+                        <CheckBox Margin="12,10,0,0"
                             HorizontalAlignment="Left"
                             Content="{DynamicResource plugin_explorer_use_location_as_working_dir}"
                             IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
-                        <CheckBox
-                            Margin="12,10,0,0"
+                        <CheckBox Margin="12,10,0,0"
                             HorizontalAlignment="Left"
                             Content="{DynamicResource plugin_explorer_launch_hidden}"
                             IsChecked="{Binding Settings.LaunchHidden}" />
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="10,6,6,6"
+                            <TextBlock Margin="10,6,6,6"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{DynamicResource plugin_explorer_editor_path}" />
-                            <TextBox
-                                Margin="15"
+                            <TextBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 TextWrapping="NoWrap"
                                 MaxWidth="250"
                                 Text="{Binding EditorPath}" />
-                            <Button
-                                MinWidth="50"
+                            <Button MinWidth="50"
                                 HorizontalAlignment="Left"
                                 Margin="15"
                                 Command="{Binding OpenEditorPath}"
                                 Content="..." />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="10,6,6,6"
+                            <TextBlock Margin="10,6,6,6"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{DynamicResource plugin_explorer_shell_path}" />
-                            <TextBox
-                                Margin="15"
+                            <TextBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 TextWrapping="NoWrap"
                                 MaxWidth="250"
                                 Text="{Binding ShellPath}" />
-                            <Button
-                                MinWidth="50"
+                            <Button MinWidth="50"
                                 HorizontalAlignment="Left"
                                 Margin="15"
                                 Command="{Binding OpenShellPath}"
@@ -132,8 +131,7 @@
 
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Index Search Engine" />
-                            <ComboBox
-                                Margin="15"
+                            <ComboBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Width="250"
@@ -144,8 +142,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Content Search Engine" />
-                            <ComboBox
-                                Margin="15"
+                            <ComboBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Width="250"
@@ -156,8 +153,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Path Enumeration Engine" />
-                            <ComboBox
-                                Margin="15"
+                            <ComboBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Width="250"
@@ -167,78 +163,78 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button 
-                                Margin="15"
-                                Content="Open Window Index Option" 
-                                Click="btnOpenIndexingOptions_Click"/>
+                            <Button Margin="15"
+                                Content="Open Window Index Option"
+                                Click="btnOpenIndexingOptions_Click" />
                         </StackPanel>
                     </StackPanel>
                 </Expander>
-                <Expander
-                    Margin="15"
+                <Expander Margin="15"
                     Header="{DynamicResource plugin_explorer_everything_setting_header}"
                     Expanded="SettingExpander_OnExpanded"
                     Collapsed="SettingExpander_OnCollapsed">
-                    <DockPanel>
-                        <TextBlock
-                            Text="{DynamicResource plugin_explorer_everything_sort_option}"
-                            Margin="15" />
-                        <ComboBox
-                            DockPanel.Dock="Left"
-                            Width="200"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
-                            SelectedItem="{Binding Settings.SortOption}"
-                            SelectionChanged="EverythingSortOptionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <TextBlock
-                            Name="tbFastSortWarning"
-                            DockPanel.Dock="Right"
-                            Margin="0 0 10 0"
-                            VerticalAlignment="Center"
-                            Foreground="Orange"
-                            Text="{Binding SortOptionWarningMessage, Mode=OneTime}"
-                            TextAlignment="Left"
-                            TextWrapping="Wrap"
-                            Visibility="{Binding FastSortWarningVisibility, Mode=OneTime}" />
-                    </DockPanel>
+                    <StackPanel Orientation="Vertical"
+                        Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource plugin_explorer_everything_sort_option}"
+                                Margin="15" />
+                            <ComboBox DockPanel.Dock="Left"
+                                Width="200"
+                                VerticalAlignment="Center"
+                                Margin="10"
+                                ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
+                                SelectedItem="{Binding Settings.SortOption}"
+                                SelectionChanged="EverythingSortOptionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Name="tbFastSortWarning"
+                                DockPanel.Dock="Right"
+                                Margin="10"
+                                VerticalAlignment="Center"
+                                Foreground="Orange"
+                                Text="{Binding SortOptionWarningMessage, Mode=OneTime}"
+                                TextAlignment="Left"
+                                TextWrapping="Wrap"
+                                Visibility="{Binding FastSortWarningVisibility, Mode=OneTime}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource plugin_explorer_everything_installed_path}"
+                                Margin="10" />
+                            <TextBox Text="{Binding EverythingInstalledPath}"
+                                Margin="10" />
+                        </StackPanel>
+                    </StackPanel>
                 </Expander>
-                <Expander
-                    Margin="15"
+                <Expander Margin="15"
                     Height="auto"
                     Expanded="SettingExpander_OnExpanded"
                     Collapsed="SettingExpander_OnCollapsed"
                     Header="{DynamicResource plugin_explorer_manageactionkeywords_header}">
                     <DockPanel HorizontalAlignment="Stretch">
-                        <ListView
-                            DockPanel.Dock="Top"
+                        <ListView DockPanel.Dock="Top"
                             ItemTemplate="{StaticResource ListViewActionKeywords}"
                             ItemsSource="{Binding ActionKeywordsModels}"
                             SelectedItem="{Binding SelectedActionKeyword}" />
-                        <Button
-                            MinWidth="100"
+                        <Button MinWidth="100"
                             Margin="10"
                             Command="{Binding EditActionKeywordCommand}"
                             Content="{DynamicResource plugin_explorer_edit}" />
                     </DockPanel>
                 </Expander>
-                <Expander
-                    Margin="15"
+                <Expander Margin="15"
                     Expanded="SettingExpander_OnExpanded"
                     Collapsed="SettingExpander_OnCollapsed"
                     Name="expAccessLinks"
                     Header="{DynamicResource plugin_explorer_quickaccesslinks_header}">
                     <ScrollViewer>
                         <DockPanel HorizontalAlignment="Stretch">
-                            <ListView
-                                x:Name="lbxAccessLinks"
+                            <ListView x:Name="lbxAccessLinks"
                                 Height="200"
                                 AllowDrop="True"
                                 DragEnter="lbxAccessLinks_DragEnter"
@@ -247,40 +243,35 @@
                                 ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
                                 ItemsSource="{Binding Settings.QuickAccessLinks}"
                                 SelectedItem="{Binding SelectedQuickAccessLink}" />
-                            <StackPanel
-                                HorizontalAlignment="Right"
+                            <StackPanel HorizontalAlignment="Right"
                                 DockPanel.Dock="Bottom"
                                 Orientation="Horizontal">
-                                <Button
-                                    MinWidth="100"
+                                <Button MinWidth="100"
                                     Margin="10"
                                     Command="{Binding RemoveLinkCommand}"
                                     CommandParameter="QuickAccessLink"
                                     Content="{DynamicResource plugin_explorer_delete}" />
-                                <Button
-                                    MinWidth="100"
+                                <Button MinWidth="100"
                                     Margin="10"
                                     Command="{Binding EditLinkCommand}"
                                     CommandParameter="QuickAccessLink"
                                     Content="{DynamicResource plugin_explorer_edit}" />
-                                <Button
-                                    MinWidth="100"
+                                <Button MinWidth="100"
                                     Margin="10"
                                     Command="{Binding AddLinkCommand}"
                                     CommandParameter="QuickAccessLink"
                                     Content="{DynamicResource plugin_explorer_add}" />
                             </StackPanel>
-                        </DockPanel></ScrollViewer>
+                        </DockPanel>
+                    </ScrollViewer>
                 </Expander>
-                <Expander
-                    Margin="15"
+                <Expander Margin="15"
                     Expanded="SettingExpander_OnExpanded"
                     Collapsed="SettingExpander_OnCollapsed"
                     Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}">
                     <ScrollViewer>
                         <DockPanel HorizontalAlignment="Stretch">
-                            <ListView
-                                Name="lbxExcludedPaths"
+                            <ListView Name="lbxExcludedPaths"
                                 AllowDrop="True"
                                 DockPanel.Dock="Top"
                                 DragEnter="lbxAccessLinks_DragEnter"
@@ -288,24 +279,20 @@
                                 ItemTemplate="{StaticResource ListViewActionKeywords}"
                                 ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
                                 SelectedItem="{Binding SelectedIndexSearchExcludedPath}" />
-                            <StackPanel
-                                HorizontalAlignment="Right"
+                            <StackPanel HorizontalAlignment="Right"
                                 DockPanel.Dock="Bottom"
                                 Orientation="Horizontal">
-                                <Button
-                                    MinWidth="100"
+                                <Button MinWidth="100"
                                     Margin="10"
                                     Command="{Binding RemoveLinkCommand}"
                                     CommandParameter="IndexSearchExcludedPaths"
                                     Content="{DynamicResource plugin_explorer_delete}" />
-                                <Button
-                                    MinWidth="100"
+                                <Button MinWidth="100"
                                     Margin="10"
                                     Command="{Binding EditLinkCommand}"
                                     CommandParameter="IndexSearchExcludedPaths"
                                     Content="{DynamicResource plugin_explorer_edit}" />
-                                <Button
-                                    MinWidth="100"
+                                <Button MinWidth="100"
                                     Margin="10"
                                     Command="{Binding AddLinkCommand}"
                                     CommandParameter="IndexSearchExcludedPaths"

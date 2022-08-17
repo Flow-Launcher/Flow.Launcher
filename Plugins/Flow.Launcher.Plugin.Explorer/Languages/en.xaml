@@ -26,6 +26,7 @@
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>

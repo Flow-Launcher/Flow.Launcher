@@ -35,11 +35,11 @@ namespace Flow.Launcher.Plugin.Explorer
         public Task InitAsync(PluginInitContext context)
         {
             Context = context;
-            
+
             Settings = context.API.LoadSettingJsonStorage<Settings>();
 
             viewModel = new SettingsViewModel(context, Settings);
-            
+
 
             // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
             if (Settings.QuickFolderAccessLinks.Any())
@@ -52,8 +52,18 @@ namespace Flow.Launcher.Plugin.Explorer
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
 
+            if (Settings.EverythingEnabled)
+            {
+                _ = EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, context.API)
+                    .ContinueWith(s =>
+                    {
+                        if (s.IsCompletedSuccessfully)
+                            Settings.EverythingInstalledPath = s.Result;
+                    }, TaskScheduler.Default);
+            }
+
             SortOptionTranslationHelper.API = context.API;
-            
+
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "Everything64.dll" : "Everything86.dll"));
             return Task.CompletedTask;
