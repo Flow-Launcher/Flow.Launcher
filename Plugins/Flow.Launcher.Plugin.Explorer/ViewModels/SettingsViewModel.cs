@@ -314,7 +314,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             get => Settings.UseWindowsIndexForDirectorySearch;
             set => Settings.UseWindowsIndexForDirectorySearch = value;
         }
-        public ICommand OpenEditorPath => new RelayCommand(_ =>
+
+        private ICommand _openEditorPathCommand;
+
+        public ICommand OpenEditorPath => _openEditorPathCommand ??= new RelayCommand(_ =>
         {
             var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
             if (path is null)
@@ -323,12 +326,34 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             EditorPath = path;
         });
 
+        private ICommand _openShellPathCommand;
+
+        public ICommand OpenShellPath => _openShellPathCommand ??= new RelayCommand(_ =>
+        {
+            var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
+            if (path is null)
+                return;
+
+            ShellPath = path;
+        });
+
+
         public string EditorPath
         {
             get => Settings.EditorPath;
             set
             {
                 Settings.EditorPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ShellPath
+        {
+            get => Settings.ShellPath;
+            set
+            {
+                Settings.ShellPath = value;
                 OnPropertyChanged();
             }
         }

@@ -25,6 +25,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string EditorPath { get; set; } = "";
 
+        public string ShellPath { get; set; } = "cmd";
+        
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 

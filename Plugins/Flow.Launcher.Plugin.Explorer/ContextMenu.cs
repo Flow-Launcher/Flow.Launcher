@@ -41,8 +41,10 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(CreateOpenWithEditorResult(record));
 
                 if (record.Type == ResultType.Folder && record.WindowsIndexed)
+                {
                     contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
-
+                    contextMenus.Add(CreateOpenWithShellResult(record));
+                }
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
                 contextMenus.Add(CreateOpenWindowsIndexingOptions());
@@ -246,12 +248,13 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
+        
+        
         private Result CreateOpenWithEditorResult(SearchResult record)
         {
             string editorPath = Settings.EditorPath;
 
-            var name = Context.API.GetTranslation("plugin_explorer_openwitheditor") 
-                                    + " " + Path.GetFileNameWithoutExtension(editorPath);
+            var name = $"{Context.API.GetTranslation("plugin_explorer_openwitheditor")} {Path.GetFileNameWithoutExtension(editorPath)}";
 
             return new Result
             {
@@ -266,6 +269,38 @@ namespace Flow.Launcher.Plugin.Explorer
                     catch (Exception e)
                     {
                         var message = $"Failed to open editor for file at {record.FullPath} with Editor {Path.GetFileNameWithoutExtension(editorPath)} at {editorPath}";
+                        LogException(message, e);
+                        Context.API.ShowMsgError(message);
+                        return false;
+                    }
+                },
+                IcoPath = Constants.FileImagePath
+            };
+        }
+        
+        private Result CreateOpenWithShellResult(SearchResult record)
+        {
+            string shellPath = Settings.ShellPath;
+
+            var name = $"{Context.API.GetTranslation("plugin_explorer_openwithshell")} {Path.GetFileNameWithoutExtension(shellPath)}";
+
+            return new Result
+            {
+                Title = name,
+                Action = _ =>
+                {
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo()
+                        {
+                            FileName = shellPath,
+                            WorkingDirectory = record.FullPath
+                        });
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        var message = $"Failed to open editor for file at {record.FullPath} with Shell {Path.GetFileNameWithoutExtension(shellPath)} at {shellPath}";
                         LogException(message, e);
                         Context.API.ShowMsgError(message);
                         return false;

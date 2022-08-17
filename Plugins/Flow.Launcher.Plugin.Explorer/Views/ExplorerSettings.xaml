@@ -109,6 +109,26 @@
                                 Command="{Binding OpenEditorPath}"
                                 Content="..." />
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="10,6,6,6"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{DynamicResource plugin_explorer_shell_path}" />
+                            <TextBox
+                                Margin="15"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                TextWrapping="NoWrap"
+                                MaxWidth="250"
+                                Text="{Binding ShellPath}" />
+                            <Button
+                                MinWidth="50"
+                                HorizontalAlignment="Left"
+                                Margin="15"
+                                Command="{Binding OpenShellPath}"
+                                Content="..." />
+                        </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Index Search Engine" />

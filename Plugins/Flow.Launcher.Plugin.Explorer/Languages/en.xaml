@@ -28,6 +28,7 @@
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as executable working directory</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
@@ -62,6 +63,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the file or folder</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>
