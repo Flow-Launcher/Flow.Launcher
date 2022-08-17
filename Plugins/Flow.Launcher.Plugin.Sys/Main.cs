@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -270,11 +270,12 @@ namespace Flow.Launcher.Plugin.Sys
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Application.Current.MainWindow.Hide();
 
-                        context.API.ReloadAllPluginData().ContinueWith(_ =>
+                        _ = context.API.ReloadAllPluginData().ContinueWith(_ =>
                             context.API.ShowMsg(
                                 context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
                                 context.API.GetTranslation(
-                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")));
+                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")),
+                            System.Threading.Tasks.TaskScheduler.Current);
                         
                         return true;
                     }

@@ -517,6 +517,7 @@ namespace Flow.Launcher
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.Text.Length > 0
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
                             var queryWithoutActionKeyword = 

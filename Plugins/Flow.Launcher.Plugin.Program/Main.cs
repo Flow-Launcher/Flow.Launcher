@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin.Program
         {
 
             if (IsStartupIndexProgramsRequired)
-                _ = IndexPrograms();
+                _ = IndexProgramsAsync();
 
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
              {
@@ -122,7 +122,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 if (indexedWinApps && indexedUWPApps)
                     _settings.LastIndexTime = DateTime.Today;
-            });
+            }, TaskScheduler.Current);
 
             if (!(_win32s.Any() && _uwps.Any()))
                 await indexTask;
@@ -142,7 +142,7 @@ namespace Flow.Launcher.Plugin.Program
             _uwps = applications;
         }
 
-        public static async Task IndexPrograms()
+        public static async Task IndexProgramsAsync()
         {
             var t1 = Task.Run(IndexWin32Programs);
             var t2 = Task.Run(IndexUwpPrograms);
@@ -246,7 +246,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task ReloadDataAsync()
         {
-            await IndexPrograms();
+            await IndexProgramsAsync();
         }
     }
 }

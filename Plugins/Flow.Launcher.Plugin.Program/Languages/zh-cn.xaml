@@ -33,7 +33,7 @@
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">您确定要删除选定的程序源吗？</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher仅索引下列后缀的文件：</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher仅索引下列后缀的文件（后缀应当以 ; 分隔）：</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">成功更新索引文件后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">文件后缀不能为空</system:String>
 

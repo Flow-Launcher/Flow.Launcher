@@ -7,16 +7,16 @@
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">書籤資料</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">載入書籤至:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">新增視窗</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">新增分頁</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">設定瀏覽器路徑:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">選擇</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">複製網址</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">複製書籤網址</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">載入瀏覽器自:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">瀏覽器名稱</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">檔案目錄路徑</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">新增</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">刪除</system:String>
 </ResourceDictionary>

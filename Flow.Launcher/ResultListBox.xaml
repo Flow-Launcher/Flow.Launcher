@@ -86,7 +86,7 @@
                                 Height="32"
                                 Margin="0,0,0,0"
                                 HorizontalAlignment="Center"
-                                Source="{Binding Image}"
+                                Source="{Binding Image, TargetNullValue={x:Null}}"
                                 Stretch="Uniform"
                                 Visibility="{Binding ShowIcon}" />
                         </Border>

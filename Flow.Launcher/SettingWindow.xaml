@@ -598,10 +598,8 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                                     </StackPanel>
                                     <CheckBox
-                                        Checked="OnAutoStartupChecked"
-                                        IsChecked="{Binding Settings.StartFlowLauncherOnSystemStartup}"
-                                        Style="{DynamicResource SideControlCheckBox}"
-                                        Unchecked="OnAutoStartupUncheck" />
+                                        IsChecked="{Binding StartFlowLauncherOnSystemStartup}"
+                                        Style="{DynamicResource SideControlCheckBox}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
@@ -917,6 +915,7 @@
                             Padding="0,0,0,0"
                             Background="{DynamicResource Color01B}">
                             <ListBox
+                                Name="Plugins"
                                 Width="Auto"
                                 Margin="5,0,0,0"
                                 Padding="0,0,7,0"
@@ -927,6 +926,7 @@
                                 ScrollViewer.CanContentScroll="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
+                                SelectionChanged="SelectedPluginChanged"
                                 SnapsToDevicePixels="True">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -1116,7 +1116,8 @@
                                                             Margin="0"
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
-                                                            Content="{Binding SettingControl}" />
+                                                            Content="{Binding SettingControl}"
+                                                            SizeChanged="ItemSizeChanged" />
                                                     </StackPanel>
 
                                                     <StackPanel>
@@ -1126,8 +1127,7 @@
                                                             VerticalAlignment="Center"
                                                             BorderThickness="0,1,0,0"
                                                             CornerRadius="0"
-                                                            Style="{DynamicResource SettingGroupBox}"
-                                                            Visibility="{Binding ActionKeywordsVisibility}">
+                                                            Style="{DynamicResource SettingGroupBox}">
                                                             <ItemsControl Style="{DynamicResource SettingGrid}">
                                                                 <StackPanel
                                                                     Margin="0,0,-14,0"
@@ -1793,7 +1793,8 @@
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedQueryBoxFont}" />
+                                                            SelectedItem="{Binding SelectedQueryBoxFont}"
+                                                            IsSynchronizedWithCurrentItem="False" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,0,0,0"
@@ -1843,7 +1844,8 @@
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedResultFont}" />
+                                                            SelectedItem="{Binding SelectedResultFont}"
+                                                            IsSynchronizedWithCurrentItem="False" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,-2,0,0"

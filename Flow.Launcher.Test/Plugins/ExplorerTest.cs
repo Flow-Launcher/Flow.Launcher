@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin;
+﻿using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Explorer;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
@@ -20,10 +20,12 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
+#pragma warning disable CS1998 // async method with no await (more readable to leave it async to match the tested signature)
         private async Task<List<Result>> MethodWindowsIndexSearchReturnsZeroResultsAsync(Query dummyQuery, string dummyString, CancellationToken dummyToken)
         {
             return new List<Result>();
         }
+#pragma warning restore CS1998
 
         private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString, CancellationToken token)
         {
@@ -157,6 +159,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
         
+
         [SupportedOSPlatform("windows7.0")]
         [TestCase(@"some words", @"FREETEXT('some words')")]
         public void GivenWindowsIndexSearch_WhenQueryWhereRestrictionsIsForFileContentSearch_ThenShouldReturnFreeTextString(

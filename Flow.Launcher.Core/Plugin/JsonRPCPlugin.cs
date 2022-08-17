@@ -69,7 +69,13 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
+#pragma warning disable SYSLIB0020 
+            // IgnoreNullValues is obsolete, but the replacement JsonIgnoreCondition.WhenWritingNull still 
+            // deserializes null, instead of ignoring it and leaving the default (empty list). We can change the behaviour
+            // to accept null and fallback to a default etc, or just keep IgnoreNullValues for now
+            // see: https://github.com/dotnet/runtime/issues/39152
             IgnoreNullValues = true,
+#pragma warning restore SYSLIB0020 // Type or member is obsolete
             Converters =
             {
                 new JsonObjectConverter()
@@ -82,7 +88,7 @@ namespace Flow.Launcher.Core.Plugin
         };
         private Dictionary<string, object> Settings { get; set; }
 
-        private Dictionary<string, FrameworkElement> _settingControls = new();
+        private readonly Dictionary<string, FrameworkElement> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -115,7 +121,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var result in queryResponseModel.Result)
             {
-                result.Action = c =>
+                result.AsyncAction = async c =>
                 {
                     UpdateSettings(result.SettingsChange);
 
@@ -133,15 +139,15 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        var actionResponse = Request(result.JsonRPCAction);
+                        var actionResponse = await RequestAsync(result.JsonRPCAction);
 
-                        if (string.IsNullOrEmpty(actionResponse))
+                        if (actionResponse.Length == 0)
                         {
                             return !result.JsonRPCAction.DontHideAfterAction;
                         }
 
-                        var jsonRpcRequestModel =
-                            JsonSerializer.Deserialize<JsonRPCRequestModel>(actionResponse, options);
+                        var jsonRpcRequestModel = await
+                            JsonSerializer.DeserializeAsync<JsonRPCRequestModel>(actionResponse, options);
 
                         if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
                         {
@@ -166,19 +172,20 @@ namespace Flow.Launcher.Core.Plugin
         private void ExecuteFlowLauncherAPI(string method, object[] parameters)
         {
             var parametersTypeArray = parameters.Select(param => param.GetType()).ToArray();
-            MethodInfo methodInfo = PluginManager.API.GetType().GetMethod(method, parametersTypeArray);
-            if (methodInfo != null)
+            var methodInfo = typeof(IPublicAPI).GetMethod(method, parametersTypeArray);
+            if (methodInfo == null)
             {
-                try
-                {
-                    methodInfo.Invoke(PluginManager.API, parameters);
-                }
-                catch (Exception)
-                {
+                return;
+            }
+            try
+            {
+                methodInfo.Invoke(PluginManager.API, parameters);
+            }
+            catch (Exception)
+            {
 #if (DEBUG)
-                    throw;
+                throw;
 #endif
-                }
             }
         }
 
@@ -241,7 +248,7 @@ namespace Flow.Launcher.Core.Plugin
         protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
             Process process = null;
-            bool disposed = false;
+            using var exitTokenSource = new CancellationTokenSource();
             try
             {
                 process = Process.Start(startInfo);
@@ -251,6 +258,7 @@ namespace Flow.Launcher.Core.Plugin
                     return Stream.Null;
                 }
 
+
                 await using var source = process.StandardOutput.BaseStream;
 
                 var buffer = BufferManager.GetStream();
@@ -259,7 +267,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     // ReSharper disable once AccessToModifiedClosure
                     // Manually Check whether disposed
-                    if (!disposed && !process.HasExited)
+                    if (!exitTokenSource.IsCancellationRequested && !process.HasExited)
                         process.Kill();
                 });
 
@@ -302,8 +310,8 @@ namespace Flow.Launcher.Core.Plugin
             }
             finally
             {
+                exitTokenSource.Cancel();
                 process?.Dispose();
-                disposed = true;
             }
         }
 
@@ -365,8 +373,7 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new StackPanel
             {
-                Margin = settingPanelMargin,
-                Orientation = Orientation.Vertical
+                Margin = settingPanelMargin, Orientation = Orientation.Vertical
             };
             settingWindow.Content = mainPanel;
 
@@ -374,8 +381,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var panel = new StackPanel
                 {
-                    Orientation = Orientation.Horizontal,
-                    Margin = settingControlMargin
+                    Orientation = Orientation.Horizontal, Margin = settingControlMargin
                 };
                 var name = new TextBlock()
                 {

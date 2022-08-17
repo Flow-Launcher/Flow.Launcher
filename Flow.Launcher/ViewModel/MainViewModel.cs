@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -194,37 +194,38 @@ namespace Flow.Launcher.ViewModel
                 PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
-            OpenResultCommand = new RelayCommand(index =>
+            OpenResultCommand = new RelayCommand(async index =>
             {
                 var results = SelectedResults;
 
                 if (index != null)
                 {
-                    results.SelectedIndex = int.Parse(index.ToString());
+                    results.SelectedIndex = int.Parse(index.ToString()!);
                 }
 
                 var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result == null)
                 {
-                    bool hideWindow = result.Action != null && result.Action(new ActionContext
-                    {
-                        SpecialKeyState = GlobalHotkey.CheckModifiers()
-                    });
+                    return;
+                }
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
 
-                    if (hideWindow)
-                    {
-                        Hide();
-                    }
+                if (hideWindow)
+                {
+                    Hide();
+                }
 
-                    if (SelectedIsFromQueryResults())
-                    {
-                        _userSelectedRecord.Add(result);
-                        _history.Add(result.OriginQuery.RawQuery);
-                    }
-                    else
-                    {
-                        SelectedResults = Results;
-                    }
+                if (SelectedIsFromQueryResults())
+                {
+                    _userSelectedRecord.Add(result);
+                    _history.Add(result.OriginQuery.RawQuery);
+                }
+                else
+                {
+                    SelectedResults = Results;
                 }
             });
 
@@ -298,16 +299,16 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
 
-                PluginManager
-                    .ReloadData()
+                _ = PluginManager
+                    .ReloadDataAsync()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
-                        }))
+                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
+                                );
+                        }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
         }
@@ -572,7 +573,7 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -664,7 +665,7 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query)
         {
-            if (_lastQuery.ActionKeyword != query.ActionKeyword)
+            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 Results.Clear();
             }
