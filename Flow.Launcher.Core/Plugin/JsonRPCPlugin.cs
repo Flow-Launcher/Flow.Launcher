@@ -254,6 +254,14 @@ namespace Flow.Launcher.Core.Plugin
                 return Stream.Null;
             }
 
+
+
+            var sourceBuffer = BufferManager.GetStream();
+            var errorBuffer = BufferManager.GetStream();
+
+            var sourceCopyTask = process.StandardOutput.BaseStream.CopyToAsync(sourceBuffer, token);
+            var errorCopyTask = process.StandardError.BaseStream.CopyToAsync(errorBuffer, token);
+            
             token.Register(() =>
             {
                 try
@@ -265,14 +273,6 @@ namespace Flow.Launcher.Core.Plugin
                 {
                 }
             });
-
-
-            var sourceBuffer = BufferManager.GetStream();
-            var errorBuffer = BufferManager.GetStream();
-
-            var sourceCopyTask = process.StandardOutput.BaseStream.CopyToAsync(sourceBuffer, token);
-            var errorCopyTask = process.StandardError.BaseStream.CopyToAsync(errorBuffer, token);
-
 
             try
             {
