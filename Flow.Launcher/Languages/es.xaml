@@ -157,7 +157,7 @@
     </system:String>
     <system:String x:Key="releaseNotes">Notas de la versión</system:String>
     <system:String x:Key="documentation">Consejos de uso</system:String>
-    <system:String x:Key="devtool">Herramientas de desarrolador</system:String>
+    <system:String x:Key="devtool">Herramientas de desarrollador</system:String>
     <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
