@@ -69,7 +69,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
-#pragma warning disable SYSLIB0020 
+#pragma warning disable SYSLIB0020
             // IgnoreNullValues is obsolete, but the replacement JsonIgnoreCondition.WhenWritingNull still 
             // deserializes null, instead of ignoring it and leaving the default (empty list). We can change the behaviour
             // to accept null and fallback to a default etc, or just keep IgnoreNullValues for now
@@ -247,73 +247,74 @@ namespace Flow.Launcher.Core.Plugin
 
         protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
-            Process process = null;
-            using var exitTokenSource = new CancellationTokenSource();
-            try
+            using var process = Process.Start(startInfo);
+            if (process == null)
             {
-                process = Process.Start(startInfo);
-                if (process == null)
-                {
-                    Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
-                    return Stream.Null;
-                }
+                Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
+                return Stream.Null;
+            }
 
 
-                await using var source = process.StandardOutput.BaseStream;
 
-                var buffer = BufferManager.GetStream();
+            var sourceBuffer = BufferManager.GetStream();
+            var errorBuffer = BufferManager.GetStream();
 
-                token.Register(() =>
-                {
-                    // ReSharper disable once AccessToModifiedClosure
-                    // Manually Check whether disposed
-                    if (!exitTokenSource.IsCancellationRequested && !process.HasExited)
-                        process.Kill();
-                });
-
+            var sourceCopyTask = process.StandardOutput.BaseStream.CopyToAsync(sourceBuffer, token);
+            var errorCopyTask = process.StandardError.BaseStream.CopyToAsync(errorBuffer, token);
+            
+            token.Register(() =>
+            {
                 try
                 {
-                    // token expire won't instantly trigger the exception, 
-                    // manually kill process at before
-                    await source.CopyToAsync(buffer, token);
+                    if (!process.HasExited)
+                        process.Kill();
                 }
-                catch (OperationCanceledException)
+                catch (InvalidOperationException)
                 {
-                    await buffer.DisposeAsync();
-                    return Stream.Null;
                 }
+            });
 
-                buffer.Seek(0, SeekOrigin.Begin);
-
-                token.ThrowIfCancellationRequested();
-
-                if (buffer.Length == 0)
-                {
-                    var errorMessage = process.StandardError.EndOfStream ?
-                        "Empty JSONRPC Response" :
-                        await process.StandardError.ReadToEndAsync();
-                    throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
-                }
-
-                if (!process.StandardError.EndOfStream)
-                {
-                    using var standardError = process.StandardError;
-                    var error = await standardError.ReadToEndAsync();
-
-                    if (!string.IsNullOrEmpty(error))
-                    {
-                        Log.Error($"|{context.CurrentPluginMetadata.Name}.{nameof(ExecuteAsync)}|{error}");
-                    }
-                }
-
-                return buffer;
-            }
-            finally
+            try
             {
-                exitTokenSource.Cancel();
-                process?.Dispose();
+                // token expire won't instantly trigger the exception, 
+                // manually kill process at before
+                await process.WaitForExitAsync(token);
+                await Task.WhenAll(sourceCopyTask, errorCopyTask);
             }
+            catch (OperationCanceledException)
+            {
+                await sourceBuffer.DisposeAsync();
+                return Stream.Null;
+            }
+
+            sourceBuffer.Seek(0, SeekOrigin.Begin);
+
+            token.ThrowIfCancellationRequested();
+
+            if (sourceBuffer.Length == 0)
+            {
+                var errorMessage = errorBuffer.Length == 0 ?
+                    "Empty JSONRPC Response" :
+                    await process.StandardError.ReadToEndAsync();
+
+                Log.Error($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
+            }
+
+            if (errorBuffer.Length != 0)
+            {
+                using var error = new StreamReader(errorBuffer);
+                
+                var errorMessage = await error.ReadToEndAsync();
+
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    Log.Error($"|{context.CurrentPluginMetadata.Name}.{nameof(ExecuteAsync)}|{errorMessage}");
+                }
+            }
+
+            return sourceBuffer;
         }
+
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -366,6 +367,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly Thickness settingPanelMargin = new(15, 20, 15, 20);
         private static readonly Thickness settingTextBlockMargin = new(10, 4, 10, 4);
         private JsonRpcConfigurationModel _settingsTemplate;
+
         public Control CreateSettingPanel()
         {
             if (Settings == null)
@@ -397,84 +399,84 @@ namespace Flow.Launcher.Core.Plugin
                 switch (type)
                 {
                     case "textBlock":
+                    {
+                        contentControl = new TextBlock
                         {
-                            contentControl = new TextBlock
-                            {
-                                Text = attribute.Description.Replace("\\r\\n", "\r\n"),
-                                Margin = settingTextBlockMargin,
-                                MaxWidth = 500,
-                                TextWrapping = TextWrapping.WrapWithOverflow
-                            };
-                            break;
-                        }
+                            Text = attribute.Description.Replace("\\r\\n", "\r\n"),
+                            Margin = settingTextBlockMargin,
+                            MaxWidth = 500,
+                            TextWrapping = TextWrapping.WrapWithOverflow
+                        };
+                        break;
+                    }
                     case "input":
+                    {
+                        var textBox = new TextBox()
                         {
-                            var textBox = new TextBox()
-                            {
-                                Width = 300,
-                                Text = Settings[attribute.Name] as string ?? string.Empty,
-                                Margin = settingControlMargin,
-                                ToolTip = attribute.Description
-                            };
-                            textBox.TextChanged += (_, _) =>
-                            {
-                                Settings[attribute.Name] = textBox.Text;
-                            };
-                            contentControl = textBox;
-                            break;
-                        }
+                            Width = 300,
+                            Text = Settings[attribute.Name] as string ?? string.Empty,
+                            Margin = settingControlMargin,
+                            ToolTip = attribute.Description
+                        };
+                        textBox.TextChanged += (_, _) =>
+                        {
+                            Settings[attribute.Name] = textBox.Text;
+                        };
+                        contentControl = textBox;
+                        break;
+                    }
                     case "textarea":
+                    {
+                        var textBox = new TextBox()
                         {
-                            var textBox = new TextBox()
-                            {
-                                Width = 300,
-                                Height = 120,
-                                Margin = settingControlMargin,
-                                TextWrapping = TextWrapping.WrapWithOverflow,
-                                AcceptsReturn = true,
-                                Text = Settings[attribute.Name] as string ?? string.Empty,
-                                ToolTip = attribute.Description
-                            };
-                            textBox.TextChanged += (sender, _) =>
-                            {
-                                Settings[attribute.Name] = ((TextBox)sender).Text;
-                            };
-                            contentControl = textBox;
-                            break;
-                        }
+                            Width = 300,
+                            Height = 120,
+                            Margin = settingControlMargin,
+                            TextWrapping = TextWrapping.WrapWithOverflow,
+                            AcceptsReturn = true,
+                            Text = Settings[attribute.Name] as string ?? string.Empty,
+                            ToolTip = attribute.Description
+                        };
+                        textBox.TextChanged += (sender, _) =>
+                        {
+                            Settings[attribute.Name] = ((TextBox)sender).Text;
+                        };
+                        contentControl = textBox;
+                        break;
+                    }
                     case "passwordBox":
+                    {
+                        var passwordBox = new PasswordBox()
                         {
-                            var passwordBox = new PasswordBox()
-                            {
-                                Width = 300,
-                                Margin = settingControlMargin,
-                                Password = Settings[attribute.Name] as string ?? string.Empty,
-                                PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
-                                ToolTip = attribute.Description
-                            };
-                            passwordBox.PasswordChanged += (sender, _) =>
-                            {
-                                Settings[attribute.Name] = ((PasswordBox)sender).Password;
-                            };
-                            contentControl = passwordBox;
-                            break;
-                        }
+                            Width = 300,
+                            Margin = settingControlMargin,
+                            Password = Settings[attribute.Name] as string ?? string.Empty,
+                            PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
+                            ToolTip = attribute.Description
+                        };
+                        passwordBox.PasswordChanged += (sender, _) =>
+                        {
+                            Settings[attribute.Name] = ((PasswordBox)sender).Password;
+                        };
+                        contentControl = passwordBox;
+                        break;
+                    }
                     case "dropdown":
+                    {
+                        var comboBox = new ComboBox()
                         {
-                            var comboBox = new ComboBox()
-                            {
-                                ItemsSource = attribute.Options,
-                                SelectedItem = Settings[attribute.Name],
-                                Margin = settingControlMargin,
-                                ToolTip = attribute.Description
-                            };
-                            comboBox.SelectionChanged += (sender, _) =>
-                            {
-                                Settings[attribute.Name] = (string)((ComboBox)sender).SelectedItem;
-                            };
-                            contentControl = comboBox;
-                            break;
-                        }
+                            ItemsSource = attribute.Options,
+                            SelectedItem = Settings[attribute.Name],
+                            Margin = settingControlMargin,
+                            ToolTip = attribute.Description
+                        };
+                        comboBox.SelectionChanged += (sender, _) =>
+                        {
+                            Settings[attribute.Name] = (string)((ComboBox)sender).SelectedItem;
+                        };
+                        contentControl = comboBox;
+                        break;
+                    }
                     case "checkbox":
                         var checkBox = new CheckBox
                         {
@@ -499,6 +501,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             return settingWindow;
         }
+
         public void Save()
         {
             if (Settings != null)
@@ -541,4 +544,5 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
     }
+
 }
