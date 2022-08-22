@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -85,12 +86,15 @@ namespace Flow.Launcher.Core.Plugin
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
-            if (output == Stream.Null) return null;
+            await using (output)
+            {
+                if (output == Stream.Null) return null;
 
-            var queryResponseModel =
-                await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
+                var queryResponseModel =
+                    await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
-            return ParseResults(queryResponseModel);
+                return ParseResults(queryResponseModel);
+            }
         }
 
         private List<Result> DeserializedResult(string output)
@@ -132,7 +136,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        var actionResponse = await RequestAsync(result.JsonRPCAction);
+                        await using var actionResponse = await RequestAsync(result.JsonRPCAction);
 
                         if (actionResponse.Length == 0)
                         {
@@ -273,31 +277,18 @@ namespace Flow.Launcher.Core.Plugin
                 return Stream.Null;
             }
 
+            switch (sourceBuffer.Length, errorBuffer.Position)
+            {
+                case (0, 0):
+                    var errorMessage = Encoding.UTF8.GetString(errorBuffer.GetBuffer(), 0, (int)errorBuffer.Position);
+                    Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
+                    break;
+                case (_, not 0):
+                    throw new InvalidDataException(Encoding.UTF8.GetString(errorBuffer.ToArray())); // The process has exited with an error message
+            }
+
             sourceBuffer.Seek(0, SeekOrigin.Begin);
-
-            token.ThrowIfCancellationRequested();
-
-            if (sourceBuffer.Length == 0)
-            {
-                var errorMessage = errorBuffer.Length == 0 ?
-                    "Empty JSONRPC Response" :
-                    await process.StandardError.ReadToEndAsync();
-
-                Log.Error($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
-            }
-
-            if (errorBuffer.Length != 0)
-            {
-                using var error = new StreamReader(errorBuffer);
-
-                var errorMessage = await error.ReadToEndAsync();
-
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    Log.Error($"|{context.CurrentPluginMetadata.Name}.{nameof(ExecuteAsync)}|{errorMessage}");
-                }
-            }
-
+            
             return sourceBuffer;
         }
 
