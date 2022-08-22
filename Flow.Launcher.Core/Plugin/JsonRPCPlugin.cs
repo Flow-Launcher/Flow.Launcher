@@ -280,7 +280,7 @@ namespace Flow.Launcher.Core.Plugin
             switch (sourceBuffer.Length, errorBuffer.Length)
             {
                 case (0, 0):
-                    var errorMessage = Encoding.UTF8.GetString(errorBuffer.GetBuffer(), 0, (int)errorBuffer.Position);
+                    const string errorMessage = "Empty JSON-RPC Response.";
                     Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
                     break;
                 case (_, not 0):
