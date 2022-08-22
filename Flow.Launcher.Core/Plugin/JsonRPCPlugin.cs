@@ -277,7 +277,7 @@ namespace Flow.Launcher.Core.Plugin
                 return Stream.Null;
             }
 
-            switch (sourceBuffer.Length, errorBuffer.Position)
+            switch (sourceBuffer.Length, errorBuffer.Length)
             {
                 case (0, 0):
                     var errorMessage = Encoding.UTF8.GetString(errorBuffer.GetBuffer(), 0, (int)errorBuffer.Position);
