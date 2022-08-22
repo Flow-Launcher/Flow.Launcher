@@ -1,34 +1,26 @@
-﻿using Accessibility;
-using Flow.Launcher.Core.Resource;
+﻿using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using ICSharpCode.SharpZipLib.Zip;
-using JetBrains.Annotations;
 using Microsoft.IO;
-using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using CheckBox = System.Windows.Controls.CheckBox;
 using Control = System.Windows.Controls.Control;
-using Label = System.Windows.Controls.Label;
 using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
-using System.Windows.Data;
 
 namespace Flow.Launcher.Core.Plugin
 {
