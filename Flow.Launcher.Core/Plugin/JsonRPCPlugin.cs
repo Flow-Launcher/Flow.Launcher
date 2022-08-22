@@ -3,6 +3,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -254,24 +255,17 @@ namespace Flow.Launcher.Core.Plugin
                 return Stream.Null;
             }
 
-
-
             var sourceBuffer = BufferManager.GetStream();
-            var errorBuffer = BufferManager.GetStream();
+            using var errorBuffer = BufferManager.GetStream();
 
             var sourceCopyTask = process.StandardOutput.BaseStream.CopyToAsync(sourceBuffer, token);
             var errorCopyTask = process.StandardError.BaseStream.CopyToAsync(errorBuffer, token);
-            
-            token.Register(() =>
+
+            await using var registeredEvent = token.Register(() =>
             {
-                try
-                {
-                    if (!process.HasExited)
-                        process.Kill();
-                }
-                catch (InvalidOperationException)
-                {
-                }
+                if (!process.HasExited)
+                    process.Kill();
+                sourceBuffer.Dispose();
             });
 
             try
@@ -303,7 +297,7 @@ namespace Flow.Launcher.Core.Plugin
             if (errorBuffer.Length != 0)
             {
                 using var error = new StreamReader(errorBuffer);
-                
+
                 var errorMessage = await error.ReadToEndAsync();
 
                 if (!string.IsNullOrEmpty(errorMessage))
