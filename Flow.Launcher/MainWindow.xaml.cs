@@ -517,6 +517,7 @@ namespace Flow.Launcher
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.Text.Length > 0
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
                             var queryWithoutActionKeyword = 
@@ -538,7 +539,9 @@ namespace Flow.Launcher
 
         private void MoveQueryTextToEnd()
         {
-            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
+            // QueryTextBox seems to be update with a DispatcherPriority as low as ContextIdle.
+            // To ensure QueryTextBox is up to date with QueryText from the View, we need to Dispatch with such a priority
+            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length, System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
         public void InitializeColorScheme()

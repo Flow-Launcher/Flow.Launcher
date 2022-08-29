@@ -19,10 +19,10 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Flow.Launcher.Plugin.WindowsSettings.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,28 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 16-Bit Application Support.
+        /// </summary>
+        public static string _16BitApplicationSupport {
+            get {
+                return ResourceManager.GetString("16BitApplicationSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///    .
+        /// </summary>
+        public static string _null {
+            get {
+                return ResourceManager.GetString("null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
-        internal static string About {
+        public static string About {
             get {
                 return ResourceManager.GetString("About", resourceCulture);
             }
@@ -72,7 +91,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to access.cpl.
         /// </summary>
-        internal static string access_cpl {
+        public static string access_cpl {
             get {
                 return ResourceManager.GetString("access.cpl", resourceCulture);
             }
@@ -81,7 +100,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Accessibility Options.
         /// </summary>
-        internal static string AccessibilityOptions {
+        public static string AccessibilityOptions {
             get {
                 return ResourceManager.GetString("AccessibilityOptions", resourceCulture);
             }
@@ -90,25 +109,52 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Accessory apps.
         /// </summary>
-        internal static string AccessoryApps {
+        public static string AccessoryApps {
             get {
                 return ResourceManager.GetString("AccessoryApps", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access RemoteApp and desktops.
+        /// </summary>
+        public static string AccessRemoteappAndDesktops {
+            get {
+                return ResourceManager.GetString("AccessRemoteappAndDesktops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Access work or school.
         /// </summary>
-        internal static string AccessWorkOrSchool {
+        public static string AccessWorkOrSchool {
             get {
                 return ResourceManager.GetString("AccessWorkOrSchool", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accommodate learning abilities.
+        /// </summary>
+        public static string AccommodateLearningAbilities {
+            get {
+                return ResourceManager.GetString("AccommodateLearningAbilities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accommodate low vision.
+        /// </summary>
+        public static string AccommodateLowVision {
+            get {
+                return ResourceManager.GetString("AccommodateLowVision", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account info.
         /// </summary>
-        internal static string AccountInfo {
+        public static string AccountInfo {
             get {
                 return ResourceManager.GetString("AccountInfo", resourceCulture);
             }
@@ -117,7 +163,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        internal static string Accounts {
+        public static string Accounts {
             get {
                 return ResourceManager.GetString("Accounts", resourceCulture);
             }
@@ -126,7 +172,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Action Center.
         /// </summary>
-        internal static string ActionCenter {
+        public static string ActionCenter {
             get {
                 return ResourceManager.GetString("ActionCenter", resourceCulture);
             }
@@ -135,7 +181,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Activation.
         /// </summary>
-        internal static string Activation {
+        public static string Activation {
             get {
                 return ResourceManager.GetString("Activation", resourceCulture);
             }
@@ -144,25 +190,79 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Activity history.
         /// </summary>
-        internal static string ActivityHistory {
+        public static string ActivityHistory {
             get {
                 return ResourceManager.GetString("ActivityHistory", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a Bluetooth device.
+        /// </summary>
+        public static string AddABluetoothDevice {
+            get {
+                return ResourceManager.GetString("AddABluetoothDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a device.
+        /// </summary>
+        public static string AddADevice {
+            get {
+                return ResourceManager.GetString("AddADevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a language.
+        /// </summary>
+        public static string AddALanguage {
+            get {
+                return ResourceManager.GetString("AddALanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add clocks for different time zones.
+        /// </summary>
+        public static string AddClocksForDifferentTimeZones {
+            get {
+                return ResourceManager.GetString("AddClocksForDifferentTimeZones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Hardware.
         /// </summary>
-        internal static string AddHardware {
+        public static string AddHardware {
             get {
                 return ResourceManager.GetString("AddHardware", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add or remove programs.
+        /// </summary>
+        public static string AddOrRemovePrograms {
+            get {
+                return ResourceManager.GetString("AddOrRemovePrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add or remove user accounts.
+        /// </summary>
+        public static string AddOrRemoveUserAccounts {
+            get {
+                return ResourceManager.GetString("AddOrRemoveUserAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add/Remove Programs.
         /// </summary>
-        internal static string AddRemovePrograms {
+        public static string AddRemovePrograms {
             get {
                 return ResourceManager.GetString("AddRemovePrograms", resourceCulture);
             }
@@ -171,16 +271,61 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Add your phone.
         /// </summary>
-        internal static string AddYourPhone {
+        public static string AddYourPhone {
             get {
                 return ResourceManager.GetString("AddYourPhone", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjust ClearType text.
+        /// </summary>
+        public static string AdjustCleartypeText {
+            get {
+                return ResourceManager.GetString("AdjustCleartypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust commonly used mobility settings.
+        /// </summary>
+        public static string AdjustCommonlyUsedMobilitySettings {
+            get {
+                return ResourceManager.GetString("AdjustCommonlyUsedMobilitySettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust settings before giving a presentation.
+        /// </summary>
+        public static string AdjustSettingsBeforeGivingAPresentation {
+            get {
+                return ResourceManager.GetString("AdjustSettingsBeforeGivingAPresentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust system volume.
+        /// </summary>
+        public static string AdjustSystemVolume {
+            get {
+                return ResourceManager.GetString("AdjustSystemVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust the appearance and performance of Windows.
+        /// </summary>
+        public static string AdjustTheAppearanceAndPerformanceOfWindows {
+            get {
+                return ResourceManager.GetString("AdjustTheAppearanceAndPerformanceOfWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrative Tools.
         /// </summary>
-        internal static string AdministrativeTools {
+        public static string AdministrativeTools {
             get {
                 return ResourceManager.GetString("AdministrativeTools", resourceCulture);
             }
@@ -189,7 +334,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Advanced display settings.
         /// </summary>
-        internal static string AdvancedDisplaySettings {
+        public static string AdvancedDisplaySettings {
             get {
                 return ResourceManager.GetString("AdvancedDisplaySettings", resourceCulture);
             }
@@ -198,16 +343,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Advanced graphics.
         /// </summary>
-        internal static string AdvancedGraphics {
+        public static string AdvancedGraphics {
             get {
                 return ResourceManager.GetString("AdvancedGraphics", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced printer setup.
+        /// </summary>
+        public static string AdvancedPrinterSetup {
+            get {
+                return ResourceManager.GetString("AdvancedPrinterSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advertising ID.
         /// </summary>
-        internal static string AdvertisingId {
+        public static string AdvertisingId {
             get {
                 return ResourceManager.GetString("AdvertisingId", resourceCulture);
             }
@@ -216,16 +370,43 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Airplane mode.
         /// </summary>
-        internal static string AirplaneMode {
+        public static string AirplaneMode {
             get {
                 return ResourceManager.GetString("AirplaneMode", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allow an app through Windows Firewall.
+        /// </summary>
+        public static string AllowAnAppThroughWindowsFirewall {
+            get {
+                return ResourceManager.GetString("AllowAnAppThroughWindowsFirewall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow remote access to your computer.
+        /// </summary>
+        public static string AllowRemoteAccessToYourComputer {
+            get {
+                return ResourceManager.GetString("AllowRemoteAccessToYourComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Remote Assistance invitations to be sent from this computer.
+        /// </summary>
+        public static string AllowRemoteAssistanceInvitationsToBeSentFromThisComputer {
+            get {
+                return ResourceManager.GetString("AllowRemoteAssistanceInvitationsToBeSentFromThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alt+Tab.
         /// </summary>
-        internal static string AltAndTab {
+        public static string AltAndTab {
             get {
                 return ResourceManager.GetString("AltAndTab", resourceCulture);
             }
@@ -234,7 +415,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Alternative names.
         /// </summary>
-        internal static string AlternativeName {
+        public static string AlternativeName {
             get {
                 return ResourceManager.GetString("AlternativeName", resourceCulture);
             }
@@ -243,7 +424,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Animations.
         /// </summary>
-        internal static string Animations {
+        public static string Animations {
             get {
                 return ResourceManager.GetString("Animations", resourceCulture);
             }
@@ -252,16 +433,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to App color.
         /// </summary>
-        internal static string AppColor {
+        public static string AppColor {
             get {
                 return ResourceManager.GetString("AppColor", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Control Panel.
+        /// </summary>
+        public static string AppControlPanel {
+            get {
+                return ResourceManager.GetString("AppControlPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App diagnostics.
         /// </summary>
-        internal static string AppDiagnostics {
+        public static string AppDiagnostics {
             get {
                 return ResourceManager.GetString("AppDiagnostics", resourceCulture);
             }
@@ -270,7 +460,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to App features.
         /// </summary>
-        internal static string AppFeatures {
+        public static string AppFeatures {
             get {
                 return ResourceManager.GetString("AppFeatures", resourceCulture);
             }
@@ -279,7 +469,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to App.
         /// </summary>
-        internal static string Application {
+        public static string Application {
             get {
                 return ResourceManager.GetString("Application", resourceCulture);
             }
@@ -288,7 +478,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Apps and Features.
         /// </summary>
-        internal static string AppsAndFeatures {
+        public static string AppsAndFeatures {
             get {
                 return ResourceManager.GetString("AppsAndFeatures", resourceCulture);
             }
@@ -297,7 +487,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to System settings.
         /// </summary>
-        internal static string AppSettingsApp {
+        public static string AppSettingsApp {
             get {
                 return ResourceManager.GetString("AppSettingsApp", resourceCulture);
             }
@@ -306,7 +496,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Apps for websites.
         /// </summary>
-        internal static string AppsForWebsites {
+        public static string AppsForWebsites {
             get {
                 return ResourceManager.GetString("AppsForWebsites", resourceCulture);
             }
@@ -315,7 +505,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to App volume and device preferences.
         /// </summary>
-        internal static string AppVolumeAndDevicePreferences {
+        public static string AppVolumeAndDevicePreferences {
             get {
                 return ResourceManager.GetString("AppVolumeAndDevicePreferences", resourceCulture);
             }
@@ -324,7 +514,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to appwiz.cpl.
         /// </summary>
-        internal static string appwiz_cpl {
+        public static string appwiz_cpl {
             get {
                 return ResourceManager.GetString("appwiz.cpl", resourceCulture);
             }
@@ -333,7 +523,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Area.
         /// </summary>
-        internal static string Area {
+        public static string Area {
             get {
                 return ResourceManager.GetString("Area", resourceCulture);
             }
@@ -342,7 +532,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        internal static string AreaAccounts {
+        public static string AreaAccounts {
             get {
                 return ResourceManager.GetString("AreaAccounts", resourceCulture);
             }
@@ -351,7 +541,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Administrative Tools.
         /// </summary>
-        internal static string AreaAdministrativeTools {
+        public static string AreaAdministrativeTools {
             get {
                 return ResourceManager.GetString("AreaAdministrativeTools", resourceCulture);
             }
@@ -360,7 +550,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Appearance and Personalization.
         /// </summary>
-        internal static string AreaAppearanceAndPersonalization {
+        public static string AreaAppearanceAndPersonalization {
             get {
                 return ResourceManager.GetString("AreaAppearanceAndPersonalization", resourceCulture);
             }
@@ -369,7 +559,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Apps.
         /// </summary>
-        internal static string AreaApps {
+        public static string AreaApps {
             get {
                 return ResourceManager.GetString("AreaApps", resourceCulture);
             }
@@ -378,7 +568,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Clock and Region.
         /// </summary>
-        internal static string AreaClockAndRegion {
+        public static string AreaClockAndRegion {
             get {
                 return ResourceManager.GetString("AreaClockAndRegion", resourceCulture);
             }
@@ -387,7 +577,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Control Panel.
         /// </summary>
-        internal static string AreaControlPanel {
+        public static string AreaControlPanel {
             get {
                 return ResourceManager.GetString("AreaControlPanel", resourceCulture);
             }
@@ -396,7 +586,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cortana.
         /// </summary>
-        internal static string AreaCortana {
+        public static string AreaCortana {
             get {
                 return ResourceManager.GetString("AreaCortana", resourceCulture);
             }
@@ -405,7 +595,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Devices.
         /// </summary>
-        internal static string AreaDevices {
+        public static string AreaDevices {
             get {
                 return ResourceManager.GetString("AreaDevices", resourceCulture);
             }
@@ -414,7 +604,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ease of access.
         /// </summary>
-        internal static string AreaEaseOfAccess {
+        public static string AreaEaseOfAccess {
             get {
                 return ResourceManager.GetString("AreaEaseOfAccess", resourceCulture);
             }
@@ -423,7 +613,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Extras.
         /// </summary>
-        internal static string AreaExtras {
+        public static string AreaExtras {
             get {
                 return ResourceManager.GetString("AreaExtras", resourceCulture);
             }
@@ -432,7 +622,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Gaming.
         /// </summary>
-        internal static string AreaGaming {
+        public static string AreaGaming {
             get {
                 return ResourceManager.GetString("AreaGaming", resourceCulture);
             }
@@ -441,7 +631,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Hardware and Sound.
         /// </summary>
-        internal static string AreaHardwareAndSound {
+        public static string AreaHardwareAndSound {
             get {
                 return ResourceManager.GetString("AreaHardwareAndSound", resourceCulture);
             }
@@ -450,7 +640,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Home page.
         /// </summary>
-        internal static string AreaHomePage {
+        public static string AreaHomePage {
             get {
                 return ResourceManager.GetString("AreaHomePage", resourceCulture);
             }
@@ -459,7 +649,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mixed reality.
         /// </summary>
-        internal static string AreaMixedReality {
+        public static string AreaMixedReality {
             get {
                 return ResourceManager.GetString("AreaMixedReality", resourceCulture);
             }
@@ -468,7 +658,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network and Internet.
         /// </summary>
-        internal static string AreaNetworkAndInternet {
+        public static string AreaNetworkAndInternet {
             get {
                 return ResourceManager.GetString("AreaNetworkAndInternet", resourceCulture);
             }
@@ -477,7 +667,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Personalization.
         /// </summary>
-        internal static string AreaPersonalization {
+        public static string AreaPersonalization {
             get {
                 return ResourceManager.GetString("AreaPersonalization", resourceCulture);
             }
@@ -486,7 +676,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
-        internal static string AreaPhone {
+        public static string AreaPhone {
             get {
                 return ResourceManager.GetString("AreaPhone", resourceCulture);
             }
@@ -495,7 +685,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Privacy.
         /// </summary>
-        internal static string AreaPrivacy {
+        public static string AreaPrivacy {
             get {
                 return ResourceManager.GetString("AreaPrivacy", resourceCulture);
             }
@@ -504,7 +694,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Programs.
         /// </summary>
-        internal static string AreaPrograms {
+        public static string AreaPrograms {
             get {
                 return ResourceManager.GetString("AreaPrograms", resourceCulture);
             }
@@ -513,7 +703,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SurfaceHub.
         /// </summary>
-        internal static string AreaSurfaceHub {
+        public static string AreaSurfaceHub {
             get {
                 return ResourceManager.GetString("AreaSurfaceHub", resourceCulture);
             }
@@ -522,7 +712,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to System.
         /// </summary>
-        internal static string AreaSystem {
+        public static string AreaSystem {
             get {
                 return ResourceManager.GetString("AreaSystem", resourceCulture);
             }
@@ -531,7 +721,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to System and Security.
         /// </summary>
-        internal static string AreaSystemAndSecurity {
+        public static string AreaSystemAndSecurity {
             get {
                 return ResourceManager.GetString("AreaSystemAndSecurity", resourceCulture);
             }
@@ -540,16 +730,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Time and language.
         /// </summary>
-        internal static string AreaTimeAndLanguage {
+        public static string AreaTimeAndLanguage {
             get {
                 return ResourceManager.GetString("AreaTimeAndLanguage", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string AreaUnknown {
+            get {
+                return ResourceManager.GetString("AreaUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update and security.
         /// </summary>
-        internal static string AreaUpdateAndSecurity {
+        public static string AreaUpdateAndSecurity {
             get {
                 return ResourceManager.GetString("AreaUpdateAndSecurity", resourceCulture);
             }
@@ -558,7 +757,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to User accounts.
         /// </summary>
-        internal static string AreaUserAccounts {
+        public static string AreaUserAccounts {
             get {
                 return ResourceManager.GetString("AreaUserAccounts", resourceCulture);
             }
@@ -567,7 +766,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Assigned access.
         /// </summary>
-        internal static string AssignedAccess {
+        public static string AssignedAccess {
             get {
                 return ResourceManager.GetString("AssignedAccess", resourceCulture);
             }
@@ -576,7 +775,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Audio.
         /// </summary>
-        internal static string Audio {
+        public static string Audio {
             get {
                 return ResourceManager.GetString("Audio", resourceCulture);
             }
@@ -585,7 +784,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Audio alerts.
         /// </summary>
-        internal static string AudioAlerts {
+        public static string AudioAlerts {
             get {
                 return ResourceManager.GetString("AudioAlerts", resourceCulture);
             }
@@ -594,16 +793,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Audio and speech.
         /// </summary>
-        internal static string AudioAndSpeech {
+        public static string AudioAndSpeech {
             get {
                 return ResourceManager.GetString("AudioAndSpeech", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto-hide the taskbar.
+        /// </summary>
+        public static string AutoHideTheTaskbar {
+            get {
+                return ResourceManager.GetString("AutoHideTheTaskbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically adjust for daylight saving time.
+        /// </summary>
+        public static string AutomaticallyAdjustForDaylightSavingTime {
+            get {
+                return ResourceManager.GetString("AutomaticallyAdjustForDaylightSavingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automatic file downloads.
         /// </summary>
-        internal static string AutomaticFileDownloads {
+        public static string AutomaticFileDownloads {
             get {
                 return ResourceManager.GetString("AutomaticFileDownloads", resourceCulture);
             }
@@ -612,7 +829,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to AutoPlay.
         /// </summary>
-        internal static string AutoPlay {
+        public static string AutoPlay {
             get {
                 return ResourceManager.GetString("AutoPlay", resourceCulture);
             }
@@ -621,7 +838,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Background.
         /// </summary>
-        internal static string Background {
+        public static string Background {
             get {
                 return ResourceManager.GetString("Background", resourceCulture);
             }
@@ -630,7 +847,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Background Apps.
         /// </summary>
-        internal static string BackgroundApps {
+        public static string BackgroundApps {
             get {
                 return ResourceManager.GetString("BackgroundApps", resourceCulture);
             }
@@ -639,7 +856,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Backup.
         /// </summary>
-        internal static string Backup {
+        public static string Backup {
             get {
                 return ResourceManager.GetString("Backup", resourceCulture);
             }
@@ -648,16 +865,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Backup and Restore.
         /// </summary>
-        internal static string BackupAndRestore {
+        public static string BackupAndRestore {
             get {
                 return ResourceManager.GetString("BackupAndRestore", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back up and Restore (Windows 7).
+        /// </summary>
+        public static string BackUpAndRestoreWindows7 {
+            get {
+                return ResourceManager.GetString("BackUpAndRestoreWindows7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back up your recovery key.
+        /// </summary>
+        public static string BackUpYourRecoveryKey {
+            get {
+                return ResourceManager.GetString("BackUpYourRecoveryKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battery Saver.
         /// </summary>
-        internal static string BatterySaver {
+        public static string BatterySaver {
             get {
                 return ResourceManager.GetString("BatterySaver", resourceCulture);
             }
@@ -666,7 +901,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Battery Saver settings.
         /// </summary>
-        internal static string BatterySaverSettings {
+        public static string BatterySaverSettings {
             get {
                 return ResourceManager.GetString("BatterySaverSettings", resourceCulture);
             }
@@ -675,7 +910,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Battery saver usage details.
         /// </summary>
-        internal static string BatterySaverUsageDetails {
+        public static string BatterySaverUsageDetails {
             get {
                 return ResourceManager.GetString("BatterySaverUsageDetails", resourceCulture);
             }
@@ -684,7 +919,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Battery use.
         /// </summary>
-        internal static string BatteryUse {
+        public static string BatteryUse {
             get {
                 return ResourceManager.GetString("BatteryUse", resourceCulture);
             }
@@ -693,7 +928,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Biometric Devices.
         /// </summary>
-        internal static string BiometricDevices {
+        public static string BiometricDevices {
             get {
                 return ResourceManager.GetString("BiometricDevices", resourceCulture);
             }
@@ -702,16 +937,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to BitLocker Drive Encryption.
         /// </summary>
-        internal static string BitLockerDriveEncryption {
+        public static string BitLockerDriveEncryption {
             get {
                 return ResourceManager.GetString("BitLockerDriveEncryption", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Block or allow pop-ups.
+        /// </summary>
+        public static string BlockOrAllowPopUps {
+            get {
+                return ResourceManager.GetString("BlockOrAllowPopUps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block or allow third-party cookies.
+        /// </summary>
+        public static string BlockOrAllowThirdPartyCookies {
+            get {
+                return ResourceManager.GetString("BlockOrAllowThirdPartyCookies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blue light.
         /// </summary>
-        internal static string BlueLight {
+        public static string BlueLight {
             get {
                 return ResourceManager.GetString("BlueLight", resourceCulture);
             }
@@ -720,7 +973,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Bluetooth.
         /// </summary>
-        internal static string Bluetooth {
+        public static string Bluetooth {
             get {
                 return ResourceManager.GetString("Bluetooth", resourceCulture);
             }
@@ -729,7 +982,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Bluetooth devices.
         /// </summary>
-        internal static string BluetoothDevices {
+        public static string BluetoothDevices {
             get {
                 return ResourceManager.GetString("BluetoothDevices", resourceCulture);
             }
@@ -738,7 +991,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Blue-yellow.
         /// </summary>
-        internal static string BlueYellow {
+        public static string BlueYellow {
             get {
                 return ResourceManager.GetString("BlueYellow", resourceCulture);
             }
@@ -747,7 +1000,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Bopomofo IME.
         /// </summary>
-        internal static string BopomofoIme {
+        public static string BopomofoIme {
             get {
                 return ResourceManager.GetString("BopomofoIme", resourceCulture);
             }
@@ -756,7 +1009,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to bpmf.
         /// </summary>
-        internal static string bpmf {
+        public static string bpmf {
             get {
                 return ResourceManager.GetString("bpmf", resourceCulture);
             }
@@ -765,7 +1018,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Broadcasting.
         /// </summary>
-        internal static string Broadcasting {
+        public static string Broadcasting {
             get {
                 return ResourceManager.GetString("Broadcasting", resourceCulture);
             }
@@ -774,16 +1027,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Calendar.
         /// </summary>
-        internal static string Calendar {
+        public static string Calendar {
             get {
                 return ResourceManager.GetString("Calendar", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibrate display colour.
+        /// </summary>
+        public static string CalibrateDisplayColour {
+            get {
+                return ResourceManager.GetString("CalibrateDisplayColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calibrate the screen for pen or touch input.
+        /// </summary>
+        public static string CalibrateTheScreenForPenOrTouchInput {
+            get {
+                return ResourceManager.GetString("CalibrateTheScreenForPenOrTouchInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Call history.
         /// </summary>
-        internal static string CallHistory {
+        public static string CallHistory {
             get {
                 return ResourceManager.GetString("CallHistory", resourceCulture);
             }
@@ -792,7 +1063,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to calling.
         /// </summary>
-        internal static string calling {
+        public static string calling {
             get {
                 return ResourceManager.GetString("calling", resourceCulture);
             }
@@ -801,7 +1072,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Camera.
         /// </summary>
-        internal static string Camera {
+        public static string Camera {
             get {
                 return ResourceManager.GetString("Camera", resourceCulture);
             }
@@ -810,7 +1081,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cangjie IME.
         /// </summary>
-        internal static string CangjieIme {
+        public static string CangjieIme {
             get {
                 return ResourceManager.GetString("CangjieIme", resourceCulture);
             }
@@ -819,7 +1090,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Caps Lock.
         /// </summary>
-        internal static string CapsLock {
+        public static string CapsLock {
             get {
                 return ResourceManager.GetString("CapsLock", resourceCulture);
             }
@@ -828,25 +1099,601 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cellular and SIM.
         /// </summary>
-        internal static string CellularAndSim {
+        public static string CellularAndSim {
             get {
                 return ResourceManager.GetString("CellularAndSim", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change account type.
+        /// </summary>
+        public static string ChangeAccountType {
+            get {
+                return ResourceManager.GetString("ChangeAccountType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change advanced colour management settings for displays, scanners and printers.
+        /// </summary>
+        public static string ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters {
+            get {
+                return ResourceManager.GetString("ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Automatic Maintenance settings.
+        /// </summary>
+        public static string ChangeAutomaticMaintenanceSettings {
+            get {
+                return ResourceManager.GetString("ChangeAutomaticMaintenanceSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change battery settings.
+        /// </summary>
+        public static string ChangeBatterySettings {
+            get {
+                return ResourceManager.GetString("ChangeBatterySettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Bluetooth settings.
+        /// </summary>
+        public static string ChangeBluetoothSettings {
+            get {
+                return ResourceManager.GetString("ChangeBluetoothSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change cursor blink rate.
+        /// </summary>
+        public static string ChangeCursorBlinkRate {
+            get {
+                return ResourceManager.GetString("ChangeCursorBlinkRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change date, time or number formats.
+        /// </summary>
+        public static string ChangeDateTimeOrNumberFormats {
+            get {
+                return ResourceManager.GetString("ChangeDateTimeOrNumberFormats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change default printer.
+        /// </summary>
+        public static string ChangeDefaultPrinter {
+            get {
+                return ResourceManager.GetString("ChangeDefaultPrinter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change default settings for media or devices.
+        /// </summary>
+        public static string ChangeDefaultSettingsForMediaOrDevices {
+            get {
+                return ResourceManager.GetString("ChangeDefaultSettingsForMediaOrDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change device installation settings.
+        /// </summary>
+        public static string ChangeDeviceInstallationSettings {
+            get {
+                return ResourceManager.GetString("ChangeDeviceInstallationSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Font Settings.
+        /// </summary>
+        public static string ChangeFontSettings {
+            get {
+                return ResourceManager.GetString("ChangeFontSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change how the mouse pointer looks.
+        /// </summary>
+        public static string ChangeHowTheMousePointerLooks {
+            get {
+                return ResourceManager.GetString("ChangeHowTheMousePointerLooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change how the mouse pointer looks when it’s moving.
+        /// </summary>
+        public static string ChangeHowTheMousePointerLooksWhenItSMoving {
+            get {
+                return ResourceManager.GetString("ChangeHowTheMousePointerLooksWhenItSMoving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change how web pages are displayed in tabs.
+        /// </summary>
+        public static string ChangeHowWebPagesAreDisplayedInTabs {
+            get {
+                return ResourceManager.GetString("ChangeHowWebPagesAreDisplayedInTabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change how Windows searches.
+        /// </summary>
+        public static string ChangeHowWindowsSearches {
+            get {
+                return ResourceManager.GetString("ChangeHowWindowsSearches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change how your keyboard works.
+        /// </summary>
+        public static string ChangeHowYourKeyboardWorks {
+            get {
+                return ResourceManager.GetString("ChangeHowYourKeyboardWorks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change how your mouse works.
+        /// </summary>
+        public static string ChangeHowYourMouseWorks {
+            get {
+                return ResourceManager.GetString("ChangeHowYourMouseWorks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change input methods.
+        /// </summary>
+        public static string ChangeInputMethods {
+            get {
+                return ResourceManager.GetString("ChangeInputMethods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change location settings.
+        /// </summary>
+        public static string ChangeLocationSettings {
+            get {
+                return ResourceManager.GetString("ChangeLocationSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change mouse click settings.
+        /// </summary>
+        public static string ChangeMouseClickSettings {
+            get {
+                return ResourceManager.GetString("ChangeMouseClickSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change mouse settings.
+        /// </summary>
+        public static string ChangeMouseSettings {
+            get {
+                return ResourceManager.GetString("ChangeMouseSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change mouse wheel settings.
+        /// </summary>
+        public static string ChangeMouseWheelSettings {
+            get {
+                return ResourceManager.GetString("ChangeMouseWheelSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change multi-touch gesture settings.
+        /// </summary>
+        public static string ChangeMultiTouchGestureSettings {
+            get {
+                return ResourceManager.GetString("ChangeMultiTouchGestureSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change or remove a program.
+        /// </summary>
+        public static string ChangeOrRemoveAProgram {
+            get {
+                return ResourceManager.GetString("ChangeOrRemoveAProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change PC wake-up settings.
+        /// </summary>
+        public static string ChangePCWakeUpSettings {
+            get {
+                return ResourceManager.GetString("ChangePCWakeUpSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change power-saving settings.
+        /// </summary>
+        public static string ChangePowerSavingSettings {
+            get {
+                return ResourceManager.GetString("ChangePowerSavingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change screen saver.
+        /// </summary>
+        public static string ChangeScreenSaver {
+            get {
+                return ResourceManager.GetString("ChangeScreenSaver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change search options for files and folders.
+        /// </summary>
+        public static string ChangeSearchOptionsForFilesAndFolders {
+            get {
+                return ResourceManager.GetString("ChangeSearchOptionsForFilesAndFolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change security settings.
+        /// </summary>
+        public static string ChangeSecuritySettings {
+            get {
+                return ResourceManager.GetString("ChangeSecuritySettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change settings for content received using Tap and send.
+        /// </summary>
+        public static string ChangeSettingsForContentReceivedUsingTapAndSend {
+            get {
+                return ResourceManager.GetString("ChangeSettingsForContentReceivedUsingTapAndSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change sound card settings.
+        /// </summary>
+        public static string ChangeSoundCardSettings {
+            get {
+                return ResourceManager.GetString("ChangeSoundCardSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change system sounds.
+        /// </summary>
+        public static string ChangeSystemSounds {
+            get {
+                return ResourceManager.GetString("ChangeSystemSounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change tablet pen settings.
+        /// </summary>
+        public static string ChangeTabletPenSettings {
+            get {
+                return ResourceManager.GetString("ChangeTabletPenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change temporary Internet file settings.
+        /// </summary>
+        public static string ChangeTemporaryInternetFileSettings {
+            get {
+                return ResourceManager.GetString("ChangeTemporaryInternetFileSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change text-to-speech settings.
+        /// </summary>
+        public static string ChangeTextToSpeechSettings {
+            get {
+                return ResourceManager.GetString("ChangeTextToSpeechSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the file type associated with a file extension.
+        /// </summary>
+        public static string ChangeTheFileTypeAssociatedWithAFileExtension {
+            get {
+                return ResourceManager.GetString("ChangeTheFileTypeAssociatedWithAFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the mouse pointer display or speed.
+        /// </summary>
+        public static string ChangeTheMousePointerDisplayOrSpeed {
+            get {
+                return ResourceManager.GetString("ChangeTheMousePointerDisplayOrSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the Narrator’s voice.
+        /// </summary>
+        public static string ChangeTheNarratorSVoice {
+            get {
+                return ResourceManager.GetString("ChangeTheNarratorSVoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the order of Windows SideShow gadgets.
+        /// </summary>
+        public static string ChangeTheOrderOfWindowsSideshowGadgets {
+            get {
+                return ResourceManager.GetString("ChangeTheOrderOfWindowsSideshowGadgets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the search provider in Internet Explorer.
+        /// </summary>
+        public static string ChangeTheSearchProviderInInternetExplorer {
+            get {
+                return ResourceManager.GetString("ChangeTheSearchProviderInInternetExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the time zone.
+        /// </summary>
+        public static string ChangeTheTimeZone {
+            get {
+                return ResourceManager.GetString("ChangeTheTimeZone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the way currency is displayed.
+        /// </summary>
+        public static string ChangeTheWayCurrencyIsDisplayed {
+            get {
+                return ResourceManager.GetString("ChangeTheWayCurrencyIsDisplayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the way dates and lists are displayed.
+        /// </summary>
+        public static string ChangeTheWayDatesAndListsAreDisplayed {
+            get {
+                return ResourceManager.GetString("ChangeTheWayDatesAndListsAreDisplayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the way measurements are displayed.
+        /// </summary>
+        public static string ChangeTheWayMeasurementsAreDisplayed {
+            get {
+                return ResourceManager.GetString("ChangeTheWayMeasurementsAreDisplayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the way time is displayed.
+        /// </summary>
+        public static string ChangeTheWayTimeIsDisplayed {
+            get {
+                return ResourceManager.GetString("ChangeTheWayTimeIsDisplayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change touch input settings.
+        /// </summary>
+        public static string ChangeTouchInputSettings {
+            get {
+                return ResourceManager.GetString("ChangeTouchInputSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change User Account Control settings.
+        /// </summary>
+        public static string ChangeUserAccountControlSettings {
+            get {
+                return ResourceManager.GetString("ChangeUserAccountControlSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change what closing the lid does.
+        /// </summary>
+        public static string ChangeWhatClosingTheLidDoes {
+            get {
+                return ResourceManager.GetString("ChangeWhatClosingTheLidDoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change what the power buttons do.
+        /// </summary>
+        public static string ChangeWhatThePowerButtonsDo {
+            get {
+                return ResourceManager.GetString("ChangeWhatThePowerButtonsDo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change when the computer sleeps.
+        /// </summary>
+        public static string ChangeWhenTheComputerSleeps {
+            get {
+                return ResourceManager.GetString("ChangeWhenTheComputerSleeps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Windows SideShow-compatible device settings.
+        /// </summary>
+        public static string ChangeWindowsSideshowCompatibleDeviceSettings {
+            get {
+                return ResourceManager.GetString("ChangeWindowsSideshowCompatibleDeviceSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Windows SideShow settings.
+        /// </summary>
+        public static string ChangeWindowsSideshowSettings {
+            get {
+                return ResourceManager.GetString("ChangeWindowsSideshowSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Windows To Go start-up options.
+        /// </summary>
+        public static string ChangeWindowsToGoStartUpOptions {
+            get {
+                return ResourceManager.GetString("ChangeWindowsToGoStartUpOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change workgroup name.
+        /// </summary>
+        public static string ChangeWorkgroupName {
+            get {
+                return ResourceManager.GetString("ChangeWorkgroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change your homepage.
+        /// </summary>
+        public static string ChangeYourHomepage {
+            get {
+                return ResourceManager.GetString("ChangeYourHomepage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check firewall status.
+        /// </summary>
+        public static string CheckFirewallStatus {
+            get {
+                return ResourceManager.GetString("CheckFirewallStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check keyboard status.
+        /// </summary>
+        public static string CheckKeyboardStatus {
+            get {
+                return ResourceManager.GetString("CheckKeyboardStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check processor speed.
+        /// </summary>
+        public static string CheckProcessorSpeed {
+            get {
+                return ResourceManager.GetString("CheckProcessorSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check security status.
+        /// </summary>
+        public static string CheckSecurityStatus {
+            get {
+                return ResourceManager.GetString("CheckSecurityStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a power plan.
+        /// </summary>
+        public static string ChooseAPowerPlan {
+            get {
+                return ResourceManager.GetString("ChooseAPowerPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose how you open links.
+        /// </summary>
+        public static string ChooseHowYouOpenLinks {
+            get {
+                return ResourceManager.GetString("ChooseHowYouOpenLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose the order of how your screen rotates.
+        /// </summary>
+        public static string ChooseTheOrderOfHowYourScreenRotates {
+            get {
+                return ResourceManager.GetString("ChooseTheOrderOfHowYourScreenRotates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose when to turn off display.
+        /// </summary>
+        public static string ChooseWhenToTurnOffDisplay {
+            get {
+                return ResourceManager.GetString("ChooseWhenToTurnOffDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose which folders appear on Start.
         /// </summary>
-        internal static string ChooseWhichFoldersAppearOnStart {
+        public static string ChooseWhichFoldersAppearOnStart {
             get {
                 return ResourceManager.GetString("ChooseWhichFoldersAppearOnStart", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear disk space by deleting unnecessary files.
+        /// </summary>
+        public static string ClearDiskSpaceByDeletingUnnecessaryFiles {
+            get {
+                return ResourceManager.GetString("ClearDiskSpaceByDeletingUnnecessaryFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client service for NetWare.
         /// </summary>
-        internal static string ClientServiceForNetWare {
+        public static string ClientServiceForNetWare {
             get {
                 return ResourceManager.GetString("ClientServiceForNetWare", resourceCulture);
             }
@@ -855,7 +1702,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Clipboard.
         /// </summary>
-        internal static string Clipboard {
+        public static string Clipboard {
             get {
                 return ResourceManager.GetString("Clipboard", resourceCulture);
             }
@@ -864,7 +1711,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Closed captions.
         /// </summary>
-        internal static string ClosedCaptions {
+        public static string ClosedCaptions {
             get {
                 return ResourceManager.GetString("ClosedCaptions", resourceCulture);
             }
@@ -873,7 +1720,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Color filters.
         /// </summary>
-        internal static string ColorFilters {
+        public static string ColorFilters {
             get {
                 return ResourceManager.GetString("ColorFilters", resourceCulture);
             }
@@ -882,7 +1729,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Color management.
         /// </summary>
-        internal static string ColorManagement {
+        public static string ColorManagement {
             get {
                 return ResourceManager.GetString("ColorManagement", resourceCulture);
             }
@@ -891,7 +1738,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Colors.
         /// </summary>
-        internal static string Colors {
+        public static string Colors {
             get {
                 return ResourceManager.GetString("Colors", resourceCulture);
             }
@@ -900,25 +1747,61 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Command.
         /// </summary>
-        internal static string Command {
+        public static string Command {
             get {
                 return ResourceManager.GetString("Command", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configure advanced user profile properties.
+        /// </summary>
+        public static string ConfigureAdvancedUserProfileProperties {
+            get {
+                return ResourceManager.GetString("ConfigureAdvancedUserProfileProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure proxy server.
+        /// </summary>
+        public static string ConfigureProxyServer {
+            get {
+                return ResourceManager.GetString("ConfigureProxyServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected Devices.
         /// </summary>
-        internal static string ConnectedDevices {
+        public static string ConnectedDevices {
             get {
                 return ResourceManager.GetString("ConnectedDevices", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect to a network.
+        /// </summary>
+        public static string ConnectToANetwork {
+            get {
+                return ResourceManager.GetString("ConnectToANetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect to the Internet.
+        /// </summary>
+        public static string ConnectToTheInternet {
+            get {
+                return ResourceManager.GetString("ConnectToTheInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contacts.
         /// </summary>
-        internal static string Contacts {
+        public static string Contacts {
             get {
                 return ResourceManager.GetString("Contacts", resourceCulture);
             }
@@ -927,16 +1810,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Control Panel.
         /// </summary>
-        internal static string ControlPanel {
+        public static string ControlPanel {
             get {
                 return ResourceManager.GetString("ControlPanel", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Control the computer without the mouse or keyboard.
+        /// </summary>
+        public static string ControlTheComputerWithoutTheMouseOrKeyboard {
+            get {
+                return ResourceManager.GetString("ControlTheComputerWithoutTheMouseOrKeyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy command.
         /// </summary>
-        internal static string CopyCommand {
+        public static string CopyCommand {
             get {
                 return ResourceManager.GetString("CopyCommand", resourceCulture);
             }
@@ -945,7 +1837,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Core Isolation.
         /// </summary>
-        internal static string CoreIsolation {
+        public static string CoreIsolation {
             get {
                 return ResourceManager.GetString("CoreIsolation", resourceCulture);
             }
@@ -954,7 +1846,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cortana.
         /// </summary>
-        internal static string Cortana {
+        public static string Cortana {
             get {
                 return ResourceManager.GetString("Cortana", resourceCulture);
             }
@@ -963,7 +1855,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cortana across my devices.
         /// </summary>
-        internal static string CortanaAcrossMyDevices {
+        public static string CortanaAcrossMyDevices {
             get {
                 return ResourceManager.GetString("CortanaAcrossMyDevices", resourceCulture);
             }
@@ -972,16 +1864,70 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cortana - Language.
         /// </summary>
-        internal static string CortanaLanguage {
+        public static string CortanaLanguage {
             get {
                 return ResourceManager.GetString("CortanaLanguage", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create an account.
+        /// </summary>
+        public static string CreateAnAccount {
+            get {
+                return ResourceManager.GetString("CreateAnAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create and format hard disk partitions.
+        /// </summary>
+        public static string CreateAndFormatHardDiskPartitions {
+            get {
+                return ResourceManager.GetString("CreateAndFormatHardDiskPartitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a password reset disk.
+        /// </summary>
+        public static string CreateAPasswordResetDisk {
+            get {
+                return ResourceManager.GetString("CreateAPasswordResetDisk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a recovery drive.
+        /// </summary>
+        public static string CreateARecoveryDrive {
+            get {
+                return ResourceManager.GetString("CreateARecoveryDrive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a restore point.
+        /// </summary>
+        public static string CreateARestorePoint {
+            get {
+                return ResourceManager.GetString("CreateARestorePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create standard user account.
+        /// </summary>
+        public static string CreateStandardUserAccount {
+            get {
+                return ResourceManager.GetString("CreateStandardUserAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credential manager.
         /// </summary>
-        internal static string CredentialManager {
+        public static string CredentialManager {
             get {
                 return ResourceManager.GetString("CredentialManager", resourceCulture);
             }
@@ -990,7 +1936,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Crossdevice.
         /// </summary>
-        internal static string Crossdevice {
+        public static string Crossdevice {
             get {
                 return ResourceManager.GetString("Crossdevice", resourceCulture);
             }
@@ -999,16 +1945,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Custom devices.
         /// </summary>
-        internal static string CustomDevices {
+        public static string CustomDevices {
             get {
                 return ResourceManager.GetString("CustomDevices", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customise the mouse buttons.
+        /// </summary>
+        public static string CustomiseTheMouseButtons {
+            get {
+                return ResourceManager.GetString("CustomiseTheMouseButtons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark color.
         /// </summary>
-        internal static string DarkColor {
+        public static string DarkColor {
             get {
                 return ResourceManager.GetString("DarkColor", resourceCulture);
             }
@@ -1017,7 +1972,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Dark mode.
         /// </summary>
-        internal static string DarkMode {
+        public static string DarkMode {
             get {
                 return ResourceManager.GetString("DarkMode", resourceCulture);
             }
@@ -1026,7 +1981,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Data usage.
         /// </summary>
-        internal static string DataUsage {
+        public static string DataUsage {
             get {
                 return ResourceManager.GetString("DataUsage", resourceCulture);
             }
@@ -1035,7 +1990,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Date and time.
         /// </summary>
-        internal static string DateAndTime {
+        public static string DateAndTime {
             get {
                 return ResourceManager.GetString("DateAndTime", resourceCulture);
             }
@@ -1044,7 +1999,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Default apps.
         /// </summary>
-        internal static string DefaultApps {
+        public static string DefaultApps {
             get {
                 return ResourceManager.GetString("DefaultApps", resourceCulture);
             }
@@ -1053,7 +2008,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Default camera.
         /// </summary>
-        internal static string DefaultCamera {
+        public static string DefaultCamera {
             get {
                 return ResourceManager.GetString("DefaultCamera", resourceCulture);
             }
@@ -1062,7 +2017,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Default location.
         /// </summary>
-        internal static string DefaultLocation {
+        public static string DefaultLocation {
             get {
                 return ResourceManager.GetString("DefaultLocation", resourceCulture);
             }
@@ -1071,7 +2026,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Default programs.
         /// </summary>
-        internal static string DefaultPrograms {
+        public static string DefaultPrograms {
             get {
                 return ResourceManager.GetString("DefaultPrograms", resourceCulture);
             }
@@ -1080,16 +2035,43 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Default Save Locations.
         /// </summary>
-        internal static string DefaultSaveLocations {
+        public static string DefaultSaveLocations {
             get {
                 return ResourceManager.GetString("DefaultSaveLocations", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Defragment and optimise your drives.
+        /// </summary>
+        public static string DefragmentAndOptimiseYourDrives {
+            get {
+                return ResourceManager.GetString("DefragmentAndOptimiseYourDrives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete browsing history.
+        /// </summary>
+        public static string DeleteBrowsingHistory {
+            get {
+                return ResourceManager.GetString("DeleteBrowsingHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete cookies or temporary files.
+        /// </summary>
+        public static string DeleteCookiesOrTemporaryFiles {
+            get {
+                return ResourceManager.GetString("DeleteCookiesOrTemporaryFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delivery Optimization.
         /// </summary>
-        internal static string DeliveryOptimization {
+        public static string DeliveryOptimization {
             get {
                 return ResourceManager.GetString("DeliveryOptimization", resourceCulture);
             }
@@ -1098,7 +2080,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to desk.cpl.
         /// </summary>
-        internal static string desk_cpl {
+        public static string desk_cpl {
             get {
                 return ResourceManager.GetString("desk.cpl", resourceCulture);
             }
@@ -1107,7 +2089,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Desktop themes.
         /// </summary>
-        internal static string DesktopThemes {
+        public static string DesktopThemes {
             get {
                 return ResourceManager.GetString("DesktopThemes", resourceCulture);
             }
@@ -1116,7 +2098,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to deuteranopia.
         /// </summary>
-        internal static string deuteranopia {
+        public static string deuteranopia {
             get {
                 return ResourceManager.GetString("deuteranopia", resourceCulture);
             }
@@ -1125,7 +2107,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Device manager.
         /// </summary>
-        internal static string DeviceManager {
+        public static string DeviceManager {
             get {
                 return ResourceManager.GetString("DeviceManager", resourceCulture);
             }
@@ -1134,7 +2116,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Devices and printers.
         /// </summary>
-        internal static string DevicesAndPrinters {
+        public static string DevicesAndPrinters {
             get {
                 return ResourceManager.GetString("DevicesAndPrinters", resourceCulture);
             }
@@ -1143,16 +2125,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to DHCP.
         /// </summary>
-        internal static string Dhcp {
+        public static string Dhcp {
             get {
                 return ResourceManager.GetString("Dhcp", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diagnose your computer&apos;s memory problems.
+        /// </summary>
+        public static string DiagnoseYourComputersMemoryProblems {
+            get {
+                return ResourceManager.GetString("DiagnoseYourComputersMemoryProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dial-up.
         /// </summary>
-        internal static string DialUp {
+        public static string DialUp {
             get {
                 return ResourceManager.GetString("DialUp", resourceCulture);
             }
@@ -1161,7 +2152,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Direct access.
         /// </summary>
-        internal static string DirectAccess {
+        public static string DirectAccess {
             get {
                 return ResourceManager.GetString("DirectAccess", resourceCulture);
             }
@@ -1170,7 +2161,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Direct open your phone.
         /// </summary>
-        internal static string DirectOpenYourPhone {
+        public static string DirectOpenYourPhone {
             get {
                 return ResourceManager.GetString("DirectOpenYourPhone", resourceCulture);
             }
@@ -1179,7 +2170,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Display.
         /// </summary>
-        internal static string Display {
+        public static string Display {
             get {
                 return ResourceManager.GetString("Display", resourceCulture);
             }
@@ -1188,7 +2179,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Display properties.
         /// </summary>
-        internal static string DisplayProperties {
+        public static string DisplayProperties {
             get {
                 return ResourceManager.GetString("DisplayProperties", resourceCulture);
             }
@@ -1197,7 +2188,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to DNS.
         /// </summary>
-        internal static string DNS {
+        public static string DNS {
             get {
                 return ResourceManager.GetString("DNS", resourceCulture);
             }
@@ -1206,7 +2197,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Documents.
         /// </summary>
-        internal static string Documents {
+        public static string Documents {
             get {
                 return ResourceManager.GetString("Documents", resourceCulture);
             }
@@ -1215,7 +2206,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Duplicating my display.
         /// </summary>
-        internal static string DuplicatingMyDisplay {
+        public static string DuplicatingMyDisplay {
             get {
                 return ResourceManager.GetString("DuplicatingMyDisplay", resourceCulture);
             }
@@ -1224,7 +2215,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to During these hours.
         /// </summary>
-        internal static string DuringTheseHours {
+        public static string DuringTheseHours {
             get {
                 return ResourceManager.GetString("DuringTheseHours", resourceCulture);
             }
@@ -1233,25 +2224,70 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ease of access center.
         /// </summary>
-        internal static string EaseOfAccessCenter {
+        public static string EaseOfAccessCenter {
             get {
                 return ResourceManager.GetString("EaseOfAccessCenter", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit environment variables for your account.
+        /// </summary>
+        public static string EditEnvironmentVariablesForYourAccount {
+            get {
+                return ResourceManager.GetString("EditEnvironmentVariablesForYourAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit group policy.
+        /// </summary>
+        public static string EditGroupPolicy {
+            get {
+                return ResourceManager.GetString("EditGroupPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edition.
         /// </summary>
-        internal static string Edition {
+        public static string Edition {
             get {
                 return ResourceManager.GetString("Edition", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit local users and groups.
+        /// </summary>
+        public static string EditLocalUsersAndGroups {
+            get {
+                return ResourceManager.GetString("EditLocalUsersAndGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit power plan.
+        /// </summary>
+        public static string EditPowerPlan {
+            get {
+                return ResourceManager.GetString("EditPowerPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the system environment variables.
+        /// </summary>
+        public static string EditTheSystemEnvironmentVariables {
+            get {
+                return ResourceManager.GetString("EditTheSystemEnvironmentVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
-        internal static string Email {
+        public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
@@ -1260,25 +2296,43 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Email and app accounts.
         /// </summary>
-        internal static string EmailAndAppAccounts {
+        public static string EmailAndAppAccounts {
             get {
                 return ResourceManager.GetString("EmailAndAppAccounts", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable or disable session cookies.
+        /// </summary>
+        public static string EnableOrDisableSessionCookies {
+            get {
+                return ResourceManager.GetString("EnableOrDisableSessionCookies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encryption.
         /// </summary>
-        internal static string Encryption {
+        public static string Encryption {
             get {
                 return ResourceManager.GetString("Encryption", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encrypt your offline files.
+        /// </summary>
+        public static string EncryptYourOfflineFiles {
+            get {
+                return ResourceManager.GetString("EncryptYourOfflineFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Environment.
         /// </summary>
-        internal static string Environment {
+        public static string Environment {
             get {
                 return ResourceManager.GetString("Environment", resourceCulture);
             }
@@ -1287,7 +2341,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ethernet.
         /// </summary>
-        internal static string Ethernet {
+        public static string Ethernet {
             get {
                 return ResourceManager.GetString("Ethernet", resourceCulture);
             }
@@ -1296,7 +2350,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Exploit Protection.
         /// </summary>
-        internal static string ExploitProtection {
+        public static string ExploitProtection {
             get {
                 return ResourceManager.GetString("ExploitProtection", resourceCulture);
             }
@@ -1305,7 +2359,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Extras.
         /// </summary>
-        internal static string Extras {
+        public static string Extras {
             get {
                 return ResourceManager.GetString("Extras", resourceCulture);
             }
@@ -1314,7 +2368,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Eye control.
         /// </summary>
-        internal static string EyeControl {
+        public static string EyeControl {
             get {
                 return ResourceManager.GetString("EyeControl", resourceCulture);
             }
@@ -1323,7 +2377,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Eye tracker.
         /// </summary>
-        internal static string EyeTracker {
+        public static string EyeTracker {
             get {
                 return ResourceManager.GetString("EyeTracker", resourceCulture);
             }
@@ -1332,7 +2386,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Family and other people.
         /// </summary>
-        internal static string FamilyAndOtherPeople {
+        public static string FamilyAndOtherPeople {
             get {
                 return ResourceManager.GetString("FamilyAndOtherPeople", resourceCulture);
             }
@@ -1341,7 +2395,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Feedback and diagnostics.
         /// </summary>
-        internal static string FeedbackAndDiagnostics {
+        public static string FeedbackAndDiagnostics {
             get {
                 return ResourceManager.GetString("FeedbackAndDiagnostics", resourceCulture);
             }
@@ -1350,16 +2404,97 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to File system.
         /// </summary>
-        internal static string FileSystem {
+        public static string FileSystem {
             get {
                 return ResourceManager.GetString("FileSystem", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find and fix audio playback problems.
+        /// </summary>
+        public static string FindAndFixAudioPlaybackProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixAudioPlaybackProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix audio recording problems.
+        /// </summary>
+        public static string FindAndFixAudioRecordingProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixAudioRecordingProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix bluescreen problems.
+        /// </summary>
+        public static string FindAndFixBluescreenProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixBluescreenProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix keyboard problems.
+        /// </summary>
+        public static string FindAndFixKeyboardProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixKeyboardProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix networking and connection problems.
+        /// </summary>
+        public static string FindAndFixNetworkingAndConnectionProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixNetworkingAndConnectionProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix printing problems.
+        /// </summary>
+        public static string FindAndFixPrintingProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixPrintingProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix problems.
+        /// </summary>
+        public static string FindAndFixProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix problems with Windows Search.
+        /// </summary>
+        public static string FindAndFixProblemsWithWindowsSearch {
+            get {
+                return ResourceManager.GetString("FindAndFixProblemsWithWindowsSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find and fix windows update problems.
+        /// </summary>
+        public static string FindAndFixWindowsUpdateProblems {
+            get {
+                return ResourceManager.GetString("FindAndFixWindowsUpdateProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FindFast.
         /// </summary>
-        internal static string FindFast {
+        public static string FindFast {
             get {
                 return ResourceManager.GetString("FindFast", resourceCulture);
             }
@@ -1368,7 +2503,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to findfast.cpl.
         /// </summary>
-        internal static string findfast_cpl {
+        public static string findfast_cpl {
             get {
                 return ResourceManager.GetString("findfast.cpl", resourceCulture);
             }
@@ -1377,7 +2512,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Find My Device.
         /// </summary>
-        internal static string FindMyDevice {
+        public static string FindMyDevice {
             get {
                 return ResourceManager.GetString("FindMyDevice", resourceCulture);
             }
@@ -1386,16 +2521,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Firewall.
         /// </summary>
-        internal static string Firewall {
+        public static string Firewall {
             get {
                 return ResourceManager.GetString("Firewall", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fix problems with your computer.
+        /// </summary>
+        public static string FixProblemsWithYourComputer {
+            get {
+                return ResourceManager.GetString("FixProblemsWithYourComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Focus assist - Quiet hours.
         /// </summary>
-        internal static string FocusAssistQuietHours {
+        public static string FocusAssistQuietHours {
             get {
                 return ResourceManager.GetString("FocusAssistQuietHours", resourceCulture);
             }
@@ -1404,7 +2548,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Focus assist - Quiet moments.
         /// </summary>
-        internal static string FocusAssistQuietMoments {
+        public static string FocusAssistQuietMoments {
             get {
                 return ResourceManager.GetString("FocusAssistQuietMoments", resourceCulture);
             }
@@ -1413,7 +2557,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Folder options.
         /// </summary>
-        internal static string FolderOptions {
+        public static string FolderOptions {
             get {
                 return ResourceManager.GetString("FolderOptions", resourceCulture);
             }
@@ -1422,7 +2566,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Fonts.
         /// </summary>
-        internal static string Fonts {
+        public static string Fonts {
             get {
                 return ResourceManager.GetString("Fonts", resourceCulture);
             }
@@ -1431,7 +2575,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to For developers.
         /// </summary>
-        internal static string ForDevelopers {
+        public static string ForDevelopers {
             get {
                 return ResourceManager.GetString("ForDevelopers", resourceCulture);
             }
@@ -1440,7 +2584,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Game bar.
         /// </summary>
-        internal static string GameBar {
+        public static string GameBar {
             get {
                 return ResourceManager.GetString("GameBar", resourceCulture);
             }
@@ -1449,7 +2593,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Game controllers.
         /// </summary>
-        internal static string GameControllers {
+        public static string GameControllers {
             get {
                 return ResourceManager.GetString("GameControllers", resourceCulture);
             }
@@ -1458,7 +2602,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Game DVR.
         /// </summary>
-        internal static string GameDvr {
+        public static string GameDvr {
             get {
                 return ResourceManager.GetString("GameDvr", resourceCulture);
             }
@@ -1467,7 +2611,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Game Mode.
         /// </summary>
-        internal static string GameMode {
+        public static string GameMode {
             get {
                 return ResourceManager.GetString("GameMode", resourceCulture);
             }
@@ -1476,7 +2620,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Gateway.
         /// </summary>
-        internal static string Gateway {
+        public static string Gateway {
             get {
                 return ResourceManager.GetString("Gateway", resourceCulture);
             }
@@ -1485,16 +2629,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
-        internal static string General {
+        public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate a system health report.
+        /// </summary>
+        public static string GenerateASystemHealthReport {
+            get {
+                return ResourceManager.GetString("GenerateASystemHealthReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get more features with a new edition of Windows.
+        /// </summary>
+        public static string GetMoreFeaturesWithANewEditionOfWindows {
+            get {
+                return ResourceManager.GetString("GetMoreFeaturesWithANewEditionOfWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get programs.
         /// </summary>
-        internal static string GetPrograms {
+        public static string GetPrograms {
             get {
                 return ResourceManager.GetString("GetPrograms", resourceCulture);
             }
@@ -1503,16 +2665,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Getting started.
         /// </summary>
-        internal static string GettingStarted {
+        public static string GettingStarted {
             get {
                 return ResourceManager.GetString("GettingStarted", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Give administrative rights to a domain user.
+        /// </summary>
+        public static string GiveAdministrativeRightsToADomainUser {
+            get {
+                return ResourceManager.GetString("GiveAdministrativeRightsToADomainUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Give other users access to this computer.
+        /// </summary>
+        public static string GiveOtherUsersAccessToThisComputer {
+            get {
+                return ResourceManager.GetString("GiveOtherUsersAccessToThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Glance.
         /// </summary>
-        internal static string Glance {
+        public static string Glance {
             get {
                 return ResourceManager.GetString("Glance", resourceCulture);
             }
@@ -1521,7 +2701,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Graphics settings.
         /// </summary>
-        internal static string GraphicsSettings {
+        public static string GraphicsSettings {
             get {
                 return ResourceManager.GetString("GraphicsSettings", resourceCulture);
             }
@@ -1530,7 +2710,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Grayscale.
         /// </summary>
-        internal static string Grayscale {
+        public static string Grayscale {
             get {
                 return ResourceManager.GetString("Grayscale", resourceCulture);
             }
@@ -1539,25 +2719,52 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Green week.
         /// </summary>
-        internal static string GreenWeek {
+        public static string GreenWeek {
             get {
                 return ResourceManager.GetString("GreenWeek", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group similar windows on the taskbar.
+        /// </summary>
+        public static string GroupSimilarWindowsOnTheTaskbar {
+            get {
+                return ResourceManager.GetString("GroupSimilarWindowsOnTheTaskbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Headset display.
         /// </summary>
-        internal static string HeadsetDisplay {
+        public static string HeadsetDisplay {
             get {
                 return ResourceManager.GetString("HeadsetDisplay", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hear a tone when keys are pressed.
+        /// </summary>
+        public static string HearAToneWhenKeysArePressed {
+            get {
+                return ResourceManager.GetString("HearAToneWhenKeysArePressed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hear text read aloud with Narrator.
+        /// </summary>
+        public static string HearTextReadAloudWithNarrator {
+            get {
+                return ResourceManager.GetString("HearTextReadAloudWithNarrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to High contrast.
         /// </summary>
-        internal static string HighContrast {
+        public static string HighContrast {
             get {
                 return ResourceManager.GetString("HighContrast", resourceCulture);
             }
@@ -1566,7 +2773,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Holographic audio.
         /// </summary>
-        internal static string HolographicAudio {
+        public static string HolographicAudio {
             get {
                 return ResourceManager.GetString("HolographicAudio", resourceCulture);
             }
@@ -1575,7 +2782,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Holographic Environment.
         /// </summary>
-        internal static string HolographicEnvironment {
+        public static string HolographicEnvironment {
             get {
                 return ResourceManager.GetString("HolographicEnvironment", resourceCulture);
             }
@@ -1584,7 +2791,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Holographic Headset.
         /// </summary>
-        internal static string HolographicHeadset {
+        public static string HolographicHeadset {
             get {
                 return ResourceManager.GetString("HolographicHeadset", resourceCulture);
             }
@@ -1593,7 +2800,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Holographic Management.
         /// </summary>
-        internal static string HolographicManagement {
+        public static string HolographicManagement {
             get {
                 return ResourceManager.GetString("HolographicManagement", resourceCulture);
             }
@@ -1602,25 +2809,70 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Home group.
         /// </summary>
-        internal static string HomeGroup {
+        public static string HomeGroup {
             get {
                 return ResourceManager.GetString("HomeGroup", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How to change the size of virtual memory.
+        /// </summary>
+        public static string HowToChangeTheSizeOfVirtualMemory {
+            get {
+                return ResourceManager.GetString("HowToChangeTheSizeOfVirtualMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to change your Windows password.
+        /// </summary>
+        public static string HowToChangeYourWindowsPassword {
+            get {
+                return ResourceManager.GetString("HowToChangeYourWindowsPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to install a program.
+        /// </summary>
+        public static string HowToInstallAProgram {
+            get {
+                return ResourceManager.GetString("HowToInstallAProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
-        internal static string Id {
+        public static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identify and repair network problems.
+        /// </summary>
+        public static string IdentifyAndRepairNetworkProblems {
+            get {
+                return ResourceManager.GetString("IdentifyAndRepairNetworkProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore repeated keystrokes using FilterKeys.
+        /// </summary>
+        public static string IgnoreRepeatedKeystrokesUsingFilterkeys {
+            get {
+                return ResourceManager.GetString("IgnoreRepeatedKeystrokesUsingFilterkeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
-        internal static string Image {
+        public static string Image {
             get {
                 return ResourceManager.GetString("Image", resourceCulture);
             }
@@ -1629,7 +2881,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Indexing options.
         /// </summary>
-        internal static string IndexingOptions {
+        public static string IndexingOptions {
             get {
                 return ResourceManager.GetString("IndexingOptions", resourceCulture);
             }
@@ -1638,7 +2890,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to inetcpl.cpl.
         /// </summary>
-        internal static string inetcpl_cpl {
+        public static string inetcpl_cpl {
             get {
                 return ResourceManager.GetString("inetcpl.cpl", resourceCulture);
             }
@@ -1647,7 +2899,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Infrared.
         /// </summary>
-        internal static string Infrared {
+        public static string Infrared {
             get {
                 return ResourceManager.GetString("Infrared", resourceCulture);
             }
@@ -1656,16 +2908,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Inking and typing.
         /// </summary>
-        internal static string InkingAndTyping {
+        public static string InkingAndTyping {
             get {
                 return ResourceManager.GetString("InkingAndTyping", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install a program from the network.
+        /// </summary>
+        public static string InstallAProgramFromTheNetwork {
+            get {
+                return ResourceManager.GetString("InstallAProgramFromTheNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internet options.
         /// </summary>
-        internal static string InternetOptions {
+        public static string InternetOptions {
             get {
                 return ResourceManager.GetString("InternetOptions", resourceCulture);
             }
@@ -1674,7 +2935,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to intl.cpl.
         /// </summary>
-        internal static string intl_cpl {
+        public static string intl_cpl {
             get {
                 return ResourceManager.GetString("intl.cpl", resourceCulture);
             }
@@ -1683,16 +2944,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Inverted colors.
         /// </summary>
-        internal static string InvertedColors {
+        public static string InvertedColors {
             get {
                 return ResourceManager.GetString("InvertedColors", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invite someone to connect to your PC and help you, or offer to help someone else.
+        /// </summary>
+        public static string InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse {
+            get {
+                return ResourceManager.GetString("InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP.
         /// </summary>
-        internal static string Ip {
+        public static string Ip {
             get {
                 return ResourceManager.GetString("Ip", resourceCulture);
             }
@@ -1701,7 +2971,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Isolated Browsing.
         /// </summary>
-        internal static string IsolatedBrowsing {
+        public static string IsolatedBrowsing {
             get {
                 return ResourceManager.GetString("IsolatedBrowsing", resourceCulture);
             }
@@ -1710,16 +2980,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Japan IME settings.
         /// </summary>
-        internal static string JapanImeSettings {
+        public static string JapanImeSettings {
             get {
                 return ResourceManager.GetString("JapanImeSettings", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Join a domain.
+        /// </summary>
+        public static string JoinADomain {
+            get {
+                return ResourceManager.GetString("JoinADomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to joy.cpl.
         /// </summary>
-        internal static string joy_cpl {
+        public static string joy_cpl {
             get {
                 return ResourceManager.GetString("joy.cpl", resourceCulture);
             }
@@ -1728,7 +3007,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Joystick properties.
         /// </summary>
-        internal static string JoystickProperties {
+        public static string JoystickProperties {
             get {
                 return ResourceManager.GetString("JoystickProperties", resourceCulture);
             }
@@ -1737,7 +3016,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to jpnime.
         /// </summary>
-        internal static string jpnime {
+        public static string jpnime {
             get {
                 return ResourceManager.GetString("jpnime", resourceCulture);
             }
@@ -1746,7 +3025,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Keyboard.
         /// </summary>
-        internal static string Keyboard {
+        public static string Keyboard {
             get {
                 return ResourceManager.GetString("Keyboard", resourceCulture);
             }
@@ -1755,7 +3034,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Keypad.
         /// </summary>
-        internal static string Keypad {
+        public static string Keypad {
             get {
                 return ResourceManager.GetString("Keypad", resourceCulture);
             }
@@ -1764,7 +3043,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Keys.
         /// </summary>
-        internal static string Keys {
+        public static string Keys {
             get {
                 return ResourceManager.GetString("Keys", resourceCulture);
             }
@@ -1773,16 +3052,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
-        internal static string Language {
+        public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Let Windows suggest Ease of Access settings.
+        /// </summary>
+        public static string LetWindowsSuggestEaseOfAccessSettings {
+            get {
+                return ResourceManager.GetString("LetWindowsSuggestEaseOfAccessSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light color.
         /// </summary>
-        internal static string LightColor {
+        public static string LightColor {
             get {
                 return ResourceManager.GetString("LightColor", resourceCulture);
             }
@@ -1791,7 +3079,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Light mode.
         /// </summary>
-        internal static string LightMode {
+        public static string LightMode {
             get {
                 return ResourceManager.GetString("LightMode", resourceCulture);
             }
@@ -1800,16 +3088,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Location.
         /// </summary>
-        internal static string Location {
+        public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock or unlock the taskbar.
+        /// </summary>
+        public static string LockOrUnlockTheTaskbar {
+            get {
+                return ResourceManager.GetString("LockOrUnlockTheTaskbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lock screen.
         /// </summary>
-        internal static string LockScreen {
+        public static string LockScreen {
             get {
                 return ResourceManager.GetString("LockScreen", resourceCulture);
             }
@@ -1818,16 +3115,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Magnifier.
         /// </summary>
-        internal static string Magnifier {
+        public static string Magnifier {
             get {
                 return ResourceManager.GetString("Magnifier", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magnify portions of the screen using Magnifier.
+        /// </summary>
+        public static string MagnifyPortionsOfTheScreenUsingMagnifier {
+            get {
+                return ResourceManager.GetString("MagnifyPortionsOfTheScreenUsingMagnifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mail - Microsoft Exchange or Windows Messaging.
         /// </summary>
-        internal static string MailMicrosoftExchangeOrWindowsMessaging {
+        public static string MailMicrosoftExchangeOrWindowsMessaging {
             get {
                 return ResourceManager.GetString("MailMicrosoftExchangeOrWindowsMessaging", resourceCulture);
             }
@@ -1836,34 +3142,196 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to main.cpl.
         /// </summary>
-        internal static string main_cpl {
+        public static string main_cpl {
             get {
                 return ResourceManager.GetString("main.cpl", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make a file type always open in a specific program.
+        /// </summary>
+        public static string MakeAFileTypeAlwaysOpenInASpecificProgram {
+            get {
+                return ResourceManager.GetString("MakeAFileTypeAlwaysOpenInASpecificProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make changes to accounts.
+        /// </summary>
+        public static string MakeChangesToAccounts {
+            get {
+                return ResourceManager.GetString("MakeChangesToAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make it easier to see the mouse pointer.
+        /// </summary>
+        public static string MakeItEasierToSeeTheMousePointer {
+            get {
+                return ResourceManager.GetString("MakeItEasierToSeeTheMousePointer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage advanced sharing settings.
+        /// </summary>
+        public static string ManageAdvancedSharingSettings {
+            get {
+                return ResourceManager.GetString("ManageAdvancedSharingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage audio devices.
+        /// </summary>
+        public static string ManageAudioDevices {
+            get {
+                return ResourceManager.GetString("ManageAudioDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage BitLocker.
+        /// </summary>
+        public static string ManageBitlocker {
+            get {
+                return ResourceManager.GetString("ManageBitlocker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage browser add-ons.
+        /// </summary>
+        public static string ManageBrowserAddOns {
+            get {
+                return ResourceManager.GetString("ManageBrowserAddOns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage computer certificates.
+        /// </summary>
+        public static string ManageComputerCertificates {
+            get {
+                return ResourceManager.GetString("ManageComputerCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage disk space used by your offline files.
+        /// </summary>
+        public static string ManageDiskSpaceUsedByYourOfflineFiles {
+            get {
+                return ResourceManager.GetString("ManageDiskSpaceUsedByYourOfflineFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage file encryption certificates.
+        /// </summary>
+        public static string ManageFileEncryptionCertificates {
+            get {
+                return ResourceManager.GetString("ManageFileEncryptionCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage known networks.
         /// </summary>
-        internal static string ManageKnownNetworks {
+        public static string ManageKnownNetworks {
             get {
                 return ResourceManager.GetString("ManageKnownNetworks", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage network passwords.
+        /// </summary>
+        public static string ManageNetworkPasswords {
+            get {
+                return ResourceManager.GetString("ManageNetworkPasswords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage offline files.
+        /// </summary>
+        public static string ManageOfflineFiles {
+            get {
+                return ResourceManager.GetString("ManageOfflineFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage optional features.
         /// </summary>
-        internal static string ManageOptionalFeatures {
+        public static string ManageOptionalFeatures {
             get {
                 return ResourceManager.GetString("ManageOptionalFeatures", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Storage Spaces.
+        /// </summary>
+        public static string ManageStorageSpaces {
+            get {
+                return ResourceManager.GetString("ManageStorageSpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage user certificates.
+        /// </summary>
+        public static string ManageUserCertificates {
+            get {
+                return ResourceManager.GetString("ManageUserCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Web Credentials.
+        /// </summary>
+        public static string ManageWebCredentials {
+            get {
+                return ResourceManager.GetString("ManageWebCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Windows Credentials.
+        /// </summary>
+        public static string ManageWindowsCredentials {
+            get {
+                return ResourceManager.GetString("ManageWindowsCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Work Folders.
+        /// </summary>
+        public static string ManageWorkFolders {
+            get {
+                return ResourceManager.GetString("ManageWorkFolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Media streaming options.
+        /// </summary>
+        public static string MediaStreamingOptions {
+            get {
+                return ResourceManager.GetString("MediaStreamingOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messaging.
         /// </summary>
-        internal static string Messaging {
+        public static string Messaging {
             get {
                 return ResourceManager.GetString("Messaging", resourceCulture);
             }
@@ -1872,7 +3340,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Metered connection.
         /// </summary>
-        internal static string MeteredConnection {
+        public static string MeteredConnection {
             get {
                 return ResourceManager.GetString("MeteredConnection", resourceCulture);
             }
@@ -1881,25 +3349,70 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Microphone.
         /// </summary>
-        internal static string Microphone {
+        public static string Microphone {
             get {
                 return ResourceManager.GetString("Microphone", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft ChangJie Settings.
+        /// </summary>
+        public static string MicrosoftChangjieSettings {
+            get {
+                return ResourceManager.GetString("MicrosoftChangjieSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft IME Register Word (Japanese).
+        /// </summary>
+        public static string MicrosoftIMERegisterWordJapanese {
+            get {
+                return ResourceManager.GetString("MicrosoftIMERegisterWordJapanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Microsoft Mail Post Office.
         /// </summary>
-        internal static string MicrosoftMailPostOffice {
+        public static string MicrosoftMailPostOffice {
             get {
                 return ResourceManager.GetString("MicrosoftMailPostOffice", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft New Phonetic Settings.
+        /// </summary>
+        public static string MicrosoftNewPhoneticSettings {
+            get {
+                return ResourceManager.GetString("MicrosoftNewPhoneticSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Pinyin SimpleFast Options.
+        /// </summary>
+        public static string MicrosoftPinyinSimplefastOptions {
+            get {
+                return ResourceManager.GetString("MicrosoftPinyinSimplefastOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Quick Settings.
+        /// </summary>
+        public static string MicrosoftQuickSettings {
+            get {
+                return ResourceManager.GetString("MicrosoftQuickSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mlcfg32.cpl.
         /// </summary>
-        internal static string mlcfg32_cpl {
+        public static string mlcfg32_cpl {
             get {
                 return ResourceManager.GetString("mlcfg32.cpl", resourceCulture);
             }
@@ -1908,7 +3421,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mmsys.cpl.
         /// </summary>
-        internal static string mmsys_cpl {
+        public static string mmsys_cpl {
             get {
                 return ResourceManager.GetString("mmsys.cpl", resourceCulture);
             }
@@ -1917,7 +3430,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mobile devices.
         /// </summary>
-        internal static string MobileDevices {
+        public static string MobileDevices {
             get {
                 return ResourceManager.GetString("MobileDevices", resourceCulture);
             }
@@ -1926,7 +3439,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mobile hotspot.
         /// </summary>
-        internal static string MobileHotspot {
+        public static string MobileHotspot {
             get {
                 return ResourceManager.GetString("MobileHotspot", resourceCulture);
             }
@@ -1935,7 +3448,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to modem.cpl.
         /// </summary>
-        internal static string modem_cpl {
+        public static string modem_cpl {
             get {
                 return ResourceManager.GetString("modem.cpl", resourceCulture);
             }
@@ -1944,7 +3457,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mono.
         /// </summary>
-        internal static string Mono {
+        public static string Mono {
             get {
                 return ResourceManager.GetString("Mono", resourceCulture);
             }
@@ -1953,7 +3466,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to More details.
         /// </summary>
-        internal static string MoreDetails {
+        public static string MoreDetails {
             get {
                 return ResourceManager.GetString("MoreDetails", resourceCulture);
             }
@@ -1962,7 +3475,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Motion.
         /// </summary>
-        internal static string Motion {
+        public static string Motion {
             get {
                 return ResourceManager.GetString("Motion", resourceCulture);
             }
@@ -1971,7 +3484,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mouse.
         /// </summary>
-        internal static string Mouse {
+        public static string Mouse {
             get {
                 return ResourceManager.GetString("Mouse", resourceCulture);
             }
@@ -1980,7 +3493,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mouse and touchpad.
         /// </summary>
-        internal static string MouseAndTouchpad {
+        public static string MouseAndTouchpad {
             get {
                 return ResourceManager.GetString("MouseAndTouchpad", resourceCulture);
             }
@@ -1989,7 +3502,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mouse, Fonts, Keyboard, and Printers properties.
         /// </summary>
-        internal static string MouseFontsKeyboardAndPrintersProperties {
+        public static string MouseFontsKeyboardAndPrintersProperties {
             get {
                 return ResourceManager.GetString("MouseFontsKeyboardAndPrintersProperties", resourceCulture);
             }
@@ -1998,16 +3511,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mouse pointer.
         /// </summary>
-        internal static string MousePointer {
+        public static string MousePointer {
             get {
                 return ResourceManager.GetString("MousePointer", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move the pointer with the keypad using MouseKeys.
+        /// </summary>
+        public static string MoveThePointerWithTheKeypadUsingMousekeys {
+            get {
+                return ResourceManager.GetString("MoveThePointerWithTheKeypadUsingMousekeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multimedia properties.
         /// </summary>
-        internal static string MultimediaProperties {
+        public static string MultimediaProperties {
             get {
                 return ResourceManager.GetString("MultimediaProperties", resourceCulture);
             }
@@ -2016,7 +3538,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Multitasking.
         /// </summary>
-        internal static string Multitasking {
+        public static string Multitasking {
             get {
                 return ResourceManager.GetString("Multitasking", resourceCulture);
             }
@@ -2025,7 +3547,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Narrator.
         /// </summary>
-        internal static string Narrator {
+        public static string Narrator {
             get {
                 return ResourceManager.GetString("Narrator", resourceCulture);
             }
@@ -2034,16 +3556,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Navigation bar.
         /// </summary>
-        internal static string NavigationBar {
+        public static string NavigationBar {
             get {
                 return ResourceManager.GetString("NavigationBar", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Navigation properties.
+        /// </summary>
+        public static string NavigationProperties {
+            get {
+                return ResourceManager.GetString("NavigationProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to netcpl.cpl.
         /// </summary>
-        internal static string netcpl_cpl {
+        public static string netcpl_cpl {
             get {
                 return ResourceManager.GetString("netcpl.cpl", resourceCulture);
             }
@@ -2052,7 +3583,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to netsetup.cpl.
         /// </summary>
-        internal static string netsetup_cpl {
+        public static string netsetup_cpl {
             get {
                 return ResourceManager.GetString("netsetup.cpl", resourceCulture);
             }
@@ -2061,7 +3592,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network.
         /// </summary>
-        internal static string Network {
+        public static string Network {
             get {
                 return ResourceManager.GetString("Network", resourceCulture);
             }
@@ -2070,7 +3601,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network and sharing center.
         /// </summary>
-        internal static string NetworkAndSharingCenter {
+        public static string NetworkAndSharingCenter {
             get {
                 return ResourceManager.GetString("NetworkAndSharingCenter", resourceCulture);
             }
@@ -2079,7 +3610,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network connection.
         /// </summary>
-        internal static string NetworkConnection {
+        public static string NetworkConnection {
             get {
                 return ResourceManager.GetString("NetworkConnection", resourceCulture);
             }
@@ -2088,7 +3619,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network properties.
         /// </summary>
-        internal static string NetworkProperties {
+        public static string NetworkProperties {
             get {
                 return ResourceManager.GetString("NetworkProperties", resourceCulture);
             }
@@ -2097,7 +3628,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network Setup Wizard.
         /// </summary>
-        internal static string NetworkSetupWizard {
+        public static string NetworkSetupWizard {
             get {
                 return ResourceManager.GetString("NetworkSetupWizard", resourceCulture);
             }
@@ -2106,7 +3637,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Network status.
         /// </summary>
-        internal static string NetworkStatus {
+        public static string NetworkStatus {
             get {
                 return ResourceManager.GetString("NetworkStatus", resourceCulture);
             }
@@ -2115,7 +3646,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to NFC.
         /// </summary>
-        internal static string NFC {
+        public static string NFC {
             get {
                 return ResourceManager.GetString("NFC", resourceCulture);
             }
@@ -2124,7 +3655,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to NFC Transactions.
         /// </summary>
-        internal static string NFCTransactions {
+        public static string NFCTransactions {
             get {
                 return ResourceManager.GetString("NFCTransactions", resourceCulture);
             }
@@ -2133,7 +3664,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Night light.
         /// </summary>
-        internal static string NightLight {
+        public static string NightLight {
             get {
                 return ResourceManager.GetString("NightLight", resourceCulture);
             }
@@ -2142,7 +3673,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Night light settings.
         /// </summary>
-        internal static string NightLightSettings {
+        public static string NightLightSettings {
             get {
                 return ResourceManager.GetString("NightLightSettings", resourceCulture);
             }
@@ -2151,7 +3682,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Note.
         /// </summary>
-        internal static string Note {
+        public static string Note {
             get {
                 return ResourceManager.GetString("Note", resourceCulture);
             }
@@ -2160,7 +3691,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available when you have connected a mobile device to your device..
         /// </summary>
-        internal static string NoteAddYourPhone {
+        public static string NoteAddYourPhone {
             get {
                 return ResourceManager.GetString("NoteAddYourPhone", resourceCulture);
             }
@@ -2169,7 +3700,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available on devices that support advanced graphics options..
         /// </summary>
-        internal static string NoteAdvancedGraphics {
+        public static string NoteAdvancedGraphics {
             get {
                 return ResourceManager.GetString("NoteAdvancedGraphics", resourceCulture);
             }
@@ -2178,7 +3709,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available on devices that have a battery, such as a tablet..
         /// </summary>
-        internal static string NoteBattery {
+        public static string NoteBattery {
             get {
                 return ResourceManager.GetString("NoteBattery", resourceCulture);
             }
@@ -2187,7 +3718,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Deprecated in Windows 10, version 1809 (build 17763) and later..
         /// </summary>
-        internal static string NoteDeprecated17763 {
+        public static string NoteDeprecated17763 {
             get {
                 return ResourceManager.GetString("NoteDeprecated17763", resourceCulture);
             }
@@ -2196,7 +3727,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if Dial is paired..
         /// </summary>
-        internal static string NoteDialPaired {
+        public static string NoteDialPaired {
             get {
                 return ResourceManager.GetString("NoteDialPaired", resourceCulture);
             }
@@ -2205,7 +3736,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if DirectAccess is enabled..
         /// </summary>
-        internal static string NoteDirectAccess {
+        public static string NoteDirectAccess {
             get {
                 return ResourceManager.GetString("NoteDirectAccess", resourceCulture);
             }
@@ -2214,7 +3745,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available on devices that support advanced display options..
         /// </summary>
-        internal static string NoteDisplayGraphics {
+        public static string NoteDisplayGraphics {
             get {
                 return ResourceManager.GetString("NoteDisplayGraphics", resourceCulture);
             }
@@ -2223,7 +3754,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only present if user is enrolled in WIP..
         /// </summary>
-        internal static string NoteEnrolledWIP {
+        public static string NoteEnrolledWIP {
             get {
                 return ResourceManager.GetString("NoteEnrolledWIP", resourceCulture);
             }
@@ -2232,7 +3763,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Requires eyetracker hardware..
         /// </summary>
-        internal static string NoteEyetrackerHardware {
+        public static string NoteEyetrackerHardware {
             get {
                 return ResourceManager.GetString("NoteEyetrackerHardware", resourceCulture);
             }
@@ -2241,7 +3772,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Available if the Microsoft Japan input method editor is installed..
         /// </summary>
-        internal static string NoteImeJapan {
+        public static string NoteImeJapan {
             get {
                 return ResourceManager.GetString("NoteImeJapan", resourceCulture);
             }
@@ -2250,7 +3781,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Available if the Microsoft Pinyin input method editor is installed..
         /// </summary>
-        internal static string NoteImePinyin {
+        public static string NoteImePinyin {
             get {
                 return ResourceManager.GetString("NoteImePinyin", resourceCulture);
             }
@@ -2259,7 +3790,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Available if the Microsoft Wubi input method editor is installed..
         /// </summary>
-        internal static string NoteImeWubi {
+        public static string NoteImeWubi {
             get {
                 return ResourceManager.GetString("NoteImeWubi", resourceCulture);
             }
@@ -2268,7 +3799,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if the Mixed Reality Portal app is installed..
         /// </summary>
-        internal static string NoteMixedReality {
+        public static string NoteMixedReality {
             get {
                 return ResourceManager.GetString("NoteMixedReality", resourceCulture);
             }
@@ -2277,7 +3808,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available on mobile and if the enterprise has deployed a provisioning package..
         /// </summary>
-        internal static string NoteMobileProvisioning {
+        public static string NoteMobileProvisioning {
             get {
                 return ResourceManager.GetString("NoteMobileProvisioning", resourceCulture);
             }
@@ -2286,7 +3817,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Added in Windows 10, version 1903 (build 18362)..
         /// </summary>
-        internal static string NoteSince18362 {
+        public static string NoteSince18362 {
             get {
                 return ResourceManager.GetString("NoteSince18362", resourceCulture);
             }
@@ -2295,7 +3826,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Added in Windows 10, version 2004 (build 19041)..
         /// </summary>
-        internal static string NoteSince19041 {
+        public static string NoteSince19041 {
             get {
                 return ResourceManager.GetString("NoteSince19041", resourceCulture);
             }
@@ -2304,7 +3835,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if &quot;settings apps&quot; are installed, for example, by a 3rd party..
         /// </summary>
-        internal static string NoteThirdParty {
+        public static string NoteThirdParty {
             get {
                 return ResourceManager.GetString("NoteThirdParty", resourceCulture);
             }
@@ -2313,7 +3844,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if touchpad hardware is present..
         /// </summary>
-        internal static string NoteTouchpad {
+        public static string NoteTouchpad {
             get {
                 return ResourceManager.GetString("NoteTouchpad", resourceCulture);
             }
@@ -2322,7 +3853,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if the device has a Wi-Fi adapter..
         /// </summary>
-        internal static string NoteWiFiAdapter {
+        public static string NoteWiFiAdapter {
             get {
                 return ResourceManager.GetString("NoteWiFiAdapter", resourceCulture);
             }
@@ -2331,7 +3862,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Device must be Windows Anywhere-capable..
         /// </summary>
-        internal static string NoteWindowsAnywhere {
+        public static string NoteWindowsAnywhere {
             get {
                 return ResourceManager.GetString("NoteWindowsAnywhere", resourceCulture);
             }
@@ -2340,7 +3871,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Only available if enterprise has deployed a provisioning package..
         /// </summary>
-        internal static string NoteWorkplaceProvisioning {
+        public static string NoteWorkplaceProvisioning {
             get {
                 return ResourceManager.GetString("NoteWorkplaceProvisioning", resourceCulture);
             }
@@ -2349,7 +3880,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Notifications.
         /// </summary>
-        internal static string Notifications {
+        public static string Notifications {
             get {
                 return ResourceManager.GetString("Notifications", resourceCulture);
             }
@@ -2358,7 +3889,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Notifications and actions.
         /// </summary>
-        internal static string NotificationsAndActions {
+        public static string NotificationsAndActions {
             get {
                 return ResourceManager.GetString("NotificationsAndActions", resourceCulture);
             }
@@ -2367,7 +3898,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Num Lock.
         /// </summary>
-        internal static string NumLock {
+        public static string NumLock {
             get {
                 return ResourceManager.GetString("NumLock", resourceCulture);
             }
@@ -2376,7 +3907,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to nwc.cpl.
         /// </summary>
-        internal static string nwc_cpl {
+        public static string nwc_cpl {
             get {
                 return ResourceManager.GetString("nwc.cpl", resourceCulture);
             }
@@ -2385,7 +3916,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to odbccp32.cpl.
         /// </summary>
-        internal static string odbccp32_cpl {
+        public static string odbccp32_cpl {
             get {
                 return ResourceManager.GetString("odbccp32.cpl", resourceCulture);
             }
@@ -2394,7 +3925,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to ODBC Data Source Administrator (32-bit).
         /// </summary>
-        internal static string OdbcDataSourceAdministrator32Bit {
+        public static string OdbcDataSourceAdministrator32Bit {
             get {
                 return ResourceManager.GetString("OdbcDataSourceAdministrator32Bit", resourceCulture);
             }
@@ -2403,7 +3934,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to ODBC Data Source Administrator (64-bit).
         /// </summary>
-        internal static string OdbcDataSourceAdministrator64Bit {
+        public static string OdbcDataSourceAdministrator64Bit {
             get {
                 return ResourceManager.GetString("OdbcDataSourceAdministrator64Bit", resourceCulture);
             }
@@ -2412,7 +3943,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Offline files.
         /// </summary>
-        internal static string OfflineFiles {
+        public static string OfflineFiles {
             get {
                 return ResourceManager.GetString("OfflineFiles", resourceCulture);
             }
@@ -2421,7 +3952,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Offline Maps.
         /// </summary>
-        internal static string OfflineMaps {
+        public static string OfflineMaps {
             get {
                 return ResourceManager.GetString("OfflineMaps", resourceCulture);
             }
@@ -2430,7 +3961,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Offline Maps - Download maps.
         /// </summary>
-        internal static string OfflineMapsDownloadMaps {
+        public static string OfflineMapsDownloadMaps {
             get {
                 return ResourceManager.GetString("OfflineMapsDownloadMaps", resourceCulture);
             }
@@ -2439,16 +3970,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to On-Screen.
         /// </summary>
-        internal static string OnScreen {
+        public static string OnScreen {
             get {
                 return ResourceManager.GetString("OnScreen", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Optimise for blindness.
+        /// </summary>
+        public static string OptimiseForBlindness {
+            get {
+                return ResourceManager.GetString("OptimiseForBlindness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optimise visual display.
+        /// </summary>
+        public static string OptimiseVisualDisplay {
+            get {
+                return ResourceManager.GetString("OptimiseVisualDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OS.
         /// </summary>
-        internal static string Os {
+        public static string Os {
             get {
                 return ResourceManager.GetString("Os", resourceCulture);
             }
@@ -2457,7 +4006,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Other devices.
         /// </summary>
-        internal static string OtherDevices {
+        public static string OtherDevices {
             get {
                 return ResourceManager.GetString("OtherDevices", resourceCulture);
             }
@@ -2466,7 +4015,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Other options.
         /// </summary>
-        internal static string OtherOptions {
+        public static string OtherOptions {
             get {
                 return ResourceManager.GetString("OtherOptions", resourceCulture);
             }
@@ -2475,7 +4024,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Other users.
         /// </summary>
-        internal static string OtherUsers {
+        public static string OtherUsers {
             get {
                 return ResourceManager.GetString("OtherUsers", resourceCulture);
             }
@@ -2484,7 +4033,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Parental controls.
         /// </summary>
-        internal static string ParentalControls {
+        public static string ParentalControls {
             get {
                 return ResourceManager.GetString("ParentalControls", resourceCulture);
             }
@@ -2493,7 +4042,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
-        internal static string Password {
+        public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
@@ -2502,7 +4051,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to password.cpl.
         /// </summary>
-        internal static string password_cpl {
+        public static string password_cpl {
             get {
                 return ResourceManager.GetString("password.cpl", resourceCulture);
             }
@@ -2511,7 +4060,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Password properties.
         /// </summary>
-        internal static string PasswordProperties {
+        public static string PasswordProperties {
             get {
                 return ResourceManager.GetString("PasswordProperties", resourceCulture);
             }
@@ -2520,7 +4069,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pen and input devices.
         /// </summary>
-        internal static string PenAndInputDevices {
+        public static string PenAndInputDevices {
             get {
                 return ResourceManager.GetString("PenAndInputDevices", resourceCulture);
             }
@@ -2529,7 +4078,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pen and touch.
         /// </summary>
-        internal static string PenAndTouch {
+        public static string PenAndTouch {
             get {
                 return ResourceManager.GetString("PenAndTouch", resourceCulture);
             }
@@ -2538,7 +4087,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pen and Windows Ink.
         /// </summary>
-        internal static string PenAndWindowsInk {
+        public static string PenAndWindowsInk {
             get {
                 return ResourceManager.GetString("PenAndWindowsInk", resourceCulture);
             }
@@ -2547,7 +4096,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to People Near Me.
         /// </summary>
-        internal static string PeopleNearMe {
+        public static string PeopleNearMe {
             get {
                 return ResourceManager.GetString("PeopleNearMe", resourceCulture);
             }
@@ -2556,16 +4105,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Performance information and tools.
         /// </summary>
-        internal static string PerformanceInformationAndTools {
+        public static string PerformanceInformationAndTools {
             get {
                 return ResourceManager.GetString("PerformanceInformationAndTools", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perform recommended maintenance tasks automatically.
+        /// </summary>
+        public static string PerformRecommendedMaintenanceTasksAutomatically {
+            get {
+                return ResourceManager.GetString("PerformRecommendedMaintenanceTasksAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Permissions and history.
         /// </summary>
-        internal static string PermissionsAndHistory {
+        public static string PermissionsAndHistory {
             get {
                 return ResourceManager.GetString("PermissionsAndHistory", resourceCulture);
             }
@@ -2574,7 +4132,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Personalization (category).
         /// </summary>
-        internal static string PersonalizationCategory {
+        public static string PersonalizationCategory {
             get {
                 return ResourceManager.GetString("PersonalizationCategory", resourceCulture);
             }
@@ -2583,7 +4141,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
-        internal static string Phone {
+        public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
             }
@@ -2592,7 +4150,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Phone and modem.
         /// </summary>
-        internal static string PhoneAndModem {
+        public static string PhoneAndModem {
             get {
                 return ResourceManager.GetString("PhoneAndModem", resourceCulture);
             }
@@ -2601,7 +4159,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Phone and modem - Options.
         /// </summary>
-        internal static string PhoneAndModemOptions {
+        public static string PhoneAndModemOptions {
             get {
                 return ResourceManager.GetString("PhoneAndModemOptions", resourceCulture);
             }
@@ -2610,7 +4168,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Phone calls.
         /// </summary>
-        internal static string PhoneCalls {
+        public static string PhoneCalls {
             get {
                 return ResourceManager.GetString("PhoneCalls", resourceCulture);
             }
@@ -2619,7 +4177,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Phone - Default apps.
         /// </summary>
-        internal static string PhoneDefaultApps {
+        public static string PhoneDefaultApps {
             get {
                 return ResourceManager.GetString("PhoneDefaultApps", resourceCulture);
             }
@@ -2628,7 +4186,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Picture.
         /// </summary>
-        internal static string Picture {
+        public static string Picture {
             get {
                 return ResourceManager.GetString("Picture", resourceCulture);
             }
@@ -2637,7 +4195,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pictures.
         /// </summary>
-        internal static string Pictures {
+        public static string Pictures {
             get {
                 return ResourceManager.GetString("Pictures", resourceCulture);
             }
@@ -2646,7 +4204,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pinyin IME settings.
         /// </summary>
-        internal static string PinyinImeSettings {
+        public static string PinyinImeSettings {
             get {
                 return ResourceManager.GetString("PinyinImeSettings", resourceCulture);
             }
@@ -2655,7 +4213,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pinyin IME settings - domain lexicon.
         /// </summary>
-        internal static string PinyinImeSettingsDomainLexicon {
+        public static string PinyinImeSettingsDomainLexicon {
             get {
                 return ResourceManager.GetString("PinyinImeSettingsDomainLexicon", resourceCulture);
             }
@@ -2664,7 +4222,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pinyin IME settings - Key configuration.
         /// </summary>
-        internal static string PinyinImeSettingsKeyConfiguration {
+        public static string PinyinImeSettingsKeyConfiguration {
             get {
                 return ResourceManager.GetString("PinyinImeSettingsKeyConfiguration", resourceCulture);
             }
@@ -2673,16 +4231,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pinyin IME settings - UDP.
         /// </summary>
-        internal static string PinyinImeSettingsUdp {
+        public static string PinyinImeSettingsUdp {
             get {
                 return ResourceManager.GetString("PinyinImeSettingsUdp", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Play CDs or other media automatically.
+        /// </summary>
+        public static string PlayCdsOrOtherMediaAutomatically {
+            get {
+                return ResourceManager.GetString("PlayCdsOrOtherMediaAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Playing a game full screen.
         /// </summary>
-        internal static string PlayingGameFullScreen {
+        public static string PlayingGameFullScreen {
             get {
                 return ResourceManager.GetString("PlayingGameFullScreen", resourceCulture);
             }
@@ -2691,16 +4258,16 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Plugin to search for Windows settings.
         /// </summary>
-        internal static string PluginDescription {
+        public static string PluginDescription {
             get {
                 return ResourceManager.GetString("PluginDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Windows settings.
+        ///   Looks up a localized string similar to Windows Settings.
         /// </summary>
-        internal static string PluginTitle {
+        public static string PluginTitle {
             get {
                 return ResourceManager.GetString("PluginTitle", resourceCulture);
             }
@@ -2709,7 +4276,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Power and sleep.
         /// </summary>
-        internal static string PowerAndSleep {
+        public static string PowerAndSleep {
             get {
                 return ResourceManager.GetString("PowerAndSleep", resourceCulture);
             }
@@ -2718,7 +4285,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to powercfg.cpl.
         /// </summary>
-        internal static string powercfg_cpl {
+        public static string powercfg_cpl {
             get {
                 return ResourceManager.GetString("powercfg.cpl", resourceCulture);
             }
@@ -2727,7 +4294,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Power options.
         /// </summary>
-        internal static string PowerOptions {
+        public static string PowerOptions {
             get {
                 return ResourceManager.GetString("PowerOptions", resourceCulture);
             }
@@ -2736,16 +4303,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Presentation.
         /// </summary>
-        internal static string Presentation {
+        public static string Presentation {
             get {
                 return ResourceManager.GetString("Presentation", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press key combinations one at a time.
+        /// </summary>
+        public static string PressKeyCombinationsOneAtATime {
+            get {
+                return ResourceManager.GetString("PressKeyCombinationsOneAtATime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview, delete, show or hide fonts.
+        /// </summary>
+        public static string PreviewDeleteShowOrHideFonts {
+            get {
+                return ResourceManager.GetString("PreviewDeleteShowOrHideFonts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Printers.
         /// </summary>
-        internal static string Printers {
+        public static string Printers {
             get {
                 return ResourceManager.GetString("Printers", resourceCulture);
             }
@@ -2754,7 +4339,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Printers and scanners.
         /// </summary>
-        internal static string PrintersAndScanners {
+        public static string PrintersAndScanners {
             get {
                 return ResourceManager.GetString("PrintersAndScanners", resourceCulture);
             }
@@ -2763,16 +4348,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Print screen.
         /// </summary>
-        internal static string PrintScreen {
+        public static string PrintScreen {
             get {
                 return ResourceManager.GetString("PrintScreen", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Print the speech reference card.
+        /// </summary>
+        public static string PrintTheSpeechReferenceCard {
+            get {
+                return ResourceManager.GetString("PrintTheSpeechReferenceCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private Character Editor.
+        /// </summary>
+        public static string PrivateCharacterEditor {
+            get {
+                return ResourceManager.GetString("PrivateCharacterEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Problem reports and solutions.
         /// </summary>
-        internal static string ProblemReportsAndSolutions {
+        public static string ProblemReportsAndSolutions {
             get {
                 return ResourceManager.GetString("ProblemReportsAndSolutions", resourceCulture);
             }
@@ -2781,7 +4384,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Processor.
         /// </summary>
-        internal static string Processor {
+        public static string Processor {
             get {
                 return ResourceManager.GetString("Processor", resourceCulture);
             }
@@ -2790,7 +4393,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Programs and features.
         /// </summary>
-        internal static string ProgramsAndFeatures {
+        public static string ProgramsAndFeatures {
             get {
                 return ResourceManager.GetString("ProgramsAndFeatures", resourceCulture);
             }
@@ -2799,7 +4402,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Projecting to this PC.
         /// </summary>
-        internal static string ProjectingToThisPc {
+        public static string ProjectingToThisPc {
             get {
                 return ResourceManager.GetString("ProjectingToThisPc", resourceCulture);
             }
@@ -2808,7 +4411,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to protanopia.
         /// </summary>
-        internal static string protanopia {
+        public static string protanopia {
             get {
                 return ResourceManager.GetString("protanopia", resourceCulture);
             }
@@ -2817,7 +4420,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Provisioning.
         /// </summary>
-        internal static string Provisioning {
+        public static string Provisioning {
             get {
                 return ResourceManager.GetString("Provisioning", resourceCulture);
             }
@@ -2826,7 +4429,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Proximity.
         /// </summary>
-        internal static string Proximity {
+        public static string Proximity {
             get {
                 return ResourceManager.GetString("Proximity", resourceCulture);
             }
@@ -2835,7 +4438,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Proxy.
         /// </summary>
-        internal static string Proxy {
+        public static string Proxy {
             get {
                 return ResourceManager.GetString("Proxy", resourceCulture);
             }
@@ -2844,7 +4447,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Quickime.
         /// </summary>
-        internal static string Quickime {
+        public static string Quickime {
             get {
                 return ResourceManager.GetString("Quickime", resourceCulture);
             }
@@ -2853,7 +4456,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Quiet moments game.
         /// </summary>
-        internal static string QuietMomentsGame {
+        public static string QuietMomentsGame {
             get {
                 return ResourceManager.GetString("QuietMomentsGame", resourceCulture);
             }
@@ -2862,7 +4465,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Radios.
         /// </summary>
-        internal static string Radios {
+        public static string Radios {
             get {
                 return ResourceManager.GetString("Radios", resourceCulture);
             }
@@ -2871,7 +4474,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to RAM.
         /// </summary>
-        internal static string Ram {
+        public static string Ram {
             get {
                 return ResourceManager.GetString("Ram", resourceCulture);
             }
@@ -2880,16 +4483,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Recognition.
         /// </summary>
-        internal static string Recognition {
+        public static string Recognition {
             get {
                 return ResourceManager.GetString("Recognition", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Record steps to reproduce a problem.
+        /// </summary>
+        public static string RecordStepsToReproduceAProblem {
+            get {
+                return ResourceManager.GetString("RecordStepsToReproduceAProblem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recovery.
         /// </summary>
-        internal static string Recovery {
+        public static string Recovery {
             get {
                 return ResourceManager.GetString("Recovery", resourceCulture);
             }
@@ -2898,7 +4510,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Red eye.
         /// </summary>
-        internal static string RedEye {
+        public static string RedEye {
             get {
                 return ResourceManager.GetString("RedEye", resourceCulture);
             }
@@ -2907,7 +4519,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Red-green.
         /// </summary>
-        internal static string RedGreen {
+        public static string RedGreen {
             get {
                 return ResourceManager.GetString("RedGreen", resourceCulture);
             }
@@ -2916,7 +4528,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Red week.
         /// </summary>
-        internal static string RedWeek {
+        public static string RedWeek {
             get {
                 return ResourceManager.GetString("RedWeek", resourceCulture);
             }
@@ -2925,7 +4537,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Region.
         /// </summary>
-        internal static string Region {
+        public static string Region {
             get {
                 return ResourceManager.GetString("Region", resourceCulture);
             }
@@ -2934,7 +4546,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Regional language.
         /// </summary>
-        internal static string RegionalLanguage {
+        public static string RegionalLanguage {
             get {
                 return ResourceManager.GetString("RegionalLanguage", resourceCulture);
             }
@@ -2943,7 +4555,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Regional settings properties.
         /// </summary>
-        internal static string RegionalSettingsProperties {
+        public static string RegionalSettingsProperties {
             get {
                 return ResourceManager.GetString("RegionalSettingsProperties", resourceCulture);
             }
@@ -2952,7 +4564,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Region and language.
         /// </summary>
-        internal static string RegionAndLanguage {
+        public static string RegionAndLanguage {
             get {
                 return ResourceManager.GetString("RegionAndLanguage", resourceCulture);
             }
@@ -2961,7 +4573,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Region formatting.
         /// </summary>
-        internal static string RegionFormatting {
+        public static string RegionFormatting {
             get {
                 return ResourceManager.GetString("RegionFormatting", resourceCulture);
             }
@@ -2970,7 +4582,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to RemoteApp and desktop connections.
         /// </summary>
-        internal static string RemoteAppAndDesktopConnections {
+        public static string RemoteAppAndDesktopConnections {
             get {
                 return ResourceManager.GetString("RemoteAppAndDesktopConnections", resourceCulture);
             }
@@ -2979,16 +4591,97 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Remote Desktop.
         /// </summary>
-        internal static string RemoteDesktop {
+        public static string RemoteDesktop {
             get {
                 return ResourceManager.GetString("RemoteDesktop", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename this computer.
+        /// </summary>
+        public static string RenameThisComputer {
+            get {
+                return ResourceManager.GetString("RenameThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace sounds with visual cues.
+        /// </summary>
+        public static string ReplaceSoundsWithVisualCues {
+            get {
+                return ResourceManager.GetString("ReplaceSoundsWithVisualCues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Security Policies.
+        /// </summary>
+        public static string ResetSecurityPolicies {
+            get {
+                return ResourceManager.GetString("ResetSecurityPolicies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore data, files or computer from backup (Windows 7).
+        /// </summary>
+        public static string RestoreDataFilesOrComputerFromBackupWindows7 {
+            get {
+                return ResourceManager.GetString("RestoreDataFilesOrComputerFromBackupWindows7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore your files with File History.
+        /// </summary>
+        public static string RestoreYourFilesWithFileHistory {
+            get {
+                return ResourceManager.GetString("RestoreYourFilesWithFileHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review your computer&apos;s status and resolve issues.
+        /// </summary>
+        public static string ReviewYourComputersStatusAndResolveIssues {
+            get {
+                return ResourceManager.GetString("ReviewYourComputersStatusAndResolveIssues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run programs made for previous versions of Windows.
+        /// </summary>
+        public static string RunProgramsMadeForPreviousVersionsOfWindows {
+            get {
+                return ResourceManager.GetString("RunProgramsMadeForPreviousVersionsOfWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save backup copies of your files with File History.
+        /// </summary>
+        public static string SaveBackupCopiesOfYourFilesWithFileHistory {
+            get {
+                return ResourceManager.GetString("SaveBackupCopiesOfYourFilesWithFileHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan a document or picture.
+        /// </summary>
+        public static string ScanADocumentOrPicture {
+            get {
+                return ResourceManager.GetString("ScanADocumentOrPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scanners and cameras.
         /// </summary>
-        internal static string ScannersAndCameras {
+        public static string ScannersAndCameras {
             get {
                 return ResourceManager.GetString("ScannersAndCameras", resourceCulture);
             }
@@ -2997,7 +4690,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to schedtasks.
         /// </summary>
-        internal static string schedtasks {
+        public static string schedtasks {
             get {
                 return ResourceManager.GetString("schedtasks", resourceCulture);
             }
@@ -3006,7 +4699,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Scheduled.
         /// </summary>
-        internal static string Scheduled {
+        public static string Scheduled {
             get {
                 return ResourceManager.GetString("Scheduled", resourceCulture);
             }
@@ -3015,16 +4708,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Scheduled tasks.
         /// </summary>
-        internal static string ScheduledTasks {
+        public static string ScheduledTasks {
             get {
                 return ResourceManager.GetString("ScheduledTasks", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schedule tasks.
+        /// </summary>
+        public static string ScheduleTasks {
+            get {
+                return ResourceManager.GetString("ScheduleTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Screen rotation.
         /// </summary>
-        internal static string ScreenRotation {
+        public static string ScreenRotation {
             get {
                 return ResourceManager.GetString("ScreenRotation", resourceCulture);
             }
@@ -3033,7 +4735,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Scroll bars.
         /// </summary>
-        internal static string ScrollBars {
+        public static string ScrollBars {
             get {
                 return ResourceManager.GetString("ScrollBars", resourceCulture);
             }
@@ -3042,7 +4744,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Scroll Lock.
         /// </summary>
-        internal static string ScrollLock {
+        public static string ScrollLock {
             get {
                 return ResourceManager.GetString("ScrollLock", resourceCulture);
             }
@@ -3051,7 +4753,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SDNS.
         /// </summary>
-        internal static string Sdns {
+        public static string Sdns {
             get {
                 return ResourceManager.GetString("Sdns", resourceCulture);
             }
@@ -3060,7 +4762,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Searching Windows.
         /// </summary>
-        internal static string SearchingWindows {
+        public static string SearchingWindows {
             get {
                 return ResourceManager.GetString("SearchingWindows", resourceCulture);
             }
@@ -3069,7 +4771,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SecureDNS.
         /// </summary>
-        internal static string SecureDNS {
+        public static string SecureDNS {
             get {
                 return ResourceManager.GetString("SecureDNS", resourceCulture);
             }
@@ -3078,7 +4780,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Security Center.
         /// </summary>
-        internal static string SecurityCenter {
+        public static string SecurityCenter {
             get {
                 return ResourceManager.GetString("SecurityCenter", resourceCulture);
             }
@@ -3087,43 +4789,223 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Security Processor.
         /// </summary>
-        internal static string SecurityProcessor {
+        public static string SecurityProcessor {
             get {
                 return ResourceManager.GetString("SecurityProcessor", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See the name of this computer.
+        /// </summary>
+        public static string SeeTheNameOfThisComputer {
+            get {
+                return ResourceManager.GetString("SeeTheNameOfThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See which processes start up automatically when you start Windows.
+        /// </summary>
+        public static string SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows {
+            get {
+                return ResourceManager.GetString("SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select users who can use remote desktop.
+        /// </summary>
+        public static string SelectUsersWhoCanUseRemoteDesktop {
+            get {
+                return ResourceManager.GetString("SelectUsersWhoCanUseRemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send or receive a file.
+        /// </summary>
+        public static string SendOrReceiveAFile {
+            get {
+                return ResourceManager.GetString("SendOrReceiveAFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session cleanup.
         /// </summary>
-        internal static string SessionCleanup {
+        public static string SessionCleanup {
             get {
                 return ResourceManager.GetString("SessionCleanup", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set flicks to perform certain tasks.
+        /// </summary>
+        public static string SetFlicksToPerformCertainTasks {
+            get {
+                return ResourceManager.GetString("SetFlicksToPerformCertainTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set tablet buttons to perform certain tasks.
+        /// </summary>
+        public static string SetTabletButtonsToPerformCertainTasks {
+            get {
+                return ResourceManager.GetString("SetTabletButtonsToPerformCertainTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the time and date.
+        /// </summary>
+        public static string SetTheTimeAndDate {
+            get {
+                return ResourceManager.GetString("SetTheTimeAndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings for Microsoft IME (Japanese).
+        /// </summary>
+        public static string SettingsForMicrosoftIMEJapanese {
+            get {
+                return ResourceManager.GetString("SettingsForMicrosoftIMEJapanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings home page.
         /// </summary>
-        internal static string SettingsHomePage {
+        public static string SettingsHomePage {
             get {
                 return ResourceManager.GetString("SettingsHomePage", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set up a broadband connection.
+        /// </summary>
+        public static string SetUpABroadbandConnection {
+            get {
+                return ResourceManager.GetString("SetUpABroadbandConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up a connection or network.
+        /// </summary>
+        public static string SetUpAConnectionOrNetwork {
+            get {
+                return ResourceManager.GetString("SetUpAConnectionOrNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up a dial-up connection.
+        /// </summary>
+        public static string SetUpADialUpConnection {
+            get {
+                return ResourceManager.GetString("SetUpADialUpConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up a microphone.
+        /// </summary>
+        public static string SetUpAMicrophone {
+            get {
+                return ResourceManager.GetString("SetUpAMicrophone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up a virtual private network (VPN) connection.
+        /// </summary>
+        public static string SetUpAVirtualPrivateNetworkVPNConnection {
+            get {
+                return ResourceManager.GetString("SetUpAVirtualPrivateNetworkVPNConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up dialling rules.
+        /// </summary>
+        public static string SetUpDiallingRules {
+            get {
+                return ResourceManager.GetString("SetUpDiallingRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up iSCSI initiator.
+        /// </summary>
+        public static string SetUpIscsiInitiator {
+            get {
+                return ResourceManager.GetString("SetUpIscsiInitiator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set up a kiosk.
         /// </summary>
-        internal static string SetUpKiosk {
+        public static string SetUpKiosk {
             get {
                 return ResourceManager.GetString("SetUpKiosk", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set up ODBC data sources.
+        /// </summary>
+        public static string SetUpODBCDataSources {
+            get {
+                return ResourceManager.GetString("SetUpODBCDataSources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up ODBC data sources (32-bit).
+        /// </summary>
+        public static string SetUpODBCDataSources32Bit {
+            get {
+                return ResourceManager.GetString("SetUpODBCDataSources32Bit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up ODBC data sources (64-bit).
+        /// </summary>
+        public static string SetUpODBCDataSources64Bit {
+            get {
+                return ResourceManager.GetString("SetUpODBCDataSources64Bit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set up USB game controllers.
+        /// </summary>
+        public static string SetUpUSBGameControllers {
+            get {
+                return ResourceManager.GetString("SetUpUSBGameControllers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set your default programs.
+        /// </summary>
+        public static string SetYourDefaultPrograms {
+            get {
+                return ResourceManager.GetString("SetYourDefaultPrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shared experiences.
         /// </summary>
-        internal static string SharedExperiences {
+        public static string SharedExperiences {
             get {
                 return ResourceManager.GetString("SharedExperiences", resourceCulture);
             }
@@ -3132,7 +5014,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Shortcuts.
         /// </summary>
-        internal static string Shortcuts {
+        public static string Shortcuts {
             get {
                 return ResourceManager.GetString("Shortcuts", resourceCulture);
             }
@@ -3141,16 +5023,79 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to wifi.
         /// </summary>
-        internal static string ShortNameWiFi {
+        public static string ShortNameWiFi {
             get {
                 return ResourceManager.GetString("ShortNameWiFi", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show hidden files and folders.
+        /// </summary>
+        public static string ShowHiddenFilesAndFolders {
+            get {
+                return ResourceManager.GetString("ShowHiddenFilesAndFolders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show how much RAM is on this computer.
+        /// </summary>
+        public static string ShowHowMuchRAMIsOnThisComputer {
+            get {
+                return ResourceManager.GetString("ShowHowMuchRAMIsOnThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show or hide file extensions.
+        /// </summary>
+        public static string ShowOrHideFileExtensions {
+            get {
+                return ResourceManager.GetString("ShowOrHideFileExtensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show which domain your computer is on.
+        /// </summary>
+        public static string ShowWhichDomainYourComputerIsOn {
+            get {
+                return ResourceManager.GetString("ShowWhichDomainYourComputerIsOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show which operating system your computer is running.
+        /// </summary>
+        public static string ShowWhichOperatingSystemYourComputerIsRunning {
+            get {
+                return ResourceManager.GetString("ShowWhichOperatingSystemYourComputerIsRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show which programs are installed on your computer.
+        /// </summary>
+        public static string ShowWhichProgramsAreInstalledOnYourComputer {
+            get {
+                return ResourceManager.GetString("ShowWhichProgramsAreInstalledOnYourComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show which workgroup this computer is on.
+        /// </summary>
+        public static string ShowWhichWorkgroupThisComputerIsOn {
+            get {
+                return ResourceManager.GetString("ShowWhichWorkgroupThisComputerIsOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign-in options.
         /// </summary>
-        internal static string SignInOptions {
+        public static string SignInOptions {
             get {
                 return ResourceManager.GetString("SignInOptions", resourceCulture);
             }
@@ -3159,7 +5104,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sign-in options - Dynamic lock.
         /// </summary>
-        internal static string SignInOptionsDynamicLock {
+        public static string SignInOptionsDynamicLock {
             get {
                 return ResourceManager.GetString("SignInOptionsDynamicLock", resourceCulture);
             }
@@ -3168,7 +5113,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Size.
         /// </summary>
-        internal static string Size {
+        public static string Size {
             get {
                 return ResourceManager.GetString("Size", resourceCulture);
             }
@@ -3177,16 +5122,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sound.
         /// </summary>
-        internal static string Sound {
+        public static string Sound {
             get {
                 return ResourceManager.GetString("Sound", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Specify single- or double-click to open.
+        /// </summary>
+        public static string SpecifySingleOrDoubleClickToOpen {
+            get {
+                return ResourceManager.GetString("SpecifySingleOrDoubleClickToOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify which hand you write with.
+        /// </summary>
+        public static string SpecifyWhichHandYouWriteWith {
+            get {
+                return ResourceManager.GetString("SpecifyWhichHandYouWriteWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Speech.
         /// </summary>
-        internal static string Speech {
+        public static string Speech {
             get {
                 return ResourceManager.GetString("Speech", resourceCulture);
             }
@@ -3195,7 +5158,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Speech recognition.
         /// </summary>
-        internal static string SpeechRecognition {
+        public static string SpeechRecognition {
             get {
                 return ResourceManager.GetString("SpeechRecognition", resourceCulture);
             }
@@ -3204,7 +5167,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Speech typing.
         /// </summary>
-        internal static string SpeechTyping {
+        public static string SpeechTyping {
             get {
                 return ResourceManager.GetString("SpeechTyping", resourceCulture);
             }
@@ -3213,25 +5176,43 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Start.
         /// </summary>
-        internal static string Start {
+        public static string Start {
             get {
                 return ResourceManager.GetString("Start", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start or stop using AutoPlay for all media and devices.
+        /// </summary>
+        public static string StartOrStopUsingAutoplayForAllMediaAndDevices {
+            get {
+                return ResourceManager.GetString("StartOrStopUsingAutoplayForAllMediaAndDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start places.
         /// </summary>
-        internal static string StartPlaces {
+        public static string StartPlaces {
             get {
                 return ResourceManager.GetString("StartPlaces", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start speech recognition.
+        /// </summary>
+        public static string StartSpeechRecognition {
+            get {
+                return ResourceManager.GetString("StartSpeechRecognition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Startup apps.
         /// </summary>
-        internal static string StartupApps {
+        public static string StartupApps {
             get {
                 return ResourceManager.GetString("StartupApps", resourceCulture);
             }
@@ -3240,7 +5221,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to sticpl.cpl.
         /// </summary>
-        internal static string sticpl_cpl {
+        public static string sticpl_cpl {
             get {
                 return ResourceManager.GetString("sticpl.cpl", resourceCulture);
             }
@@ -3249,7 +5230,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Storage.
         /// </summary>
-        internal static string Storage {
+        public static string Storage {
             get {
                 return ResourceManager.GetString("Storage", resourceCulture);
             }
@@ -3258,7 +5239,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Storage policies.
         /// </summary>
-        internal static string StoragePolicies {
+        public static string StoragePolicies {
             get {
                 return ResourceManager.GetString("StoragePolicies", resourceCulture);
             }
@@ -3267,7 +5248,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Storage Sense.
         /// </summary>
-        internal static string StorageSense {
+        public static string StorageSense {
             get {
                 return ResourceManager.GetString("StorageSense", resourceCulture);
             }
@@ -3276,7 +5257,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to in.
         /// </summary>
-        internal static string SubtitlePreposition {
+        public static string SubtitlePreposition {
             get {
                 return ResourceManager.GetString("SubtitlePreposition", resourceCulture);
             }
@@ -3285,7 +5266,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sync center.
         /// </summary>
-        internal static string SyncCenter {
+        public static string SyncCenter {
             get {
                 return ResourceManager.GetString("SyncCenter", resourceCulture);
             }
@@ -3294,7 +5275,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sync your settings.
         /// </summary>
-        internal static string SyncYourSettings {
+        public static string SyncYourSettings {
             get {
                 return ResourceManager.GetString("SyncYourSettings", resourceCulture);
             }
@@ -3303,7 +5284,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to sysdm.cpl.
         /// </summary>
-        internal static string sysdm_cpl {
+        public static string sysdm_cpl {
             get {
                 return ResourceManager.GetString("sysdm.cpl", resourceCulture);
             }
@@ -3312,7 +5293,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to System.
         /// </summary>
-        internal static string System {
+        public static string System {
             get {
                 return ResourceManager.GetString("System", resourceCulture);
             }
@@ -3321,7 +5302,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to System properties and Add New Hardware wizard.
         /// </summary>
-        internal static string SystemPropertiesAndAddNewHardwareWizard {
+        public static string SystemPropertiesAndAddNewHardwareWizard {
             get {
                 return ResourceManager.GetString("SystemPropertiesAndAddNewHardwareWizard", resourceCulture);
             }
@@ -3330,7 +5311,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Tab.
         /// </summary>
-        internal static string Tab {
+        public static string Tab {
             get {
                 return ResourceManager.GetString("Tab", resourceCulture);
             }
@@ -3339,7 +5320,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Tablet mode.
         /// </summary>
-        internal static string TabletMode {
+        public static string TabletMode {
             get {
                 return ResourceManager.GetString("TabletMode", resourceCulture);
             }
@@ -3348,16 +5329,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Tablet PC settings.
         /// </summary>
-        internal static string TabletPcSettings {
+        public static string TabletPcSettings {
             get {
                 return ResourceManager.GetString("TabletPcSettings", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Take speech tutorials.
+        /// </summary>
+        public static string TakeSpeechTutorials {
+            get {
+                return ResourceManager.GetString("TakeSpeechTutorials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Talk.
         /// </summary>
-        internal static string Talk {
+        public static string Talk {
             get {
                 return ResourceManager.GetString("Talk", resourceCulture);
             }
@@ -3366,7 +5356,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Talk to Cortana.
         /// </summary>
-        internal static string TalkToCortana {
+        public static string TalkToCortana {
             get {
                 return ResourceManager.GetString("TalkToCortana", resourceCulture);
             }
@@ -3375,7 +5365,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Taskbar.
         /// </summary>
-        internal static string Taskbar {
+        public static string Taskbar {
             get {
                 return ResourceManager.GetString("Taskbar", resourceCulture);
             }
@@ -3384,16 +5374,34 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Taskbar color.
         /// </summary>
-        internal static string TaskbarColor {
+        public static string TaskbarColor {
             get {
                 return ResourceManager.GetString("TaskbarColor", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TaskLink.
+        /// </summary>
+        public static string TaskLink {
+            get {
+                return ResourceManager.GetString("TaskLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task Manager.
+        /// </summary>
+        public static string TaskManager {
+            get {
+                return ResourceManager.GetString("TaskManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tasks.
         /// </summary>
-        internal static string Tasks {
+        public static string Tasks {
             get {
                 return ResourceManager.GetString("Tasks", resourceCulture);
             }
@@ -3402,7 +5410,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Team Conferencing.
         /// </summary>
-        internal static string TeamConferencing {
+        public static string TeamConferencing {
             get {
                 return ResourceManager.GetString("TeamConferencing", resourceCulture);
             }
@@ -3411,16 +5419,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Team device management.
         /// </summary>
-        internal static string TeamDeviceManagement {
+        public static string TeamDeviceManagement {
             get {
                 return ResourceManager.GetString("TeamDeviceManagement", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tell if an RSS feed is available on a website.
+        /// </summary>
+        public static string TellIfAnRSSFeedIsAvailableOnAWebsite {
+            get {
+                return ResourceManager.GetString("TellIfAnRSSFeedIsAvailableOnAWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text to speech.
         /// </summary>
-        internal static string TextToSpeech {
+        public static string TextToSpeech {
             get {
                 return ResourceManager.GetString("TextToSpeech", resourceCulture);
             }
@@ -3429,7 +5446,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Themes.
         /// </summary>
-        internal static string Themes {
+        public static string Themes {
             get {
                 return ResourceManager.GetString("Themes", resourceCulture);
             }
@@ -3438,7 +5455,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to themes.cpl.
         /// </summary>
-        internal static string themes_cpl {
+        public static string themes_cpl {
             get {
                 return ResourceManager.GetString("themes.cpl", resourceCulture);
             }
@@ -3447,7 +5464,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to timedate.cpl.
         /// </summary>
-        internal static string timedate_cpl {
+        public static string timedate_cpl {
             get {
                 return ResourceManager.GetString("timedate.cpl", resourceCulture);
             }
@@ -3456,7 +5473,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Timeline.
         /// </summary>
-        internal static string Timeline {
+        public static string Timeline {
             get {
                 return ResourceManager.GetString("Timeline", resourceCulture);
             }
@@ -3465,7 +5482,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Touch.
         /// </summary>
-        internal static string Touch {
+        public static string Touch {
             get {
                 return ResourceManager.GetString("Touch", resourceCulture);
             }
@@ -3474,7 +5491,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Touch feedback.
         /// </summary>
-        internal static string TouchFeedback {
+        public static string TouchFeedback {
             get {
                 return ResourceManager.GetString("TouchFeedback", resourceCulture);
             }
@@ -3483,16 +5500,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Touchpad.
         /// </summary>
-        internal static string Touchpad {
+        public static string Touchpad {
             get {
                 return ResourceManager.GetString("Touchpad", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Train the computer to recognise your voice.
+        /// </summary>
+        public static string TrainTheComputerToRecogniseYourVoice {
+            get {
+                return ResourceManager.GetString("TrainTheComputerToRecogniseYourVoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transparency.
         /// </summary>
-        internal static string Transparency {
+        public static string Transparency {
             get {
                 return ResourceManager.GetString("Transparency", resourceCulture);
             }
@@ -3501,7 +5527,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to tritanopia.
         /// </summary>
-        internal static string tritanopia {
+        public static string tritanopia {
             get {
                 return ResourceManager.GetString("tritanopia", resourceCulture);
             }
@@ -3510,25 +5536,133 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Troubleshoot.
         /// </summary>
-        internal static string Troubleshoot {
+        public static string Troubleshoot {
             get {
                 return ResourceManager.GetString("Troubleshoot", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Troubleshooting History.
+        /// </summary>
+        public static string TroubleshootingHistory {
+            get {
+                return ResourceManager.GetString("TroubleshootingHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TruePlay.
         /// </summary>
-        internal static string TruePlay {
+        public static string TruePlay {
             get {
                 return ResourceManager.GetString("TruePlay", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Turn autocomplete in Internet Explorer on or off.
+        /// </summary>
+        public static string TurnAutocompleteInInternetExplorerOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnAutocompleteInInternetExplorerOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn flicks on or off.
+        /// </summary>
+        public static string TurnFlicksOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnFlicksOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn High Contrast on or off.
+        /// </summary>
+        public static string TurnHighContrastOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnHighContrastOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Magnifier on or off.
+        /// </summary>
+        public static string TurnMagnifierOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnMagnifierOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn off automatic window arrangement.
+        /// </summary>
+        public static string TurnOffAutomaticWindowArrangement {
+            get {
+                return ResourceManager.GetString("TurnOffAutomaticWindowArrangement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn off background images.
+        /// </summary>
+        public static string TurnOffBackgroundImages {
+            get {
+                return ResourceManager.GetString("TurnOffBackgroundImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn off unnecessary animations.
+        /// </summary>
+        public static string TurnOffUnnecessaryAnimations {
+            get {
+                return ResourceManager.GetString("TurnOffUnnecessaryAnimations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn on easy access keys.
+        /// </summary>
+        public static string TurnOnEasyAccessKeys {
+            get {
+                return ResourceManager.GetString("TurnOnEasyAccessKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn On-Screen keyboard on or off.
+        /// </summary>
+        public static string TurnOnScreenKeyboardOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnOnScreenKeyboardOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn screen saver on or off.
+        /// </summary>
+        public static string TurnScreenSaverOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnScreenSaverOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Windows features on or off.
+        /// </summary>
+        public static string TurnWindowsFeaturesOnOrOff {
+            get {
+                return ResourceManager.GetString("TurnWindowsFeaturesOnOrOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Typing.
         /// </summary>
-        internal static string Typing {
+        public static string Typing {
             get {
                 return ResourceManager.GetString("Typing", resourceCulture);
             }
@@ -3537,34 +5671,61 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Uninstall.
         /// </summary>
-        internal static string Uninstall {
+        public static string Uninstall {
             get {
                 return ResourceManager.GetString("Uninstall", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uninstall a program.
+        /// </summary>
+        public static string UninstallAProgram {
+            get {
+                return ResourceManager.GetString("UninstallAProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to USB.
         /// </summary>
-        internal static string Usb {
+        public static string Usb {
             get {
                 return ResourceManager.GetString("Usb", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use audio description for video.
+        /// </summary>
+        public static string UseAudioDescriptionForVideo {
+            get {
+                return ResourceManager.GetString("UseAudioDescriptionForVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User accounts.
         /// </summary>
-        internal static string UserAccounts {
+        public static string UserAccounts {
             get {
                 return ResourceManager.GetString("UserAccounts", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use screen reader.
+        /// </summary>
+        public static string UseScreenReader {
+            get {
+                return ResourceManager.GetString("UseScreenReader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
-        internal static string Version {
+        public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
             }
@@ -3573,7 +5734,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Video playback.
         /// </summary>
-        internal static string VideoPlayback {
+        public static string VideoPlayback {
             get {
                 return ResourceManager.GetString("VideoPlayback", resourceCulture);
             }
@@ -3582,16 +5743,169 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Videos.
         /// </summary>
-        internal static string Videos {
+        public static string Videos {
             get {
                 return ResourceManager.GetString("Videos", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View advanced system settings.
+        /// </summary>
+        public static string ViewAdvancedSystemSettings {
+            get {
+                return ResourceManager.GetString("ViewAdvancedSystemSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View all problem reports.
+        /// </summary>
+        public static string ViewAllProblemReports {
+            get {
+                return ResourceManager.GetString("ViewAllProblemReports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View basic information about your computer.
+        /// </summary>
+        public static string ViewBasicInformationAboutYourComputer {
+            get {
+                return ResourceManager.GetString("ViewBasicInformationAboutYourComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View current accessibility settings.
+        /// </summary>
+        public static string ViewCurrentAccessibilitySettings {
+            get {
+                return ResourceManager.GetString("ViewCurrentAccessibilitySettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View devices and printers.
+        /// </summary>
+        public static string ViewDevicesAndPrinters {
+            get {
+                return ResourceManager.GetString("ViewDevicesAndPrinters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View event logs.
+        /// </summary>
+        public static string ViewEventLogs {
+            get {
+                return ResourceManager.GetString("ViewEventLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View installed fonts.
+        /// </summary>
+        public static string ViewInstalledFonts {
+            get {
+                return ResourceManager.GetString("ViewInstalledFonts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View installed updates.
+        /// </summary>
+        public static string ViewInstalledUpdates {
+            get {
+                return ResourceManager.GetString("ViewInstalledUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View local services.
+        /// </summary>
+        public static string ViewLocalServices {
+            get {
+                return ResourceManager.GetString("ViewLocalServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View network computers and devices.
+        /// </summary>
+        public static string ViewNetworkComputersAndDevices {
+            get {
+                return ResourceManager.GetString("ViewNetworkComputersAndDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View network connections.
+        /// </summary>
+        public static string ViewNetworkConnections {
+            get {
+                return ResourceManager.GetString("ViewNetworkConnections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View network status and tasks.
+        /// </summary>
+        public static string ViewNetworkStatusAndTasks {
+            get {
+                return ResourceManager.GetString("ViewNetworkStatusAndTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View recent messages about your computer.
+        /// </summary>
+        public static string ViewRecentMessagesAboutYourComputer {
+            get {
+                return ResourceManager.GetString("ViewRecentMessagesAboutYourComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View recommended actions to keep Windows running smoothly.
+        /// </summary>
+        public static string ViewRecommendedActionsToKeepWindowsRunningSmoothly {
+            get {
+                return ResourceManager.GetString("ViewRecommendedActionsToKeepWindowsRunningSmoothly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View reliability history.
+        /// </summary>
+        public static string ViewReliabilityHistory {
+            get {
+                return ResourceManager.GetString("ViewReliabilityHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View scanners and cameras.
+        /// </summary>
+        public static string ViewScannersAndCameras {
+            get {
+                return ResourceManager.GetString("ViewScannersAndCameras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View system resource usage in Task Manager.
+        /// </summary>
+        public static string ViewSystemResourceUsageInTaskManager {
+            get {
+                return ResourceManager.GetString("ViewSystemResourceUsageInTaskManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Virtual Desktops.
         /// </summary>
-        internal static string VirtualDesktops {
+        public static string VirtualDesktops {
             get {
                 return ResourceManager.GetString("VirtualDesktops", resourceCulture);
             }
@@ -3600,7 +5914,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Virus.
         /// </summary>
-        internal static string Virus {
+        public static string Virus {
             get {
                 return ResourceManager.GetString("Virus", resourceCulture);
             }
@@ -3609,7 +5923,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Voice activation.
         /// </summary>
-        internal static string VoiceActivation {
+        public static string VoiceActivation {
             get {
                 return ResourceManager.GetString("VoiceActivation", resourceCulture);
             }
@@ -3618,7 +5932,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Volume.
         /// </summary>
-        internal static string Volume {
+        public static string Volume {
             get {
                 return ResourceManager.GetString("Volume", resourceCulture);
             }
@@ -3627,7 +5941,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to VPN.
         /// </summary>
-        internal static string Vpn {
+        public static string Vpn {
             get {
                 return ResourceManager.GetString("Vpn", resourceCulture);
             }
@@ -3636,7 +5950,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wallpaper.
         /// </summary>
-        internal static string Wallpaper {
+        public static string Wallpaper {
             get {
                 return ResourceManager.GetString("Wallpaper", resourceCulture);
             }
@@ -3645,7 +5959,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Warmer color.
         /// </summary>
-        internal static string WarmerColor {
+        public static string WarmerColor {
             get {
                 return ResourceManager.GetString("WarmerColor", resourceCulture);
             }
@@ -3654,7 +5968,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Welcome center.
         /// </summary>
-        internal static string WelcomeCenter {
+        public static string WelcomeCenter {
             get {
                 return ResourceManager.GetString("WelcomeCenter", resourceCulture);
             }
@@ -3663,7 +5977,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Welcome screen.
         /// </summary>
-        internal static string WelcomeScreen {
+        public static string WelcomeScreen {
             get {
                 return ResourceManager.GetString("WelcomeScreen", resourceCulture);
             }
@@ -3672,16 +5986,25 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to wgpocpl.cpl.
         /// </summary>
-        internal static string wgpocpl_cpl {
+        public static string wgpocpl_cpl {
             get {
                 return ResourceManager.GetString("wgpocpl.cpl", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to What&apos;s happened to the Quick Launch toolbar?.
+        /// </summary>
+        public static string WhatsHappenedToTheQuickLaunchToolbar {
+            get {
+                return ResourceManager.GetString("WhatsHappenedToTheQuickLaunchToolbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wheel.
         /// </summary>
-        internal static string Wheel {
+        public static string Wheel {
             get {
                 return ResourceManager.GetString("Wheel", resourceCulture);
             }
@@ -3690,7 +6013,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wi-Fi.
         /// </summary>
-        internal static string WiFi {
+        public static string WiFi {
             get {
                 return ResourceManager.GetString("WiFi", resourceCulture);
             }
@@ -3699,7 +6022,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wi-Fi Calling.
         /// </summary>
-        internal static string WiFiCalling {
+        public static string WiFiCalling {
             get {
                 return ResourceManager.GetString("WiFiCalling", resourceCulture);
             }
@@ -3708,7 +6031,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wi-Fi settings.
         /// </summary>
-        internal static string WiFiSettings {
+        public static string WiFiSettings {
             get {
                 return ResourceManager.GetString("WiFiSettings", resourceCulture);
             }
@@ -3717,7 +6040,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Window border.
         /// </summary>
-        internal static string WindowBorder {
+        public static string WindowBorder {
             get {
                 return ResourceManager.GetString("WindowBorder", resourceCulture);
             }
@@ -3726,7 +6049,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Anytime Upgrade.
         /// </summary>
-        internal static string WindowsAnytimeUpgrade {
+        public static string WindowsAnytimeUpgrade {
             get {
                 return ResourceManager.GetString("WindowsAnytimeUpgrade", resourceCulture);
             }
@@ -3735,7 +6058,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Anywhere.
         /// </summary>
-        internal static string WindowsAnywhere {
+        public static string WindowsAnywhere {
             get {
                 return ResourceManager.GetString("WindowsAnywhere", resourceCulture);
             }
@@ -3744,7 +6067,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows CardSpace.
         /// </summary>
-        internal static string WindowsCardSpace {
+        public static string WindowsCardSpace {
             get {
                 return ResourceManager.GetString("WindowsCardSpace", resourceCulture);
             }
@@ -3753,7 +6076,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Defender.
         /// </summary>
-        internal static string WindowsDefender {
+        public static string WindowsDefender {
             get {
                 return ResourceManager.GetString("WindowsDefender", resourceCulture);
             }
@@ -3762,7 +6085,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Firewall.
         /// </summary>
-        internal static string WindowsFirewall {
+        public static string WindowsFirewall {
             get {
                 return ResourceManager.GetString("WindowsFirewall", resourceCulture);
             }
@@ -3771,7 +6094,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Hello setup - Face.
         /// </summary>
-        internal static string WindowsHelloSetupFace {
+        public static string WindowsHelloSetupFace {
             get {
                 return ResourceManager.GetString("WindowsHelloSetupFace", resourceCulture);
             }
@@ -3780,7 +6103,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Hello setup - Fingerprint.
         /// </summary>
-        internal static string WindowsHelloSetupFingerprint {
+        public static string WindowsHelloSetupFingerprint {
             get {
                 return ResourceManager.GetString("WindowsHelloSetupFingerprint", resourceCulture);
             }
@@ -3789,7 +6112,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Insider Program.
         /// </summary>
-        internal static string WindowsInsiderProgram {
+        public static string WindowsInsiderProgram {
             get {
                 return ResourceManager.GetString("WindowsInsiderProgram", resourceCulture);
             }
@@ -3798,7 +6121,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Mobility Center.
         /// </summary>
-        internal static string WindowsMobilityCenter {
+        public static string WindowsMobilityCenter {
             get {
                 return ResourceManager.GetString("WindowsMobilityCenter", resourceCulture);
             }
@@ -3807,7 +6130,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows search.
         /// </summary>
-        internal static string WindowsSearch {
+        public static string WindowsSearch {
             get {
                 return ResourceManager.GetString("WindowsSearch", resourceCulture);
             }
@@ -3816,7 +6139,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Security.
         /// </summary>
-        internal static string WindowsSecurity {
+        public static string WindowsSecurity {
             get {
                 return ResourceManager.GetString("WindowsSecurity", resourceCulture);
             }
@@ -3825,7 +6148,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Update.
         /// </summary>
-        internal static string WindowsUpdate {
+        public static string WindowsUpdate {
             get {
                 return ResourceManager.GetString("WindowsUpdate", resourceCulture);
             }
@@ -3834,7 +6157,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Update - Advanced options.
         /// </summary>
-        internal static string WindowsUpdateAdvancedOptions {
+        public static string WindowsUpdateAdvancedOptions {
             get {
                 return ResourceManager.GetString("WindowsUpdateAdvancedOptions", resourceCulture);
             }
@@ -3843,7 +6166,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Update - Check for updates.
         /// </summary>
-        internal static string WindowsUpdateCheckForUpdates {
+        public static string WindowsUpdateCheckForUpdates {
             get {
                 return ResourceManager.GetString("WindowsUpdateCheckForUpdates", resourceCulture);
             }
@@ -3852,7 +6175,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Update - Restart options.
         /// </summary>
-        internal static string WindowsUpdateRestartOptions {
+        public static string WindowsUpdateRestartOptions {
             get {
                 return ResourceManager.GetString("WindowsUpdateRestartOptions", resourceCulture);
             }
@@ -3861,7 +6184,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Update - View optional updates.
         /// </summary>
-        internal static string WindowsUpdateViewOptionalUpdates {
+        public static string WindowsUpdateViewOptionalUpdates {
             get {
                 return ResourceManager.GetString("WindowsUpdateViewOptionalUpdates", resourceCulture);
             }
@@ -3870,7 +6193,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Windows Update - View update history.
         /// </summary>
-        internal static string WindowsUpdateViewUpdateHistory {
+        public static string WindowsUpdateViewUpdateHistory {
             get {
                 return ResourceManager.GetString("WindowsUpdateViewUpdateHistory", resourceCulture);
             }
@@ -3879,7 +6202,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wireless.
         /// </summary>
-        internal static string Wireless {
+        public static string Wireless {
             get {
                 return ResourceManager.GetString("Wireless", resourceCulture);
             }
@@ -3888,7 +6211,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Workplace.
         /// </summary>
-        internal static string Workplace {
+        public static string Workplace {
             get {
                 return ResourceManager.GetString("Workplace", resourceCulture);
             }
@@ -3897,7 +6220,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Workplace provisioning.
         /// </summary>
-        internal static string WorkplaceProvisioning {
+        public static string WorkplaceProvisioning {
             get {
                 return ResourceManager.GetString("WorkplaceProvisioning", resourceCulture);
             }
@@ -3906,7 +6229,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wubi IME settings.
         /// </summary>
-        internal static string WubiImeSettings {
+        public static string WubiImeSettings {
             get {
                 return ResourceManager.GetString("WubiImeSettings", resourceCulture);
             }
@@ -3915,7 +6238,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Wubi IME settings - UDP.
         /// </summary>
-        internal static string WubiImeSettingsUdp {
+        public static string WubiImeSettingsUdp {
             get {
                 return ResourceManager.GetString("WubiImeSettingsUdp", resourceCulture);
             }
@@ -3924,7 +6247,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Xbox Networking.
         /// </summary>
-        internal static string XboxNetworking {
+        public static string XboxNetworking {
             get {
                 return ResourceManager.GetString("XboxNetworking", resourceCulture);
             }
@@ -3933,7 +6256,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your info.
         /// </summary>
-        internal static string YourInfo {
+        public static string YourInfo {
             get {
                 return ResourceManager.GetString("YourInfo", resourceCulture);
             }
@@ -3942,7 +6265,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Zoom.
         /// </summary>
-        internal static string Zoom {
+        public static string Zoom {
             get {
                 return ResourceManager.GetString("Zoom", resourceCulture);
             }

@@ -16,7 +16,9 @@ namespace Flow.Launcher.Plugin
         {
             Search = search;
             RawQuery = rawQuery;
+#pragma warning disable CS0618
             Terms = terms;
+#pragma warning restore CS0618
             SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }

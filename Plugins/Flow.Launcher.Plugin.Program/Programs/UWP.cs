@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -163,11 +163,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and "
-                                                   + $"unable to convert Package to UWP for {p.Id.FullName}", e);
-                        return new Application[]
-                        {
-                        };
+                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and unable to convert Package to UWP for {p.Id.FullName}", e);
+                        return Array.Empty<Application>();
                     }
 #endif
 #if DEBUG //make developer aware and implement handling
@@ -440,7 +437,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
+                        _ = appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -451,7 +448,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            private async void LaunchElevated()
+            private void LaunchElevated()
             {
                 string command = "shell:AppsFolder\\" + UniqueIdentifier;
                 command = Environment.ExpandEnvironmentVariables(command.Trim());
@@ -588,7 +585,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
                     var key = logoKeyFromVersion[Package.Version];
-                    app.GetStringValue(key, out string logoUri);
+                    _ = app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else

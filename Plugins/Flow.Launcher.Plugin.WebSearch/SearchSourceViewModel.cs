@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Image;
+﻿using Flow.Launcher.Infrastructure.Image;
 using System;
 using System.Drawing;
 using System.IO;
@@ -34,10 +34,10 @@ namespace Flow.Launcher.Plugin.WebSearch
                 {
                     File.Copy(fullpathToSelectedImage, destinationFileNameFullPath);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 #if DEBUG
-                    throw e;
+                    throw;
 #else
                 MessageBox.Show(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
                 UpdateIconAttributes(selectedSearchSource, fullPathToOriginalImage);
