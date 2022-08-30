@@ -132,8 +132,6 @@ namespace Flow.Launcher.Infrastructure.Image
                         }
                         
                     }
-
-                    
                 }
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
                 {
