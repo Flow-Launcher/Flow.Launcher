@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -113,7 +114,27 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[path], ImageType.Cache);
                 }
+                if (path.StartsWith("http://") || path.StartsWith("https://"))
+                {
+                    // Download image from url
+                    using (WebClient client = new WebClient())
+                    {
+                        using (MemoryStream stream = new MemoryStream(client.DownloadData(path)))
+                        {
+                            var image = new BitmapImage();
+                            image.BeginInit();
+                            image.CacheOption = BitmapCacheOption.OnLoad;
+                            image.StreamSource = stream;
+                            image.EndInit();
+                            image.Freeze();
+                            ImageCache[path] = image;
+                            return new ImageResult(image, ImageType.Data);
+                        }
+                        
+                    }
 
+                    
+                }
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
                 {
                     var imageSource = new BitmapImage(new Uri(path));
