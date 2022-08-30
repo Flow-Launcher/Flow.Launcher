@@ -82,8 +82,8 @@
                             BorderThickness="0">
                             <Image
                                 x:Name="ImageIcon"
-                                Width="32"
-                                Height="32"
+                                Width="{Binding IconXY}"
+                                Height="{Binding IconXY}"
                                 Margin="0,0,0,0"
                                 HorizontalAlignment="Center"
                                 Source="{Binding Image, TargetNullValue={x:Null}}"
