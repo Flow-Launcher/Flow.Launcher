@@ -135,7 +135,7 @@ namespace Flow.Launcher.Plugin
             set
             {
                 _pluginDirectory = value;
-                if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath))
+                    if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath) && !IcoPath.StartsWith("http://") && !IcoPath.StartsWith("https://"))
                 {
                     IcoPath = Path.Combine(value, IcoPath);
                 }
