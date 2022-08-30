@@ -88,7 +88,11 @@
                                 HorizontalAlignment="Center"
                                 Source="{Binding Image, TargetNullValue={x:Null}}"
                                 Stretch="Uniform"
-                                Visibility="{Binding ShowIcon}" />
+                                Visibility="{Binding ShowIcon}">
+                                <Image.Clip>
+                                    <EllipseGeometry RadiusX="{Binding IconRadius}" RadiusY="{Binding IconRadius}" Center="16 16"/>
+                                </Image.Clip>
+                            </Image>
                         </Border>
                         <Border
                             Margin="9,0,0,0"
