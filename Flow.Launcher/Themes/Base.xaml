@@ -79,6 +79,76 @@
         <Setter Property="Stroke" Value="Blue" />
     </Style>
 
+    <Style x:Key="BaseClockPanel" TargetType="{x:Type StackPanel}">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="0,0,14,0" />
+        <Setter Property="Visibility" Value="Collapsed" />
+    </Style>
+    <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0,0,0,-5" />
+    </Style>
+    <Style x:Key="BaseDateBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+    </Style>
+
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#cc8ec8" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#cc8ec8" />
+    </Style>
+    <Style
+        x:Key="ClockPanel"
+        BasedOn="{StaticResource BaseClockPanel}"
+        TargetType="{x:Type StackPanel}">
+        <Setter Property="Visibility" Value="Visible" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.0"
+                                To="1.0"
+                                Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="1.0"
+                                To="0.0"
+                                Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
 
     <!--  Item Style  -->
     <Style x:Key="ProgressBarResult" TargetType="{x:Type ProgressBar}">
