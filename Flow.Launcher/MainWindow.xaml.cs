@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,8 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Windows.Threading;
+using System.Globalization;
 
 namespace Flow.Launcher
 {
@@ -43,6 +45,13 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
+
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -51,6 +60,12 @@ namespace Flow.Launcher
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
+            DateBox.Text = System.DateTime.Now.ToString("ddd MM/dd", CultureInfo.InvariantCulture);
+
         }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
