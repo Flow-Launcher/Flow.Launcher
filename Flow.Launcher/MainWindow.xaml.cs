@@ -63,8 +63,23 @@ namespace Flow.Launcher
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
-            DateBox.Text = System.DateTime.Now.ToString("MM/dd dddd");
+            if (_settings.UseClock == true)
+            {
+                ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
+            }
+            else if(_settings.UseClock == false)
+            {
+                ClockBox.Visibility = Visibility.Collapsed;
+            }
+            if (_settings.UseDate == false)
+            {
+                DateBox.Text = System.DateTime.Now.ToString("MM/dd ddd");
+            }
+            else if (_settings.UseDate == true)
+            {
+                DateBox.Visibility = Visibility.Collapsed;
+            }
+            
 
         }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
