@@ -64,7 +64,7 @@ namespace Flow.Launcher
         private void Timer_Tick(object sender, EventArgs e)
         {
             ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
-            DateBox.Text = System.DateTime.Now.ToString("ddd MM/dd", CultureInfo.InvariantCulture);
+            DateBox.Text = System.DateTime.Now.ToString("MM/dd dddd");
 
         }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
@@ -363,6 +363,7 @@ namespace Flow.Launcher
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
             iconsb.Begin(SearchIcon);
+            iconsb.Begin(ClockPanel);
             sb.Begin(FlowMainWindow);
         }
 

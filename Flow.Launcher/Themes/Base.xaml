@@ -117,11 +117,16 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource BaseClockPanel}"
         TargetType="{x:Type StackPanel}">
+        <Setter Property="Margin" Value="0,0,62,0" />
         <Setter Property="Visibility" Value="Visible" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
-
-                <DataTrigger.EnterActions>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
@@ -131,20 +136,20 @@
                                 Duration="0:0:0.2" />
                         </Storyboard>
                     </BeginStoryboard>
-                </DataTrigger.EnterActions>
-                <DataTrigger.ExitActions>
+                </MultiDataTrigger.EnterActions>
+                <MultiDataTrigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 Storyboard.TargetProperty="Opacity"
-                                From="1.0"
                                 To="0.0"
                                 Duration="0:0:0.2" />
                         </Storyboard>
                     </BeginStoryboard>
-                </DataTrigger.ExitActions>
+                </MultiDataTrigger.ExitActions>
 
-            </DataTrigger>
+            </MultiDataTrigger>
+            <DataTrigger Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
 
         </Style.Triggers>
 
