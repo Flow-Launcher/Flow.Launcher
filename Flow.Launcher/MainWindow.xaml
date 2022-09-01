@@ -192,11 +192,12 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
+
                     <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
                         <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}" />
                         <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}" />
-
                     </StackPanel>
+
                     <Canvas Style="{DynamicResource SearchIconPosition}">
                         <Image
                             x:Name="PluginActivationIcon"
