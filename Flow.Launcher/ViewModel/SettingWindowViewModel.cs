@@ -385,6 +385,19 @@ namespace Flow.Launcher.ViewModel
             set => Settings.UseSound = value;
         }
 
+        public bool UseClock
+        {
+            get => Settings.UseClock;
+            set => Settings.UseClock = value;
+        }
+
+        public bool UseDate
+        {
+            get => Settings.UseDate;
+            set => Settings.UseDate = value;
+        }
+
+
         public Brush PreviewBackground
         {
             get

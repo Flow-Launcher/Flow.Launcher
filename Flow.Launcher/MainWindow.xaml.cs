@@ -82,6 +82,29 @@ namespace Flow.Launcher
             
 
         }
+
+        public void ClockDisplay()
+        {
+            if (_settings.UseClock == true)
+            {
+                ClockBox.Visibility = Visibility.Visible;
+                ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
+            }
+            else if (_settings.UseClock == false)
+            {
+                ClockBox.Visibility = Visibility.Collapsed;
+            }
+            if (_settings.UseDate == true)
+            {
+                DateBox.Visibility = Visibility.Visible;
+                DateBox.Text = System.DateTime.Now.ToString("MM/dd ddd");
+            }
+            else if (_settings.UseDate == false)
+            {
+                DateBox.Visibility = Visibility.Collapsed;
+            }
+
+        }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (QueryTextBox.SelectionLength == 0)
@@ -205,6 +228,12 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
+                        break;
+                    case nameof(Settings.UseClock):
+                        ClockDisplay();
+                        break;
+                    case nameof(Settings.UseDate):
+                        ClockDisplay();
                         break;
                 }
             };
@@ -378,7 +407,6 @@ namespace Flow.Launcher
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
             iconsb.Begin(SearchIcon);
-            iconsb.Begin(ClockPanel);
             sb.Begin(FlowMainWindow);
         }
 

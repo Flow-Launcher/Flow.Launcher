@@ -42,7 +42,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
         public bool UseClock { get; set; } = true;
-        public bool UseDate { get; set; } = true;
+        public bool UseDate { get; set; } = false;
         public bool FirstLaunch { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
