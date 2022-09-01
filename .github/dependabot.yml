@@ -11,3 +11,7 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "squirrel-windows"
+    reviewers:
+      - "jjw24"
+      - "taooceros"
+      - "JohnTheGr8"
