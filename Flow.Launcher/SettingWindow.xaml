@@ -597,9 +597,7 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                                     </StackPanel>
-                                    <CheckBox
-                                        IsChecked="{Binding StartFlowLauncherOnSystemStartup}"
-                                        Style="{DynamicResource SideControlCheckBox}" />
+                                    <CheckBox IsChecked="{Binding StartFlowLauncherOnSystemStartup}" Style="{DynamicResource SideControlCheckBox}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
@@ -1555,8 +1553,17 @@
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
-
                                                     </Border>
+                                                    <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
+                                                        <TextBlock
+                                                            x:Name="DateBox"
+                                                            Style="{DynamicResource DateBox}"
+                                                            Text="09-01 Thu" />
+                                                        <TextBlock
+                                                            x:Name="ClockBox"
+                                                            Style="{DynamicResource ClockBox}"
+                                                            Text="PM 12:04" />
+                                                    </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
                                                             Margin="0"
@@ -1792,9 +1799,9 @@
                                                             Margin="20,0,0,0"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
+                                                            IsSynchronizedWithCurrentItem="False"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedQueryBoxFont}"
-                                                            IsSynchronizedWithCurrentItem="False" />
+                                                            SelectedItem="{Binding SelectedQueryBoxFont}" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,0,0,0"
@@ -1843,9 +1850,9 @@
                                                             Margin="20,-2,0,0"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
+                                                            IsSynchronizedWithCurrentItem="False"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedResultFont}"
-                                                            IsSynchronizedWithCurrentItem="False" />
+                                                            SelectedItem="{Binding SelectedResultFont}" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,-2,0,0"
@@ -1877,7 +1884,60 @@
                                     <StackPanel>
 
                                         <Border
-                                            Margin="0,30,0,0"
+                                            Margin="0,24,0,12"
+                                            Padding="0"
+                                            CornerRadius="5"
+                                            Style="{DynamicResource SettingGroupBox}">
+                                            <StackPanel Orientation="Vertical">
+                                                <Border
+                                                    Margin="0"
+                                                    BorderThickness="0"
+                                                    Style="{DynamicResource SettingGroupBox}">
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Clock}" />
+                                                        </StackPanel>
+                                                        <ui:ToggleSwitch
+                                                            Grid.Row="0"
+                                                            Grid.Column="2"
+                                                            IsOn="{Binding UseClock, Mode=TwoWay}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
+                                                        <TextBlock Style="{StaticResource Glyph}">
+                                                            &#xec92;
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
+                                                <Separator
+                                                    Width="Auto"
+                                                    BorderThickness="1"
+                                                    Style="{StaticResource SettingSeparatorStyle}" />
+                                                <Border
+                                                    Margin="0"
+                                                    BorderThickness="0"
+                                                    Style="{DynamicResource SettingGroupBox}">
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Date}" />
+                                                        </StackPanel>
+                                                        <ui:ToggleSwitch
+                                                            Grid.Row="0"
+                                                            Grid.Column="2"
+                                                            IsOn="{Binding UseDate, Mode=TwoWay}"
+                                                            OffContent="{DynamicResource disable}"
+                                                            OnContent="{DynamicResource enable}"
+                                                            Style="{DynamicResource SideToggleSwitch}" />
+                                                        <TextBlock Style="{StaticResource Glyph}">
+                                                            &#xe787;
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border
+                                            Margin="0,12,0,12"
                                             Padding="0"
                                             CornerRadius="5"
                                             Style="{DynamicResource SettingGroupBox}">
