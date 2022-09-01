@@ -32,7 +32,7 @@ namespace Flow.Launcher.Core.Plugin
     internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         protected PluginInitContext Context;
-        public const string JsonRpc = "JsonRPC";
+        public const string JsonRPC = "JsonRPC";
 
         /// <summary>
         /// The language this JsonRPCPlugin support

@@ -25,7 +25,7 @@ namespace Flow.Launcher.Core.Plugin
             };
 
             // temp fix for issue #667
-            var path = Path.Combine(Constant.ProgramDirectory, JsonRpc);
+            var path = Path.Combine(Constant.ProgramDirectory, JsonRPC);
             _startInfo.EnvironmentVariables["PYTHONPATH"] = path;
 
             _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
