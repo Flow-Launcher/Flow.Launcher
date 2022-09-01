@@ -79,6 +79,8 @@
         <Setter Property="Stroke" Value="Blue" />
     </Style>
 
+    <Style x:Key="BaseClockPosition" TargetType="{x:Type Canvas}" />
+
     <Style x:Key="BaseClockPanel" TargetType="{x:Type StackPanel}">
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="HorizontalAlignment" Value="Right" />
@@ -88,29 +90,31 @@
         <Setter Property="Visibility" Value="Collapsed" />
     </Style>
     <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="22" />
         <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="10,0,0,0" />
+        <Setter Property="Margin" Value="0,0,2,0" />
     </Style>
     <Style x:Key="BaseDateBox" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="0,0,10,0" />
     </Style>
 
     <Style
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="Foreground" Value="#C6C6C6" />
     </Style>
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="Foreground" Value="#C6C6C6" />
     </Style>
     <Style
         x:Key="ClockPanel"

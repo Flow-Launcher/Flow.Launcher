@@ -71,11 +71,11 @@ namespace Flow.Launcher
             {
                 ClockBox.Visibility = Visibility.Collapsed;
             }
-            if (_settings.UseDate == false)
+            if (_settings.UseDate == true)
             {
                 DateBox.Text = System.DateTime.Now.ToString("MM/dd ddd");
             }
-            else if (_settings.UseDate == true)
+            else if (_settings.UseDate == false)
             {
                 DateBox.Visibility = Visibility.Collapsed;
             }
