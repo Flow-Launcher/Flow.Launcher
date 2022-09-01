@@ -29,10 +29,10 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    internal abstract class JsonRpcPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
-        protected PluginInitContext context;
-        public const string JsonRPC = "JsonRPC";
+        protected PluginInitContext Context;
+        public const string JsonRpc = "JsonRPC";
 
         /// <summary>
         /// The language this JsonRPCPlugin support
@@ -43,19 +43,16 @@ namespace Flow.Launcher.Core.Plugin
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
 
-        private string SettingConfigurationPath => Path.Combine(context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name, "Settings.json");
+        private int RequestId { get; set; }
+
+        private string SettingConfigurationPath => Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
+        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, Context.CurrentPluginMetadata.Name, "Settings.json");
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var request = new JsonRPCRequestModel
-            {
-                Method = "context_menu",
-                Parameters = new[]
-                {
-                    selectedResult.ContextData
-                }
-            };
+            var request = new JsonRPCRequestModel(RequestId++, 
+                "context_menu", 
+                new[] { selectedResult.ContextData });
             var output = Request(request);
             return DeserializedResult(output);
         }
@@ -113,7 +110,7 @@ namespace Flow.Launcher.Core.Plugin
 
             if (!string.IsNullOrEmpty(queryResponseModel.DebugMessage))
             {
-                context.API.ShowMsg(queryResponseModel.DebugMessage);
+                Context.API.ShowMsg(queryResponseModel.DebugMessage);
             }
 
             foreach (var result in queryResponseModel.Result)
@@ -281,7 +278,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 case (0, 0):
                     const string errorMessage = "Empty JSON-RPC Response.";
-                    Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
+                    Log.Warn($"|{nameof(JsonRpcPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
                     break;
                 case (_, not 0):
                     throw new InvalidDataException(Encoding.UTF8.GetString(errorBuffer.ToArray())); // The process has exited with an error message
@@ -295,20 +292,15 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var request = new JsonRPCRequestModel
-            {
-                Method = "query",
-                Parameters = new object[]
-                {
-                    query.Search
-                },
-                Settings = Settings
-            };
+            var request = new JsonRPCRequestModel(RequestId++, 
+                "query", 
+                new object[]{ query.Search }, 
+                Settings);
             var output = await RequestAsync(request, token);
             return await DeserializedResultAsync(output);
         }
 
-        public async Task InitSettingAsync()
+        private async Task InitSettingAsync()
         {
             if (!File.Exists(SettingConfigurationPath))
                 return;
@@ -337,7 +329,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public virtual async Task InitAsync(PluginInitContext context)
         {
-            this.context = context;
+            this.Context = context;
             await InitSettingAsync();
         }
         private static readonly Thickness settingControlMargin = new(10, 4, 10, 4);
@@ -483,7 +475,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (Settings != null)
             {
-                Helper.ValidateDirectory(Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name));
+                Helper.ValidateDirectory(Path.Combine(DataLocation.PluginSettingsDirectory, Context.CurrentPluginMetadata.Name));
                 File.WriteAllText(SettingPath, JsonSerializer.Serialize(Settings, settingSerializeOption));
             }
         }

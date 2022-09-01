@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -8,12 +8,17 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal class PythonPlugin : JsonRpcPlugin
+    public class PythonPluginV2 : JsonRpcPluginV2
     {
         private readonly ProcessStartInfo _startInfo;
+        private Process _process;
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
 
-        public PythonPlugin(string filename)
+        protected override Stream InputStream { get; set; }
+        protected override Stream OutputStream { get; set; }
+        protected override StreamReader ErrorStream { get; set; }
+
+        public PythonPluginV2(string filename)
         {
             _startInfo = new ProcessStartInfo
             {
@@ -22,6 +27,7 @@ namespace Flow.Launcher.Core.Plugin
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                RedirectStandardInput = true
             };
 
             // temp fix for issue #667
@@ -36,27 +42,22 @@ namespace Flow.Launcher.Core.Plugin
             //Add -B flag to tell python don't write .py[co] files. Because .pyc contains location infos which will prevent python portable
             _startInfo.ArgumentList.Add("-B");
         }
+        
 
-        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
-        {
-            _startInfo.ArgumentList[2] = request.ToString();
-
-            return ExecuteAsync(_startInfo, token);
-        }
-
-        protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
-        {
-            _startInfo.ArgumentList[2] = rpcRequest.ToString();
-            _startInfo.WorkingDirectory = Context.CurrentPluginMetadata.PluginDirectory;
-            // TODO: Async Action
-            return Execute(_startInfo);
-        }
         public override async Task InitAsync(PluginInitContext context)
         {
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
-            _startInfo.ArgumentList.Add("");
-            await base.InitAsync(context);
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
+
+            _process = Process.Start(_startInfo);
+            
+            ArgumentNullException.ThrowIfNull(_process);
+            
+            InputStream = _process.StandardInput.BaseStream;
+            OutputStream = _process.StandardOutput.BaseStream;
+            ErrorStream = _process.StandardError;
+            
+            await base.InitAsync(context);
         }
     }
 }

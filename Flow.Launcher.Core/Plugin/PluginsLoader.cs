@@ -83,7 +83,10 @@ namespace Flow.Launcher.Core.Plugin
                             return;
                         }
 
-                        plugins.Add(new PluginPair {Plugin = plugin, Metadata = metadata});
+                        plugins.Add(new PluginPair
+                        {
+                            Plugin = plugin, Metadata = metadata
+                        });
                     });
                 metadata.InitTime += milliseconds;
             }
@@ -110,14 +113,14 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, PluginsSettings settings)
         {
-            if (!source.Any(o => o.Language.ToUpper() == AllowedLanguage.Python))
+            if (!source.Any(o => o.Language.ToUpper() is AllowedLanguage.Python or AllowedLanguage.PythonV2))
                 return new List<PluginPair>();
 
             if (!string.IsNullOrEmpty(settings.PythonDirectory) && FilesFolders.LocationExists(settings.PythonDirectory))
                 return SetPythonPathForPluginPairs(source, Path.Combine(settings.PythonDirectory, PythonExecutable));
 
             var pythonPath = string.Empty;
-            
+
             if (MessageBox.Show("Flow detected you have installed Python plugins, which " +
                                 "will need Python to run. Would you like to download Python? " +
                                 Environment.NewLine + Environment.NewLine +
@@ -185,17 +188,22 @@ namespace Flow.Launcher.Core.Plugin
             return SetPythonPathForPluginPairs(source, pythonPath);
         }
 
-        private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(List<PluginMetadata> source, string pythonPath)
-            =>  source
-                .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
+        private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(IEnumerable<PluginMetadata> source, string pythonPath)
+            => source
+                .Where(o => o.Language.ToUpper() is AllowedLanguage.Python or AllowedLanguage.PythonV2)
                 .Select(metadata => new PluginPair
                 {
-                    Plugin = new PythonPlugin(pythonPath), 
+                    Plugin = metadata.Language.ToUpper() switch
+                    {
+                        AllowedLanguage.Python => new PythonPlugin(pythonPath),
+                        AllowedLanguage.PythonV2 => new PythonPluginV2(pythonPath),
+                        _ => throw new ArgumentOutOfRangeException()
+                    },
                     Metadata = metadata
                 })
                 .ToList();
 
-    public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)

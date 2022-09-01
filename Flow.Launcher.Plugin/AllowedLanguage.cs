@@ -1,4 +1,6 @@
-﻿namespace Flow.Launcher.Plugin
+﻿using System;
+
+namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Allowed plugin languages
@@ -8,34 +10,27 @@
         /// <summary>
         /// Python
         /// </summary>
-        public static string Python
-        {
-            get { return "PYTHON"; }
-        }
+        public const string Python = "PYTHON";
+        
+        /// <summary>
+        /// Python V2
+        /// </summary>
+        public const string PythonV2 = "PYTHON_V2";
 
         /// <summary>
         /// C#
         /// </summary>
-        public static string CSharp
-        {
-            get { return "CSHARP"; }
-        }
+        public const string CSharp = "CSHARP";
 
         /// <summary>
         /// F#
         /// </summary>
-        public static string FSharp
-        {
-            get { return "FSHARP"; }
-        }
+        public const string FSharp = "FSHARP";
 
         /// <summary>
         /// Standard .exe
         /// </summary>
-        public static string Executable
-        {
-            get { return "EXECUTABLE"; }
-        }
+        public const string Executable = "EXECUTABLE";
 
         /// <summary>
         /// Determines if this language is a .NET language
@@ -56,8 +51,9 @@
         public static bool IsAllowed(string language)
         {
             return IsDotNet(language)
-                || language.ToUpper() == Python.ToUpper()
-                || language.ToUpper() == Executable.ToUpper();
+                || String.Equals(language, Python, StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(language, PythonV2, StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(language, Executable, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -71,26 +72,31 @@ namespace Flow.Launcher.Plugin
 
         public string ActionKeyword { get; init; }
 
+        [JsonIgnore]
         /// <summary>
         /// Return first search split by space if it has
         /// </summary>
         public string FirstSearch => SplitSearch(0);
-
+        
+        [JsonIgnore]
         private string _secondToEndSearch;
-
+        
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
+        [JsonIgnore]
         public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
         /// Return second search split by space if it has
         /// </summary>
+        [JsonIgnore]
         public string SecondSearch => SplitSearch(1);
 
         /// <summary>
         /// Return third search split by space if it has
         /// </summary>
+        [JsonIgnore]
         public string ThirdSearch => SplitSearch(2);
 
         private string SplitSearch(int index)

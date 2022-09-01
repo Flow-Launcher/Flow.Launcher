@@ -21,67 +21,36 @@ using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public class JsonRPCErrorModel
-    {
-        public int Code { get; set; }
+    public record JsonRPCRequestMessage(PluginMetadata PluginMetadata, IAsyncEnumerable<JsonRPCRequestModel> Requests);
+    public record JsonRPCBase(int Id, JsonRPCErrorModel Error = default);
+    public record JsonRPCErrorModel(int Code, string Message, string Data);
 
-        public string Message { get; set; }
+    public record JsonRPCResponseModel(int Id, JsonRPCErrorModel Error = default) : JsonRPCBase(Id, Error);
+    public record JsonRPCQueryResponseModel(int Id,
+        [property: JsonPropertyName("result")] List<JsonRPCResult> Result,
+        Dictionary<string, object> SettingsChange = null,
+        string DebugMessage = "",
+        JsonRPCErrorModel Error = default) : JsonRPCResponseModel(Id, Error);
 
-        public string Data { get; set; }
-    }
+    public record JsonRPCRequestModel(int Id,
+        string Method,
+        object[] Parameters,
+        Dictionary<string, object> Settings = default,
+        JsonRPCErrorModel Error = default) : JsonRPCBase(Id, Error);
 
-
-    public class JsonRPCResponseModel
-    {
-        public string Result { get; set; }
-
-        public JsonRPCErrorModel Error { get; set; }
-    }
-
-    public class JsonRPCQueryResponseModel : JsonRPCResponseModel
-    {
-        [JsonPropertyName("result")]
-        public new List<JsonRPCResult> Result { get; set; }
-
-        public Dictionary<string, object> SettingsChange { get; set; }
-
-        public string DebugMessage { get; set; }
-    }
-
-    public class JsonRPCRequestModel
-    {
-        public string Method { get; set; }
-
-        public object[] Parameters { get; set; }
-
-        public Dictionary<string, object> Settings { get; set; }
-
-        private static readonly JsonSerializerOptions options = new()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, options);
-        }
-    }
-
-    /// <summary>
-    /// Json RPC Request that Flow Launcher sent to client
-    /// </summary>
-    public class JsonRPCServerRequestModel : JsonRPCRequestModel
-    {
-
-    }
 
     /// <summary>
     /// Json RPC Request(in query response) that client sent to Flow Launcher
     /// </summary>
-    public class JsonRPCClientRequestModel : JsonRPCRequestModel
-    {
-        public bool DontHideAfterAction { get; set; }
-    }
-
+    public record JsonRPCClientRequestModel(
+        int Id,
+        string Method,
+        object[] Parameters,
+        Dictionary<string, object> Settings,
+        bool DontHideAfterAction = false,
+        JsonRPCErrorModel Error = default) : JsonRPCRequestModel(Id, Method, Parameters, Settings, Error);
+    
+    
     /// <summary>
     /// Represent the json-rpc result item that client send to Flow Launcher
     /// Typically, we will send back this request model to client after user select the result item
