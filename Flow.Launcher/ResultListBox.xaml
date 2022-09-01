@@ -30,7 +30,7 @@
 
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Button>
+            <Button HorizontalAlignment="Stretch">
                 <Button.Template>
                     <ControlTemplate>
                         <ContentPresenter Content="{TemplateBinding Button.Content}" />
@@ -39,9 +39,10 @@
                 <Button.Content>
                     <Grid
                         Margin="0"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Cursor="Hand"
+                        ShowGridLines="True"
                         UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
@@ -50,7 +51,7 @@
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="9*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel
@@ -129,12 +130,9 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                MinWidth="750"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}">
-                    
-                            </TextBlock>
+                                ToolTip="{Binding ShowSubTitleToolTip}" />
 
                         </Grid>
 
