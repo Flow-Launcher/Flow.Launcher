@@ -204,10 +204,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
-        internal ObservableCollection<ShortCutModel> ShortCuts { get; set; } = new()
-        {
-            ("spp", "sp play")
-        };
+        internal ObservableCollection<ShortCutModel> ShortCuts { get; set; } = new();
     }
 
     public enum LastQueryMode
