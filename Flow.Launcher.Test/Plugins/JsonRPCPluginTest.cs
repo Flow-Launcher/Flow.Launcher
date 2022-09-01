@@ -14,7 +14,7 @@ namespace Flow.Launcher.Test.Plugins
 {
     [TestFixture]
     // ReSharper disable once InconsistentNaming
-    internal class JsonRPCPluginTest : JsonRpcPlugin
+    internal class JsonRPCPluginTest : JsonRPCPlugin
     {
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
 

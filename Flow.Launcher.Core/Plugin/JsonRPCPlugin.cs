@@ -29,7 +29,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRpcPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         protected PluginInitContext Context;
         public const string JsonRpc = "JsonRPC";
@@ -278,7 +278,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 case (0, 0):
                     const string errorMessage = "Empty JSON-RPC Response.";
-                    Log.Warn($"|{nameof(JsonRpcPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
+                    Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
                     break;
                 case (_, not 0):
                     throw new InvalidDataException(Encoding.UTF8.GetString(errorBuffer.ToArray())); // The process has exited with an error message

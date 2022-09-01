@@ -8,7 +8,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal class PythonPlugin : JsonRpcPlugin
+    internal class PythonPlugin : JsonRPCPlugin
     {
         private readonly ProcessStartInfo _startInfo;
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;

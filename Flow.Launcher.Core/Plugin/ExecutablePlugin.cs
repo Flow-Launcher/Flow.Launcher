@@ -6,7 +6,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal class ExecutablePlugin : JsonRpcPlugin
+    internal class ExecutablePlugin : JsonRPCPlugin
     {
         private readonly ProcessStartInfo _startInfo;
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
