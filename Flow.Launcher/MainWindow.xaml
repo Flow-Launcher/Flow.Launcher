@@ -243,7 +243,7 @@
                     <Rectangle
                             Width="Auto"
                             HorizontalAlignment="Stretch"
-                            Style="{DynamicResource SeparatorStyle}" />
+                            Style="{DynamicResource SeparatorStyle}" Visibility="Visible" />
                     <Line
                         x:Name="ProgressBar"
                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
@@ -262,7 +262,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="0.7*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
+                    <StackPanel Grid.Column="0" x:Name="ResultArea">
                     <Border Style="{DynamicResource WindowRadius}">
                         <Border.Clip>
                             <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -309,8 +309,8 @@
                         </ContentControl>
                     </Border>
                     </StackPanel>
-                    <Grid Grid.Column="1" DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch" Visibility="Visible">
-                        <Border BorderThickness="1 0 0 0" BorderBrush="#cecece" Background="Transparent" Margin="0 0 10 10">
+                    <Grid x:Name="Preview" Style="{DynamicResource PreviewArea}" Grid.Column="1" DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch" Visibility="Collapsed">
+                        <Border BorderThickness="1 0 0 0" BorderBrush="#FFEAEAEA" Background="Transparent" Margin="0 0 10 10">
                         <Grid Margin="10 0 10 0"  VerticalAlignment="Center" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>

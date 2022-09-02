@@ -590,9 +590,31 @@ namespace Flow.Launcher
                         }
                     }
                     break;
+                case Key.F2:
+                    PreviewToggle();
+                    e.Handled = true;
+                    break;
+
                 default:
                     break;
 
+            }
+        }
+
+        public void PreviewToggle()
+        {
+
+            if (Preview.Visibility == Visibility.Collapsed)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                //HotkeyArea.SetValue(Visibility, Visibility.Collapsed);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                //HotkeyArea.SetValue(Visibility, Visibility.Visible);
+                Preview.Visibility = Visibility.Collapsed;
             }
         }
 
