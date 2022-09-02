@@ -219,8 +219,12 @@ namespace Flow.Launcher.Infrastructure.Image
                 option);
         }
 
-        public static bool CacheContainImage(string path)
+        public static bool CacheContainImage(string path, bool fullImage = false)
         {
+            if (fullImage)
+            {
+                return ImageCache.ContainsKey(path + ImageType.FullImageFile);
+            }
             return ImageCache.ContainsKey(path) && ImageCache[path] != null;
         }
 
