@@ -110,9 +110,9 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
                 }
-                if (loadFullImage && ImageCache.ContainsKey(path + ImageType.FullImageFile))
+                if (loadFullImage && ImageCache.ContainsKey($"{path}_{ImageType.FullImageFile}"))
                 {
-                    return new ImageResult(ImageCache[path + ImageType.FullImageFile], ImageType.Cache);
+                    return new ImageResult(ImageCache[$"{path}_{ImageType.FullImageFile}"], ImageType.Cache);
                 }
                 if (!loadFullImage && ImageCache.ContainsKey(path))
                 {
@@ -223,7 +223,7 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             if (fullImage)
             {
-                return ImageCache.ContainsKey(path + ImageType.FullImageFile);
+                return ImageCache.ContainsKey($"{path}_{ImageType.FullImageFile}");
             }
             return ImageCache.ContainsKey(path) && ImageCache[path] != null;
         }
@@ -236,7 +236,10 @@ namespace Flow.Launcher.Infrastructure.Image
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
             { // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
-
+                if (imageResult.ImageType == ImageType.FullImageFile)
+                {
+                    path = $"{path}_{ImageType.FullImageFile}";
+                }
                 if (hash != null)
                 {
 
@@ -246,10 +249,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     }
                     else
                     { // new guid
-                        if (imageResult.ImageType == ImageType.FullImageFile)
-                        {
-                            path = path + ImageType.FullImageFile;
-                        }
+
                         GuidToKey[hash] = path;
                     }
                 }
