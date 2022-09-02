@@ -260,7 +260,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="0.7*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                     <Border Style="{DynamicResource WindowRadius}">
@@ -309,18 +309,20 @@
                         </ContentControl>
                     </Border>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch">
-                        <Grid Margin="10" Background="red" VerticalAlignment="Stretch">
+                    <Grid Grid.Column="1" DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch" Visibility="Visible">
+                        <Border BorderThickness="1 0 0 0" BorderBrush="#cecece" Background="Transparent" Margin="0 0 10 10">
+                        <Grid Margin="10 0 10 0"  VerticalAlignment="Center" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Grid.Column="0" MaxHeight="200" Height="64" x:Name="ImageIcon" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}" Margin="0 0 0 8" />
+                            <Image Grid.Row="0" Grid.Column="0" Height="64" x:Name="ImageIcon" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}" Margin="0 0 0 8" />
                             <TextBlock Grid.Row="1" x:Name="Title" Text="{Binding Result.Title}" FontSize="18" TextAlignment="Center" FontWeight="SemiBold" Style="{DynamicResource ItemTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" />
-                            <TextBlock Grid.Row="2" x:Name="SubTitle" Text="{Binding Result.SubTitle}" TextAlignment="Left" FontSize="15" Style="{DynamicResource ItemSubTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0 4 0 0"></TextBlock>
+                            <TextBlock Grid.Row="2" x:Name="SubTitle" Text="{Binding Result.SubTitle}" FontSize="13" LineHeight="22" Style="{DynamicResource ItemSubTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0 12 0 0" TextAlignment="Center"></TextBlock>
                         </Grid>
-                    </StackPanel>
+                        </Border>
+                    </Grid>
                 </Grid>
                 
             </StackPanel>
