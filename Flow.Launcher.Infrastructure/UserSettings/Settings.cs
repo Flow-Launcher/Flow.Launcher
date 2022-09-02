@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -137,6 +137,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// when false Alphabet static service will always return empty results
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
+        public bool AlwaysPreview { get; set; } = false;
 
         [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
