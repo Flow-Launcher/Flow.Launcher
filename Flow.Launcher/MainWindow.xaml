@@ -311,7 +311,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Grid.Column="0" Height="64" x:Name="ImageIcon" HorizontalAlignment="Center" Source="{Binding Image}" Visibility="{Binding ShowIcon}" Margin="0 0 0 8" />
+                            <Image Grid.Row="0" Grid.Column="0" Height="128" x:Name="ImageIcon" HorizontalAlignment="Center" Source="{Binding PreviewImage}" Visibility="{Binding ShowIcon}" Margin="0 0 0 8" />
                             <TextBlock Grid.Row="1" x:Name="Title" Text="{Binding Result.Title}" FontSize="18" TextAlignment="Center" FontWeight="SemiBold" Style="{DynamicResource ItemTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" />
                             <TextBlock Grid.Row="2" x:Name="SubTitle" Text="{Binding Result.SubTitle}" FontSize="13" LineHeight="22" Style="{DynamicResource ItemSubTitleStyle}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="0 12 0 0" TextAlignment="Center"></TextBlock>
                         </Grid>
