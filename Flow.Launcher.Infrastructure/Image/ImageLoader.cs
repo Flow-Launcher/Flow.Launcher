@@ -101,7 +101,7 @@ namespace Flow.Launcher.Infrastructure.Image
         }
 
         private static ImageResult LoadInternal(string path, bool loadFullImage = false)
-        {
+{
             ImageResult imageResult;
 
             try
@@ -114,7 +114,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[path + ImageType.FullImageFile], ImageType.Cache);
                 }
-                if (ImageCache.ContainsKey(path))
+                if (!loadFullImage && ImageCache.ContainsKey(path))
                 {
                     return new ImageResult(ImageCache[path], ImageType.Cache);
                 }
@@ -236,10 +236,7 @@ namespace Flow.Launcher.Infrastructure.Image
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
             { // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
-                if (imageResult.ImageType == ImageType.FullImageFile)
-                {
-                    path = path + ImageType.FullImageFile;
-                }
+
                 if (hash != null)
                 {
 
@@ -249,6 +246,10 @@ namespace Flow.Launcher.Infrastructure.Image
                     }
                     else
                     { // new guid
+                        if (imageResult.ImageType == ImageType.FullImageFile)
+                        {
+                            path = path + ImageType.FullImageFile;
+                        }
                         GuidToKey[hash] = path;
                     }
                 }
