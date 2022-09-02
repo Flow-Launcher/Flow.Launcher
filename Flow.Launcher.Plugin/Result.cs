@@ -68,6 +68,11 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
+        /// Full image used for preview window
+        /// </summary>
+        public string PreviewImage { get; set; }
+
+        /// <summary>
         /// Delegate function, see <see cref="Icon"/>
         /// </summary>
         /// <returns></returns>
