@@ -71,4 +71,7 @@
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8391AB" />
     </Style>
+    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#4e586b" />
+    </Style>        
 </ResourceDictionary>

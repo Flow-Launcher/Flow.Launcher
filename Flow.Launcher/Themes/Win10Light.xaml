@@ -102,4 +102,7 @@
         <Setter Property="Height" Value="32" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
+    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#c6c6c6" />
+    </Style>
 </ResourceDictionary>

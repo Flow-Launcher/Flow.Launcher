@@ -91,5 +91,7 @@
         <Setter Property="Foreground" Value="#787878" />
         <Setter Property="Opacity" Value="0.1" />
     </Style>
-
+    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#474747" />
+    </Style>
 </ResourceDictionary>
