@@ -335,6 +335,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
@@ -342,6 +343,7 @@
                 <MultiDataTrigger.Setters>
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="0" />
                 </MultiDataTrigger.Setters>
             </MultiDataTrigger>
         </Style.Triggers>
@@ -372,6 +374,15 @@
         <Setter Property="Margin" Value="0,2,18,0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style x:Key="BasePreviewBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1 0 0 0" />
+        <Setter Property="BorderBrush" Value="#FFEAEAEA" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0 0 10 10" />
+    </Style>
+    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="Gray" />
     </Style>
 
     <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">

@@ -310,7 +310,7 @@
                     </Border>
                     </StackPanel>
                     <Grid x:Name="Preview" Style="{DynamicResource PreviewArea}" Grid.Column="1" DataContext="{Binding SelectedItem, ElementName=ResultListBox}" VerticalAlignment="Stretch" Visibility="Collapsed">
-                        <Border BorderThickness="1 0 0 0" BorderBrush="#FFEAEAEA" Background="Transparent" Margin="0 0 10 10">
+                        <Border Style="{DynamicResource PreviewBorderStyle}">
                         <Grid Margin="10 0 10 0"  VerticalAlignment="Center" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>

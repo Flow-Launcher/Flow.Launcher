@@ -110,4 +110,7 @@
         <Setter Property="Margin" Value="0,0,22,0" />
         <Setter Property="Visibility" Value="Visible" />
     </Style>
+    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#04152E" />
+    </Style>
 </ResourceDictionary>
