@@ -95,6 +95,7 @@ namespace Flow.Launcher.Infrastructure.Image
             Folder,
             Data,
             ImageFile,
+            FullImageFile,
             Error,
             Cache
         }
