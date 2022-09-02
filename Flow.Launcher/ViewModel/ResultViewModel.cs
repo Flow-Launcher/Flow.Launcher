@@ -182,27 +182,7 @@ namespace Flow.Launcher.ViewModel
         private async ValueTask LoadPreviewImageAsync()
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
-            if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
-            {
-                try
-                {
-                    previewImage = Result.Icon();
-                    return;
-                }
-                catch (Exception e)
-                {
-                    Log.Exception(
-                        $"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
-                        e);
-                }
-            }
 
-            if (ImageLoader.CacheContainImage(imagePath, true))
-            {
-                // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                previewImage = ImageLoader.Load(imagePath, true);
-                return;
-            }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
             PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
