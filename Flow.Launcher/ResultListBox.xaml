@@ -42,7 +42,6 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Cursor="Hand"
-                        ShowGridLines="True"
                         UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
