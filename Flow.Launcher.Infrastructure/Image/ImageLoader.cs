@@ -228,6 +228,10 @@ namespace Flow.Launcher.Infrastructure.Image
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
             { // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
+                if (imageResult.ImageType == ImageType.FullImageFile)
+                {
+                    path = path + ImageType.FullImageFile;
+                }
                 if (hash != null)
                 {
 
