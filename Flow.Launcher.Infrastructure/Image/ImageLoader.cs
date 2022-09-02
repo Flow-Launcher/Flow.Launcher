@@ -174,6 +174,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     if (loadFullImage)
                     {
                         image = LoadFullImage(path);
+                        type = ImageType.FullImageFile;
                     }
                     else
                     {
