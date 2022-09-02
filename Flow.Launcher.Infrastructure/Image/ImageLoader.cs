@@ -110,14 +110,15 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
                 }
-                if (ImageCache.ContainsKey(path))
-                {
-                    return new ImageResult(ImageCache[path], ImageType.Cache);
-                }
                 if (loadFullImage && ImageCache.ContainsKey(path + ImageType.FullImageFile))
                 {
                     return new ImageResult(ImageCache[path + ImageType.FullImageFile], ImageType.Cache);
                 }
+                if (ImageCache.ContainsKey(path))
+                {
+                    return new ImageResult(ImageCache[path], ImageType.Cache);
+                }
+
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
                 {
                     var imageSource = new BitmapImage(new Uri(path));
