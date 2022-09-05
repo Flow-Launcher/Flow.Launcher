@@ -361,6 +361,25 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public List<string> TimeFormatList { get; set; } = new List<string>()
+        {
+            "hh:mm",
+            "HH:mm",
+            "tt hh:mm",
+            "hh:mm tt"
+        };
+
+        public List<string> DateFormatList { get; set; } = new List<string>()
+        {
+            "MM'/'dd dddd",
+            "MM'/'dd ddd",
+            "MM'/'dd",
+            "dd'/'MM",
+            "ddd MM'/'dd",
+            "dddd MM'/'dd",
+            "dddd"
+        };
+
         public double WindowWidthSize
         {
             get => Settings.WindowSize;

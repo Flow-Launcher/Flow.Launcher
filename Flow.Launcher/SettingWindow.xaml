@@ -1,17 +1,16 @@
 <Window
     x:Class="Flow.Launcher.SettingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     Title="{DynamicResource flowlauncher_settings}"
     Width="1000"
     Height="700"
@@ -1905,12 +1904,9 @@
                                                     MinWidth="180"
                                                             VerticalAlignment="Center"
                                                     Margin="0,0,18,0"
-                                                    DisplayMemberPath="Display"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding ColorSchemes}"
-                                                    SelectedValue="{Binding Settings.ColorScheme}"
-                                                    SelectedValuePath="Value"
-                                                    SelectionChanged="ColorSchemeSelectedIndexChanged" />
+                                                    ItemsSource="{Binding TimeFormatList}"
+                                                    SelectedValue="{Binding Settings.TimeFormat}"/>
                                                             <ui:ToggleSwitch
                                                             
                                                             IsOn="{Binding UseClock, Mode=TwoWay}"
@@ -1943,14 +1939,11 @@
                                                     MinWidth="180"
                                                             VerticalAlignment="Center"
                                                     Margin="0,0,18,0"
-                                                    DisplayMemberPath="Display"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding ColorSchemes}"
-                                                    SelectedValue="{Binding Settings.ColorScheme}"
-                                                    SelectedValuePath="Value"
-                                                    SelectionChanged="ColorSchemeSelectedIndexChanged" />
+                                                    ItemsSource="{Binding DateFormatList}"
+                                                    SelectedValue="{Binding Settings.DateFormat}"
+                                                    />
                                                         <ui:ToggleSwitch
-                                                        
                                                             IsOn="{Binding UseDate, Mode=TwoWay}"
                                                             OffContent="{DynamicResource disable}"
                                                             OnContent="{DynamicResource enable}"
