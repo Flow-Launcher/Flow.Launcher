@@ -660,6 +660,22 @@
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AlwaysPreview}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AlwaysPreviewToolTip}" />
+                                    </StackPanel>
+                                    <CheckBox
+                                        IsChecked="{Binding Settings.AlwaysPreview}"
+                                        Style="{DynamicResource SideControlCheckBox}"
+                                        ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe8ff;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ShouldUsePinyin}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ShouldUsePinyinToolTip}" />
                                     </StackPanel>
@@ -1628,7 +1644,7 @@
                                                     Margin="0,0,18,0"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
-                                                    Maximum="900"
+                                                    Maximum="1920"
                                                     Minimum="400"
                                                     TickFrequency="10"
                                                     Value="{Binding WindowWidthSize, Mode=TwoWay}" />

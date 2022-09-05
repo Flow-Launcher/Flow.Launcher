@@ -30,7 +30,7 @@
 
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Button>
+            <Button HorizontalAlignment="Stretch">
                 <Button.Template>
                     <ControlTemplate>
                         <ContentPresenter Content="{TemplateBinding Button.Content}" />
@@ -39,7 +39,7 @@
                 <Button.Content>
                     <Grid
                         Margin="0"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Cursor="Hand"
                         UseLayoutRounding="False">
@@ -50,12 +50,13 @@
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="9*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel
                             Grid.Column="2"
                             Margin="0,0,10,0"
+                            x:Name="HotkeyArea"
                             Visibility="{Binding ShowOpenResultHotkey}">
                             <TextBlock
                                 x:Name="Hotkey"
@@ -129,12 +130,9 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                MinWidth="750"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}">
-                    
-                            </TextBlock>
+                                ToolTip="{Binding ShowSubTitleToolTip}" />
 
                         </Grid>
 

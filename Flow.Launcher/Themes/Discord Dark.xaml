@@ -165,4 +165,7 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#72767d" />
     </Style>
+    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#42454a" />
+    </Style>    
 </ResourceDictionary>

@@ -53,7 +53,7 @@ namespace Flow.Launcher
             timer.Start();
 
             InitializeComponent();
-            InitializePosition();
+            InitializePosition();            
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -161,6 +161,7 @@ namespace Flow.Launcher
                                 }
                                 
                                 UpdatePosition();
+                                PreviewReset();
                                 Activate();
                                 QueryTextBox.Focus();
                                 _settings.ActivateTimes++;
@@ -368,7 +369,7 @@ namespace Flow.Launcher
                 return;
 
             _animating = true;
-            UpdatePosition();
+            UpdatePosition();            
             Storyboard sb = new Storyboard();
             Storyboard iconsb = new Storyboard();
             CircleEase easing = new CircleEase();  // or whatever easing class you want
@@ -590,9 +591,44 @@ namespace Flow.Launcher
                         }
                     }
                     break;
+                case Key.F2:
+                    PreviewToggle();
+                    e.Handled = true;
+                    break;
+
                 default:
                     break;
 
+            }
+        }
+
+        public void PreviewReset()
+        {
+            if (_settings.AlwaysPreview == true)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                Preview.Visibility = Visibility.Collapsed;
+            }
+        }
+        public void PreviewToggle()
+        {
+
+            if (Preview.Visibility == Visibility.Collapsed)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                //HotkeyArea.SetValue(Visibility, Visibility.Collapsed);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                //HotkeyArea.SetValue(Visibility, Visibility.Visible);
+                Preview.Visibility = Visibility.Collapsed;
             }
         }
 

@@ -95,12 +95,13 @@ namespace Flow.Launcher.Infrastructure.Image
             Folder,
             Data,
             ImageFile,
+            FullImageFile,
             Error,
             Cache
         }
 
         private static ImageResult LoadInternal(string path, bool loadFullImage = false)
-        {
+{
             ImageResult imageResult;
 
             try
@@ -109,7 +110,11 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
                 }
-                if (ImageCache.ContainsKey(path))
+                if (loadFullImage && ImageCache.ContainsKey($"{path}_{ImageType.FullImageFile}"))
+                {
+                    return new ImageResult(ImageCache[$"{path}_{ImageType.FullImageFile}"], ImageType.Cache);
+                }
+                if (!loadFullImage && ImageCache.ContainsKey(path))
                 {
                     return new ImageResult(ImageCache[path], ImageType.Cache);
                 }
@@ -173,6 +178,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     if (loadFullImage)
                     {
                         image = LoadFullImage(path);
+                        type = ImageType.FullImageFile;
                     }
                     else
                     {
@@ -213,8 +219,12 @@ namespace Flow.Launcher.Infrastructure.Image
                 option);
         }
 
-        public static bool CacheContainImage(string path)
+        public static bool CacheContainImage(string path, bool fullImage = false)
         {
+            if (fullImage)
+            {
+                return ImageCache.ContainsKey($"{path}_{ImageType.FullImageFile}");
+            }
             return ImageCache.ContainsKey(path) && ImageCache[path] != null;
         }
 
@@ -226,6 +236,10 @@ namespace Flow.Launcher.Infrastructure.Image
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
             { // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
+                if (imageResult.ImageType == ImageType.FullImageFile)
+                {
+                    path = $"{path}_{ImageType.FullImageFile}";
+                }
                 if (hash != null)
                 {
 
@@ -235,6 +249,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     }
                     else
                     { // new guid
+
                         GuidToKey[hash] = path;
                     }
                 }
