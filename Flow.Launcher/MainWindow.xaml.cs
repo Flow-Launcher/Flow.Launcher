@@ -63,24 +63,7 @@ namespace Flow.Launcher
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (_settings.UseClock == true)
-            {
-                ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
-            }
-            else if(_settings.UseClock == false)
-            {
-                ClockBox.Visibility = Visibility.Collapsed;
-            }
-            if (_settings.UseDate == true)
-            {
-                DateBox.Text = System.DateTime.Now.ToString("MM/dd ddd");
-            }
-            else if (_settings.UseDate == false)
-            {
-                DateBox.Visibility = Visibility.Collapsed;
-            }
-            
-
+            ClockDisplay();
         }
 
         public void ClockDisplay()
@@ -88,7 +71,7 @@ namespace Flow.Launcher
             if (_settings.UseClock == true)
             {
                 ClockBox.Visibility = Visibility.Visible;
-                ClockBox.Text = System.DateTime.Now.ToString("tt hh:mm");
+                ClockBox.Text = System.DateTime.Now.ToString(_settings.TimeFormat);
             }
             else if (_settings.UseClock == false)
             {
@@ -97,7 +80,7 @@ namespace Flow.Launcher
             if (_settings.UseDate == true)
             {
                 DateBox.Visibility = Visibility.Visible;
-                DateBox.Text = System.DateTime.Now.ToString("MM/dd ddd");
+                DateBox.Text = System.DateTime.Now.ToString(_settings.DateFormat);
             }
             else if (_settings.UseDate == false)
             {
