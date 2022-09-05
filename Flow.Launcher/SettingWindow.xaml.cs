@@ -348,5 +348,10 @@ namespace Flow.Launcher
         {
             Plugins.ScrollIntoView(Plugins.SelectedItem);
         }
+
+        private void ColorSchemeSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
