@@ -1,16 +1,16 @@
 <Window
     x:Class="Flow.Launcher.SettingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
-    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
-    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource flowlauncher_settings}"
     Width="1000"
     Height="700"
@@ -1570,14 +1570,8 @@
                                                             Text="{DynamicResource hiThere}" />
                                                     </Border>
                                                     <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
-                                                        <TextBlock
-                                                            x:Name="DateBox"
-                                                            Style="{DynamicResource DateBox}"
-                                                            Text="09-01 Thu" />
-                                                        <TextBlock
-                                                            x:Name="ClockBox"
-                                                            Style="{DynamicResource ClockBox}"
-                                                            Text="PM 12:04" />
+                                                        <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}" />
+                                                        <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}" />
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -1912,23 +1906,25 @@
                                                         <StackPanel Style="{StaticResource TextPanel}">
                                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Clock}" />
                                                         </StackPanel>
-                                                        <StackPanel Grid.Row="0"
-                                                            Grid.Column="2" Orientation="Horizontal">
-                                                        <ComboBox
-                                                    x:Name="TimeFormat"
-                                                    Grid.Column="2"
-                                                    MinWidth="180"
-                                                            VerticalAlignment="Center"
-                                                    Margin="0,0,18,0"
-                                                    FontSize="14"
-                                                    ItemsSource="{Binding TimeFormatList}"
-                                                    SelectedValue="{Binding Settings.TimeFormat}"/>
+                                                        <StackPanel
+                                                            Grid.Row="0"
+                                                            Grid.Column="2"
+                                                            Orientation="Horizontal">
+                                                            <ComboBox
+                                                                x:Name="TimeFormat"
+                                                                Grid.Column="2"
+                                                                MinWidth="180"
+                                                                Margin="0,0,18,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                ItemsSource="{Binding TimeFormatList}"
+                                                                SelectedValue="{Binding Settings.TimeFormat}"
+                                                                SelectionChanged="PreviewClockAndDate" />
                                                             <ui:ToggleSwitch
-                                                            
-                                                            IsOn="{Binding UseClock, Mode=TwoWay}"
-                                                            OffContent="{DynamicResource disable}"
-                                                            OnContent="{DynamicResource enable}"
-                                                            Style="{DynamicResource SideToggleSwitch}" />
+                                                                IsOn="{Binding UseClock, Mode=TwoWay}"
+                                                                OffContent="{DynamicResource disable}"
+                                                                OnContent="{DynamicResource enable}"
+                                                                Style="{DynamicResource SideToggleSwitch}" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xec92;
@@ -1947,23 +1943,25 @@
                                                         <StackPanel Style="{StaticResource TextPanel}">
                                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Date}" />
                                                         </StackPanel>
-                                                        <StackPanel     Grid.Row="0"
-                                                            Grid.Column="2" Orientation="Horizontal">
-                                                        <ComboBox
-                                                    x:Name="DateFormat"
-                                                    Grid.Column="2"
-                                                    MinWidth="180"
-                                                            VerticalAlignment="Center"
-                                                    Margin="0,0,18,0"
-                                                    FontSize="14"
-                                                    ItemsSource="{Binding DateFormatList}"
-                                                    SelectedValue="{Binding Settings.DateFormat}"
-                                                    />
-                                                        <ui:ToggleSwitch
-                                                            IsOn="{Binding UseDate, Mode=TwoWay}"
-                                                            OffContent="{DynamicResource disable}"
-                                                            OnContent="{DynamicResource enable}"
-                                                            Style="{DynamicResource SideToggleSwitch}" />
+                                                        <StackPanel
+                                                            Grid.Row="0"
+                                                            Grid.Column="2"
+                                                            Orientation="Horizontal">
+                                                            <ComboBox
+                                                                x:Name="DateFormat"
+                                                                Grid.Column="2"
+                                                                MinWidth="180"
+                                                                Margin="0,0,18,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                ItemsSource="{Binding DateFormatList}"
+                                                                SelectedValue="{Binding Settings.DateFormat}"
+                                                                SelectionChanged="PreviewClockAndDate" />
+                                                            <ui:ToggleSwitch
+                                                                IsOn="{Binding UseDate, Mode=TwoWay}"
+                                                                OffContent="{DynamicResource disable}"
+                                                                OnContent="{DynamicResource enable}"
+                                                                Style="{DynamicResource SideToggleSwitch}" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe787;
