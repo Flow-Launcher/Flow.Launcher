@@ -1924,7 +1924,8 @@
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}" />
+                                                                Style="{DynamicResource SideToggleSwitch}"
+                                                                Toggled="PreviewClockAndDate" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xec92;
@@ -1961,7 +1962,8 @@
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}" />
+                                                                Style="{DynamicResource SideToggleSwitch}"
+                                                                Toggled="PreviewClockAndDate" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe787;
