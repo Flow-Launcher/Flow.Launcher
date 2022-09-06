@@ -597,9 +597,7 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                                     </StackPanel>
-                                    <CheckBox
-                                        IsChecked="{Binding StartFlowLauncherOnSystemStartup}"
-                                        Style="{DynamicResource SideControlCheckBox}" />
+                                    <CheckBox IsChecked="{Binding StartFlowLauncherOnSystemStartup}" Style="{DynamicResource SideControlCheckBox}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
@@ -1621,7 +1619,7 @@
                                                     Margin="0,0,18,0"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
-                                                    Maximum="900"
+                                                    Maximum="1920"
                                                     Minimum="400"
                                                     TickFrequency="10"
                                                     Value="{Binding WindowWidthSize, Mode=TwoWay}" />
@@ -1792,9 +1790,9 @@
                                                             Margin="20,0,0,0"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
+                                                            IsSynchronizedWithCurrentItem="False"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedQueryBoxFont}"
-                                                            IsSynchronizedWithCurrentItem="False" />
+                                                            SelectedItem="{Binding SelectedQueryBoxFont}" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,0,0,0"
@@ -1843,9 +1841,9 @@
                                                             Margin="20,-2,0,0"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
+                                                            IsSynchronizedWithCurrentItem="False"
                                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedResultFont}"
-                                                            IsSynchronizedWithCurrentItem="False" />
+                                                            SelectedItem="{Binding SelectedResultFont}" />
                                                         <ComboBox
                                                             Width="130"
                                                             Margin="10,-2,0,0"
