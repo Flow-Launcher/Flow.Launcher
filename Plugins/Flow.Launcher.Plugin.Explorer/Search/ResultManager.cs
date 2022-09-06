@@ -77,6 +77,43 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
+        private static string toReadableSize(long pDrvSize, int pi)
+        {
+            int mok = 0;
+            double drvSize = pDrvSize;
+            string Space = "Byte";
+            string returnStr = "";
+
+            while (drvSize > 1024.0)
+            {
+                drvSize /= 1024.0;
+                mok++;
+            }
+
+            if (mok == 1)
+                Space =  "KB";
+            else if (mok == 2)
+                Space = " MB";
+            else if (mok == 3)
+                Space = " GB";
+            else if (mok == 4)
+                Space = " TB";
+
+            if (mok != 0)
+                if (pi == 1)
+                    returnStr = string.Format("{0:F1}{1}", drvSize, Space);
+                else if (pi == 2)
+                    returnStr = string.Format("{0:F2}{1}", drvSize, Space);
+                else if (pi == 3)
+                    returnStr = string.Format("{0:F3}{1}", drvSize, Space);
+                else
+                    returnStr = string.Format("{0}{1}", Convert.ToInt32(drvSize), Space);
+            else
+                returnStr = string.Format("{0}{1}", Convert.ToInt32(drvSize), Space);
+
+            return returnStr;
+        }
+
         internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
@@ -86,19 +123,32 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Path.DirectorySeparatorChar
             }, StringSplitOptions.None).Last();
 
-            if (retrievedDirectoryPath.EndsWith(":\\"))
-            {
-                var driveLetter = path.Substring(0, 1).ToUpper();
-                folderName = driveLetter + " drive";
-            }
-
             var title = "Open current directory";
 
             if (retrievedDirectoryPath != path)
                 title = "Open " + folderName;
 
-
             var subtitleFolderName = folderName;
+            var subtitle = $"Use > to search within {subtitleFolderName}, " +
+                           $"* to search for file extensions or >* to combine both searches.";
+
+
+
+
+
+            int? progressBar = null;
+            if (retrievedDirectoryPath.EndsWith(":\\"))
+            {
+                title = ""; // hide title when use progress bar,
+                var driveLetter = path.Substring(0, 1).ToUpper();
+                folderName = driveLetter + " drive";
+                var driveName = driveLetter + ":\\";
+                DriveInfo drv = new DriveInfo(driveLetter);
+                subtitle = toReadableSize(drv.AvailableFreeSpace, 2) + " free of " + toReadableSize(drv.TotalSize, 2);
+                double UsingSize = ((Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100);
+                progressBar = Convert.ToInt32(UsingSize);
+            }
+
 
             // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
             if (folderName.Length > 19)
@@ -107,11 +157,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return new Result
             {
                 Title = title,
-                SubTitle = $"Use > to search within {subtitleFolderName}, " +
-                           $"* to search for file extensions or >* to combine both searches.",
+                SubTitle = subtitle,
                 AutoCompleteText = GetPathWithActionKeyword(retrievedDirectoryPath, ResultType.Folder),
                 IcoPath = retrievedDirectoryPath,
                 Score = 500,
+                ProgressBar = progressBar,
                 Action = c =>
                 {
                     Context.API.OpenDirectory(retrievedDirectoryPath);

@@ -111,7 +111,10 @@
                                 <RowDefinition />
                                 <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
-
+                            <ProgressBar
+                                x:Name="progressbarResult"
+                                Style="{DynamicResource ProgressBarResult}"
+                                Value="{Binding Result.ProgressBar}" />
                             <TextBlock
                                 x:Name="Title"
                                 VerticalAlignment="Center"
@@ -132,9 +135,7 @@
                                 MinWidth="750"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}">
-                    
-                            </TextBlock>
+                                ToolTip="{Binding ShowSubTitleToolTip}" />
 
                         </Grid>
 
