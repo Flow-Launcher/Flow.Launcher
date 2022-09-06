@@ -46,6 +46,7 @@
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
                             <converter:OrdinalConverter x:Key="OrdinalConverter" />
+                            <converter:ProgressForegroundConverter x:Key="ProgressForegroundConverter" />
                             <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
@@ -112,7 +113,11 @@
                                 <RowDefinition />
                                 <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
-
+                            <ProgressBar
+                                x:Name="progressbarResult"
+                                Foreground="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Value, Converter={StaticResource ProgressForegroundConverter}}"
+                                Style="{DynamicResource ProgressBarResult}"
+                                Value="{Binding Result.ProgressBar}" />
                             <TextBlock
                                 x:Name="Title"
                                 VerticalAlignment="Center"

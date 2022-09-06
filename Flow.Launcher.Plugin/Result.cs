@@ -202,5 +202,7 @@ namespace Flow.Launcher.Plugin
         {
             return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
         }
+
+        public int? ProgressBar { get; set; }
     }
 }
