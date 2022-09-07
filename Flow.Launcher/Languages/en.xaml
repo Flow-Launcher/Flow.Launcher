@@ -35,7 +35,7 @@
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
     <system:String x:Key="LauncherPosition">Launcher Position</system:String>
     <system:String x:Key="rememberLastLocation">Remember last launch location</system:String>
-    <system:String x:Key="LauncherPositionRememberLastLaunchLocation">Remember Last Launch Location</system:String>
+    <system:String x:Key="LauncherPositionRememberLastLaunchLocation">Remember Last Location</system:String>
     <system:String x:Key="LauncherPositionMouseScreenCenter">Mouse Focused Screen Center</system:String>
     <system:String x:Key="LauncherPositionMouseScreenCenterTop">Mouse Focused Screen Center Top</system:String>
     <system:String x:Key="LauncherPositionMouseScreenLeftTop">Mouse Focused Screen Left Top</system:String>
