@@ -240,6 +240,16 @@ namespace Flow.Launcher
                 Left = WindowLeft();
                 Top = 10;
             }
+            else if (_settings.LauncherPosition == "MouseScreenLeftTop")
+            {
+                Left = 10;
+                Top = 10;
+            }
+            else if (_settings.LauncherPosition == "MouseScreenRightTop")
+            {
+                Left = WindowRight();
+                Top = 10;
+            }
         }
 
         private void UpdateNotifyIconText()
@@ -481,6 +491,16 @@ namespace Flow.Launcher
                 Left = WindowLeft();
                 Top = 10;
             }
+            else if (_settings.LauncherPosition == "MouseScreenLeftTop")
+            {
+                Left = 10;
+                Top = 10;
+            }
+            else if (_settings.LauncherPosition == "MouseScreenRightTop")
+            {
+                Left = WindowRight();
+                Top = 10;
+            }
         }
 
         private void OnLocationChanged(object sender, EventArgs e)
@@ -523,6 +543,15 @@ namespace Flow.Launcher
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
+        }
+
+        public double WindowRight()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - ActualWidth) - 10;
+            return left;
         }
 
         /// <summary>
