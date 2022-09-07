@@ -783,11 +783,13 @@
                                         BorderThickness="0"
                                         Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Style="{DynamicResource SettingTitleLabel}"
-                                                Text="{DynamicResource maxShowResults}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
+                                                    Text="{DynamicResource maxShowResults}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource maxShowResultsToolTip}" />
+                                            </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
                                                 Width="100"

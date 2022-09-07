@@ -593,6 +593,24 @@ namespace Flow.Launcher
                         Left = Left - 50;
                     }
                     break;
+                case Key.OemOpenBrackets:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_settings.MaxResultsToShow < 2)
+                        {
+                        }
+                        else
+                        {
+                            _settings.MaxResultsToShow = _settings.MaxResultsToShow - 1;
+                        }
+                    }
+                    break;
+                case Key.OemCloseBrackets:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        _settings.MaxResultsToShow = _settings.MaxResultsToShow + 1;
+                    }
+                    break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
                     {
