@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,8 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Windows.Threading;
+using System.Globalization;
 
 namespace Flow.Launcher
 {
@@ -43,6 +45,13 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
+
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -51,6 +60,33 @@ namespace Flow.Launcher
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ClockDisplay();
+        }
+
+        public void ClockDisplay()
+        {
+            if (_settings.UseClock == true)
+            {
+                ClockBox.Visibility = Visibility.Visible;
+                ClockBox.Text = System.DateTime.Now.ToString(_settings.TimeFormat);
+            }
+            else if (_settings.UseClock == false)
+            {
+                ClockBox.Visibility = Visibility.Collapsed;
+            }
+            if (_settings.UseDate == true)
+            {
+                DateBox.Visibility = Visibility.Visible;
+                DateBox.Text = System.DateTime.Now.ToString(_settings.DateFormat);
+            }
+            else if (_settings.UseDate == false)
+            {
+                DateBox.Visibility = Visibility.Collapsed;
+            }
+
         }
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
@@ -175,6 +211,12 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
+                        break;
+                    case nameof(Settings.UseClock):
+                        ClockDisplay();
+                        break;
+                    case nameof(Settings.UseDate):
+                        ClockDisplay();
                         break;
                 }
             };
