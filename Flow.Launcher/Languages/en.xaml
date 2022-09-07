@@ -36,8 +36,10 @@
     <system:String x:Key="LauncherPosition">Launcher Position</system:String>
     <system:String x:Key="rememberLastLocation">Remember last launch location</system:String>
     <system:String x:Key="LauncherPositionRememberLastLaunchLocation">Remember Last Launch Location</system:String>
-    <system:String x:Key="LauncherPositionMouseScreenCenter">Mouse Screen Center</system:String>
-    <system:String x:Key="LauncherPositionMouseScreenCenterTop">Mouse Screen Center Top</system:String>
+    <system:String x:Key="LauncherPositionMouseScreenCenter">Mouse Focused Screen Center</system:String>
+    <system:String x:Key="LauncherPositionMouseScreenCenterTop">Mouse Focused Screen Center Top</system:String>
+    <system:String x:Key="LauncherPositionMouseScreenLeftTop">Mouse Focused Screen Left Top</system:String>
+    <system:String x:Key="LauncherPositionMouseScreenRightTop">Mouse Focused Screen Right Top</system:String>
     <system:String x:Key="language">Language</system:String>
     <system:String x:Key="lastQueryMode">Last Query Style</system:String>
     <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>

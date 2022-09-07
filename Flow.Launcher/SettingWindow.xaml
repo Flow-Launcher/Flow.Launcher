@@ -642,7 +642,7 @@
                                     <ComboBox
                                         x:Name="LauncherPosition"
                                         Grid.Column="2"
-                                        MinWidth="180"
+                                        MinWidth="220"
                                         Margin="0,0,18,0"
                                         VerticalAlignment="Center"
                                         DisplayMemberPath="Display"
@@ -651,7 +651,6 @@
                                         SelectedValue="{Binding Settings.LauncherPosition}"
                                         SelectedValuePath="Value"
                                         SelectionChanged="LauncherPositionSelectedIndexChanged" />
-                                    <!--<CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" />-->
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7f4;
                                     </TextBlock>

@@ -228,6 +228,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         RememberLastLaunchLocation,
         MouseScreenCenter,
-        MouseScreenCenterTop
+        MouseScreenCenterTop,
+        MouseScreenLeftTop,
+        MouseScreenRightTop
     }
 }
