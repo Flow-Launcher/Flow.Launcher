@@ -12,6 +12,7 @@ using Flow.Launcher.ViewModel;
 using Microsoft.Win32;
 using ModernWpf;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,6 +49,7 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            InitializePosition();
             RefreshMaximizeRestoreButton();
             // Fix (workaround) for the window freezes after lock screen (Win+L)
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
@@ -243,6 +245,8 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            settings.SettingWindowTop = Top;
+            settings.SettingWindowLeft = Left;
             viewModel.Save();
         }
 
@@ -320,6 +324,7 @@ namespace Flow.Launcher
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
+            
             Close();
         }
 
@@ -380,6 +385,37 @@ namespace Flow.Launcher
                 DateBox.Visibility = Visibility.Collapsed;
             }
 
+        }
+
+        public void InitializePosition()
+        {
+            if (settings.SettingWindowTop == 0 && settings.SettingWindowLeft == 0)
+            {
+                Top = WindowTop();
+                Left = WindowLeft();
+            }
+            else
+            {
+                Top = settings.SettingWindowTop;
+                Left = settings.SettingWindowLeft;
+            }
+        }
+        public double WindowLeft()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        public double WindowTop()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+            return top;
         }
     }
 }
