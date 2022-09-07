@@ -33,7 +33,11 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
+    <system:String x:Key="LauncherPosition">Launcher Position</system:String>
     <system:String x:Key="rememberLastLocation">Remember last launch location</system:String>
+    <system:String x:Key="LauncherPositionRememberLastLaunchLocation">Remember Last Launch Location</system:String>
+    <system:String x:Key="LauncherPositionMouseScreenCenter">Mouse Screen Center</system:String>
+    <system:String x:Key="LauncherPositionMouseScreenCenterTop">Mouse Screen Center Top</system:String>
     <system:String x:Key="language">Language</system:String>
     <system:String x:Key="lastQueryMode">Last Query Style</system:String>
     <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
