@@ -51,7 +51,7 @@ namespace Flow.Launcher.ViewModel
         {
             await _updater.UpdateAppAsync(App.API, false);
         }
-
+        
         public bool AutoUpdates
         {
             get => Settings.AutoUpdates;
@@ -416,6 +416,29 @@ namespace Flow.Launcher.ViewModel
             set => Settings.UseDate = value;
         }
 
+        public double SettingWindowWidth
+        {
+            get => Settings.SettingWindowWidth;
+            set => Settings.SettingWindowWidth = value;
+        }
+
+        public double SettingWindowHeight
+        {
+            get => Settings.SettingWindowHeight;
+            set => Settings.SettingWindowHeight = value;
+        }
+
+        public double SettingWindowTop
+        {
+            get => Settings.SettingWindowTop;
+            set => Settings.SettingWindowTop = value;
+        }
+
+        public double SettingWindowLeft
+        {
+            get => Settings.SettingWindowLeft;
+            set => Settings.SettingWindowLeft = value;
+        }
 
         public Brush PreviewBackground
         {
