@@ -124,6 +124,7 @@
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can quick adjust Ctrl+Plus/Minus Key in query box too.</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
 

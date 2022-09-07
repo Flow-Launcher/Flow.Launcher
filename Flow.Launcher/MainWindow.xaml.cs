@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -478,6 +478,7 @@ namespace Flow.Launcher
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {
                 case Key.Down:
@@ -504,6 +505,12 @@ namespace Flow.Launcher
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        
+                        _settings.WindowSize = _settings.WindowSize + 100;
+                        Left = Left - 50;
+                    }
                     break;
                 case Key.Left:
                     if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
@@ -511,9 +518,39 @@ namespace Flow.Launcher
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
                     }
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_settings.WindowSize < 400)
+                        {
+                        }
+                        else
+                        {
+                            _settings.WindowSize = _settings.WindowSize - 100;
+                            Left = Left + 50;
+                        }
+                    }
+                    break;
+                case Key.OemMinus:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_settings.WindowSize < 400)
+                        {
+                        }
+                        else
+                        {
+                            _settings.WindowSize = _settings.WindowSize - 100;
+                            Left = Left + 50;
+                        }
+                    }
+                    break;
+                case Key.OemPlus:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        _settings.WindowSize = _settings.WindowSize + 100;
+                        Left = Left - 50;
+                    }
                     break;
                 case Key.Back:
-                    var specialKeyState = GlobalHotkey.CheckModifiers();
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
@@ -531,6 +568,7 @@ namespace Flow.Launcher
                         }
                     }
                     break;
+
                 default:
                     break;
 
