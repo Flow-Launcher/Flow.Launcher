@@ -238,7 +238,7 @@ namespace Flow.Launcher
             else if (_settings.LauncherPosition == "MouseScreenCenterTop")
             {
                 Left = WindowLeft();
-                Top = 0;
+                Top = 10;
             }
         }
 
@@ -479,7 +479,7 @@ namespace Flow.Launcher
             else if (_settings.LauncherPosition == "MouseScreenCenterTop")
             {
                 Left = WindowLeft();
-                Top = 0;
+                Top = 10;
             }
         }
 
