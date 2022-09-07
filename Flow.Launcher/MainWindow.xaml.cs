@@ -214,8 +214,9 @@ namespace Flow.Launcher
             var menu = contextMenu;
             ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[5]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -241,6 +242,10 @@ namespace Flow.Launcher
             {
                 Header = InternationalizationManager.Instance.GetTranslation("GameMode")
             };
+            var positionreset = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset")
+            };
             var settings = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
@@ -252,12 +257,14 @@ namespace Flow.Launcher
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             gamemode.Click += (o, e) => ToggleGameMode();
+            positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             contextMenu.Items.Add(gamemode);
+            contextMenu.Items.Add(positionreset);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
@@ -303,6 +310,12 @@ namespace Flow.Launcher
                 _notifyIcon.Icon = Properties.Resources.gamemode;
                 _viewModel.GameModeStatus = true;
             }
+        }
+        private void PositionReset()
+        {
+                Left = WindowLeft();
+                Top = WindowTop();
+            
         }
         private void InitProgressbarAnimation()
         {
