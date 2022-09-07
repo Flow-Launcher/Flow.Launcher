@@ -224,15 +224,20 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
             {
                 Top = _settings.WindowTop;
                 Left = _settings.WindowLeft;
             }
-            else
+            else if(_settings.LauncherPosition == "MouseScreenCenter")
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+            }
+            else if (_settings.LauncherPosition == "MouseScreenCenterTop")
+            {
+                Left = WindowLeft();
+                Top = 0;
             }
         }
 
@@ -460,15 +465,20 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
             {
                 Left = _settings.WindowLeft;
                 Top = _settings.WindowTop;
             }
-            else
+            else if (_settings.LauncherPosition == "MouseScreenCenter")
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+            }
+            else if (_settings.LauncherPosition == "MouseScreenCenterTop")
+            {
+                Left = WindowLeft();
+                Top = 0;
             }
         }
 
@@ -476,7 +486,7 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;

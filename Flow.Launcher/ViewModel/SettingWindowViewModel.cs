@@ -361,6 +361,32 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+
+        public class LauncherPosition
+        {
+            public string Display { get; set; }
+            public LauncherPositions Value { get; set; }
+        }
+
+        public List<LauncherPosition> LauncherPositions
+        {
+            get
+            {
+                List<LauncherPosition> modes = new List<LauncherPosition>();
+                var enums = (LauncherPositions[])Enum.GetValues(typeof(LauncherPositions));
+                foreach (var e in enums)
+                {
+                    var key = $"LauncherPosition{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new LauncherPosition { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+
         public List<string> TimeFormatList { get; set; } = new List<string>()
         {
             "hh:mm",

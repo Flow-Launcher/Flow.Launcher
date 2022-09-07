@@ -355,6 +355,12 @@ namespace Flow.Launcher
 
         }
 
+        private void LauncherPositionSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+
         private void PreviewClockAndDate(object sender, RoutedEventArgs e)
         {
             ClockDisplay();
