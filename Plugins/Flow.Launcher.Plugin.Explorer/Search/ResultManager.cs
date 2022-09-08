@@ -132,10 +132,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var subtitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.";
 
-
-
-
-
             int? progressBar = null;
             if (retrievedDirectoryPath.EndsWith(":\\"))
             {
