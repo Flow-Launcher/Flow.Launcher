@@ -193,6 +193,42 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
+                    Title = "My Computer",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmycomputer"),
+                    IcoPath = "Images\\mycomputer.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7f4"),
+                    Action = c =>
+                    {
+                        // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
+                        // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
+                        // 0 for nothing
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:mycomputerfolder");
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Desktop",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmydesktop"),
+                    IcoPath = "Images\\desktop.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7fb"),
+                    Action = c =>
+                    {
+                        // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
+                        // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
+                        // 0 for nothing
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:desktop");
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
                     Title = "Empty Recycle Bin",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
@@ -209,6 +245,21 @@ namespace Flow.Launcher.Plugin.Sys
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Open Recycle Bin",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
+                    IcoPath = "Images\\recyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:RecycleBinFolder");
                         }
 
                         return true;
