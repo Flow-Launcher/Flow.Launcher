@@ -19,8 +19,16 @@
     <system:String x:Key="flowlauncher_plugin_sys_sleep">PC를 절전모드로 전환</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">휴지통 비우기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">휴지통 열기</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openmycomputer">내 컴퓨터</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openmycomputer">내 PC</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openmydesktop">바탕 화면</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_libraries">라이브러리</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_explorer">파일 탐색기</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_pictures">사진</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_music">음악</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_videos">비디오</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_downloads">다운로드</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_documents">문서</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">색인 옵션</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">최대 절전 모드</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Flow Launcher 설정 저장</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">플러그인 데이터를 새 콘텐츠와 함께 다시 로드</system:String>
