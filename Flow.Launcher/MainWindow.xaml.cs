@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,9 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Text;
+using DataObject = System.Windows.DataObject;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -382,6 +385,52 @@ namespace Flow.Launcher
         {
             e.Handled = true;
         }
+
+        private Point start;
+
+        private void FileView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.start = e.GetPosition(null);
+        }
+
+        private void FileView_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Point mpos = e.GetPosition(null);
+            Vector diff = this.start - mpos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+              Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
+              Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            {
+                
+                if (this.ResultListBox.SelectedItems.Count == 0)
+                {
+                    return;
+                }
+
+                var r = (ResultListBox)sender;
+                var d = (DependencyObject)e.OriginalSource;
+                var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
+                var result = (ResultViewModel)item?.DataContext;
+                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                Console.WriteLine("result");
+
+                // right about here you get the file urls of the selected items.
+                // should be quite easy, if not, ask.
+                //string[] files = "asdf.txt";
+
+                string path = @"D:\test.png";
+                string[] files = { path };
+                var data = new DataObject(System.Windows.DataFormats.FileDrop, files);
+                data.SetData(System.Windows.DataFormats.Text, files[0]);
+                DragDrop.DoDragDrop(this, data, System.Windows.DragDropEffects.Copy);
+                e.Handled = true;
+                // string dataFormat = System.Windows.DataFormats.FileDrop;
+                //System.Windows.DataObject dataObject = new System.Windows.DataObject(dataFormat, files);
+                //DragDrop.DoDragDrop(this.ResultListBox, dataObject, System.Windows.DragDropEffects.Copy);
+            }
+        }
+
 
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
