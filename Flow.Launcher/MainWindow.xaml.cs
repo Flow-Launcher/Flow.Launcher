@@ -663,6 +663,12 @@ namespace Flow.Launcher
                         _settings.MaxResultsToShow = _settings.MaxResultsToShow + 1;
                     }
                     break;
+                case Key.F12:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        ToggleGameMode();
+                    }
+                    break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
                     {
