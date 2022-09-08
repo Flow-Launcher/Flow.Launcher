@@ -193,15 +193,27 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
-                    Title = "My Computer",
+                    Title = "Explorer",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_explorer"),
+                    IcoPath = "Images\\explorer.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec50"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "");
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "My PC",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmycomputer"),
                     IcoPath = "Images\\mycomputer.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7f4"),
                     Action = c =>
                     {
-                        // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
-                        // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
-                        // 0 for nothing
                         {
                             System.Diagnostics.Process.Start("explorer.exe", "shell:mycomputerfolder");
                         }
@@ -217,11 +229,113 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7fb"),
                     Action = c =>
                     {
-                        // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
-                        // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
-                        // 0 for nothing
                         {
                             System.Diagnostics.Process.Start("explorer.exe", "shell:desktop");
+                        }
+
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Libraries",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_libraries"),
+                    IcoPath = "Images\\libraries.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8f1"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:Libraries");
+                        }
+
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Pictures",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_pictures"),
+                    IcoPath = "Images\\pictures.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8b9"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:My Pictures");
+                        }
+
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Videos",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_videos"),
+                    IcoPath = "Images\\videos.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe714"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:My Video");
+                        }
+
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Documents",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_documents"),
+                    IcoPath = "Images\\documents.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8a5"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:Personal");
+                        }
+
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Music",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_music"),
+                    IcoPath = "Images\\music.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe93c"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:My Music");
+                        }
+
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Index Option",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_indexoption"),
+                    IcoPath = "Images\\indexoption.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("control.exe", "srchadmin.dll");
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Downloads",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_downloads"),
+                    IcoPath = "Images\\download.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7f4"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", "shell:downloads");
                         }
 
                         return true;
@@ -232,7 +346,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Empty Recycle Bin",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe896"),
                     Action = c =>
                     {
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
@@ -254,7 +368,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Open Recycle Bin",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
-                    IcoPath = "Images\\recyclebin.png",
+                    IcoPath = "Images\\openrecyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     Action = c =>
                     {
