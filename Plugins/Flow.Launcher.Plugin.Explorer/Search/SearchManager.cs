@@ -55,29 +55,38 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                 results.UnionWith(quickAccessLinks);
             }
-
-            IAsyncEnumerable<SearchResult> searchResults;
-
-            if (ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword))
-            {
-                // A backdoor to prevent everything to do content search
-                if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
-                {
-                    return EverythingContentSearchResult(query);
-                }
-                searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
-            }
             else
             {
-                searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                return new List<Result>();
             }
 
+            IAsyncEnumerable<SearchResult> searchResults = null;
 
-            if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword) ||
-                ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword))
+            bool isPathSearch = query.Search.IsLocationPathString();
+
+            switch (isPathSearch)
             {
-                results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+                case true 
+                when (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
+                      || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)):
+                    results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+                    return results.ToList();
+                    break;
+                case false when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
+                {
+                    // A backdoor to prevent everything to do content search
+                    if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
+                    {
+                        return EverythingContentSearchResult(query);
+                    }
+                    searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
+                    break;
+                }
+                case false:
+                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                    break;
             }
+
 
             if (searchResults == null)
             {
@@ -154,7 +163,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).LocationExists())
                 return results.ToList();
 
-            var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex 
+            var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
                                  && UseWindowsIndexForDirectorySearch(locationPath);
 
             results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
@@ -172,7 +181,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             query.Search[..recursiveIndicatorIndex],
                             query.Search[(recursiveIndicatorIndex + 1)..],
                             true,
-                            token).ToListAsync(cancellationToken: token)
+                            token)
+                        .ToListAsync(cancellationToken: token)
                         .ConfigureAwait(false);
 
             }
@@ -207,7 +217,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         }
 
         public static bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
-        
+
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
         {

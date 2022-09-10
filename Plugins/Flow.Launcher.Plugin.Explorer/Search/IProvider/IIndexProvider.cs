@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace Flow.Launcher.Plugin.Explorer.Search
+namespace Flow.Launcher.Plugin.Explorer.Search.IProvider
 {
     public interface IIndexProvider
     {

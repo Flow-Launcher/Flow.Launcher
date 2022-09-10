@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -65,7 +66,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #region SearchEngine
 
-        public PathEnumerationEngineOption PathEnumerationEngine { get; set; }
+        public PathEnumerationEngineOption PathEnumerationEngine { get; set; } = PathEnumerationEngineOption.WindowsIndex;
 
         private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
         private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
@@ -81,7 +82,7 @@ namespace Flow.Launcher.Plugin.Explorer
         };
 
         [JsonIgnore]
-        public IPathEnumerable PathEnumerator => PathEnumerationEngine switch
+        public IPathIndexProvider PathEnumerator => PathEnumerationEngine switch
         {
             PathEnumerationEngineOption.Everything => EverythingManagerInstance,
             PathEnumerationEngineOption.WindowsIndex => WindowsIndexSearchManager,

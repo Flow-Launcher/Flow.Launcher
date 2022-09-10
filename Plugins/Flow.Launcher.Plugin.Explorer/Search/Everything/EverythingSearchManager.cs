@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-    public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathEnumerable
+    public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider
     {
         private Settings Settings { get; }
 

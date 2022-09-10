@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
     {
 
         // Reserved keywords in oleDB
-        private const string ReservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
+        private static Regex _reservedPatternMatcher = new(@"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$", RegexOptions.Compiled);
 
         private static async IAsyncEnumerable<SearchResult> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, [EnumeratorCancellation] CancellationToken token)
         {
@@ -28,31 +28,42 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             await using var command = new OleDbCommand(indexQueryString, conn);
             // Results return as an OleDbDataReader.
-            await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+            OleDbDataReader dataReaderAttempt;
+            try
+            {
+                dataReaderAttempt = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+            }
+            catch (OleDbException e)
+            {
+                Log.Exception($"|WindowsIndex.ExecuteWindowsIndexSearchAsync|Failed to execute windows index search query: {indexQueryString}", e);
+                yield break;
+            }
+            await using var dataReader = dataReaderAttempt;
             token.ThrowIfCancellationRequested();
 
-            if (dataReaderResults is not { HasRows: true })
+            if (dataReader is not { HasRows: true })
             {
                 yield break;
             }
-            while (await dataReaderResults.ReadAsync(token))
+
+            while (await dataReader.ReadAsync(token))
             {
                 token.ThrowIfCancellationRequested();
-                if (dataReaderResults.GetValue(0) == DBNull.Value || dataReaderResults.GetValue(1) == DBNull.Value)
+                if (dataReader.GetValue(0) == DBNull.Value || dataReader.GetValue(1) == DBNull.Value)
                 {
                     continue;
                 }
                 // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
-                var encodedFragmentPath = dataReaderResults
+                var encodedFragmentPath = dataReader
                     .GetString(1)
                     .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
 
                 var path = new Uri(encodedFragmentPath).LocalPath;
 
-                yield return new SearchResult()
+                yield return new SearchResult
                 {
                     FullPath = path,
-                    Type = dataReaderResults.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                    Type = dataReader.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
                     WindowsIndexed = true
                 };
             }
@@ -60,22 +71,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
         }
 
-        internal static IAsyncEnumerable<SearchResult> WindowsIndexSearchAsync(string searchString,
-            Func<CSearchQueryHelper> createQueryHelper,
-            Func<string, string> constructQuery,
-            IEnumerable<AccessLink> exclusionList,
+
+
+        internal static IAsyncEnumerable<SearchResult> WindowsIndexSearchAsync(string connectionString,
+            string search,
             CancellationToken token)
         {
-            var regexMatch = Regex.Match(searchString, ReservedStringPattern);
-
-            if (regexMatch.Success)
-                return AsyncEnumerable.Empty<SearchResult>();
-
-            var constructedQuery = constructQuery(searchString);
-
-            return ExecuteWindowsIndexSearchAsync(constructedQuery, createQueryHelper().ConnectionString, token);
+            return _reservedPatternMatcher.IsMatch(search)
+                ? AsyncEnumerable.Empty<SearchResult>()
+                : ExecuteWindowsIndexSearchAsync(search, connectionString, token);
         }
 
+        // TODO: Move to General Search Manager
         private static void RemoveResultsInExclusionList(List<SearchResult> results, IReadOnlyList<AccessLink> exclusionList, CancellationToken token)
         {
             var indexExclusionListCount = exclusionList.Count;
@@ -102,6 +109,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             }
         }
 
+        // TODO: Use a custom exception to handle this
         private static List<Result> ResultForWindexSearchOff(string rawQuery)
         {
             var api = SearchManager.Context.API;

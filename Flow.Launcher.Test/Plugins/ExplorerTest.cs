@@ -73,7 +73,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When            
-            var queryString = queryConstructor.QueryForTopLevelDirectorySearch(folderPath);
+            var queryString = queryConstructor.Directory(folderPath);
 
             // Then
             Assert.IsTrue(queryString == expectedString,
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When            
-            var queryString = queryConstructor.QueryForTopLevelDirectorySearch(userSearchString);
+            var queryString = queryConstructor.Directory(userSearchString);
 
             // Then
             Assert.IsTrue(queryString == expectedString,
@@ -125,7 +125,7 @@ namespace Flow.Launcher.Test.Plugins
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString)
         {
             //When
-            var resultString = QueryConstructor.QueryWhereRestrictionsForAllFilesAndFoldersSearch;
+            var resultString = QueryConstructor.RestrictionsForAllFilesAndFoldersSearch;
 
             // Then
             Assert.IsTrue(resultString == expectedString,
@@ -142,7 +142,7 @@ namespace Flow.Launcher.Test.Plugins
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
-            var baseQuery =  queryConstructor.CreateBaseQuery();
+            var baseQuery =  queryConstructor.BaseQueryHelper;
             
             // system running this test could have different locale than the hard-coded 1033 LCID en-US.
             var queryKeywordLocale = baseQuery.QueryKeywordLocale;
@@ -151,7 +151,7 @@ namespace Flow.Launcher.Test.Plugins
             
 
             //When
-            var resultString = queryConstructor.QueryForAllFilesAndFolders(userSearchString);
+            var resultString = queryConstructor.FilesAndFolders(userSearchString);
 
             // Then
             Assert.IsTrue(resultString == expectedString,
@@ -169,7 +169,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When
-            var resultString = queryConstructor.QueryWhereRestrictionsForFileContentSearch(querySearchString);
+            var resultString = QueryConstructor.RestrictionsForFileContentSearch(querySearchString);
 
             // Then
             Assert.IsTrue(resultString == expectedString,
@@ -187,7 +187,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When
-            var resultString = queryConstructor.QueryForFileContentSearch(userSearchString);
+            var resultString = queryConstructor.FileContent(userSearchString);
 
             // Then
             Assert.IsTrue(resultString == expectedString,
