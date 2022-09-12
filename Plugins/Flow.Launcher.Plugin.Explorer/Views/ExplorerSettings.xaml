@@ -130,7 +130,8 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Index Search Engine" />
+                            <TextBlock Text="Index Search Engine"
+                                VerticalAlignment="Center" />
                             <ComboBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
@@ -141,7 +142,8 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Content Search Engine" />
+                            <TextBlock Text="Content Search Engine"
+                                VerticalAlignment="Center" />
                             <ComboBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
@@ -152,7 +154,8 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Path Enumeration Engine" />
+                            <TextBlock Text="Path Enumeration Engine"
+                                VerticalAlignment="Center" />
                             <ComboBox Margin="15"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
