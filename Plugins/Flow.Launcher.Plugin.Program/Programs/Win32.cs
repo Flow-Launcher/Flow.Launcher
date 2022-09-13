@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -104,6 +105,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
+                PreviewPanel = new Lazy<System.Windows.Controls.UserControl>(() =>
+                {
+                    var control = new UserControl();
+                    control.Content = new TextBlock()
+                    {
+                        Text = "test"
+                    };
+                    return control;
+                }),
                 Action = c =>
                 {
                     var runAsAdmin = (
