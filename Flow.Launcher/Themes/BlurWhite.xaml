@@ -11,6 +11,14 @@
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
         TargetType="{x:Type TextBlock}">
+
+    <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style
+        x:Key="ItemGlyph"
+        BasedOn="{StaticResource BaseGlyphStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FF000000" />
     </Style>
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
@@ -34,6 +42,13 @@
         x:Key="WindowBorderStyle"
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
+    <Style
+        x:Key="WindowBorderStyle"
+        BasedOn="{StaticResource BaseWindowBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="#aaaaaa" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Opacity="0.9" Color="White" />
@@ -44,6 +59,13 @@
         <Setter Property="CornerRadius" Value="0" />
     </Style>
 
+    <Style
+        x:Key="WindowStyle"
+        BasedOn="{StaticResource BaseWindowStyle}"
+        TargetType="{x:Type Window}">
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.Foreground" Value="#0078d7" />
+    </Style>
     <Style
         x:Key="WindowStyle"
         BasedOn="{StaticResource BaseWindowStyle}"
