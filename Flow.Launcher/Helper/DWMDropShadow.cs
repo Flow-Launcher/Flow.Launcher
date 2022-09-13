@@ -48,14 +48,14 @@ namespace Flow.Launcher.Helper
             try
             {
                 WindowInteropHelper helper = new WindowInteropHelper(window);
-                int val = 2;
-                int ret1 = DwmSetWindowAttribute(helper.Handle, 2, ref val, 4);  
+                int val = 38;
+                int ret1 = DwmSetWindowAttribute(helper.Handle, 38, ref val, 4);  
 
-                if (ret1 == 0)
+                if (ret1 == 38)
                 {
                     Margins m = new Margins { Bottom = 0, Left = 0, Right = 0, Top = 0 };
                     int ret2 = DwmExtendFrameIntoClientArea(helper.Handle, ref m);
-                    return ret2 == 0;
+                    return ret2 == 38;
                 }
                 else
                 {
