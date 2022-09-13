@@ -18,7 +18,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Put computer to sleep</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Empty recycle bin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openmycomputer">My PC</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openmypc">My PC</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openmydesktop">Desktop</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_libraries">Libraries</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_explorer">Explorer</system:String>

@@ -19,7 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_sleep">PC를 절전모드로 전환</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">휴지통 비우기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">휴지통 열기</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openmycomputer">내 PC</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openmypc">내 PC</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openmydesktop">바탕 화면</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_libraries">라이브러리</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_explorer">파일 탐색기</system:String>

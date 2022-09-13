@@ -209,7 +209,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "My PC",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmycomputer"),
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmypc"),
                     IcoPath = "Images\\mycomputer.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7f4"),
                     Action = c =>
