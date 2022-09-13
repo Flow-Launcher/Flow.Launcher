@@ -26,7 +26,7 @@
     ResizeMode="CanResize"
     StateChanged="Window_StateChanged"
     Top="{Binding SettingWindowTop, Mode=TwoWay}"
-    WindowStartupLocation="CenterScreen"
+    WindowStartupLocation="Manual"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
