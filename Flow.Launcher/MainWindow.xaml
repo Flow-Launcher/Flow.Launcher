@@ -14,6 +14,7 @@
     MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
     d:DataContext="{d:DesignInstance vm:MainViewModel}"
     AllowDrop="True"
+    AllowsTransparency="True"
     Background="Transparent"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
@@ -30,7 +31,7 @@
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
-    WindowStyle="ToolWindow"
+    WindowStyle="None"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" />

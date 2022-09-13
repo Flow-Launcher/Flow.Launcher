@@ -39,7 +39,7 @@
         <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Opacity="0.9" Color="White" />
+                <SolidColorBrush Opacity="0.85" Color="White" />
             </Setter.Value>
         </Setter>
     </Style>
