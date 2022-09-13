@@ -346,7 +346,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Empty Recycle Bin",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe896"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     Action = c =>
                     {
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
