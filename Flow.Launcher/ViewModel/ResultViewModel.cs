@@ -15,7 +15,7 @@ namespace Flow.Launcher.ViewModel
     public class ResultViewModel : BaseModel
     {
         private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new(); 
+        private static Dictionary<string, string> fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -66,6 +66,10 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ShowOpenResultHotkey =>
             Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility ShowCustomizedPrewview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility ShowIcon
         {
