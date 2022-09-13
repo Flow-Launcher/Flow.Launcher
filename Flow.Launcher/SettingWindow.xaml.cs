@@ -39,10 +39,10 @@ namespace Flow.Launcher
         {
             settings = viewModel.Settings;
             DataContext = viewModel;
-            InitializeComponent();
-            InitializePosition();
             this.viewModel = viewModel;
             API = api;
+            InitializePosition();
+            InitializeComponent();
         }
 
         #region General
@@ -323,7 +323,7 @@ namespace Flow.Launcher
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            
+
             Close();
         }
 
