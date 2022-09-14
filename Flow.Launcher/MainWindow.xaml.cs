@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,7 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Windows.Data;
 
 namespace Flow.Launcher
 {
@@ -554,6 +555,12 @@ namespace Flow.Launcher
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
             }
+        }
+
+        private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
+            be.UpdateSource();
         }
     }
 }
