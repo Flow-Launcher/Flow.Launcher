@@ -97,7 +97,7 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = IsBlurTheme();
 
-                //if (Settings.UseDropShadowEffect && !BlurEnabled)
+                if (Settings.UseDropShadowEffect && !BlurEnabled)
                 AddDropShadowEffectToCurrentTheme();
 
                 SetBlurForWindow();
@@ -231,7 +231,7 @@ namespace Flow.Launcher.Core.Resource
         {
             var dict = GetResourceDictionary();
 
-            var windowBorderStyle = dict["WindowStyle"] as Style;
+            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
             var effectSetter = new Setter
             {
