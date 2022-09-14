@@ -12,7 +12,6 @@ using Flow.Launcher.ViewModel;
 using Microsoft.Win32;
 using ModernWpf;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,18 +37,18 @@ namespace Flow.Launcher
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
-            InitializeComponent();
             settings = viewModel.Settings;
             DataContext = viewModel;
             this.viewModel = viewModel;
             API = api;
+            InitializePosition();
+            InitializeComponent();
         }
 
         #region General
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            InitializePosition();
             RefreshMaximizeRestoreButton();
             // Fix (workaround) for the window freezes after lock screen (Win+L)
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
@@ -57,6 +56,7 @@ namespace Flow.Launcher
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
             ClockDisplay();
+            InitializePosition();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -324,7 +324,7 @@ namespace Flow.Launcher
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            
+
             Close();
         }
 
