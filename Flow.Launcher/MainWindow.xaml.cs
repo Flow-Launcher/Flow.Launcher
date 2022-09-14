@@ -530,7 +530,7 @@ namespace Flow.Launcher
                         }
                     }
                     break;
-                case Key.OemCloseBrackets:
+                case Key.OemOpenBrackets:
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_settings.WindowSize < 400)
@@ -543,14 +543,14 @@ namespace Flow.Launcher
                         }
                     }
                     break;
-                case Key.OemOpenBrackets:
+                case Key.OemCloseBrackets:
                     if (specialKeyState.CtrlPressed)
                     {
                         _settings.WindowSize = _settings.WindowSize + 100;
                         Left = Left - 50;
                     }
                     break;
-                case Key.OemPlus:
+                case Key.OemMinus:
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_settings.MaxResultsToShow < 2)
@@ -562,7 +562,7 @@ namespace Flow.Launcher
                         }
                     }
                     break;
-                case Key.OemMinus:
+                case Key.OemPlus:
                     if (specialKeyState.CtrlPressed)
                     {
                         _settings.MaxResultsToShow = _settings.MaxResultsToShow + 1;
