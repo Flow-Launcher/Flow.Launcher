@@ -28,6 +28,9 @@
         <Setter Property="Height" Value="42" />
     </Style>
 
+    <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="0" />
+    </Style>
     <Style
         x:Key="WindowBorderStyle"
         BasedOn="{StaticResource BaseWindowBorderStyle}"

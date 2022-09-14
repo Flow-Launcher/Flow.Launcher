@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
-        private const int ShadowExtraMargin = 12;
+        private const int ShadowExtraMargin = 32;
 
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
@@ -98,7 +98,7 @@ namespace Flow.Launcher.Core.Resource
                 BlurEnabled = IsBlurTheme();
 
                 if (Settings.UseDropShadowEffect && !BlurEnabled)
-                    AddDropShadowEffectToCurrentTheme();
+                AddDropShadowEffectToCurrentTheme();
 
                 SetBlurForWindow();
             }
@@ -238,9 +238,10 @@ namespace Flow.Launcher.Core.Resource
                 Property = Border.EffectProperty,
                 Value = new DropShadowEffect
                 {
-                    Opacity = 0.4,
-                    ShadowDepth = 2,
-                    BlurRadius = 15
+                    Opacity = 0.3,
+                    ShadowDepth = 12,
+                    Direction = 270,
+                    BlurRadius = 30
                 }
             };
 
@@ -250,7 +251,7 @@ namespace Flow.Launcher.Core.Resource
                 marginSetter = new Setter()
                 {
                     Property = Border.MarginProperty,
-                    Value = new Thickness(ShadowExtraMargin),
+                    Value = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin),
                 };
                 windowBorderStyle.Setters.Add(marginSetter);
             }

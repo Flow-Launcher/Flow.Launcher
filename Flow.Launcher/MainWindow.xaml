@@ -33,6 +33,10 @@
     WindowStartupLocation="Manual"
     WindowStyle="None"
     mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" />
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />

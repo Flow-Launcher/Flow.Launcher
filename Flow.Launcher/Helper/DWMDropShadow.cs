@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -8,6 +7,14 @@ namespace Flow.Launcher.Helper
 {
     public class DwmDropShadow
     {
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Margins
+        {
+            public int Left;
+            public int Right;
+            public int Top;
+            public int Bottom;
+        }
 
         [DllImport("dwmapi.dll", PreserveSig = true)]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
@@ -48,14 +55,14 @@ namespace Flow.Launcher.Helper
             try
             {
                 WindowInteropHelper helper = new WindowInteropHelper(window);
-                int val = 2;
-                int ret1 = DwmSetWindowAttribute(helper.Handle, 2, ref val, 4);  
+                int val = 38;
+                int ret1 = DwmSetWindowAttribute(helper.Handle, 38, ref val, 4);  
 
                 if (ret1 == 0)
                 {
                     Margins m = new Margins { Bottom = 0, Left = 0, Right = 0, Top = 0 };
                     int ret2 = DwmExtendFrameIntoClientArea(helper.Handle, ref m);
-                    return ret2 == 0;
+                    return ret2 == 38;
                 }
                 else
                 {
