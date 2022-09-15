@@ -238,9 +238,10 @@ namespace Flow.Launcher.Core.Resource
                 Property = Border.EffectProperty,
                 Value = new DropShadowEffect
                 {
-                    Opacity = 0.4,
-                    ShadowDepth = 2,
-                    BlurRadius = 15
+                    Opacity = 0.3,
+                    ShadowDepth = 12,
+                    Direction = 270,
+                    BlurRadius = 30
                 }
             };
 
