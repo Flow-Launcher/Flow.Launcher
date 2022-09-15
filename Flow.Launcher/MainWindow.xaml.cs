@@ -21,6 +21,7 @@ using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Windows.Data;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -559,8 +560,7 @@ namespace Flow.Launcher
 
         private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
-            be.UpdateSource();
+            _viewModel.ChangeQueryText(QueryTextBox.Text);
         }
     }
 }
