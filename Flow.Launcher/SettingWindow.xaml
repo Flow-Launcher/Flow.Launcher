@@ -2419,7 +2419,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
-                                            Margin="0,0,30,0"
+                                            Margin="0,0,18,0"
                                             VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
@@ -2465,7 +2465,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
-                                            Margin="0,0,30,0"
+                                            Margin="0,0,18,0"
                                             VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
