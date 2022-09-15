@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
-        private const int ShadowExtraMargin = 12;
+        private const int ShadowExtraMargin = 32;
 
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
@@ -251,7 +251,7 @@ namespace Flow.Launcher.Core.Resource
                 marginSetter = new Setter()
                 {
                     Property = Border.MarginProperty,
-                    Value = new Thickness(ShadowExtraMargin),
+                    Value = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin),
                 };
                 windowBorderStyle.Setters.Add(marginSetter);
             }
