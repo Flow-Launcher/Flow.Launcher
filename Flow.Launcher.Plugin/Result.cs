@@ -201,7 +201,12 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Progress bar display. Providing an int value between 0-100 will trigger the progress bar to be displayed on the result
         /// </summary>
-        public int? ProgressBar { get; set; }
+        public int ProgressBarValue { get; set; }
+
+        /// <summary>
+        /// Progress bar visibility Check
+        /// </summary>
+        public bool IsProgressBarVisible { get; set; } = false;
 
         /// <summary>
         /// Optionally set the color of the progress bar

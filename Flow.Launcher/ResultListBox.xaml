@@ -115,7 +115,7 @@
                                 x:Name="progressbarResult"
                                 Foreground="{Binding Result.ProgressBarColor}"
                                 Style="{DynamicResource ProgressBarResult}"
-                                Value="{Binding Result.ProgressBar}" />
+                                Value="{Binding Result.ProgressBarValue}" />
                             <TextBlock
                                 x:Name="Title"
                                 VerticalAlignment="Center"

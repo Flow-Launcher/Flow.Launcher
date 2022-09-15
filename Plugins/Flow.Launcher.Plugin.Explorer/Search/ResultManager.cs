@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static Result CreateDriveSpaceDisplayResult(string path, bool windowsIndexed = false)
         {
             var progressBarColor = "#26a0da";
-            int? progressValue = null;
+            int progressValue = 0;
             var title = string.Empty; // hide title when use progress bar,
             var driveLetter = path.Substring(0, 1).ToUpper();
             var driveName = driveLetter + ":\\";
@@ -100,7 +100,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 IcoPath = path,
                 Score = 500,
-                ProgressBar = progressValue,
+                ProgressBarValue = progressValue,
+                IsProgressBarVisible = true,
                 ProgressBarColor = progressBarColor,
                 Action = c =>
                 {
