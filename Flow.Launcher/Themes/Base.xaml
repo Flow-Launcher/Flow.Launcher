@@ -157,6 +157,8 @@
 
     </Style>
 
+    </Style>
+
     <!--  Item Style  -->
     <Style x:Key="ProgressBarResult" TargetType="{x:Type ProgressBar}">
         <Setter Property="Height" Value="18" />

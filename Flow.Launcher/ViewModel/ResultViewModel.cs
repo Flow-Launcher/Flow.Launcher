@@ -194,6 +194,16 @@ namespace Flow.Launcher.ViewModel
             PreviewImage = ShellFolder.FromParsingName(imagePath).Thumbnail.LargeBitmapSource;
         }
 
+
+        private async ValueTask LoadPreviewImageAsync()
+        {
+            var imagePath = Result.PreviewImage ?? Result.IcoPath;
+
+
+            // We need to modify the property not field here to trigger the OnPropertyChanged event
+            PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
+        }
+
         public Result Result { get; }
 
         public string QuerySuggestionText { get; set; }

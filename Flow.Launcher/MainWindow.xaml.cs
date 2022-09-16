@@ -360,6 +360,12 @@ namespace Flow.Launcher
                 Top = WindowTop();
             
         }
+        private void PositionReset()
+        {
+                Left = WindowLeft();
+                Top = WindowTop();
+            
+        }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
@@ -643,6 +649,30 @@ namespace Flow.Launcher
                     {
                         _settings.WindowSize = _settings.WindowSize + 100;
                         Left = Left - 50;
+                    }
+                    break;
+                case Key.OemMinus:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        if (_settings.MaxResultsToShow < 2)
+                        {
+                        }
+                        else
+                        {
+                            _settings.MaxResultsToShow = _settings.MaxResultsToShow - 1;
+                        }
+                    }
+                    break;
+                case Key.OemPlus:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        _settings.MaxResultsToShow = _settings.MaxResultsToShow + 1;
+                    }
+                    break;
+                case Key.F12:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        ToggleGameMode();
                     }
                     break;
                 case Key.OemMinus:
