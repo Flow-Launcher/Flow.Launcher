@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
