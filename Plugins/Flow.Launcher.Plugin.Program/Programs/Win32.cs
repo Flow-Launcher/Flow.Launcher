@@ -105,15 +105,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
-                PreviewPanel = new Lazy<System.Windows.Controls.UserControl>(() =>
-                {
-                    var control = new UserControl();
-                    control.Content = new TextBlock()
-                    {
-                        Text = "test"
-                    };
-                    return control;
-                }),
                 Action = c =>
                 {
                     var runAsAdmin = (
