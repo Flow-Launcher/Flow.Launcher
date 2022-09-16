@@ -173,7 +173,7 @@
                         Background="Transparent"
                         PreviewDragOver="OnPreviewDragOver"
                         Style="{DynamicResource QueryBoxStyle}"
-                        Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                        Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         PreviewKeyUp="QueryTextBox_KeyUp"
                         Visibility="Visible">
                         <TextBox.CommandBindings>

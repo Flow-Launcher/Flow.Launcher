@@ -560,7 +560,8 @@ namespace Flow.Launcher
 
         private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            _viewModel.ChangeQueryText(QueryTextBox.Text);
+            if(_viewModel.QueryText != QueryTextBox.Text)
+                _viewModel.QueryText = QueryTextBox.Text;
         }
     }
 }
