@@ -181,7 +181,8 @@ namespace Flow.Launcher.ViewModel
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+            //Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+            Image = ShellFolder.FromParsingName(imagePath).Thumbnail.MediumBitmapSource;
         }
 
 
@@ -190,7 +191,7 @@ namespace Flow.Launcher.ViewModel
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
             // We need to modify the property not field here to trigger the OnPropertyChanged event
             //PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
-            PreviewImage = ShellFile.FromFilePath(imagePath).Thumbnail.ExtraLargeBitmapSource;
+            PreviewImage = ShellFolder.FromParsingName(imagePath).Thumbnail.LargeBitmapSource;
         }
 
         public Result Result { get; }
