@@ -562,13 +562,11 @@ namespace Flow.Launcher
             if (Preview.Visibility == Visibility.Collapsed)
             {
                 ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
-                //HotkeyArea.SetValue(Visibility, Visibility.Collapsed);
                 Preview.Visibility = Visibility.Visible;
             }
             else
             {
                 ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
-                //HotkeyArea.SetValue(Visibility, Visibility.Visible);
                 Preview.Visibility = Visibility.Collapsed;
             }
         }

@@ -9,6 +9,8 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Drawing;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -186,10 +188,9 @@ namespace Flow.Launcher.ViewModel
         private async ValueTask LoadPreviewImageAsync()
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
-
-
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
+            //PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
+            PreviewImage = ShellFile.FromFilePath(imagePath).Thumbnail.LargeBitmapSource;
         }
 
         public Result Result { get; }
