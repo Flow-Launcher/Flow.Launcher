@@ -44,7 +44,6 @@ namespace Flow.Launcher
             _viewModel = mainVM;
             _settings = settings;
             InitializeComponent();
-            InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -89,6 +88,7 @@ namespace Flow.Launcher
             InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
+            InitializePosition();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
@@ -178,20 +178,6 @@ namespace Flow.Launcher
                         break;
                 }
             };
-        }
-
-        private void InitializePosition()
-        {
-            if (_settings.RememberLastLaunchLocation)
-            {
-                Top = _settings.WindowTop;
-                Left = _settings.WindowLeft;
-            }
-            else
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
         }
 
         private void UpdateNotifyIconText()
@@ -454,6 +440,15 @@ namespace Flow.Launcher
             }
         }
 
+        private void InitializePosition()
+        {
+            if (!_settings.RememberLastLaunchLocation)
+            {
+                Left = WindowLeft();
+                Top = WindowTop();
+            }
+        }
+        
         public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -505,67 +500,12 @@ namespace Flow.Launcher
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        
-                        _settings.WindowSize = _settings.WindowSize + 100;
-                        Left = Left - 50;
-                    }
                     break;
                 case Key.Left:
                     if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
-                    }
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        if (_settings.WindowSize < 400)
-                        {
-                        }
-                        else
-                        {
-                            _settings.WindowSize = _settings.WindowSize - 100;
-                            Left = Left + 50;
-                        }
-                    }
-                    break;
-                case Key.OemOpenBrackets:
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        if (_settings.WindowSize < 400)
-                        {
-                        }
-                        else
-                        {
-                            _settings.WindowSize = _settings.WindowSize - 100;
-                            Left = Left + 50;
-                        }
-                    }
-                    break;
-                case Key.OemCloseBrackets:
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        _settings.WindowSize = _settings.WindowSize + 100;
-                        Left = Left - 50;
-                    }
-                    break;
-                case Key.OemMinus:
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        if (_settings.MaxResultsToShow < 2)
-                        {
-                        }
-                        else
-                        {
-                            _settings.MaxResultsToShow = _settings.MaxResultsToShow - 1;
-                        }
-                    }
-                    break;
-                case Key.OemPlus:
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        _settings.MaxResultsToShow = _settings.MaxResultsToShow + 1;
                     }
                     break;
                 case Key.F12:
