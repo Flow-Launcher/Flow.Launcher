@@ -1282,7 +1282,7 @@
                 </TabItem>
 
                 <!--#region Plugin Store-->
-                <TabItem>
+                <TabItem KeyDown="PluginStore_OnKeyDown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1341,7 +1341,7 @@
                                 HorizontalAlignment="Right"
                                 DockPanel.Dock="Right"
                                 FontSize="14"
-                                KeyDown="PluginFilterTxb_OnKeyDown"
+                                KeyDown="PluginStoreFilterTxb_OnKeyDown"
                                 LostFocus="RefreshPluginStoreEventHandler"
                                 Text=""
                                 TextAlignment="Left">

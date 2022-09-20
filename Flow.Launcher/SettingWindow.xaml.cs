@@ -369,7 +369,8 @@ namespace Flow.Launcher
                 return true;
             if (item is UserPlugin model)
             {
-                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet();
+                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
+                    || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
             }
             return false;
         }
@@ -397,13 +398,13 @@ namespace Flow.Launcher
         private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                RefreshPluginStoreEventHandler(sender, e);
+                RefreshPluginListEventHandler(sender, e);
         }
 
         private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                RefreshPluginListEventHandler(sender, e);
+                RefreshPluginStoreEventHandler(sender, e);
         }
         private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
         {
@@ -419,6 +420,13 @@ namespace Flow.Launcher
         private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+        private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+            {
+                pluginStoreFilterTxb.Focus();
+            }
         }
     }
 }
