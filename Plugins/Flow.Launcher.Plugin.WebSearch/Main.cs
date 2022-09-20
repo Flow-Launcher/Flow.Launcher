@@ -74,6 +74,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                         IcoPath = searchSource.IconPath,
                         ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                         Score = score,
+                        PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel()),
                         Action = c =>
                         {
                             _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
