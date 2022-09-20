@@ -224,13 +224,43 @@ namespace Flow.Launcher
             };
         }
 
+        private void InitializePosition()
+        {
+            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
+            {
+                Top = _settings.WindowTop;
+                Left = _settings.WindowLeft;
+            }
+            else if(_settings.LauncherPosition == "MouseScreenCenter")
+            {
+                Left = WindowLeft();
+                Top = WindowTop();
+            }
+            else if (_settings.LauncherPosition == "MouseScreenCenterTop")
+            {
+                Left = WindowLeft();
+                Top = 10;
+            }
+            else if (_settings.LauncherPosition == "MouseScreenLeftTop")
+            {
+                Left = 10;
+                Top = 10;
+            }
+            else if (_settings.LauncherPosition == "MouseScreenRightTop")
+            {
+                Left = WindowRight();
+                Top = 10;
+            }
+        }
+
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
             ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[5]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -256,6 +286,10 @@ namespace Flow.Launcher
             {
                 Header = InternationalizationManager.Instance.GetTranslation("GameMode")
             };
+            var positionreset = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset")
+            };
             var settings = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
@@ -267,12 +301,14 @@ namespace Flow.Launcher
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             gamemode.Click += (o, e) => ToggleGameMode();
+            positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             contextMenu.Items.Add(gamemode);
+            contextMenu.Items.Add(positionreset);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
@@ -318,6 +354,12 @@ namespace Flow.Launcher
                 _notifyIcon.Icon = Properties.Resources.gamemode;
                 _viewModel.GameModeStatus = true;
             }
+        }
+        private void PositionReset()
+        {
+                Left = WindowLeft();
+                Top = WindowTop();
+            
         }
         private void InitProgressbarAnimation()
         {
@@ -448,15 +490,30 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
             {
                 Left = _settings.WindowLeft;
                 Top = _settings.WindowTop;
             }
-            else
+            else if (_settings.LauncherPosition == "MouseScreenCenter")
             {
                 Left = WindowLeft();
                 Top = WindowTop();
+            }
+            else if (_settings.LauncherPosition == "MouseScreenCenterTop")
+            {
+                Left = WindowLeft();
+                Top = 10;
+            }
+            else if (_settings.LauncherPosition == "MouseScreenLeftTop")
+            {
+                Left = 10;
+                Top = 10;
+            }
+            else if (_settings.LauncherPosition == "MouseScreenRightTop")
+            {
+                Left = WindowRight();
+                Top = 10;
             }
         }
 
@@ -464,7 +521,7 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
@@ -509,6 +566,15 @@ namespace Flow.Launcher
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
+        }
+
+        public double WindowRight()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - ActualWidth) - 10;
+            return left;
         }
 
         /// <summary>
