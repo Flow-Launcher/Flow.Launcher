@@ -321,8 +321,8 @@
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-            <Setter Property="MinWidth" Value="330" />
-            <Setter Property="Height" Value="98" />
+            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="Height" Value="Auto" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -1400,7 +1400,7 @@
                                             Margin="0,0,6,18"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
-                                            Columns="2"
+                                            Columns="3"
                                             IsItemsHost="True"
                                             SnapsToDevicePixels="True" />
                                     </ItemsPanelTemplate>
@@ -1433,15 +1433,46 @@
                                                 </ControlTemplate>
                                             </ToggleButton.Template>
 
-                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="72" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
+                                            <Grid
+                                                Height="160"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="56" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
                                                 <StackPanel
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
                                                     Grid.Column="0"
+                                                    Grid.ColumnSpan="2"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal">
+                                                    <Image
+                                                        Width="32"
+                                                        Height="32"
+                                                        Margin="0,0,8,0"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        RenderOptions.BitmapScalingMode="HighQuality"
+                                                        Source="/Images/new.png"
+                                                        Stretch="Uniform" />
+                                                    <Image
+                                                        Width="28"
+                                                        Height="28"
+                                                        Margin="0,-2,8,0"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        RenderOptions.BitmapScalingMode="HighQuality"
+                                                        Source="/Images/installed.png"
+                                                        Stretch="Uniform"
+                                                        Visibility="Visible" />
+                                                </StackPanel>
+
+                                                <StackPanel
+                                                    Grid.Row="0"
                                                     Margin="0,0,0,0"
-                                                    VerticalAlignment="Center">
+                                                    VerticalAlignment="Top">
                                                     <StackPanel.Style>
                                                         <Style>
                                                             <Setter Property="StackPanel.Visibility" Value="Visible" />
@@ -1455,16 +1486,18 @@
                                                     <Image
                                                         Width="32"
                                                         Height="32"
-                                                        Margin="8,0,6,0"
-                                                        VerticalAlignment="Center"
+                                                        Margin="20,20,6,0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
                                                         RenderOptions.BitmapScalingMode="HighQuality"
                                                         Source="{Binding IcoPath, IsAsync=True}"
                                                         Stretch="Uniform" />
                                                 </StackPanel>
                                                 <StackPanel
-                                                    Grid.Column="1"
-                                                    Margin="0,0,8,0"
-                                                    VerticalAlignment="Center"
+                                                    Grid.Row="1"
+                                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
+                                                    Margin="0,6,0,0"
+                                                    VerticalAlignment="Top"
                                                     Panel.ZIndex="0">
                                                     <StackPanel.Style>
                                                         <Style>
@@ -1477,14 +1510,16 @@
                                                         </Style>
                                                     </StackPanel.Style>
                                                     <TextBlock
-                                                        Padding="0,0,20,0"
+                                                        Padding="20,0,20,0"
+                                                        VerticalAlignment="Top"
+                                                        FontWeight="SemiBold"
                                                         Foreground="{DynamicResource Color05B}"
                                                         Text="{Binding Name}"
                                                         TextWrapping="WrapWithOverflow"
                                                         ToolTip="{Binding Version}" />
                                                     <TextBlock
-                                                        Margin="0,2,0,0"
-                                                        Padding="0,0,20,0"
+                                                        Margin="0,6,0,0"
+                                                        Padding="20,0,22,20"
                                                         Foreground="{DynamicResource Color04B}"
                                                         TextWrapping="WrapWithOverflow">
                                                         <Run
@@ -1495,6 +1530,7 @@
 
                                                 </StackPanel>
                                                 <StackPanel
+                                                    Grid.RowSpan="2"
                                                     Grid.Column="0"
                                                     Grid.ColumnSpan="2"
                                                     HorizontalAlignment="Stretch"
@@ -1512,7 +1548,7 @@
 
 
                                                     <Grid
-                                                        Height="94"
+                                                        Height="180"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         Panel.ZIndex="1">
@@ -1524,12 +1560,13 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <StackPanel
+                                                            Grid.Row="0"
                                                             Grid.Column="0"
                                                             HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center">
-                                                            <StackPanel Orientation="Horizontal">
+                                                            VerticalAlignment="Top">
+                                                            <StackPanel Orientation="Vertical">
                                                                 <TextBlock
-                                                                    Margin="20,0,0,0"
+                                                                    Margin="20,20,0,0"
                                                                     Padding="0,0,0,0"
                                                                     FontWeight="Bold"
                                                                     Foreground="{DynamicResource Color05B}"
@@ -1537,14 +1574,14 @@
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Name}" />
                                                                 <TextBlock
-                                                                    Margin="10,0,0,0"
+                                                                    Margin="20,4,0,0"
                                                                     Padding="0,0,20,0"
                                                                     Foreground="{DynamicResource Color05B}"
                                                                     Text="{Binding Version}"
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Version}" />
                                                             </StackPanel>
-                                                            <StackPanel Margin="20,2,120,0" Orientation="Vertical">
+                                                            <StackPanel Margin="20,6,20,0" Orientation="Vertical">
                                                                 <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
                                                                     <Hyperlink
                                                                         Foreground="{DynamicResource Color04B}"
@@ -1555,12 +1592,14 @@
                                                                 </TextBlock>
                                                             </StackPanel>
                                                         </StackPanel>
-                                                        <Border Padding="0,0,20,0">
+                                                        <Border
+                                                            Grid.Row="0"
+                                                            Grid.Column="1"
+                                                            Padding="0,0,0,0">
                                                             <Button
                                                                 Name="ShortCutButtonPrev"
-                                                                Grid.Column="1"
                                                                 MinHeight="40"
-                                                                Margin="0,0,0,0"
+                                                                Margin="0,70,20,0"
                                                                 Padding="15,5,15,5"
                                                                 HorizontalAlignment="Right"
                                                                 VerticalAlignment="Center"
