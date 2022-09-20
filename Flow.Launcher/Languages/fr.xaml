@@ -28,6 +28,7 @@
     <system:String x:Key="portableMode">Mode Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Stocker tous les paramètres et données utilisateur dans un seul dossier (Pratique en cas d'utilisation de disques amovibles ou de services cloud).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Lancer Flow Launcher au démarrage du système</system:String>
+    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Cacher Flow Launcher lors de la perte de focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne pas afficher les notifications lors d'une nouvelle version</system:String>
     <system:String x:Key="rememberLastLocation">Se souvenir du dernier emplacement de la fenêtre</system:String>
@@ -42,16 +43,16 @@
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Désactiver l'activation de Flow Launcher lorsqu'une application en plein écran est active (Recommandé pour les jeux).</system:String>
     <system:String x:Key="defaultFileManager">Gestionnaire de fichiers par défaut</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
-    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowser">Navigateur web par défaut</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonDirectory">Répertoire de Python</system:String>
     <system:String x:Key="autoUpdates">Mettre à jour automatiquement</system:String>
     <system:String x:Key="selectPythonDirectory">Sélectionner</system:String>
     <system:String x:Key="hideOnStartup">Cacher Flow Launcher au démarrage</system:String>
-    <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIcon">Masquer icône du plateau</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyin">Devrait utiliser le pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
@@ -173,7 +174,7 @@
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowser_name">Navigateur</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
     <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
@@ -279,9 +280,9 @@
     <system:String x:Key="RecommendWeather">Weather</system:String>
     <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">Commande Shell</system:String>
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth dans les Paramètres de Windows</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 

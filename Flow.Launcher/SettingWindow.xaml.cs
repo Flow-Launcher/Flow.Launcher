@@ -1,9 +1,10 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -18,9 +19,11 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
+using ListViewItem = System.Windows.Controls.ListViewItem;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
@@ -30,12 +33,9 @@ namespace Flow.Launcher
 {
     public partial class SettingWindow
     {
-        private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-
         public readonly IPublicAPI API;
         private Settings settings;
         private SettingWindowViewModel viewModel;
-        private static MainViewModel mainViewModel;
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
@@ -58,44 +58,11 @@ namespace Flow.Launcher
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
 
-            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(pluginList.ItemsSource);
+            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
             pluginListView.Filter = PluginListFilter;
 
             pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
             pluginStoreView.Filter = PluginStoreFilter;
-        }
-
-        private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
-        {
-            SetStartup();
-        }
-
-        private void OnAutoStartupUncheck(object sender, RoutedEventArgs e)
-        {
-            RemoveStartup();
-        }
-
-        public static void SetStartup()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
-        }
-
-        private void RemoveStartup()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.DeleteValue(Constant.FlowLauncher, false);
-        }
-
-        public static bool StartupSet()
-        {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            var path = key?.GetValue(Constant.FlowLauncher) as string;
-            if (path != null)
-            {
-                return path == Constant.ExecutablePath;
-            }
-            return false;
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -143,7 +110,7 @@ namespace Flow.Launcher
 
         private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
         {
-            HotkeyControl.SetHotkey(viewModel.Settings.Hotkey, false);
+            _ = HotkeyControl.SetHotkeyAsync(viewModel.Settings.Hotkey, false);
         }
 
         private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
@@ -271,7 +238,7 @@ namespace Flow.Launcher
 
         #endregion
 
-        private async void OnCheckUpdates(object sender, RoutedEventArgs e)
+        private void OnCheckUpdates(object sender, RoutedEventArgs e)
         {
             viewModel.UpdateApp(); // TODO: change to command
         }
@@ -442,6 +409,16 @@ namespace Flow.Launcher
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
                 pluginFilterTxb.Focus();
+        }
+
+        private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

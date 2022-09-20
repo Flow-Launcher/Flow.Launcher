@@ -9,24 +9,29 @@ using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.IO;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu
+    public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
     {
         private PluginInitContext context;
 
         private List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
-        private Settings _settings { get; set;}
+        private Settings _settings { get; set; }
 
         public void Init(PluginInitContext context)
         {
             this.context = context;
-            
+
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
+
+            _ = MonitorRefreshQueue();
         }
 
         public List<Result> Query(Query query)
@@ -52,7 +57,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
                         return true;
                     },
-                    ContextData = new BookmarkAttributes { Url = c.Url }
+                    ContextData = new BookmarkAttributes
+                    {
+                        Url = c.Url
+                    }
                 }).Where(r => r.Score > 0);
                 return returnList.ToList();
             }
@@ -69,9 +77,62 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                         context.API.OpenUrl(c.Url);
                         return true;
                     },
-                    ContextData = new BookmarkAttributes { Url = c.Url }
+                    ContextData = new BookmarkAttributes
+                    {
+                        Url = c.Url
+                    }
                 }).ToList();
             }
+        }
+
+
+        private static Channel<byte> refreshQueue = Channel.CreateBounded<byte>(1);
+
+        private async Task MonitorRefreshQueue()
+        {
+            var reader = refreshQueue.Reader;
+            while (await reader.WaitToReadAsync())
+            {
+                await Task.Delay(2000);
+                if (reader.TryRead(out _))
+                {
+                    ReloadData();
+                }
+            }
+        }
+
+        private static readonly List<FileSystemWatcher> Watchers = new();
+
+        internal static void RegisterBookmarkFile(string path)
+        {
+            var directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory))
+                return;
+            var watcher = new FileSystemWatcher(directory!);
+            if (File.Exists(path))
+            {
+                var fileName = Path.GetFileName(path);
+                watcher.Filter = fileName;
+            }
+
+            watcher.NotifyFilter = NotifyFilters.FileName |
+                                   NotifyFilters.LastAccess |
+                                   NotifyFilters.LastWrite |
+                                   NotifyFilters.Size;
+
+            watcher.Changed += static (_, _) =>
+            {
+                refreshQueue.Writer.TryWrite(default);
+            };
+
+            watcher.Renamed += static (_, _) =>
+            {
+                refreshQueue.Writer.TryWrite(default);
+            };
+
+            watcher.EnableRaisingEvents = true;
+
+            Watchers.Add(watcher);
         }
 
         public void ReloadData()
@@ -98,7 +159,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            return new List<Result>() {
+            return new List<Result>()
+            {
                 new Result
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
@@ -114,7 +176,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                         catch (Exception e)
                         {
                             var message = "Failed to set url in clipboard";
-                            Log.Exception("Main",message, e, "LoadContextMenus");
+                            Log.Exception("Main", message, e, "LoadContextMenus");
 
                             context.API.ShowMsg(message);
 
@@ -122,12 +184,20 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                         }
                     },
                     IcoPath = "Images\\copylink.png"
-                }};
+                }
+            };
         }
 
         internal class BookmarkAttributes
         {
             internal string Url { get; set; }
+        }
+        public void Dispose()
+        {
+            foreach (var watcher in Watchers)
+            {
+                watcher.Dispose();
+            }
         }
     }
 }

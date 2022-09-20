@@ -81,7 +81,7 @@ namespace Flow.Launcher
             }
 
             tbAction.Text = updateCustomHotkey.ActionKeyword;
-            ctlHotkey.SetHotkey(updateCustomHotkey.Hotkey, false);
+            _ = ctlHotkey.SetHotkeyAsync(updateCustomHotkey.Hotkey, false);
             update = true;
             lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
         }

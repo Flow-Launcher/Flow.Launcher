@@ -119,7 +119,7 @@ namespace Flow.Launcher.Plugin.Program.Views
         {
             ViewRefresh();
             indexingPanel.Visibility = Visibility.Visible;
-            await Main.IndexPrograms();
+            await Main.IndexProgramsAsync();
             indexingPanel.Visibility = Visibility.Hidden;
         }
 

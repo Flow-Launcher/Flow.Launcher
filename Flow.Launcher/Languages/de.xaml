@@ -28,6 +28,7 @@
     <system:String x:Key="portableMode">Portabler Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Speichern Sie alle Einstellungen und Benutzerdaten in einem Ordner (nützlich bei Verwendung mit Wechseldatenträgern oder Clouddiensten).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Starte Flow Launcher bei Systemstart</system:String>
+    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verstecke Flow Launcher wenn der Fokus verloren geht</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Zeige keine Nachricht wenn eine neue Version vorhanden ist</system:String>
     <system:String x:Key="rememberLastLocation">Merke letzte Ausführungsposition</system:String>
