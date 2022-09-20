@@ -9,13 +9,15 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Drawing;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
         private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new(); 
+        private static Dictionary<string, string> fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -67,6 +69,10 @@ namespace Flow.Launcher.ViewModel
         public Visibility ShowOpenResultHotkey =>
             Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
 
+        public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility ShowCustomizedPrewview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
+
         public Visibility ShowIcon
         {
             get
@@ -112,8 +118,10 @@ namespace Flow.Launcher.ViewModel
             : Result.SubTitleToolTip;
 
         private volatile bool ImageLoaded;
+        private volatile bool PreviewImageLoaded;
 
         private ImageSource image = ImageLoader.DefaultImage;
+        private ImageSource previewImage = ImageLoader.DefaultImage;
 
         public ImageSource Image
         {
@@ -128,6 +136,21 @@ namespace Flow.Launcher.ViewModel
                 return image;
             }
             private set => image = value;
+        }
+
+        public ImageSource PreviewImage
+        {
+            get
+            {
+                if (!PreviewImageLoaded)
+                {
+                    PreviewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
+
+                return previewImage;
+            }
+            private set => previewImage = value;
         }
 
         public GlyphInfo Glyph { get; set; }
@@ -158,7 +181,17 @@ namespace Flow.Launcher.ViewModel
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+            //Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+            Image = ShellFolder.FromParsingName(imagePath).Thumbnail.MediumBitmapSource;
+        }
+
+
+        private async ValueTask LoadPreviewImageAsync()
+        {
+            var imagePath = Result.PreviewImage ?? Result.IcoPath;
+            // We need to modify the property not field here to trigger the OnPropertyChanged event
+            //PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
+            PreviewImage = ShellFolder.FromParsingName(imagePath).Thumbnail.LargeBitmapSource;
         }
 
         public Result Result { get; }

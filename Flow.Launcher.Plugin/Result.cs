@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
@@ -66,6 +67,11 @@ namespace Flow.Launcher.Plugin
                 }
             }
         }
+
+        /// <summary>
+        /// Full image used for preview window
+        /// </summary>
+        public string PreviewImage { get; set; }
 
         /// <summary>
         /// Delegate function, see <see cref="Icon"/>
@@ -187,6 +193,11 @@ namespace Flow.Launcher.Plugin
         /// Show message as ToolTip on result SubTitle hover over
         /// </summary>
         public string SubTitleToolTip { get; set; }
+
+        /// <summary>
+        /// Customized Preview Panel
+        /// </summary>
+        public Lazy<UserControl> PreviewPanel { get; set; }
 
         /// <summary>
         /// Run this result, asynchronously

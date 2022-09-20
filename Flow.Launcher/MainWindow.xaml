@@ -8,11 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     Name="FlowMainWindow"
     Title="Flow Launcher"
     MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
     MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
-    d:DataContext="{d:DesignInstance vm:MainViewModel}"
     AllowDrop="True"
     AllowsTransparency="True"
     Background="Transparent"
@@ -239,11 +239,12 @@
                                 </Style.Triggers>
                             </Style>
                         </ContentControl.Style>
-                        <Rectangle
-                            Width="Auto"
-                            HorizontalAlignment="Stretch"
-                            Style="{DynamicResource SeparatorStyle}" />
                     </ContentControl>
+                    <Rectangle
+                        Width="Auto"
+                        HorizontalAlignment="Stretch"
+                        Style="{DynamicResource SeparatorStyle}"
+                        Visibility="Visible" />
                     <Line
                         x:Name="ProgressBar"
                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
@@ -257,52 +258,112 @@
                         Y1="0"
                         Y2="0" />
                 </Grid>
-
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                        </MultiBinding>
-                    </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox
-                            x:Name="ResultListBox"
-                            DataContext="{Binding Results}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                        </MultiBinding>
-                    </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox
-                            x:Name="ContextMenu"
-                            DataContext="{Binding ContextMenu}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                        </MultiBinding>
-                    </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox
-                            x:Name="History"
-                            DataContext="{Binding History}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="0.8*" MinWidth="240" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="ResultArea" Grid.Column="0">
+                        <Border Style="{DynamicResource WindowRadius}">
+                            <Border.Clip>
+                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.Clip>
+                            <ContentControl>
+                                <flowlauncher:ResultListBox
+                                    x:Name="ResultListBox"
+                                    DataContext="{Binding Results}"
+                                    PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            </ContentControl>
+                        </Border>
+                        <Border Style="{DynamicResource WindowRadius}">
+                            <Border.Clip>
+                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.Clip>
+                            <ContentControl>
+                                <flowlauncher:ResultListBox
+                                    x:Name="ContextMenu"
+                                    DataContext="{Binding ContextMenu}"
+                                    PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            </ContentControl>
+                        </Border>
+                        <Border Style="{DynamicResource WindowRadius}">
+                            <Border.Clip>
+                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.Clip>
+                            <ContentControl>
+                                <flowlauncher:ResultListBox
+                                    x:Name="History"
+                                    DataContext="{Binding History}"
+                                    PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            </ContentControl>
+                        </Border>
+                    </StackPanel>
+                    <Grid
+                        x:Name="Preview"
+                        Grid.Column="1"
+                        VerticalAlignment="Stretch"
+                        d:DataContext="{d:DesignInstance vm:ResultViewModel}"
+                        DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                        Style="{DynamicResource PreviewArea}"
+                        Visibility="Collapsed">
+                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowDefaultPreview}">
+                            <Grid
+                                Margin="20,0,10,0"
+                                VerticalAlignment="Center"
+                                Background="Transparent">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    x:Name="ImageIcon"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    MaxWidth="{Binding ActualWidth, ElementName=Preview}"
+                                    MaxHeight="400"
+                                    Margin="0,10,0,8"
+                                    HorizontalAlignment="Center"
+                                    Source="{Binding PreviewImage}"
+                                    Visibility="{Binding ShowIcon}" />
+                                <TextBlock
+                                    x:Name="Title"
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch"
+                                    FontSize="18"
+                                    FontWeight="SemiBold"
+                                    Style="{DynamicResource ItemTitleStyle}"
+                                    Text="{Binding Result.Title}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                                <TextBlock
+                                    x:Name="SubTitle"
+                                    Grid.Row="2"
+                                    Margin="0,2,0,10"
+                                    HorizontalAlignment="Stretch"
+                                    FontSize="13"
+                                    LineHeight="18"
+                                    Style="{DynamicResource ItemSubTitleStyle}"
+                                    Text="{Binding Result.SubTitle}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </Border>
+                        <ContentControl Content="{Binding Result.PreviewPanel.Value}" Visibility="{Binding ShowCustomizedPrewview}" />
+                    </Grid>
+                </Grid>
             </StackPanel>
         </Border>
     </Grid>
