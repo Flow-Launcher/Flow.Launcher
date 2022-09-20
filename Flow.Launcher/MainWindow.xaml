@@ -255,7 +255,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="0.7*" />
+                        <ColumnDefinition Width="0.8*" MinWidth="240" />
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="ResultArea" Grid.Column="0">
                         <Border Style="{DynamicResource WindowRadius}">
