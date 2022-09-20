@@ -2299,7 +2299,7 @@
                                     <Button
                                         MinWidth="100"
                                         Margin="10,10,0,10"
-                                        Click="OnAddCustomeHotkeyClick"
+                                        Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
                                 </StackPanel>
                             </Grid>

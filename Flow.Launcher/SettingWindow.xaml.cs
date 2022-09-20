@@ -168,7 +168,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnAddCustomeHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             new CustomQueryHotkeySetting(this, settings).ShowDialog();
         }
