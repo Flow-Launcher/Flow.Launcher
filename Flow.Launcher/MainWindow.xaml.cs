@@ -540,15 +540,6 @@ namespace Flow.Launcher
                 _viewModel.Show();
             }
         }
-
-        private void InitializePosition()
-        {
-            if (!_settings.RememberLastLaunchLocation)
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
-        }
         
         public double WindowLeft()
         {
