@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Web.WebView2.Core;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -20,9 +21,17 @@ namespace Flow.Launcher.Plugin.WebSearch
     /// </summary>
     public partial class PreviewPanel : UserControl
     {
-        public PreviewPanel()
+        public string Url { get; set; }
+
+        public PreviewPanel(string url)
         {
+            Url = url;
             InitializeComponent();
+            webView.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
+        }
+        private void WebView_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
+        {
+            webView.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36";
         }
     }
 }
