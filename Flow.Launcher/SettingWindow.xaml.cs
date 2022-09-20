@@ -37,11 +37,12 @@ namespace Flow.Launcher
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
-            InitializeComponent();
             settings = viewModel.Settings;
             DataContext = viewModel;
             this.viewModel = viewModel;
             API = api;
+            InitializePosition();
+            InitializeComponent();
         }
 
         #region General
@@ -55,6 +56,7 @@ namespace Flow.Launcher
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
             ClockDisplay();
+            InitializePosition();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -243,6 +245,8 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            settings.SettingWindowTop = Top;
+            settings.SettingWindowLeft = Left;
             viewModel.Save();
         }
 
@@ -320,6 +324,7 @@ namespace Flow.Launcher
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
+
             Close();
         }
 
@@ -380,6 +385,37 @@ namespace Flow.Launcher
                 DateBox.Visibility = Visibility.Collapsed;
             }
 
+        }
+
+        public void InitializePosition()
+        {
+            if (settings.SettingWindowTop == 0 && settings.SettingWindowLeft == 0)
+            {
+                Top = WindowTop();
+                Left = WindowLeft();
+            }
+            else
+            {
+                Top = settings.SettingWindowTop;
+                Left = settings.SettingWindowLeft;
+            }
+        }
+        public double WindowLeft()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        public double WindowTop()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+            return top;
         }
     }
 }
