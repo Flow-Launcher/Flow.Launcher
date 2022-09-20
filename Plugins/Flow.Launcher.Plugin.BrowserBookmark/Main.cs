@@ -60,7 +60,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     ContextData = new BookmarkAttributes
                     {
                         Url = c.Url
-                    }
+                    },
+                    PreviewPanel = new Lazy<UserControl>(() => new PreviewUrl())
                 }).Where(r => r.Score > 0);
                 return returnList.ToList();
             }
