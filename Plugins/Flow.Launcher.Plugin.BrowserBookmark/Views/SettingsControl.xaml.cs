@@ -1,7 +1,8 @@
-using System.Windows;
+﻿using System.Windows;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
@@ -58,6 +59,16 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 
             var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
             window.ShowDialog();
+        }
+        private void Others_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CustomBrowsersList.Visibility == Visibility.Collapsed)
+            {
+                CustomBrowsersList.Visibility = Visibility.Visible;
+            }
+            else
+                CustomBrowsersList.Visibility = Visibility.Collapsed;
         }
     }
 }
