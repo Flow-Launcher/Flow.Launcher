@@ -54,6 +54,7 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+            ClockDisplay();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -347,6 +348,38 @@ namespace Flow.Launcher
         private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
         {
             Plugins.ScrollIntoView(Plugins.SelectedItem);
+        }
+
+        private void ColorSchemeSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void PreviewClockAndDate(object sender, RoutedEventArgs e)
+        {
+            ClockDisplay();
+        }
+        public void ClockDisplay()
+        {
+            if (settings.UseClock == true)
+            {
+                ClockBox.Visibility = Visibility.Visible;
+                ClockBox.Text = System.DateTime.Now.ToString(settings.TimeFormat);
+            }
+            else if (settings.UseClock == false)
+            {
+                ClockBox.Visibility = Visibility.Collapsed;
+            }
+            if (settings.UseDate == true)
+            {
+                DateBox.Visibility = Visibility.Visible;
+                DateBox.Text = System.DateTime.Now.ToString(settings.DateFormat);
+            }
+            else if (settings.UseDate == false)
+            {
+                DateBox.Visibility = Visibility.Collapsed;
+            }
+
         }
     }
 }
