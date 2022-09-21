@@ -3,9 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
-
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-
+    
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
@@ -91,7 +89,6 @@
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Visibility" Value="Visible" />
         <Setter Property="Foreground" Value="#26a0da " />
-        <Setter Property="Visibility" Value="{Binding Result.IsProgressBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Style>
 
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
