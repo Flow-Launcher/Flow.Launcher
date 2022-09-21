@@ -120,21 +120,18 @@ namespace Flow.Launcher.Infrastructure.Image
                 if (IsUriScheme)
                 {
                     // Download image from url
-                    using (WebClient client = new WebClient())
+                    var resp = Http.Http.GetStreamAsync(path).Result;
+                    if (resp == null)
                     {
-                        using (MemoryStream stream = new MemoryStream(client.DownloadData(path)))
-                        {
-                            var image = new BitmapImage();
-                            image.BeginInit();
-                            image.CacheOption = BitmapCacheOption.OnLoad;
-                            image.StreamSource = stream;
-                            image.EndInit();
-                            image.Freeze();
-                            ImageCache[path] = image;
-                            return new ImageResult(image, ImageType.Data);
-                        }
-                        
+                        return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
                     }
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.StreamSource = resp;
+                    image.EndInit();
+                    image.Freeze();
+                    ImageCache[path] = image;
+                    return new ImageResult(image, ImageType.ImageFile);
                 }
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
                 {
