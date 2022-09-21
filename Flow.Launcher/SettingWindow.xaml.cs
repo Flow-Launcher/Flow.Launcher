@@ -24,6 +24,7 @@ using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using MessageBox = System.Windows.MessageBox;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
 
@@ -37,6 +38,7 @@ namespace Flow.Launcher
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
+            ToolTipService.InitialShowDelayProperty.OverrideMetadata(typeof(FrameworkElement),new FrameworkPropertyMetadata(0)); //ToolTip Speed
             InitializeComponent();
             settings = viewModel.Settings;
             DataContext = viewModel;
