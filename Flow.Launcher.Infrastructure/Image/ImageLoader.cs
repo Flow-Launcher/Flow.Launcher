@@ -114,7 +114,10 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[path], ImageType.Cache);
                 }
-                if (path.StartsWith("http://") || path.StartsWith("https://"))
+                Uri uriResult;
+                bool IsUriScheme = Uri.TryCreate(path, UriKind.Absolute, out uriResult)
+                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+                if (IsUriScheme)
                 {
                     // Download image from url
                     using (WebClient client = new WebClient())
