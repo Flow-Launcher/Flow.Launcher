@@ -134,8 +134,11 @@ namespace Flow.Launcher.Plugin
             get { return _pluginDirectory; }
             set
             {
+                Uri uriResult;
+                bool IsUriScheme = Uri.TryCreate(IcoPath, UriKind.Absolute, out uriResult)
+                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
                 _pluginDirectory = value;
-                    if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath) && !IcoPath.StartsWith("http://") && !IcoPath.StartsWith("https://"))
+                    if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath) && !IsUriScheme)
                 {
                     IcoPath = Path.Combine(value, IcoPath);
                 }
