@@ -561,7 +561,10 @@ namespace Flow.Launcher
         private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             if(_viewModel.QueryText != QueryTextBox.Text)
-                _viewModel.QueryText = QueryTextBox.Text;
+            {
+                BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
+                be.UpdateSource();
+            }
         }
     }
 }
