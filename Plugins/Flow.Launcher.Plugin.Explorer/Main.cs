@@ -11,7 +11,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -76,7 +78,31 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            return await searchManager.SearchAsync(query, token);
+            try
+            {
+                return await searchManager.SearchAsync(query, token);
+
+            }
+            catch (Exception e) when (e is SearchException or SearchException)
+            {
+                return new List<Result>
+                {
+                    new()
+                    {
+                        Title = e.Message,
+                        SubTitle = e is EngineNotAvailableException engineException
+                            ? engineException.Resolution
+                            : "Enter to copy the message to clipboard",
+                        Score = 501,
+                        IcoPath = Constants.ExplorerIconImagePath,
+                        Action = _ =>
+                        {
+                            Clipboard.SetDataObject(e.ToString());
+                            return true;
+                        }
+                    }
+                };
+            }
         }
 
         public string GetTranslatedPluginTitle()

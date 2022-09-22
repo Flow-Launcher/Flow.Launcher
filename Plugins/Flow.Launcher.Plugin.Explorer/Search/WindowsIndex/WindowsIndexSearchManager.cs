@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +21,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             QueryHelper = QueryConstructor.CreateQueryHelper();
         }
 
-        private IAsyncEnumerable<SearchResult> WindowsIndexFileContentSearchAsync(string querySearchString,
+        private IAsyncEnumerable<SearchResult> WindowsIndexFileContentSearchAsync(ReadOnlySpan<char> querySearchString,
             CancellationToken token)
         {
-            if (string.IsNullOrEmpty(querySearchString))
+            if (querySearchString.IsEmpty)
                 return AsyncEnumerable.Empty<SearchResult>();
 
             return WindowsIndex.WindowsIndexSearchAsync(
@@ -32,7 +33,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 token);
         }
 
-        private IAsyncEnumerable<SearchResult> WindowsIndexFilesAndFoldersSearchAsync(string querySearchString,
+        private IAsyncEnumerable<SearchResult> WindowsIndexFilesAndFoldersSearchAsync(ReadOnlySpan<char> querySearchString,
             CancellationToken token = default)
         {
             return WindowsIndex.WindowsIndexSearchAsync(
@@ -41,8 +42,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 token);
         }
 
-        private IAsyncEnumerable<SearchResult> WindowsIndexTopLevelFolderSearchAsync(string search,
-            string path, 
+        private IAsyncEnumerable<SearchResult> WindowsIndexTopLevelFolderSearchAsync(ReadOnlySpan<char> search,
+            ReadOnlySpan<char> path,
             bool recursive,
             CancellationToken token)
         {
@@ -53,15 +54,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 queryConstructor.Directory(path, search, recursive),
                 token);
         }
-        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> SearchAsync(ReadOnlySpan<char> search, CancellationToken token)
         {
             return WindowsIndexFilesAndFoldersSearchAsync(search, token: token);
         }
-        public IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> ContentSearchAsync(ReadOnlySpan<char> plainSearch, ReadOnlySpan<char> contentSearch, CancellationToken token)
         {
             return WindowsIndexFileContentSearchAsync(contentSearch, token);
         }
-        public IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> EnumerateAsync(ReadOnlySpan<char> path, ReadOnlySpan<char> search, bool recursive, CancellationToken token)
         {
             return WindowsIndexTopLevelFolderSearchAsync(search, path, recursive, token);
         }

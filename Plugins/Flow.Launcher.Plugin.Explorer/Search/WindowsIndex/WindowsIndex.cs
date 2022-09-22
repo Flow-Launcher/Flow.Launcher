@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
@@ -77,9 +78,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             string search,
             CancellationToken token)
         {
-            return _reservedPatternMatcher.IsMatch(search)
-                ? AsyncEnumerable.Empty<SearchResult>()
-                : ExecuteWindowsIndexSearchAsync(search, connectionString, token);
+            try
+            {
+
+                return _reservedPatternMatcher.IsMatch(search)
+                    ? AsyncEnumerable.Empty<SearchResult>()
+                    : ExecuteWindowsIndexSearchAsync(search, connectionString, token);
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new SearchException("Windows Index", e.Message, e);
+            }
+            catch (COMException e)
+            {
+                var api = SearchManager.Context.API;
+
+                throw new EngineNotAvailableException("Windows Index", 
+                    api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                    api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                    e);
+            }
         }
 
         // TODO: Move to General Search Manager
@@ -138,7 +156,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                                 MessageBoxButton.YesNo) == MessageBoxResult.Yes
                             && actionKeywordCount == 1)
                         {
-                            api.ChangeQuery(string.Format("{0} install everything", pluginsManagerPlugin.Metadata.ActionKeywords[0]));
+                            api.ChangeQuery($"{pluginsManagerPlugin.Metadata.ActionKeywords[0]} install everything");
                         }
                         else
                         {
@@ -148,7 +166,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                             api.ChangeQuery(rawQuery);
                         }
 
-                        var mainWindow = Application.Current.MainWindow;
+                        var mainWindow = Application.Current.MainWindow!;
                         mainWindow.Show();
                         mainWindow.Focus();
 

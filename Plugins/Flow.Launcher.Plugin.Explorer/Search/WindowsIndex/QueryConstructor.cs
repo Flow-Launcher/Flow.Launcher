@@ -1,3 +1,5 @@
+using System;
+using System.Buffers;
 using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
@@ -50,25 +52,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return queryHelper;
         }
 
-        private static string TopLevelDirectoryConstraint(string path) => $"directory='file:{path}'";
-        private static string RecursiveDirectoryConstraint(string path) => $"scope='file:{path}'";
+        private static string TopLevelDirectoryConstraint(ReadOnlySpan<char> path) => $"directory='file:{path}'";
+        private static string RecursiveDirectoryConstraint(ReadOnlySpan<char> path) => $"scope='file:{path}'";
 
         ///<summary>
         /// Set the required WHERE clause restriction to search on the first level of a specified directory.
         ///</summary>
+        [Obsolete("This method is not used and will be removed in a future version.")]
         public string QueryWhereRestrictionsForTopLevelDirectorySearch(string path)
         {
             return QueryWhereRestrictionsFromLocationPath(path, "directory='file:");
         }
 
+        
         ///<summary>
         /// Set the required WHERE clause restriction to search all files and subfolders of a specified directory.
         ///</summary>
+        [Obsolete("This method is not used and will be removed in a future version.")]
         public string QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(string path)
         {
             return QueryWhereRestrictionsFromLocationPath(path, "directory='scope:");
         }
 
+        // TODO: Remove the method
         private string QueryWhereRestrictionsFromLocationPath(string path, string searchDepth)
         {
             if (path.EndsWith(Constants.DirectorySeperator))
@@ -92,15 +98,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///<summary>
         /// Search will be performed on all folders and files on the first level of a specified directory.
         ///</summary>
-        public string Directory(string path, string searchString = "", bool recursive = false)
+        public string Directory(ReadOnlySpan<char> path, ReadOnlySpan<char> searchString = default, bool recursive = false)
         {
-            var queryConstraint = searchString is "" ? "" : $"AND ({FileName} LIKE '{searchString}%' OR CONTAINS({FileName},'\"{searchString}*\"'))";
+            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND ({FileName} LIKE '{searchString}%' OR CONTAINS({FileName},'\"{searchString}*\"'))";
 
             var scopeConstraint = recursive
                 ? RecursiveDirectoryConstraint(path)
                 : TopLevelDirectoryConstraint(path);
 
-            string query = $"SELECT TOP {Settings.MaxResult} {BaseQueryHelper.QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {FileName}";
+            var query = $"SELECT TOP {Settings.MaxResult} {BaseQueryHelper.QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {FileName}";
 
             return query;
         }
@@ -108,13 +114,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///<summary>
         /// Search will be performed on all folders and files based on user's search keywords.
         ///</summary>
-        public string FilesAndFolders(string userSearchString)
+        public string FilesAndFolders(ReadOnlySpan<char> userSearchString)
         {
-            if (string.IsNullOrEmpty(userSearchString))
+            if (userSearchString.IsWhiteSpace())
                 userSearchString = "*";
 
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return $"{BaseQueryHelper.GenerateSQLFromUserQuery(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+            return $"{BaseQueryHelper.GenerateSQLFromUserQuery(userSearchString.ToString())} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
         }
 
         ///<summary>
@@ -131,7 +137,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///<summary>
         /// Search will be performed on all indexed file contents for the specified search keywords.
         ///</summary>
-        public string FileContent(string userSearchString)
+        public string FileContent(ReadOnlySpan<char> userSearchString)
         {
             string query =
                 $"SELECT TOP {Settings.MaxResult} {BaseQueryHelper.QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
@@ -142,6 +148,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///<summary>
         /// Set the required WHERE clause restriction to search within file content.
         ///</summary>
-        public static string RestrictionsForFileContentSearch(string searchQuery) => $"FREETEXT('{searchQuery}')";
+        public static string RestrictionsForFileContentSearch(ReadOnlySpan<char> searchQuery) => $"FREETEXT('{searchQuery}')";
     }
 }

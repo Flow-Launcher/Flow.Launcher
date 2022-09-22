@@ -57,26 +57,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 
                 foreach (var fileSystemInfo in directoryInfo.EnumerateFileSystemInfos(searchCriteria, enumerationOption))
                 {
-                    if (fileSystemInfo is System.IO.DirectoryInfo)
+                    results.Add(new SearchResult
                     {
-                        results.Add(new SearchResult()
+                        FullPath = fileSystemInfo.FullName,
+                        Type = fileSystemInfo switch
                         {
-                            FullPath = fileSystemInfo.FullName,
-                            Type = ResultType.Folder,
-                            WindowsIndexed = false
-                        });
-                    }
-                    else
-                    {
-                        results.Add(new SearchResult()
-                        {
-                            FullPath = fileSystemInfo.FullName,
-                            Type = ResultType.File,
-                            WindowsIndexed = false
-                        });
-                    }
+                            System.IO.DirectoryInfo {Parent: null} => ResultType.Volume,
+                            System.IO.DirectoryInfo => ResultType.Folder,
+                            FileInfo => ResultType.File,
+                            _ => throw new ArgumentOutOfRangeException(nameof(fileSystemInfo))
+                        },
+                        WindowsIndexed = false
+                    });
 
-                    token.ThrowIfCancellationRequested();
+                    if (token.IsCancellationRequested)
+                        return results;
                 }
             }
             catch (Exception e)

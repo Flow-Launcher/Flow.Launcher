@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+﻿using System;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,14 +18,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         }
 
 
-        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> SearchAsync(ReadOnlySpan<char> search, CancellationToken token)
         {
             return EverythingApi.SearchAsync(
                 new EverythingSearchOption(search, Settings.SortOption),
                 token);
         }
-        public IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch,
-            string contentSearch, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> ContentSearchAsync(ReadOnlySpan<char> plainSearch,
+            ReadOnlySpan<char> contentSearch, CancellationToken token)
         {
             if (!Settings.EnableEverythingContentSearch)
             {
@@ -39,7 +40,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     contentSearch),
                 token);
         }
-        public IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> EnumerateAsync(ReadOnlySpan<char> path, ReadOnlySpan<char> search, bool recursive, CancellationToken token)
         {
             return EverythingApi.SearchAsync(
                     new EverythingSearchOption(search,

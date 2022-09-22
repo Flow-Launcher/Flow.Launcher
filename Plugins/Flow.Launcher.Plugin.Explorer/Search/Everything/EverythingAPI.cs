@@ -109,31 +109,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             
             try
             {
+                
                 if (option.Keyword.StartsWith("@"))
                 {
                     EverythingApiDllImport.Everything_SetRegex(true);
                     option.Keyword = option.Keyword[1..];
                 }
+                
+                var builder = new StringBuilder();
+                builder.Append(option.Keyword);
 
-                if (!string.IsNullOrEmpty(option.ParentPath))
+                if (!option.ParentPath.IsWhiteSpace())
                 {
-                    option.Keyword += $" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"";
+                    builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
                 }
 
                 if (option.IsContentSearch)
                 {
-                    option.Keyword += $" content:\"{option.ContentSearchKeyword}\"";
+                    builder.Append($" content:\"{option.ContentSearchKeyword}\"");
                 }
 
-                EverythingApiDllImport.Everything_SetSearchW(option.Keyword);
+                EverythingApiDllImport.Everything_SetSearchW(builder.ToString());
                 EverythingApiDllImport.Everything_SetOffset(option.Offset);
                 EverythingApiDllImport.Everything_SetMax(option.MaxCount);
 
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
 
                 if (token.IsCancellationRequested) yield break;
-
-
 
                 if (!EverythingApiDllImport.Everything_QueryW(true))
                 {

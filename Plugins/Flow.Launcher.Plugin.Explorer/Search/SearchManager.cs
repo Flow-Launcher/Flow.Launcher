@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -66,9 +67,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             switch (isPathSearch)
             {
-                case true 
-                when (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                      || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)):
+                case true
+                    when (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
+                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)):
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return results.ToList();
                     break;
@@ -168,7 +169,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
 
-            token.ThrowIfCancellationRequested();
+            if (token.IsCancellationRequested)
+                return new List<Result>();
 
             IEnumerable<SearchResult> directoryResult;
 
@@ -194,16 +196,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 }
                 catch (Exception e)
                 {
-                    results.Add(
-                        new Result
-                        {
-                            Title = string.Format(SearchManager.Context.API.GetTranslation(
-                                    "plugin_explorer_directoryinfosearch_error"),
-                                e.Message),
-                            Score = 501,
-                            IcoPath = Constants.ExplorerIconImagePath
-                        });
-                    directoryResult = Enumerable.Empty<SearchResult>();
+                    throw new SearchException("DirectoryInfoSearch", e.Message, e);
                 }
             }
 
