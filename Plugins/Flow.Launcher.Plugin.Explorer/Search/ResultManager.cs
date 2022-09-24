@@ -2,6 +2,7 @@
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,15 +93,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static Result CreateDriveSpaceDisplayResult(string path, bool windowsIndexed = false)
         {
             var progressBarColor = "#26a0da";
-            int? progressValue = null;
             var title = string.Empty; // hide title when use progress bar,
             var driveLetter = path.Substring(0, 1).ToUpper();
             var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
             var subtitle = toReadableSize(drv.AvailableFreeSpace, 2) + " free of " + toReadableSize(drv.TotalSize, 2);
-            double UsingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
+            double usingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
 
-            progressValue = Convert.ToInt32(UsingSize);
+            int? progressValue = Convert.ToInt32(usingSize);
 
             if (progressValue >= 90)
                 progressBarColor = "#da2626";
@@ -123,7 +123,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitleToolTip = path,
                 ContextData = new SearchResult
                 {
-                    Type = ResultType.Folder,
+                    Type = ResultType.Volume,
                     FullPath = path,
                     ShowIndexState = true,
                     WindowsIndexed = windowsIndexed
@@ -177,25 +177,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
-            var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
-
-            var folderName = retrievedDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
+            var folderName = path.TrimEnd(Constants.DirectorySeperator).Split(new[]
             {
                 Path.DirectorySeparatorChar
             }, StringSplitOptions.None).Last();
 
-            if (retrievedDirectoryPath.EndsWith(":\\"))
-            {
-                var driveLetter = path.Substring(0, 1).ToUpper();
-                folderName = driveLetter + " drive";
-            }
-
-            var title = "Open current directory";
-
-            if (retrievedDirectoryPath != path)
-                title = "Open " + folderName;
-
-
+            var title = $"Open {folderName}";
+            
             var subtitleFolderName = folderName;
 
             // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
@@ -207,20 +195,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
-                AutoCompleteText = GetPathWithActionKeyword(retrievedDirectoryPath, ResultType.Folder),
-                IcoPath = retrievedDirectoryPath,
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
+                IcoPath = path,
                 Score = 500,
-                Action = c =>
+                Action = _ =>
                 {
-                    Context.API.OpenDirectory(retrievedDirectoryPath);
+                    Context.API.OpenDirectory(path);
                     return true;
                 },
-                TitleToolTip = retrievedDirectoryPath,
-                SubTitleToolTip = retrievedDirectoryPath,
                 ContextData = new SearchResult
                 {
                     Type = ResultType.Folder,
-                    FullPath = retrievedDirectoryPath,
+                    FullPath = path,
                     ShowIndexState = true,
                     WindowsIndexed = windowsIndexed
                 }

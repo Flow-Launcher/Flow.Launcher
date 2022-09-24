@@ -119,7 +119,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 var builder = new StringBuilder();
                 builder.Append(option.Keyword);
 
-                if (!option.ParentPath.IsWhiteSpace())
+                if (!string.IsNullOrWhiteSpace(option.ParentPath))
                 {
                     builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
                 }

@@ -54,15 +54,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 queryConstructor.Directory(path, search, recursive),
                 token);
         }
-        public IAsyncEnumerable<SearchResult> SearchAsync(ReadOnlySpan<char> search, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
         {
             return WindowsIndexFilesAndFoldersSearchAsync(search, token: token);
         }
-        public IAsyncEnumerable<SearchResult> ContentSearchAsync(ReadOnlySpan<char> plainSearch, ReadOnlySpan<char> contentSearch, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch, CancellationToken token)
         {
             return WindowsIndexFileContentSearchAsync(contentSearch, token);
         }
-        public IAsyncEnumerable<SearchResult> EnumerateAsync(ReadOnlySpan<char> path, ReadOnlySpan<char> search, bool recursive, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
         {
             return WindowsIndexTopLevelFolderSearchAsync(search, path, recursive, token);
         }

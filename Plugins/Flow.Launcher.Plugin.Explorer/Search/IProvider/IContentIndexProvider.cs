@@ -6,6 +6,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.IProvider
 {
     public interface IContentIndexProvider
     {
-        public IAsyncEnumerable<SearchResult> ContentSearchAsync(ReadOnlySpan<char> plainSearch, ReadOnlySpan<char> contentSearch, CancellationToken token = default);
+        public IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch, CancellationToken token = default);
     }
 }

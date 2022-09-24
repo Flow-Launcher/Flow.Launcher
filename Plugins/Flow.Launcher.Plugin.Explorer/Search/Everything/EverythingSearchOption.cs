@@ -3,11 +3,11 @@ using Flow.Launcher.Plugin.Everything.Everything;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-    public record struct EverythingSearchOption(ReadOnlySpan<char> Keyword, 
+    public record struct EverythingSearchOption(string Keyword, 
         SortOption SortOption,
         bool IsContentSearch = false, 
-        ReadOnlySpan<char> ContentSearchKeyword = default,
-        ReadOnlySpan<char> ParentPath = default,
+        string ContentSearchKeyword = default,
+        string ParentPath = default,
         bool IsRecursive = true,
         int Offset = 0, 
         int MaxCount = 100);

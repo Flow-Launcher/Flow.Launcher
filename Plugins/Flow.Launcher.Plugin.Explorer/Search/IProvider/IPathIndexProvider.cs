@@ -6,6 +6,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.IProvider
 {
     public interface IPathIndexProvider
     {
-        public IAsyncEnumerable<SearchResult> EnumerateAsync(ReadOnlySpan<char> path, ReadOnlySpan<char> search, bool recursive, CancellationToken token);
+        public IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, CancellationToken token);
     }
 }
