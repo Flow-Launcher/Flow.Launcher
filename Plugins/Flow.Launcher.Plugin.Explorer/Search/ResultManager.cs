@@ -54,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 Title = title,
                 IcoPath = path,
-                SubTitle = subtitle,
+                SubTitle = Path.GetDirectoryName(path),
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
@@ -218,7 +218,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var result = new Result
             {
                 Title = Path.GetFileName(filePath),
-                SubTitle = filePath,
+                SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
@@ -229,7 +229,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            Task.Run(() =>
+                            _ = Task.Run(() =>
                             {
                                 try
                                 {

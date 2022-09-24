@@ -47,7 +47,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             // This allows the user to type the below action keywords and see/search the list of quick folder links
             if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
                 || ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword))
+                || ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
+                || ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword))
             {
                 if (string.IsNullOrEmpty(query.Search))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
@@ -166,14 +167,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
                                  && UseWindowsIndexForDirectorySearch(locationPath);
+            
+            var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
-            if (locationPath.EndsWith(":\\"))
+            if (retrievedDirectoryPath.EndsWith(":\\"))
             {
-                results.Add(ResultManager.CreateDriveSpaceDisplayResult(locationPath, useIndexSearch));
+                results.Add(ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, useIndexSearch));
             }
             else
             {
-                results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+                results.Add(ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, useIndexSearch));
             }
 
             if (token.IsCancellationRequested)
