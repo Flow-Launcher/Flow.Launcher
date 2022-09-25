@@ -995,7 +995,7 @@
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
-                                                                ToolTip="Change Plugin Results Priority">
+                                                                ToolTip="{DynamicResource priorityToolTip}">
                                                                 <!--#region Priority Button Style-->
                                                                 <Button.Resources>
                                                                     <Style TargetType="Border">
