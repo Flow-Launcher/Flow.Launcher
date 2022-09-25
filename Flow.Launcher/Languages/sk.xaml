@@ -69,6 +69,7 @@
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
     <system:String x:Key="author">od</system:String>
     <system:String x:Key="plugin_init_time">Inicializácia:</system:String>
