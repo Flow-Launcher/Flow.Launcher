@@ -125,25 +125,44 @@ namespace Flow.Launcher.ViewModel
         #region general
 
         // todo a better name?
-        public class LastQueryMode
+        public class LastQueryMode : BaseModel
         {
             public string Display { get; set; }
             public Infrastructure.UserSettings.LastQueryMode Value { get; set; }
         }
+
+        private List<LastQueryMode> _lastQueryModes = new List<LastQueryMode>();
         public List<LastQueryMode> LastQueryModes
         {
             get
             {
-                List<LastQueryMode> modes = new List<LastQueryMode>();
-                var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.LastQueryMode));
-                foreach (var e in enums)
+                if (_lastQueryModes.Count == 0)
                 {
-                    var key = $"LastQuery{e}";
-                    var display = _translater.GetTranslation(key);
-                    var m = new LastQueryMode { Display = display, Value = e, };
-                    modes.Add(m);
+                    _lastQueryModes = InitLastQueryModes();
                 }
-                return modes;
+                return _lastQueryModes;
+            }
+        }
+
+        private List<LastQueryMode> InitLastQueryModes()
+        {
+            var modes = new List<LastQueryMode>();
+            var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.LastQueryMode));
+            foreach (var e in enums)
+            {
+                var key = $"LastQuery{e}";
+                var display = _translater.GetTranslation(key);
+                var m = new LastQueryMode { Display = display, Value = e, };
+                modes.Add(m);
+            }
+            return modes;
+        }
+
+        private void UpdateLastQueryModeDisplay()
+        {
+            foreach (var item in LastQueryModes)
+            {
+                item.Display = _translater.GetTranslation($"LastQuery{item.Value}");
             }
         }
 
@@ -159,6 +178,8 @@ namespace Flow.Launcher.ViewModel
 
                 if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
                     ShouldUsePinyin = true;
+
+                UpdateLastQueryModeDisplay();
             }
         }
 
@@ -305,7 +326,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
-                
+
                 if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                     DropShadowEffect = false;
             }
