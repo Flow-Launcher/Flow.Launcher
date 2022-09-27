@@ -565,7 +565,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     size += fi.Length;
                 }
-            return string.Format(_translater.GetTranslation("clearlogfolder")) + " (" + FormatBytes(size) + ")" ;
+            return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")" ;
             }
             set
             {
