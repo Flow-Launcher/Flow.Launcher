@@ -275,8 +275,7 @@ namespace Flow.Launcher
             if (confirmResult == MessageBoxResult.Yes)
             {
                 DirectoryInfo Di = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
-                FileInfo[] files = Di.GetFiles();
-                foreach (FileInfo file in files)
+                foreach (FileInfo file in Di.EnumerateFiles())
                 {
                     file.Delete();
                 }
