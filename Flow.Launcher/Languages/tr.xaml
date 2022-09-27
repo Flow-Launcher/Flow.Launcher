@@ -69,6 +69,7 @@
     <system:String x:Key="currentPriority">Mevcut öncelik</system:String>
     <system:String x:Key="newPriority">Yeni Öncelik</system:String>
     <system:String x:Key="priority">Öncelik</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Eklenti Klasörü</system:String>
     <system:String x:Key="author">Yapımcı:</system:String>
     <system:String x:Key="plugin_init_time">Açılış Süresi:</system:String>
