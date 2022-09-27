@@ -630,6 +630,7 @@
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideNotifyIcon}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource hideNotifyIconToolTip}" />
                                     </StackPanel>
                                     <CheckBox IsChecked="{Binding Settings.HideNotifyIcon}" Style="{DynamicResource SideControlCheckBox}" />
                                 </ItemsControl>
@@ -869,6 +870,9 @@
                                         ItemsSource="{Binding Languages}"
                                         SelectedValue="{Binding Language}"
                                         SelectedValuePath="LanguageCode" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xf2b7;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
                         </StackPanel>

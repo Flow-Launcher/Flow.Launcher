@@ -52,6 +52,7 @@
     <system:String x:Key="selectPythonDirectory">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, Setting menu can be opened by right-clicking in querybox.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
