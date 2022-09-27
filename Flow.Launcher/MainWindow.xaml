@@ -193,7 +193,7 @@
                         </TextBox.ContextMenu>
                     </TextBox>
 
-                    <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
+                    <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}" IsHitTestVisible="False">
                         <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}" />
                         <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}" />
                     </StackPanel>
