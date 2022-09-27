@@ -166,18 +166,18 @@ namespace Flow.Launcher.Core.Plugin
 
         public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
         {
-            if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
-            {
-                var plugin = NonGlobalPlugins[query.ActionKeyword];
-                return new List<PluginPair>
-                {
-                    plugin
-                };
-            }
-            else
-            {
+            if (query is null)
+                return Array.Empty<PluginPair>();
+            
+            if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
                 return GlobalPlugins;
-            }
+            
+            
+            var plugin = NonGlobalPlugins[query.ActionKeyword];
+            return new List<PluginPair>
+            {
+                plugin
+            };
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
