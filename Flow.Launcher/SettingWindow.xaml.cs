@@ -269,6 +269,23 @@ namespace Flow.Launcher
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
         }
+        private void ClearLogFolder(object sender, RoutedEventArgs e)
+        {
+            var confirmResult = MessageBox.Show(InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),InternationalizationManager.Instance.GetTranslation("clearlogfolder"), MessageBoxButton.YesNo);
+            if (confirmResult == MessageBoxResult.Yes)
+            {
+                DirectoryInfo Di = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+                FileInfo[] files = Di.GetFiles();
+                foreach (FileInfo file in files)
+                {
+                    file.Delete();
+                }
+            }
+            else
+            {
+            }
+
+        }
 
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
         {

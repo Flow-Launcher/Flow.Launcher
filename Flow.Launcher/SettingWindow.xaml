@@ -2523,6 +2523,10 @@
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
                                                 Content="{DynamicResource settingfolder}" />
+                                            <Button
+                                                Margin="0,0,12,0"
+                                                Click="ClearLogFolder"
+                                                Content="{DynamicResource clearlogfolder}" />
                                             <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
