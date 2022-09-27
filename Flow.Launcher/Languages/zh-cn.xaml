@@ -69,6 +69,7 @@
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
+    <system:String x:Key="priorityToolTip">更改插件结果优先级</system:String>
     <system:String x:Key="pluginDirectory">插件目录</system:String>
     <system:String x:Key="author">出自</system:String>
     <system:String x:Key="plugin_init_time">加载耗时：</system:String>
