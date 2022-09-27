@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -291,8 +291,8 @@ namespace Flow.Launcher.ViewModel
                         {
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
+                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
+                                );
                         }))
                     .ConfigureAwait(false);
             });
@@ -332,6 +332,9 @@ namespace Flow.Launcher.ViewModel
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
             }
             else if (reQuery)
             {
@@ -688,7 +691,11 @@ namespace Flow.Launcher.ViewModel
                 IcoPath = icon,
                 SubTitle = subtitle,
                 PluginDirectory = metadata.PluginDirectory,
-                Action = _ => false
+                Action = _ =>
+                {
+                    App.API.OpenUrl(metadata.Website);
+                    return true;
+                }
             };
             return menu;
         }
