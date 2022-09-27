@@ -279,6 +279,7 @@ namespace Flow.Launcher
                 {
                     file.Delete();
                 }
+                ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
             }
             else
             {
