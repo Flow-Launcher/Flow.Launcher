@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                 return new List<Result>();
 
             var results = from keyword in PluginManager.NonGlobalPlugins.Keys
-                          where keyword.StartsWith(query.SearchTerms[0])
+                          where keyword.StartsWith(query.Search)
                           let metadata = PluginManager.NonGlobalPlugins[keyword].Metadata
                           where !metadata.Disabled
                           select new Result
