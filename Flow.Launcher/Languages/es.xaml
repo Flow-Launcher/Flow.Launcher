@@ -69,6 +69,7 @@
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Carpeta de complementos</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
