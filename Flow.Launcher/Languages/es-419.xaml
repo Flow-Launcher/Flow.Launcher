@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al arrancar el sistema</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de la búsqueda</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima de similitud requerida para resultados.</system:String>
     <system:String x:Key="ShouldUsePinyin">Debe usar Pinyin</system:String>
@@ -69,7 +70,7 @@
     <system:String x:Key="currentPriority">Prioridad Actual</system:String>
     <system:String x:Key="newPriority">Nueva Prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
-    <system:String x:Key="priorityToolTip">Cambiar la prioridad del resultado del plugin</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Directorio de Plugins</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
