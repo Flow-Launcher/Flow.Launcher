@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Seç</system:String>
     <system:String x:Key="hideOnStartup">Başlangıçta Flow Launcher'u gizle</system:String>
     <system:String x:Key="hideNotifyIcon">Sistem çekmecesi simgesini gizle</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Sorgu Arama Hassasiyeti</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Sonuçlar için gereken minimum maç puanını değiştirir.</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
@@ -69,6 +70,7 @@
     <system:String x:Key="currentPriority">Mevcut öncelik</system:String>
     <system:String x:Key="newPriority">Yeni Öncelik</system:String>
     <system:String x:Key="priority">Öncelik</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Eklenti Klasörü</system:String>
     <system:String x:Key="author">Yapımcı:</system:String>
     <system:String x:Key="plugin_init_time">Açılış Süresi:</system:String>
