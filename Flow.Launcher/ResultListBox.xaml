@@ -120,6 +120,7 @@
                                 x:Name="Title"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
+                                IsHitTestVisible="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
                                 ToolTip="{Binding ShowTitleToolTip}">
@@ -133,6 +134,7 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
+                                IsHitTestVisible="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
                                 ToolTip="{Binding ShowSubTitleToolTip}" />
