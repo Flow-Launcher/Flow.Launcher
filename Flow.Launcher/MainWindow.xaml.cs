@@ -23,6 +23,8 @@ using Flow.Launcher.Plugin.SharedCommands;
 using System.Text;
 using DataObject = System.Windows.DataObject;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Flow.Launcher
 {
@@ -412,22 +414,19 @@ namespace Flow.Launcher
                 var d = (DependencyObject)e.OriginalSource;
                 var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
                 var result = (ResultViewModel)item?.DataContext;
-                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                Console.WriteLine("result");
 
-                // right about here you get the file urls of the selected items.
-                // should be quite easy, if not, ask.
-                //string[] files = "asdf.txt";
 
-                string path = @"D:\test.png";
+                string copyText = string.IsNullOrEmpty(result.Result.CopyText) ? result.Result.SubTitle : result.Result.CopyText;
+                var isFile = File.Exists(copyText);
+                var isFolder = Directory.Exists(copyText);
+
+                //string path = @"D:\test.png";
+                string path = Convert.ToString(copyText);
                 string[] files = { path };
                 var data = new DataObject(System.Windows.DataFormats.FileDrop, files);
-                data.SetData(System.Windows.DataFormats.Text, files[0]);
-                DragDrop.DoDragDrop(this, data, System.Windows.DragDropEffects.Copy);
+                //data.SetData(System.Windows.DataFormats.FileDrop, files[0]);
+                DragDrop.DoDragDrop(this.ResultListBox, data, System.Windows.DragDropEffects.Copy);
                 e.Handled = true;
-                // string dataFormat = System.Windows.DataFormats.FileDrop;
-                //System.Windows.DataObject dataObject = new System.Windows.DataObject(dataFormat, files);
-                //DragDrop.DoDragDrop(this.ResultListBox, dataObject, System.Windows.DragDropEffects.Copy);
             }
         }
 
