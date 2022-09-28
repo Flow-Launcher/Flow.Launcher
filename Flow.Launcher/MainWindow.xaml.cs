@@ -390,42 +390,34 @@ namespace Flow.Launcher
 
         private Point start;
 
-        private void FileView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.start = e.GetPosition(null);
         }
 
-        private void FileView_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ResultList_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
+            if (this.ResultListBox.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            
             Point mpos = e.GetPosition(null);
             Vector diff = this.start - mpos;
+
+            var r = (ResultListBox)sender;
+            var d = (DependencyObject)e.OriginalSource;
+            var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
+            var result = (ResultViewModel)item?.DataContext;
 
             if (e.LeftButton == MouseButtonState.Pressed &&
               Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
               Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
-                
-                if (this.ResultListBox.SelectedItems.Count == 0)
-                {
-                    return;
-                }
-
-                var r = (ResultListBox)sender;
-                var d = (DependencyObject)e.OriginalSource;
-                var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
-                var result = (ResultViewModel)item?.DataContext;
-
-
                 string copyText = string.IsNullOrEmpty(result.Result.CopyText) ? result.Result.SubTitle : result.Result.CopyText;
-                var isFile = File.Exists(copyText);
-                var isFolder = Directory.Exists(copyText);
-
-                //string path = @"D:\test.png";
-                string path = Convert.ToString(copyText);
-                string[] files = { path };
+                string[] files = { copyText };
                 var data = new DataObject(System.Windows.DataFormats.FileDrop, files);
-                //data.SetData(System.Windows.DataFormats.FileDrop, files[0]);
-                DragDrop.DoDragDrop(this.ResultListBox, data, System.Windows.DragDropEffects.Copy);
+                DragDrop.DoDragDrop(this.ResultListBox, data, System.Windows.DragDropEffects.Copy | System.Windows.DragDropEffects.Move);
                 e.Handled = true;
             }
         }
