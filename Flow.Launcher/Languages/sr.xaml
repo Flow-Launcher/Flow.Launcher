@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Izaberi</system:String>
     <system:String x:Key="hideOnStartup">Sakrij Flow Launcher pri podizanju sistema</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
@@ -69,6 +70,7 @@
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin direktorijum</system:String>
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Vreme inicijalizacije:</system:String>
