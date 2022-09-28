@@ -40,7 +40,7 @@
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键(建议游戏时打开)。</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键 (建议游戏时打开) 。</system:String>
     <system:String x:Key="defaultFileManager">默认文件管理器</system:String>
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
     <system:String x:Key="defaultBrowser">默认浏览器</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
+    <system:String x:Key="priorityToolTip">更改插件结果优先级</system:String>
     <system:String x:Key="pluginDirectory">插件目录</system:String>
     <system:String x:Key="author">出自</system:String>
     <system:String x:Key="plugin_init_time">加载耗时：</system:String>
@@ -156,8 +156,8 @@
         下载更新失败，请检查您与 github-cloud.s3.amazonaws.com 的连接状态或检查代理设置， 
         或访问 https://github.com/Flow-Launcher/Flow.Launcher/releases 手动下载更新
     </system:String>
-    <system:String x:Key="releaseNotes">更新说明:</system:String>
-    <system:String x:Key="documentation">使用技巧:</system:String>
+    <system:String x:Key="releaseNotes">更新说明</system:String>
+    <system:String x:Key="documentation">使用技巧</system:String>
     <system:String x:Key="devtool">开发工具</system:String>
     <system:String x:Key="settingfolder">设置目录</system:String>
     <system:String x:Key="logfolder">日志目录</system:String>
@@ -257,11 +257,11 @@
     <system:String x:Key="Welcome_Page1_Text01">你好，这是你第一次运行 Flow Launcher！</system:String>
     <system:String x:Key="Welcome_Page1_Text02">在启动前，这个向导将有助于设置 Flow Launcher。如果您愿意，您可以跳过。请选择一种语言</system:String>
     <system:String x:Key="Welcome_Page2_Title">搜索并运行您PC上的文件和应用程序</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要触摸鼠标。</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要鼠标。</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 默认使用下面的快捷键激活。 要更改它，请点击输入并按键盘上所需的热键。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷键</system:String>
     <system:String x:Key="Welcome_Page4_Title">动作关键词和命令</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。 某些函数起始于一个动作关键词，如有必要，它们可以在没有动作关键词的情况下使用。欢迎尝试一下的查询语句。</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。某些功能使用一个动作关键词激活，如有必要，它们也可以在没有动作关键词的情况下使用。欢迎尝试以下的查询语句。</system:String>
     <system:String x:Key="Welcome_Page5_Title">开始使用 Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">完成了！享受 Flow Launcher。不要忘记激活快捷键 :)</system:String>
 
@@ -286,6 +286,6 @@
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Windows 设置中的蓝牙</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">便笺</system:String>
 
 </ResourceDictionary>
