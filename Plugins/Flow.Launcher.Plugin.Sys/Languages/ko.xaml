@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">컴퓨터 잠금</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher 닫기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcher 재시작</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">이 프로그램을 조정합니다</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">PC를 절전모드로 전환</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">휴지통 비우기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">최대 절전 모드</system:String>
