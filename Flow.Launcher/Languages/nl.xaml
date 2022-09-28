@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Selecteer</system:String>
     <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
     <system:String x:Key="hideNotifyIcon">Systeemvakpictogram verbergen</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Zoekopdracht nauwkeurigheid</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Wijzigt de minimale overeenkomst-score die vereist is voor resultaten.</system:String>
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
