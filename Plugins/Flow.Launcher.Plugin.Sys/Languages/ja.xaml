@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">このコンピュータをロックする</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcherを終了する</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcherを再起動する</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">このアプリの設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">スリープ</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">ゴミ箱を空にする</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
