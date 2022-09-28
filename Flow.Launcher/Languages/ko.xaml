@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">검색 결과에 필요한 최소 매치 점수를 변경합니다.</system:String>
     <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>
@@ -69,7 +70,7 @@
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
-    <system:String x:Key="priorityToolTip">플러그인 결과 우선 순위 변경</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">플러그인 폴더</system:String>
     <system:String x:Key="author">제작자</system:String>
     <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
