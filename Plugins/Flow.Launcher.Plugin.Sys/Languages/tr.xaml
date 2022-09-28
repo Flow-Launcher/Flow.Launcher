@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bilgisayarı Kilitle</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher'u Kapat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcher'u Yeniden Başlat</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Flow Launcher Ayarlarını Aç</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Bilgisayarı Uyku Moduna Al</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Geri Dönüşüm Kutusunu Boşalt</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Bilgisayarı Askıya Al</system:String>
