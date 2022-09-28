@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
     <system:String x:Key="ShouldUsePinyin">Použiť Pinyin</system:String>
