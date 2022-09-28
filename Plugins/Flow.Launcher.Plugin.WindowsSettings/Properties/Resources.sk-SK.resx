@@ -673,7 +673,7 @@
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Asistent na lepšie sústredenie - Obdobie kľudu</value>
+    <value>Asistent na lepšie sústredenie - Obdobie pokoja</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
@@ -2290,7 +2290,7 @@
     <value>Skontrolovať stav zabezpečenia</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>Odstrániť súbory cookie alebo dočasné súbory</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
     <value>Zadanie ruky používanej na písanie</value>
