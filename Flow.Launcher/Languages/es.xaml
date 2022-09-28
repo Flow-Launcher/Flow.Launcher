@@ -57,7 +57,7 @@
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Complemento</system:String>
+    <system:String x:Key="plugin">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
     <system:String x:Key="disable">Desactivado</system:String>
@@ -69,7 +69,7 @@
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
+    <system:String x:Key="priorityToolTip">Cambiar la prioridad de los resultados del complemento</system:String>
     <system:String x:Key="pluginDirectory">Carpeta de complementos</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
