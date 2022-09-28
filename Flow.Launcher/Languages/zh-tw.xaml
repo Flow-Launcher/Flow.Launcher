@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜索精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜索</system:String>
@@ -69,7 +70,7 @@
     <system:String x:Key="currentPriority">目前優先</system:String>
     <system:String x:Key="newPriority">新增優先</system:String>
     <system:String x:Key="priority">優先</system:String>
-    <system:String x:Key="priorityToolTip">更改插件結果優先順序</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
     <system:String x:Key="author">作者</system:String>
     <system:String x:Key="plugin_init_time">載入耗時：</system:String>
