@@ -12,20 +12,20 @@
     <system:String x:Key="iconTraySettings">Impostazioni</system:String>
     <system:String x:Key="iconTrayAbout">About</system:String>
     <system:String x:Key="iconTrayExit">Esci</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
-    <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
+    <system:String x:Key="closeWindow">Chiudi</system:String>
+    <system:String x:Key="copy">Copia</system:String>
+    <system:String x:Key="cut">Taglia</system:String>
+    <system:String x:Key="paste">Incolla</system:String>
     <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
+    <system:String x:Key="folderTitle">Cartella</system:String>
+    <system:String x:Key="textTitle">Testo</system:String>
+    <system:String x:Key="GameMode">Modalità gioco</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Impostaizoni Flow Launcher</system:String>
     <system:String x:Key="general">Generale</system:String>
-    <system:String x:Key="portableMode">Portable Mode</system:String>
+    <system:String x:Key="portableMode">Modalità portatile</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Avvia Wow all'avvio di Windows</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Seleziona</system:String>
     <system:String x:Key="hideOnStartup">Nascondi Flow Launcher all'avvio</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
@@ -69,6 +70,7 @@
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Cartella Plugin</system:String>
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Tempo di avvio:</system:String>
@@ -80,7 +82,7 @@
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Store</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="install">Install</system:String>
+    <system:String x:Key="install">Installa</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -93,12 +95,12 @@
     <system:String x:Key="opacity">Opacità</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
-    <system:String x:Key="ThemeFolder">Theme Folder</system:String>
+    <system:String x:Key="ThemeFolder">Cartella temi</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
     <system:String x:Key="ColorScheme">Color Scheme</system:String>
     <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
+    <system:String x:Key="ColorSchemeLight">Chiaro</system:String>
+    <system:String x:Key="ColorSchemeDark">Scuro</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="Animation">Animation</system:String>
@@ -130,7 +132,7 @@
     <system:String x:Key="enableProxy">Abilita Proxy HTTP</system:String>
     <system:String x:Key="server">Server HTTP</system:String>
     <system:String x:Key="port">Porta</system:String>
-    <system:String x:Key="userName">User Name</system:String>
+    <system:String x:Key="userName">Nome utente</system:String>
     <system:String x:Key="password">Password</system:String>
     <system:String x:Key="testProxy">Proxy Test</system:String>
     <system:String x:Key="save">Salva</system:String>
@@ -143,9 +145,9 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">About</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Sito web</system:String>
     <system:String x:Key="github">Github</system:String>
-    <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="docs">Documentazione</system:String>
     <system:String x:Key="version">Versione</system:String>
     <system:String x:Key="about_activate_times">Hai usato Flow Launcher {0} volte</system:String>
     <system:String x:Key="checkUpdates">Cerca aggiornamenti</system:String>
@@ -251,7 +253,7 @@
     <system:String x:Key="update_flowlauncher_update_update_description">Descrizione aggiornamento</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
+    <system:String x:Key="Skip">Salta</system:String>
     <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
