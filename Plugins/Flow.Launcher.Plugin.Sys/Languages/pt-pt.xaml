@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquear computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Fechar Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Reiniciar Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Ajustar definições de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Suspender computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Esvaziar reciclagem</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernar computador</system:String>
