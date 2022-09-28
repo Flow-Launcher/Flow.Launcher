@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Точність пошуку запитів</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
@@ -69,6 +70,7 @@
     <system:String x:Key="currentPriority">Поточний пріоритет</system:String>
     <system:String x:Key="newPriority">Новий пріоритет</system:String>
     <system:String x:Key="priority">Пріоритет</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Директорія плагінів</system:String>
     <system:String x:Key="author">за</system:String>
     <system:String x:Key="plugin_init_time">Ініціалізація:</system:String>
