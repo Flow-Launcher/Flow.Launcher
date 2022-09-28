@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">鎖定電腦</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">退出Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">重新啟動 Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">睡眠</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">清空資源回收桶</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
