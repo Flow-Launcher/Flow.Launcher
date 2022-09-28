@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Command List-->
+    <!--  Command List  -->
     <system:String x:Key="flowlauncher_plugin_sys_command">명령어</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">설명</system:String>
 
@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">컴퓨터 잠금</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher 닫기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcher 재시작</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">이 프로그램을 조정합니다</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">PC를 절전모드로 전환</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">휴지통 비우기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">최대 절전 모드</system:String>
@@ -23,7 +23,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Flow Launcher의 도움말 및 사용안내</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Flow Launcher의 설정이 저장된 위치 열기</system:String>
 
-    <!--Dialogs-->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">성공</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">모든 Flow Launcher 설정을 저장했습니다</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">적용 가능한 모든 플러그인 데이터를 다시 로드했습니다</system:String>
