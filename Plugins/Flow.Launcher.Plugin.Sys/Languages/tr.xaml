@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Command List-->
+    <!--  Command List  -->
     <system:String x:Key="flowlauncher_plugin_sys_command">Komut</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Açıklama</system:String>
 
@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bilgisayarı Kilitle</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher'u Kapat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Flow Launcher'u Yeniden Başlat</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Flow Launcher Ayarlarını Aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Bilgisayarı Uyku Moduna Al</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Geri Dönüşüm Kutusunu Boşalt</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Bilgisayarı Askıya Al</system:String>
@@ -23,7 +23,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visit Flow Launcher's documentation for more help and how to use tips</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Open the location where Flow Launcher's settings are stored</system:String>
 
-    <!--Dialogs-->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Başarılı</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Tüm Flow Launcher ayarları kaydedildi.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
