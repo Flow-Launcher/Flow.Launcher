@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜索精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜索</system:String>
