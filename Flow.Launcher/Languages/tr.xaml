@@ -157,7 +157,7 @@
         Güncellemenin yüklenmesi başarısız oldu. Lütfen bağlantınız ve vekil sunucu ayarlarınızın github-cloud.s3.amazonaws.com
         adresine ulaşabilir olduğunu kontrol edin ya da https://github.com/Flow-Launcher/Flow.Launcher/releases adresinden güncellemeyi elle indirin.
     </system:String>
-    <system:String x:Key="releaseNotes">Sürüm Notları:</system:String>
+    <system:String x:Key="releaseNotes">Sürüm Notları</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
