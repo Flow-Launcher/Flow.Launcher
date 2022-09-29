@@ -386,6 +386,55 @@
             <!--#endregion-->
         </Style>
 
+        <Style
+            x:Key="PluginListStyle"
+            BasedOn="{StaticResource {x:Type ListBox}}"
+            TargetType="ListBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,20,0,4"
+                                            FontWeight="Bold"
+                                            Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="StoreListStyle"
+            BasedOn="{StaticResource {x:Type ListBox}}"
+            TargetType="ListBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,20,0,4"
+                                            FontWeight="Bold"
+                                            Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle_Network}" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--  For Tab Header responsive Width  -->
         <Style TargetType="{x:Type TabControl}">
             <Setter Property="FontSize" Value="14" />
@@ -914,7 +963,7 @@
                                 <DockPanel DockPanel.Dock="Right">
                                     <TextBox
                                         Name="pluginFilterTxb"
-                                        Width="250"
+                                        Width="150"
                                         Height="34"
                                         Margin="0,5,26,0"
                                         HorizontalAlignment="Right"
@@ -975,7 +1024,8 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
                                 SelectionChanged="SelectedPluginChanged"
-                                SnapsToDevicePixels="True">
+                                SnapsToDevicePixels="True"
+                                Style="{DynamicResource PluginListStyle}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Margin="0,0,0,18" />
@@ -1322,22 +1372,12 @@
                         <DockPanel
                             Grid.Row="0"
                             Grid.Column="1"
-                            Margin="5,18,0,0">
-                            <Button
-                                Height="34"
-                                Margin="0,5,16,5"
-                                Padding="12,4,12,4"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Click="OnPluginStoreRefreshClick"
-                                Content="{DynamicResource refresh}"
-                                DockPanel.Dock="Right"
-                                FontSize="13" />
+                            Margin="5,24,0,0">
                             <TextBox
                                 Name="pluginStoreFilterTxb"
-                                Width="250"
+                                Width="150"
                                 Height="34"
-                                Margin="0,0,6,0"
+                                Margin="0,0,26,0"
                                 HorizontalAlignment="Right"
                                 DockPanel.Dock="Right"
                                 FontSize="14"
@@ -1375,7 +1415,16 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-
+                            <Button
+                                Height="34"
+                                Margin="0,5,10,5"
+                                Padding="12,4,12,4"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Click="OnPluginStoreRefreshClick"
+                                Content="{DynamicResource refresh}"
+                                DockPanel.Dock="Right"
+                                FontSize="13" />
                         </DockPanel>
                         <Border
                             Grid.Row="1"
@@ -1385,7 +1434,7 @@
                             <ListBox
                                 x:Name="StoreListBox"
                                 Width="Auto"
-                                Margin="6,0,0,0"
+                                Margin="5,1,0,0"
                                 Padding="0,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
@@ -1393,11 +1442,12 @@
                                 ItemContainerStyle="{StaticResource StoreList}"
                                 ItemsSource="{Binding ExternalPlugins}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                SelectionMode="Single">
+                                SelectionMode="Single"
+                                Style="{DynamicResource StoreListStyle}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <UniformGrid
-                                            Margin="0,0,6,18"
+                                            Margin="0,0,17,18"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Columns="3"
@@ -1576,7 +1626,7 @@
                                                             VerticalAlignment="Top">
                                                             <StackPanel Orientation="Vertical">
                                                                 <TextBlock
-                                                                    Margin="20,20,0,0"
+                                                                    Margin="20,20,20,0"
                                                                     Padding="0,0,0,0"
                                                                     FontWeight="Bold"
                                                                     Foreground="{DynamicResource Color05B}"
@@ -1584,7 +1634,7 @@
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Name}" />
                                                                 <TextBlock
-                                                                    Margin="20,4,0,0"
+                                                                    Margin="20,4,20,0"
                                                                     Padding="0,0,20,0"
                                                                     Foreground="{DynamicResource Color05B}"
                                                                     Text="{Binding Version}"
@@ -1625,7 +1675,6 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Border>
-
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
