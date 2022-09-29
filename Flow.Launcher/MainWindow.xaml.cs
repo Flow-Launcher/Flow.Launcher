@@ -417,7 +417,7 @@ namespace Flow.Launcher
                 string copyText = string.IsNullOrEmpty(result.Result.CopyText) ? result.Result.SubTitle : result.Result.CopyText;
                 string[] files = { copyText };
                 var data = new DataObject(System.Windows.DataFormats.FileDrop, files);
-                DragDrop.DoDragDrop(this.ResultListBox, data, System.Windows.DragDropEffects.Copy | System.Windows.DragDropEffects.Move);
+                DragDrop.DoDragDrop(this.ResultListBox, data, System.Windows.DragDropEffects.Move | System.Windows.DragDropEffects.Copy);
                 e.Handled = true;
             }
         }
