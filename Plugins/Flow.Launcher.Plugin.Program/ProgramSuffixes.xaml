@@ -91,7 +91,7 @@
                     Margin="5,0,0,0"
                     HorizontalAlignment="Right"
                     Click="ButtonBase_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_update}"
+                    Content="{DynamicResource done}"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>

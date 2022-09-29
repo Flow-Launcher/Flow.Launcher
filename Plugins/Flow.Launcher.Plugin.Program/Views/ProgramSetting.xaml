@@ -162,13 +162,13 @@
                     MinWidth="100"
                     Margin="10"
                     Click="btnEditProgramSource_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_edit}" />
+                    Content="{DynamicResource edit}" />
                 <Button
                     x:Name="btnAddProgramSource"
                     MinWidth="100"
                     Margin="10,10,0,10"
                     Click="btnAddProgramSource_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_add}" />
+                    Content="{DynamicResource add}" />
             </StackPanel>
         </DockPanel>
     </Grid>
