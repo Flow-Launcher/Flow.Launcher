@@ -157,7 +157,7 @@
         Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
-    <system:String x:Key="releaseNotes">Zmiany:</system:String>
+    <system:String x:Key="releaseNotes">Zmiany</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
