@@ -1621,7 +1621,7 @@
                                                     Margin="0,0,18,0"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
-                                                    Maximum="900"
+                                                    Maximum="1920"
                                                     Minimum="400"
                                                     TickFrequency="10"
                                                     Value="{Binding WindowWidthSize, Mode=TwoWay}" />

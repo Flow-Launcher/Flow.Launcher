@@ -77,7 +77,6 @@ namespace Flow.Launcher
             };
             link.Inlines.Add(url);
             link.NavigateUri = new Uri(url);
-            link.RequestNavigate += (s, e) => SearchWeb.OpenInBrowserTab(e.Uri.ToString());
             link.Click += (s, e) => SearchWeb.OpenInBrowserTab(url);
 
             paragraph.Inlines.Add(textBeforeUrl);
