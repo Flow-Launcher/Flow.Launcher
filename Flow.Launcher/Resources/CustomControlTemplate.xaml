@@ -2724,7 +2724,8 @@
                         Background="{DynamicResource CustomContextBackground}"
                         BorderBrush="{DynamicResource CustomContextBorder}"
                         BorderThickness="1"
-                        CornerRadius="8">
+                        CornerRadius="8"
+                        UseLayoutRounding="True">
                         <Border.Effect>
                             <DropShadowEffect
                                 BlurRadius="12"
