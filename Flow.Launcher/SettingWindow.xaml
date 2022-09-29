@@ -972,7 +972,10 @@
                                         KeyDown="PluginFilterTxb_OnKeyDown"
                                         LostFocus="RefreshPluginListEventHandler"
                                         Text=""
-                                        TextAlignment="Left">
+                                        TextAlignment="Left"
+                                        ToolTip="{DynamicResource searchpluginToolTip}"
+                                        ToolTipService.InitialShowDelay="200"
+                                        ToolTipService.Placement="Top">
                                         <TextBox.Style>
                                             <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
                                                 <Style.Resources>
@@ -1384,7 +1387,10 @@
                                 KeyDown="PluginStoreFilterTxb_OnKeyDown"
                                 LostFocus="RefreshPluginStoreEventHandler"
                                 Text=""
-                                TextAlignment="Left">
+                                TextAlignment="Left"
+                                ToolTip="{DynamicResource searchpluginToolTip}"
+                                ToolTipService.InitialShowDelay="200"
+                                ToolTipService.Placement="Top">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
                                         <Style.Resources>
