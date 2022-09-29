@@ -156,7 +156,7 @@
     <system:String x:Key="downloadUpdatesFailed">
         Échec du téléchargement de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à github-cloud.s3.amazonaws.com, ou téléchargez manuelement la mise à jour sur https://github.com/Flow-Launcher/Flow.Launcher/releases.
     </system:String>
-    <system:String x:Key="releaseNotes">Notes de changement :</system:String>
+    <system:String x:Key="releaseNotes">Notes de changement</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
