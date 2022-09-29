@@ -157,7 +157,7 @@
         下載更新失敗，請檢查您對 github-cloud.s3.amazonaws.com 的連線和代理設定，
         或是到 https://github.com/Flow-Launcher/Flow.Launcher/releases 手動下載更新。
     </system:String>
-    <system:String x:Key="releaseNotes">更新說明:</system:String>
+    <system:String x:Key="releaseNotes">更新說明</system:String>
     <system:String x:Key="documentation">使用技巧</system:String>
     <system:String x:Key="devtool">開發工具</system:String>
     <system:String x:Key="settingfolder">設定資料夾</system:String>
