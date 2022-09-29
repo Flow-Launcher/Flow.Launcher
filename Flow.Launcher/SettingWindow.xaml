@@ -395,7 +395,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <Grid>
+                                <Grid Margin="20,0,0,0">
                                     <StackPanel>
                                         <TextBlock
                                             Margin="0,20,0,4"
@@ -420,7 +420,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <Grid>
+                                <Grid Margin="20,0,0,0">
                                     <StackPanel>
                                         <TextBlock
                                             Margin="0,20,0,4"
