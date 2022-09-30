@@ -100,8 +100,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 IcoPath = path,
                 Score = 500,
-                ProgressBarValue = progressValue,
-                IsProgressBarVisible = true,
+                ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
                 Action = c =>
                 {
