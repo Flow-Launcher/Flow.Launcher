@@ -12,10 +12,21 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel>
-            <TextBlock x:Name="Title" />
-            <Image x:Name="Image" />
-            <TextBlock x:Name="Desc" />
+        <StackPanel Margin="10">
+            <TextBlock
+                x:Name="Title"
+                FontSize="16"
+                FontWeight="Bold"
+                TextWrapping="Wrap" />
+            <Image
+                x:Name="Image"
+                MaxHeight="200"
+                Margin="0,10,0,10" />
+            <TextBlock
+                x:Name="Desc"
+                Margin="0,0,0,5"
+                FontSize="13"
+                TextWrapping="Wrap" />
         </StackPanel>
     </Grid>
 </UserControl>
