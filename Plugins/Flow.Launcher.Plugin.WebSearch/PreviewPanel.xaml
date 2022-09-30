@@ -9,9 +9,13 @@
     MinHeight="400"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
     <Grid>
-        <wv2:WebView2 Name="webView" Source="{Binding Url}" />
+        <StackPanel>
+            <TextBlock x:Name="Title" />
+            <Image x:Name="Image" />
+            <TextBlock x:Name="Desc" />
+        </StackPanel>
     </Grid>
 </UserControl>
