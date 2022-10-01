@@ -14,16 +14,21 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palabra clave de acción</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Buscar</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda: </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Por favor, seleccione una búsqueda web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">¿Está seguro que desea eliminar {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Si dispone de un servicio de búsqueda web que desea utilizar, puede añadirlo a Flow. Por ejemplo, si desea buscar 'casino' en Netflix puede utilizar el siguiente formato url en la barra de direcciones: &quot;https://www.netflix.com/search?q=Casino&quot;. Para cualquier otra búsqueda sustituya el término &quot;Casino&quot; por el de la búsqueda deseada.</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Añadirla a la sección URL, abajo indicada. Ahora puede buscar en Netflix utilizando cualquier término de búsqueda.</system:String>
-   
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
+        Now copy this entrire string and paste it in the URL field below.
+        Then replace casino with {q}.
+        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+    </system:String>
 
-    <!--web search edit-->
+
+
+    <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Activar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Seleccionar icono</system:String>
