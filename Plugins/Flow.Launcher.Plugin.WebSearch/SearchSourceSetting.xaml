@@ -74,10 +74,11 @@
                                 Text="{DynamicResource flowlauncher_plugin_websearch_guide_1}"
                                 TextAlignment="Left"
                                 TextWrapping="WrapWithOverflow" />
-                            <TextBlock
+                            <TextBox
                                 Margin="0,12,0,12"
                                 FontSize="14"
                                 FontWeight="SemiBold"
+                                IsReadOnly="True"
                                 Text="{DynamicResource flowlauncher_plugin_websearch_guide_2}"
                                 TextAlignment="Center"
                                 TextWrapping="WrapWithOverflow" />
