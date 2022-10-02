@@ -42,7 +42,7 @@
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">全螢幕模式下停用快捷鍵（推薦用於遊戲時）。</system:String>
     <system:String x:Key="defaultFileManager">預設檔案管理器</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">選擇打開資料夾時要使用的檔案管理器。</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">選擇開啟資料夾時要使用的檔案管理器。</system:String>
     <system:String x:Key="defaultBrowser">預設瀏覽器</system:String>
     <system:String x:Key="defaultBrowserToolTip">設定新增分頁、視窗和無痕模式。</system:String>
     <system:String x:Key="pythonDirectory">Python 路徑</system:String>
