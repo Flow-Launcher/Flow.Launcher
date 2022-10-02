@@ -1565,7 +1565,7 @@
                                                         <RowDefinition />
                                                     </Grid.RowDefinitions>
                                                     <Border Grid.Row="0">
-                                                        <TextBox
+                                                        <TextBox x:Name="QueryTextBox"
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
