@@ -14,7 +14,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">Lock this computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Close Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Restart Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak this app</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Put computer to sleep</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Empty recycle bin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>

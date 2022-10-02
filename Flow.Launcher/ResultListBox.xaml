@@ -111,7 +111,21 @@
                                 <RowDefinition />
                                 <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
-
+                            <ProgressBar
+                                x:Name="progressbarResult"
+                                Foreground="{Binding Result.ProgressBarColor}"
+                                Value="{Binding ResultProgress, Mode=OneWay}">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar" BasedOn="{StaticResource ProgressBarResult}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Result.ProgressBar}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
                             <TextBlock
                                 x:Name="Title"
                                 VerticalAlignment="Center"
