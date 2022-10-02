@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public string EditorPath { get; set; } = "";
 
         public string ShellPath { get; set; } = "cmd";
-        
+
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 
@@ -66,13 +66,11 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #region SearchEngine
 
-        public PathEnumerationEngineOption PathEnumerationEngine { get; set; } = PathEnumerationEngineOption.WindowsIndex;
-
         private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
         private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
 
 
-        public IndexSearchEngineOption IndexSearchEngine { get; set; }
+        public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
         [JsonIgnore]
         public IIndexProvider IndexProvider => IndexSearchEngine switch
         {
@@ -80,6 +78,8 @@ namespace Flow.Launcher.Plugin.Explorer
             IndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
             _ => throw new ArgumentOutOfRangeException(nameof(IndexSearchEngine))
         };
+
+        public PathEnumerationEngineOption PathEnumerationEngine { get; set; } = PathEnumerationEngineOption.WindowsIndex;
 
         [JsonIgnore]
         public IPathIndexProvider PathEnumerator => PathEnumerationEngine switch
@@ -89,7 +89,7 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => throw new ArgumentOutOfRangeException(nameof(PathEnumerationEngine))
         };
 
-        public ContentIndexSearchEngineOption ContentSearchEngine { get; set; }
+        public ContentIndexSearchEngineOption ContentSearchEngine { get; set; } = ContentIndexSearchEngineOption.WindowsIndex;
         [JsonIgnore]
         public IContentIndexProvider ContentIndexProvider => ContentSearchEngine switch
         {
@@ -100,28 +100,28 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public enum PathEnumerationEngineOption
         {
-            [Description("plugin_explorer_engine_everything")]
-            Everything,
             [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex,
+            [Description("plugin_explorer_engine_everything")]
+            Everything,
             [Description("plugin_explorer_path_enumeration_engine_none")]
             Direct
         }
 
         public enum IndexSearchEngineOption
         {
+            [Description("plugin_explorer_engine_windows_index")]
+            WindowsIndex,
             [Description("plugin_explorer_engine_everything")]
             Everything,
-            [Description("plugin_explorer_engine_windows_index")]
-            WindowsIndex
         }
 
         public enum ContentIndexSearchEngineOption
         {
+            [Description("plugin_explorer_engine_windows_index")]
+            WindowsIndex,
             [Description("plugin_explorer_engine_everything")]
             Everything,
-            [Description("plugin_explorer_engine_windows_index")]
-            WindowsIndex
         }
 
         #endregion
@@ -138,7 +138,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool EnableEverythingContentSearch { get; set; } = false;
 
-        public bool EverythingEnabled => IndexSearchEngine==IndexSearchEngineOption.Everything ||
+        public bool EverythingEnabled => IndexSearchEngine == IndexSearchEngineOption.Everything ||
                                          PathEnumerationEngine == PathEnumerationEngineOption.Everything ||
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
