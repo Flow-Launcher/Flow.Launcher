@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
-
+    
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
@@ -80,6 +80,16 @@
     </Style>
 
     <!--  Item Style  -->
+    <Style x:Key="ProgressBarResult" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Foreground" Value="#26a0da " />
+    </Style>
+
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
