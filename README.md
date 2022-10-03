@@ -234,7 +234,6 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
-| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
 
 ## System Command List

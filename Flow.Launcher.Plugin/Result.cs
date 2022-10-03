@@ -66,6 +66,10 @@ namespace Flow.Launcher.Plugin
                 }
             }
         }
+        /// <summary>
+        /// Determines if Icon has a border radius
+        /// </summary>
+        public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
         /// Delegate function, see <see cref="Icon"/>
