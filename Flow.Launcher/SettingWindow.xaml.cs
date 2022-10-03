@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
+﻿using Droplex;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -364,6 +365,18 @@ namespace Flow.Launcher
         private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
         {
             Plugins.ScrollIntoView(Plugins.SelectedItem);
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var id = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
+                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeyword} uninstall {id}");
+                API.ShowMainWindow();
+            }
         }
     }
 }
