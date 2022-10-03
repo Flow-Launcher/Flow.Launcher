@@ -66,6 +66,10 @@ namespace Flow.Launcher.Plugin
                 }
             }
         }
+        /// <summary>
+        /// Determines if Icon has a border radius
+        /// </summary>
+        public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
         /// Delegate function, see <see cref="Icon"/>
@@ -197,5 +201,16 @@ namespace Flow.Launcher.Plugin
         {
             return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
         }
+
+        /// <summary>
+        /// Progress bar display. Providing an int value between 0-100 will trigger the progress bar to be displayed on the result
+        /// </summary>
+        public int? ProgressBar { get; set; }
+
+        /// <summary>
+        /// Optionally set the color of the progress bar
+        /// </summary>
+        /// <default>#26a0da (blue)</default>
+        public string ProgressBarColor { get; set; } = "#26a0da";
     }
 }
