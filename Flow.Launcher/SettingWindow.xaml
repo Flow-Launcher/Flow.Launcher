@@ -1230,6 +1230,17 @@
                                                                         Cursor="Hand"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
+                                                                        MouseUp="OnExternalPluginUninstallClick"
+                                                                        Text="{DynamicResource plugin_uninstall}"
+                                                                        TextDecorations="Underline" />
+
+                                                                    <TextBlock
+                                                                        Margin="10,0,0,0"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Center"
+                                                                        Cursor="Hand"
+                                                                        FontSize="11"
+                                                                        Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnPluginDirecotyClick"
                                                                         Text="{DynamicResource pluginDirectory}"
                                                                         TextDecorations="Underline" />
