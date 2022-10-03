@@ -22,6 +22,7 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Windows.Threading;
 using System.Globalization;
+using System.Reflection.Emit;
 
 namespace Flow.Launcher
 {
@@ -47,11 +48,15 @@ namespace Flow.Launcher
             _settings = settings;
 
 
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
-            timer.Tick += Timer_Tick;
+            var timer = new Timer
+            {
+                Interval = 1000,
+            };
+            timer.Tick += (s, evt) =>
+            {
+                ClockDisplay();
+            };
             timer.Start();
-
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -60,10 +65,6 @@ namespace Flow.Launcher
         public MainWindow()
         {
             InitializeComponent();
-        }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            ClockDisplay();
         }
 
         public void ClockDisplay()
