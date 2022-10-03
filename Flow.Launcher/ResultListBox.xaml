@@ -111,7 +111,11 @@
                                 <RowDefinition />
                                 <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
-
+                            <ProgressBar
+                                x:Name="progressbarResult"
+                                Foreground="{Binding Result.ProgressBarColor}"
+                                Style="{DynamicResource ProgressBarResult}"
+                                Value="{Binding Result.ProgressBar}" />
                             <TextBlock
                                 x:Name="Title"
                                 VerticalAlignment="Center"
