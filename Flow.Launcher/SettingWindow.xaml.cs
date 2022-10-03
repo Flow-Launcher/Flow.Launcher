@@ -381,7 +381,7 @@ namespace Flow.Launcher
             {
                 DateBox.Visibility = Visibility.Collapsed;
             }
-
+        }
 
         private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
         {
@@ -394,5 +394,6 @@ namespace Flow.Launcher
                 API.ShowMainWindow();
             }
         }
+
     }
 }
