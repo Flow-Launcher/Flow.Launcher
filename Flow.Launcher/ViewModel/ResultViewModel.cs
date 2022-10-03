@@ -84,6 +84,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public double IconRadius
+        {
+            get
+            {
+                if (Result.RoundedIcon)
+                {
+                    return IconXY / 2;
+                }
+                return IconXY;
+            }
+
+        }
+
         public Visibility ShowGlyph
         {
             get
@@ -174,6 +187,8 @@ namespace Flow.Launcher.ViewModel
         }
 
         public string QuerySuggestionText { get; set; }
+
+        public double IconXY { get; set; } = 32;
 
         public override bool Equals(object obj)
         {
