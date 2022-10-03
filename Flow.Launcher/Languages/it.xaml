@@ -10,7 +10,7 @@
     <system:String x:Key="lastExecuteTime">Ultima esecuzione: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Apri</system:String>
     <system:String x:Key="iconTraySettings">Impostazioni</system:String>
-    <system:String x:Key="iconTrayAbout">About</system:String>
+    <system:String x:Key="iconTrayAbout">Informazioni</system:String>
     <system:String x:Key="iconTrayExit">Esci</system:String>
     <system:String x:Key="closeWindow">Chiudi</system:String>
     <system:String x:Key="copy">Copia</system:String>
@@ -20,13 +20,13 @@
     <system:String x:Key="folderTitle">Cartella</system:String>
     <system:String x:Key="textTitle">Testo</system:String>
     <system:String x:Key="GameMode">Modalità gioco</system:String>
-    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
+    <system:String x:Key="GameModeToolTip">Sospendere l'uso dei tasti di scelta rapida.</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Impostaizoni Flow Launcher</system:String>
     <system:String x:Key="general">Generale</system:String>
     <system:String x:Key="portableMode">Modalità portatile</system:String>
-    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
+    <system:String x:Key="portableModeToolTIp">Memorizzare tutte le impostazioni e i dati dell'utente in un'unica cartella (utile se utilizzato con unità rimovibili o servizi cloud).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Avvia Wow all'avvio di Windows</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
@@ -34,16 +34,16 @@
     <system:String x:Key="rememberLastLocation">Ricorda l'ultima posizione di avvio del launcher</system:String>
     <system:String x:Key="language">Lingua</system:String>
     <system:String x:Key="lastQueryMode">Comportamento ultima ricerca</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Mostra/nasconde i risultati precedenti quando Flow Launcher viene riattivato.</system:String>
     <system:String x:Key="LastQueryPreserved">Conserva ultima ricerca</system:String>
     <system:String x:Key="LastQuerySelected">Seleziona ultima ricerca</system:String>
     <system:String x:Key="LastQueryEmpty">Cancella ultima ricerca</system:String>
     <system:String x:Key="maxShowResults">Numero massimo di risultati mostrati</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignora i tasti di scelta rapida in applicazione a schermo pieno</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
-    <system:String x:Key="defaultFileManager">Default File Manager</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
-    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disattivare l'attivazione di Flow Launcher quando è attiva un'applicazione a schermo intero (consigliato per i giochi).</system:String>
+    <system:String x:Key="defaultFileManager">Gestore File predefinito</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">Selezionare il Gestore file da usare all'apertura della cartella.</system:String>
+    <system:String x:Key="defaultBrowser">Browser predefinito</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonDirectory">Cartella Python</system:String>
     <system:String x:Key="autoUpdates">Aggiornamento automatico</system:String>
@@ -145,7 +145,7 @@
     <system:String x:Key="proxyConnectFailed">Connessione Proxy fallita</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
+    <system:String x:Key="about">Informazioni</system:String>
     <system:String x:Key="website">Sito web</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Documentazione</system:String>
@@ -176,7 +176,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Browser predefinito</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
