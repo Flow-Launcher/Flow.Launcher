@@ -45,8 +45,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double SettingWindowWidth { get; set; } = 1000;
         public double SettingWindowHeight { get; set; } = 700;
-        public double SettingWindowTop { get; set; } = 0;
-        public double SettingWindowLeft { get; set; } = 0;
+        public double SettingWindowTop { get; set; }
+        public double SettingWindowLeft { get; set; }
 
         public int CustomExplorerIndex { get; set; } = 0;
 
