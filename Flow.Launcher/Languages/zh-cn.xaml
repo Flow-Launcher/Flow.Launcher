@@ -111,8 +111,8 @@
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
-    <system:String x:Key="openResultModifiers">打开结果快捷键</system:String>
-    <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键。</system:String>
+    <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
+    <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
