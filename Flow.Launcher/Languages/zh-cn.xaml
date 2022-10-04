@@ -111,10 +111,10 @@
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
-    <system:String x:Key="openResultModifiers">开放结果修饰符</system:String>
-    <system:String x:Key="openResultModifiersToolTip">指定修饰符用于打开指定的选项。</system:String>
+    <system:String x:Key="openResultModifiers">打开结果快捷键</system:String>
+    <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">显示热键用于快速选择选项。</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQuery">查询</system:String>
     <system:String x:Key="delete">删除</system:String>
@@ -271,7 +271,7 @@
 
     <system:String x:Key="HotkeyUpDownDesc">返回/上下文菜单</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">选项导航</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">打开菜单目录</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">打开上下文菜单</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">打开所在目录</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理员身份运行</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查询历史</system:String>
