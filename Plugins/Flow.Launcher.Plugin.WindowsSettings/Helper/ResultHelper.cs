@@ -125,7 +125,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
         private static string GetSubtitle(string section, string entryType)
         {
-            var settingType = entryType == "AppSettingsApp" ? "System settings" : "Control Panel";
+            var settingType = entryType == "AppSettingsApp" ? Resources.AppSettingsApp : Resources.AppControlPanel;
 
             return $"{settingType} > {section}";
         }
@@ -139,7 +139,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         {
             var toolTipText = new StringBuilder();
 
-            var settingType = entry.Type == "AppSettingsApp" ? "System settings" : "Control Panel";
+            var settingType = entry.Type == "AppSettingsApp" ? Resources.AppSettingsApp : Resources.AppControlPanel;
 
             toolTipText.AppendLine($"{Resources.Application}: {settingType}");
             toolTipText.AppendLine($"{Resources.Area}: {entry.Area}");
