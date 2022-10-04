@@ -215,7 +215,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:mycomputerfolder");
+                            context.API.OpenDirectory("shell:mycomputerfolder");
                         }
 
                         return true;
@@ -230,7 +230,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:desktop");
+                            context.API.OpenDirectory("shell:desktop");
                         }
 
                         return true;
@@ -245,7 +245,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:Libraries");
+                            context.API.OpenDirectory("shell:Libraries");
                         }
 
                         return true;
@@ -260,7 +260,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:My Pictures");
+                            context.API.OpenDirectory("shell:My Pictures");
                         }
 
                         return true;
@@ -275,7 +275,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:My Video");
+                            context.API.OpenDirectory("shell:My Video");
                         }
 
                         return true;
@@ -290,7 +290,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:Personal");
+                            context.API.OpenDirectory("shell:Personal");
                         }
 
                         return true;
@@ -305,7 +305,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:My Music");
+                            context.API.OpenDirectory("shell:My Music");
                         }
 
                         return true;
@@ -335,7 +335,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:downloads");
+                            context.API.OpenDirectory("shell:downloads");
                         }
 
                         return true;
@@ -373,7 +373,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            System.Diagnostics.Process.Start("explorer.exe", "shell:RecycleBinFolder");
+                            context.API.OpenDirectory("shell:RecycleBinFolder");
                         }
 
                         return true;
