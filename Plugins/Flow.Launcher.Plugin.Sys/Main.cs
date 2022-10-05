@@ -238,7 +238,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                                   System.Diagnostics.Process.Start("explorer.exe", "shell://RecycleBinFolder");
+                                   System.Diagnostics.Process.Start("explorer", "shell:RecycleBinFolder");
                         }
 
                         return true;
