@@ -163,6 +163,8 @@
     <system:String x:Key="devtool">開發工具</system:String>
     <system:String x:Key="settingfolder">設定資料夾</system:String>
     <system:String x:Key="logfolder">日誌資料夾</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">嚮導</system:String>
 
     <!--  FileManager Setting Dialog  -->
