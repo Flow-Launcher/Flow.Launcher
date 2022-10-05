@@ -15,7 +15,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting">Flow Launcher 设置</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">休眠这台电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">清空回收站</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">打开回收站</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption">索引选项</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">休眠计算机</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">保存所有 Flow Launcher 设置</system:String>
