@@ -15,6 +15,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting">設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">睡眠</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">清空資源回收桶</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">索引選項</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Save all Flow Launcher settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Refreshes plugin data with new content</system:String>
