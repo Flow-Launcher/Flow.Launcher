@@ -250,7 +250,6 @@
                         Height="2"
                         HorizontalAlignment="Right"
                         StrokeThickness="1"
-                        Style="{DynamicResource PendingLineStyle}"
                         Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         X1="-150"
                         X2="-50"
