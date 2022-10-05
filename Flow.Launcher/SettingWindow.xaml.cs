@@ -386,7 +386,7 @@ namespace Flow.Launcher
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                settings.ShortCuts.Remove(item.Value);
+                settings.CustomShortcuts.Remove(item.Value);
             }
         }
         private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
@@ -397,7 +397,7 @@ namespace Flow.Launcher
                 var shortcutSettingWindow = new CustomShortcutSetting(item.Value);
                 if (shortcutSettingWindow.ShowDialog() == true)
                 {
-                    settings.ShortCuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
+                    settings.CustomShortcuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
                 }
             }
             else
@@ -411,7 +411,7 @@ namespace Flow.Launcher
             var shortcutSettingWindow = new CustomShortcutSetting();
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                settings.ShortCuts.Add(shortcutSettingWindow.ShortCut);
+                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
             }
         }
     }
