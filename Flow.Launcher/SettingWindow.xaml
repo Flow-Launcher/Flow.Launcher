@@ -2539,6 +2539,11 @@
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
                                                 Content="{DynamicResource settingfolder}" />
+                                            <Button
+                                                Name="ClearLogFolderBtn"
+                                                Margin="0,0,12,0"
+                                                Click="ClearLogFolder"
+                                                Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
                                             <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
