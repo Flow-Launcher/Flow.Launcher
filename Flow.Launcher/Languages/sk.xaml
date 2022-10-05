@@ -163,6 +163,8 @@
     <system:String x:Key="devtool">Nástroje pre vývojárov</system:String>
     <system:String x:Key="settingfolder">Priečinok s nastaveniami</system:String>
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
+    <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
+    <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
     <system:String x:Key="welcomewindow">Sprievodca</system:String>
 
     <!--  FileManager Setting Dialog  -->
