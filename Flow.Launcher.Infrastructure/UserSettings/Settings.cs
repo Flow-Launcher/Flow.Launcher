@@ -204,7 +204,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
-        internal ObservableCollection<ShortCutModel> ShortCuts { get; set; } = new();
+        internal ObservableCollection<CustomShortcutModel> ShortCuts { get; set; } = new();
     }
 
     public enum LastQueryMode
@@ -221,12 +221,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Dark
     }
 
-    public struct ShortCutModel
+    public struct CustomShortcutModel
     {
         public string Key { get; set; }
         public string Value { get; set; }
 
-        public ShortCutModel(string key, string value)
+        public CustomShortcutModel(string key, string value)
         {
             Key = key;
             Value = value;
@@ -234,7 +234,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public override bool Equals(object obj)
         {
-            return obj is ShortCutModel other &&
+            return obj is CustomShortcutModel other &&
                    Key == other.Key &&
                    Value == other.Value;
         }
@@ -250,14 +250,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             value = Value;
         }
 
-        public static implicit operator (string Key, string Value)(ShortCutModel value)
+        public static implicit operator (string Key, string Value)(CustomShortcutModel value)
         {
             return (value.Key, value.Value);
         }
 
-        public static implicit operator ShortCutModel((string Key, string Value) value)
+        public static implicit operator CustomShortcutModel((string Key, string Value) value)
         {
-            return new ShortCutModel(value.Key, value.Value);
+            return new CustomShortcutModel(value.Key, value.Value);
         }
     }
 }

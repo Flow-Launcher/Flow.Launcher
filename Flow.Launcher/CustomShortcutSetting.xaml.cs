@@ -19,7 +19,7 @@ namespace Flow.Launcher
 
         public string Key { get; set; }
         public string Value { get; set; }
-        public ShortCutModel ShortCut => (Key, Value);
+        public CustomShortcutModel ShortCut => (Key, Value);
         public CustomShortcutSetting()
         {
             InitializeComponent();
