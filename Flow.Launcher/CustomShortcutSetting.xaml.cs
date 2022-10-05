@@ -14,12 +14,12 @@ namespace Flow.Launcher
     {
         private SettingWindow _settingWidow;
         private bool update;
-        private CustomPluginHotkey updateCustomHotkey;
         private Settings _settings;
 
         public string Key { get; set; }
         public string Value { get; set; }
         public CustomShortcutModel ShortCut => (Key, Value);
+
         public CustomShortcutSetting()
         {
             InitializeComponent();

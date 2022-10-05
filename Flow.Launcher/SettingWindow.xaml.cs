@@ -365,10 +365,13 @@ namespace Flow.Launcher
                 restoreButton.Visibility = Visibility.Collapsed;
             }
         }
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             RefreshMaximizeRestoreButton();
         }
+
+        #region Shortcut
 
         private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
         {
@@ -386,15 +389,16 @@ namespace Flow.Launcher
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                settings.CustomShortcuts.Remove(item.Value);
+                settings.CustomShortcuts.Remove(item);
             }
         }
+
         private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomShortcut;
             if (item != null)
             {
-                var shortcutSettingWindow = new CustomShortcutSetting(item.Value);
+                var shortcutSettingWindow = new CustomShortcutSetting(item);
                 if (shortcutSettingWindow.ShowDialog() == true)
                 {
                     settings.CustomShortcuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
@@ -414,5 +418,8 @@ namespace Flow.Launcher
                 settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
             }
         }
+
+        #endregion
+
     }
 }

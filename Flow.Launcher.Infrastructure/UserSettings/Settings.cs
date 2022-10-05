@@ -220,44 +220,4 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Light,
         Dark
     }
-
-    public struct CustomShortcutModel
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-
-        public CustomShortcutModel(string key, string value)
-        {
-            Key = key;
-            Value = value;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is CustomShortcutModel other &&
-                   Key == other.Key &&
-                   Value == other.Value;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Key, Value);
-        }
-
-        public void Deconstruct(out string key, out string value)
-        {
-            key = Key;
-            value = Value;
-        }
-
-        public static implicit operator (string Key, string Value)(CustomShortcutModel value)
-        {
-            return (value.Key, value.Value);
-        }
-
-        public static implicit operator CustomShortcutModel((string Key, string Value) value)
-        {
-            return new CustomShortcutModel(value.Key, value.Value);
-        }
-    }
 }
