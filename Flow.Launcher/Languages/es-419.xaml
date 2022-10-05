@@ -163,6 +163,8 @@
     <system:String x:Key="devtool">Herramientas de desarrollo</system:String>
     <system:String x:Key="settingfolder">Carpeta de Configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
