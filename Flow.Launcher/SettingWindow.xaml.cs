@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using ModernWpf;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -272,20 +273,17 @@ namespace Flow.Launcher
         }
         private void ClearLogFolder(object sender, RoutedEventArgs e)
         {
-            var confirmResult = MessageBox.Show(InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),InternationalizationManager.Instance.GetTranslation("clearlogfolder"), MessageBoxButton.YesNo);
+            var confirmResult = MessageBox.Show(
+                InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
+                InternationalizationManager.Instance.GetTranslation("clearlogfolder"), 
+                MessageBoxButton.YesNo);
+            
             if (confirmResult == MessageBoxResult.Yes)
             {
-                DirectoryInfo Di = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
-                foreach (FileInfo file in Di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
+                viewModel.ClearLogFolder();
+                
                 ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
             }
-            else
-            {
-            }
-
         }
 
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
