@@ -163,6 +163,8 @@
     <system:String x:Key="devtool">개발자도구</system:String>
     <system:String x:Key="settingfolder">설정 폴더</system:String>
     <system:String x:Key="logfolder">로그 폴더</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">마법사</system:String>
 
     <!--  FileManager Setting Dialog  -->
