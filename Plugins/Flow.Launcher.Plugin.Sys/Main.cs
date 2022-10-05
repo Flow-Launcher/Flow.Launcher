@@ -191,126 +191,6 @@ namespace Flow.Launcher.Plugin.Sys
                         return true;
                     }
                 },
-                new Result
-                {
-                    Title = "Explorer",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_explorer"),
-                    IcoPath = "Images\\explorer.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec50"),
-                    Action = c =>
-                    {
-                        {
-                            System.Diagnostics.Process.Start("explorer.exe", "");
-                        }
-
-                        return true;
-                    }
-                },
-                new Result
-                {
-                    Title = "My PC",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmypc"),
-                    IcoPath = "Images\\mycomputer.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7f4"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:mycomputerfolder");
-                        }
-
-                        return true;
-                    }
-                },
-                new Result
-                {
-                    Title = "Desktop",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openmydesktop"),
-                    IcoPath = "Images\\desktop.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7fb"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:desktop");
-                        }
-
-                        return true;
-                    }
-                },
-                 new Result
-                {
-                    Title = "Libraries",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_libraries"),
-                    IcoPath = "Images\\libraries.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8f1"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:Libraries");
-                        }
-
-                        return true;
-                    }
-                },
-                 new Result
-                {
-                    Title = "Pictures",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_pictures"),
-                    IcoPath = "Images\\pictures.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8b9"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:My Pictures");
-                        }
-
-                        return true;
-                    }
-                },
-                 new Result
-                {
-                    Title = "Videos",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_videos"),
-                    IcoPath = "Images\\videos.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe714"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:My Video");
-                        }
-
-                        return true;
-                    }
-                },
-                 new Result
-                {
-                    Title = "Documents",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_documents"),
-                    IcoPath = "Images\\documents.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8a5"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:Personal");
-                        }
-
-                        return true;
-                    }
-                },
-                 new Result
-                {
-                    Title = "Music",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_music"),
-                    IcoPath = "Images\\music.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe93c"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:My Music");
-                        }
-
-                        return true;
-                    }
-                },
                  new Result
                 {
                     Title = "Index Option",
@@ -321,21 +201,6 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         {
                             System.Diagnostics.Process.Start("control.exe", "srchadmin.dll");
-                        }
-
-                        return true;
-                    }
-                },
-                new Result
-                {
-                    Title = "Downloads",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_downloads"),
-                    IcoPath = "Images\\download.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7f4"),
-                    Action = c =>
-                    {
-                        {
-                            context.API.OpenDirectory("shell:downloads");
                         }
 
                         return true;
@@ -373,7 +238,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         {
-                            context.API.OpenDirectory("shell:RecycleBinFolder");
+                                   System.Diagnostics.Process.Start("explorer.exe", "shell://RecycleBinFolder");
                         }
 
                         return true;
