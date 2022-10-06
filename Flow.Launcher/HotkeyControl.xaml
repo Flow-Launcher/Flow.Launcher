@@ -49,7 +49,6 @@
             Margin="0,0,18,0"
             VerticalContentAlignment="Center"
             input:InputMethod.IsInputMethodEnabled="False"
-            PreviewKeyDown="TbHotkey_OnPreviewKeyDown"
             TabIndex="100"
             LostFocus="tbHotkey_LostFocus"/>
     </Grid>
