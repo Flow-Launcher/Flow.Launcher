@@ -17,7 +17,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Nastala chyba počas inštalácie pluginu {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Nie je k dispozícii žiadna aktualizácia</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Všetky pluginy sú aktuálne</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} od {1} {2}{3}Chcete aktualizovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} od {1} {2}{3}Chcete aktualizovať tento plugin? Po aktualizácii sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizácia pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Aktualizácia pre tento plugin je k dispozícii, chcete ju zobraziť?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je už nainštalovaný</system:String>

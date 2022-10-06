@@ -600,6 +600,45 @@ namespace Flow.Launcher.ViewModel
         public string Github => Constant.GitHub;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
+        
+        public string CheckLogFolder
+        {
+            get 
+            {
+                var dirInfo = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+                long size = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
+                
+                return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")" ;
+            }
+        }
+
+        internal void ClearLogFolder()
+        {
+            var directory = new DirectoryInfo(
+                                        Path.Combine(
+                                            DataLocation.DataDirectory(),
+                                            Constant.Logs,
+                                            Constant.Version));
+
+            directory.EnumerateFiles()
+                     .ToList()
+                     .ForEach(x => x.Delete());
+        }
+        internal string FormatBytes(long bytes)
+        {
+            const int scale = 1024;
+            string[] orders = new string[] { "GB", "MB", "KB", "Bytes" };
+            long max = (long)Math.Pow(scale, orders.Length - 1);
+
+            foreach (string order in orders)
+            {
+                if (bytes > max)
+                    return string.Format("{0:##.##} {1}", decimal.Divide(bytes, max), order);
+
+                max /= scale;
+            }
+            return "0 Bytes";
+        }
         #endregion
     }
 }
