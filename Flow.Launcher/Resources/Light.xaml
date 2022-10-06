@@ -17,7 +17,10 @@
     <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
     <SolidColorBrush x:Key="HotkeyForeground" Color="#acacac" />
     <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#acacac" />
+    <SolidColorBrush x:Key="GuideAlertBG" Color="#fff4ce" />
+    <SolidColorBrush x:Key="GuideAlertCircleFill" Color="#9d5d00" />
     <Color x:Key="ItemSelectedBackgroundColorBrush">#198F8F8F</Color>
+
 
     <SolidColorBrush x:Key="Color00B" Color="#fbfbfb" />
     <SolidColorBrush x:Key="Color01B" Color="#f3f3f3" />
