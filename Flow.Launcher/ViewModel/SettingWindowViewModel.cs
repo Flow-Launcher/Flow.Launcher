@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Core;
@@ -19,6 +22,8 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
+using Windows.Management.Deployment.Preview;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -241,7 +246,8 @@ namespace Flow.Launcher.ViewModel
 
         #region plugin
 
-        public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
+        //public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
+        public static string Plugin => @"https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json";
         public PluginViewModel SelectedPlugin { get; set; }
 
         public IList<PluginViewModel> PluginViewModels
@@ -261,8 +267,49 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                return PluginsManifest.UserPlugins;
+                return LabelMaker(PluginsManifest.UserPlugins);
             }
+        }
+
+        private  IList<UserPlugin> LabelMaker(IList<UserPlugin> list)
+        {
+            foreach (UserPlugin item in list)
+            {
+                item.LabelNew = false;
+                item.LabelInstalled = false;
+                item.LabelUpdated = false;
+
+                foreach (var vm in PluginViewModels)
+                {
+
+                    var id = vm.PluginPair.Metadata.ID;
+                    if (item.ID == vm.PluginPair.Metadata.ID) // Add Installed Label
+                    {
+                        item.LabelInstalled = true;
+                    }
+
+                    TimeSpan UpdatedDay = DateTime.Now.Subtract(item.LatestReleaseDate);
+                    int LastUpdated = UpdatedDay.Days;
+
+                    if (LastUpdated <= 5) // Add Updated Label 
+                    {
+                        item.LabelUpdated = true;
+                    }
+                }
+                TimeSpan AddedDay = DateTime.Now.Subtract(item.DateAdded);
+                int DateAdded = AddedDay.Days;
+                if (DateAdded <= 7)
+                {
+
+                    //item.LabelNew = true; // Add New Label
+                    //item.LabelUpdated = false; // Hide Updated Label when Added New Label. New and Update doesn't show both same time.
+                }
+            }
+
+            // New first, Updated second. Installed to bottom of list.
+            list = list.OrderByDescending(x => x.LabelNew).OrderByDescending(x => x.LabelUpdated).ThenBy(y => y.LabelInstalled).ToList();
+
+            return list;
         }
 
         public Control SettingProvider
