@@ -58,7 +58,13 @@ namespace Flow.Launcher.Plugin
             {
                 if (!string.IsNullOrEmpty(PluginDirectory) && !Path.IsPathRooted(value))
                 {
-                    _icoPath = Path.Combine(value, IcoPath);
+                    string absPath = Path.Combine(value, IcoPath);
+                    // Only convert relative paths if its a valid path
+                    if (File.Exists(absPath))
+                    {
+                        _icoPath = Path.Combine(value, IcoPath);
+                    }
+                    
                 }
                 else
                 {
