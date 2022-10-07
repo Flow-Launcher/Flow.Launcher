@@ -28,7 +28,7 @@
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">开机自启</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="setAutoStartFailed">设置开机自启时出错</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
@@ -40,7 +40,7 @@
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键(建议游戏时打开)。</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键 (建议游戏时打开) 。</system:String>
     <system:String x:Key="defaultFileManager">默认文件管理器</system:String>
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
     <system:String x:Key="defaultBrowser">默认浏览器</system:String>
@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
     <system:String x:Key="ShouldUsePinyin">启动拼音搜索</system:String>
@@ -69,12 +70,14 @@
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
+    <system:String x:Key="priorityToolTip">更改插件结果优先级</system:String>
     <system:String x:Key="pluginDirectory">插件目录</system:String>
     <system:String x:Key="author">出自</system:String>
     <system:String x:Key="plugin_init_time">加载耗时：</system:String>
     <system:String x:Key="plugin_query_time">查询耗时：</system:String>
     <system:String x:Key="plugin_query_version">| 版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
+    <system:String x:Key="plugin_uninstall">卸载</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -108,10 +111,10 @@
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
-    <system:String x:Key="openResultModifiers">开放结果修饰符</system:String>
-    <system:String x:Key="openResultModifiersToolTip">指定修饰符用于打开指定的选项。</system:String>
+    <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
+    <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">显示热键用于快速选择选项。</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQuery">查询</system:String>
     <system:String x:Key="delete">删除</system:String>
@@ -155,11 +158,13 @@
         下载更新失败，请检查您与 github-cloud.s3.amazonaws.com 的连接状态或检查代理设置， 
         或访问 https://github.com/Flow-Launcher/Flow.Launcher/releases 手动下载更新
     </system:String>
-    <system:String x:Key="releaseNotes">更新说明:</system:String>
-    <system:String x:Key="documentation">使用技巧:</system:String>
+    <system:String x:Key="releaseNotes">更新说明</system:String>
+    <system:String x:Key="documentation">使用技巧</system:String>
     <system:String x:Key="devtool">开发工具</system:String>
     <system:String x:Key="settingfolder">设置目录</system:String>
     <system:String x:Key="logfolder">日志目录</system:String>
+    <system:String x:Key="clearlogfolder">清除日志</system:String>
+    <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
 
     <!--  FileManager Setting Dialog  -->
@@ -256,11 +261,11 @@
     <system:String x:Key="Welcome_Page1_Text01">你好，这是你第一次运行 Flow Launcher！</system:String>
     <system:String x:Key="Welcome_Page1_Text02">在启动前，这个向导将有助于设置 Flow Launcher。如果您愿意，您可以跳过。请选择一种语言</system:String>
     <system:String x:Key="Welcome_Page2_Title">搜索并运行您PC上的文件和应用程序</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要触摸鼠标。</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要鼠标。</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 默认使用下面的快捷键激活。 要更改它，请点击输入并按键盘上所需的热键。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷键</system:String>
     <system:String x:Key="Welcome_Page4_Title">动作关键词和命令</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。 某些函数起始于一个动作关键词，如有必要，它们可以在没有动作关键词的情况下使用。欢迎尝试一下的查询语句。</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。某些功能使用一个动作关键词激活，如有必要，它们也可以在没有动作关键词的情况下使用。欢迎尝试以下的查询语句。</system:String>
     <system:String x:Key="Welcome_Page5_Title">开始使用 Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">完成了！享受 Flow Launcher。不要忘记激活快捷键 :)</system:String>
 
@@ -268,7 +273,7 @@
 
     <system:String x:Key="HotkeyUpDownDesc">返回/上下文菜单</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">选项导航</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">打开菜单目录</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">打开上下文菜单</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">打开所在目录</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理员身份运行</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查询历史</system:String>
@@ -285,6 +290,6 @@
     <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Windows 设置中的蓝牙</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">便笺</system:String>
 
 </ResourceDictionary>

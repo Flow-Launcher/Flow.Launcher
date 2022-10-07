@@ -673,7 +673,7 @@
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Asistent na lepšie sústredenie - Obdobie kľudu</value>
+    <value>Asistent na lepšie sústredenie - Obdobie pokoja</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
@@ -831,7 +831,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
-    <value> </value>
+    <value>Svetlá farba</value>
   </data>
   <data name="LightMode" xml:space="preserve">
     <value>Svetlý režim</value>
@@ -982,7 +982,7 @@
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value> </value>
+    <value>Nočné osvetlenie</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
     <value>Nastavenia nočného osvetlenia</value>
@@ -1004,7 +1004,7 @@
     <value>Zastarané v systéme Windows 10, verzia 1809 (zostava 17763) a novších.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value> </value>
+    <value>K dispozícii len v prípade, že je spárované zariadenie Dial.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
     <value>Dostupné iba vtedy, ak je povolený DirectAccess.</value>
@@ -1031,7 +1031,7 @@
     <value>Dostupné iba v prípade, že je nainštalovaná aplikácia Mixed Reality Portal.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value> </value>
+    <value>K dispozícii len v mobilných zariadeniach a v prípade, že podnik nasadil balík provisioningu.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
     <value>Pridané v systéme Windows 10, verzia 1903 (zostava 18362).</value>
@@ -1052,7 +1052,7 @@
     <value>Zariadenie musí podporovať Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value> </value>
+    <value>K dispozícii len v prípade, že podnik nasadil balík provisioningu.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Oznámenia</value>
@@ -1271,7 +1271,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value> </value>
+    <value>Hranie hry na celú obrazovku</value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Vysielače</value>
@@ -1297,7 +1297,7 @@
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
-    <value> </value>
+    <value>Protanopia</value>
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
@@ -1427,7 +1427,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
-    <value> </value>
+    <value>Priečinky v ponuke Štart</value>
   </data>
   <data name="StartupApps" xml:space="preserve">
     <value>Aplikácie pri spustení</value>
@@ -1595,7 +1595,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value> </value>
+    <value>Hlasitosť</value>
   </data>
   <data name="Vpn" xml:space="preserve">
     <value>VPN</value>
@@ -2290,7 +2290,7 @@
     <value>Skontrolovať stav zabezpečenia</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>Odstrániť súbory cookie alebo dočasné súbory</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
     <value>Zadanie ruky používanej na písanie</value>
