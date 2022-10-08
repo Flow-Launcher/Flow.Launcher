@@ -1,29 +1,30 @@
-﻿using System;
+﻿using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.UserSettings;
+using System;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
-        private SettingWindow _settingWidow;
-        private bool update;
         private Settings _settings;
-
+        private bool update = false;
         public string Key { get; set; }
         public string Value { get; set; }
         public CustomShortcutModel ShortCut => (Key, Value);
 
-        public CustomShortcutSetting()
+        public CustomShortcutSetting(Settings settings)
         {
+            _settings = settings;
             InitializeComponent();
         }
 
-        public CustomShortcutSetting((string, string) shortcut)
+        public CustomShortcutSetting((string, string) shortcut, Settings settings)
         {
             (Key, Value) = shortcut;
+            _settings = settings;
+            update = true;
             InitializeComponent();
         }
 
@@ -35,17 +36,17 @@ namespace Flow.Launcher
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            if (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)))
+            if (!update && _settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("dulplicateShortcut"));
-                DialogResult = false;
+                return;
             }
-            else if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
+            if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidShortcut"));
-                DialogResult = false;
+                return;
             }
+            DialogResult = true;
             Close();
         }
 
@@ -53,6 +54,14 @@ namespace Flow.Launcher
         {
             DialogResult = false;
             Close();
+        }
+
+        private void BtnTestShortcut_OnClick(object sender, RoutedEventArgs e)
+        {
+            App.API.ChangeQuery(tbExpand.Text);
+            Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.Opacity = 1;
+            Application.Current.MainWindow.Focus();
         }
     }
 }

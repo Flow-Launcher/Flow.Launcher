@@ -398,7 +398,7 @@ namespace Flow.Launcher
             var item = viewModel.SelectedCustomShortcut;
             if (item != null)
             {
-                var shortcutSettingWindow = new CustomShortcutSetting(item);
+                var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
                 if (shortcutSettingWindow.ShowDialog() == true)
                 {
                     settings.CustomShortcuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
@@ -412,7 +412,7 @@ namespace Flow.Launcher
 
         private void OnAddCustomeShortCutClick(object sender, RoutedEventArgs e)
         {
-            var shortcutSettingWindow = new CustomShortcutSetting();
+            var shortcutSettingWindow = new CustomShortcutSetting(settings);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
                 settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);

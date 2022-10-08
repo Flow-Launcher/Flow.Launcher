@@ -215,7 +215,6 @@
 	<!--  Custom Query Shortcut Dialog  -->
 	<system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
 	<system:String x:Key="customeQueryShortcutTips">Enter a shortcut to automatically expand to the specified query.</system:String>
-	<system:String x:Key="preview">Preview</system:String>
 	<system:String x:Key="dulplicateShortcut">Shortcut is dulplicate, please enter a new Shortcut or edit the existing one.</system:String>
 	<system:String x:Key="invalidShortcut">Invalid Shortcut</system:String>
 

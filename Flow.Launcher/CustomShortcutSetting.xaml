@@ -110,14 +110,25 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource customShortcutExpansion}" />
-                        <TextBox
+
+						<DockPanel
                             Grid.Row="1"
                             Grid.Column="1"
-                            Margin="10"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            Text="{Binding Value}"/>
-                    </Grid>
+                            LastChildFill="True">
+							<Button
+                                x:Name="btnTestShortcut"
+                                Padding="10,5,10,5"
+                                Click="BtnTestShortcut_OnClick"
+                                Content="{DynamicResource preview}"
+                                DockPanel.Dock="Right" />
+							<TextBox
+                                x:Name="tbExpand"
+                                Margin="10"
+                                HorizontalAlignment="Stretch"
+								Text="{Binding Value}"
+                                VerticalAlignment="Center" />
+						</DockPanel>
+					</Grid>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

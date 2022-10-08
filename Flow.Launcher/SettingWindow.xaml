@@ -2175,7 +2175,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         Foreground="{DynamicResource Color05B}"
-                                        Text="Shortcut" />
+                                        Text="{DynamicResource customQueryShortcut}" />
                                     <ListView
                                         MinHeight="185"
                                         Margin="0,6,0,0"
