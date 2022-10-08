@@ -2188,14 +2188,14 @@
                                         Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                                         <ListView.View>
                                             <GridView>
-                                                <GridViewColumn Header="Key">
+                                                <GridViewColumn Header="{DynamicResource customShortcut}">
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <TextBlock Text="{Binding Key}" />
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
-                                                <GridViewColumn Header="Mapped Value">
+												<GridViewColumn Header="{DynamicResource customShortcutExpansion}">
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <TextBlock Text="{Binding Value}" />

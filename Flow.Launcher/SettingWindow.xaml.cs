@@ -415,11 +415,6 @@ namespace Flow.Launcher
             var shortcutSettingWindow = new CustomShortcutSetting();
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                if (settings.CustomShortcuts.Contains(shortcutSettingWindow.ShortCut))
-                {
-                    MessageBox.Show("Dulplicate shortcut");
-                    return;
-                }
                 settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
             }
         }

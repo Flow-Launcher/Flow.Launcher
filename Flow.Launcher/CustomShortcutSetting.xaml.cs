@@ -1,12 +1,8 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Collections.Generic;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
@@ -40,6 +36,16 @@ namespace Flow.Launcher
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
+            if (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)))
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("dulplicateShortcut"));
+                DialogResult = false;
+            }
+            else if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidShortcut"));
+                DialogResult = false;
+            }
             Close();
         }
 
