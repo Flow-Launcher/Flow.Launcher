@@ -283,7 +283,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public IList<UserPlugin> ExternalPlugins
+        public IList<PluginStoreItemViewModel> ExternalPlugins
         {
             get
             {
@@ -291,45 +291,13 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private  IList<UserPlugin> LabelMaker(IList<UserPlugin> list)
+        private  IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
         {
-            foreach (UserPlugin item in list)
-            {
-                item.LabelNew = false;
-                item.LabelInstalled = false;
-                item.LabelUpdated = false;
-
-                foreach (var vm in PluginViewModels)
-                {
-
-                    var id = vm.PluginPair.Metadata.ID;
-                    if (item.ID == vm.PluginPair.Metadata.ID) // Add Installed Label
-                    {
-                        item.LabelInstalled = true;
-                    }
-
-                    TimeSpan UpdatedDay = DateTime.Now.Subtract(item.LatestReleaseDate);
-                    int LastUpdated = UpdatedDay.Days;
-
-                    if (LastUpdated <= 5) // Add Updated Label 
-                    {
-                        item.LabelUpdated = true;
-                    }
-                }
-                TimeSpan AddedDay = DateTime.Now.Subtract(item.DateAdded);
-                int DateAdded = AddedDay.Days;
-                if (DateAdded <= 7)
-                {
-
-                    item.LabelNew = true; // Add New Label
-                    item.LabelUpdated = false; // Hide Updated Label when Added New Label. New and Update doesn't show both same time.
-                }
-            }
-
-            // New first, Updated second. Installed to bottom of list.
-            list = list.OrderByDescending(x => x.LabelNew).OrderByDescending(x => x.LabelUpdated).ThenBy(y => y.LabelInstalled).ToList();
-
-            return list;
+            return list.Select(p=>new PluginStoreItemViewModel(p))
+                .OrderBy(p=>p.LabelNew)
+                .ThenByDescending(p=>p.LabelUpdated)
+                .ThenBy(p=>p.LabelInstalled)
+                .ToList();
         }
 
         public Control SettingProvider

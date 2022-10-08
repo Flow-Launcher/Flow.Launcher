@@ -17,9 +17,5 @@ namespace Flow.Launcher.Core.ExternalPlugins
         public DateTime LatestReleaseDate { get; set; }
         public DateTime DateAdded { get; set; }
 
-        /* Label Data for Plugin Store */
-        public bool LabelNew { get; set; }
-        public bool LabelInstalled { get; set; }
-        public bool LabelUpdated { get; set; }
     }
 }
