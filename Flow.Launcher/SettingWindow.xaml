@@ -1625,7 +1625,7 @@
                                                         <Run
                                                             FontSize="12"
                                                             Foreground="{DynamicResource Color04B}"
-                                                            Text="{Binding Description}" />
+                                                            Text="{Binding Description, Mode=OneWay}" />
                                                     </TextBlock>
 
                                                 </StackPanel>
@@ -1687,7 +1687,7 @@
                                                                         Foreground="{DynamicResource Color04B}"
                                                                         NavigateUri="{Binding Website}"
                                                                         RequestNavigate="OnRequestNavigate">
-                                                                        <Run FontSize="12" Text="{Binding Author}" />
+                                                                        <Run FontSize="12" Text="{Binding Author, Mode=OneWay}" />
                                                                     </Hyperlink>
                                                                 </TextBlock>
                                                             </StackPanel>
