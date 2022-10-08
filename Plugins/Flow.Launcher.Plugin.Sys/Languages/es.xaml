@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquea el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Cierra Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Reinicia Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Ajustar la configuración de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Ajusta la configuración de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Duerme el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Vacia la papelera de reciclaje</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Abre la papelera de reciclaje</system:String>
