@@ -267,8 +267,7 @@ namespace Flow.Launcher.ViewModel
 
         #region plugin
 
-        //public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
-        public static string Plugin => @"https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json";
+        public static string Plugin => @"https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest";
         public PluginViewModel SelectedPlugin { get; set; }
 
         public IList<PluginViewModel> PluginViewModels
@@ -322,8 +321,8 @@ namespace Flow.Launcher.ViewModel
                 if (DateAdded <= 7)
                 {
 
-                    //item.LabelNew = true; // Add New Label
-                    //item.LabelUpdated = false; // Hide Updated Label when Added New Label. New and Update doesn't show both same time.
+                    item.LabelNew = true; // Add New Label
+                    item.LabelUpdated = false; // Hide Updated Label when Added New Label. New and Update doesn't show both same time.
                 }
             }
 
