@@ -1,15 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
-    public class CustomShortcutModel
+    public class CustomShortcutBaseModel
     {
         public string Key { get; set; }
-        public string Value { get; set; }
+
+        [JsonIgnore]
+        public Func<string> Expand { get; set; } = () => { return ""; };
+
+        public override bool Equals(object obj)
+        {
+            return obj is CustomShortcutBaseModel other &&
+                   Key == other.Key;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Key);
+        }
+    };
+
+    public class CustomShortcutModel : CustomShortcutBaseModel
+    {
+        public string Value
+        {
+            get { return Expand(); }
+            set { Expand = () => { return value; }; }
+        }
 
         public CustomShortcutModel(string key, string value)
         {
@@ -17,22 +36,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             Value = value;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is CustomShortcutModel other &&
-                   Key == other.Key &&
-                   Value == other.Value;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Key, Value);
-        }
-
         public void Deconstruct(out string key, out string value)
         {
             key = Key;
-            value = Value;
+            value = Expand();
         }
 
         public static implicit operator (string Key, string Value)(CustomShortcutModel shortcut)
