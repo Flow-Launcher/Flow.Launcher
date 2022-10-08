@@ -175,6 +175,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
@@ -204,7 +205,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
-        internal ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new();
     }
 
     public enum LastQueryMode
