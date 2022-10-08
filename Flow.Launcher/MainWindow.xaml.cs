@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,8 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Windows.Data;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -136,22 +138,20 @@ namespace Flow.Launcher
                         }
                     case nameof(MainViewModel.ProgressBarVisibility):
                         {
-                            Dispatcher.Invoke(async () =>
+                            Dispatcher.Invoke(() =>
                             {
                                 if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
                                 {
-                                    await Task.Delay(50);
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
                                 else if (_viewModel.MainWindowVisibilityStatus &&
-                                         isProgressBarStoryboardPaused)
+                                            isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
-                            }, System.Windows.Threading.DispatcherPriority.Render);
-
+                            });
                             break;
                         }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
@@ -553,6 +553,15 @@ namespace Flow.Launcher
             else if (_settings.ColorScheme == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+            }
+        }
+
+        private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(_viewModel.QueryText != QueryTextBox.Text)
+            {
+                BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
+                be.UpdateSource();
             }
         }
     }

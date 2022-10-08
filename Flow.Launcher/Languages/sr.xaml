@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Izaberi</system:String>
     <system:String x:Key="hideOnStartup">Sakrij Flow Launcher pri podizanju sistema</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
@@ -69,12 +70,14 @@
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin direktorijum</system:String>
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Vreme inicijalizacije:</system:String>
     <system:String x:Key="plugin_query_time">Vreme upita:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -155,11 +158,13 @@
         Neuspešno preuzimanje ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema github-cloud.s3.amazonaws.com, 
         ili posetite https://github.com/Flow-Launcher/Flow.Launcher/releases da preuzmete ažuriranja ručno.
     </system:String>
-    <system:String x:Key="releaseNotes">U novoj verziji:</system:String>
+    <system:String x:Key="releaseNotes">U novoj verziji</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
     <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
 
     <!--  FileManager Setting Dialog  -->

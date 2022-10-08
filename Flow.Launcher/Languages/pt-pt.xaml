@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Se o ícone da bandeja estiver oculto, pode abrir as Definições com um clique com o botão direito do rato na caixa de pesquisa.</system:String>
     <system:String x:Key="querySearchPrecision">Precisão da consulta</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
     <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
@@ -69,12 +70,14 @@
     <system:String x:Key="currentPriority">Prioridade atual</system:String>
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
+    <system:String x:Key="priorityToolTip">Alterar prioridade dos resultados do plugin</system:String>
     <system:String x:Key="pluginDirectory">Diretório de plugins</system:String>
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
     <system:String x:Key="plugin_query_version">| Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
+    <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -159,6 +162,8 @@
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Pasta de definições</system:String>
     <system:String x:Key="logfolder">Pasta de registos</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Assistente</system:String>
 
     <!--  FileManager Setting Dialog  -->

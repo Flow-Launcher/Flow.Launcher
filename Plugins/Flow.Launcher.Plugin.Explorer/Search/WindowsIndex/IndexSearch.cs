@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Microsoft.Search.Interop;
 using System;
@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
     {
 
         // Reserved keywords in oleDB
-        private const string reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_;\[\]]+$";
+        private const string reservedStringPattern = @"^[`\@\＠\#\＃\＊\^,\&\＆\/\\\$\%_;\[\]]+$";
 
         internal static async Task<List<Result>> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, Query query, CancellationToken token)
         {
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 await using var conn = new OleDbConnection(connectionString);
                 await conn.OpenAsync(token);
                 token.ThrowIfCancellationRequested();
-
+                
                 await using var command = new OleDbCommand(indexQueryString, conn);
                 // Results return as an OleDbDataReader.
                 await using var dataReaderResults = await command.ExecuteReaderAsync(token) as OleDbDataReader;
