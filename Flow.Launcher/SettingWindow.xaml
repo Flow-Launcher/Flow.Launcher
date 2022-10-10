@@ -13,18 +13,20 @@
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource flowlauncher_settings}"
-    Width="1000"
-    Height="700"
+    Width="{Binding SettingWindowWidth, Mode=TwoWay}"
+    Height="{Binding SettingWindowHeight, Mode=TwoWay}"
     MinWidth="900"
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
     Icon="Images\app.ico"
+    Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
     StateChanged="Window_StateChanged"
-    WindowStartupLocation="CenterScreen"
+    Top="{Binding SettingWindowTop, Mode=TwoWay}"
+    WindowStartupLocation="Manual"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
@@ -630,6 +632,7 @@
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideNotifyIcon}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource hideNotifyIconToolTip}" />
                                     </StackPanel>
                                     <CheckBox IsChecked="{Binding Settings.HideNotifyIcon}" Style="{DynamicResource SideControlCheckBox}" />
                                 </ItemsControl>
@@ -869,6 +872,9 @@
                                         ItemsSource="{Binding Languages}"
                                         SelectedValue="{Binding Language}"
                                         SelectedValuePath="LanguageCode" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xf2b7;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
                         </StackPanel>
@@ -995,7 +1001,7 @@
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
-                                                                ToolTip="Change Plugin Results Priority">
+                                                                ToolTip="{DynamicResource priorityToolTip}">
                                                                 <!--#region Priority Button Style-->
                                                                 <Button.Resources>
                                                                     <Style TargetType="Border">
@@ -1201,6 +1207,17 @@
                                                                             <Run Text="{DynamicResource plugin_query_web}" />
                                                                         </Hyperlink>
                                                                     </TextBlock>
+
+                                                                    <TextBlock
+                                                                        Margin="10,0,0,0"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Center"
+                                                                        Cursor="Hand"
+                                                                        FontSize="11"
+                                                                        Foreground="{DynamicResource PluginInfoColor}"
+                                                                        MouseUp="OnExternalPluginUninstallClick"
+                                                                        Text="{DynamicResource plugin_uninstall}"
+                                                                        TextDecorations="Underline" />
 
                                                                     <TextBlock
                                                                         Margin="10,0,0,0"
@@ -2418,7 +2435,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
-                                            Margin="0,0,30,0"
+                                            Margin="0,0,18,0"
                                             VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
@@ -2464,7 +2481,7 @@
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
-                                            Margin="0,0,30,0"
+                                            Margin="0,0,18,0"
                                             VerticalAlignment="Center"
                                             Orientation="Horizontal">
                                             <TextBlock Margin="0,0,12,0">
@@ -2522,6 +2539,11 @@
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
                                                 Content="{DynamicResource settingfolder}" />
+                                            <Button
+                                                Name="ClearLogFolderBtn"
+                                                Margin="0,0,12,0"
+                                                Click="ClearLogFolder"
+                                                Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
                                             <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">

@@ -10,7 +10,10 @@ namespace Flow.Launcher.Converters
         {
             if (value is ListBoxItem listBoxItem
                 && ItemsControl.ItemsControlFromItemContainer(listBoxItem) is ListBox listBox)
-                return listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem) + 1;
+            {
+                var res = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem) + 1;
+                return res == 10 ? 0 : res;  // 10th item => HOTKEY+0
+            }
 
             return 0;
         }
