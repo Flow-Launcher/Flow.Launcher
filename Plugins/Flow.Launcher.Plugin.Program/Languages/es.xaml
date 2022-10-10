@@ -11,7 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_program_location">Ubicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos los programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">Extensiones de archivo</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_reindex">Re-indexar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">Volver a indexar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexando</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Indexar menú de inicio</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando esté activado, Flow cargará los programas desde el menú de inicio</system:String>
@@ -55,6 +55,6 @@
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Correcto</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Programa desactivado correctamente en las búsquedas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Esta aplicación no fué diseñada para ser ejecutada como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Esta aplicación no fue diseñada para ser ejecutada como administrador</system:String>
 
 </ResourceDictionary>
