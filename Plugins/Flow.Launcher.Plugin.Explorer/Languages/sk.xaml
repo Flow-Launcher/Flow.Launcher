@@ -23,7 +23,7 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použite vyhľadávanie v indexe</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Zapnutím tejto funkcie sa zrýchli odozva indexovaných priečinkov/súborov, ale ak priečinok/súbor nie je indexovaný, nezobrazí sa. Ak bol priečinok/súbor pridaný do Vylúčené umiestnenia indexovania, zobrazí sa, aj keď je táto možnosť zapnutá</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>

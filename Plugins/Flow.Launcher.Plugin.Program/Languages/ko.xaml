@@ -43,7 +43,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable_program">이 프로그램 표시 비활성화</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">프로그램</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcher에서 프로그램 검색</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcher에서 프로그램을 검색합니다</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">잘못된 경로</system:String>
 

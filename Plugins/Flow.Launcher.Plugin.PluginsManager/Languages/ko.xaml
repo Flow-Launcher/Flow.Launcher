@@ -30,7 +30,7 @@
     
     <!--Plugin Infos-->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">플러그인 관리자</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">플러그인의 설치/삭제/업데이트를 관리하는 플러그인</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">알수없는 제작자</system:String>
 
     <!--Context menu items-->

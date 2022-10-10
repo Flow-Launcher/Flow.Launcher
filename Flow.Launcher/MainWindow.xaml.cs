@@ -138,22 +138,20 @@ namespace Flow.Launcher
                         }
                     case nameof(MainViewModel.ProgressBarVisibility):
                         {
-                            Dispatcher.Invoke(async () =>
+                            Dispatcher.Invoke(() =>
                             {
                                 if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
                                 {
-                                    await Task.Delay(50);
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
                                 else if (_viewModel.MainWindowVisibilityStatus &&
-                                         isProgressBarStoryboardPaused)
+                                            isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
-                            }, System.Windows.Threading.DispatcherPriority.Render);
-
+                            });
                             break;
                         }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):

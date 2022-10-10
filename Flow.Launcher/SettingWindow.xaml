@@ -13,18 +13,20 @@
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource flowlauncher_settings}"
-    Width="1000"
-    Height="700"
+    Width="{Binding SettingWindowWidth, Mode=TwoWay}"
+    Height="{Binding SettingWindowHeight, Mode=TwoWay}"
     MinWidth="900"
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
     Icon="Images\app.ico"
+    Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
     StateChanged="Window_StateChanged"
-    WindowStartupLocation="CenterScreen"
+    Top="{Binding SettingWindowTop, Mode=TwoWay}"
+    WindowStartupLocation="Manual"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
@@ -1116,7 +1118,6 @@
                                                         <!--#endregion-->
                                                         <ContentControl
                                                             x:Name="PluginSettingControl"
-                                                            MaxHeight="550"
                                                             Margin="0"
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
@@ -2542,6 +2543,11 @@
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
                                                 Content="{DynamicResource settingfolder}" />
+                                            <Button
+                                                Name="ClearLogFolderBtn"
+                                                Margin="0,0,12,0"
+                                                Click="ClearLogFolder"
+                                                Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
                                             <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
