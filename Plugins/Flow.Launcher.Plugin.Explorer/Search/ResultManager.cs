@@ -94,10 +94,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var progressBarColor = "#26a0da";
             var title = string.Empty; // hide title when use progress bar,
-            var driveLetter = path.Substring(0, 1).ToUpper();
+            var driveLetter = path[..1].ToUpper();
             var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
-            var subtitle = toReadableSize(drv.AvailableFreeSpace, 2) + " free of " + toReadableSize(drv.TotalSize, 2);
+            var subtitle = ToReadableSize(drv.AvailableFreeSpace, 2) + " free of " + ToReadableSize(drv.TotalSize, 2);
             double usingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
 
             int? progressValue = Convert.ToInt32(usingSize);
@@ -131,7 +131,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        private static string toReadableSize(long pDrvSize, int pi)
+        private static string ToReadableSize(long pDrvSize, int pi)
         {
             int mok = 0;
             double drvSize = pDrvSize;
@@ -152,24 +152,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             else if (mok == 4)
                 Space = " TB";
 
-            var returnStr = string.Format("{0}{1}", Convert.ToInt32(drvSize), Space);
+            var returnStr = $"{Convert.ToInt32(drvSize)}{Space}";
             if (mok != 0)
             {
-                switch (pi)
+                returnStr = pi switch
                 {
-                    case 1:
-                        returnStr = string.Format("{0:F1}{1}", drvSize, Space);
-                        break;
-                    case 2:
-                        returnStr = string.Format("{0:F2}{1}", drvSize, Space);
-                        break;
-                    case 3:
-                        returnStr = string.Format("{0:F3}{1}", drvSize, Space);
-                        break;
-                    default:
-                        returnStr = string.Format("{0}{1}", Convert.ToInt32(drvSize), Space);
-                        break;
-                }
+                    1 => $"{drvSize:F1}{Space}",
+                    2 => $"{drvSize:F2}{Space}",
+                    3 => $"{drvSize:F3}{Space}",
+                    _ => $"{Convert.ToInt32(drvSize)}{Space}"
+                };
             }
 
             return returnStr;
