@@ -62,6 +62,13 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = new Query();
 
             _settings = settings;
+            _settings.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(Settings.WindowSize))
+                {
+                    OnPropertyChanged(nameof(MainWindowWidth));
+                }
+            };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
@@ -356,21 +363,25 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            MainWindowWidth += 100;
+            if (_settings.WindowSize > 1920) return;
+            _settings.WindowSize += 100;
             Left -= 50;
+            OnPropertyChanged();
         }
 
         [RelayCommand]
         private void DecreaseWidth()
         {
-            if (MainWindowWidth < 400) return;
+            if (_settings.WindowSize < 400) return;
             Left += 50;
-            MainWindowWidth -= 100;
+            _settings.WindowSize -= 100;
+            OnPropertyChanged();
         }
 
         [RelayCommand]
         private void IncreaseMaxResult()
         {
+            if (_settings.MaxResultsToShow > 17) return;
             _settings.MaxResultsToShow += 1;
         }
 
