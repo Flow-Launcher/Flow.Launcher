@@ -383,6 +383,7 @@ namespace Flow.Launcher
             }
             return false;
         }
+
         private bool PluginStoreFilter(object item)
         {
             if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
