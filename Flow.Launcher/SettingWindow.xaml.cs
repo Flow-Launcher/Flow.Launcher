@@ -65,6 +65,7 @@ namespace Flow.Launcher
 
             pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
             pluginStoreView.Filter = PluginStoreFilter;
+
             InitializePosition();
         }
 
@@ -246,7 +247,6 @@ namespace Flow.Launcher
             viewModel.UpdateApp(); // TODO: change to command
         }
 
-
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             API.OpenUrl(e.Uri.AbsoluteUri);
@@ -383,6 +383,7 @@ namespace Flow.Launcher
             }
             return false;
         }
+
         private bool PluginStoreFilter(object item)
         {
             if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
@@ -415,6 +416,7 @@ namespace Flow.Launcher
                 pluginStoreView.Refresh();
             }
         }
+
         private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -426,21 +428,13 @@ namespace Flow.Launcher
             if (e.Key == Key.Enter)
                 RefreshPluginStoreEventHandler(sender, e);
         }
+
         private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
                 pluginFilterTxb.Focus();
         }
 
-        private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
-
-        private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
         private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
