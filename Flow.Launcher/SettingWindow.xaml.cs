@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using ModernWpf;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -38,11 +39,12 @@ namespace Flow.Launcher
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
-            InitializeComponent();
             settings = viewModel.Settings;
             DataContext = viewModel;
             this.viewModel = viewModel;
             API = api;
+            InitializePosition();
+            InitializeComponent();
         }
 
         #region General
@@ -55,6 +57,7 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+            InitializePosition();
             ClockDisplay();
         }
 
@@ -244,6 +247,8 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            settings.SettingWindowTop = Top;
+            settings.SettingWindowLeft = Left;
             viewModel.Save();
         }
 
@@ -270,6 +275,20 @@ namespace Flow.Launcher
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+        }
+        private void ClearLogFolder(object sender, RoutedEventArgs e)
+        {
+            var confirmResult = MessageBox.Show(
+                InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
+                InternationalizationManager.Instance.GetTranslation("clearlogfolder"), 
+                MessageBoxButton.YesNo);
+            
+            if (confirmResult == MessageBoxResult.Yes)
+            {
+                viewModel.ClearLogFolder();
+                
+                ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
+            }
         }
 
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
@@ -321,6 +340,7 @@ namespace Flow.Launcher
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
+
             Close();
         }
 
@@ -383,6 +403,36 @@ namespace Flow.Launcher
             }
         }
 
+        public void InitializePosition()
+        {
+            if (settings.SettingWindowTop >= 0 && settings.SettingWindowLeft >= 0)
+            {
+                Top = settings.SettingWindowTop;
+                Left = settings.SettingWindowLeft;
+            }
+            else
+            {
+                Top = WindowTop();
+                Left = WindowLeft();
+            }
+        }
+        public double WindowLeft()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        public double WindowTop()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+            return top;
+        }
         private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -393,6 +443,7 @@ namespace Flow.Launcher
                 API.ChangeQuery($"{actionKeyword} uninstall {id}");
                 API.ShowMainWindow();
             }
+
         }
 
     }
