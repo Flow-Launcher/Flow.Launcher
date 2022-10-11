@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
@@ -25,9 +26,8 @@ namespace Flow.Launcher.ViewModel
         public string UrlSourceCode => _plugin.UrlSourceCode;
         public string IcoPath => _plugin.IcoPath;
 
-        public bool LabelNew => _plugin.LatestReleaseDate - DateTime.Now < TimeSpan.FromDays(7);
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
-        public bool LabelUpdated => _plugin.DateAdded - DateTime.Now < TimeSpan.FromDays(5) && !LabelNew;
-        public bool UpdateBtn => LabelUpdated && LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
+        public bool LabelUpdate => LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
+        public bool LabelNew => DateTime.Now - _plugin.LatestReleaseDate < TimeSpan.FromDays(7) && !LabelUpdate; // Show Update Label show first.
     }
 }

@@ -93,10 +93,10 @@
     <system:String x:Key="updatebtn">Update</system:String>
     <system:String x:Key="LabelInstalled">Installed</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
-    <system:String x:Key="LabelNew">New</system:String>
-    <system:String x:Key="LabelNewToolTip">This is a newly registered plug-in in 7 days</system:String>
-    <system:String x:Key="LabelUpdated">Updated</system:String>
-    <system:String x:Key="LabelUpdatedToolTip">This plug-in has been updated within the last 5 days</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdate">Update</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
 
 
 

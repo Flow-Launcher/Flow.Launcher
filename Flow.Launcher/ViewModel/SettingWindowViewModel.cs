@@ -294,8 +294,8 @@ namespace Flow.Launcher.ViewModel
         private  IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
         {
             return list.Select(p=>new PluginStoreItemViewModel(p))
-                .OrderBy(p=>p.LabelNew)
-                .ThenByDescending(p=>p.LabelUpdated)
+                .OrderByDescending(p=>p.LabelNew)
+                .ThenByDescending(p=>p.LabelUpdate)
                 .ThenBy(p=>p.LabelInstalled)
                 .ToList();
         }
