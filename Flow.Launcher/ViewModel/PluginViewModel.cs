@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;
@@ -43,7 +43,13 @@ namespace Flow.Launcher.ViewModel
 
         private Control _settingControl;
         private bool _isExpanded;
-        public Control SettingControl => IsExpanded ? _settingControl ??= PluginPair.Plugin is not ISettingProvider settingProvider ? new Control() : settingProvider.CreateSettingPanel() : null;
+        public Control SettingControl 
+            => IsExpanded
+                ? _settingControl
+                    ??= PluginPair.Plugin is not ISettingProvider settingProvider
+                        ? new Control() 
+                        : settingProvider.CreateSettingPanel() 
+                : null;
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
