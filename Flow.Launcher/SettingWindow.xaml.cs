@@ -427,6 +427,7 @@ namespace Flow.Launcher
             if (e.Key == Key.Enter)
                 RefreshPluginStoreEventHandler(sender, e);
         }
+
         private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
