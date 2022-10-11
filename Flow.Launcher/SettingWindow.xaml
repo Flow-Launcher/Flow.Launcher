@@ -323,8 +323,6 @@
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-            <Setter Property="MinWidth" Value="100" />
-            <Setter Property="Height" Value="Auto" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
