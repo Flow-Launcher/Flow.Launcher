@@ -58,6 +58,10 @@
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Знайти більше плагінів</system:String>
     <system:String x:Key="enable">Увімкнено</system:String>
