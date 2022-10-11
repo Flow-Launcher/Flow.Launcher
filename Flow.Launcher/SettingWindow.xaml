@@ -1030,7 +1030,6 @@
                                 ScrollViewer.CanContentScroll="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
-                                SelectionChanged="SelectedPluginChanged"
                                 SnapsToDevicePixels="True"
                                 Style="{DynamicResource PluginListStyle}">
                                 <ListBox.ItemsPanel>
@@ -1220,8 +1219,7 @@
                                                             Margin="0"
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
-                                                            Content="{Binding SettingControl}"
-                                                            SizeChanged="ItemSizeChanged" />
+                                                            Content="{Binding SettingControl}" />
                                                     </StackPanel>
 
                                                     <StackPanel>
