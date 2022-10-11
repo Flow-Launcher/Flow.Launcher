@@ -428,7 +428,7 @@
                                             Margin="0,20,0,4"
                                             FontWeight="Bold"
                                             Text="{DynamicResource searchplugin_Noresult_Title}" />
-                                        <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle_Network}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult}" />
                                     </StackPanel>
                                 </Grid>
                             </ControlTemplate>
