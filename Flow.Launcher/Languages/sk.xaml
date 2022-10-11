@@ -58,6 +58,10 @@
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zapnuté</system:String>
