@@ -324,8 +324,6 @@
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-            <Setter Property="MinWidth" Value="100" />
-            <Setter Property="Height" Value="Auto" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -429,7 +427,7 @@
                                             Margin="0,20,0,4"
                                             FontWeight="Bold"
                                             Text="{DynamicResource searchplugin_Noresult_Title}" />
-                                        <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle_Network}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult}" />
                                     </StackPanel>
                                 </Grid>
                             </ControlTemplate>
@@ -1033,7 +1031,6 @@
                                 ScrollViewer.CanContentScroll="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
-                                SelectionChanged="SelectedPluginChanged"
                                 SnapsToDevicePixels="True"
                                 Style="{DynamicResource PluginListStyle}">
                                 <ListBox.ItemsPanel>
@@ -1223,8 +1220,7 @@
                                                             Margin="0"
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
-                                                            Content="{Binding SettingControl}"
-                                                            SizeChanged="ItemSizeChanged" />
+                                                            Content="{Binding SettingControl}" />
                                                     </StackPanel>
 
                                                     <StackPanel>

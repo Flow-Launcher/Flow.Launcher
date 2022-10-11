@@ -61,10 +61,9 @@
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
-    <system:String x:Key="searchpluginToolTip">Ctrl+F to Search Plugins</system:String>
-    <system:String x:Key="searchplugin_Noresult_Title">No results to display</system:String>
-    <system:String x:Key="searchplugin_Noresult_Subtitle">Try another search term.</system:String>
-    <system:String x:Key="searchplugin_Noresult_Subtitle_Network">Please check your network connection or try another search term.</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
     <system:String x:Key="enable">On</system:String>
