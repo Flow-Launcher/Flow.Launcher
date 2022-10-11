@@ -491,5 +491,27 @@ namespace Flow.Launcher
             }
 
         }
+
+        private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+            {
+                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeyword} uninstall {plugin.Name}");
+                API.ShowMainWindow();
+            }
+        }
+
+        private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+            { 
+                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+                API.ChangeQuery($"{actionKeyword} update {plugin.Name}");
+                API.ShowMainWindow();
+            }
+        }
     }
 }

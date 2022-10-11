@@ -24,9 +24,10 @@ namespace Flow.Launcher.ViewModel
         public string UrlDownload => _plugin.UrlDownload;
         public string UrlSourceCode => _plugin.UrlSourceCode;
         public string IcoPath => _plugin.IcoPath;
-        
-        public bool LabelNew => _plugin.LatestReleaseDate-DateTime.Now < TimeSpan.FromDays(7);
+
+        public bool LabelNew => _plugin.LatestReleaseDate - DateTime.Now < TimeSpan.FromDays(7);
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
-        public bool LabelUpdated => _plugin.DateAdded -DateTime.Now < TimeSpan.FromDays(5) && !LabelNew;
+        public bool LabelUpdated => _plugin.DateAdded - DateTime.Now < TimeSpan.FromDays(5) && !LabelNew;
+        public bool UpdateBtn => LabelUpdated && LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
     }
 }
