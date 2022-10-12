@@ -115,6 +115,7 @@
             TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
             <Setter Property="Width" Value="Auto" />
+            <Setter Property="FocusVisualMargin" Value="5" />
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="OffContent" Value="{DynamicResource disable}" />
@@ -648,7 +649,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding StartFlowLauncherOnSystemStartup}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
@@ -664,7 +664,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding Settings.HideOnStartup}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
@@ -680,7 +679,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding Settings.HideWhenDeactive}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
@@ -695,7 +693,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding Settings.HideNotifyIcon}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
@@ -708,7 +705,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding Settings.RememberLastLaunchLocation}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
@@ -722,7 +718,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
@@ -739,9 +734,9 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding Settings.ShouldUsePinyin}"
-                                        Style="{DynamicResource SideToggleSwitch}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+                                        Style="{DynamicResource SideToggleSwitch}"
+                                        ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe98a;
                                     </TextBlock>
@@ -755,7 +750,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding AutoUpdates}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
@@ -772,7 +766,6 @@
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
-                                        FocusVisualMargin="5"
                                         IsOn="{Binding PortableMode}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
