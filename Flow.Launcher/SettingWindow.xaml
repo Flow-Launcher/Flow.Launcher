@@ -1342,7 +1342,7 @@
                                         Margin="0,30,0,0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Orientation="Horizontal">
+                                        Orientation="Horizontal" UseLayoutRounding="True">
                                         <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
                                             <Border Style="{DynamicResource WindowRadius}">
                                                 <Border.Clip>
