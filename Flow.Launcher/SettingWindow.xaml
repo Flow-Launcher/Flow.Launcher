@@ -646,7 +646,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding StartFlowLauncherOnSystemStartup}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding StartFlowLauncherOnSystemStartup}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
@@ -658,7 +662,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideOnStartup}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.HideOnStartup}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.HideOnStartup}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xed1a;
                                     </TextBlock>
@@ -670,7 +678,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideFlowLauncherWhenLoseFocus}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.HideWhenDeactive}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.HideWhenDeactive}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>
 
@@ -681,7 +693,11 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideNotifyIcon}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource hideNotifyIconToolTip}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.HideNotifyIcon}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.HideNotifyIcon}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>
 
@@ -690,7 +706,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource rememberLastLocation}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.RememberLastLaunchLocation}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>
 
@@ -700,7 +720,11 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreen}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreenToolTip}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7fc;
                                     </TextBlock>
@@ -713,10 +737,11 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ShouldUsePinyin}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ShouldUsePinyinToolTip}" />
                                     </StackPanel>
-                                    <CheckBox
-                                        IsChecked="{Binding Settings.ShouldUsePinyin}"
-                                        Style="{DynamicResource SideControlCheckBox}"
-                                        ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.ShouldUsePinyin}"
+                                        Style="{DynamicResource SideToggleSwitch}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe98a;
                                     </TextBlock>
