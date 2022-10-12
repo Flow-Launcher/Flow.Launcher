@@ -48,17 +48,7 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
-
-
-            var timer = new Timer
-            {
-                Interval = 1000,
-            };
-            timer.Tick += (s, evt) =>
-            {
-                ClockDisplay();
-            };
-            timer.Start();
+            
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -69,28 +59,7 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        public void ClockDisplay()
-        {
-            if (_settings.UseClock == true)
-            {
-                ClockBox.Visibility = Visibility.Visible;
-                ClockBox.Text = System.DateTime.Now.ToString(_settings.TimeFormat);
-            }
-            else if (_settings.UseClock == false)
-            {
-                ClockBox.Visibility = Visibility.Collapsed;
-            }
-            if (_settings.UseDate == true)
-            {
-                DateBox.Visibility = Visibility.Visible;
-                DateBox.Text = System.DateTime.Now.ToString(_settings.DateFormat);
-            }
-            else if (_settings.UseDate == false)
-            {
-                DateBox.Visibility = Visibility.Collapsed;
-            }
-
-        }
+        
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (QueryTextBox.SelectionLength == 0)
@@ -212,12 +181,6 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
-                        break;
-                    case nameof(Settings.UseClock):
-                        ClockDisplay();
-                        break;
-                    case nameof(Settings.UseDate):
-                        ClockDisplay();
                         break;
                 }
             };

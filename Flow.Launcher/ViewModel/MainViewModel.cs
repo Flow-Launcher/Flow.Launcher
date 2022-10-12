@@ -37,7 +37,6 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
-        internal readonly Settings _settings;
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
@@ -60,8 +59,8 @@ namespace Flow.Launcher.ViewModel
             _queryText = "";
             _lastQuery = new Query();
 
-            _settings = settings;
-            _settings.PropertyChanged += (_, args) =>
+            Settings = settings;
+            Settings.PropertyChanged += (_, args) =>
             {
                 if (args.PropertyName == nameof(Settings.WindowSize))
                 {
@@ -76,14 +75,15 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(_settings);
-            Results = new ResultsViewModel(_settings);
-            History = new ResultsViewModel(_settings);
+            ContextMenu = new ResultsViewModel(Settings);
+            Results = new ResultsViewModel(Settings);
+            History = new ResultsViewModel(Settings);
             _selectedResults = Results;
 
             InitializeKeyCommands();
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
+            RegisterClockAndDateUpdateAsync();
 
             SetOpenResultModifiers();
         }
@@ -307,7 +307,7 @@ namespace Flow.Launcher.ViewModel
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
-                                );
+                            );
                         }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
@@ -317,10 +317,26 @@ namespace Flow.Launcher.ViewModel
 
         #region ViewModel Properties
 
+        public Settings Settings { get; }
+        public object ClockText { get; private set; }
+        public string DateText { get; private set; }
+
+        private async Task RegisterClockAndDateUpdateAsync()
+        {
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            // ReSharper disable once MethodSupportsCancellation
+            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
+            {
+                if (Settings.UseClock)
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat);
+                if (Settings.UseDate)
+                    DateText = DateTime.Now.ToString(Settings.DateFormat);
+            }
+        }
         public ResultsViewModel Results { get; private set; }
-        
+
         public ResultsViewModel ContextMenu { get; private set; }
-        
+
         public ResultsViewModel History { get; private set; }
 
         public bool GameModeStatus { get; set; }
@@ -411,7 +427,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility SearchIconVisibility { get; set; }
 
-        public double MainWindowWidth => _settings.WindowSize;
+        public double MainWindowWidth => Settings.WindowSize;
 
         public string PluginIconPath { get; set; } = null;
 
@@ -592,7 +608,7 @@ namespace Flow.Launcher.ViewModel
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
             }
-            
+
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -759,7 +775,7 @@ namespace Flow.Launcher.ViewModel
 
         private void SetOpenResultModifiers()
         {
-            OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
+            OpenResultCommandModifiers = Settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
         public void ToggleFlowLauncher()
@@ -788,24 +804,24 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
-            switch (_settings.LastQueryMode)
+            switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
                     await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
-                    if (_settings.UseAnimation)
+                    if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
-                    if (_settings.UseAnimation)
+                    if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+                    throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
             }
 
             MainWindowVisibilityStatus = false;
@@ -820,7 +836,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
         }
 
 
@@ -903,18 +919,18 @@ namespace Flow.Launcher.ViewModel
 
                         Clipboard.SetFileDropList(paths);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                +" " 
-                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("copy")
+                            + " "
+                            + (isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")),
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                     else
                     {
                         Clipboard.SetDataObject(copyText.ToString());
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                + " " 
-                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("copy")
+                            + " "
+                            + App.API.GetTranslation("textTitle"),
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                 }
