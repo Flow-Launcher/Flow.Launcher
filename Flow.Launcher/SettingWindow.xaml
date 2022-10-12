@@ -1208,8 +1208,6 @@
                                                     </StackPanel>
 
                                                     <StackPanel>
-
-
                                                         <Border
                                                             Padding="0"
                                                             HorizontalAlignment="Stretch"
