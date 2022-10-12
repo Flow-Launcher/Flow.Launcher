@@ -91,6 +91,8 @@ namespace Flow.Launcher
                 // main windows needs initialized before theme change because of blur settigns
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
+                
+                QuickSwitch.QuickSwitch.Initialize();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
