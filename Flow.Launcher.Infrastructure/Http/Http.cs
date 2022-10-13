@@ -136,7 +136,7 @@ namespace Flow.Launcher.Infrastructure.Http
                 throw new HttpRequestException(
                     $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
             }
-            
+
             return content;
         }
 
@@ -148,15 +148,31 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <param name="token">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
         /// <returns></returns>
         public static Task<Stream> GetStreamAsync([NotNull] string url,
-            HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
-            CancellationToken token = default) => GetStreamAsync(new Uri(url), completionOption, token);
+            CancellationToken token = default) => GetStreamAsync(new Uri(url), token);
 
 
-        public static async Task<Stream> GetStreamAsync([NotNull] Uri url, HttpCompletionOption completionOption, CancellationToken token = default)
+        /// <summary>
+        /// Send a GET request to the specified Uri with an HTTP completion option and a cancellation token as an asynchronous operation.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public static async Task<Stream> GetStreamAsync([NotNull] Uri url,
+            CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            using var response = await client.GetAsync(url, completionOption, token);
-            return await response.Content.ReadAsStreamAsync(token);
+            return await client.GetStreamAsync(url, token);
+        }
+
+        public static async Task<HttpResponseMessage> GetResponseAsync(string url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+            CancellationToken token = default)
+            => await GetResponseAsync(new Uri(url), completionOption, token);
+
+        public static async Task<HttpResponseMessage> GetResponseAsync([NotNull] Uri url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+            CancellationToken token = default)
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            return await client.GetAsync(url, completionOption, token);
         }
 
         /// <summary>
