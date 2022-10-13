@@ -323,8 +323,6 @@
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-            <Setter Property="MinWidth" Value="330" />
-            <Setter Property="Height" Value="98" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -388,6 +386,55 @@
             <!--#endregion-->
         </Style>
 
+        <Style
+            x:Key="PluginListStyle"
+            BasedOn="{StaticResource {x:Type ListBox}}"
+            TargetType="ListBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,20,0,4"
+                                            FontWeight="Bold"
+                                            Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="StoreListStyle"
+            BasedOn="{StaticResource {x:Type ListBox}}"
+            TargetType="ListBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,20,0,4"
+                                            FontWeight="Bold"
+                                            Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult}" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--  For Tab Header responsive Width  -->
         <Style TargetType="{x:Type TabControl}">
             <Setter Property="FontSize" Value="14" />
@@ -882,7 +929,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem>
+                <TabItem KeyDown="OnPluginSettingKeydown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -907,13 +954,66 @@
                             <RowDefinition Height="73" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Padding="5,18,0,0">
-                            <TextBlock
-                                Margin="0,5,0,0"
-                                FontSize="30"
-                                Style="{StaticResource PageTitle}"
-                                Text="{DynamicResource plugin}"
-                                TextAlignment="left" />
+                        <Border
+                            Grid.Row="0"
+                            Padding="5,18,0,0"
+                            HorizontalAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    DockPanel.Dock="Left"
+                                    FontSize="30"
+                                    Style="{StaticResource PageTitle}"
+                                    Text="{DynamicResource plugin}"
+                                    TextAlignment="Left" />
+                                <DockPanel DockPanel.Dock="Right">
+                                    <TextBox
+                                        Name="pluginFilterTxb"
+                                        Width="150"
+                                        Height="34"
+                                        Margin="0,5,26,0"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Right"
+                                        FontSize="14"
+                                        KeyDown="PluginFilterTxb_OnKeyDown"
+                                        LostFocus="RefreshPluginListEventHandler"
+                                        Text=""
+                                        TextAlignment="Left"
+                                        ToolTip="{DynamicResource searchpluginToolTip}"
+                                        ToolTipService.InitialShowDelay="200"
+                                        ToolTipService.Placement="Top">
+                                        <TextBox.Style>
+                                            <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                                <Style.Resources>
+                                                    <VisualBrush
+                                                        x:Key="CueBannerBrush"
+                                                        AlignmentX="Left"
+                                                        AlignmentY="Center"
+                                                        Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <Label
+                                                                Padding="10,0,0,0"
+                                                                Content="{DynamicResource searchplugin}"
+                                                                Foreground="{DynamicResource CustomContextDisabled}" />
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="Text" Value="{x:Null}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </DockPanel>
+                            </DockPanel>
                         </Border>
                         <Border
                             Grid.Row="1"
@@ -932,8 +1032,8 @@
                                 ScrollViewer.CanContentScroll="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
-                                SelectionChanged="SelectedPluginChanged"
-                                SnapsToDevicePixels="True">
+                                SnapsToDevicePixels="True"
+                                Style="{DynamicResource PluginListStyle}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Margin="0,0,0,18" />
@@ -947,7 +1047,7 @@
                                             Padding="0"
                                             Background="Transparent"
                                             FlowDirection="RightToLeft"
-                                            IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"
+                                            IsExpanded="{Binding Mode=TwoWay, Path=IsExpanded}"
                                             Style="{StaticResource ExpanderStyle1}">
                                             <Expander.Header>
                                                 <Grid
@@ -1121,8 +1221,7 @@
                                                             Margin="0"
                                                             Padding="1"
                                                             VerticalAlignment="Stretch"
-                                                            Content="{Binding SettingControl}"
-                                                            SizeChanged="ItemSizeChanged" />
+                                                            Content="{Binding SettingControl}" />
                                                     </StackPanel>
 
                                                     <StackPanel>
@@ -1250,7 +1349,7 @@
                 </TabItem>
 
                 <!--#region Plugin Store-->
-                <TabItem>
+                <TabItem KeyDown="PluginStore_OnKeyDown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1287,19 +1386,66 @@
                                 Text="{DynamicResource pluginStore}"
                                 TextAlignment="left" />
                         </Border>
-                        <Border
+                        <DockPanel
                             Grid.Row="0"
                             Grid.Column="1"
-                            Padding="5,18,32,0">
+                            Margin="5,24,0,0">
+                            <TextBox
+                                Name="pluginStoreFilterTxb"
+                                Width="150"
+                                Height="34"
+                                Margin="0,0,26,0"
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Right"
+                                FontSize="14"
+                                KeyDown="PluginStoreFilterTxb_OnKeyDown"
+                                LostFocus="RefreshPluginStoreEventHandler"
+                                Text=""
+                                TextAlignment="Left"
+                                ToolTip="{DynamicResource searchpluginToolTip}"
+                                ToolTipService.InitialShowDelay="200"
+                                ToolTipService.Placement="Top">
+                                <TextBox.Style>
+                                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                        <Style.Resources>
+                                            <VisualBrush
+                                                x:Key="CueBannerBrush"
+                                                AlignmentX="Left"
+                                                AlignmentY="Center"
+                                                Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label
+                                                        Padding="10,0,0,0"
+                                                        Content="{DynamicResource searchplugin}"
+                                                        Foreground="{DynamicResource CustomContextDisabled}" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                             <Button
                                 Height="34"
-                                Margin="0,5,0,5"
+                                Margin="0,5,10,5"
                                 Padding="12,4,12,4"
                                 HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
                                 Click="OnPluginStoreRefreshClick"
                                 Content="{DynamicResource refresh}"
+                                DockPanel.Dock="Right"
                                 FontSize="13" />
-                        </Border>
+                        </DockPanel>
                         <Border
                             Grid.Row="1"
                             Grid.Column="0"
@@ -1308,7 +1454,7 @@
                             <ListBox
                                 x:Name="StoreListBox"
                                 Width="Auto"
-                                Margin="6,0,0,0"
+                                Margin="5,1,0,0"
                                 Padding="0,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
@@ -1316,14 +1462,15 @@
                                 ItemContainerStyle="{StaticResource StoreList}"
                                 ItemsSource="{Binding ExternalPlugins}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                SelectionMode="Single">
+                                SelectionMode="Single"
+                                Style="{DynamicResource StoreListStyle}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <UniformGrid
-                                            Margin="0,0,6,18"
+                                            Margin="0,0,17,18"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
-                                            Columns="2"
+                                            Columns="3"
                                             IsItemsHost="True"
                                             SnapsToDevicePixels="True" />
                                     </ItemsPanelTemplate>
@@ -1356,15 +1503,56 @@
                                                 </ControlTemplate>
                                             </ToggleButton.Template>
 
-                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="72" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
+                                            <Grid
+                                                Height="160"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="56" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
                                                 <StackPanel
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
                                                     Grid.Column="0"
+                                                    Grid.ColumnSpan="2"
+                                                    Margin="0,0,2,0"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal">
+                                                    <Border
+                                                        x:Name="LabelNew"
+                                                        Margin="0,10,8,0"
+                                                        Padding="6,2,6,2"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        Background="#f14551"
+                                                        CornerRadius="4"
+                                                        Visibility="Collapsed">
+                                                        <TextBlock
+                                                            FontSize="11"
+                                                            Foreground="White"
+                                                            Text="New" />
+                                                    </Border>
+                                                    <Border
+                                                        x:Name="Labelinstalled"
+                                                        Margin="0,10,8,0"
+                                                        Padding="6,2,6,2"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        Background="{DynamicResource ToggleSwitchFillOn}"
+                                                        CornerRadius="4"
+                                                        Visibility="Collapsed">
+                                                        <TextBlock
+                                                            FontSize="11"
+                                                            Foreground="White"
+                                                            Text="Installed" />
+                                                    </Border>
+                                                </StackPanel>
+
+                                                <StackPanel
+                                                    Grid.Row="0"
                                                     Margin="0,0,0,0"
-                                                    VerticalAlignment="Center">
+                                                    VerticalAlignment="Top">
                                                     <StackPanel.Style>
                                                         <Style>
                                                             <Setter Property="StackPanel.Visibility" Value="Visible" />
@@ -1378,16 +1566,18 @@
                                                     <Image
                                                         Width="32"
                                                         Height="32"
-                                                        Margin="8,0,6,0"
-                                                        VerticalAlignment="Center"
+                                                        Margin="20,20,6,0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
                                                         RenderOptions.BitmapScalingMode="HighQuality"
                                                         Source="{Binding IcoPath, IsAsync=True}"
                                                         Stretch="Uniform" />
                                                 </StackPanel>
                                                 <StackPanel
-                                                    Grid.Column="1"
-                                                    Margin="0,0,8,0"
-                                                    VerticalAlignment="Center"
+                                                    Grid.Row="1"
+                                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
+                                                    Margin="0,6,0,0"
+                                                    VerticalAlignment="Top"
                                                     Panel.ZIndex="0">
                                                     <StackPanel.Style>
                                                         <Style>
@@ -1400,14 +1590,16 @@
                                                         </Style>
                                                     </StackPanel.Style>
                                                     <TextBlock
-                                                        Padding="0,0,20,0"
+                                                        Padding="20,0,20,0"
+                                                        VerticalAlignment="Top"
+                                                        FontWeight="SemiBold"
                                                         Foreground="{DynamicResource Color05B}"
                                                         Text="{Binding Name}"
                                                         TextWrapping="WrapWithOverflow"
                                                         ToolTip="{Binding Version}" />
                                                     <TextBlock
-                                                        Margin="0,2,0,0"
-                                                        Padding="0,0,20,0"
+                                                        Margin="0,6,0,0"
+                                                        Padding="20,0,22,20"
                                                         Foreground="{DynamicResource Color04B}"
                                                         TextWrapping="WrapWithOverflow">
                                                         <Run
@@ -1418,6 +1610,7 @@
 
                                                 </StackPanel>
                                                 <StackPanel
+                                                    Grid.RowSpan="2"
                                                     Grid.Column="0"
                                                     Grid.ColumnSpan="2"
                                                     HorizontalAlignment="Stretch"
@@ -1435,7 +1628,7 @@
 
 
                                                     <Grid
-                                                        Height="94"
+                                                        Height="180"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         Panel.ZIndex="1">
@@ -1447,12 +1640,13 @@
                                                         </Grid.ColumnDefinitions>
 
                                                         <StackPanel
+                                                            Grid.Row="0"
                                                             Grid.Column="0"
                                                             HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center">
-                                                            <StackPanel Orientation="Horizontal">
+                                                            VerticalAlignment="Top">
+                                                            <StackPanel Orientation="Vertical">
                                                                 <TextBlock
-                                                                    Margin="20,0,0,0"
+                                                                    Margin="20,20,20,0"
                                                                     Padding="0,0,0,0"
                                                                     FontWeight="Bold"
                                                                     Foreground="{DynamicResource Color05B}"
@@ -1460,14 +1654,14 @@
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Name}" />
                                                                 <TextBlock
-                                                                    Margin="10,0,0,0"
+                                                                    Margin="20,4,20,0"
                                                                     Padding="0,0,20,0"
                                                                     Foreground="{DynamicResource Color05B}"
                                                                     Text="{Binding Version}"
                                                                     TextWrapping="WrapWithOverflow"
                                                                     ToolTip="{Binding Version}" />
                                                             </StackPanel>
-                                                            <StackPanel Margin="20,2,120,0" Orientation="Vertical">
+                                                            <StackPanel Margin="20,6,20,0" Orientation="Vertical">
                                                                 <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
                                                                     <Hyperlink
                                                                         Foreground="{DynamicResource Color04B}"
@@ -1478,12 +1672,14 @@
                                                                 </TextBlock>
                                                             </StackPanel>
                                                         </StackPanel>
-                                                        <Border Padding="0,0,20,0">
+                                                        <Border
+                                                            Grid.Row="0"
+                                                            Grid.Column="1"
+                                                            Padding="0,0,0,0">
                                                             <Button
                                                                 Name="ShortCutButtonPrev"
-                                                                Grid.Column="1"
                                                                 MinHeight="40"
-                                                                Margin="0,0,0,0"
+                                                                Margin="0,70,20,0"
                                                                 Padding="15,5,15,5"
                                                                 HorizontalAlignment="Right"
                                                                 VerticalAlignment="Center"
@@ -1499,7 +1695,6 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Border>
-
                     </Grid>
                 </TabItem>
                 <!--#endregion-->
@@ -2175,7 +2370,7 @@
                                     <Button
                                         MinWidth="100"
                                         Margin="10,10,0,10"
-                                        Click="OnAddCustomeHotkeyClick"
+                                        Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
                                 </StackPanel>
                             </Grid>
