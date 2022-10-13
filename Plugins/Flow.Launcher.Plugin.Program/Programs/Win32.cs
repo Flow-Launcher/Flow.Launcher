@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 Title = title,
                 SubTitle = Main._settings.HideAppsPath ? string.Empty : LnkResolvedPath ?? FullPath,
-                IcoPath = IcoPath,
+                IcoPath = "https://media.wired.com/photos/598e35fb99d76447c4eb1f28/master/pass/phonepicutres-TA.jpg",
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,

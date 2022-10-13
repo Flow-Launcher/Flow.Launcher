@@ -120,7 +120,8 @@ namespace Flow.Launcher.Core
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
 
-            await using var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
+            using var response = await Http.GetResponseAsync(api, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+            await using var jsonStream = await response.Content.ReadAsStreamAsync();
 
             var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();

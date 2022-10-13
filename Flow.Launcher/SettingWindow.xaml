@@ -1068,7 +1068,7 @@
                                                             Height="32"
                                                             Margin="32,0,0,0"
                                                             FlowDirection="LeftToRight"
-                                                            Source="{Binding Image, IsAsync=True}" />
+                                                            Source="{Binding Image, Mode=OneWay}" />
                                                     </StackPanel>
                                                     <StackPanel Grid.Column="1" Margin="12,0,14,0">
                                                         <TextBlock

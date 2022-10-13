@@ -145,7 +145,7 @@ namespace Flow.Launcher.ViewModel
 
         public GlyphInfo Glyph { get; set; }
 
-        private async ValueTask LoadImageAsync()
+        private async Task LoadImageAsync()
         {
             var imagePath = Result.IcoPath;
             if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
@@ -166,12 +166,13 @@ namespace Flow.Launcher.ViewModel
             if (ImageLoader.CacheContainImage(imagePath))
             {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = ImageLoader.Load(imagePath);
+                image = await ImageLoader.LoadAsync(imagePath);
                 return;
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+            var i = await Task.Run(async () => await ImageLoader.LoadAsync(imagePath));
+            Image = i;
         }
 
         public Result Result { get; }
