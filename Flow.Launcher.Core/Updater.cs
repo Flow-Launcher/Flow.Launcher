@@ -79,7 +79,7 @@ namespace Flow.Launcher.Core
                     await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
                 }
 
-                var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
+                var newVersionTips = NewVersionTips(newReleaseVersion.ToString());
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
@@ -120,8 +120,7 @@ namespace Flow.Launcher.Core
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
 
-            using var response = await Http.GetResponseAsync(api, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
-            await using var jsonStream = await response.Content.ReadAsStreamAsync();
+            await using var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
 
             var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
@@ -138,10 +137,10 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        public string NewVersinoTips(string version)
+        public string NewVersionTips(string version)
         {
-            var translater = InternationalizationManager.Instance;
-            var tips = string.Format(translater.GetTranslation("newVersionTips"), version);
+            var translator = InternationalizationManager.Instance;
+            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
 
             return tips;
         }

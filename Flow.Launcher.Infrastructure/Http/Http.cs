@@ -178,9 +178,9 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <summary>
         /// Asynchrously send an HTTP request.
         /// </summary>
-        public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token = default)
+        public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken token = default)
         {
-            return await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
+            return await client.SendAsync(request, completionOption, token);
         }
     }
 }
