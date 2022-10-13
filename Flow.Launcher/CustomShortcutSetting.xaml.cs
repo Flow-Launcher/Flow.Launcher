@@ -20,9 +20,10 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        public CustomShortcutSetting((string, string) shortcut, Settings settings)
+        public CustomShortcutSetting(CustomShortcutModel shortcut, Settings settings)
         {
-            (Key, Value) = shortcut;
+            Key = shortcut.Key;
+            Value = shortcut.Value;
             _settings = settings;
             update = true;
             InitializeComponent();

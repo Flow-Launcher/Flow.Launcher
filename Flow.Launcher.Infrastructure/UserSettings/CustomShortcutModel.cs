@@ -46,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public void Deconstruct(out string key, out string value)
         {
             key = Key;
-            value = Expand();
+            value = Value;
         }
 
         public static implicit operator (string Key, string Value)(CustomShortcutModel shortcut)

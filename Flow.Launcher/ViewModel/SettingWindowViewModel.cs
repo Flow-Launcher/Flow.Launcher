@@ -543,7 +543,6 @@ namespace Flow.Launcher.ViewModel
         public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
 
         public CustomShortcutModel? SelectedCustomShortcut { get; set; }
-        public int? SelectCustomShortcutIndex { get; set; }
 
         public void AddShortcut(CustomShortcutModel shortcut)
         {
@@ -551,10 +550,10 @@ namespace Flow.Launcher.ViewModel
             ShortCuts.Add(shortcut);
         }
 
-        public void EditShortcut(CustomShortcutModel shortcut)
+        public void EditShortcut(CustomShortcutModel oldShortcut, CustomShortcutModel newShortcut)
         {
-            Settings.CustomShortcuts[ShortCuts.IndexOf(shortcut)] = shortcut;
-            ShortCuts[ShortCuts.IndexOf(shortcut)] = shortcut;
+            RemoveShortcut(oldShortcut);
+            AddShortcut(newShortcut);
         }
 
         public void RemoveShortcut(CustomShortcutModel shortcut)

@@ -411,7 +411,7 @@ namespace Flow.Launcher
                 var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
                 if (shortcutSettingWindow.ShowDialog() == true)
                 {
-                    viewModel.EditShortcut(item);
+                    viewModel.EditShortcut(item, shortcutSettingWindow.ShortCut);
                 }
             }
             else

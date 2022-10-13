@@ -2131,7 +2131,8 @@
                                             <GridView>
                                                 <GridViewColumn Width="180" Header="{DynamicResource hotkey}">
                                                     <GridViewColumn.CellTemplate>
-                                                        <DataTemplate DataType="userSettings:CustomPluginHotkey">
+                                                        <DataTemplate 
+															="userSettings:CustomPluginHotkey">
                                                             <TextBlock Text="{Binding Hotkey}" />
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
@@ -2184,7 +2185,6 @@
                                         BorderThickness="1"
                                         ItemsSource="{Binding ShortCuts}"
                                         SelectedItem="{Binding SelectedCustomShortcut}"
-                                        SelectedIndex="{Binding SelectCustomShortcutIndex}"
                                         Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                                         <ListView.View>
                                             <GridView>
