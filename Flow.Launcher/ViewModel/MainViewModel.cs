@@ -363,18 +363,30 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            if (_settings.WindowSize > 1920) return;
-            _settings.WindowSize += 100;
-            Left -= 50;
+            if (MainWindowWidth + 100 > 1920 || _settings.WindowSize == 1920)
+            {
+               _settings.WindowSize = 1920;        
+            }
+            else 
+            { 
+                _settings.WindowSize += 100;
+                Left -= 50;
+            }
             OnPropertyChanged();
         }
 
         [RelayCommand]
         private void DecreaseWidth()
         {
-            if (_settings.WindowSize < 400) return;
-            Left += 50;
-            _settings.WindowSize -= 100;
+            if (MainWindowWidth - 100 < 400 || _settings.WindowSize == 400)
+            {
+                _settings.WindowSize = 400;
+            }
+            else
+            { 
+                Left += 50;
+                _settings.WindowSize -= 100;
+            }
             OnPropertyChanged();
         }
 
