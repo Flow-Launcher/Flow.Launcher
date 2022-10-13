@@ -182,30 +182,28 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
+            switch (_settings.LauncherPosition)
             {
-                Top = _settings.WindowTop;
-                Left = _settings.WindowLeft;
-            }
-            else if(_settings.LauncherPosition == "MouseScreenCenter")
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
-            else if (_settings.LauncherPosition == "MouseScreenCenterTop")
-            {
-                Left = WindowLeft();
-                Top = 10;
-            }
-            else if (_settings.LauncherPosition == "MouseScreenLeftTop")
-            {
-                Left = 10;
-                Top = 10;
-            }
-            else if (_settings.LauncherPosition == "MouseScreenRightTop")
-            {
-                Left = WindowRight();
-                Top = 10;
+                case LauncherPositions.RememberLastLaunchLocation:
+                    Top = _settings.WindowTop;
+                    Left = _settings.WindowLeft;
+                    break;
+                case LauncherPositions.MouseScreenCenter:
+                    Left = WindowLeft();
+                    Top = WindowTop();
+                    break;
+                case LauncherPositions.MouseScreenCenterTop:
+                    Left = WindowLeft();
+                    Top = 10;
+                    break;
+                case LauncherPositions.MouseScreenLeftTop:
+                    Left = 10;
+                    Top = 10;
+                    break;
+                case LauncherPositions.MouseScreenRightTop:
+                    Left = WindowRight();
+                    Top = 10;
+                    break;
             }
         }
 
@@ -445,39 +443,14 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-
-            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
-            {
-                Left = _settings.WindowLeft;
-                Top = _settings.WindowTop;
-            }
-            else if (_settings.LauncherPosition == "MouseScreenCenter")
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
-            else if (_settings.LauncherPosition == "MouseScreenCenterTop")
-            {
-                Left = WindowLeft();
-                Top = 10;
-            }
-            else if (_settings.LauncherPosition == "MouseScreenLeftTop")
-            {
-                Left = 10;
-                Top = 10;
-            }
-            else if (_settings.LauncherPosition == "MouseScreenRightTop")
-            {
-                Left = WindowRight();
-                Top = 10;
-            }
+            InitializePosition();
         }
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
             if (_animating)
                 return;
-            if (_settings.LauncherPosition == "RememberLastLaunchLocation")
+            if (_settings.LauncherPosition == LauncherPositions.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;

@@ -199,7 +199,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactive { get; set; } = true;
-        public string LauncherPosition { get; set; } = "RememberLastLaunchLocation";
+        public LauncherPositions LauncherPosition { get; set; } = LauncherPositions.RememberLastLaunchLocation;
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
