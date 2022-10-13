@@ -1689,34 +1689,38 @@
                                                             </StackPanel>
                                                         </StackPanel>
                                                         <Grid Grid.Row="0" Grid.Column="1">
-                                                            <Button
-                                                                MinHeight="40"
+                                                            <StackPanel
                                                                 Margin="0,70,20,0"
-                                                                Padding="15,5,15,5"
                                                                 HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                Click="OnExternalPluginInstallClick"
-                                                                Content="{DynamicResource installbtn}"
-                                                                Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
-                                                            <Button
-                                                                MinHeight="40"
-                                                                Margin="0,70,20,0"
-                                                                Padding="15,5,15,5"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                Click="OnExternalPluginUninstallClick"
-                                                                Content="{DynamicResource uninstallbtn}"
-                                                                Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                            <Button
-                                                                MinHeight="40"
-                                                                Margin="0,70,20,0"
-                                                                Padding="15,5,15,5"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                Click="OnExternalPluginUpdateClick"
-                                                                Content="{DynamicResource updatebtn}"
-                                                                Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                            <!--  Hide Install Button when installed Item  -->
+                                                                Orientation="Horizontal">
+                                                                <Button
+                                                                    MinHeight="40"
+                                                                    Padding="15,5,15,5"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="OnExternalPluginInstallClick"
+                                                                    Content="{DynamicResource installbtn}"
+                                                                    Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
+                                                                <Button
+                                                                    MinHeight="40"
+                                                                    Margin="5,0,0,0"
+                                                                    Padding="15,5,15,5"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="OnExternalPluginUninstallClick"
+                                                                    Content="{DynamicResource uninstallbtn}"
+                                                                    Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                                <Button
+                                                                    MinHeight="40"
+                                                                    Margin="5,0,0,0"
+                                                                    Padding="15,5,15,5"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="OnExternalPluginUpdateClick"
+                                                                    Content="{DynamicResource updatebtn}"
+                                                                    Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                                <!--  Hide Install Button when installed Item  -->
+                                                            </StackPanel>
                                                         </Grid>
                                                     </Grid>
                                                 </StackPanel>
