@@ -2131,8 +2131,7 @@
                                             <GridView>
                                                 <GridViewColumn Width="180" Header="{DynamicResource hotkey}">
                                                     <GridViewColumn.CellTemplate>
-                                                        <DataTemplate 
-															="userSettings:CustomPluginHotkey">
+                                                        <DataTemplate DataType="userSettings:CustomPluginHotkey">
                                                             <TextBlock Text="{Binding Hotkey}" />
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>

@@ -37,14 +37,14 @@ namespace Flow.Launcher
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
+            if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
+                return;
+            }
             if (!update && (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)) || _settings.BuiltinShortcuts.Contains(new CustomShortcutModel(Key, Value))))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("dulplicateShortcut"));
-                return;
-            }
-            if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
-            {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidShortcut"));
                 return;
             }
             DialogResult = true;

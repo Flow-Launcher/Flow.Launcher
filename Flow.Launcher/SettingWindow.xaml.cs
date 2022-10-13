@@ -383,7 +383,7 @@ namespace Flow.Launcher
             }
             else if (!item.CanBeEdited)
             {
-                MessageBox.Show("This shortcut cannot be deleted or edited.");  // TODO
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("uneditableShortcut"));
                 return;
             }
 
@@ -401,22 +401,21 @@ namespace Flow.Launcher
         private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomShortcut;
-            if (item != null)
-            {
-                if (!item.CanBeEdited)
-                {
-                    MessageBox.Show("This shortcut cannot be deleted or edited.");
-                    return;
-                }
-                var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
-                if (shortcutSettingWindow.ShowDialog() == true)
-                {
-                    viewModel.EditShortcut(item, shortcutSettingWindow.ShortCut);
-                }
-            }
-            else
+            if (item == null)
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return;
+            }
+            else if (!item.CanBeEdited)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("uneditableShortcut"));
+                return;
+            }
+
+            var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                viewModel.EditShortcut(item, shortcutSettingWindow.ShortCut);
             }
         }
 
