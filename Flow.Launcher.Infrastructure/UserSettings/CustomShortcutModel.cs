@@ -1,7 +1,4 @@
-﻿using NLog.Time;
-using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.RightsManagement;
+﻿using System;
 using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -11,11 +8,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public string Key { get; set; }
         public string Value { get; set; }
-        public bool CanBeEdited { get; private set; } // Can be edited by user via dialog
+
+        [JsonIgnore]
+        public bool CanBeEdited { get; private set; } // Can be edited by user from settings window
 
         [JsonIgnore]
         public Func<string> Expand { get; set; } = () => { return ""; };
 
+        [JsonConstructorAttribute]
         public CustomShortcutModel(string key, string value)
         {
             Key = key;
