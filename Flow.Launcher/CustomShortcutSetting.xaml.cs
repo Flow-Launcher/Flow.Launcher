@@ -34,9 +34,9 @@ namespace Flow.Launcher
             Close();
         }
 
-        private void btnAdd_OnClick(object sender, RoutedEventArgs e)
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!update && _settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)))
+            if (!update && (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)) || _settings.BuiltinShortcuts.Contains(new CustomShortcutModel(Key, Value))))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("dulplicateShortcut"));
                 return;

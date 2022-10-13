@@ -1,39 +1,46 @@
-﻿using System;
+﻿using NLog.Time;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.RightsManagement;
 using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
-    public class CustomShortcutBaseModel
+
+    public class CustomShortcutModel
     {
         public string Key { get; set; }
+        public string Value { get; set; }
+        public bool CanBeEdited { get; private set; } // Can be edited by user via dialog
 
         [JsonIgnore]
         public Func<string> Expand { get; set; } = () => { return ""; };
 
+        public CustomShortcutModel(string key, string value)
+        {
+            Key = key;
+            Value = value;
+            CanBeEdited = true;
+            Expand = () => { return Value; };
+        }
+
+        public CustomShortcutModel(string key, string description, Func<string> expand)
+        {
+            Key = key;
+            Value = description;
+            CanBeEdited = false;
+            Expand = expand;
+        }
+
         public override bool Equals(object obj)
         {
-            return obj is CustomShortcutBaseModel other &&
+            return obj is CustomShortcutModel other &&
                    Key == other.Key;
         }
 
         public override int GetHashCode()
         {
             return HashCode.Combine(Key);
-        }
-    };
-
-    public class CustomShortcutModel : CustomShortcutBaseModel
-    {
-        public string Value
-        {
-            get { return Expand(); }
-            set { Expand = () => { return value; }; }
-        }
-
-        public CustomShortcutModel(string key, string value)
-        {
-            Key = key;
-            Value = value;
         }
 
         public void Deconstruct(out string key, out string value)

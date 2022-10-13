@@ -381,6 +381,11 @@ namespace Flow.Launcher
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
                 return;
             }
+            else if (!item.CanBeEdited)
+            {
+                MessageBox.Show("This shortcut cannot be deleted or edited.");  // TODO
+                return;
+            }
 
             string deleteWarning =
                 string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
@@ -389,7 +394,7 @@ namespace Flow.Launcher
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                settings.CustomShortcuts.Remove(item);
+                viewModel.RemoveShortcut(item);
             }
         }
 
@@ -398,10 +403,15 @@ namespace Flow.Launcher
             var item = viewModel.SelectedCustomShortcut;
             if (item != null)
             {
+                if (!item.CanBeEdited)
+                {
+                    MessageBox.Show("This shortcut cannot be deleted or edited.");
+                    return;
+                }
                 var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
                 if (shortcutSettingWindow.ShowDialog() == true)
                 {
-                    settings.CustomShortcuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
+                    viewModel.EditShortcut(item);
                 }
             }
             else
@@ -410,12 +420,12 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnAddCustomeShortCutClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomShortCutClick(object sender, RoutedEventArgs e)
         {
             var shortcutSettingWindow = new CustomShortcutSetting(settings);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
+                viewModel.AddShortcut(shortcutSettingWindow.ShortCut);
             }
         }
 

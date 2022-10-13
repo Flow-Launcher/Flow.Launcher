@@ -149,7 +149,7 @@
                     x:Name="btnAdd"
                     MinWidth="140"
                     Margin="5,0,10,0"
-                    Click="btnAdd_OnClick"
+                    Click="BtnAdd_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>

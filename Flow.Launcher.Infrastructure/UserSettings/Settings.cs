@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Windows;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher;
 using Flow.Launcher.ViewModel;
-
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel
@@ -175,7 +175,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
+
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+
+        [JsonIgnore]
+        public ObservableCollection<CustomShortcutModel> BuiltinShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>() { 
+            new CustomShortcutModel("{clipboard}", "Get text from clipboard.", Clipboard.GetText)
+        };
 
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }

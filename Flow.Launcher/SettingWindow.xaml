@@ -2223,7 +2223,7 @@
                                         <Button
                                             MinWidth="100"
                                             Margin="10,10,0,10"
-                                            Click="OnAddCustomeShortCutClick"
+                                            Click="OnAddCustomShortCutClick"
                                             Content="{DynamicResource add}" />
                                     </StackPanel>
                                 </StackPanel>
