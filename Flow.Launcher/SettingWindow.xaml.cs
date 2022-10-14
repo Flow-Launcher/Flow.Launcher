@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -25,6 +26,7 @@ using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using ListViewItem = System.Windows.Controls.ListViewItem;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
@@ -57,6 +59,13 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+
+            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
+            pluginListView.Filter = PluginListFilter;
+
+            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
+            pluginStoreView.Filter = PluginStoreFilter;
+
             InitializePosition();
             ClockDisplay();
         }
@@ -164,7 +173,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnAddCustomeHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             new CustomQueryHotkeySetting(this, settings).ShowDialog();
         }
@@ -362,13 +371,77 @@ namespace Flow.Launcher
             RefreshMaximizeRestoreButton();
         }
 
-        private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
+        private CollectionView pluginListView;
+        private CollectionView pluginStoreView;
+
+        private bool PluginListFilter(object item)
         {
-            Plugins.ScrollIntoView(Plugins.SelectedItem);
+            if (string.IsNullOrEmpty(pluginFilterTxb.Text))
+                return true;
+            if (item is PluginViewModel model)
+            {
+                return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
+            }
+            return false;
         }
-        private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
+
+        private bool PluginStoreFilter(object item)
         {
-            Plugins.ScrollIntoView(Plugins.SelectedItem);
+            if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
+                return true;
+            if (item is UserPlugin model)
+            {
+                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
+                    || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
+            }
+            return false;
+        }
+
+        private string lastPluginListSearch = "";
+        private string lastPluginStoreSearch = "";
+
+        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginFilterTxb.Text != lastPluginListSearch)
+            {
+                lastPluginListSearch = pluginFilterTxb.Text;
+                pluginListView.Refresh();
+            }
+        }
+
+        private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
+            {
+                lastPluginStoreSearch = pluginStoreFilterTxb.Text;
+                pluginStoreView.Refresh();
+            }
+        }
+
+        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginListEventHandler(sender, e);
+        }
+
+        private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginStoreEventHandler(sender, e);
+        }
+
+        private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
+                pluginFilterTxb.Focus();
+        }
+
+        private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+            {
+                pluginStoreFilterTxb.Focus();
+            }
         }
 
 
