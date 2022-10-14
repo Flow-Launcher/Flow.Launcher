@@ -393,14 +393,18 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseMaxResult()
         {
-            if (_settings.MaxResultsToShow > 16) return;
+            if (_settings.MaxResultsToShow == 17)
+                return;
+
             _settings.MaxResultsToShow += 1;
         }
 
         [RelayCommand]
         private void DecreaseMaxResult()
         {
-            if (_settings.MaxResultsToShow < 2) return;
+            if (_settings.MaxResultsToShow == 2)
+                return;
+
             _settings.MaxResultsToShow -= 1;
         }
 
