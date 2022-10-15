@@ -389,7 +389,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
 
             var toFilter = new List<string>();
-            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).ToList().ConvertAll(x => x.ToLower()).Distinct();
+            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLower());
 
             foreach (var path in paths)
             {
