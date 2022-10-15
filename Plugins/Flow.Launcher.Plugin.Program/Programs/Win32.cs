@@ -318,14 +318,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes)
+        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive=true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
 
             return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
-                IgnoreInaccessible = true, RecurseSubdirectories = true
+                IgnoreInaccessible = true, RecurseSubdirectories = recursive
             }).Where(x => suffixes.Contains(Extension(x)));
         }
 
@@ -393,7 +393,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             foreach (var path in paths)
             {
-                var p = ProgramPaths(path, suffixes);
+                var p = ProgramPaths(path, suffixes, recursive:false);
                 toFilter.AddRange(p);
             }
             var programs = ExceptDisabledSource(toFilter.Distinct())
