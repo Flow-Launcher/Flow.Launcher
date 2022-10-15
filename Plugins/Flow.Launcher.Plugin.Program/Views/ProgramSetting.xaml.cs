@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,6 +62,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             set
             {
                 _settings.EnableStartMenuSource = value;
+                ReIndexing();
+            }
+        }
+
+        public bool EnablePATHSource
+        {
+            get => _settings.EnablePATHSource;
+            set
+            {
+                _settings.EnablePATHSource = value;
                 ReIndexing();
             }
         }

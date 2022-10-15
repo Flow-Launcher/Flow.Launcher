@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
+using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -275,6 +276,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 program.Valid = false;
                 return program;
             }
+            catch (FileNotFoundException e)
+            {
+                ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
+                                "|An unexpected error occurred in the calling method LnkProgram", e);
+
+                program.Valid = false;
+                return program;
+            }
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
             {
@@ -361,6 +370,32 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var toFilter = paths1.Concat(paths2);
 
+            var programs = ExceptDisabledSource(toFilter.Distinct())
+                .Select(x => Extension(x) switch
+                {
+                    ShortcutExtension => LnkProgram(x),
+                    _ => Win32Program(x)
+                }).Where(x => x.Valid);
+            return programs;
+        }
+
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes)
+        {
+            var disabledProgramsList = Main._settings.DisabledProgramSources;
+
+            string? pathEnv = Environment.GetEnvironmentVariable("Path");
+            if (String.IsNullOrEmpty(pathEnv)) { 
+                return Array.Empty<Win32>(); 
+            }
+
+            var toFilter = new List<string>();
+            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).ToList().ConvertAll(x => x.ToLower()).Distinct();
+
+            foreach (var path in paths)
+            {
+                var p = ProgramPaths(path, suffixes);
+                toFilter.AddRange(p);
+            }
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => Extension(x) switch
                 {
@@ -520,6 +555,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
+                }
+
+                if (settings.EnablePATHSource)
+                {
+                    var path = PATHPrograms(settings.ProgramSuffixes);
+                    autoIndexPrograms = autoIndexPrograms.Concat(path);
                 }
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms);

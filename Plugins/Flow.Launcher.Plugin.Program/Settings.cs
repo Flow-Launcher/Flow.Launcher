@@ -12,10 +12,11 @@ namespace Flow.Launcher.Plugin.Program
         public string[] ProgramSuffixes { get; set; } = {"appref-ms", "exe", "lnk"};
 
         public bool EnableStartMenuSource { get; set; } = true;
-
         public bool EnableDescription { get; set; } = false;
         public bool HideAppsPath { get; set; } = true;
         public bool EnableRegistrySource { get; set; } = true;
+        public bool EnablePATHSource { get; set; } = false;
+
         public string CustomizedExplorer { get; set; } = Explorer;
         public string CustomizedArgs { get; set; } = ExplorerArgs;
 
