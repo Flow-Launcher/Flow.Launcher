@@ -19,6 +19,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">When enabled, Flow will load programs from the start menu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Index Registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">Index PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>

@@ -63,9 +63,9 @@
                     <CheckBox
                         Name="PATHEnabled"
                         Margin="70,8,10,8"
-                        Content="Enable Path"
+                        Content="{DynamicResource flowlauncher_plugin_program_index_PATH}"
                         IsChecked="{Binding EnablePATHSource}"
-                        ToolTip="" />
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_PATH_tooltip}" />
                 </StackPanel>
             </StackPanel>
             <StackPanel
