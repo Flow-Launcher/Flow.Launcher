@@ -662,7 +662,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<CustomShortcutModel> builtInShortcuts)
+        private static Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
         {
             StringBuilder queryBuilder = new(queryText);
 

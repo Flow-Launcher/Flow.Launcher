@@ -217,7 +217,6 @@
 	<system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
 	<system:String x:Key="dulplicateShortcut">Shortcut is dulplicate, please enter a new Shortcut or edit the existing one.</system:String>
 	<system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
-	<system:String x:Key="uneditableShortcut">This shortcut cannot be deleted or edited.</system:String>
 
 	<!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>

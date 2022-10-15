@@ -42,7 +42,7 @@ namespace Flow.Launcher
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
-            if (!update && (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)) || _settings.BuiltinShortcuts.Contains(new CustomShortcutModel(Key, Value))))
+            if (!update && (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)) || _settings.BuiltinShortcuts.Contains(new BuiltinShortcutModel(Key, Value, null))))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("dulplicateShortcut"));
                 return;

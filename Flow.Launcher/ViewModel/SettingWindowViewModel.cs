@@ -44,7 +44,6 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
-            ShortCuts = new ObservableCollection<CustomShortcutModel>(Settings.CustomShortcuts.Union(Settings.BuiltinShortcuts));
         }
 
         public Settings Settings { get; set; }
@@ -181,7 +180,7 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public ObservableCollection<CustomShortcutModel> ShortCuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+        public ObservableCollection<CustomShortcutModel> ShortCuts => Settings.CustomShortcuts;
 
         public string TestProxy()
         {
@@ -538,29 +537,11 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
-        #region hotkey
+        #region hotkey & shortcut
 
         public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
 
         public CustomShortcutModel? SelectedCustomShortcut { get; set; }
-
-        public void AddShortcut(CustomShortcutModel shortcut)
-        {
-            Settings.CustomShortcuts.Add(shortcut);
-            ShortCuts.Add(shortcut);
-        }
-
-        public void EditShortcut(CustomShortcutModel oldShortcut, CustomShortcutModel newShortcut)
-        {
-            RemoveShortcut(oldShortcut);
-            AddShortcut(newShortcut);
-        }
-
-        public void RemoveShortcut(CustomShortcutModel shortcut)
-        {
-            Settings.CustomShortcuts.Remove(shortcut);
-            ShortCuts.Remove(shortcut);
-        }
 
         #endregion
 

@@ -381,11 +381,6 @@ namespace Flow.Launcher
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
                 return;
             }
-            else if (!item.CanBeEdited)
-            {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("uneditableShortcut"));
-                return;
-            }
 
             string deleteWarning =
                 string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
@@ -394,7 +389,7 @@ namespace Flow.Launcher
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                viewModel.RemoveShortcut(item);
+                settings.CustomShortcuts.Remove(item);
             }
         }
 
@@ -406,16 +401,12 @@ namespace Flow.Launcher
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
                 return;
             }
-            else if (!item.CanBeEdited)
-            {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("uneditableShortcut"));
-                return;
-            }
 
             var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                viewModel.EditShortcut(item, shortcutSettingWindow.ShortCut);
+                settings.CustomShortcuts.Remove(item);
+                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
             }
         }
 
@@ -424,7 +415,7 @@ namespace Flow.Launcher
             var shortcutSettingWindow = new CustomShortcutSetting(settings);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                viewModel.AddShortcut(shortcutSettingWindow.ShortCut);
+                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
             }
         }
 
