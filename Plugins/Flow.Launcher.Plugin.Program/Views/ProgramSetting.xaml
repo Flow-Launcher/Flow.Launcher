@@ -54,10 +54,19 @@
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
                 </StackPanel>
+                
                 <Separator
                     Height="1"
                     BorderBrush="{DynamicResource Color03B}"
                     BorderThickness="1" />
+                <StackPanel Width="Auto" Orientation="Horizontal">
+                    <CheckBox
+                        Name="PATHEnabled"
+                        Margin="70,8,10,8"
+                        Content="Enable Path"
+                        IsChecked="{Binding EnablePATHSource}"
+                        ToolTip="" />
+                </StackPanel>
             </StackPanel>
             <StackPanel
                 Width="Auto"
