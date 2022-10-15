@@ -12,7 +12,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public override bool Equals(object obj)
         {
-            return obj is CustomShortcutModel other &&
+            return obj is ShortcutBaseModel other &&
                    Key == other.Key;
         }
 

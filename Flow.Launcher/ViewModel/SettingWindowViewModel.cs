@@ -537,7 +537,7 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
-        #region hotkey & shortcut
+        #region hotkey
 
         public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
 
