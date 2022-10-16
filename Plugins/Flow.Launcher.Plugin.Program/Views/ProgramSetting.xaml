@@ -22,7 +22,6 @@
                 <StackPanel Width="Auto" Orientation="Horizontal">
                     <CheckBox
                         Name="StartMenuEnabled"
-                        Width="220"
                         Margin="70,8,10,8"
                         Content="{DynamicResource flowlauncher_plugin_program_index_start}"
                         IsChecked="{Binding EnableStartMenuSource}"
@@ -33,6 +32,12 @@
                         Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
                         IsChecked="{Binding EnableRegistrySource}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
+                    <CheckBox
+                        Name="PATHEnabled"
+                        Margin="70,8,10,8"
+                        Content="{DynamicResource flowlauncher_plugin_program_index_PATH}"
+                        IsChecked="{Binding EnablePATHSource}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_PATH_tooltip}" />
                 </StackPanel>
 
                 <Separator
@@ -42,7 +47,6 @@
                 <StackPanel Width="Auto" Orientation="Horizontal">
                     <CheckBox
                         Name="HideLnkEnabled"
-                        Width="220"
                         Margin="70,8,10,8"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
                         IsChecked="{Binding HideAppsPath}"
@@ -53,19 +57,6 @@
                         Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
-                </StackPanel>
-                
-                <Separator
-                    Height="1"
-                    BorderBrush="{DynamicResource Color03B}"
-                    BorderThickness="1" />
-                <StackPanel Width="Auto" Orientation="Horizontal">
-                    <CheckBox
-                        Name="PATHEnabled"
-                        Margin="70,8,10,8"
-                        Content="{DynamicResource flowlauncher_plugin_program_index_PATH}"
-                        IsChecked="{Binding EnablePATHSource}"
-                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_PATH_tooltip}" />
                 </StackPanel>
             </StackPanel>
             <StackPanel
