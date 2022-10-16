@@ -565,7 +565,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
 
-                return programs.Concat(autoIndexPrograms).Distinct().ToArray();
+                return ProgramsHasher(programs.Concat(autoIndexPrograms)).ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception)
