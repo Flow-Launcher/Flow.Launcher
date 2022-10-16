@@ -11,13 +11,9 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Infrastructure.Logger;
-using System.Collections;
 using System.Diagnostics;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
-using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
