@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.Program
         public DateTime LastIndexTime { get; set; }
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
         public List<DisabledProgramSource> DisabledProgramSources { get; set; } = new List<DisabledProgramSource>();
-        public string[] ProgramSuffixes { get; set; } = {"appref-ms", "exe", "lnk"};
+        public string[] ProgramSuffixes { get; set; } = {"appref-ms", "exe", "lnk", "url"};
 
         public bool EnableStartMenuSource { get; set; } = true;
 
