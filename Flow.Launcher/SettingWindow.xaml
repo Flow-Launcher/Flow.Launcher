@@ -2225,7 +2225,42 @@
                                             Click="OnAddCustomShortCutClick"
                                             Content="{DynamicResource add}" />
                                     </StackPanel>
-                                </StackPanel>
+
+									<TextBlock
+                                        Margin="0,0,12,2"
+                                        Padding="0,12,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="{DynamicResource Color05B}"
+                                        Text="Built-in Shortcuts" />
+									<ListView
+                                        MinHeight="185"
+                                        Margin="0,6,0,0"
+                                        Background="{DynamicResource Color02B}"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="1"
+                                        ItemsSource="{Binding Settings.BuiltinShortcuts}"
+                                        Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+										<ListView.View>
+											<GridView>
+												<GridViewColumn Header="{DynamicResource customShortcut}">
+													<GridViewColumn.CellTemplate>
+														<DataTemplate>
+															<TextBlock Text="{Binding Key}" />
+														</DataTemplate>
+													</GridViewColumn.CellTemplate>
+												</GridViewColumn>
+												<GridViewColumn Header="Description">
+													<GridViewColumn.CellTemplate>
+														<DataTemplate>
+															<TextBlock Text="{Binding Description}" />
+														</DataTemplate>
+													</GridViewColumn.CellTemplate>
+												</GridViewColumn>
+											</GridView>
+										</ListView.View>
+									</ListView>
+								</StackPanel>
                             </Grid>
                         </Border>
                     </ScrollViewer>
