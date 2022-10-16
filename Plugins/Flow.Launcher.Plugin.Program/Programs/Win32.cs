@@ -361,7 +361,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> StartMenuPrograms(string[] suffixes)
         {
-            var disabledProgramsList = Main._settings.DisabledProgramSources;
 
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
@@ -381,21 +380,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> PATHPrograms(string[] suffixes)
         {
-            var disabledProgramsList = Main._settings.DisabledProgramSources;
-
-            string? pathEnv = Environment.GetEnvironmentVariable("Path");
+            var pathEnv = Environment.GetEnvironmentVariable("Path");
             if (String.IsNullOrEmpty(pathEnv)) { 
                 return Array.Empty<Win32>(); 
             }
 
-            var toFilter = new List<string>();
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLower());
 
-            foreach (var path in paths)
-            {
-                var p = ProgramPaths(path, suffixes, recursive:false);
-                toFilter.AddRange(p);
-            }
+            var toFilter = paths.SelectMany(p => ProgramPaths(p, suffixes, recursive:false));
+
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => Extension(x) switch
                 {
