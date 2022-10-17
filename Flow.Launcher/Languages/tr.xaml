@@ -39,6 +39,7 @@
     <system:String x:Key="LastQuerySelected">Son sorguyu sakla ve tümünü seç</system:String>
     <system:String x:Key="LastQueryEmpty">Sorgu kutusunu temizle</system:String>
     <system:String x:Key="maxShowResults">Maksimum sonuç sayısı</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Tam ekran modunda kısayol tuşunu gözardı et</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Tam ekran bir uygulama etkinken Flow Launcher etkinleştirmesini devre dışı bırakın (Oyunlar için önerilir).</system:String>
     <system:String x:Key="defaultFileManager">Varsayılan Dosya Yöneticisi</system:String>
@@ -129,6 +130,7 @@
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
 
