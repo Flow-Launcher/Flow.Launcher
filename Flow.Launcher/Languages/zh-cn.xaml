@@ -130,7 +130,7 @@
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口宽度</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">您也可以使用 Ctrl+[ 和 Ctrl+] 快速调整它。</system:String>
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
 
