@@ -39,6 +39,7 @@
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">全螢幕模式下停用快捷鍵（推薦用於遊戲時）。</system:String>
     <system:String x:Key="defaultFileManager">預設檔案管理器</system:String>
@@ -129,6 +130,7 @@
     <system:String x:Key="queryWindowShadowEffect">查詢窗口陰影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖標</system:String>
     <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖標</system:String>
 
