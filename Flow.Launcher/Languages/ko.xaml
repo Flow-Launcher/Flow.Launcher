@@ -39,6 +39,7 @@
     <system:String x:Key="LastQuerySelected">직전 쿼리 내용 선택</system:String>
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 단축키 무시</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="defaultFileManager">기본 파일관리자</system:String>
@@ -129,6 +130,7 @@
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">플루언트 아이콘 사용</system:String>
     <system:String x:Key="useGlyphUIEffect">결과 및 일부 메뉴에서 플루언트 아이콘을 사용합니다.</system:String>
 
