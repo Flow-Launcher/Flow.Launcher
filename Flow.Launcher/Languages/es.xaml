@@ -101,7 +101,7 @@
     <system:String x:Key="opacity">Opacidad</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">El tema {0} no existe, activando el tema por defecto</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Fallo al cargar el tema {0}, activando el tema predeterminado</system:String>
-    <system:String x:Key="ThemeFolder">Carpeta de temas</system:String>
+    <system:String x:Key="ThemeFolder">Carpeta de temas del usuario</system:String>
     <system:String x:Key="OpenThemeFolder">Abrir carpeta de temas</system:String>
     <system:String x:Key="ColorScheme">Esquema de colores</system:String>
     <system:String x:Key="ColorSchemeSystem">Predeterminado del sistema</system:String>
@@ -273,7 +273,7 @@
     <system:String x:Key="Welcome_Page4_Title">Palabra clave de acción y comandos</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Busque en la web, inicie aplicaciones o ejecute diversas funciones mediante los complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción y, si es necesario, pueden utilizarse sin ellas. Pruebe las siguientes consultas en Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Iniciemos Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides el atajo de teclado para empezar :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Finalizado. Disfrute de Flow Launcher. No olvide utilizar el atajo de teclado para iniciar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
