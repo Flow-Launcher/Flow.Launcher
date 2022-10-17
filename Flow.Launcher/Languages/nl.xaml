@@ -39,6 +39,7 @@
     <system:String x:Key="LastQuerySelected">Selecteer laatste zoekopdracht</system:String>
     <system:String x:Key="LastQueryEmpty">Laatste zoekopdracht verwijderen</system:String>
     <system:String x:Key="maxShowResults">Laat maximale resultaten zien</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Negeer sneltoetsen in fullscreen mode</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">De activatie van Flow Launcher uitschakelen als er een applicatie actief is die zich in een volledig scherm bevind (Aanbevolen voor spellen).</system:String>
     <system:String x:Key="defaultFileManager">Standaard Bestandsbeheerder</system:String>
@@ -129,6 +130,7 @@
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
 
