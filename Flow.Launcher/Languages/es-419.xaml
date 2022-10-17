@@ -39,6 +39,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Borrar última consulta</system:String>
     <system:String x:Key="maxShowResults">Máximo de resultados mostrados</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deshabilitar Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Gestor de archivos predeterminado</system:String>
@@ -129,6 +130,7 @@
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana de búsqueda</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto sombra tiene un uso sustancial de GPU. No se recomienda si el rendimiento de su computadora es limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de Ancho de Ventana</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Usar Iconos de Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Usar iconos de Segoe Fluent para resultados de consultas que sean soportados</system:String>
 
