@@ -111,24 +111,24 @@
                             FontSize="14"
                             Text="{DynamicResource customShortcutExpansion}" />
 
-						<DockPanel
+                        <DockPanel
                             Grid.Row="1"
                             Grid.Column="1"
                             LastChildFill="True">
-							<Button
+                            <Button
                                 x:Name="btnTestShortcut"
                                 Padding="10,5,10,5"
                                 Click="BtnTestShortcut_OnClick"
                                 Content="{DynamicResource preview}"
                                 DockPanel.Dock="Right" />
-							<TextBox
+                            <TextBox
                                 x:Name="tbExpand"
                                 Margin="10"
                                 HorizontalAlignment="Stretch"
-								Text="{Binding Value}"
+                                Text="{Binding Value}"
                                 VerticalAlignment="Center" />
-						</DockPanel>
-					</Grid>
+                        </DockPanel>
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
