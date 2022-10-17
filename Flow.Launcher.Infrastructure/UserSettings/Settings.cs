@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Windows;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher;
@@ -176,6 +177,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+
+        [JsonIgnore]
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new ObservableCollection<BuiltinShortcutModel>() { 
+            new BuiltinShortcutModel("{clipboard}", "Get text from clipboard.", Clipboard.GetText)  // TODO: translation?
+        };
+
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
 
@@ -204,7 +212,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
-        internal ObservableCollection<ShortCutModel> ShortCuts { get; set; } = new();
     }
 
     public enum LastQueryMode
@@ -219,45 +226,5 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         System,
         Light,
         Dark
-    }
-
-    public struct ShortCutModel
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-
-        public ShortCutModel(string key, string value)
-        {
-            Key = key;
-            Value = value;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is ShortCutModel other &&
-                   Key == other.Key &&
-                   Value == other.Value;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Key, Value);
-        }
-
-        public void Deconstruct(out string key, out string value)
-        {
-            key = Key;
-            value = Value;
-        }
-
-        public static implicit operator (string Key, string Value)(ShortCutModel value)
-        {
-            return (value.Key, value.Value);
-        }
-
-        public static implicit operator ShortCutModel((string Key, string Value) value)
-        {
-            return new ShortCutModel(value.Key, value.Value);
-        }
     }
 }

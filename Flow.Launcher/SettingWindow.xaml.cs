@@ -365,10 +365,13 @@ namespace Flow.Launcher
                 restoreButton.Visibility = Visibility.Collapsed;
             }
         }
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             RefreshMaximizeRestoreButton();
         }
+
+        #region Shortcut
 
         private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
         {
@@ -386,33 +389,37 @@ namespace Flow.Launcher
                 MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                settings.ShortCuts.Remove(item.Value);
-            }
-        }
-        private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
-        {
-            var item = viewModel.SelectedCustomShortcut;
-            if (item != null)
-            {
-                var shortcutSettingWindow = new CustomShortcutSetting(item.Value);
-                if (shortcutSettingWindow.ShowDialog() == true)
-                {
-                    settings.ShortCuts[viewModel.SelectCustomShortcutIndex.Value] = shortcutSettingWindow.ShortCut;
-                }
-            }
-            else
-            {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                settings.CustomShortcuts.Remove(item);
             }
         }
 
-        private void OnAddCustomeShortCutClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
         {
-            var shortcutSettingWindow = new CustomShortcutSetting();
+            var item = viewModel.SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return;
+            }
+
+            var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                settings.ShortCuts.Add(shortcutSettingWindow.ShortCut);
+                settings.CustomShortcuts.Remove(item);
+                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
             }
         }
+
+        private void OnAddCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            var shortcutSettingWindow = new CustomShortcutSetting(settings);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
+            }
+        }
+
+        #endregion
+
     }
 }

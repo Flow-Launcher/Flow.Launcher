@@ -180,7 +180,7 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public ObservableCollection<ShortCutModel> ShortCuts => Settings.ShortCuts;
+        public ObservableCollection<CustomShortcutModel> ShortCuts => Settings.CustomShortcuts;
 
         public string TestProxy()
         {
@@ -541,8 +541,7 @@ namespace Flow.Launcher.ViewModel
 
         public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
 
-        public ShortCutModel? SelectedCustomShortcut { get; set; }
-        public int? SelectCustomShortcutIndex { get; set; }
+        public CustomShortcutModel? SelectedCustomShortcut { get; set; }
 
         #endregion
 

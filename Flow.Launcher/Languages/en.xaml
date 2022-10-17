@@ -113,8 +113,9 @@
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
-    <system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
+	<system:String x:Key="customQueryHotkey">Custom Query Hotkey</system:String>
+	<system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+	<system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expanded</system:String>
     <system:String x:Key="delete">Delete</system:String>
@@ -211,7 +212,13 @@
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
     <system:String x:Key="update">Update</system:String>
 
-    <!--  Hotkey Control  -->
+	<!--  Custom Query Shortcut Dialog  -->
+	<system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+	<system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+	<system:String x:Key="dulplicateShortcut">Shortcut is dulplicate, please enter a new Shortcut or edit the existing one.</system:String>
+	<system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+
+	<!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>
 
     <!--  Crash Reporter  -->

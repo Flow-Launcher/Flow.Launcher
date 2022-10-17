@@ -554,7 +554,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var query = ConstructQuery(QueryText, _settings.ShortCuts);
+            var query = ConstructQuery(QueryText, _settings.CustomShortcuts, _settings.BuiltinShortcuts);
 
 
             _updateSource?.Dispose();
@@ -662,21 +662,24 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static Query ConstructQuery(string queryText, IEnumerable<ShortCutModel> shortcuts)
+        private static Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
         {
             StringBuilder queryBuilder = new(queryText);
 
-            foreach (var (key, value) in shortcuts)
+            foreach (var shortcut in customShortcuts)
             {
-                if (queryBuilder.Equals(key))
+                if (queryBuilder.Equals(shortcut.Key))
                 {
-                    queryBuilder.Replace(key, value);
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
                 }
 
-                queryBuilder.Replace('@' + key, value);
+                queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
-            
-            queryBuilder.Replace("{clipboard}", Clipboard.GetText());
+
+            foreach (var shortcut in builtInShortcuts)
+            {
+                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+            }
 
             var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
             return query;
