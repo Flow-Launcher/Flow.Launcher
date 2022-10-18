@@ -39,7 +39,7 @@
     <system:String x:Key="LastQuerySelected">직전 쿼리 내용 선택</system:String>
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Equals and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 단축키 무시</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="defaultFileManager">기본 파일관리자</system:String>
