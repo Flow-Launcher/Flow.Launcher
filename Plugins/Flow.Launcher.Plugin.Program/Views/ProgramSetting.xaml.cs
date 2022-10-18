@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -352,11 +352,24 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (IsSelectedRowStatusEnabledMoreOrEqualThanDisabled(selectedItems))
             {
-                btnProgramSourceStatus.Content = "Disable";
+                btnProgramSourceStatus.Content = "Disable";  // todo
             }
             else
             {
                 btnProgramSourceStatus.Content = "Enable";
+            }
+        }
+
+        private void ProgramSourceView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedProgramSource = programSourceView.SelectedItem as Settings.ProgramSource;
+            if (selectedProgramSource != null)
+            {
+                var add = new AddProgramSource(selectedProgramSource, _settings);
+                if (add.ShowDialog() ?? false)
+                {
+                    ReIndexing();
+                }
             }
         }
     }

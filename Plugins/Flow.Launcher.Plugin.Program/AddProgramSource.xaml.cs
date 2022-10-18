@@ -9,27 +9,31 @@ namespace Flow.Launcher.Plugin.Program
     /// <summary>
     /// Interaction logic for AddProgramSource.xaml
     /// </summary>
-    public partial class AddProgramSource
+    public partial class AddProgramSource : Window
     {
         private PluginInitContext _context;
-        private Settings.ProgramSource _editing;
+        private Settings.ProgramSource _updating;
         private Settings _settings;
+        private bool update;
 
         public AddProgramSource(PluginInitContext context, Settings settings)
         {
             InitializeComponent();
             _context = context;
             _settings = settings;
-            Directory.Focus();
+            tbDirectory.Focus();
+            Chkbox.IsChecked = true;
+            update = false;
         }
 
-        public AddProgramSource(Settings.ProgramSource edit, Settings settings)
+        public AddProgramSource(Settings.ProgramSource source, Settings settings)
         {
-            _editing = edit;
+            _updating = source;
             _settings = settings;
-
+            update = true;
             InitializeComponent();
-            Directory.Text = _editing.Location;
+            Chkbox.IsChecked = _updating.Enabled;
+            tbDirectory.Text = _updating.Location;
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -38,7 +42,7 @@ namespace Flow.Launcher.Plugin.Program
             DialogResult result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                Directory.Text = dialog.SelectedPath;
+                tbDirectory.Text = dialog.SelectedPath;
             }
         }
 
@@ -47,22 +51,23 @@ namespace Flow.Launcher.Plugin.Program
             Close();
         }
 
-        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            string s = Directory.Text;
-            if (!System.IO.Directory.Exists(s))
+            string path = tbDirectory.Text;
+            if (!System.IO.Directory.Exists(path))
             {
                 System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
                 return;
             }
-            if (_editing == null)
+            if (!update)
             {
-                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == Directory.Text))
+                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == path))
                 {
                     var source = new ProgramSource
                     {
-                        Location = Directory.Text,
-                        UniqueIdentifier = Directory.Text
+                        Location = path,
+                        UniqueIdentifier = path,
+                        Enabled = Chkbox.IsChecked ?? true
                     };
 
                     _settings.ProgramSources.Insert(0, source);
@@ -71,7 +76,8 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                _editing.Location = Directory.Text;
+                _updating.Location = path;
+                _updating.Enabled = Chkbox.IsChecked ?? true;
             }
 
             DialogResult = true;
