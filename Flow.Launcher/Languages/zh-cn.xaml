@@ -39,7 +39,7 @@
     <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Equals and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">当全屏应用程序激活时禁用快捷键 (建议游戏时打开) 。</system:String>
     <system:String x:Key="defaultFileManager">默认文件管理器</system:String>
