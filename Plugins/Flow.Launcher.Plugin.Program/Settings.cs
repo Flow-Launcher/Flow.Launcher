@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Program
 {
@@ -10,7 +9,7 @@ namespace Flow.Launcher.Plugin.Program
         public DateTime LastIndexTime { get; set; }
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
         public List<DisabledProgramSource> DisabledProgramSources { get; set; } = new List<DisabledProgramSource>();
-        public string[] ProgramSuffixes { get; set; } = {"appref-ms", "exe", "lnk"};
+        public string[] ProgramSuffixes { get; set; } = { "appref-ms", "exe", "lnk" };
 
         public bool EnableStartMenuSource { get; set; } = true;
 
@@ -42,16 +41,6 @@ namespace Flow.Launcher.Plugin.Program
             public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
             public bool Enabled { get; set; } = true;
             public string UniqueIdentifier { get; set; }
-
-            public override bool Equals(object obj)
-            {
-                return obj is ProgramSource other && other.UniqueIdentifier.ToLower() == this.UniqueIdentifier.ToLower();
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(UniqueIdentifier.ToLower());
-            }
         }
 
         public class DisabledProgramSource : ProgramSource { }
