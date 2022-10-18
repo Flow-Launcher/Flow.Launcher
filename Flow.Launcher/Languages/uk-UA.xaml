@@ -39,7 +39,7 @@
     <system:String x:Key="LastQuerySelected">Вибрати останній запит</system:String>
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Equals and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Вимкнути активацію Flow Launcher коли активовано повноекранний додаток (Рекомендується для ігор).</system:String>
     <system:String x:Key="defaultFileManager">Стандартний Файловий Менеджер</system:String>
