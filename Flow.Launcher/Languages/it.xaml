@@ -39,7 +39,7 @@
     <system:String x:Key="LastQuerySelected">Seleziona ultima ricerca</system:String>
     <system:String x:Key="LastQueryEmpty">Cancella ultima ricerca</system:String>
     <system:String x:Key="maxShowResults">Numero massimo di risultati mostrati</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Equals and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignora i tasti di scelta rapida in applicazione a schermo pieno</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disattivare l'attivazione di Flow Launcher quando è attiva un'applicazione a schermo intero (consigliato per i giochi).</system:String>
     <system:String x:Key="defaultFileManager">Gestore File predefinito</system:String>
