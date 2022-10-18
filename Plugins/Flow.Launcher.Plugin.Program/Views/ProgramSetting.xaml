@@ -116,7 +116,8 @@
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
-            MouseDoubleClick="ProgramSourceView_MouseDoubleClick"
+            MouseDoubleClick="programSourceView_MouseDoubleClick"
+            SelectionChanged="programSourceView_SelectionChanged"
             SelectionMode="Extended">
             <ListView.View>
                 <GridView>

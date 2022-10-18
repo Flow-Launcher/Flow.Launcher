@@ -24,14 +24,15 @@ namespace Flow.Launcher.Plugin.Program
             tbDirectory.Focus();
             Chkbox.IsChecked = true;
             update = false;
+            btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
         }
 
         public AddProgramSource(Settings.ProgramSource source, Settings settings)
         {
+            InitializeComponent();
             _updating = source;
             _settings = settings;
             update = true;
-            InitializeComponent();
             Chkbox.IsChecked = _updating.Enabled;
             tbDirectory.Text = _updating.Location;
         }

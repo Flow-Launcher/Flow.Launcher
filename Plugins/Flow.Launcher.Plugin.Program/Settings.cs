@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Program
 {
@@ -41,6 +42,16 @@ namespace Flow.Launcher.Plugin.Program
             public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
             public bool Enabled { get; set; } = true;
             public string UniqueIdentifier { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                return obj is ProgramSource other && other.UniqueIdentifier.ToLower() == this.UniqueIdentifier.ToLower();
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(UniqueIdentifier.ToLower());
+            }
         }
 
         public class DisabledProgramSource : ProgramSource { }

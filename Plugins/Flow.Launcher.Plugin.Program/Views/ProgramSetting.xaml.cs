@@ -235,18 +235,14 @@ namespace Flow.Launcher.Plugin.Program.Views
                                 .SelectedItems.Cast<ProgramSource>()
                                 .ToList();
 
-            if (selectedItems.Count() == 0)
+            if (selectedItems.Count == 0)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
                 MessageBox.Show(msg);
                 return;
             }
 
-            if (selectedItems
-                .Where(t1 => !_settings
-                                .ProgramSources
-                                .Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
-                .Count() == 0)
+            if (IsAllItemsUserAdded(selectedItems))
             {
                 var msg = string.Format(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
@@ -257,7 +253,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
                 DeleteProgramSources(selectedItems);
             }
-            else if (IsSelectedRowStatusEnabledMoreOrEqualThanDisabled(selectedItems))
+            else if (HasMoreOrEqualEnabledItems(selectedItems))
             {
                 ProgramSettingDisplayList.SetProgramSourcesStatus(selectedItems, false);
 
@@ -329,48 +325,47 @@ namespace Flow.Launcher.Plugin.Program.Views
             dataView.Refresh();
         }
 
-        private bool IsSelectedRowStatusEnabledMoreOrEqualThanDisabled(List<ProgramSource> selectedItems)
+        private static bool HasMoreOrEqualEnabledItems(List<ProgramSource> items)
         {
-            return selectedItems.Where(x => x.Enabled).Count() >= selectedItems.Where(x => !x.Enabled).Count();
+            return items.Where(x => x.Enabled).Count() >= items.Count / 2;
         }
 
-        private void Row_OnClick(object sender, RoutedEventArgs e)
+        private void programSourceView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = programSourceView
                 .SelectedItems.Cast<ProgramSource>()
                 .ToList();
 
-            if (selectedItems
-                .Where(t1 => !_settings
-                                .ProgramSources
-                                .Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
-                .Count() == 0)
+            if (IsAllItemsUserAdded(selectedItems))
             {
                 btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_delete");
-                return;
             }
-
-            if (IsSelectedRowStatusEnabledMoreOrEqualThanDisabled(selectedItems))
+            else if (HasMoreOrEqualEnabledItems(selectedItems))
             {
-                btnProgramSourceStatus.Content = "Disable";  // todo
+                btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_disable");
             }
             else
             {
-                btnProgramSourceStatus.Content = "Enable";
+                btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_enable");
             }
         }
 
-        private void ProgramSourceView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void programSourceView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedProgramSource = programSourceView.SelectedItem as Settings.ProgramSource;
             if (selectedProgramSource != null)
-            {
+            { 
                 var add = new AddProgramSource(selectedProgramSource, _settings);
                 if (add.ShowDialog() ?? false)
                 {
                     ReIndexing();
                 }
             }
+        }
+
+        private bool IsAllItemsUserAdded(List<ProgramSource> items)
+        {
+            return items.All(x => _settings.ProgramSources.Any(y => y == x));
         }
     }
 }
