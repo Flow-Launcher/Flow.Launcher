@@ -71,7 +71,7 @@
     <system:String x:Key="actionKeywords">Palabra clave de acción</system:String>
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
     <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Cambia las palabras clave de acción</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
