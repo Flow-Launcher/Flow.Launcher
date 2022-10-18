@@ -39,7 +39,7 @@
     <system:String x:Key="LastQuerySelected">Letzte Abfrage auswählen</system:String>
     <system:String x:Key="LastQueryEmpty">Letzte Abfrage leeren</system:String>
     <system:String x:Key="maxShowResults">Maximale Anzahl Ergebnissen</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Equals and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoriere Tastenkombination wenn Fenster im Vollbildmodus ist</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Deaktiviere Flow Launcher, wenn eine Vollbildanwendung aktiv ist (Empfohlen für Spiele).</system:String>
     <system:String x:Key="defaultFileManager">Standard-Dateimanager</system:String>
