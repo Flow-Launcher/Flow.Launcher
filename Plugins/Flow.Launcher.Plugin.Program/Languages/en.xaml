@@ -34,6 +34,9 @@
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source">Edit Program Source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
+
     <system:String x:Key="flowlauncher_plugin_program_update">OK</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher will only index files that end with the following suffixes. (Each suffix should split by ';' )</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
