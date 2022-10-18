@@ -47,6 +47,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string DateFormat { get; set; } = "MM'/'dd ddd";
         public bool FirstLaunch { get; set; } = true;
 
+        public double SettingWindowWidth { get; set; } = 1000;
+        public double SettingWindowHeight { get; set; } = 700;
+        public double SettingWindowTop { get; set; }
+        public double SettingWindowLeft { get; set; }
+
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]

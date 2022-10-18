@@ -51,7 +51,7 @@ namespace Flow.Launcher.ViewModel
         {
             await _updater.UpdateAppAsync(App.API, false);
         }
-
+        
         public bool AutoUpdates
         {
             get => Settings.AutoUpdates;
@@ -125,25 +125,44 @@ namespace Flow.Launcher.ViewModel
         #region general
 
         // todo a better name?
-        public class LastQueryMode
+        public class LastQueryMode : BaseModel
         {
             public string Display { get; set; }
             public Infrastructure.UserSettings.LastQueryMode Value { get; set; }
         }
+
+        private List<LastQueryMode> _lastQueryModes = new List<LastQueryMode>();
         public List<LastQueryMode> LastQueryModes
         {
             get
             {
-                List<LastQueryMode> modes = new List<LastQueryMode>();
-                var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.LastQueryMode));
-                foreach (var e in enums)
+                if (_lastQueryModes.Count == 0)
                 {
-                    var key = $"LastQuery{e}";
-                    var display = _translater.GetTranslation(key);
-                    var m = new LastQueryMode { Display = display, Value = e, };
-                    modes.Add(m);
+                    _lastQueryModes = InitLastQueryModes();
                 }
-                return modes;
+                return _lastQueryModes;
+            }
+        }
+
+        private List<LastQueryMode> InitLastQueryModes()
+        {
+            var modes = new List<LastQueryMode>();
+            var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.LastQueryMode));
+            foreach (var e in enums)
+            {
+                var key = $"LastQuery{e}";
+                var display = _translater.GetTranslation(key);
+                var m = new LastQueryMode { Display = display, Value = e, };
+                modes.Add(m);
+            }
+            return modes;
+        }
+
+        private void UpdateLastQueryModeDisplay()
+        {
+            foreach (var item in LastQueryModes)
+            {
+                item.Display = _translater.GetTranslation($"LastQuery{item.Value}");
             }
         }
 
@@ -159,6 +178,8 @@ namespace Flow.Launcher.ViewModel
 
                 if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
                     ShouldUsePinyin = true;
+
+                UpdateLastQueryModeDisplay();
             }
         }
 
@@ -305,7 +326,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
-                
+
                 if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                     DropShadowEffect = false;
             }
@@ -428,6 +449,30 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.UseSound;
             set => Settings.UseSound = value;
+        }
+
+        public double SettingWindowWidth
+        {
+            get => Settings.SettingWindowWidth;
+            set => Settings.SettingWindowWidth = value;
+        }
+
+        public double SettingWindowHeight
+        {
+            get => Settings.SettingWindowHeight;
+            set => Settings.SettingWindowHeight = value;
+        }
+
+        public double SettingWindowTop
+        {
+            get => Settings.SettingWindowTop;
+            set => Settings.SettingWindowTop = value;
+        }
+
+        public double SettingWindowLeft
+        {
+            get => Settings.SettingWindowLeft;
+            set => Settings.SettingWindowLeft = value;
         }
 
         public bool UseClock
@@ -613,6 +658,45 @@ namespace Flow.Launcher.ViewModel
         public string Github => Constant.GitHub;
         public static string Version => Constant.Version;
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
+        
+        public string CheckLogFolder
+        {
+            get 
+            {
+                var dirInfo = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+                long size = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
+                
+                return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")" ;
+            }
+        }
+
+        internal void ClearLogFolder()
+        {
+            var directory = new DirectoryInfo(
+                                        Path.Combine(
+                                            DataLocation.DataDirectory(),
+                                            Constant.Logs,
+                                            Constant.Version));
+
+            directory.EnumerateFiles()
+                     .ToList()
+                     .ForEach(x => x.Delete());
+        }
+        internal string FormatBytes(long bytes)
+        {
+            const int scale = 1024;
+            string[] orders = new string[] { "GB", "MB", "KB", "Bytes" };
+            long max = (long)Math.Pow(scale, orders.Length - 1);
+
+            foreach (string order in orders)
+            {
+                if (bytes > max)
+                    return string.Format("{0:##.##} {1}", decimal.Divide(bytes, max), order);
+
+                max /= scale;
+            }
+            return "0 Bytes";
+        }
         #endregion
     }
 }

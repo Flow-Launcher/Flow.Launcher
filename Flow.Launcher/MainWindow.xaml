@@ -150,6 +150,11 @@
             Command="{Binding OpenResultCommand}"
             CommandParameter="8"
             Modifiers="{Binding OpenResultCommandModifiers}" />
+        <KeyBinding
+            Key="D0"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="9"
+            Modifiers="{Binding OpenResultCommandModifiers}" />
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
@@ -174,6 +179,7 @@
                         PreviewDragOver="OnPreviewDragOver"
                         Style="{DynamicResource QueryBoxStyle}"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        PreviewKeyUp="QueryTextBox_KeyUp"
                         Visibility="Visible">
                         <TextBox.CommandBindings>
                             <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />

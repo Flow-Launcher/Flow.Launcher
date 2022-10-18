@@ -17,7 +17,7 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="SelectionBrush" Value="#0a68d8" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="#f3f3f3" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#000000" />
         <Setter Property="CaretBrush" Value="#000000" />
         <Setter Property="FontSize" Value="26" />
@@ -28,7 +28,7 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#f3f3f3" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#b5b5b5" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="Padding" Value="0,4,66,0" />
@@ -41,7 +41,16 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="#aaaaaa" />
         <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="Background" Value="#f3f3f3" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Offset="0" Color="#f4f1f8" />
+                    <GradientStop Offset="0.8" Color="#f9f2e8" />
+                    <GradientStop Offset="1" Color="#f9f0f3" />
+                </LinearGradientBrush>
+
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style
         x:Key="WindowStyle"
