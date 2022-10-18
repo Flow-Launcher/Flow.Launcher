@@ -128,7 +128,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enable}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock

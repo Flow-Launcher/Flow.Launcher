@@ -94,7 +94,6 @@
                             LastChildFill="True">
                             <Button
                                 Width="70"
-                                Margin="10"
                                 HorizontalAlignment="Right"
                                 Click="BrowseButton_Click"
                                 DockPanel.Dock="Right"
@@ -112,7 +111,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
-                            Text="{DynamicResource enable}" />
+                            Text="{DynamicResource flowlauncher_plugin_program_enabled}" />
                         <CheckBox x:Name="Chkbox"
                             Grid.Row="1"
                             Grid.Column="1"

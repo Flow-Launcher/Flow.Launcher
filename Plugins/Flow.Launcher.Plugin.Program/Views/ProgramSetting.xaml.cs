@@ -36,6 +36,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 _settings.EnableDescription = value;
             }
         }
+
         public bool HideAppsPath
         {
             get => _settings.HideAppsPath;
