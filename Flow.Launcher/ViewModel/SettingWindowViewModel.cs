@@ -41,6 +41,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.ActivateTimes):
                         OnPropertyChanged(nameof(ActivatedTimes));
                         break;
+                    case nameof(Settings.WindowSize):
+                        OnPropertyChanged(nameof(WindowWidthSize));
+                        break;
                 }
             };
         }

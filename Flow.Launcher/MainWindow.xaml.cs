@@ -46,7 +46,6 @@ namespace Flow.Launcher
             _viewModel = mainVM;
             _settings = settings;
             InitializeComponent();
-            InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -91,6 +90,7 @@ namespace Flow.Launcher
             InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
+            InitializePosition();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
@@ -178,20 +178,6 @@ namespace Flow.Launcher
                         break;
                 }
             };
-        }
-
-        private void InitializePosition()
-        {
-            if (_settings.RememberLastLaunchLocation)
-            {
-                Top = _settings.WindowTop;
-                Left = _settings.WindowLeft;
-            }
-            else
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
         }
 
         private void UpdateNotifyIconText()
@@ -454,6 +440,15 @@ namespace Flow.Launcher
             }
         }
 
+        private void InitializePosition()
+        {
+            if (!_settings.RememberLastLaunchLocation)
+            {
+                Left = WindowLeft();
+                Top = WindowTop();
+            }
+        }
+        
         public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -478,6 +473,7 @@ namespace Flow.Launcher
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {
                 case Key.Down:
@@ -512,8 +508,13 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.F12:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        ToggleGameMode();
+                    }
+                    break;
                 case Key.Back:
-                    var specialKeyState = GlobalHotkey.CheckModifiers();
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
