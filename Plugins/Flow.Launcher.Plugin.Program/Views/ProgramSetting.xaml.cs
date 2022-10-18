@@ -365,7 +365,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private bool IsAllItemsUserAdded(List<ProgramSource> items)
         {
-            return items.All(x => _settings.ProgramSources.Any(y => y == x));
+            return items.All(x => _settings.ProgramSources.Any(y => y.UniqueIdentifier == x.UniqueIdentifier));
         }
     }
 }
