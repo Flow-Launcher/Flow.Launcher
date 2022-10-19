@@ -53,7 +53,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.10.56" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.3.44" />
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="NLog.Schema" Version="4.7.10" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.13.0" />
