@@ -601,67 +601,86 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 // windows 8.1 https://msdn.microsoft.com/en-us/library/windows/apps/hh965372.aspx#target_size
                 // windows 8 https://msdn.microsoft.com/en-us/library/windows/apps/br211475.aspx
 
-                string path;
-                if (uri.Contains("\\"))
-                {
-                    path = Path.Combine(Package.Location, uri);
-                }
-                else
-                {
-                    // for C:\Windows\MiracastView etc
-                    path = Path.Combine(Package.Location, "Assets", uri);
-                }
+                string path = Path.Combine(Package.Location, uri);
+
+                // TODO: NOT sure why we needed this? Maybe for Windows 8?
+                //if (uri.Contains("\\"))
+                //{
+                //    path = Path.Combine(Package.Location, uri);
+                //}
+                //else
+                //{
+                //    // for C:\Windows\MiracastView etc
+                //    path = Path.Combine(Package.Location, "Assets", uri);
+                //}
 
                 var extension = Path.GetExtension(path);
                 if (extension != null)
                 {
-                    var end = path.Length - extension.Length;
-                    var prefix = path.Substring(0, end);
-                    var paths = new List<string>
+                    if (File.Exists(path))
                     {
-                        path
-                    };
-
-                    var scaleFactors = new Dictionary<PackageVersion, List<int>>
-                    {
-                        // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
-                        {
-                            PackageVersion.Windows10, new List<int>
-                            {
-                                100,
-                                125,
-                                150,
-                                200,
-                                400
-                            }
-                        },
-                        {
-                            PackageVersion.Windows81, new List<int>
-                            {
-                                100,
-                                120,
-                                140,
-                                160,
-                                180
-                            }
-                        },
-                        {
-                            PackageVersion.Windows8, new List<int>
-                            {
-                                100
-                            }
-                        }
-                    };
-
-                    if (scaleFactors.ContainsKey(Package.Version))
-                    {
-                        foreach (var factor in scaleFactors[Package.Version])
-                        {
-                            paths.Add($"{prefix}.scale-{factor}{extension}");
-                        }
+                        return path; // shortcut, avoid enumerating files
                     }
 
-                    var selected = paths.FirstOrDefault(File.Exists);
+                    var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
+                    var logoDir = Path.GetDirectoryName(path);  // e.g ..\..\Assets
+                    if (String.IsNullOrEmpty(logoNamePrefix) || String.IsNullOrEmpty(logoDir) || !Directory.Exists(logoDir))
+                    {
+                        // Known issue: Edge always triggers it since logo is not at uri
+                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
+                           $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Package.Location}", new FileNotFoundException());
+                        return string.Empty;
+                    }
+
+                    var files = Directory.EnumerateFiles(logoDir);
+
+                    // Just ignore all qulifiers
+                    // select like logo[xxx].png
+                    // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
+                    var selected = files.FirstOrDefault(file => 
+                        Path.GetFileName(file).StartsWith(logoNamePrefix) && extension == Path.GetExtension(file)
+                    );
+
+                    //var scaleFactors = new Dictionary<PackageVersion, List<int>>
+                    //{
+                    //    // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
+                    //    {
+                    //        PackageVersion.Windows10, new List<int>
+                    //        {
+                    //            100,
+                    //            125,
+                    //            150,
+                    //            200,
+                    //            400
+                    //        }
+                    //    },
+                    //    {
+                    //        PackageVersion.Windows81, new List<int>
+                    //        {
+                    //            100,
+                    //            120,
+                    //            140,
+                    //            160,
+                    //            180
+                    //        }
+                    //    },
+                    //    {
+                    //        PackageVersion.Windows8, new List<int>
+                    //        {
+                    //            100
+                    //        }
+                    //    }
+                    //};
+
+                    //if (scaleFactors.ContainsKey(Package.Version))
+                    //{
+                    //    foreach (var factor in scaleFactors[Package.Version])
+                    //    {
+                    //        // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
+                    //        suffixes.Add($"scale-{factor}{extension}");  // MS don't require scale as the last 
+                    //    }
+                    //}
+
                     if (!string.IsNullOrEmpty(selected))
                     {
                         return selected;
@@ -669,7 +688,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     else
                     {
                         ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                   $"|{UserModelId} can't find logo uri for {uri} in package location: {Package.Location}", new FileNotFoundException());
+                                                   $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Package.Location}", new FileNotFoundException());
                         return string.Empty;
                     }
                 }
