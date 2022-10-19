@@ -108,7 +108,6 @@ namespace Flow.Launcher
                                     animationSound.Position = TimeSpan.Zero;
                                     animationSound.Play();
                                 }
-                                
                                 UpdatePosition();
                                 Activate();
                                 QueryTextBox.Focus();
@@ -161,6 +160,7 @@ namespace Flow.Launcher
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
+
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -175,6 +175,12 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
+                        break;
+                    case nameof(Settings.WindowLeft):
+                        Left = _settings.WindowLeft;
+                        break;
+                    case nameof(Settings.WindowTop):
+                        Top = _settings.WindowTop;
                         break;
                 }
             };
@@ -311,9 +317,10 @@ namespace Flow.Launcher
         }
         private void PositionReset()
         {
-                Left = WindowLeft();
-                Top = WindowTop();
-            
+            _settings.WindowLeft = WindowLeft();
+            _settings.WindowTop = WindowTop();
+           // Left = _settings.WindowLeft;
+            //Top = _settings.WindowTop;
         }
         private void InitProgressbarAnimation()
         {
@@ -467,15 +474,6 @@ namespace Flow.Launcher
             else
             {
                 _viewModel.Show();
-            }
-        }
-
-        private void InitializePosition()
-        {
-            if (!_settings.RememberLastLaunchLocation)
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
             }
         }
         
