@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">검색 결과에 필요한 최소 매치 점수를 변경합니다.</system:String>
     <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>
@@ -76,6 +77,7 @@
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
     <system:String x:Key="plugin_query_version">| 버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
+    <system:String x:Key="plugin_uninstall">제거</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -87,7 +89,7 @@
     <system:String x:Key="theme">테마</system:String>
     <system:String x:Key="browserMoreThemes">테마 갤러리</system:String>
     <system:String x:Key="howToCreateTheme">테마 제작 안내</system:String>
-    <system:String x:Key="hiThere">안녕하세요.</system:String>
+    <system:String x:Key="hiThere">안녕하세요!</system:String>
     <system:String x:Key="queryBoxFont">쿼리 상자 글꼴</system:String>
     <system:String x:Key="resultItemFont">결과 항목 글꼴</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
@@ -161,6 +163,8 @@
     <system:String x:Key="devtool">개발자도구</system:String>
     <system:String x:Key="settingfolder">설정 폴더</system:String>
     <system:String x:Key="logfolder">로그 폴더</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">마법사</system:String>
 
     <!--  FileManager Setting Dialog  -->

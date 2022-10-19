@@ -32,7 +32,9 @@
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
     WindowStyle="None"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Left="{Binding Left, Mode=TwoWay}"
+    Top="{Binding Top, Mode=TwoWay}">
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -84,6 +86,22 @@
             Modifiers="Ctrl" />
         <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
         <KeyBinding Key="Left" Command="{Binding EscCommand}" />
+        <KeyBinding
+            Key="OemCloseBrackets"
+            Modifiers="Control"
+            Command="{Binding IncreaseWidthCommand}"/>
+        <KeyBinding
+            Key="OemOpenBrackets"
+            Modifiers="Control"
+            Command="{Binding DecreaseWidthCommand}"/>
+        <KeyBinding
+            Key="OemPlus"
+            Modifiers="Control"
+            Command="{Binding IncreaseMaxResultCommand}"/> 
+        <KeyBinding
+            Key="OemMinus"
+            Modifiers="Control"
+            Command="{Binding DecreaseMaxResultCommand}"/>
         <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
@@ -149,6 +167,11 @@
             Key="D9"
             Command="{Binding OpenResultCommand}"
             CommandParameter="8"
+            Modifiers="{Binding OpenResultCommandModifiers}" />
+        <KeyBinding
+            Key="D0"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="9"
             Modifiers="{Binding OpenResultCommandModifiers}" />
     </Window.InputBindings>
     <Grid>

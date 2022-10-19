@@ -191,6 +191,21 @@ namespace Flow.Launcher.Plugin.Sys
                         return true;
                     }
                 },
+                 new Result
+                {
+                    Title = "Index Option",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_indexoption"),
+                    IcoPath = "Images\\indexoption.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("control.exe", "srchadmin.dll");
+                        }
+
+                        return true;
+                    }
+                },
                 new Result
                 {
                     Title = "Empty Recycle Bin",
@@ -209,6 +224,21 @@ namespace Flow.Launcher.Plugin.Sys
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Open Recycle Bin",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
+                    IcoPath = "Images\\openrecyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    Action = c =>
+                    {
+                        {
+                                   System.Diagnostics.Process.Start("explorer", "shell:RecycleBinFolder");
                         }
 
                         return true;

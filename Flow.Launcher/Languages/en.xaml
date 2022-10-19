@@ -41,6 +41,7 @@
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
     <system:String x:Key="defaultFileManager">Default File Manager</system:String>
@@ -60,6 +61,10 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
     <system:String x:Key="enable">On</system:String>
@@ -127,6 +132,7 @@
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
 
@@ -165,6 +171,8 @@
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
     <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
 
     <!--  FileManager Setting Dialog  -->

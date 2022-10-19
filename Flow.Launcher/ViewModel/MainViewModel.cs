@@ -21,10 +21,11 @@ using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class MainViewModel : BaseModel, ISavable
+    public partial class MainViewModel : BaseModel, ISavable
     {
         #region Private Fields
 
@@ -82,6 +83,7 @@ namespace Flow.Launcher.ViewModel
             _selectedResults = Results;
 
             InitializeKeyCommands();
+
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
 
@@ -153,6 +155,8 @@ namespace Flow.Launcher.ViewModel
                 };
             }
         }
+
+
 
         private void InitializeKeyCommands()
         {
@@ -307,7 +311,7 @@ namespace Flow.Launcher.ViewModel
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
                                 InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
-                                );
+                            );
                         }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
@@ -318,9 +322,9 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public ResultsViewModel Results { get; private set; }
-        
+
         public ResultsViewModel ContextMenu { get; private set; }
-        
+
         public ResultsViewModel History { get; private set; }
 
         public bool GameModeStatus { get; set; }
@@ -334,6 +338,74 @@ namespace Flow.Launcher.ViewModel
                 _queryText = value;
                 Query();
             }
+        }
+
+
+        public double Top
+        {
+            get => _settings.WindowTop;
+            set
+            {
+                _settings.WindowTop = value;
+                OnPropertyChanged();
+            }
+        }
+        public double Left
+        {
+            get => _settings.WindowLeft;
+            set
+            {
+                _settings.WindowLeft = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [RelayCommand]
+        private void IncreaseWidth()
+        {
+            if (MainWindowWidth + 100 > 1920 || _settings.WindowSize == 1920)
+            {
+               _settings.WindowSize = 1920;        
+            }
+            else 
+            { 
+                _settings.WindowSize += 100;
+                Left -= 50;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void DecreaseWidth()
+        {
+            if (MainWindowWidth - 100 < 400 || _settings.WindowSize == 400)
+            {
+                _settings.WindowSize = 400;
+            }
+            else
+            { 
+                Left += 50;
+                _settings.WindowSize -= 100;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void IncreaseMaxResult()
+        {
+            if (_settings.MaxResultsToShow == 17)
+                return;
+
+            _settings.MaxResultsToShow += 1;
+        }
+
+        [RelayCommand]
+        private void DecreaseMaxResult()
+        {
+            if (_settings.MaxResultsToShow == 2)
+                return;
+
+            _settings.MaxResultsToShow -= 1;
         }
 
         /// <summary>
@@ -411,7 +483,11 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility SearchIconVisibility { get; set; }
 
-        public double MainWindowWidth => _settings.WindowSize;
+        public double MainWindowWidth
+        {
+            get => _settings.WindowSize;
+            set => _settings.WindowSize = value;
+        }
 
         public string PluginIconPath { get; set; } = null;
 
@@ -592,7 +668,7 @@ namespace Flow.Launcher.ViewModel
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
             }
-            
+
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -903,18 +979,18 @@ namespace Flow.Launcher.ViewModel
 
                         Clipboard.SetFileDropList(paths);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                +" " 
-                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("copy")
+                            + " "
+                            + (isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")),
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                     else
                     {
                         Clipboard.SetDataObject(copyText.ToString());
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                + " " 
-                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("copy")
+                            + " "
+                            + App.API.GetTranslation("textTitle"),
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                 }

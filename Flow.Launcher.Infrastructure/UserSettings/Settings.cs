@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -42,6 +42,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
         public bool FirstLaunch { get; set; } = true;
+
+        public double SettingWindowWidth { get; set; } = 1000;
+        public double SettingWindowHeight { get; set; } = 700;
+        public double SettingWindowTop { get; set; }
+        public double SettingWindowLeft { get; set; }
 
         public int CustomExplorerIndex { get; set; } = 0;
 
