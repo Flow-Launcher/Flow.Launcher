@@ -177,6 +177,12 @@ namespace Flow.Launcher
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
                         break;
+                    case nameof(Settings.WindowLeft):
+                        Left = _settings.WindowLeft;
+                        break;
+                    case nameof(Settings.WindowTop):
+                        Top = _settings.WindowTop;
+                        break;
                 }
             };
         }
