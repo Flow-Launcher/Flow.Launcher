@@ -46,6 +46,7 @@ namespace Flow.Launcher
             _viewModel = mainVM;
             _settings = settings;
             InitializeComponent();
+            InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -176,12 +177,6 @@ namespace Flow.Launcher
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
                         break;
-                    case nameof(Settings.WindowLeft):
-                        Left = _settings.WindowLeft;
-                        break;
-                    case nameof(Settings.WindowTop):
-                        Top = _settings.WindowTop;
-                        break;
                 }
             };
         }
@@ -195,11 +190,11 @@ namespace Flow.Launcher
                     Left = _settings.WindowLeft;
                     break;
                 case LauncherPositions.MouseScreenCenter:
-                    Left = WindowLeft();
-                    Top = WindowTop();
+                    Left = HorizonCenter();
+                    Top = VerticalCenter();
                     break;
                 case LauncherPositions.MouseScreenCenterTop:
-                    Left = WindowLeft();
+                    Left = HorizonCenter();
                     Top = 10;
                     break;
                 case LauncherPositions.MouseScreenLeftTop:
@@ -207,7 +202,7 @@ namespace Flow.Launcher
                     Top = 10;
                     break;
                 case LauncherPositions.MouseScreenRightTop:
-                    Left = WindowRight();
+                    Left = HorizonRight();
                     Top = 10;
                     break;
             }
@@ -315,17 +310,17 @@ namespace Flow.Launcher
                 _viewModel.GameModeStatus = true;
             }
         }
-        private void PositionReset()
+        private async void PositionReset()
         {
-            _settings.WindowLeft = WindowLeft();
-            _settings.WindowTop = WindowTop();
-           // Left = _settings.WindowLeft;
-            //Top = _settings.WindowTop;
+           _viewModel.Show();
+           await Task.Delay(300); // If don't give a time, Positioning will be weired.
+           Left = HorizonCenter();
+           Top = VerticalCenter();
         }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
-                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 50, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
@@ -429,6 +424,8 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
             //This condition stops extra hide call when animator is on, 
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
@@ -477,7 +474,7 @@ namespace Flow.Launcher
             }
         }
         
-        public double WindowLeft()
+        public double HorizonCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
@@ -486,7 +483,7 @@ namespace Flow.Launcher
             return left;
         }
 
-        public double WindowTop()
+        public double VerticalCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
@@ -495,7 +492,7 @@ namespace Flow.Launcher
             return top;
         }
 
-        public double WindowRight()
+        public double HorizonRight()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
