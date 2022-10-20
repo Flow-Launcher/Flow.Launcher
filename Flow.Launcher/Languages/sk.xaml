@@ -21,7 +21,7 @@
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionReset">Resetovať polohu</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
