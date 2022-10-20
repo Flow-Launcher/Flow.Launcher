@@ -1344,7 +1344,8 @@
                                         Margin="0,30,0,0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Orientation="Horizontal" UseLayoutRounding="True">
+                                        Orientation="Horizontal"
+                                        UseLayoutRounding="True">
                                         <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
                                             <Border Style="{DynamicResource WindowRadius}">
                                                 <Border.Clip>
@@ -1900,11 +1901,10 @@
                                                         Text="{DynamicResource showOpenResultHotkey}" />
                                                     <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource showOpenResultHotkeyToolTip}" />
                                                 </StackPanel>
-                                                <CheckBox
+                                                <ui:ToggleSwitch
                                                     Grid.Column="2"
-                                                    FontSize="14"
-                                                    IsChecked="{Binding Settings.ShowOpenResultHotkey}"
-                                                    Style="{DynamicResource SideControlCheckBox}" />
+                                                    IsOn="{Binding Settings.ShowOpenResultHotkey}"
+                                                    Style="{DynamicResource SideToggleSwitch}" />
                                             </ItemsControl>
                                         </Border>
                                     </StackPanel>
@@ -2024,7 +2024,10 @@
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource enableProxy}" />
-                                                <CheckBox IsChecked="{Binding Settings.Proxy.Enabled}" Style="{DynamicResource SideControlCheckBox}" />
+                                                <ui:ToggleSwitch
+                                                    Grid.Column="2"
+                                                    IsOn="{Binding Settings.Proxy.Enabled}"
+                                                    Style="{DynamicResource SideToggleSwitch}" />
                                             </ItemsControl>
                                         </Border>
                                         <Separator
