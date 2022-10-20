@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
+using Flow.Launcher.Plugin.Program.Views.Models;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -24,9 +25,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
     public class Win32 : IProgram, IEquatable<Win32>
     {
         public string Name { get; set; }
-        public string UniqueIdentifier { get; set; }
+        public string UniqueIdentifier { get => _uid; set => _uid = value.ToLowerInvariant(); }
         public string IcoPath { get; set; }
-        public string FullPath { get; set; }
+        public string FullPath { 
+            get => _fullPath; 
+            set 
+            { 
+                _fullPath = value;
+                _uid = value.ToLowerInvariant();
+            }
+        }
         public string LnkResolvedPath { get; set; }
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
@@ -37,6 +45,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private const string ShortcutExtension = "lnk";
         private const string ExeExtension = "exe";
+        private string _uid = string.Empty;
+        private string _fullPath = string.Empty;
 
         private static readonly Win32 Default = new Win32()
         {
@@ -47,7 +57,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             LnkResolvedPath = null,
             ParentDirectory = string.Empty,
             ExecutableName = null,
-            UniqueIdentifier = string.Empty,
+            //UniqueIdentifier = string.Empty,
             Valid = false,
             Enabled = false
         };
@@ -208,7 +218,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Name = Path.GetFileNameWithoutExtension(path),
                     IcoPath = path,
                     FullPath = path,
-                    UniqueIdentifier = path,
+                    //UniqueIdentifier = path,
                     ParentDirectory = Directory.GetParent(path).FullName,
                     Description = string.Empty,
                     Valid = true,
@@ -333,7 +343,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<Win32> UnregisteredPrograms(List<Settings.ProgramSource> sources, string[] suffixes)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes)
         {
             var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
                     .SelectMany(s => ProgramPaths(s.Location, suffixes)), x => x)
