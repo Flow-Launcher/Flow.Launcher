@@ -268,6 +268,7 @@ namespace Flow.Launcher
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
+            positionreset.ToolTip = InternationalizationManager.Instance.GetTranslation("PositionResetToolTip");
             contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(positionreset);
             contextMenu.Items.Add(settings);
