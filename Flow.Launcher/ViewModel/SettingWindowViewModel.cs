@@ -387,23 +387,23 @@ namespace Flow.Launcher.ViewModel
 
 
 
-        public class LauncherPosition
+        public class SearchWindowPosition
         {
             public string Display { get; set; }
-            public LauncherPositions Value { get; set; }
+            public SearchWindowPositions Value { get; set; }
         }
 
-        public List<LauncherPosition> LauncherPositions
+        public List<SearchWindowPosition> SearchWindowPositions
         {
             get
             {
-                List<LauncherPosition> modes = new List<LauncherPosition>();
-                var enums = (LauncherPositions[])Enum.GetValues(typeof(LauncherPositions));
+                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
+                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
                 foreach (var e in enums)
                 {
-                    var key = $"LauncherPosition{e}";
+                    var key = $"SearchWindowPosition{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new LauncherPosition { Display = display, Value = e, };
+                    var m = new SearchWindowPosition { Display = display, Value = e, };
                     modes.Add(m);
                 }
                 return modes;

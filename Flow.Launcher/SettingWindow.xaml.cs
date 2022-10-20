@@ -435,7 +435,7 @@ namespace Flow.Launcher
                 pluginFilterTxb.Focus();
         }
 
-        private void LauncherPositionSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        private void SearchWindowPositionSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

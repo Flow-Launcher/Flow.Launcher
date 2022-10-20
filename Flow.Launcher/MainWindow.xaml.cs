@@ -189,25 +189,25 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            switch (_settings.LauncherPosition)
+            switch (_settings.SearchWindowPosition)
             {
-                case LauncherPositions.RememberLastLaunchLocation:
+                case SearchWindowPositions.RememberLastLaunchLocation:
                     Top = _settings.WindowTop;
                     Left = _settings.WindowLeft;
                     break;
-                case LauncherPositions.MouseScreenCenter:
+                case SearchWindowPositions.MouseScreenCenter:
                     Left = HorizonCenter();
                     Top = VerticalCenter();
                     break;
-                case LauncherPositions.MouseScreenCenterTop:
+                case SearchWindowPositions.MouseScreenCenterTop:
                     Left = HorizonCenter();
                     Top = 10;
                     break;
-                case LauncherPositions.MouseScreenLeftTop:
+                case SearchWindowPositions.MouseScreenLeftTop:
                     Left = 10;
                     Top = 10;
                     break;
-                case LauncherPositions.MouseScreenRightTop:
+                case SearchWindowPositions.MouseScreenRightTop:
                     Left = HorizonRight();
                     Top = 10;
                     break;
@@ -461,7 +461,7 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-            if (_settings.LauncherPosition == LauncherPositions.RememberLastLaunchLocation)
+            if (_settings.SearchWindowPosition == SearchWindowPositions.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
