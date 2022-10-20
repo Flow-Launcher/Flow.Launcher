@@ -60,8 +60,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             InitPackageVersion(namespaces);
 
             const uint noAttribute = 0x80;
-            const Stgm exclusiveRead = Stgm.Read | Stgm.ShareExclusive;
-            var hResult = SHCreateStreamOnFileEx(path, exclusiveRead, noAttribute, false, null, out IStream stream);
+            const Stgm nonExclusiveRead = Stgm.Read | Stgm.ShareDenyNone;
+            var hResult = SHCreateStreamOnFileEx(path, nonExclusiveRead, noAttribute, false, null, out IStream stream);
 
             if (hResult == Hresult.Ok)
             {
@@ -85,7 +85,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Apps = new List<Application>().ToArray();
             }
 
-            if (Marshal.ReleaseComObject(stream) > 0)
+            if (stream != null && Marshal.ReleaseComObject(stream) > 0)
             {
                 Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
             }
@@ -784,6 +784,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             Read = 0x0,
             ShareExclusive = 0x10,
+            ShareDenyNone = 0x40
         }
 
         private enum Hresult : uint
