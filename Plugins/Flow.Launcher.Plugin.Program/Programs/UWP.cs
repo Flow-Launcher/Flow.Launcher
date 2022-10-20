@@ -603,101 +603,104 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 string path = Path.Combine(Package.Location, uri);
 
-                // TODO: NOT sure why we needed this? Maybe for Windows 8?
-                //if (uri.Contains("\\"))
-                //{
-                //    path = Path.Combine(Package.Location, uri);
-                //}
-                //else
-                //{
-                //    // for C:\Windows\MiracastView etc
-                //    path = Path.Combine(Package.Location, "Assets", uri);
-                //}
-
-                var extension = Path.GetExtension(path);
-                if (extension != null)
+                var logoPath = TryToFindLogo(uri, path);
+                if (String.IsNullOrEmpty(logoPath))
                 {
-                    if (File.Exists(path))
+                    // TODO: Don't know why, just keep it at the moment
+                    // Maybe on older version of Windows 10?
+                    // for C:\Windows\MiracastView etc
+                    return TryToFindLogo(uri, Path.Combine(Package.Location, "Assets", uri));
+                }
+                return logoPath;
+
+                string TryToFindLogo(string uri, string path)
+                {
+                    var extension = Path.GetExtension(path);
+                    if (extension != null)
                     {
-                        return path; // shortcut, avoid enumerating files
-                    }
+                        if (File.Exists(path))
+                        {
+                            return path; // shortcut, avoid enumerating files
+                        }
 
-                    var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
-                    var logoDir = Path.GetDirectoryName(path);  // e.g ..\..\Assets
-                    if (String.IsNullOrEmpty(logoNamePrefix) || String.IsNullOrEmpty(logoDir) || !Directory.Exists(logoDir))
-                    {
-                        // Known issue: Edge always triggers it since logo is not at uri
-                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                           $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Package.Location}", new FileNotFoundException());
-                        return string.Empty;
-                    }
+                        var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
+                        var logoDir = Path.GetDirectoryName(path);  // e.g ..\..\Assets
+                        if (String.IsNullOrEmpty(logoNamePrefix) || String.IsNullOrEmpty(logoDir) || !Directory.Exists(logoDir))
+                        {
+                            // Known issue: Edge always triggers it since logo is not at uri
+                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
+                               $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Package.Location}", new FileNotFoundException());
+                            return string.Empty;
+                        }
 
-                    var files = Directory.EnumerateFiles(logoDir);
+                        var files = Directory.EnumerateFiles(logoDir);
 
-                    // Just ignore all qulifiers
-                    // select like logo[xxx].png
-                    // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
-                    var selected = files.FirstOrDefault(file => 
-                        Path.GetFileName(file).StartsWith(logoNamePrefix) && extension == Path.GetExtension(file)
-                    );
+                        // Currently we don't care which one to choose
+                        // Just ignore all qualifiers
+                        // select like logo.[xxx_yyy].png
+                        // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
+                        var selected = files.FirstOrDefault(file =>
+                            Path.GetFileName(file).StartsWith(logoNamePrefix) && extension == Path.GetExtension(file)
+                        );
 
-                    //var scaleFactors = new Dictionary<PackageVersion, List<int>>
-                    //{
-                    //    // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
-                    //    {
-                    //        PackageVersion.Windows10, new List<int>
-                    //        {
-                    //            100,
-                    //            125,
-                    //            150,
-                    //            200,
-                    //            400
-                    //        }
-                    //    },
-                    //    {
-                    //        PackageVersion.Windows81, new List<int>
-                    //        {
-                    //            100,
-                    //            120,
-                    //            140,
-                    //            160,
-                    //            180
-                    //        }
-                    //    },
-                    //    {
-                    //        PackageVersion.Windows8, new List<int>
-                    //        {
-                    //            100
-                    //        }
-                    //    }
-                    //};
+                        //var scaleFactors = new Dictionary<PackageVersion, List<int>>
+                        //{
+                        //    // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
+                        //    {
+                        //        PackageVersion.Windows10, new List<int>
+                        //        {
+                        //            100,
+                        //            125,
+                        //            150,
+                        //            200,
+                        //            400
+                        //        }
+                        //    },
+                        //    {
+                        //        PackageVersion.Windows81, new List<int>
+                        //        {
+                        //            100,
+                        //            120,
+                        //            140,
+                        //            160,
+                        //            180
+                        //        }
+                        //    },
+                        //    {
+                        //        PackageVersion.Windows8, new List<int>
+                        //        {
+                        //            100
+                        //        }
+                        //    }
+                        //};
 
-                    //if (scaleFactors.ContainsKey(Package.Version))
-                    //{
-                    //    foreach (var factor in scaleFactors[Package.Version])
-                    //    {
-                    //        // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
-                    //        suffixes.Add($"scale-{factor}{extension}");  // MS don't require scale as the last 
-                    //    }
-                    //}
+                        //if (scaleFactors.ContainsKey(Package.Version))
+                        //{
+                        //    foreach (var factor in scaleFactors[Package.Version])
+                        //    {
+                        //        // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
+                        //        suffixes.Add($"scale-{factor}{extension}");  // MS don't require scale as the last 
+                        //    }
+                        //}
 
-                    if (!string.IsNullOrEmpty(selected))
-                    {
-                        return selected;
+                        if (!string.IsNullOrEmpty(selected))
+                        {
+                            return selected;
+                        }
+                        else
+                        {
+                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
+                                                       $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Package.Location}", new FileNotFoundException());
+                            return string.Empty;
+                        }
                     }
                     else
                     {
                         ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                   $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Package.Location}", new FileNotFoundException());
+                                                   $"|Unable to find extension from {uri} for {UserModelId} " +
+                                                   $"in package location {Package.Location}", new FileNotFoundException());
                         return string.Empty;
                     }
-                }
-                else
-                {
-                    ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                               $"|Unable to find extension from {uri} for {UserModelId} " +
-                                               $"in package location {Package.Location}", new FileNotFoundException());
-                    return string.Empty;
                 }
             }
 
@@ -705,7 +708,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public ImageSource Logo()
             {
                 var logo = ImageFromPath(LogoPath);
-                var plated = PlatedImage(logo);
+                var plated = PlatedImage(logo);  // TODO: maybe get plated directly from app package?
 
                 // todo magic! temp fix for cross thread object
                 plated.Freeze();
