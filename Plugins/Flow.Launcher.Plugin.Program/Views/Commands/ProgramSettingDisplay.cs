@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
 {
     internal static class ProgramSettingDisplay
     {
-        internal static List<ProgramSource> LoadProgramSources(this List<Settings.ProgramSource> programSources)
+        internal static List<ProgramSource> LoadProgramSources(this List<ProgramSource> programSources)
         {
             var list = new List<ProgramSource>();
 
@@ -108,7 +108,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
                 .ToList()
                 .ForEach(x => Main._settings.DisabledProgramSources
                                             .Add(
-                                                    new Settings.DisabledProgramSource
+                                                    new DisabledProgramSource
                                                     {
                                                         Name = x.Name,
                                                         Location = x.Location,

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -147,7 +147,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void btnEditProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedProgramSource = programSourceView.SelectedItem as Settings.ProgramSource;
+            var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
             if (selectedProgramSource != null)
             {
                 var add = new AddProgramSource(selectedProgramSource, _settings);
