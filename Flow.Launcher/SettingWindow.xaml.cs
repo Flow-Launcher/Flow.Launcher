@@ -435,12 +435,6 @@ namespace Flow.Launcher
                 pluginFilterTxb.Focus();
         }
 
-        private void SearchWindowPositionSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
         private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)

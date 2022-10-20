@@ -700,8 +700,7 @@
                                         FontSize="14"
                                         ItemsSource="{Binding SearchWindowPositions}"
                                         SelectedValue="{Binding Settings.SearchWindowPosition}"
-                                        SelectedValuePath="Value"
-                                        SelectionChanged="SearchWindowPositionSelectedIndexChanged" />
+                                        SelectedValuePath="Value" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7f4;
                                     </TextBlock>
