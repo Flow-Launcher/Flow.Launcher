@@ -11,6 +11,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
+using Flow.Launcher.Plugin.Program.Views.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
@@ -205,7 +206,7 @@ namespace Flow.Launcher.Plugin.Program
 
             _settings.DisabledProgramSources
                 .Add(
-                    new Settings.DisabledProgramSource
+                    new DisabledProgramSource
                     {
                         Name = programToDelete.Name,
                         Location = programToDelete.Location,
