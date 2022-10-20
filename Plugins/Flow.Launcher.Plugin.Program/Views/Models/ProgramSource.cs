@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
         public ProgramSource()
         {
-        }
+        }  // TODO Remove
 
         /// <summary>
         /// Custom user added source.

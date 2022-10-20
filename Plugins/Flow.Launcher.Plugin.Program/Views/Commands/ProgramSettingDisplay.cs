@@ -133,14 +133,15 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
 
         internal static bool IsReindexRequired(this List<ProgramSource> selectedItems)
         {
-            if (selectedItems.Where(t1 => t1.Enabled && !Main._uwps.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier)).Count() > 0
-                && selectedItems.Where(t1 => t1.Enabled && !Main._win32s.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier)).Count() > 0)
+            // Not in cache
+            if (selectedItems.Any(t1 => t1.Enabled && !Main._uwps.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
+                && selectedItems.Any(t1 => t1.Enabled && !Main._win32s.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier)))
                 return true;
 
             // ProgramSources holds list of user added directories, 
             // so when we enable/disable we need to reindex to show/not show the programs
             // that are found in those directories.
-            if (selectedItems.Where(t1 => Main._settings.ProgramSources.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier)).Count() > 0)
+            if (selectedItems.Any(t1 => Main._settings.ProgramSources.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier)))
                 return true;
 
             return false;
