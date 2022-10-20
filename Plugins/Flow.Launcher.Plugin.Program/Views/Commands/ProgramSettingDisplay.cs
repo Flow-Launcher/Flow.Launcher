@@ -107,15 +107,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
                                 && !Main._settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
                 .ToList()
                 .ForEach(x => Main._settings.DisabledProgramSources
-                                            .Add(
-                                                    new DisabledProgramSource
-                                                    {
-                                                        Name = x.Name,
-                                                        Location = x.Location,
-                                                        UniqueIdentifier = x.UniqueIdentifier,
-                                                        Enabled = false
-                                                    }
-                                            ));
+                                            .Add(new DisabledProgramSource(x)));
         }
 
         internal static void RemoveDisabledFromSettings(this List<ProgramSource> list)

@@ -68,16 +68,6 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
             return program != null && program.UniqueIdentifier == this.UniqueIdentifier;
         }
 
-        public static bool operator ==(ProgramSource a, ProgramSource b)
-        {
-            return a is not null && a.Equals(b);
-        }
-
-        public static bool operator !=(ProgramSource a, ProgramSource b)
-        {
-            return !(a == b);
-        }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(uid);
@@ -86,7 +76,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
     public class DisabledProgramSource : ProgramSource
     {
-        public DisabledProgramSource() { }
+        //public DisabledProgramSource() { }
 
         public DisabledProgramSource(string location) : base(location, false) { }
 

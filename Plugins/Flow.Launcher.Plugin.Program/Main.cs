@@ -204,16 +204,7 @@ namespace Flow.Launcher.Plugin.Program
                 _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                     .Enabled = false;
 
-            _settings.DisabledProgramSources
-                .Add(
-                    new DisabledProgramSource
-                    {
-                        Name = programToDelete.Name,
-                        Location = programToDelete.Location,
-                        UniqueIdentifier = programToDelete.UniqueIdentifier,
-                        Enabled = false
-                    }
-                );
+            _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
         }
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)
