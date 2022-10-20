@@ -21,8 +21,8 @@
     <system:String x:Key="textTitle">Texto</system:String>
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionReset">Repor posição</system:String>
+    <system:String x:Key="PositionResetToolTip">Repor posição da janela de pesquisa</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Definições Flow Launcher</system:String>
@@ -33,13 +33,13 @@
     <system:String x:Key="setAutoStartFailed">Erro ao definir para iniciar ao arrancar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
+    <system:String x:Key="SearchWindowPosition">Posição da janela de pesquisa</system:String>
     <system:String x:Key="rememberLastLocation">Memorizar localização anterior</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Location</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Memorizar última posição</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Ecrã do rato - Centro</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Ecrã do rato - Centro, cima</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Ecrã do rato - Esquerda, cima</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Ecrã do rato - Direita, cima</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo da última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostrar/ocultar resultados anteriores ao reiniciar Flow Launcher</system:String>
@@ -47,7 +47,7 @@
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">Também pode ajustar rapidamente através do atalho Ctrl+Sinal Mais e Ctrl+Sinal Menos</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de atalho se em ecrã completo</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desativar ativação do Flow Launcher se alguma aplicação estiver em ecrã completo (recomendado para jogos)</system:String>
     <system:String x:Key="defaultFileManager">Gestor de ficheiros padrão</system:String>
