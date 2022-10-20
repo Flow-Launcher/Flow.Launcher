@@ -21,6 +21,8 @@
     <system:String x:Key="textTitle">텍스트</system:String>
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
+    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 설정</system:String>
@@ -31,7 +33,13 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
     <system:String x:Key="rememberLastLocation">마지막 실행 위치 기억</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Location</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
     <system:String x:Key="language">언어</system:String>
     <system:String x:Key="lastQueryMode">마지막 쿼리 스타일</system:String>
     <system:String x:Key="lastQueryModeToolTip">쿼리박스를 열었을 때 쿼리 처리 방식</system:String>
