@@ -27,14 +27,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string Name { get; set; }
         public string UniqueIdentifier { get => _uid; set => _uid = value.ToLowerInvariant(); }
         public string IcoPath { get; set; }
-        public string FullPath { 
-            get => _fullPath; 
-            set 
-            { 
-                _fullPath = value;
-                _uid = value.ToLowerInvariant();
-            }
-        }
+        public string FullPath { get; set; }
         public string LnkResolvedPath { get; set; }
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
@@ -46,7 +39,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ShortcutExtension = "lnk";
         private const string ExeExtension = "exe";
         private string _uid = string.Empty;
-        private string _fullPath = string.Empty;
 
         private static readonly Win32 Default = new Win32()
         {
@@ -57,7 +49,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             LnkResolvedPath = null,
             ParentDirectory = string.Empty,
             ExecutableName = null,
-            //UniqueIdentifier = string.Empty,
+            UniqueIdentifier = string.Empty,
             Valid = false,
             Enabled = false
         };
@@ -218,7 +210,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Name = Path.GetFileNameWithoutExtension(path),
                     IcoPath = path,
                     FullPath = path,
-                    //UniqueIdentifier = path,
+                    UniqueIdentifier = path,
                     ParentDirectory = Directory.GetParent(path).FullName,
                     Description = string.Empty,
                     Valid = true,
