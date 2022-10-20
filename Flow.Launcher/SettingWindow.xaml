@@ -809,6 +809,9 @@
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
+
+                                                        </Border>
+                                                        <Border Background="{DynamicResource Color02B}">
                                                             <ContentControl
                                                                 x:Name="PluginSettingControl"
                                                                 Margin="0"
