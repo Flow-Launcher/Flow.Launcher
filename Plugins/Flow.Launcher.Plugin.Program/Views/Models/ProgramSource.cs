@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
     {
         private string name;
 
-        public string Location;
+        public string Location { get; set; }
         public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
         public bool Enabled { get; set; } = true;
         private string uid { get; set; }
@@ -26,13 +26,13 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         /// </summary>
         public string UniqueIdentifier { get => uid; set => uid = value.ToLowerInvariant(); }
 
-        //public ProgramSource() {}
+        public ProgramSource() { }  // only for json deserialization
 
         /// <summary>
-        /// Custom user added source.
+        /// Add source by location
         /// </summary>
-        /// <param name="location"></param>
-        /// <param name="enabled"></param>
+        /// <param name="location">location of program source</param>
+        /// <param name="enabled">enabled</param>
         public ProgramSource(string location, bool enabled=true)
         {
             Location = location;
@@ -74,7 +74,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
     public class DisabledProgramSource : ProgramSource
     {
-        //public DisabledProgramSource() { }
+        public DisabledProgramSource() { }  // only for json deserialization
 
         public DisabledProgramSource(string location) : base(location, false) { }
 
