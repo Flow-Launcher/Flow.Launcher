@@ -26,16 +26,14 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         /// </summary>
         public string UniqueIdentifier { get => uid; set => uid = value.ToLowerInvariant(); }
 
-        public ProgramSource()
-        {
-        }  // TODO Remove
+        //public ProgramSource() {}
 
         /// <summary>
         /// Custom user added source.
         /// </summary>
         /// <param name="location"></param>
         /// <param name="enabled"></param>
-        public ProgramSource(string location, bool enabled)
+        public ProgramSource(string location, bool enabled=true)
         {
             Location = location;
             Enabled = enabled;

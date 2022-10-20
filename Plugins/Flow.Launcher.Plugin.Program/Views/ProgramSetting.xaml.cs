@@ -199,13 +199,9 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 foreach (string directory in directories)
                 {
-                    if (Directory.Exists(directory) && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == directory))
+                    if (Directory.Exists(directory) && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == directory.ToLowerInvariant()))
                     {
-                        var source = new ProgramSource
-                        {
-                            Location = directory,
-                            UniqueIdentifier = directory
-                        };
+                        var source = new ProgramSource(directory);
 
                         directoriesToAdd.Add(source);
                     }

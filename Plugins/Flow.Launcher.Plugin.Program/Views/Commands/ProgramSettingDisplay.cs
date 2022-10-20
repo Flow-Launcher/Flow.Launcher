@@ -13,16 +13,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
         {
             var list = new List<ProgramSource>();
 
-            programSources.ForEach(x => list
-                                        .Add(
-                                                new ProgramSource
-                                                {
-                                                    Enabled = x.Enabled,
-                                                    Location = x.Location,
-                                                    Name = x.Name,
-                                                    UniqueIdentifier = x.UniqueIdentifier
-                                                }
-                                        ));
+            programSources.ForEach(x => list.Add(new ProgramSource(x)));
 
             // Even though these are disabled, we still want to display them so users can enable later on
             Main._settings
@@ -32,16 +23,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
                                   .Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
                 .Select(x => x)
                 .ToList()
-                .ForEach(x => list
-                              .Add(
-                                    new ProgramSource
-                                    {
-                                        Enabled = x.Enabled,
-                                        Location = x.Location,
-                                        Name = x.Name,
-                                        UniqueIdentifier = x.UniqueIdentifier
-                                    }
-                              ));
+                .ForEach(x => list.Add(new ProgramSource(x)));
 
             return list;
         }
@@ -51,30 +33,12 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
             Main._win32s
                 .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
                 .ToList()
-                .ForEach(t1 => ProgramSetting.ProgramSettingDisplayList
-                                             .Add(
-                                                    new ProgramSource
-                                                    {
-                                                        Name = t1.Name,
-                                                        Location = t1.ParentDirectory,
-                                                        UniqueIdentifier = t1.UniqueIdentifier,
-                                                        Enabled = t1.Enabled
-                                                    }
-                                             ));
+                .ForEach(t1 => ProgramSetting.ProgramSettingDisplayList.Add(new ProgramSource(t1)));
 
             Main._uwps
                 .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
                 .ToList()
-                .ForEach(t1 => ProgramSetting.ProgramSettingDisplayList
-                                             .Add(
-                                                     new ProgramSource
-                                                     {
-                                                         Name = t1.DisplayName,
-                                                         Location = t1.Package.Location,
-                                                         UniqueIdentifier = t1.UniqueIdentifier,
-                                                         Enabled = t1.Enabled
-                                                     }
-                                              ));
+                .ForEach(t1 => ProgramSetting.ProgramSettingDisplayList.Add(new ProgramSource(t1)));
         }
 
         internal static void SetProgramSourcesStatus(this List<ProgramSource> list, List<ProgramSource> selectedProgramSourcesToDisable, bool status)

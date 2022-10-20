@@ -59,11 +59,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == Directory.Text))
                 {
-                    var source = new ProgramSource
-                    {
-                        Location = Directory.Text,
-                        UniqueIdentifier = Directory.Text
-                    };
+                    var source = new ProgramSource(Directory.Text);
 
                     _settings.ProgramSources.Insert(0, source);
                     ProgramSetting.ProgramSettingDisplayList.Add(source);
