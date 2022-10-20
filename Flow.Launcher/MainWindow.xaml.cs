@@ -320,7 +320,7 @@ namespace Flow.Launcher
         private async void PositionReset()
         {
            _viewModel.Show();
-           await Task.Delay(300); // If don't give a time, Positioning will be weired.
+           await Task.Delay(300); // If don't give a time, Positioning will be weird.
            Left = HorizonCenter();
            Top = VerticalCenter();
         }
