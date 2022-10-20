@@ -685,12 +685,25 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource rememberLastLocation}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ComboBox
+                                        x:Name="SearchWindowPosition"
+                                        Grid.Column="2"
+                                        MinWidth="220"
+                                        Margin="0,0,18,0"
+                                        VerticalAlignment="Center"
+                                        DisplayMemberPath="Display"
+                                        FontSize="14"
+                                        ItemsSource="{Binding SearchWindowPositions}"
+                                        SelectedValue="{Binding Settings.SearchWindowPosition}"
+                                        SelectedValuePath="Value" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe7f4;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
 

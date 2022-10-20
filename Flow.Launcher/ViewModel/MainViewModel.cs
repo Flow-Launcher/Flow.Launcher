@@ -341,25 +341,6 @@ namespace Flow.Launcher.ViewModel
         }
 
 
-        public double Top
-        {
-            get => _settings.WindowTop;
-            set
-            {
-                _settings.WindowTop = value;
-                OnPropertyChanged();
-            }
-        }
-        public double Left
-        {
-            get => _settings.WindowLeft;
-            set
-            {
-                _settings.WindowLeft = value;
-                OnPropertyChanged();
-            }
-        }
-
         [RelayCommand]
         private void IncreaseWidth()
         {
@@ -370,7 +351,7 @@ namespace Flow.Launcher.ViewModel
             else 
             { 
                 _settings.WindowSize += 100;
-                Left -= 50;
+                _settings.WindowLeft -= 50;
             }
             OnPropertyChanged();
         }
@@ -384,7 +365,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             { 
-                Left += 50;
+                _settings.WindowLeft += 50;
                 _settings.WindowSize -= 100;
             }
             OnPropertyChanged();
