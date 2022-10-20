@@ -298,7 +298,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public class Application : IProgram
         {
             public string AppListEntry { get; set; }
-            public string UniqueIdentifier { get => _uid; set => _uid = value.ToLowerInvariant(); }
+            public string UniqueIdentifier { get; set; }
             public string DisplayName { get; set; }
             public string Description { get; set; }
             public string UserModelId { get; set; }
@@ -316,8 +316,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public UWP Package { get; set; }
 
             public Application() { }
-
-            private string _uid = string.Empty;
 
             public Result Result(string query, IPublicAPI api)
             {
