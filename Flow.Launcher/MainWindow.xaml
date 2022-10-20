@@ -32,9 +32,7 @@
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
     WindowStyle="None"
-    mc:Ignorable="d"
-    Left="{Binding Left, Mode=TwoWay}"
-    Top="{Binding Top, Mode=TwoWay}">
+    mc:Ignorable="d">
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -88,20 +86,20 @@
         <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="OemCloseBrackets"
-            Modifiers="Control"
-            Command="{Binding IncreaseWidthCommand}"/>
+            Command="{Binding IncreaseWidthCommand}"
+            Modifiers="Control" />
         <KeyBinding
             Key="OemOpenBrackets"
-            Modifiers="Control"
-            Command="{Binding DecreaseWidthCommand}"/>
+            Command="{Binding DecreaseWidthCommand}"
+            Modifiers="Control" />
         <KeyBinding
             Key="OemPlus"
-            Modifiers="Control"
-            Command="{Binding IncreaseMaxResultCommand}"/> 
+            Command="{Binding IncreaseMaxResultCommand}"
+            Modifiers="Control" />
         <KeyBinding
             Key="OemMinus"
-            Modifiers="Control"
-            Command="{Binding DecreaseMaxResultCommand}"/>
+            Command="{Binding DecreaseMaxResultCommand}"
+            Modifiers="Control" />
         <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
@@ -195,9 +193,9 @@
                         AllowDrop="True"
                         Background="Transparent"
                         PreviewDragOver="OnPreviewDragOver"
+                        PreviewKeyUp="QueryTextBox_KeyUp"
                         Style="{DynamicResource QueryBoxStyle}"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        PreviewKeyUp="QueryTextBox_KeyUp"
                         Visibility="Visible">
                         <TextBox.CommandBindings>
                             <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
