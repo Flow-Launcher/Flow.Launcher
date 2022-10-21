@@ -53,7 +53,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void InitializeAppInfo()
         {
-            AppxPackageHelper _helper = new AppxPackageHelper();
             var path = Path.Combine(Location, "AppxManifest.xml");
 
             var namespaces = XmlNamespaces(path);
@@ -67,7 +66,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var apps = new List<Application>();
 
-                List<AppxPackageHelper.IAppxManifestApplication> _apps = _helper.getAppsFromManifest(stream);
+                List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
                 foreach (var _app in _apps)
                 {
                     var app = new Application(_app, this);
