@@ -109,9 +109,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|UWP|XmlNamespaces|{path}" +
                                            $"|Error occured while trying to get the XML from {path}", new ArgumentNullException());
 
-                return new string[]
-                {
-                };
+                return Array.Empty<string>();
             }
         }
 
@@ -184,9 +182,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             else
             {
-                return new Application[]
-                {
-                };
+                return Array.Empty<Application>();
             }
         }
 
@@ -232,9 +228,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             else
             {
-                return new Package[]
-                {
-                };
+                return Array.Empty<Package>();
             }
         }
 

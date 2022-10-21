@@ -83,13 +83,9 @@ namespace Flow.Launcher.Plugin.Program
             Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
             {
                 _win32Storage = new BinaryStorage<Win32[]>("Win32");
-                _win32s = _win32Storage.TryLoad(new Win32[]
-                {
-                });
+                _win32s = _win32Storage.TryLoad(Array.Empty<Win32>());
                 _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
-                _uwps = _uwpStorage.TryLoad(new UWP.Application[]
-                {
-                });
+                _uwps = _uwpStorage.TryLoad(Array.Empty<UWP.Application>());
             });
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
@@ -124,9 +120,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             var windows10 = new Version(10, 0);
             var support = Environment.OSVersion.Version.Major >= windows10.Major;
-            var applications = support ? UWP.All() : new UWP.Application[]
-            {
-            };
+            var applications = support ? UWP.All() : Array.Empty<UWP.Application>();
             _uwps = applications;
             ResetCache();
         }
