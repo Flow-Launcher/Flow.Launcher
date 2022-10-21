@@ -22,7 +22,7 @@
     <system:String x:Key="GameMode">Modo Juego</system:String>
     <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
     <system:String x:Key="PositionReset">Restablecer posición</system:String>
-    <system:String x:Key="PositionResetToolTip">Restablecer posición de la ventana de búsqueda</system:String>
+    <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
@@ -36,10 +36,10 @@
     <system:String x:Key="SearchWindowPosition">Posición de la ventana de búsqueda</system:String>
     <system:String x:Key="rememberLastLocation">Recordar última posición de Flow Launcher</system:String>
     <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Recordar última posición</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Ratón enfocado en el centro de la pantalla</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Ratón enfocado en el centro superior de la pantalla</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Ratón enfocado en esquina superior izquierda de la pantalla</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Ratón enfocado en esquina superior derecha de la pantalla</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
