@@ -18,7 +18,6 @@ using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
-using System.Runtime.Versioning;
 using System.Threading.Channels;
 
 namespace Flow.Launcher.Plugin.Program.Programs
@@ -688,9 +687,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             private BitmapImage ImageFromPath(string path)
             {
+                // TODO: Consider using infrastructure.image.imageloader?
                 if (File.Exists(path))
                 {
-                    var image = new BitmapImage(new Uri(path));
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.UriSource =  new Uri(path);
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.EndInit();
                     return image;
                 }
                 else
