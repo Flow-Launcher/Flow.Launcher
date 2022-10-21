@@ -91,7 +91,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         /// http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
-        private string[] XmlNamespaces(string path)
+        private static string[] XmlNamespaces(string path)
         {
             XDocument z = XDocument.Load(path);
             if (z.Root != null)
@@ -536,7 +536,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            public string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
+            public static string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
             {
                 const string prefix = "ms-resource:";
 

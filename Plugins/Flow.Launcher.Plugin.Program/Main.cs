@@ -185,7 +185,7 @@ namespace Flow.Launcher.Plugin.Program
             return menuOptions;
         }
 
-        private void DisableProgram(IProgram programToDelete)
+        private static void DisableProgram(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
                 return;
@@ -219,6 +219,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             await IndexProgramsAsync();
         }
+
         public void Dispose()
         {
             Win32.Dispose();
