@@ -4,8 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="{DynamicResource flowlauncher_plugin_program_suffixes}"
-    Width="700"
+    Width="600"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
@@ -15,6 +16,49 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style
+            x:Key="CustomFileTypeTextBox"
+            BasedOn="{StaticResource DefaultTextBoxStyle}"
+            TargetType="TextBox">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=CustomFiles, Path=IsChecked}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style
+            x:Key="CustomURLTypeTextBox"
+            BasedOn="{StaticResource DefaultTextBoxStyle}"
+            TargetType="TextBox">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=CustomProtocol, Path=IsChecked}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SuffixToolTip" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=tbSuffixes, Path=IsFocused}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="URLToolTip" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=tbProtocols, Path=IsFocused}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -70,47 +114,74 @@
                     FontSize="14"
                     Text="{DynamicResource flowlauncher_plugin_program_only_index_tip}"
                     TextWrapping="Wrap" />
+                <Border>
+                    <TextBlock
+                        Margin="0,0,0,0"
+                        Style="{StaticResource URLToolTip}"
+                        Text="{DynamicResource flowlauncher_plugin_program_protocol_tooltip}"
+                        TextWrapping="Wrap" />
+                </Border>
+
+                <Border>
+                    <TextBlock
+                        Margin="0,0,0,0"
+                        Style="{StaticResource SuffixToolTip}"
+                        Text="{DynamicResource flowlauncher_plugin_program_suffixes_tooltip}"
+                        TextWrapping="Wrap" />
+                </Border>
+
+
                 <!--
                     <TextBox x:Name="tbSuffixes" Margin="0,20,0,20" />
                 -->
-                <Grid Margin="0,12,0,12">
+                <Grid Margin="0,20,0,12">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="290" />
-                        <ColumnDefinition Width="290" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="250" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="12,0,0,0">
+                    <StackPanel Grid.Column="0" Margin="0,0,0,0">
                         <TextBlock
                             Margin="0,0,0,8"
-                            FontSize="18"
-                            FontWeight="SemiBold">
-                            Excutable Types
-                        </TextBlock>
-                        <CheckBox Name="apprefMS" Margin="20,0,0,0">appref-ms</CheckBox>
-                        <CheckBox Name="EXE" Margin="20,0,0,0">EXE</CheckBox>
-                        <CheckBox Name="LNK" Margin="20,0,0,0">Lnk</CheckBox>
-                        <CheckBox Name="CustomFiles" Margin="20,0,0,0">Custom File Types</CheckBox>
-                        <TextBox x:Name="tbSuffixes" Margin="20,4,0,20" />
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="{DynamicResource flowlauncher_plugin_program_suffixes_excutable_types}" />
+                        <CheckBox Name="apprefMS" Margin="10,0,0,0">appref-ms</CheckBox>
+                        <CheckBox Name="EXE" Margin="10,0,0,0">EXE</CheckBox>
+                        <CheckBox Name="LNK" Margin="10,0,0,0">Lnk</CheckBox>
+                        <CheckBox
+                            Name="CustomFiles"
+                            Margin="10,0,0,0"
+                            Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}" />
+                        <TextBox
+                            x:Name="tbSuffixes"
+                            Margin="10,4,0,0"
+                            Style="{StaticResource CustomFileTypeTextBox}" />
                     </StackPanel>
 
                     <Border
                         Grid.Column="1"
-                        Margin="12,0,0,0"
+                        Margin="20,0,0,0"
                         Padding="20,0,0,0"
-                        BorderBrush="Black"
+                        BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
                         BorderThickness="1,0,0,0">
                         <StackPanel>
                             <TextBlock
                                 Margin="0,0,0,8"
-                                FontSize="18"
-                                FontWeight="SemiBold">
-                                URL Types
-                            </TextBlock>
-                            <CheckBox Name="steam" Margin="20,0,0,0">Steam Games</CheckBox>
-                            <CheckBox Name="epic" Margin="20,0,0,0">Epic Games</CheckBox>
-                            <CheckBox Name="http" Margin="20,0,0,0">Http/Https</CheckBox>
-                            <CheckBox Name="CustomProtocol" Margin="20,0,0,0">Custom URL Protocols</CheckBox>
-                            <TextBox x:Name="tbProtocols" Margin="0,4,0,20" />
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                Text="{DynamicResource flowlauncher_plugin_program_suffixes_URL_types}" />
+                            <CheckBox Name="steam" Margin="10,0,0,0">Steam Games</CheckBox>
+                            <CheckBox Name="epic" Margin="10,0,0,0">Epic Games</CheckBox>
+                            <CheckBox Name="http" Margin="10,0,0,0">Http/Https</CheckBox>
+                            <CheckBox
+                                Name="CustomProtocol"
+                                Margin="10,0,0,0"
+                                Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}" />
+                            <TextBox
+                                x:Name="tbProtocols"
+                                Margin="10,4,0,0"
+                                Style="{StaticResource CustomURLTypeTextBox}" />
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -123,10 +194,17 @@
             BorderThickness="0,1,0,0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
-                    x:Name="btnCancel"
+                    x:Name="btnResetl"
                     Height="30"
                     MinWidth="140"
                     Margin="0,0,5,0"
+                    Click="BtnCancel_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_reset}" />
+                <Button
+                    x:Name="btnCancel"
+                    Height="30"
+                    MinWidth="140"
+                    Margin="5,0,5,0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
 
