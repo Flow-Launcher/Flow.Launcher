@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{DynamicResource flowlauncher_plugin_program_suffixes}"
-    Width="400"
+    Width="700"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
@@ -17,7 +17,7 @@
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
@@ -55,7 +55,9 @@
                 </Grid>
             </StackPanel>
             <StackPanel Margin="26,12,26,0">
+
                 <StackPanel Margin="0,0,0,12">
+
                     <TextBlock
                         Grid.Column="0"
                         Margin="0,0,0,0"
@@ -68,7 +70,50 @@
                     FontSize="14"
                     Text="{DynamicResource flowlauncher_plugin_program_only_index_tip}"
                     TextWrapping="Wrap" />
-                <TextBox x:Name="tbSuffixes" Margin="0,20,0,20" />
+                <!--
+                    <TextBox x:Name="tbSuffixes" Margin="0,20,0,20" />
+                -->
+                <Grid Margin="0,12,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="290" />
+                        <ColumnDefinition Width="290" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="12,0,0,0">
+                        <TextBlock
+                            Margin="0,0,0,8"
+                            FontSize="18"
+                            FontWeight="SemiBold">
+                            Excutable Types
+                        </TextBlock>
+                        <CheckBox Name="apprefMS" Margin="20,0,0,0">appref-ms</CheckBox>
+                        <CheckBox Name="EXE" Margin="20,0,0,0">EXE</CheckBox>
+                        <CheckBox Name="LNK" Margin="20,0,0,0">Lnk</CheckBox>
+                        <CheckBox Name="CustomFiles" Margin="20,0,0,0">Custom File Types</CheckBox>
+                        <TextBox x:Name="tbSuffixes" Margin="20,4,0,20" />
+                    </StackPanel>
+
+                    <Border
+                        Grid.Column="1"
+                        Margin="12,0,0,0"
+                        Padding="20,0,0,0"
+                        BorderBrush="Black"
+                        BorderThickness="1,0,0,0">
+                        <StackPanel>
+                            <TextBlock
+                                Margin="0,0,0,8"
+                                FontSize="18"
+                                FontWeight="SemiBold">
+                                URL Types
+                            </TextBlock>
+                            <CheckBox Name="steam" Margin="20,0,0,0">Steam Games</CheckBox>
+                            <CheckBox Name="epic" Margin="20,0,0,0">Epic Games</CheckBox>
+                            <CheckBox Name="http" Margin="20,0,0,0">Http/Https</CheckBox>
+                            <CheckBox Name="CustomProtocol" Margin="20,0,0,0">Custom URL Protocols</CheckBox>
+                            <TextBox x:Name="tbProtocols" Margin="0,4,0,20" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
             </StackPanel>
         </StackPanel>
         <Border
