@@ -40,26 +40,47 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="SuffixToolTip" TargetType="TextBlock">
+        <Style x:Key="SettingGroupBoxSuffixToolTip" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource Color00B}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="Padding" Value="15,15,15,15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=tbSuffixes, Path=IsFocused}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=tbSuffixes, Path=IsFocused}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="URLToolTip" TargetType="TextBlock">
+        <Style x:Key="SettingGroupBoxURLToolTip" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource Color00B}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Margin" Value="0,5,0,0" />
+            <Setter Property="Padding" Value="15,15,15,15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=tbProtocols, Path=IsFocused}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=tbProtocols, Path=IsFocused}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
             </Style.Triggers>
         </Style>
+
     </Window.Resources>
 
-    <Grid>
+    <Grid x:Name="WindowArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="80" />
@@ -111,21 +132,20 @@
                         TextAlignment="Left" />
                 </StackPanel>
                 <TextBlock
+                    Margin="0,0,0,10"
                     FontSize="14"
                     Text="{DynamicResource flowlauncher_plugin_program_only_index_tip}"
                     TextWrapping="Wrap" />
-                <Border>
+                <Border Style="{DynamicResource SettingGroupBoxURLToolTip}">
                     <TextBlock
-                        Margin="0,0,0,0"
-                        Style="{StaticResource URLToolTip}"
+                        FontSize="14"
                         Text="{DynamicResource flowlauncher_plugin_program_protocol_tooltip}"
                         TextWrapping="Wrap" />
                 </Border>
 
-                <Border>
+                <Border Style="{DynamicResource SettingGroupBoxSuffixToolTip}">
                     <TextBlock
-                        Margin="0,0,0,0"
-                        Style="{StaticResource SuffixToolTip}"
+                        FontSize="14"
                         Text="{DynamicResource flowlauncher_plugin_program_suffixes_tooltip}"
                         TextWrapping="Wrap" />
                 </Border>
@@ -155,7 +175,7 @@
                             Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}" />
                         <TextBox
                             x:Name="tbSuffixes"
-                            Margin="10,4,0,0"
+                            Margin="10,4,0,6"
                             Style="{StaticResource CustomFileTypeTextBox}" />
                     </StackPanel>
 
@@ -180,7 +200,7 @@
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}" />
                             <TextBox
                                 x:Name="tbProtocols"
-                                Margin="10,4,0,0"
+                                Margin="10,4,0,6"
                                 Style="{StaticResource CustomURLTypeTextBox}" />
                         </StackPanel>
                     </Border>
