@@ -181,7 +181,7 @@
 
                     <Border
                         Grid.Column="1"
-                        Margin="20,0,0,0"
+                        Margin="20,0,0,10"
                         Padding="20,0,0,0"
                         BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
                         BorderThickness="1,0,0,0">
