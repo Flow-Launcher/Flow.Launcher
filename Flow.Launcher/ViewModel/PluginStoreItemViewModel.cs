@@ -27,9 +27,7 @@ namespace Flow.Launcher.ViewModel
         public string IcoPath => _plugin.IcoPath;
 
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
-        public bool LabelUpdate => LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
-        public bool LabelNew => DateTime.Now - _plugin.LatestReleaseDate < TimeSpan.FromDays(7) && !LabelUpdate; // Show Update Label show first.
-
+        public bool LabelUpdate => LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;        
         public string Category
         {
             get
