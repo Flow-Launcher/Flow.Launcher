@@ -27,14 +27,14 @@ namespace Flow.Launcher.Core.Plugin
             var pluginEnv = new PluginEnvironment(metadatas, settings);
             var pythonPlugins = pluginEnv.PythonSetup();
             var tsPlugins = pluginEnv.TypeScriptSetup();
-            var jsthonPlugins = pluginEnv.JavaScriptSetup();
+            var jsPlugins = pluginEnv.JavaScriptSetup();
             
             var executablePlugins = ExecutablePlugins(metadatas);
             
             var plugins = dotnetPlugins
                             .Concat(pythonPlugins)
                             .Concat(tsPlugins)
-                            .Concat(jsthonPlugins)
+                            .Concat(jsPlugins)
                             .Concat(executablePlugins)
                             .ToList();
             return plugins;
@@ -122,7 +122,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, PluginsSettings settings)
         {
-            if (!source.Any(o => o.Language.ToUpper() == AllowedLanguage.Python))
+            if (!source.Any(o => o.Language.Equals(AllowedLanguage.Python, StringComparison.OrdinalIgnoreCase)))
                 return new List<PluginPair>();
 
             if (!string.IsNullOrEmpty(settings.PythonDirectory) && FilesFolders.LocationExists(settings.PythonDirectory))
@@ -199,7 +199,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(List<PluginMetadata> source, string pythonPath)
             =>  source
-                .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
+                .Where(o => o.Language.Equals(AllowedLanguage.Python, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata => new PluginPair
                 {
                     Plugin = new PythonPlugin(pythonPath), 
