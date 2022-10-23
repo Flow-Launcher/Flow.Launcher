@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Program
 
             if (protocols.Length == 0 && _settings.UseCustomProtocols)
             {
-                string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");  // TODO text update
+                string warning = context.API.GetTranslation("flowlauncher_plugin_protocols_cannot_empty");
                 MessageBox.Show(warning);
                 return;
             }
