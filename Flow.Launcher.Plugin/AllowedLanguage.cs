@@ -1,4 +1,6 @@
-﻿namespace Flow.Launcher.Plugin
+﻿using System;
+
+namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Allowed plugin languages
@@ -8,34 +10,32 @@
         /// <summary>
         /// Python
         /// </summary>
-        public static string Python
-        {
-            get { return "PYTHON"; }
-        }
+        public const string Python = "Python";
 
         /// <summary>
         /// C#
         /// </summary>
-        public static string CSharp
-        {
-            get { return "CSHARP"; }
-        }
+        public const string CSharp = "CSharp";
 
         /// <summary>
         /// F#
         /// </summary>
-        public static string FSharp
-        {
-            get { return "FSHARP"; }
-        }
+        public const string FSharp = "FSharp";
 
         /// <summary>
         /// Standard .exe
         /// </summary>
-        public static string Executable
-        {
-            get { return "EXECUTABLE"; }
-        }
+        public const string Executable = "Executable";
+
+        /// <summary>
+        /// TypeScript
+        /// </summary>
+        public const string TypeScript = "TypeScript";
+
+        /// <summary>
+        /// JavaScript
+        /// </summary>
+        public const string JavaScript = "JavaScript";
 
         /// <summary>
         /// Determines if this language is a .NET language
@@ -44,8 +44,8 @@
         /// <returns></returns>
         public static bool IsDotNet(string language)
         {
-            return language.ToUpper() == CSharp
-                || language.ToUpper() == FSharp;
+            return language.Equals(CSharp, StringComparison.OrdinalIgnoreCase)
+                || language.Equals(FSharp, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -56,8 +56,10 @@
         public static bool IsAllowed(string language)
         {
             return IsDotNet(language)
-                || language.ToUpper() == Python.ToUpper()
-                || language.ToUpper() == Executable.ToUpper();
+                || language.Equals(Python, StringComparison.OrdinalIgnoreCase)
+                || language.Equals(Executable, StringComparison.OrdinalIgnoreCase)
+                || language.Equals(TypeScript, StringComparison.OrdinalIgnoreCase)
+                || language.Equals(JavaScript, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

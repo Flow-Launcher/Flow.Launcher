@@ -1,11 +1,14 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class PluginsSettings : BaseModel
     {
-        public string PythonDirectory { get; set; }
+        public string PythonDirectory { get; set; } // IS FILE PATH BUT CHANGE NAME TO FILE PATH??
+
+        public string NodeFilePath { get; set; }
+
         public Dictionary<string, Plugin> Plugins { get; set; } = new Dictionary<string, Plugin>();
 
         public void UpdatePluginSettings(List<PluginMetadata> metadatas)

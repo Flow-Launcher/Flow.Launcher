@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Droplex;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -22,9 +23,20 @@ namespace Flow.Launcher.Core.Plugin
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
-            var pythonPlugins = PythonPlugins(metadatas, settings);
+            
+            var pluginEnv = new PluginEnvironment(metadatas, settings);
+            var pythonPlugins = pluginEnv.PythonSetup();
+            var tsPlugins = pluginEnv.TypeScriptSetup();
+            var jsthonPlugins = pluginEnv.JavaScriptSetup();
+            
             var executablePlugins = ExecutablePlugins(metadatas);
-            var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
+            
+            var plugins = dotnetPlugins
+                            .Concat(pythonPlugins)
+                            .Concat(tsPlugins)
+                            .Concat(jsthonPlugins)
+                            .Concat(executablePlugins)
+                            .ToList();
             return plugins;
         }
 
