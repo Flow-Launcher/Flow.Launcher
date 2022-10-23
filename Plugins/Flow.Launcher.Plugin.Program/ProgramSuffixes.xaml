@@ -173,7 +173,7 @@
                         <CheckBox
                             Name="CustomFiles"
                             Margin="10,0,0,0"
-                            IsChecked="{Binding _settings.UseCustomSuffixes}"
+                            IsChecked="{Binding UseCustomSuffixes}"
                             Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}" />
                         <TextBox
                             x:Name="tbSuffixes"
@@ -199,7 +199,7 @@
                             <CheckBox
                                 Name="CustomProtocol"
                                 Margin="10,0,0,0"
-                                IsChecked="{Binding _settings.UseCustomProtocols}"
+                                IsChecked="{Binding UseCustomProtocols}"
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}" />
                             <TextBox
                                 x:Name="tbProtocols"

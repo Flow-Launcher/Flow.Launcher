@@ -21,11 +21,11 @@ namespace Flow.Launcher.Plugin.Program
 
         [JsonIgnore]
         public Dictionary<string, bool> BuiltinProtocolsStatus { get; set; } = new Dictionary<string, bool>{
-            { $"steam://run/{SuffixSeperator}steam://rungameid/", true }, { "com.epicgames.launcher://apps/", true }, { $"http://{SuffixSeperator}https://", false}
+            { $"steam://run/{SuffixSeparator}steam://rungameid/", true }, { "com.epicgames.launcher://apps/", true }, { $"http://{SuffixSeparator}https://", false}
         };
 
-        public bool UseCustomSuffixes = false;
-        public bool UseCustomProtocols = false;
+        public bool UseCustomSuffixes { get; set; } = false;
+        public bool UseCustomProtocols { get; set; } = false;
 
         public string[] GetSuffixes()
         {
@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 if (item.Value)
                 {
-                    var tmp = item.Key.Split(SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
+                    var tmp = item.Key.Split(SuffixSeparator, StringSplitOptions.RemoveEmptyEntries);
                     foreach(var p in tmp)
                     {
                         protocols.Add(p);
@@ -85,7 +85,7 @@ namespace Flow.Launcher.Plugin.Program
         public string CustomizedExplorer { get; set; } = Explorer;
         public string CustomizedArgs { get; set; } = ExplorerArgs;
 
-        internal const char SuffixSeperator = ';';
+        internal const char SuffixSeparator = ';';
 
         internal const string Explorer = "explorer";
 

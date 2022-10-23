@@ -7,17 +7,23 @@ namespace Flow.Launcher.Plugin.Program
     public partial class ProgramSuffixes
     {
         private PluginInitContext context;
-        public Settings _settings;
-        public Dictionary<string, bool> SuffixesStatus => _settings.BuiltinSuffixesStatus;
-        public Dictionary<string, bool> ProtocolsStatus => _settings.BuiltinProtocolsStatus;
+        private Settings _settings;
+        public Dictionary<string, bool> SuffixesStatus { get; set; }
+        public Dictionary<string, bool> ProtocolsStatus { get; set; }
+        public bool UseCustomSuffixes { get; set; }
+        public bool UseCustomProtocols { get; set; }
 
         public ProgramSuffixes(PluginInitContext context, Settings settings)
         {
             this.context = context;
             _settings = settings;
+            SuffixesStatus = new Dictionary<string, bool>(_settings.BuiltinSuffixesStatus);
+            ProtocolsStatus = new Dictionary<string, bool>(_settings.BuiltinProtocolsStatus);
+            UseCustomSuffixes = _settings.UseCustomSuffixes;
+            UseCustomProtocols = _settings.UseCustomProtocols;
             InitializeComponent();
-            tbSuffixes.Text = string.Join(Settings.SuffixSeperator, _settings.CustomSuffixes);
-            tbProtocols.Text = string.Join(Settings.SuffixSeperator, _settings.CustomProtocols);
+            tbSuffixes.Text = string.Join(Settings.SuffixSeparator, _settings.CustomSuffixes);
+            tbProtocols.Text = string.Join(Settings.SuffixSeparator, _settings.CustomProtocols);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -27,17 +33,17 @@ namespace Flow.Launcher.Plugin.Program
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
-            var protocols = tbProtocols.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
+            var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var protocols = tbProtocols.Text.Split(Settings.SuffixSeparator, StringSplitOptions.RemoveEmptyEntries);
 
-            if (suffixes.Length == 0 && _settings.UseCustomSuffixes)
+            if (suffixes.Length == 0 && UseCustomSuffixes)
             {
                 string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");
                 MessageBox.Show(warning);
                 return;
             }
 
-            if (protocols.Length == 0 && _settings.UseCustomProtocols)
+            if (protocols.Length == 0 && UseCustomProtocols)
             {
                 string warning = context.API.GetTranslation("flowlauncher_plugin_protocols_cannot_empty");
                 MessageBox.Show(warning);
@@ -46,6 +52,10 @@ namespace Flow.Launcher.Plugin.Program
 
             _settings.CustomSuffixes = suffixes;
             _settings.CustomProtocols = protocols;
+            _settings.BuiltinSuffixesStatus = new Dictionary<string, bool>(SuffixesStatus);
+            _settings.BuiltinProtocolsStatus = new Dictionary<string, bool>(ProtocolsStatus);
+            _settings.UseCustomSuffixes = UseCustomSuffixes;
+            _settings.UseCustomProtocols = UseCustomProtocols;
 
             DialogResult = true;
         }
