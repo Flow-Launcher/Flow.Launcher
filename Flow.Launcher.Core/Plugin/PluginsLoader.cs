@@ -210,7 +210,7 @@ namespace Flow.Launcher.Core.Plugin
     public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
-                .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)
+                .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata => new PluginPair
                 {
                     Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
