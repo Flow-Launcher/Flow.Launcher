@@ -11,17 +11,23 @@ namespace Flow.Launcher.Plugin.Program
         public DateTime LastIndexTime { get; set; }
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
         public List<DisabledProgramSource> DisabledProgramSources { get; set; } = new List<DisabledProgramSource>();
-        public string[] CustomSuffixes { get; set; } = { };
+        public string[] CustomSuffixes { get; set; } = Array.Empty<string>();
+        public string[] CustomProtocols { get; set; } = Array.Empty<string>();
 
         [JsonIgnore]
         public Dictionary<string, bool> BuiltinSuffixesStatus { get; set; } = new Dictionary<string, bool>{
             { "exe", true }, { "appref-ms", true }, { "lnk", true }
         };
 
+        [JsonIgnore]
+        public Dictionary<string, bool> BuiltinProtocolsStatus { get; set; } = new Dictionary<string, bool>{
+            { $"steam://run/{SuffixSeperator}steam://rungameid/", true }, { "com.epicgames.launcher://apps/", true }, { $"http://{SuffixSeperator}https://", false}
+        };
+
         public bool UseCustomSuffixes = false;
         public bool UseCustomProtocols = false;
 
-        public string[] GetProgramExtensions()
+        public string[] GetSuffixes()
         {
             List<string> extensions = new List<string>();
             foreach(var item in BuiltinSuffixesStatus)
@@ -32,7 +38,10 @@ namespace Flow.Launcher.Plugin.Program
                 }
             }
 
-            // todo: url
+            if (BuiltinProtocolsStatus.Values.Any(x => x == true) || UseCustomProtocols)
+            {
+                extensions.Add("url");
+            }
 
             if (UseCustomSuffixes)
             {
@@ -40,12 +49,36 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                return extensions.ToArray();
+                return extensions.DistinctBy(x => x.ToLower()).ToArray();
+            }
+        }
+
+        public string[] GetProtocols()
+        {
+            List<string> protocols = new List<string>();
+            foreach (var item in BuiltinProtocolsStatus)
+            {
+                if (item.Value)
+                {
+                    var tmp = item.Key.Split(SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
+                    foreach(var p in tmp)
+                    {
+                        protocols.Add(p);
+                    }
+                }
+            }
+
+            if (UseCustomProtocols)
+            {
+                return protocols.Concat(CustomProtocols).DistinctBy(x => x.ToLower()).ToArray();
+            }
+            else
+            {
+                return protocols.DistinctBy(x => x.ToLower()).ToArray();
             }
         }
 
         public bool EnableStartMenuSource { get; set; } = true;
-
         public bool EnableDescription { get; set; } = false;
         public bool HideAppsPath { get; set; } = true;
         public bool EnableRegistrySource { get; set; } = true;

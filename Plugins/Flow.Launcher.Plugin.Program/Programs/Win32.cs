@@ -294,17 +294,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static Win32 UrlProgram(string path)
         {
             var program = Win32Program(path);
-
-            var parser = new FileIniDataParser();
-            var data   = parser.ReadFile(path);
+            program.Valid = false;
 
             try
             {
+                var parser = new FileIniDataParser();
+                var data = parser.ReadFile(path);
                 var urlSection = data["InternetShortcut"];
+                if (urlSection != null)
+                {
+                    var url = urlSection["URL"];
+                    foreach(var protocol in Main._settings.GetProtocols())
+                    {
+                        if(url.StartsWith(protocol))
+                        {
+                            program.LnkResolvedPath = url;
+                            program.Valid = true;
+                            break;
+                        }
+                    }
+                }
 
-                program.LnkResolvedPath = urlSection["URL"];
-
-                var iconPath   = urlSection["IconFile"];
+                var iconPath = urlSection["IconFile"];
                 if (Path.GetExtension(iconPath).Equals(".ico", StringComparison.OrdinalIgnoreCase))
                 {
                     program.IcoPath = iconPath;
@@ -537,7 +548,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var programs = Enumerable.Empty<Win32>();
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.GetProgramExtensions());
+                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.GetSuffixes());
 
                 programs = programs.Concat(unregistered);
 
@@ -545,13 +556,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnableRegistrySource)
                 {
-                    var appPaths = AppPathsPrograms(settings.GetProgramExtensions());
+                    var appPaths = AppPathsPrograms(settings.GetSuffixes());
                     autoIndexPrograms = autoIndexPrograms.Concat(appPaths);
                 }
 
                 if (settings.EnableStartMenuSource)
                 {
-                    var startMenu = StartMenuPrograms(settings.GetProgramExtensions());
+                    var startMenu = StartMenuPrograms(settings.GetSuffixes());
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 

@@ -167,9 +167,9 @@
                             FontSize="16"
                             FontWeight="SemiBold"
                             Text="{DynamicResource flowlauncher_plugin_program_suffixes_excutable_types}" />
-                        <CheckBox Name="apprefMS" Margin="10,0,0,0" IsChecked="{Binding SuffixesStaus[appref-ms]}">appref-ms</CheckBox>
-                        <CheckBox Name="exe" Margin="10,0,0,0" IsChecked="{Binding SuffixesStaus[exe]}">exe</CheckBox>
-                        <CheckBox Name="lnk" Margin="10,0,0,0" IsChecked="{Binding SuffixesStaus[lnk]}">lnk</CheckBox>
+                        <CheckBox Name="apprefMS" Margin="10,0,0,0" IsChecked="{Binding SuffixesStatus[appref-ms]}">appref-ms</CheckBox>
+                        <CheckBox Name="exe" Margin="10,0,0,0" IsChecked="{Binding SuffixesStatus[exe]}">exe</CheckBox>
+                        <CheckBox Name="lnk" Margin="10,0,0,0" IsChecked="{Binding SuffixesStatus[lnk]}">lnk</CheckBox>
                         <CheckBox
                             Name="CustomFiles"
                             Margin="10,0,0,0"
@@ -193,9 +193,9 @@
                                 FontSize="16"
                                 FontWeight="SemiBold"
                                 Text="{DynamicResource flowlauncher_plugin_program_suffixes_URL_types}" />
-                            <CheckBox Name="steam" Margin="10,0,0,0">Steam Games</CheckBox>
-                            <CheckBox Name="epic" Margin="10,0,0,0">Epic Games</CheckBox>
-                            <CheckBox Name="http" Margin="10,0,0,0">Http/Https</CheckBox>
+                            <CheckBox Name="steam" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[steam://run/;steam://rungameid/]}">Steam Games</CheckBox>
+                            <CheckBox Name="epic" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[com.epicgames.launcher://apps/]}">Epic Games</CheckBox>
+                            <CheckBox Name="http" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[http://;https://]}">Http/Https</CheckBox>
                             <CheckBox
                                 Name="CustomProtocol"
                                 Margin="10,0,0,0"

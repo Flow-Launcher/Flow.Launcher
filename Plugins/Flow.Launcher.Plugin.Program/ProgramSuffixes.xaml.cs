@@ -7,8 +7,9 @@ namespace Flow.Launcher.Plugin.Program
     public partial class ProgramSuffixes
     {
         private PluginInitContext context;
-        private Settings _settings;
-        public Dictionary<string, bool> SuffixesStaus => _settings.BuiltinSuffixesStatus;
+        public Settings _settings;
+        public Dictionary<string, bool> SuffixesStatus => _settings.BuiltinSuffixesStatus;
+        public Dictionary<string, bool> ProtocolsStatus => _settings.BuiltinProtocolsStatus;
 
         public ProgramSuffixes(PluginInitContext context, Settings settings)
         {
@@ -16,6 +17,7 @@ namespace Flow.Launcher.Plugin.Program
             _settings = settings;
             InitializeComponent();
             tbSuffixes.Text = string.Join(Settings.SuffixSeperator, _settings.CustomSuffixes);
+            tbProtocols.Text = string.Join(Settings.SuffixSeperator, _settings.CustomProtocols);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -26,6 +28,7 @@ namespace Flow.Launcher.Plugin.Program
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
+            var protocols = tbProtocols.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
 
             if (suffixes.Length == 0 && _settings.UseCustomSuffixes)
             {
@@ -34,10 +37,15 @@ namespace Flow.Launcher.Plugin.Program
                 return;
             }
 
-            _settings.CustomSuffixes = suffixes;
+            if (protocols.Length == 0 && _settings.UseCustomProtocols)
+            {
+                string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");  // TODO text update
+                MessageBox.Show(warning);
+                return;
+            }
 
-            //string msg = context.API.GetTranslation("flowlauncher_plugin_program_update_file_suffixes");
-            //MessageBox.Show(msg);
+            _settings.CustomSuffixes = suffixes;
+            _settings.CustomProtocols = protocols;
 
             DialogResult = true;
         }
@@ -49,6 +57,10 @@ namespace Flow.Launcher.Plugin.Program
             lnk.IsChecked = true;
             CustomFiles.IsChecked = false;
 
+            steam.IsChecked = true;
+            epic.IsChecked = true;
+            http.IsChecked = false;
+            CustomProtocol.IsChecked = false;
         }
     }
 }
