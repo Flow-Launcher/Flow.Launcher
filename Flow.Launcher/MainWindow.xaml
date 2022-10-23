@@ -288,8 +288,6 @@
                         <flowlauncher:ResultListBox
                             x:Name="ResultListBox"
                             DataContext="{Binding Results}"
-                            MouseMove="ResultList_MouseMove"
-                            PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
                             PreviewMouseLeftButtonUp="OnPreviewMouseButtonDown" />
                     </ContentControl>
                 </Border>

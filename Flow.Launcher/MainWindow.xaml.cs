@@ -374,41 +374,6 @@ namespace Flow.Launcher
             e.Handled = true;
         }
 
-        private Point start;
-
-        private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.start = e.GetPosition(null);
-        }
-
-        private void ResultList_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if (this.ResultListBox.SelectedItems.Count == 0)
-            {
-                return;
-            }
-            
-            Point mpos = e.GetPosition(null);
-            Vector diff = this.start - mpos;
-
-            var r = (ResultListBox)sender;
-            var d = (DependencyObject)e.OriginalSource;
-            var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
-            var result = (ResultViewModel)item?.DataContext;
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-              Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance &&
-              Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
-            {
-                string copyText = string.IsNullOrEmpty(result.Result.CopyText) ? result.Result.SubTitle : result.Result.CopyText;
-                string[] files = { copyText };
-                var data = new DataObject(System.Windows.DataFormats.FileDrop, files);
-                DragDrop.DoDragDrop(this.ResultListBox, data, System.Windows.DragDropEffects.Move | System.Windows.DragDropEffects.Copy);
-                e.Handled = true;
-            }
-        }
-
-
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
             _viewModel.Hide();

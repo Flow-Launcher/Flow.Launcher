@@ -25,12 +25,15 @@
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
     Visibility="{Binding Visbility}"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    PreviewMouseMove="ResultList_MouseMove"
+    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Button HorizontalAlignment="Stretch">
+            <Button
+                HorizontalAlignment="Stretch">
                 <Button.Template>
                     <ControlTemplate>
                         <ContentPresenter Content="{TemplateBinding Button.Content}" />
