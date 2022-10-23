@@ -29,5 +29,27 @@ namespace Flow.Launcher.ViewModel
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
         public bool LabelUpdate => LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
         public bool LabelNew => DateTime.Now - _plugin.LatestReleaseDate < TimeSpan.FromDays(7) && !LabelUpdate; // Show Update Label show first.
+
+        public string Category
+        {
+            get
+            {
+                string category = "None";
+                if (DateTime.Now - _plugin.LatestReleaseDate < TimeSpan.FromDays(7))
+                {
+                    category = "RecentlyUpdated";
+                }
+                if (DateTime.Now - _plugin.DateAdded < TimeSpan.FromDays(7))
+                {
+                    category = "NewRelease";
+                }
+                if (PluginManager.GetPluginForId(_plugin.ID) != null)
+                {
+                    category = "Installed";
+                }
+
+                return category;
+            }
+        }
     }
 }
