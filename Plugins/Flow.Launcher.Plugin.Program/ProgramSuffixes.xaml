@@ -167,9 +167,9 @@
                             FontSize="16"
                             FontWeight="SemiBold"
                             Text="{DynamicResource flowlauncher_plugin_program_suffixes_excutable_types}" />
-                        <CheckBox Name="apprefMS" Margin="10,0,0,0" IsChecked="{Binding _settings.BuiltinSuffixesStatus[appref-ms]}">appref-ms</CheckBox>
-                        <CheckBox Name="exe" Margin="10,0,0,0" IsChecked="{Binding _settings.BuiltinSuffixesStatus[exe]}">exe</CheckBox>
-                        <CheckBox Name="lnk" Margin="10,0,0,0" IsChecked="{Binding _settings.BuiltinSuffixesStatus[lnk]}">lnk</CheckBox>
+                        <CheckBox Name="apprefMS" Margin="10,0,0,0" IsChecked="{Binding SuffixesStaus[appref-ms]}">appref-ms</CheckBox>
+                        <CheckBox Name="exe" Margin="10,0,0,0" IsChecked="{Binding SuffixesStaus[exe]}">exe</CheckBox>
+                        <CheckBox Name="lnk" Margin="10,0,0,0" IsChecked="{Binding SuffixesStaus[lnk]}">lnk</CheckBox>
                         <CheckBox
                             Name="CustomFiles"
                             Margin="10,0,0,0"

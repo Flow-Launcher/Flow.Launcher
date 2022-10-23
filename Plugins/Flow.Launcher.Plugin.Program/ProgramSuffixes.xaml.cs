@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace Flow.Launcher.Plugin.Program
@@ -7,13 +8,14 @@ namespace Flow.Launcher.Plugin.Program
     {
         private PluginInitContext context;
         private Settings _settings;
+        public Dictionary<string, bool> SuffixesStaus => _settings.BuiltinSuffixesStatus;
 
         public ProgramSuffixes(PluginInitContext context, Settings settings)
         {
             this.context = context;
-            InitializeComponent();
             _settings = settings;
-            tbSuffixes.Text = string.Join(Settings.SuffixSeperator.ToString(), _settings.CustomSuffixes);
+            InitializeComponent();
+            tbSuffixes.Text = string.Join(Settings.SuffixSeperator, _settings.CustomSuffixes);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -25,7 +27,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
 
-            if (suffixes.Length == 0)
+            if (suffixes.Length == 0 && _settings.UseCustomSuffixes)
             {
                 string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");
                 MessageBox.Show(warning);
@@ -34,14 +36,18 @@ namespace Flow.Launcher.Plugin.Program
 
             _settings.CustomSuffixes = suffixes;
 
-            string msg = context.API.GetTranslation("flowlauncher_plugin_program_update_file_suffixes");
-            MessageBox.Show(msg);
+            //string msg = context.API.GetTranslation("flowlauncher_plugin_program_update_file_suffixes");
+            //MessageBox.Show(msg);
 
             DialogResult = true;
         }
 
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
+            apprefMS.IsChecked = true;
+            exe.IsChecked = true;
+            lnk.IsChecked = true;
+            CustomFiles.IsChecked = false;
 
         }
     }
