@@ -392,7 +392,7 @@ namespace Flow.Launcher
         {
             if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
                 return true;
-            if (item is UserPlugin model)
+            if (item is PluginStoreItemViewModel model)
             {
                 return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
                     || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
