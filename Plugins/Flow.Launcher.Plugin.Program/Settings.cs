@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Flow.Launcher.Plugin.Program
 {
@@ -9,7 +10,28 @@ namespace Flow.Launcher.Plugin.Program
         public DateTime LastIndexTime { get; set; }
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
         public List<DisabledProgramSource> DisabledProgramSources { get; set; } = new List<DisabledProgramSource>();
-        public string[] ProgramSuffixes { get; set; } = {"appref-ms", "exe", "lnk", "url"};
+        public string[] CustomSuffixes { get; set; } = { "appref-ms", "exe", "lnk" };
+
+        public Dictionary<string, bool> BuiltinSuffixesStatus { get; set; } = new Dictionary<string, bool>{
+            { "exe", true }, { "appref-ms", true }, { "lnk", true }
+        };
+
+        public bool UseCustomSuffixes = false;
+        public bool UseCustomProtocols = false;
+
+        public string[] GetProgramExtensions()
+        {
+            List<string> extensions = new List<string>();
+            foreach(var item in BuiltinSuffixesStatus)
+            {
+                if (item.Value)
+                {
+                    extensions.Add(item.Key);
+                }
+            }
+
+            return extensions.Concat(CustomSuffixes).DistinctBy(x => x.ToLower()).ToArray();
+        }
 
         public bool EnableStartMenuSource { get; set; } = true;
 

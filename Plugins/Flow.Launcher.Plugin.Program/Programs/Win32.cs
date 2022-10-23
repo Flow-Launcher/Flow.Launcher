@@ -537,7 +537,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var programs = Enumerable.Empty<Win32>();
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
+                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.CustomSuffixes);
 
                 programs = programs.Concat(unregistered);
 
@@ -545,13 +545,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnableRegistrySource)
                 {
-                    var appPaths = AppPathsPrograms(settings.ProgramSuffixes);
+                    var appPaths = AppPathsPrograms(settings.CustomSuffixes);
                     autoIndexPrograms = autoIndexPrograms.Concat(appPaths);
                 }
 
                 if (settings.EnableStartMenuSource)
                 {
-                    var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
+                    var startMenu = StartMenuPrograms(settings.CustomSuffixes);
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 

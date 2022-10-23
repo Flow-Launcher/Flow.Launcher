@@ -9,6 +9,7 @@
     Width="600"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     ResizeMode="NoResize"
     SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
@@ -166,12 +167,13 @@
                             FontSize="16"
                             FontWeight="SemiBold"
                             Text="{DynamicResource flowlauncher_plugin_program_suffixes_excutable_types}" />
-                        <CheckBox Name="apprefMS" Margin="10,0,0,0">appref-ms</CheckBox>
-                        <CheckBox Name="EXE" Margin="10,0,0,0">EXE</CheckBox>
-                        <CheckBox Name="LNK" Margin="10,0,0,0">Lnk</CheckBox>
+                        <CheckBox Name="apprefMS" Margin="10,0,0,0" IsChecked="{Binding _settings.BuiltinSuffixesStatus[appref-ms]}">appref-ms</CheckBox>
+                        <CheckBox Name="exe" Margin="10,0,0,0" IsChecked="{Binding _settings.BuiltinSuffixesStatus[exe]}">exe</CheckBox>
+                        <CheckBox Name="lnk" Margin="10,0,0,0" IsChecked="{Binding _settings.BuiltinSuffixesStatus[lnk]}">lnk</CheckBox>
                         <CheckBox
                             Name="CustomFiles"
                             Margin="10,0,0,0"
+                            IsChecked="{Binding _settings.UseCustomSuffixes}"
                             Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}" />
                         <TextBox
                             x:Name="tbSuffixes"
@@ -197,6 +199,7 @@
                             <CheckBox
                                 Name="CustomProtocol"
                                 Margin="10,0,0,0"
+                                IsChecked="{Binding _settings.UseCustomProtocols}"
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}" />
                             <TextBox
                                 x:Name="tbProtocols"
@@ -214,11 +217,11 @@
             BorderThickness="0,1,0,0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
-                    x:Name="btnResetl"
+                    x:Name="btnReset"
                     Height="30"
                     MinWidth="140"
                     Margin="0,0,5,0"
-                    Click="BtnCancel_OnClick"
+                    Click="BtnReset_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_reset}" />
                 <Button
                     x:Name="btnCancel"
@@ -233,7 +236,7 @@
                     MinWidth="140"
                     Margin="5,0,0,0"
                     HorizontalAlignment="Right"
-                    Click="ButtonBase_OnClick"
+                    Click="BtnAdd_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_update}"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>

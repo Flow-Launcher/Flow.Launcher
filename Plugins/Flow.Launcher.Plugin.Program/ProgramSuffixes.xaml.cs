@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    /// <summary>
-    /// ProgramSuffixes.xaml 的交互逻辑
-    /// </summary>
     public partial class ProgramSuffixes
     {
         private PluginInitContext context;
@@ -18,13 +13,15 @@ namespace Flow.Launcher.Plugin.Program
             this.context = context;
             InitializeComponent();
             _settings = settings;
-            tbSuffixes.Text = string.Join(Settings.SuffixSeperator.ToString(), _settings.ProgramSuffixes);
+            tbSuffixes.Text = string.Join(Settings.SuffixSeperator.ToString(), _settings.CustomSuffixes);
         }
+
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var suffixes = tbSuffixes.Text.Split(Settings.SuffixSeperator, StringSplitOptions.RemoveEmptyEntries);
 
@@ -35,12 +32,17 @@ namespace Flow.Launcher.Plugin.Program
                 return;
             }
 
-            _settings.ProgramSuffixes = suffixes;
+            _settings.CustomSuffixes = suffixes;
 
             string msg = context.API.GetTranslation("flowlauncher_plugin_program_update_file_suffixes");
             MessageBox.Show(msg);
 
             DialogResult = true;
+        }
+
+        private void BtnReset_OnClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
