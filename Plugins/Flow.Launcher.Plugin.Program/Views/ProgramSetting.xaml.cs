@@ -88,7 +88,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void Setting_Loaded(object sender, RoutedEventArgs e)
         {
-            ProgramSettingDisplayList = _settings.ProgramSources.LoadProgramSources();
+            ProgramSettingDisplayList = ProgramSettingDisplay.LoadProgramSources();
             programSourceView.ItemsSource = ProgramSettingDisplayList;
 
             ViewRefresh();
@@ -221,7 +221,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
-            ProgramSettingDisplayList.LoadAllApplications();
+            ProgramSettingDisplay.DisplayAllPrograms();
 
             ViewRefresh();
         }
@@ -256,15 +256,15 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
             else if (IsSelectedRowStatusEnabledMoreOrEqualThanDisabled(selectedItems))
             {
-                ProgramSettingDisplayList.SetProgramSourcesStatus(selectedItems, false);
+                ProgramSettingDisplay.SetProgramSourcesStatus(selectedItems, false);
 
-                ProgramSettingDisplayList.StoreDisabledInSettings();
+                ProgramSettingDisplay.StoreDisabledInSettings();
             }
             else
             {
-                ProgramSettingDisplayList.SetProgramSourcesStatus(selectedItems, true);
+                ProgramSettingDisplay.SetProgramSourcesStatus(selectedItems, true);
 
-                ProgramSettingDisplayList.RemoveDisabledFromSettings();
+                ProgramSettingDisplay.RemoveDisabledFromSettings();
             }
 
             if (selectedItems.IsReindexRequired())
