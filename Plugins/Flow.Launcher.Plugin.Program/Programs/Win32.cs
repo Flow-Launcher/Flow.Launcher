@@ -304,13 +304,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (urlSection != null)
                 {
                     var url = urlSection["URL"];
-                    foreach(var protocol in Main._settings.GetProtocols())
+                    if(url != null)
                     {
-                        if(url.StartsWith(protocol))
+                        foreach(var protocol in Main._settings.GetProtocols())
                         {
-                            program.LnkResolvedPath = url;
-                            program.Valid = true;
-                            break;
+                            if(url.StartsWith(protocol))
+                            {
+                                program.LnkResolvedPath = url;
+                                program.Valid = true;
+                                break;
+                            }
                         }
                     }
                 }
