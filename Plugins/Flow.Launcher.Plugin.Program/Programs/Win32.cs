@@ -302,6 +302,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var data = parser.ReadFile(path);
                 var urlSection = data["InternetShortcut"];
                 var url = urlSection?["URL"];
+                if (String.IsNullOrEmpty(url))
+                {
+                    return program;
+                }
                 foreach(var protocol in Main._settings.GetProtocols())
                 {
                     if(url.StartsWith(protocol))
