@@ -19,12 +19,12 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         public string Location { get; set; }
         public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
         public bool Enabled { get; set; } = true;
-        private string uid { get; set; }
 
         /// <summary>
-        /// Guranteed lowercase.
+        /// Guaranteed lowercase.
         /// </summary>
         public string UniqueIdentifier { get => uid; set => uid = value.ToLowerInvariant(); }
+        private string uid { get; set; }
 
         public ProgramSource() { }  // only for json deserialization
 
@@ -74,6 +74,8 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
     public class DisabledProgramSource : ProgramSource
     {
+        public new bool Enabled { get; init; }
+
         public DisabledProgramSource() { }  // only for json deserialization
 
         public DisabledProgramSource(string location) : base(location, false) { }
