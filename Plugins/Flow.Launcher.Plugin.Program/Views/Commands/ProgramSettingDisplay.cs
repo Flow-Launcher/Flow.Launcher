@@ -11,9 +11,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
     {
         internal static List<ProgramSource> LoadProgramSources(this List<ProgramSource> programSources)
         {
-            var list = new List<ProgramSource>();
-
-            programSources.ForEach(x => list.Add(new ProgramSource(x)));
+            var list = new List<ProgramSource>(programSources);
 
             // Even though these are disabled, we still want to display them so users can enable later on
             Main._settings
