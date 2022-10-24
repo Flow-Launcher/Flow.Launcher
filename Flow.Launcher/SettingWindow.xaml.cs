@@ -1,4 +1,4 @@
-﻿using Droplex;
+using Droplex;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -30,6 +30,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace Flow.Launcher
 {
@@ -86,13 +87,31 @@ namespace Flow.Launcher
                     if (File.Exists(pythonPath))
                     {
                         settings.PluginSettings.PythonDirectory = pythonDirectory;
-                        MessageBox.Show("Remember to restart Flow Launcher use new Python path");
                     }
                     else
                     {
                         MessageBox.Show("Can't find python in given directory");
                     }
                 }
+            }
+        }
+
+        private void OnSelectNodeFilePathClick(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = $"Please select the Node.js executable"
+            };
+
+            var result = dlg.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Constant.NodePath = dlg.FileName;
+                settings.PluginSettings.NodeFilePath = Constant.NodePath;
             }
         }
 
