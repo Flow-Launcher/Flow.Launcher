@@ -104,7 +104,7 @@ namespace Flow.Launcher
                 Multiselect = false,
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Title = $"Please select the Node.js executable"
+                Title = InternationalizationManager.Instance.GetTranslation("selectNodeExecutable")
             };
 
             var result = dlg.ShowDialog();
