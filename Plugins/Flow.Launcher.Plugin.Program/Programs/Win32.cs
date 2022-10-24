@@ -301,25 +301,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var parser = new FileIniDataParser();
                 var data = parser.ReadFile(path);
                 var urlSection = data["InternetShortcut"];
-                if (urlSection != null)
+                var url = urlSection?["URL"];
+                foreach(var protocol in Main._settings.GetProtocols())
                 {
-                    var url = urlSection["URL"];
-                    if(url != null)
+                    if(url.StartsWith(protocol))
                     {
-                        foreach(var protocol in Main._settings.GetProtocols())
-                        {
-                            if(url.StartsWith(protocol))
-                            {
-                                program.LnkResolvedPath = url;
-                                program.Valid = true;
-                                break;
-                            }
-                        }
+                        program.LnkResolvedPath = url;
+                        program.Valid = true;
+                        break;
                     }
                 }
 
-                var iconPath = urlSection["IconFile"];
-                if (Path.GetExtension(iconPath).Equals(".ico", StringComparison.OrdinalIgnoreCase))
+                var iconPath = urlSection?["IconFile"];
+                if (iconPath != null && Path.GetExtension(iconPath).Equals(".ico", StringComparison.OrdinalIgnoreCase))
                 {
                     program.IcoPath = iconPath;
                 }
