@@ -74,8 +74,6 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
     public class DisabledProgramSource : ProgramSource
     {
-        public new bool Enabled { get; init; }
-
         public DisabledProgramSource() { }  // only for json deserialization
 
         public DisabledProgramSource(string location) : base(location, false) { }
