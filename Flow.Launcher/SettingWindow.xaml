@@ -940,7 +940,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource language}" />
