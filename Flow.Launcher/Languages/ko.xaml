@@ -47,7 +47,7 @@
     <system:String x:Key="defaultBrowserToolTip">새 탭, 새  창, 사생활 보호 모드</system:String>
     <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
-    <system:String x:Key="selectPythonDirectory">선택</system:String>
+    <system:String x:Key="select">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

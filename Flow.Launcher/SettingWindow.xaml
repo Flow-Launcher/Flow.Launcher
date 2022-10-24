@@ -916,7 +916,7 @@
                                             Height="34"
                                             Margin="10,10,18,10"
                                             Click="OnSelectPythonDirectoryClick"
-                                            Content="{DynamicResource selectPythonDirectory}" />
+                                            Content="{DynamicResource select}" />
                                     </StackPanel>
                                 </ItemsControl>
                             </Border>
