@@ -99,7 +99,7 @@
                                 DockPanel.Dock="Right"
                                 Content="{DynamicResource flowlauncher_plugin_program_browse}" />
                             <TextBox
-                                Name="tbDirectory"
+                                Name="Directory"
                                 Margin="10"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Stretch" />

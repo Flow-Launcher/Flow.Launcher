@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Program
             InitializeComponent();
             _context = context;
             _settings = settings;
-            tbDirectory.Focus();
+            Directory.Focus();
             Chkbox.IsChecked = true;
             update = false;
             btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.Program
             _settings = settings;
             update = true;
             Chkbox.IsChecked = _updating.Enabled;
-            tbDirectory.Text = _updating.Location;
+            Directory.Text = _updating.Location;
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -43,7 +43,7 @@ namespace Flow.Launcher.Plugin.Program
             DialogResult result = dialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                tbDirectory.Text = dialog.SelectedPath;
+                Directory.Text = dialog.SelectedPath;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Flow.Launcher.Plugin.Program
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            string path = tbDirectory.Text;
+            string path = Directory.Text;
             if (!System.IO.Directory.Exists(path))
             {
                 System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
