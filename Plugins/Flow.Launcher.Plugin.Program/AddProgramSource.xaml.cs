@@ -78,7 +78,7 @@ namespace Flow.Launcher.Plugin.Program
             else
             {
                 _updating.Location = path;
-                _updating.Enabled = Chkbox.IsChecked ?? true;
+                _updating.Enabled = Chkbox.IsChecked ?? true;  // Fixme, need to add to disabled source if not custom source
             }
 
             DialogResult = true;
