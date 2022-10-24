@@ -57,7 +57,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             if (_editing == null)
             {
-                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == Directory.Text))
+                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(Directory.Text, System.StringComparison.InvariantCultureIgnoreCase)))
                 {
                     var source = new ProgramSource(Directory.Text);
 
