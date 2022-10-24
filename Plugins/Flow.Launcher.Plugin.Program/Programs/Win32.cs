@@ -338,8 +338,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes)
         {
             var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
-                    .SelectMany(s => ProgramPaths(s.Location, suffixes)), x => x)
-                .Distinct();
+                    .SelectMany(s => ProgramPaths(s.Location, suffixes)))
+                    .Distinct();
 
             var programs = paths.Select(x => Extension(x) switch
             {
@@ -452,9 +452,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return entry;
         }
 
-        public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> sources)
+        public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> paths)
         {
-            return ExceptDisabledSource(sources, x => x);
+            return ExceptDisabledSource(paths, x => x.ToLowerInvariant());
         }
 
         public static IEnumerable<TSource> ExceptDisabledSource<TSource>(IEnumerable<TSource> sources,
