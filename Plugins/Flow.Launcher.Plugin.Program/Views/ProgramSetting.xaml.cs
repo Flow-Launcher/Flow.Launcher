@@ -325,7 +325,8 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private static bool HasMoreOrEqualEnabledItems(List<ProgramSource> items)
         {
-            return items.Where(x => x.Enabled).Count() >= items.Count / 2;
+            var enableCount = items.Where(x => x.Enabled).Count();
+            return enableCount >= items.Count - enableCount;
         }
 
         private void programSourceView_SelectionChanged(object sender, SelectionChangedEventArgs e)
