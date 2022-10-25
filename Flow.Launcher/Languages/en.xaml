@@ -59,6 +59,7 @@
     <system:String x:Key="pythonDirectory">Python Directory</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
     <system:String x:Key="select">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>

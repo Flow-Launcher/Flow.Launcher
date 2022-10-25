@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
-    internal class PluginEnvironment
+    public class PluginEnvironment
     {
         private const string PythonExecutable = "pythonw.exe";
         
@@ -211,6 +211,29 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
             return pluginPairs;
         }
-            
+
+        public static string GetFileFromDialog(string title, string filter="")
+        {
+            var dlg = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = title,
+                Filter = filter
+            };
+
+            var result = dlg.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                return dlg.FileName;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
     }
 }

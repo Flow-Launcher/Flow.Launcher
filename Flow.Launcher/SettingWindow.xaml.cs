@@ -72,45 +72,25 @@ namespace Flow.Launcher
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new FolderBrowserDialog
-            {
-                SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-            };
+            var selectedFile = PluginEnvironment.GetFileFromDialog(
+                                    InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
+                                    "Python|pythonw.exe");
 
-            var result = dlg.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (!string.IsNullOrEmpty(selectedFile))
             {
-                string pythonDirectory = dlg.SelectedPath;
-                if (!string.IsNullOrEmpty(pythonDirectory))
-                {
-                    var pythonPath = Path.Combine(pythonDirectory, PluginsLoader.PythonExecutable);
-                    if (File.Exists(pythonPath))
-                    {
-                        settings.PluginSettings.PythonDirectory = pythonDirectory;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Can't find python in given directory");
-                    }
-                }
+                Constant.PythonPath = selectedFile;
+                settings.PluginSettings.PythonDirectory = Constant.PythonPath;
             }
         }
 
         private void OnSelectNodeFilePathClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new OpenFileDialog
-            {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                Title = InternationalizationManager.Instance.GetTranslation("selectNodeExecutable")
-            };
+            var selectedFile = PluginEnvironment.GetFileFromDialog(
+                                    InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"));
 
-            var result = dlg.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (!string.IsNullOrEmpty(selectedFile))
             {
-                Constant.NodePath = dlg.FileName;
+                Constant.NodePath = selectedFile;
                 settings.PluginSettings.NodeFilePath = Constant.NodePath;
             }
         }
