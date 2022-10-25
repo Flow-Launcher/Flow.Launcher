@@ -45,7 +45,6 @@
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
     <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
-    <system:String x:Key="pythonDirectory">Python bibliotek</system:String>
     <system:String x:Key="autoUpdates">Autoopdatering</system:String>
     <system:String x:Key="select">Vælg</system:String>
     <system:String x:Key="hideOnStartup">Skjul Flow Launcher ved opstart</system:String>

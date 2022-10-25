@@ -45,7 +45,6 @@
     <system:String x:Key="defaultFileManagerToolTip">Wählen Sie den Dateimanager, der beim Öffnen des Ordners verwendet werden soll.</system:String>
     <system:String x:Key="defaultBrowser">Standardbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Einstellung für neuen Tab, neues Fenster und dem Privatmodus.</system:String>
-    <system:String x:Key="pythonDirectory">Python-Verzeichnis</system:String>
     <system:String x:Key="autoUpdates">Automatische Aktualisierung</system:String>
     <system:String x:Key="select">Auswählen</system:String>
     <system:String x:Key="hideOnStartup">Verstecke Flow Launcher bei Systemstart</system:String>
