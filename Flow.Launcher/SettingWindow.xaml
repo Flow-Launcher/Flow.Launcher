@@ -582,10 +582,8 @@
                         </Grid>
                     </TabItem.Header>
 
-                    <ScrollViewer
-                        Margin="0,0,0,0"
-                        utils:ScrollViewerHelperEx.IsSmoothScrollingEnabled="True"
-                        Background="{DynamicResource Color01B}">
+                    <!--                    <ScrollViewer Margin="0,0,0,0" Background="{DynamicResource Color01B}">-->
+                    <utils:ScrollViewerEx VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
@@ -879,7 +877,7 @@
                                 </ItemsControl>
                             </Border>
                         </StackPanel>
-                    </ScrollViewer>
+                    </utils:ScrollViewerEx>
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>

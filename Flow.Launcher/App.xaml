@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:util="clr-namespace:Flow.Launcher.Helper"
     ShutdownMode="OnMainWindowClose"
     Startup="OnStartupAsync">
     <Application.Resources>
