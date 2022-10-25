@@ -21,10 +21,11 @@ using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class MainViewModel : BaseModel, ISavable
+    public partial class MainViewModel : BaseModel, ISavable
     {
         #region Private Fields
 
@@ -81,6 +82,7 @@ namespace Flow.Launcher.ViewModel
             _selectedResults = Results;
 
             InitializeKeyCommands();
+
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
             RegisterClockAndDateUpdateAsync();
@@ -153,6 +155,8 @@ namespace Flow.Launcher.ViewModel
                 };
             }
         }
+
+
 
         private void InitializeKeyCommands()
         {
@@ -352,6 +356,55 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+        [RelayCommand]
+        private void IncreaseWidth()
+        {
+            if (MainWindowWidth + 100 > 1920 || _settings.WindowSize == 1920)
+            {
+               _settings.WindowSize = 1920;        
+            }
+            else 
+            { 
+                _settings.WindowSize += 100;
+                _settings.WindowLeft -= 50;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void DecreaseWidth()
+        {
+            if (MainWindowWidth - 100 < 400 || _settings.WindowSize == 400)
+            {
+                _settings.WindowSize = 400;
+            }
+            else
+            { 
+                _settings.WindowLeft += 50;
+                _settings.WindowSize -= 100;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void IncreaseMaxResult()
+        {
+            if (_settings.MaxResultsToShow == 17)
+                return;
+
+            _settings.MaxResultsToShow += 1;
+        }
+
+        [RelayCommand]
+        private void DecreaseMaxResult()
+        {
+            if (_settings.MaxResultsToShow == 2)
+                return;
+
+            _settings.MaxResultsToShow -= 1;
+        }
+
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
@@ -427,7 +480,11 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility SearchIconVisibility { get; set; }
 
-        public double MainWindowWidth => Settings.WindowSize;
+        public double MainWindowWidth
+        {
+            get => _settings.WindowSize;
+            set => _settings.WindowSize = value;
+        }
 
         public string PluginIconPath { get; set; } = null;
 

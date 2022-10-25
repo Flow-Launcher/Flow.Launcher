@@ -684,12 +684,25 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource rememberLastLocation}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ComboBox
+                                        x:Name="SearchWindowPosition"
+                                        Grid.Column="2"
+                                        MinWidth="220"
+                                        Margin="0,0,18,0"
+                                        VerticalAlignment="Center"
+                                        DisplayMemberPath="Display"
+                                        FontSize="14"
+                                        ItemsSource="{Binding SearchWindowPositions}"
+                                        SelectedValue="{Binding Settings.SearchWindowPosition}"
+                                        SelectedValuePath="Value" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe7f4;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
 
@@ -817,11 +830,13 @@
                                         BorderThickness="0"
                                         Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Style="{DynamicResource SettingTitleLabel}"
-                                                Text="{DynamicResource maxShowResults}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
+                                                    Text="{DynamicResource maxShowResults}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource maxShowResultsToolTip}" />
+                                            </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
                                                 Width="100"
@@ -1817,6 +1832,7 @@
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
                                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource windowWidthSizeToolTip}" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <TextBlock
@@ -1830,6 +1846,7 @@
                                                     Name="WindowWidthValue"
                                                     Width="300"
                                                     Margin="0,0,18,0"
+                                                    VerticalAlignment="Center"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
                                                     Maximum="1920"
