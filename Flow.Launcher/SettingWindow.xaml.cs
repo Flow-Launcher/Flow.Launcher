@@ -1,4 +1,4 @@
-using Droplex;
+﻿using Droplex;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -77,10 +77,7 @@ namespace Flow.Launcher
                                     "Python|pythonw.exe");
 
             if (!string.IsNullOrEmpty(selectedFile))
-            {
-                Constant.PythonPath = selectedFile;
-                settings.PluginSettings.PythonFilePath = Constant.PythonPath;
-            }
+                settings.PluginSettings.PythonFilePath = selectedFile;
         }
 
         private void OnSelectNodeFilePathClick(object sender, RoutedEventArgs e)
@@ -89,10 +86,7 @@ namespace Flow.Launcher
                                     InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"));
 
             if (!string.IsNullOrEmpty(selectedFile))
-            {
-                Constant.NodePath = selectedFile;
-                settings.PluginSettings.NodeFilePath = Constant.NodePath;
-            }
+                settings.PluginSettings.NodeFilePath = selectedFile;
         }
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)

@@ -1,4 +1,4 @@
-using Droplex;
+﻿using Droplex;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
@@ -89,10 +89,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         selectedFile = GetFileFromDialog(msg, "Python|pythonw.exe");
 
                         if (!string.IsNullOrEmpty(selectedFile))
-                        {
-                            Constant.PythonPath = selectedFile;
-                            pluginSettings.PythonFilePath = Constant.PythonPath;
-                        }
+                            pluginSettings.PythonFilePath = selectedFile;
                         break;
 
                     case AllowedLanguage.TypeScript:
@@ -100,10 +97,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         selectedFile = GetFileFromDialog(msg);
 
                         if (!string.IsNullOrEmpty(selectedFile))
-                        {
-                            Constant.NodePath = selectedFile;
-                            pluginSettings.NodeFilePath = Constant.NodePath;
-                        }
+                            pluginSettings.NodeFilePath = selectedFile;
                         break;
 
                     default:
@@ -121,11 +115,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
             switch (languageType)
             {
-                case AllowedLanguage.Python when FilesFolders.FileExists(pluginSettings.PythonFilePath) && !string.IsNullOrEmpty(Constant.PythonPath):
+                case AllowedLanguage.Python when FilesFolders.FileExists(pluginSettings.PythonFilePath):
                     return SetPathForPluginPairs(pluginSettings.PythonFilePath, languageType);
 
-                case AllowedLanguage.TypeScript when FilesFolders.FileExists(pluginSettings.NodeFilePath) && !string.IsNullOrEmpty(Constant.NodePath):
-                case AllowedLanguage.JavaScript when FilesFolders.FileExists(pluginSettings.NodeFilePath) && !string.IsNullOrEmpty(Constant.NodePath):
+                case AllowedLanguage.TypeScript when FilesFolders.FileExists(pluginSettings.NodeFilePath):
+                case AllowedLanguage.JavaScript when FilesFolders.FileExists(pluginSettings.NodeFilePath):
                     return SetPathForPluginPairs(pluginSettings.NodeFilePath, languageType);
 
                 default:
@@ -149,9 +143,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
                     // Python 3.8.9 is used for Windows 7 compatibility
                     DroplexPackage.Drop(App.python_3_8_9_embeddable, pythonDirPath).Wait();
-                    
-                    Constant.PythonPath = Path.Combine(pythonDirPath, PythonExecutable);
-                    pluginSettings.PythonFilePath = Constant.PythonPath;
+
+                    pluginSettings.PythonFilePath = Path.Combine(pythonDirPath, PythonExecutable);
                     break;
 
                 case AllowedLanguage.TypeScript:
@@ -161,8 +154,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
                     DroplexPackage.Drop(App.nodejs_16_18_0, nodeDirPath).Wait();
 
-                    Constant.NodePath = Path.Combine(nodeDirPath, $"node-v16.18.0-win-x64\\{NodeExecutable}");
-                    pluginSettings.NodeFilePath = Constant.NodePath;
+                    pluginSettings.NodeFilePath = Path.Combine(nodeDirPath, $"node-v16.18.0-win-x64\\{NodeExecutable}");
                     break;
 
                 default:
