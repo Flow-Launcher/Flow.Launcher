@@ -9,7 +9,6 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
-using Microsoft.WindowsAPICodePack.Shell;
 using System.Drawing;
 
 namespace Flow.Launcher.ViewModel
@@ -194,8 +193,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            //Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
-            Image = ShellFolder.FromParsingName(imagePath).Thumbnail.MediumBitmapSource;
+            Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
         }
 
 
@@ -203,8 +201,7 @@ namespace Flow.Launcher.ViewModel
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            //PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
-            PreviewImage = ShellFolder.FromParsingName(imagePath).Thumbnail.LargeBitmapSource;
+            PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
         }
 
         public Result Result { get; }
