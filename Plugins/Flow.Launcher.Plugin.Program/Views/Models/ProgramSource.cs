@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json.Serialization;
+using System.Windows.Media.Imaging;
 using Flow.Launcher.Plugin.Program.Programs;
 
 namespace Flow.Launcher.Plugin.Program.Views.Models
@@ -16,17 +18,20 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
     {
         private string name;
 
-        public string Location { get; set; }
+        public string Location { get; private set; }
         public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
         public bool Enabled { get; set; } = true;
 
-        /// <summary>
-        /// Guaranteed lowercase.
-        /// </summary>
-        public string UniqueIdentifier { get => uid; set => uid = value.ToLowerInvariant(); }
-        private string uid { get; set; }
+        public string UniqueIdentifier { get; private set; }
 
-        public ProgramSource() { }  // only for json deserialization
+        [JsonConstructor]
+        public ProgramSource(string name, string location, bool enabled, string uniqueIdentifier)
+        {
+            Location = location;
+            this.name = name;
+            Enabled = enabled;
+            UniqueIdentifier = uniqueIdentifier;
+        }
 
         /// <summary>
         /// Add source by location
@@ -37,7 +42,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         {
             Location = location;
             Enabled = enabled;
-            UniqueIdentifier = location;
+            UniqueIdentifier = location.ToLowerInvariant();  // For path comparison
         }
 
         public ProgramSource(ProgramSource source)
@@ -68,13 +73,21 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(uid);
+            return HashCode.Combine(UniqueIdentifier);
+        }
+
+        public void SetLocation(string value)
+        {
+            if (Location == value) return;
+            Location = value;
+            UniqueIdentifier = value.ToLowerInvariant();  // Update
         }
     }
 
     public class DisabledProgramSource : ProgramSource
     {
-        public DisabledProgramSource() { }  // only for json deserialization
+        [JsonConstructor]
+        public DisabledProgramSource(string name, string location, bool enabled, string uniqueIdentifier) : base(name, location, enabled, uniqueIdentifier) { }
 
         public DisabledProgramSource(string location) : base(location, false) { }
 

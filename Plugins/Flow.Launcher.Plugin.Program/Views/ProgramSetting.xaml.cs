@@ -149,18 +149,33 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void btnEditProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
-            if (selectedProgramSource != null)
+            EditProgramSource(selectedProgramSource);
+        }
+
+        private void EditProgramSource(ProgramSource selectedProgramSource)
+        {
+            if (selectedProgramSource == null)
+            {
+                string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
+                MessageBox.Show(msg);
+            }
+            else
             {
                 var add = new AddProgramSource(selectedProgramSource, _settings);
                 if (add.ShowDialog() ?? false)
                 {
+                    if (selectedProgramSource.Enabled)
+                    {
+                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, true);  // sync status in win32, uwp and disabled
+                        ProgramSettingDisplay.RemoveDisabledFromSettings();
+                    }
+                    else
+                    {
+                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, false);
+                        ProgramSettingDisplay.StoreDisabledInSettings();
+                    }
                     ReIndexing();
                 }
-            }
-            else
-            {
-                string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
             }
         }
 
@@ -352,14 +367,7 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void programSourceView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
-            if (selectedProgramSource != null)
-            { 
-                var add = new AddProgramSource(selectedProgramSource, _settings);
-                if (add.ShowDialog() ?? false)
-                {
-                    ReIndexing();
-                }
-            }
+            EditProgramSource(selectedProgramSource);
         }
 
         private bool IsAllItemsUserAdded(List<ProgramSource> items)

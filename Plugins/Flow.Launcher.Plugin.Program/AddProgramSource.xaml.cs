@@ -55,6 +55,7 @@ namespace Flow.Launcher.Plugin.Program
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             string path = Directory.Text;
+            bool modified = false;
             if (!System.IO.Directory.Exists(path))
             {
                 System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
@@ -65,18 +66,22 @@ namespace Flow.Launcher.Plugin.Program
                 if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.InvariantCultureIgnoreCase)))
                 {
                     var source = new ProgramSource(path);
-
+                    modified = true;
                     _settings.ProgramSources.Insert(0, source);
                     ProgramSetting.ProgramSettingDisplayList.Add(source);
                 }
             }
             else
             {
-                _editing.Location = path;
-                _editing.Enabled = Chkbox.IsChecked ?? true;  // Fixme, need to add to disabled source if not custom source
+                modified = _editing.Location != path || _editing.Enabled != Chkbox.IsChecked;
+                if (modified)
+                {
+                    _editing.SetLocation(path);
+                    _editing.Enabled = Chkbox.IsChecked ?? true;
+                }
             }
 
-            DialogResult = true;
+            DialogResult = modified;
             Close();
         }
     }

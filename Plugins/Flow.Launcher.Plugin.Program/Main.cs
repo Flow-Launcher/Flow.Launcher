@@ -197,7 +197,7 @@ namespace Flow.Launcher.Plugin.Program
                 _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
                 var t1 = Task.Run(() =>
                 {
-                    IndexWin32Programs();
+                    IndexUwpPrograms();
                     _settings.LastIndexTime = DateTime.Today;
                 });
             }
@@ -208,7 +208,7 @@ namespace Flow.Launcher.Plugin.Program
                 _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
                 var t1 = Task.Run(() =>
                 {
-                    IndexUwpPrograms();
+                    IndexWin32Programs();
                     _settings.LastIndexTime = DateTime.Today;
                 });
             }
