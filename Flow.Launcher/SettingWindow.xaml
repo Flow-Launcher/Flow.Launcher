@@ -911,7 +911,7 @@
                                         <TextBox
                                             Width="300"
                                             Height="34"
-                                            Text="{Binding Settings.PluginSettings.PythonFilePath, TargetNullValue='No Setting'}" />
+                                            Text="{Binding Settings.PluginSettings.PythonFilePath, TargetNullValue='None'}" />
                                         <Button
                                             Height="34"
                                             Margin="10,10,18,10"
@@ -930,7 +930,7 @@
                                         <TextBox
                                             Width="300"
                                             Height="34"
-                                            Text="{Binding Settings.PluginSettings.NodeFilePath, TargetNullValue='No Setting'}" />
+                                            Text="{Binding Settings.PluginSettings.NodeFilePath, TargetNullValue='None'}" />
                                         <Button
                                             Height="34"
                                             Margin="10,10,18,10"
