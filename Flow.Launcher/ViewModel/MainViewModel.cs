@@ -360,14 +360,14 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            if (MainWindowWidth + 100 > 1920 || _settings.WindowSize == 1920)
+            if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
             {
-               _settings.WindowSize = 1920;        
+                Settings.WindowSize = 1920;        
             }
             else 
-            { 
-                _settings.WindowSize += 100;
-                _settings.WindowLeft -= 50;
+            {
+                Settings.WindowSize += 100;
+                Settings.WindowLeft -= 50;
             }
             OnPropertyChanged();
         }
@@ -375,14 +375,14 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void DecreaseWidth()
         {
-            if (MainWindowWidth - 100 < 400 || _settings.WindowSize == 400)
+            if (MainWindowWidth - 100 < 400 || Settings.WindowSize == 400)
             {
-                _settings.WindowSize = 400;
+                Settings.WindowSize = 400;
             }
             else
-            { 
-                _settings.WindowLeft += 50;
-                _settings.WindowSize -= 100;
+            {
+                Settings.WindowLeft += 50;
+                Settings.WindowSize -= 100;
             }
             OnPropertyChanged();
         }
@@ -390,19 +390,19 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseMaxResult()
         {
-            if (_settings.MaxResultsToShow == 17)
+            if (Settings.MaxResultsToShow == 17)
                 return;
 
-            _settings.MaxResultsToShow += 1;
+            Settings.MaxResultsToShow += 1;
         }
 
         [RelayCommand]
         private void DecreaseMaxResult()
         {
-            if (_settings.MaxResultsToShow == 2)
+            if (Settings.MaxResultsToShow == 2)
                 return;
 
-            _settings.MaxResultsToShow -= 1;
+            Settings.MaxResultsToShow -= 1;
         }
 
         /// <summary>
@@ -482,8 +482,8 @@ namespace Flow.Launcher.ViewModel
 
         public double MainWindowWidth
         {
-            get => _settings.WindowSize;
-            set => _settings.WindowSize = value;
+            get => Settings.WindowSize;
+            set => Settings.WindowSize = value;
         }
 
         public string PluginIconPath { get; set; } = null;
