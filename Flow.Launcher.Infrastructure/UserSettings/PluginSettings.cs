@@ -5,7 +5,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class PluginsSettings : BaseModel
     {
-        public string PythonDirectory { get; set; } // IS FILE PATH BUT CHANGE NAME TO FILE PATH??
+        public string PythonFilePath { get; set; }
 
         public string NodeFilePath { get; set; }
 

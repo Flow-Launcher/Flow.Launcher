@@ -56,7 +56,7 @@
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
     <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
-    <system:String x:Key="pythonDirectory">Python Directory</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>

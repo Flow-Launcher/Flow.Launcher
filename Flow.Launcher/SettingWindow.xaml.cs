@@ -70,7 +70,7 @@ namespace Flow.Launcher
             InitializePosition();
         }
 
-        private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
+        private void OnSelectPythonFilePathClick(object sender, RoutedEventArgs e)
         {
             var selectedFile = PluginEnvironment.GetFileFromDialog(
                                     InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
@@ -79,7 +79,7 @@ namespace Flow.Launcher
             if (!string.IsNullOrEmpty(selectedFile))
             {
                 Constant.PythonPath = selectedFile;
-                settings.PluginSettings.PythonDirectory = Constant.PythonPath;
+                settings.PluginSettings.PythonFilePath = Constant.PythonPath;
             }
         }
 

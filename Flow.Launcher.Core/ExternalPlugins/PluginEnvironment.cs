@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.ExternalPlugins
@@ -61,8 +59,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
             switch (languageType)
             {
                 case AllowedLanguage.Python:
-                    if (!string.IsNullOrEmpty(pluginSettings.PythonDirectory) && FilesFolders.LocationExists(pluginSettings.PythonDirectory))
-                        return SetPathForPluginPairs($"{pluginSettings.PythonDirectory}\\{PythonExecutable}", languageType);
+                    if (!string.IsNullOrEmpty(pluginSettings.PythonFilePath) && FilesFolders.FileExists(pluginSettings.PythonFilePath))
+                        return SetPathForPluginPairs($"{pluginSettings.PythonFilePath}\\{PythonExecutable}", languageType);
                     break;
 
                 case AllowedLanguage.TypeScript:
@@ -82,37 +80,39 @@ namespace Flow.Launcher.Core.ExternalPlugins
                                 $"and you will be prompted to select the folder that contains the {environment} executable",
                     string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
             {
-                var dlg = new OpenFileDialog
-                {
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                    Multiselect = false,
-                    CheckFileExists = true,
-                    CheckPathExists = true,
-                    Title = $"Please select the {environment} executable"
-                };
+                var msg = $"Please select the {environment} executable";
+                var selectedFile = string.Empty;
 
-                var result = dlg.ShowDialog();
-                if (result == DialogResult.OK)
+                switch (languageType)
                 {
-                    switch (languageType)
-                    {
-                        case AllowedLanguage.Python:
-                            Constant.PythonPath = dlg.FileName;
-                            pluginSettings.PythonDirectory = Constant.PythonPath;
-                            break;
-                        case AllowedLanguage.TypeScript:
-                        case AllowedLanguage.JavaScript:
-                            Constant.NodePath = dlg.FileName;
+                    case AllowedLanguage.Python:
+                        selectedFile = GetFileFromDialog(msg, "Python|pythonw.exe");
+
+                        if (!string.IsNullOrEmpty(selectedFile))
+                        {
+                            Constant.PythonPath = selectedFile;
+                            pluginSettings.PythonFilePath = Constant.PythonPath;
+                        }
+                        break;
+
+                    case AllowedLanguage.TypeScript:
+                    case AllowedLanguage.JavaScript:
+                        selectedFile = GetFileFromDialog(msg);
+
+                        if (!string.IsNullOrEmpty(selectedFile))
+                        {
+                            Constant.NodePath = selectedFile;
                             pluginSettings.NodeFilePath = Constant.NodePath;
-                            break;
-                        default:
-                            break;
-                    }
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
-                else
-                {
+
+                // Nothing selected because user pressed cancel from the file dialog window
+                if (string.IsNullOrEmpty(selectedFile))
                     InstallEnvironment(languageType);
-                }
             }
             else
             {
@@ -121,19 +121,19 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
             switch (languageType)
             {
-                case AllowedLanguage.Python when FilesFolders.FileExists(Constant.PythonPath) && !string.IsNullOrEmpty(pluginSettings.PythonDirectory):
-                    return SetPathForPluginPairs(Constant.PythonPath, languageType);
+                case AllowedLanguage.Python when FilesFolders.FileExists(pluginSettings.PythonFilePath) && !string.IsNullOrEmpty(Constant.PythonPath):
+                    return SetPathForPluginPairs(pluginSettings.PythonFilePath, languageType);
 
-                case AllowedLanguage.TypeScript when FilesFolders.FileExists(Constant.NodePath) && !string.IsNullOrEmpty(pluginSettings.NodeFilePath):
-                case AllowedLanguage.JavaScript when FilesFolders.FileExists(Constant.NodePath) && !string.IsNullOrEmpty(pluginSettings.NodeFilePath):
+                case AllowedLanguage.TypeScript when FilesFolders.FileExists(pluginSettings.NodeFilePath) && !string.IsNullOrEmpty(Constant.NodePath):
+                case AllowedLanguage.JavaScript when FilesFolders.FileExists(pluginSettings.NodeFilePath) && !string.IsNullOrEmpty(Constant.NodePath):
                     return SetPathForPluginPairs(pluginSettings.NodeFilePath, languageType);
 
                 default:
                     MessageBox.Show(
                     "Unable to set Python executable path, please try from Flow's settings (scroll down to the bottom).");
                     Log.Error("PluginsLoader",
-                        $"Not able to successfully set Python path, the PythonDirectory variable is still an empty string.",
-                        "PythonPlugins");
+                        $"Not able to successfully set Python path, setting's PythonFilePath variable is still an empty string.",
+                        "PluginEnvironment");
 
                     return new List<PluginPair>();
             }
@@ -142,17 +142,16 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private void InstallEnvironment(string languageType)
         {
             switch (languageType)
-            {
+            {//TODO: UPDATE TO USE CENTRALISED PLUGINENVIRONMENT FOLDER
                 case AllowedLanguage.Python:
                     var pythonDirPath = Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable");
                     FilesFolders.RemoveFolderIfExists(pythonDirPath);
 
                     // Python 3.8.9 is used for Windows 7 compatibility
                     DroplexPackage.Drop(App.python_3_8_9_embeddable, pythonDirPath).Wait();
-
-                    pluginSettings.PythonDirectory = pythonDirPath;
+                    
                     Constant.PythonPath = Path.Combine(pythonDirPath, PythonExecutable);
-
+                    pluginSettings.PythonFilePath = Constant.PythonPath;
                     break;
 
                 case AllowedLanguage.TypeScript:
@@ -164,7 +163,6 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
                     Constant.NodePath = Path.Combine(nodeDirPath, $"node-v16.18.0-win-x64\\{NodeExecutable}");
                     pluginSettings.NodeFilePath = Constant.NodePath;
-
                     break;
 
                 default:

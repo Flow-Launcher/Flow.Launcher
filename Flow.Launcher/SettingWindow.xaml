@@ -905,17 +905,17 @@
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource pythonDirectory}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource pythonFilePath}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                                         <TextBox
                                             Width="300"
                                             Height="34"
-                                            Text="{Binding Settings.PluginSettings.PythonDirectory, TargetNullValue='No Setting'}" />
+                                            Text="{Binding Settings.PluginSettings.PythonFilePath, TargetNullValue='No Setting'}" />
                                         <Button
                                             Height="34"
                                             Margin="10,10,18,10"
-                                            Click="OnSelectPythonDirectoryClick"
+                                            Click="OnSelectPythonFilePathClick"
                                             Content="{DynamicResource select}" />
                                     </StackPanel>
                                 </ItemsControl>
