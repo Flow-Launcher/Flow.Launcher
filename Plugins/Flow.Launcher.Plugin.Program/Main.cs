@@ -194,16 +194,24 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                      .Enabled = false;
-               
+                var t1 = Task.Run(() =>
+                {
+                    IndexWin32Programs();
+                    _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
+                    _settings.LastIndexTime = DateTime.Today;
+                });
             }
-
-            if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)) 
+            else if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
             {
                 _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                     .Enabled = false;
+                var t1 = Task.Run(() =>
+                {
+                    IndexUwpPrograms();
+                    _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
+                    _settings.LastIndexTime = DateTime.Today;
+                });
             }
-
-            _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
         }
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)

@@ -27,14 +27,14 @@ namespace Flow.Launcher.Plugin.Program
             btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
         }
 
-        public AddProgramSource(ProgramSource edit, Settings settings)
+        public AddProgramSource(ProgramSource source, Settings settings)
         {
             InitializeComponent();
-            _updating = source;
+            _editing = source;
             _settings = settings;
             update = true;
-            Chkbox.IsChecked = _updating.Enabled;
-            Directory.Text = _updating.Location;
+            Chkbox.IsChecked = _editing.Enabled;
+            Directory.Text = _editing.Location;
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -72,8 +72,8 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                _updating.Location = path;
-                _updating.Enabled = Chkbox.IsChecked ?? true;  // Fixme, need to add to disabled source if not custom source
+                _editing.Location = path;
+                _editing.Enabled = Chkbox.IsChecked ?? true;  // Fixme, need to add to disabled source if not custom source
             }
 
             DialogResult = true;
