@@ -9,11 +9,12 @@ namespace Flow.Launcher.Plugin.Program
     /// <summary>
     /// Interaction logic for AddProgramSource.xaml
     /// </summary>
-    public partial class AddProgramSource
+    public partial class AddProgramSource : Window
     {
         private PluginInitContext _context;
         private ProgramSource _editing;
         private Settings _settings;
+        private bool update;
 
         public AddProgramSource(PluginInitContext context, Settings settings)
         {
@@ -21,15 +22,19 @@ namespace Flow.Launcher.Plugin.Program
             _context = context;
             _settings = settings;
             Directory.Focus();
+            Chkbox.IsChecked = true;
+            update = false;
+            btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
         }
 
         public AddProgramSource(ProgramSource edit, Settings settings)
         {
-            _editing = edit;
-            _settings = settings;
-
             InitializeComponent();
-            Directory.Text = _editing.Location;
+            _updating = source;
+            _settings = settings;
+            update = true;
+            Chkbox.IsChecked = _updating.Enabled;
+            Directory.Text = _updating.Location;
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -47,19 +52,19 @@ namespace Flow.Launcher.Plugin.Program
             Close();
         }
 
-        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            string s = Directory.Text;
-            if (!System.IO.Directory.Exists(s))
+            string path = Directory.Text;
+            if (!System.IO.Directory.Exists(path))
             {
                 System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
                 return;
             }
-            if (_editing == null)
+            if (!update)
             {
-                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(Directory.Text, System.StringComparison.InvariantCultureIgnoreCase)))
+                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    var source = new ProgramSource(Directory.Text);
+                    var source = new ProgramSource(path);
 
                     _settings.ProgramSources.Insert(0, source);
                     ProgramSetting.ProgramSettingDisplayList.Add(source);
@@ -67,7 +72,8 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                _editing.Location = Directory.Text;
+                _updating.Location = path;
+                _updating.Enabled = Chkbox.IsChecked ?? true;  // Fixme, need to add to disabled source if not custom source
             }
 
             DialogResult = true;

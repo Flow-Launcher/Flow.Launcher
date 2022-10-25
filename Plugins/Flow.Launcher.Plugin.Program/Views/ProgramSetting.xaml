@@ -116,6 +116,8 @@
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
+            MouseDoubleClick="programSourceView_MouseDoubleClick"
+            SelectionChanged="programSourceView_SelectionChanged"
             SelectionMode="Extended">
             <ListView.View>
                 <GridView>
@@ -126,7 +128,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enable}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock
