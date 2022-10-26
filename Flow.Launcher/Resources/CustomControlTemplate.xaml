@@ -2167,14 +2167,12 @@
                                             Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
                                             From="0.0"
                                             To="1.0"
-                                            Timeline.DesiredFrameRate="60"
                                             Duration="00:00:00.167" />
                                         <DoubleAnimation
                                             Storyboard.TargetName="ContentPresenterBorder"
                                             Storyboard.TargetProperty="(Border.Opacity)"
                                             From="0.0"
                                             To="1.0"
-                                            Timeline.DesiredFrameRate="60"
                                             Duration="00:00:00.167" />
                                     </Storyboard>
                                 </BeginStoryboard>
