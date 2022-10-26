@@ -1314,7 +1314,8 @@
                             ItemsSource="{Binding ExternalPlugins}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             SelectionMode="Single"
-                            VirtualizingStackPanel.IsVirtualizing="True">
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.VirtualizationMode="Recycling">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel
