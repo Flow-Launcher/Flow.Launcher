@@ -68,6 +68,7 @@
             </Setter>
         </Style>
         <Style x:Key="SettingGroupBox" TargetType="{x:Type Border}">
+            <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <Setter Property="BorderThickness" Value="1" />
@@ -248,7 +249,7 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="PluginList" TargetType="ListBoxItem">
+        <Style x:Key="PluginList" TargetType="ListViewItem">
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
             <Setter Property="Padding" Value="0,12,0,12" />
             <Setter Property="Margin" Value="0,0,18,5" />
@@ -257,7 +258,7 @@
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
                         <Border
                             x:Name="Bd"
                             Padding="{TemplateBinding Padding}"
@@ -319,7 +320,7 @@
         </Style>
 
         <!--#region PluginStore Style-->
-        <Style x:Key="StoreList" TargetType="ListBoxItem">
+        <Style x:Key="StoreList" TargetType="ListViewItem">
             <Setter Property="Background" Value="{DynamicResource Color02B}" />
             <Setter Property="Padding" Value="0,0,0,0" />
             <Setter Property="Margin" Value="0,0,8,5" />
@@ -329,7 +330,7 @@
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
                         <Border
                             x:Name="Bd"
                             Padding="{TemplateBinding Padding}"
@@ -437,7 +438,6 @@
                 Width="16"
                 Height="16"
                 Margin="10,4,4,4"
-                RenderOptions.BitmapScalingMode="HighQuality"
                 Source="/Images/app.png" />
             <TextBlock
                 Grid.Column="1"
@@ -541,7 +541,8 @@
                 Grid.ColumnSpan="5"
                 Height="auto"
                 SelectedIndex="1"
-                TabStripPlacement="Left">
+                TabStripPlacement="Left"
+                UseLayoutRounding="True">
                 <TabItem Style="{DynamicResource logo}">
                     <TabItem.Header>
                         <Grid Margin="0,18,0,0">
@@ -583,7 +584,7 @@
                     </TabItem.Header>
 
                     <!--                    <ScrollViewer Margin="0,0,0,0" Background="{DynamicResource Color01B}">-->
-                    <utils:ScrollViewerEx VerticalScrollBarVisibility="Auto">
+                    <utils:ScrollViewerEx VerticalScrollBarVisibility="Auto" VirtualizingStackPanel.IsVirtualizing="True">
                         <StackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
@@ -917,7 +918,7 @@
                             Grid.Column="0"
                             Padding="0,0,0,0"
                             Background="{DynamicResource Color01B}">
-                            <ListBox
+                            <ListView
                                 Name="Plugins"
                                 Width="Auto"
                                 Margin="5,0,0,0"
@@ -926,17 +927,17 @@
                                 Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
                                 ItemsSource="{Binding PluginViewModels}"
-                                ScrollViewer.CanContentScroll="False"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
                                 SelectionChanged="SelectedPluginChanged"
-                                SnapsToDevicePixels="True">
-                                <ListBox.ItemsPanel>
+                                SnapsToDevicePixels="True"
+                                VirtualizingStackPanel.IsVirtualizing="True">
+                                <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Margin="0,0,0,18" />
+                                        <VirtualizingStackPanel Margin="0,0,0,18" />
                                     </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Expander
                                             x:Name="expanderHeader"
@@ -944,7 +945,7 @@
                                             Padding="0"
                                             Background="Transparent"
                                             FlowDirection="RightToLeft"
-                                            IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"
+                                            IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor}}"
                                             Style="{StaticResource ExpanderStyle1}">
                                             <Expander.Header>
                                                 <Grid
@@ -1239,8 +1240,8 @@
                                         </Expander>
 
                                     </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Border>
 
                     </Grid>
@@ -1297,205 +1298,202 @@
                                 Content="{DynamicResource refresh}"
                                 FontSize="13" />
                         </Border>
-                        <Border
+
+                        <ListView
+                            x:Name="StoreListBox"
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Padding="0,0,0,0">
-                            <ListBox
-                                x:Name="StoreListBox"
-                                Width="Auto"
-                                Margin="6,0,0,0"
-                                Padding="0,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalContentAlignment="Center"
-                                Background="{DynamicResource Color01B}"
-                                ItemContainerStyle="{StaticResource StoreList}"
-                                ItemsSource="{Binding ExternalPlugins}"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                SelectionMode="Single">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <UniformGrid
-                                            Margin="0,0,6,18"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Columns="2"
-                                            IsItemsHost="True"
-                                            SnapsToDevicePixels="True" />
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <!--  Hover Layout Style  -->
+                            Width="Auto"
+                            Margin="6,0,0,0"
+                            Padding="0,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Center"
+                            Background="{DynamicResource Color01B}"
+                            ItemContainerStyle="{StaticResource StoreList}"
+                            ItemsSource="{Binding ExternalPlugins}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            SelectionMode="Single"
+                            VirtualizingStackPanel.IsVirtualizing="True">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel
+                                        Margin="0,0,6,18"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        IsItemsHost="True"
+                                        SnapsToDevicePixels="True" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <!--  Hover Layout Style  -->
 
-                                        <ToggleButton
-                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
-                                            HorizontalAlignment="Left"
-                                            HorizontalContentAlignment="left"
-                                            Background="Transparent"
-                                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                            Style="{StaticResource StoreItem}">
-                                            <ToggleButton.Template>
-                                                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                                                    <ContentPresenter
-                                                        x:Name="contentPresenter"
-                                                        Margin="{TemplateBinding Padding}"
-                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                        Content="{TemplateBinding Content}"
-                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                        Focusable="False"
-                                                        RecognizesAccessKey="True"
-                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                    <ControlTemplate.Triggers />
-                                                </ControlTemplate>
-                                            </ToggleButton.Template>
+                                    <ToggleButton
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
+                                        HorizontalAlignment="Left"
+                                        HorizontalContentAlignment="left"
+                                        Background="Transparent"
+                                        IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
+                                        Style="{StaticResource StoreItem}">
+                                        <ToggleButton.Template>
+                                            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                                <ContentPresenter
+                                                    x:Name="contentPresenter"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    Focusable="False"
+                                                    RecognizesAccessKey="True"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                <ControlTemplate.Triggers />
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
 
-                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="72" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel
-                                                    Grid.Column="0"
-                                                    Margin="0,0,0,0"
-                                                    VerticalAlignment="Center">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Opacity" Value="1" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-                                                    <Image
-                                                        Width="32"
-                                                        Height="32"
-                                                        Margin="8,0,6,0"
-                                                        VerticalAlignment="Center"
-                                                        RenderOptions.BitmapScalingMode="HighQuality"
-                                                        Source="{Binding IcoPath, IsAsync=True}"
-                                                        Stretch="Uniform" />
-                                                </StackPanel>
-                                                <StackPanel
-                                                    Grid.Column="1"
-                                                    Margin="0,0,8,0"
+                                        <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="72" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel
+                                                Grid.Column="0"
+                                                Margin="0,0,0,0"
+                                                VerticalAlignment="Center">
+                                                <StackPanel.Style>
+                                                    <Style>
+                                                        <Setter Property="StackPanel.Visibility" Value="Visible" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor}}" Value="true">
+                                                                <Setter Property="StackPanel.Opacity" Value="1" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+                                                <Image
+                                                    Width="32"
+                                                    Height="32"
+                                                    Margin="8,0,6,0"
                                                     VerticalAlignment="Center"
-                                                    Panel.ZIndex="0">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Opacity" Value="1" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-                                                    <TextBlock
-                                                        Padding="0,0,20,0"
-                                                        Foreground="{DynamicResource Color05B}"
-                                                        Text="{Binding Name}"
-                                                        TextWrapping="WrapWithOverflow"
-                                                        ToolTip="{Binding Version}" />
-                                                    <TextBlock
-                                                        Margin="0,2,0,0"
-                                                        Padding="0,0,20,0"
+                                                    Source="{Binding IcoPath, IsAsync=True}"
+                                                    Stretch="Uniform" />
+                                            </StackPanel>
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                Margin="0,0,8,0"
+                                                VerticalAlignment="Center"
+                                                Panel.ZIndex="0">
+                                                <StackPanel.Style>
+                                                    <Style>
+                                                        <Setter Property="StackPanel.Visibility" Value="Visible" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor}}" Value="true">
+                                                                <Setter Property="StackPanel.Opacity" Value="1" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+                                                <TextBlock
+                                                    Padding="0,0,20,0"
+                                                    Foreground="{DynamicResource Color05B}"
+                                                    Text="{Binding Name}"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    ToolTip="{Binding Version}" />
+                                                <TextBlock
+                                                    Margin="0,2,0,0"
+                                                    Padding="0,0,20,0"
+                                                    Foreground="{DynamicResource Color04B}"
+                                                    TextWrapping="WrapWithOverflow">
+                                                    <Run
+                                                        FontSize="12"
                                                         Foreground="{DynamicResource Color04B}"
-                                                        TextWrapping="WrapWithOverflow">
-                                                        <Run
-                                                            FontSize="12"
-                                                            Foreground="{DynamicResource Color04B}"
-                                                            Text="{Binding Description}" />
-                                                    </TextBlock>
+                                                        Text="{Binding Description}" />
+                                                </TextBlock>
 
-                                                </StackPanel>
-                                                <StackPanel
-                                                    Grid.Column="0"
-                                                    Grid.ColumnSpan="2"
+                                            </StackPanel>
+                                            <StackPanel
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch">
+                                                <StackPanel.Style>
+                                                    <Style>
+                                                        <Setter Property="StackPanel.Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor}}" Value="true">
+                                                                <Setter Property="StackPanel.Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+
+
+                                                <Grid
+                                                    Height="94"
                                                     HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Collapsed" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
+                                                    VerticalAlignment="Stretch"
+                                                    Panel.ZIndex="1">
+                                                    <Grid.Background>
+                                                        <SolidColorBrush Opacity="1" Color="{DynamicResource HoverStoreGrid}" />
+                                                    </Grid.Background>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" />
+                                                    </Grid.ColumnDefinitions>
 
-
-                                                    <Grid
-                                                        Height="94"
+                                                    <StackPanel
+                                                        Grid.Column="0"
                                                         HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Stretch"
-                                                        Panel.ZIndex="1">
-                                                        <Grid.Background>
-                                                            <SolidColorBrush Opacity=".95" Color="{DynamicResource HoverStoreGrid}" />
-                                                        </Grid.Background>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <StackPanel
-                                                            Grid.Column="0"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center">
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock
-                                                                    Margin="20,0,0,0"
-                                                                    Padding="0,0,0,0"
-                                                                    FontWeight="Bold"
-                                                                    Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Name}"
-                                                                    TextWrapping="WrapWithOverflow"
-                                                                    ToolTip="{Binding Name}" />
-                                                                <TextBlock
-                                                                    Margin="10,0,0,0"
-                                                                    Padding="0,0,20,0"
-                                                                    Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Version}"
-                                                                    TextWrapping="WrapWithOverflow"
-                                                                    ToolTip="{Binding Version}" />
-                                                            </StackPanel>
-                                                            <StackPanel Margin="20,2,120,0" Orientation="Vertical">
-                                                                <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
-                                                                    <Hyperlink
-                                                                        Foreground="{DynamicResource Color04B}"
-                                                                        NavigateUri="{Binding Website}"
-                                                                        RequestNavigate="OnRequestNavigate">
-                                                                        <Run FontSize="12" Text="{Binding Author}" />
-                                                                    </Hyperlink>
-                                                                </TextBlock>
-                                                            </StackPanel>
+                                                        VerticalAlignment="Center">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Margin="20,0,0,0"
+                                                                Padding="0,0,0,0"
+                                                                FontWeight="Bold"
+                                                                Foreground="{DynamicResource Color05B}"
+                                                                Text="{Binding Name}"
+                                                                TextWrapping="WrapWithOverflow"
+                                                                ToolTip="{Binding Name}" />
+                                                            <TextBlock
+                                                                Margin="10,0,0,0"
+                                                                Padding="0,0,20,0"
+                                                                Foreground="{DynamicResource Color05B}"
+                                                                Text="{Binding Version}"
+                                                                TextWrapping="WrapWithOverflow"
+                                                                ToolTip="{Binding Version}" />
                                                         </StackPanel>
-                                                        <Border Padding="0,0,20,0">
-                                                            <Button
-                                                                Name="ShortCutButtonPrev"
-                                                                Grid.Column="1"
-                                                                MinHeight="40"
-                                                                Margin="0,0,0,0"
-                                                                Padding="15,5,15,5"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                Click="OnExternalPluginInstallClick"
-                                                                Content="{DynamicResource install}" />
-                                                        </Border>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
+                                                        <StackPanel Margin="20,2,120,0" Orientation="Vertical">
+                                                            <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
+                                                                <Hyperlink
+                                                                    Foreground="{DynamicResource Color04B}"
+                                                                    NavigateUri="{Binding Website}"
+                                                                    RequestNavigate="OnRequestNavigate">
+                                                                    <Run FontSize="12" Text="{Binding Author}" />
+                                                                </Hyperlink>
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <Border Padding="0,0,20,0">
+                                                        <Button
+                                                            Name="ShortCutButtonPrev"
+                                                            Grid.Column="1"
+                                                            MinHeight="40"
+                                                            Margin="0,0,0,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginInstallClick"
+                                                            Content="{DynamicResource install}" />
+                                                    </Border>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
 
-                                        </ToggleButton>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Border>
+                                    </ToggleButton>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
                     </Grid>
                 </TabItem>
@@ -1521,7 +1519,7 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
-                            ScrollViewer.CanContentScroll="False">
+                            VirtualizingStackPanel.IsVirtualizing="True">
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />
@@ -1542,7 +1540,7 @@
                                 <StackPanel
                                     Grid.Row="1"
                                     Margin="0"
-                                    Background="{Binding PreviewBackground}">
+                                    Background="Black">
                                     <StackPanel
                                         Margin="0,30,0,0"
                                         HorizontalAlignment="Center"
@@ -1652,18 +1650,18 @@
                                         Padding="0"
                                         HorizontalAlignment="Stretch"
                                         Style="{DynamicResource SettingGroupBox}">
-                                        <ListBox
+                                        <ListView
                                             Margin="12,12,12,12"
                                             HorizontalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            ui:ScrollViewerHelper.AutoHideScrollBars="True"
                                             Background="#ffffff"
                                             ItemsSource="{Binding Themes}"
                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                            SelectedItem="{Binding SelectedTheme}">
-                                            <ListBox.ItemContainerStyle>
-                                                <Style TargetType="ListBoxItem">
+                                            SelectedItem="{Binding SelectedTheme}"
+                                            VirtualizingStackPanel.IsVirtualizing="True">
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
                                                     <Setter Property="Background" Value="Transparent" />
                                                     <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                                                     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
@@ -1671,7 +1669,7 @@
                                                     <Setter Property="Margin" Value="4" />
                                                     <Setter Property="Template">
                                                         <Setter.Value>
-                                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
                                                                 <Border
                                                                     x:Name="Bd"
                                                                     Padding="{TemplateBinding Padding}"
@@ -1705,14 +1703,14 @@
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Style>
-                                            </ListBox.ItemContainerStyle>
-                                            <ListBox.Template>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.Template>
                                                 <!--  For Scroll Wheel inside listbox area  -->
                                                 <ControlTemplate>
                                                     <ItemsPresenter />
                                                 </ControlTemplate>
-                                            </ListBox.Template>
-                                            <ListBox.ItemTemplate>
+                                            </ListView.Template>
+                                            <ListView.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid
                                                         Width="Auto"
@@ -1730,13 +1728,13 @@
                                                             TextWrapping="Wrap" />
                                                     </Grid>
                                                 </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                            <ListBox.ItemsPanel>
+                                            </ListView.ItemTemplate>
+                                            <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel />
                                                 </ItemsPanelTemplate>
-                                            </ListBox.ItemsPanel>
-                                        </ListBox>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
 
                                     </Border>
                                     <Border>
@@ -2011,7 +2009,7 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
-                        ScrollViewer.CanContentScroll="False">
+                        VirtualizingStackPanel.IsVirtualizing="True">
                         <Border>
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
@@ -2131,7 +2129,8 @@
                                     BorderThickness="1"
                                     ItemsSource="{Binding Settings.CustomPluginHotkeys}"
                                     SelectedItem="{Binding SelectedCustomPluginHotkey}"
-                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}"
+                                    VirtualizingStackPanel.IsVirtualizing="True">
                                     <ListView.View>
                                         <GridView>
                                             <GridViewColumn Width="180" Header="{DynamicResource hotkey}">
@@ -2198,7 +2197,7 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
-                        ScrollViewer.CanContentScroll="False">
+                        VirtualizingStackPanel.IsVirtualizing="True">
                         <Border>
 
                             <StackPanel>
@@ -2370,7 +2369,7 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Background="{DynamicResource Color01B}"
-                            ScrollViewer.CanContentScroll="False">
+                            VirtualizingStackPanel.IsVirtualizing="True">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
                                     Grid.Row="2"
