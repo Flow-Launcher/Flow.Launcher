@@ -2091,12 +2091,12 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
-                            <Setter TargetName="arrow" Property="Stroke" Value="#222" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color05B}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
                             <Setter TargetName="circle" Property="StrokeThickness" Value="1.5" />
-                            <Setter TargetName="arrow" Property="Stroke" Value="#FF003366" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color17B}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
