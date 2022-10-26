@@ -635,7 +635,9 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
                                 SnapsToDevicePixels="True"
-                                Style="{DynamicResource PluginListStyle}">
+                                Style="{DynamicResource PluginListStyle}"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Expander
@@ -1058,7 +1060,9 @@
                                 ItemsSource="{Binding ExternalPlugins}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectionMode="Single"
-                                Style="{DynamicResource StoreListStyle}">
+                                Style="{DynamicResource StoreListStyle}"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <UniformGrid
