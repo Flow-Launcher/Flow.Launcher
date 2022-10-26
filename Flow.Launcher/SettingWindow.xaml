@@ -644,35 +644,30 @@
                                             Padding="0"
                                             BorderThickness="0"
                                             ClipToBounds="True"
-                                            FlowDirection="RightToLeft"
                                             IsExpanded="{Binding Mode=TwoWay, Path=IsExpanded}"
                                             SnapsToDevicePixels="True"
                                             Style="{StaticResource ExpanderStyle1}">
                                             <Expander.Header>
                                                 <Border Padding="0,12,0,12">
-                                                    <Grid
-                                                        Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
-                                                        HorizontalAlignment="Left"
-                                                        FlowDirection="LeftToRight">
+                                                    <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}" HorizontalAlignment="Left">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="100" MinWidth="100" />
-                                                            <ColumnDefinition Width="8*" />
+                                                            <ColumnDefinition Width="36" MinWidth="36" />
+                                                            <ColumnDefinition Width="7*" />
                                                             <ColumnDefinition Width="Auto" />
                                                             <ColumnDefinition Width="Auto" />
                                                         </Grid.ColumnDefinitions>
                                                         <StackPanel
                                                             Grid.Column="0"
-                                                            Margin="24,0,0,0"
-                                                            VerticalAlignment="Center"
-                                                            FlowDirection="LeftToRight">
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Center">
                                                             <Image
                                                                 Width="32"
                                                                 Height="32"
-                                                                Margin="32,0,0,0"
+                                                                Margin="0,0,0,0"
                                                                 FlowDirection="LeftToRight"
                                                                 Source="{Binding Image, IsAsync=True}" />
                                                         </StackPanel>
-                                                        <StackPanel Grid.Column="1" Margin="12,0,14,0">
+                                                        <StackPanel Grid.Column="1" Margin="16,0,14,0">
                                                             <TextBlock
                                                                 Foreground="{DynamicResource Color05B}"
                                                                 Text="{Binding PluginPair.Metadata.Name}"
@@ -729,8 +724,9 @@
                                                         </StackPanel>
                                                         <DockPanel Grid.Column="3">
                                                             <ui:ToggleSwitch
-                                                                Margin="0,0,6,0"
+                                                                Margin="0,0,60,0"
                                                                 HorizontalAlignment="Right"
+                                                                DockPanel.Dock="Right"
                                                                 IsOn="{Binding PluginState}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}" />

@@ -1831,7 +1831,9 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultToggleSwitch}" TargetType="{x:Type ui:ToggleSwitch}" />
+
     <!--#region Expander for Setting Window-->
+
     <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -2044,31 +2046,43 @@
                     <Border Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="19" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Ellipse
-                                x:Name="circle"
-                                Width="19"
-                                Height="19"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Stroke="Transparent" />
-                            <Path
-                                x:Name="arrow"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                SnapsToDevicePixels="false"
-                                Stroke="#666"
-                                StrokeThickness="1" />
                             <ContentPresenter
-                                Grid.Column="1"
-                                Margin="4,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
+                                Grid.Column="0"
+                                Margin="0,0,0,0"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
                                 RecognizesAccessKey="True"
                                 SnapsToDevicePixels="True" />
+                            <Grid
+                                x:Name="ChevronGrid"
+                                Grid.Column="1"
+                                Margin="0"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                RenderTransformOrigin="0.5, 0.5">
+                                <Grid.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Grid.RenderTransform>
+                                <Ellipse
+                                    x:Name="circle"
+                                    Width="19"
+                                    Height="19"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="Transparent" />
+                                <Path
+                                    x:Name="arrow"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                    SnapsToDevicePixels="false"
+                                    Stroke="#666"
+                                    StrokeThickness="1" />
+                            </Grid>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -2110,7 +2124,7 @@
                                 x:Name="HeaderSite"
                                 MinWidth="0"
                                 MinHeight="0"
-                                Margin="18,0,0,0"
+                                Margin="18,0,18,0"
                                 Padding="{TemplateBinding Padding}"
                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -2127,19 +2141,60 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource ExpanderDownHeaderStyle}" />
-                            <ContentPresenter
-                                x:Name="ExpandSite"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                DockPanel.Dock="Bottom"
-                                Focusable="false"
-                                Visibility="Collapsed" />
+                            <Border x:Name="ContentPresenterBorder">
+                                <ContentPresenter
+                                    x:Name="ExpandSite"
+                                    Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    DockPanel.Dock="Bottom"
+                                    Focusable="false" />
+                                <Border.LayoutTransform>
+                                    <ScaleTransform ScaleY="0" />
+                                </Border.LayoutTransform>
+                            </Border>
                         </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,1,0,0" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentPresenterBorder"
+                                            Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                            From="0.0"
+                                            To="1.0"
+                                            Duration="00:00:00.167" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentPresenterBorder"
+                                            Storyboard.TargetProperty="(Border.Opacity)"
+                                            From="0.0"
+                                            To="1.0"
+                                            Duration="00:00:00.167" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentPresenterBorder"
+                                            Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                            From="1.0"
+                                            To="0"
+                                            Duration="00:00:00.167" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentPresenterBorder"
+                                            Storyboard.TargetProperty="(Border.Opacity)"
+                                            From="1.0"
+                                            To="0.0"
+                                            Duration="00:00:00.167" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
