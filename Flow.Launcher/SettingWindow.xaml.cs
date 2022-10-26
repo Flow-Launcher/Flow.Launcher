@@ -63,7 +63,7 @@ namespace Flow.Launcher
             pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
             pluginListView.Filter = PluginListFilter;
 
-            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
+            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListView.ItemsSource); 
             pluginStoreView.Filter = PluginStoreFilter;
 
             InitializePosition();
