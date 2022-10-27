@@ -41,6 +41,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.ActivateTimes):
                         OnPropertyChanged(nameof(ActivatedTimes));
                         break;
+                    case nameof(Settings.WindowSize):
+                        OnPropertyChanged(nameof(WindowWidthSize));
+                        break;
                 }
             };
         }
@@ -381,6 +384,33 @@ namespace Flow.Launcher.ViewModel
                 return modes;
             }
         }
+
+
+
+        public class SearchWindowPosition
+        {
+            public string Display { get; set; }
+            public SearchWindowPositions Value { get; set; }
+        }
+
+        public List<SearchWindowPosition> SearchWindowPositions
+        {
+            get
+            {
+                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
+                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
+                foreach (var e in enums)
+                {
+                    var key = $"SearchWindowPosition{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchWindowPosition { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+
 
         public double WindowWidthSize
         {
