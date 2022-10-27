@@ -1013,9 +1013,9 @@
     <m:StaticResource x:Key="MenuFlyoutSubItemRevealBorderBrushDisabled" ResourceKey="SystemControlTransparentBrush" />
 
     <!--  Resources for NavigationView  -->
-    <m:StaticResource x:Key="NavigationViewDefaultPaneBackground" ResourceKey="AcrylicInAppFillColorDefaultBrush" />
-    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor SystemChromeMediumColor}" />
-    <m:StaticResource x:Key="NavigationViewTopPaneBackground" ResourceKey="AcrylicInAppFillColorDefaultBrush" />
+    <m:StaticResource x:Key="NavigationViewDefaultPaneBackground" ResourceKey="Color01B" />
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor Color01}" />
+    <m:StaticResource x:Key="NavigationViewTopPaneBackground" ResourceKey="Color01B" />
 
     <m:StaticResource x:Key="NavigationViewItemBackground" ResourceKey="SystemControlTransparentRevealBackgroundBrush" />
     <m:StaticResource x:Key="NavigationViewItemBackgroundPointerOver" ResourceKey="SystemControlHighlightListLowRevealBackgroundBrush" />

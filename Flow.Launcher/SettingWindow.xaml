@@ -173,62 +173,81 @@
                 <ui:NavigationView
                     x:Name="nvSample"
                     Grid.Row="1"
-                    Grid.ColumnSpan="4"
+                    Grid.ColumnSpan="5"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    ExpandedModeThresholdWidth="500"
+                    ExpandedModeThresholdWidth="300"
                     Header="{Binding ElementName=headerText, Path=Text, Mode=TwoWay}"
                     IsBackButtonVisible="Collapsed"
+                    IsPaneToggleButtonVisible="False"
+                    IsSettingsVisible="False"
                     IsTabStop="False"
+                    OpenPaneLength="230"
                     PaneDisplayMode="Left"
                     PaneTitle="{Binding ElementName=paneText, Path=Text, Mode=TwoWay}"
                     SelectionChanged="NavigationView_SelectionChanged">
                     <ui:NavigationView.MenuItems>
                         <ui:NavigationViewItem
-                            x:Name="SamplePage1Item"
-                            Content="Menu Item1"
+                            x:Name="General"
+                            Content="{DynamicResource general}"
                             Tag="General">
                             <ui:NavigationViewItem.Icon>
                                 <ui:SymbolIcon Symbol="Play" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
-                            x:Name="SamplePage2Item"
-                            Content="Menu Item2"
+                            x:Name="plugin"
+                            Content="{DynamicResource plugin}"
                             SelectsOnInvoked="True"
-                            Tag="About">
+                            Tag="Plugins">
                             <ui:NavigationViewItem.Icon>
                                 <ui:SymbolIcon Symbol="Save" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
-                            x:Name="SamplePage3Item"
-                            Content="Menu Item3"
-                            Tag="SamplePage3">
+                            x:Name="pluginstore"
+                            Content="{DynamicResource pluginStore}"
+                            Tag="PluginStore">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Refresh" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem
+                            x:Name="Theme"
+                            Content="{DynamicResource theme}"
+                            Tag="Theme">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Refresh" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem
+                            x:Name="Hotkey"
+                            Content="{DynamicResource hotkey}"
+                            Tag="Hotkey">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Refresh" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem
+                            x:Name="Proxy"
+                            Content="{DynamicResource proxy}"
+                            Tag="Proxy">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Refresh" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem
+                            x:Name="About"
+                            Content="{DynamicResource about}"
+                            Tag="About">
                             <ui:NavigationViewItem.Icon>
                                 <ui:SymbolIcon Symbol="Refresh" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                     </ui:NavigationView.MenuItems>
-
-                    <ui:NavigationView.PaneCustomContent>
-                        <ui:HyperlinkButton
-                            x:Name="PaneHyperlink"
-                            Margin="12,0"
-                            Content="More info"
-                            Visibility="Collapsed" />
-                    </ui:NavigationView.PaneCustomContent>
-                    <ui:NavigationView.PaneFooter>
-                        <StackPanel
-                            x:Name="FooterStackPanel"
-                            Orientation="Vertical"
-                            Visibility="Collapsed">
-                            <ui:NavigationViewItem AutomationProperties.Name="download" Icon="Download" />
-                            <ui:NavigationViewItem AutomationProperties.Name="favorite" Icon="Favorite" />
-                        </StackPanel>
-                    </ui:NavigationView.PaneFooter>
                     <Grid>
-                        <ui:Frame x:Name="contentFrame" />
+                        <ui:Frame x:Name="contentFrame" Margin="0" />
                     </Grid>
                 </ui:NavigationView>
             </Grid>

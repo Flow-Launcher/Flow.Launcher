@@ -19,6 +19,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using ModernWpf.Media.Animation;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -48,6 +49,10 @@ namespace Flow.Launcher.ViewModel
             };
         }
 
+        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
+        {
+            Effect = SlideNavigationTransitionEffect.FromBottom
+        };
         public Settings Settings { get; set; }
 
         public async void UpdateApp()

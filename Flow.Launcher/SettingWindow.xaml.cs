@@ -31,6 +31,7 @@ using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
 using Flow.Launcher.Pages;
+using ModernWpf.Media.Animation;
 
 namespace Flow.Launcher
 {
@@ -490,6 +491,8 @@ namespace Flow.Launcher
 
 
         /** nav **/
+
+
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
@@ -503,9 +506,9 @@ namespace Flow.Launcher
                 {
                     string selectedItemTag = (string)selectedItem.Tag;
                     sender.Header = "Sample Page " + selectedItemTag.Substring(selectedItemTag.Length - 1);
-                    string pageName = "SamplesCommon.SamplePages." + selectedItemTag;
+                    string pageName = "Flow.Launcher.Pages." + selectedItemTag;
                     Type pageType = typeof(About).Assembly.GetType(pageName);
-                    contentFrame.Navigate(selectedItemTag);
+                    contentFrame.Navigate(pageType);
                 }
             }
         }
