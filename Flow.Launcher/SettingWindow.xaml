@@ -51,183 +51,193 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    <Grid>
+        <Border Style="{StaticResource WindowMainPanelStyle}">
+            <Grid Background="{DynamicResource Color01B}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Width="16"
+                    Height="16"
+                    Margin="10,4,4,4"
+                    Source="/Images/app.png" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="4,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource Color05B}"
+                    Text="{DynamicResource flowlauncher_settings}" />
 
-    <Border Style="{StaticResource WindowMainPanelStyle}">
-        <Grid Background="{DynamicResource Color01B}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="32" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Image
-                Grid.Column="0"
-                Width="16"
-                Height="16"
-                Margin="10,4,4,4"
-                Source="/Images/app.png" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="4,0,0,0"
-                VerticalAlignment="Center"
-                FontSize="12"
-                Foreground="{DynamicResource Color05B}"
-                Text="{DynamicResource flowlauncher_settings}" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Click="OnMinimizeButtonClick"
+                    RenderOptions.EdgeMode="Aliased"
+                    Style="{DynamicResource TitleBarButtonStyle}">
+                    <Path
+                        Width="46"
+                        Height="32"
+                        Data="M 18,15 H 28"
+                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        StrokeThickness="1">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Button>
+                <Button
+                    Name="maximizeButton"
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Click="OnMaximizeRestoreButtonClick"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <Path
+                        Width="46"
+                        Height="32"
+                        Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
+                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        StrokeThickness="1">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Button>
+                <Button
+                    Name="restoreButton"
+                    Grid.Column="3"
+                    Click="OnMaximizeRestoreButtonClick"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <Path
+                        Width="46"
+                        Height="32"
+                        Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
+                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        StrokeThickness="1">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Button>
+                <Button
+                    Grid.Column="4"
+                    Click="OnCloseButtonClick"
+                    Style="{StaticResource TitleBarCloseButtonStyle}">
+                    <Path
+                        Width="46"
+                        Height="32"
+                        Data="M 18,11 27,20 M 18,20 27,11"
+                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        StrokeThickness="1">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Button>
+                <ui:NavigationView
+                    x:Name="nvSample"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="4"
+                    Margin="0,0,0,0"
+                    VerticalAlignment="Stretch"
+                    ExpandedModeThresholdWidth="500"
+                    Header="{Binding ElementName=headerText, Path=Text, Mode=TwoWay}"
+                    IsBackButtonVisible="Collapsed"
+                    IsTabStop="False"
+                    PaneDisplayMode="Left"
+                    PaneTitle="{Binding ElementName=paneText, Path=Text, Mode=TwoWay}"
+                    SelectionChanged="NavigationView_SelectionChanged">
+                    <ui:NavigationView.MenuItems>
+                        <ui:NavigationViewItem
+                            x:Name="SamplePage1Item"
+                            Content="Menu Item1"
+                            Tag="General">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Play" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem
+                            x:Name="SamplePage2Item"
+                            Content="Menu Item2"
+                            SelectsOnInvoked="True"
+                            Tag="About">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Save" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem
+                            x:Name="SamplePage3Item"
+                            Content="Menu Item3"
+                            Tag="SamplePage3">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon Symbol="Refresh" />
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                    </ui:NavigationView.MenuItems>
 
-            <Button
-                Grid.Column="2"
-                Click="OnMinimizeButtonClick"
-                RenderOptions.EdgeMode="Aliased"
-                Style="{DynamicResource TitleBarButtonStyle}">
-                <Path
-                    Width="46"
-                    Height="32"
-                    Data="M 18,15 H 28"
-                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1">
-                    <Path.Style>
-                        <Style TargetType="Path">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                    <Setter Property="Opacity" Value="0.5" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Path.Style>
-                </Path>
-            </Button>
-            <Button
-                Name="maximizeButton"
-                Grid.Column="3"
-                Click="OnMaximizeRestoreButtonClick"
-                Style="{StaticResource TitleBarButtonStyle}">
-                <Path
-                    Width="46"
-                    Height="32"
-                    Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
-                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1">
-                    <Path.Style>
-                        <Style TargetType="Path">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                    <Setter Property="Opacity" Value="0.5" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Path.Style>
-                </Path>
-            </Button>
-            <Button
-                Name="restoreButton"
-                Grid.Column="3"
-                Click="OnMaximizeRestoreButtonClick"
-                Style="{StaticResource TitleBarButtonStyle}">
-                <Path
-                    Width="46"
-                    Height="32"
-                    Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
-                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1">
-                    <Path.Style>
-                        <Style TargetType="Path">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                    <Setter Property="Opacity" Value="0.5" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Path.Style>
-                </Path>
-            </Button>
-            <Button
-                Grid.Column="4"
-                Click="OnCloseButtonClick"
-                Style="{StaticResource TitleBarCloseButtonStyle}">
-                <Path
-                    Width="46"
-                    Height="32"
-                    Data="M 18,11 27,20 M 18,20 27,11"
-                    Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                    StrokeThickness="1">
-                    <Path.Style>
-                        <Style TargetType="Path">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                    <Setter Property="Opacity" Value="0.5" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Path.Style>
-                </Path>
-            </Button>
+                    <ui:NavigationView.PaneCustomContent>
+                        <ui:HyperlinkButton
+                            x:Name="PaneHyperlink"
+                            Margin="12,0"
+                            Content="More info"
+                            Visibility="Collapsed" />
+                    </ui:NavigationView.PaneCustomContent>
+                    <ui:NavigationView.PaneFooter>
+                        <StackPanel
+                            x:Name="FooterStackPanel"
+                            Orientation="Vertical"
+                            Visibility="Collapsed">
+                            <ui:NavigationViewItem AutomationProperties.Name="download" Icon="Download" />
+                            <ui:NavigationViewItem AutomationProperties.Name="favorite" Icon="Favorite" />
+                        </StackPanel>
+                    </ui:NavigationView.PaneFooter>
+                    <Grid>
+                        <ui:Frame x:Name="contentFrame" />
+                    </Grid>
+                </ui:NavigationView>
+            </Grid>
+        </Border>
 
-            <ui:NavigationView
-                x:Name="nvSample"
-                Grid.Row="1"
-                Height="540"
-                Margin="0,12,0,0"
-                ExpandedModeThresholdWidth="500"
-                Header="{Binding ElementName=headerText, Path=Text, Mode=TwoWay}"
-                IsBackButtonVisible="Collapsed"
-                IsTabStop="False"
-                PaneDisplayMode="Left"
-                PaneTitle="{Binding ElementName=paneText, Path=Text, Mode=TwoWay}"
-                SelectionChanged="NavigationView_SelectionChanged">
-                <ui:NavigationView.MenuItems>
-                    <ui:NavigationViewItem
-                        x:Name="SamplePage1Item"
-                        Content="Menu Item1"
-                        Tag="General">
-                        <ui:NavigationViewItem.Icon>
-                            <ui:SymbolIcon Symbol="Play" />
-                        </ui:NavigationViewItem.Icon>
-                    </ui:NavigationViewItem>
-                    <ui:NavigationViewItem
-                        x:Name="SamplePage2Item"
-                        Content="Menu Item2"
-                        SelectsOnInvoked="True"
-                        Tag="About">
-                        <ui:NavigationViewItem.Icon>
-                            <ui:SymbolIcon Symbol="Save" />
-                        </ui:NavigationViewItem.Icon>
-                    </ui:NavigationViewItem>
-                    <ui:NavigationViewItem
-                        x:Name="SamplePage3Item"
-                        Content="Menu Item3"
-                        Tag="SamplePage3">
-                        <ui:NavigationViewItem.Icon>
-                            <ui:SymbolIcon Symbol="Refresh" />
-                        </ui:NavigationViewItem.Icon>
-                    </ui:NavigationViewItem>
-                </ui:NavigationView.MenuItems>
+    </Grid>
+</Window>
 
-                <ui:NavigationView.PaneCustomContent>
-                    <ui:HyperlinkButton
-                        x:Name="PaneHyperlink"
-                        Margin="12,0"
-                        Content="More info"
-                        Visibility="Collapsed" />
-                </ui:NavigationView.PaneCustomContent>
-                <ui:NavigationView.PaneFooter>
-                    <StackPanel
-                        x:Name="FooterStackPanel"
-                        Orientation="Vertical"
-                        Visibility="Collapsed">
-                        <ui:NavigationViewItem AutomationProperties.Name="download" Icon="Download" />
-                        <ui:NavigationViewItem AutomationProperties.Name="favorite" Icon="Favorite" />
-                    </StackPanel>
-                </ui:NavigationView.PaneFooter>
-
-                <ui:Frame x:Name="contentFrame" />
-            </ui:NavigationView>
-
-            <!--<TabControl
+<!--<TabControl
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
@@ -257,8 +267,9 @@
                         </Grid>
                     </TabItem.Header>
                 </TabItem>
-                <TabItem>
-                    --><!--  LEFT TAB WIDTH  --><!--
+                <TabItem>-->
+<!--  LEFT TAB WIDTH  -->
+<!--
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -765,8 +776,9 @@
                                                                 Click="OnPluginPriorityClick"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
-                                                                ToolTip="{DynamicResource priorityToolTip}">
-                                                                --><!--#region Priority Button Style--><!--
+                                                                ToolTip="{DynamicResource priorityToolTip}">-->
+<!--#region Priority Button Style-->
+<!--
                                                                 <Button.Resources>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="CornerRadius" Value="2" />
@@ -785,8 +797,9 @@
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
-                                                                </Button.Style>
-                                                                --><!--#endregion--><!--
+                                                                </Button.Style>-->
+<!--#endregion-->
+<!--
                                                             </Button>
 
                                                         </StackPanel>
@@ -859,8 +872,9 @@
                                                             VerticalAlignment="Center"
                                                             Background="{DynamicResource Color02B}"
                                                             BorderBrush="{DynamicResource Color03B}"
-                                                            BorderThickness="0,1,0,0">
-                                                            --><!--#region SubInfo Styling--><!--
+                                                            BorderThickness="0,1,0,0">-->
+<!--#region SubInfo Styling-->
+<!--
                                                             <Border.Style>
                                                                 <Style TargetType="{x:Type Border}">
                                                                     <Setter Property="Visibility" Value="Visible" />
@@ -882,8 +896,9 @@
                                                                 Padding="1"
                                                                 VerticalAlignment="Stretch"
                                                                 Content="{Binding SettingControl}" />
-                                                        </Border>
-                                                        --><!--#endregion--><!--
+                                                        </Border>-->
+<!--#endregion-->
+<!--
 
                                                     </StackPanel>
 
@@ -1009,9 +1024,9 @@
                         </Border>
 
                     </Grid>
-                </TabItem>
-
-                --><!--#region Plugin Store--><!--
+                </TabItem>-->
+<!--#region Plugin Store-->
+<!--
                 <TabItem KeyDown="PluginStore_OnKeyDown">
                     <TabItem.Header>
                         <Grid>
@@ -1131,18 +1146,20 @@
                                 VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Margin="0,0,17,18" />
-                                        --><!--
+                                        <VirtualizingStackPanel Margin="0,0,17,18" />-->
+<!--
                                         <UniformGrid
                                             Margin="0,0,17,18"
                                             Columns="3"
                                             VirtualizingStackPanel.IsVirtualizing="True"
-                                            VirtualizingStackPanel.VirtualizationMode="Recycling" />--><!--
+                                            VirtualizingStackPanel.VirtualizationMode="Recycling" />-->
+<!--
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        --><!--  Hover Layout Style  --><!--
+                                    <DataTemplate>-->
+<!--  Hover Layout Style  -->
+<!--
                                         <WrapPanel Width="300">
                                             <ToggleButton
                                                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
@@ -1360,8 +1377,9 @@
                             </ListView>
                         </Border>
                     </Grid>
-                </TabItem>
-                --><!--#endregion--><!--
+                </TabItem>-->
+<!--#endregion-->
+<!--
 
                 <TabItem>
                     <TabItem.Header>
@@ -1400,13 +1418,13 @@
                                         Style="{StaticResource PageTitle}"
                                         Text="{DynamicResource theme}"
                                         TextAlignment="left" />
-                                </Border>
-
-                                --><!--
+                                </Border>-->
+<!--
                                 <StackPanel
                                     Grid.Row="1"
                                     Margin="0"
-                                    Background="{Binding PreviewBackground}">--><!--
+                                    Background="{Binding PreviewBackground}">-->
+<!--
                                 <StackPanel
                                     Grid.Row="1"
                                     Margin="0"
@@ -1579,8 +1597,9 @@
                                                     </Setter>
                                                 </Style>
                                             </ListView.ItemContainerStyle>
-                                            <ListView.Template>
-                                                --><!--  For Scroll Wheel inside ListView area  --><!--
+                                            <ListView.Template>-->
+<!--  For Scroll Wheel inside ListView area  -->
+<!--
                                                 <ControlTemplate>
                                                     <ItemsPresenter />
                                                 </ControlTemplate>
@@ -2439,8 +2458,3 @@
                     </Border>
                 </TabItem>
             </TabControl>-->
-            
-        </Grid>
-    </Border>
-
-</Window>

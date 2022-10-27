@@ -48,6 +48,7 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
+            nvSample.SelectedItem = nvSample.MenuItems.OfType<ModernWpf.Controls.NavigationViewItem>().First();
         }
 
         #region General
