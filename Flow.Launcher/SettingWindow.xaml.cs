@@ -30,6 +30,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
+using Flow.Launcher.Pages;
 
 namespace Flow.Launcher
 {
@@ -56,15 +57,15 @@ namespace Flow.Launcher
             RefreshMaximizeRestoreButton();
             // Fix (workaround) for the window freezes after lock screen (Win+L)
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
-            HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-            HwndTarget hwndTarget = hwndSource.CompositionTarget;
-            hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+            //HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            //HwndTarget hwndTarget = hwndSource.CompositionTarget;
+            //hwndTarget.RenderMode = RenderMode.SoftwareOnly;
 
-            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
-            pluginListView.Filter = PluginListFilter;
+            //pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
+            //pluginListView.Filter = PluginListFilter;
 
-            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListView.ItemsSource); 
-            pluginStoreView.Filter = PluginStoreFilter;
+            //pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListView.ItemsSource); 
+            //pluginStoreView.Filter = PluginStoreFilter;
 
             InitializePosition();
         }
@@ -112,29 +113,29 @@ namespace Flow.Launcher
 
         #region Hotkey
 
-        private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
-        {
-            _ = HotkeyControl.SetHotkeyAsync(viewModel.Settings.Hotkey, false);
-        }
+        //private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
+        //{
+        //    _ = HotkeyControl.SetHotkeyAsync(viewModel.Settings.Hotkey, false);
+        //}
 
         private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
         {
             HotKeyMapper.RemoveHotkey(settings.Hotkey);
         }
 
-        private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
-        {
-            if (HotkeyControl.CurrentHotkeyAvailable)
-            {
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
-                HotKeyMapper.RemoveHotkey(settings.Hotkey);
-                settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
-            }
-            else
-            {
-                HotKeyMapper.SetHotkey(new HotkeyModel(settings.Hotkey), HotKeyMapper.OnToggleHotkey);
-            }
-        }
+        //private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
+        //{
+        //    if (HotkeyControl.CurrentHotkeyAvailable)
+        //    {
+        //        HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
+        //        HotKeyMapper.RemoveHotkey(settings.Hotkey);
+        //        settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+        //    }
+        //    else
+        //    {
+        //        HotKeyMapper.SetHotkey(new HotkeyModel(settings.Hotkey), HotKeyMapper.OnToggleHotkey);
+        //    }
+        //}
 
         private void OnDeleteCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
@@ -284,20 +285,20 @@ namespace Flow.Launcher
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
         }
-        private void ClearLogFolder(object sender, RoutedEventArgs e)
-        {
-            var confirmResult = MessageBox.Show(
-                InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
-                InternationalizationManager.Instance.GetTranslation("clearlogfolder"), 
-                MessageBoxButton.YesNo);
+        //private void ClearLogFolder(object sender, RoutedEventArgs e)
+        //{
+        //    var confirmResult = MessageBox.Show(
+        //        InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
+        //        InternationalizationManager.Instance.GetTranslation("clearlogfolder"), 
+        //        MessageBoxButton.YesNo);
             
-            if (confirmResult == MessageBoxResult.Yes)
-            {
-                viewModel.ClearLogFolder();
+        //    if (confirmResult == MessageBoxResult.Yes)
+        //    {
+        //        viewModel.ClearLogFolder();
                 
-                ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
-            }
-        }
+        //        ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
+        //    }
+        //}
 
         private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
         {
@@ -373,75 +374,75 @@ namespace Flow.Launcher
         private CollectionView pluginListView;
         private CollectionView pluginStoreView;
 
-        private bool PluginListFilter(object item)
-        {
-            if (string.IsNullOrEmpty(pluginFilterTxb.Text))
-                return true;
-            if (item is PluginViewModel model)
-            {
-                return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
-            }
-            return false;
-        }
+        //private bool PluginListFilter(object item)
+        //{
+        //    if (string.IsNullOrEmpty(pluginFilterTxb.Text))
+        //        return true;
+        //    if (item is PluginViewModel model)
+        //    {
+        //        return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
+        //    }
+        //    return false;
+        //}
 
-        private bool PluginStoreFilter(object item)
-        {
-            if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
-                return true;
-            if (item is UserPlugin model)
-            {
-                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
-                    || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
-            }
-            return false;
-        }
+        //private bool PluginStoreFilter(object item)
+        //{
+        //    if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
+        //        return true;
+        //    if (item is UserPlugin model)
+        //    {
+        //        return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
+        //            || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
+        //    }
+        //    return false;
+        //}
 
-        private string lastPluginListSearch = "";
-        private string lastPluginStoreSearch = "";
+        //private string lastPluginListSearch = "";
+        //private string lastPluginStoreSearch = "";
 
-        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
-        {
-            if (pluginFilterTxb.Text != lastPluginListSearch)
-            {
-                lastPluginListSearch = pluginFilterTxb.Text;
-                pluginListView.Refresh();
-            }
-        }
+        //private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
+        //{
+        //    if (pluginFilterTxb.Text != lastPluginListSearch)
+        //    {
+        //        lastPluginListSearch = pluginFilterTxb.Text;
+        //        pluginListView.Refresh();
+        //    }
+        //}
 
-        private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
-        {
-            if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
-            {
-                lastPluginStoreSearch = pluginStoreFilterTxb.Text;
-                pluginStoreView.Refresh();
-            }
-        }
+        //private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
+        //{
+        //    if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
+        //    {
+        //        lastPluginStoreSearch = pluginStoreFilterTxb.Text;
+        //        pluginStoreView.Refresh();
+        //    }
+        //}
 
-        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                RefreshPluginListEventHandler(sender, e);
-        }
+        //private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //        RefreshPluginListEventHandler(sender, e);
+        //}
 
-        private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                RefreshPluginStoreEventHandler(sender, e);
-        }
+        //private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //        RefreshPluginStoreEventHandler(sender, e);
+        //}
 
-        private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
-        {
-            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
-                pluginFilterTxb.Focus();
-        }
+        //private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
+        //{
+        //    if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
+        //        pluginFilterTxb.Focus();
+        //}
 
-        private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
-            {
-                pluginStoreFilterTxb.Focus();
-            }
-        }
+        //private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+        //    {
+        //        pluginStoreFilterTxb.Focus();
+        //    }
+        //}
 
         public void InitializePosition()
         {
@@ -473,17 +474,39 @@ namespace Flow.Launcher
             var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
             return top;
         }
-        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var id = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
-                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeyword} uninstall {id}");
-                API.ShowMainWindow();
-            }
+        //private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (e.ChangedButton == MouseButton.Left)
+        //    {
+        //        var id = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
+        //        var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
+        //        var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
+        //        API.ChangeQuery($"{actionKeyword} uninstall {id}");
+        //        API.ShowMainWindow();
+        //    }
 
+        //}
+
+
+        /** nav **/
+        private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+                contentFrame.Navigate(typeof(General));
+            }
+            else
+            {
+                var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
+                if (selectedItem != null)
+                {
+                    string selectedItemTag = (string)selectedItem.Tag;
+                    sender.Header = "Sample Page " + selectedItemTag.Substring(selectedItemTag.Length - 1);
+                    string pageName = "SamplesCommon.SamplePages." + selectedItemTag;
+                    Type pageType = typeof(About).Assembly.GetType(pageName);
+                    contentFrame.Navigate(selectedItemTag);
+                }
+            }
         }
     }
 }

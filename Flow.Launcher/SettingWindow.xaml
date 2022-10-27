@@ -50,6 +50,8 @@
             <converters:BorderClipConverter x:Key="BorderClipConverter" />
         </ResourceDictionary>
     </Window.Resources>
+
+
     <Border Style="{StaticResource WindowMainPanelStyle}">
         <Grid Background="{DynamicResource Color01B}">
             <Grid.ColumnDefinitions>
@@ -165,11 +167,71 @@
                 </Path>
             </Button>
 
-            <TabControl
+            <ui:NavigationView
+                x:Name="nvSample"
+                Grid.Row="1"
+                Height="540"
+                Margin="0,12,0,0"
+                ExpandedModeThresholdWidth="500"
+                Header="{Binding ElementName=headerText, Path=Text, Mode=TwoWay}"
+                IsBackButtonVisible="Collapsed"
+                IsTabStop="False"
+                PaneDisplayMode="Left"
+                PaneTitle="{Binding ElementName=paneText, Path=Text, Mode=TwoWay}"
+                SelectionChanged="NavigationView_SelectionChanged">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem
+                        x:Name="SamplePage1Item"
+                        Content="Menu Item1"
+                        Tag="General">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Play" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem
+                        x:Name="SamplePage2Item"
+                        Content="Menu Item2"
+                        SelectsOnInvoked="True"
+                        Tag="About">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Save" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem
+                        x:Name="SamplePage3Item"
+                        Content="Menu Item3"
+                        Tag="SamplePage3">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Refresh" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                </ui:NavigationView.MenuItems>
+
+                <ui:NavigationView.PaneCustomContent>
+                    <ui:HyperlinkButton
+                        x:Name="PaneHyperlink"
+                        Margin="12,0"
+                        Content="More info"
+                        Visibility="Collapsed" />
+                </ui:NavigationView.PaneCustomContent>
+                <ui:NavigationView.PaneFooter>
+                    <StackPanel
+                        x:Name="FooterStackPanel"
+                        Orientation="Vertical"
+                        Visibility="Collapsed">
+                        <ui:NavigationViewItem AutomationProperties.Name="download" Icon="Download" />
+                        <ui:NavigationViewItem AutomationProperties.Name="favorite" Icon="Favorite" />
+                    </StackPanel>
+                </ui:NavigationView.PaneFooter>
+
+                <ui:Frame x:Name="contentFrame" />
+            </ui:NavigationView>
+
+            <!--<TabControl
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
-                Height="auto"
+                Height="0"
                 SelectedIndex="1"
                 TabStripPlacement="Left"
                 UseLayoutRounding="True">
@@ -196,7 +258,7 @@
                     </TabItem.Header>
                 </TabItem>
                 <TabItem>
-                    <!--  LEFT TAB WIDTH  -->
+                    --><!--  LEFT TAB WIDTH  --><!--
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -704,7 +766,7 @@
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
                                                                 ToolTip="{DynamicResource priorityToolTip}">
-                                                                <!--#region Priority Button Style-->
+                                                                --><!--#region Priority Button Style--><!--
                                                                 <Button.Resources>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="CornerRadius" Value="2" />
@@ -724,7 +786,7 @@
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </Button.Style>
-                                                                <!--#endregion-->
+                                                                --><!--#endregion--><!--
                                                             </Button>
 
                                                         </StackPanel>
@@ -798,7 +860,7 @@
                                                             Background="{DynamicResource Color02B}"
                                                             BorderBrush="{DynamicResource Color03B}"
                                                             BorderThickness="0,1,0,0">
-                                                            <!--#region SubInfo Styling-->
+                                                            --><!--#region SubInfo Styling--><!--
                                                             <Border.Style>
                                                                 <Style TargetType="{x:Type Border}">
                                                                     <Setter Property="Visibility" Value="Visible" />
@@ -821,7 +883,7 @@
                                                                 VerticalAlignment="Stretch"
                                                                 Content="{Binding SettingControl}" />
                                                         </Border>
-                                                        <!--#endregion-->
+                                                        --><!--#endregion--><!--
 
                                                     </StackPanel>
 
@@ -949,7 +1011,7 @@
                     </Grid>
                 </TabItem>
 
-                <!--#region Plugin Store-->
+                --><!--#region Plugin Store--><!--
                 <TabItem KeyDown="PluginStore_OnKeyDown">
                     <TabItem.Header>
                         <Grid>
@@ -1070,17 +1132,17 @@
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel Margin="0,0,17,18" />
-                                        <!--
+                                        --><!--
                                         <UniformGrid
                                             Margin="0,0,17,18"
                                             Columns="3"
                                             VirtualizingStackPanel.IsVirtualizing="True"
-                                            VirtualizingStackPanel.VirtualizationMode="Recycling" />-->
+                                            VirtualizingStackPanel.VirtualizationMode="Recycling" />--><!--
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <!--  Hover Layout Style  -->
+                                        --><!--  Hover Layout Style  --><!--
                                         <WrapPanel Width="300">
                                             <ToggleButton
                                                 Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
@@ -1299,7 +1361,7 @@
                         </Border>
                     </Grid>
                 </TabItem>
-                <!--#endregion-->
+                --><!--#endregion--><!--
 
                 <TabItem>
                     <TabItem.Header>
@@ -1340,11 +1402,11 @@
                                         TextAlignment="left" />
                                 </Border>
 
-                                <!--
+                                --><!--
                                 <StackPanel
                                     Grid.Row="1"
                                     Margin="0"
-                                    Background="{Binding PreviewBackground}">-->
+                                    Background="{Binding PreviewBackground}">--><!--
                                 <StackPanel
                                     Grid.Row="1"
                                     Margin="0"
@@ -1518,7 +1580,7 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.Template>
-                                                <!--  For Scroll Wheel inside ListView area  -->
+                                                --><!--  For Scroll Wheel inside ListView area  --><!--
                                                 <ControlTemplate>
                                                     <ItemsPresenter />
                                                 </ControlTemplate>
@@ -2376,7 +2438,9 @@
                         </ScrollViewer>
                     </Border>
                 </TabItem>
-            </TabControl>
+            </TabControl>-->
+            
         </Grid>
     </Border>
+
 </Window>
