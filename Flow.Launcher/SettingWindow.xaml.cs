@@ -54,9 +54,9 @@ namespace Flow.Launcher
             RefreshMaximizeRestoreButton();
             // Fix (workaround) for the window freezes after lock screen (Win+L)
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
-            HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-            HwndTarget hwndTarget = hwndSource.CompositionTarget;
-            hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+            //HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            //HwndTarget hwndTarget = hwndSource.CompositionTarget;
+            //hwndTarget.RenderMode = RenderMode.SoftwareOnly;
             InitializePosition();
         }
 
