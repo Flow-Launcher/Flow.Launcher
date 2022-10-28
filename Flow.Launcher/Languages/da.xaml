@@ -90,13 +90,24 @@
     <system:String x:Key="plugin_query_time">Søgetid:</system:String>
     <system:String x:Key="plugin_query_version">| Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
-    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="install">Install</system:String>
+    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="uninstallbtn">Uninstall</system:String>
+    <system:String x:Key="updatebtn">Opdater</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
