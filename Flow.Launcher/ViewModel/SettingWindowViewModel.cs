@@ -321,6 +321,16 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(ExternalPlugins));
         }
 
+        internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
+        {
+            var actionKeyword = plugin.Metadata.ActionKeywords.Count == 0 
+                ? string.Empty 
+                : plugin.Metadata.ActionKeywords[actionKeywordPosition];
+            
+            App.API.ChangeQuery($"{actionKeyword} {queryToDisplay}");
+            App.API.ShowMainWindow();
+        }
+
 
         #endregion
 
