@@ -90,13 +90,24 @@
     <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
     <system:String x:Key="plugin_query_version">| 版本</system:String>
     <system:String x:Key="plugin_query_web">官方網站</system:String>
-    <system:String x:Key="plugin_uninstall">解除安裝</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">外掛商店</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">外掛</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
-    <system:String x:Key="install">安裝</system:String>
+    <system:String x:Key="installbtn">安裝</system:String>
+    <system:String x:Key="uninstallbtn">解除安裝</system:String>
+    <system:String x:Key="updatebtn">更新</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主題</system:String>
