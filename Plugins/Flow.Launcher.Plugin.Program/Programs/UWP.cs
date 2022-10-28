@@ -618,10 +618,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var extension = Path.GetExtension(path);
                     if (extension != null)
                     {
-                        if (File.Exists(path))
-                        {
-                            return path; // shortcut, avoid enumerating files
-                        }
+                        //if (File.Exists(path))
+                        //{
+                        //    return path; // shortcut, avoid enumerating files
+                        //}
 
                         var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
                         var logoDir = Path.GetDirectoryName(path);  // e.g ..\..\Assets
@@ -639,9 +639,25 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // Just ignore all qualifiers
                         // select like logo.[xxx_yyy].png
                         // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
-                        var selected = files.FirstOrDefault(file =>
+                        var logos = files.Where(file =>
                             Path.GetFileName(file).StartsWith(logoNamePrefix) && extension == Path.GetExtension(file)
                         );
+
+                        var selected = logos.FirstOrDefault();
+
+                        foreach(var logo in logos)
+                        {
+
+                            var imageStream = File.OpenRead(logo);
+                            var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.None);
+                            var height = decoder.Frames[0].PixelHeight;
+                            var width = decoder.Frames[0].PixelWidth;
+                            if(height == 44 && width == 44)
+                            {
+                                selected = logo;
+                                break;
+                            }
+                        }
 
                         if (!string.IsNullOrEmpty(selected))
                         {
