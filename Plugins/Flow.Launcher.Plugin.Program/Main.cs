@@ -195,7 +195,7 @@ namespace Flow.Launcher.Plugin.Program
                 _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                      .Enabled = false;
                 _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
-                var t1 = Task.Run(() =>
+                _ = Task.Run(() =>
                 {
                     IndexUwpPrograms();
                     _settings.LastIndexTime = DateTime.Today;
@@ -206,7 +206,7 @@ namespace Flow.Launcher.Plugin.Program
                 _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
                     .Enabled = false;
                 _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
-                var t1 = Task.Run(() =>
+                _ = Task.Run(() =>
                 {
                     IndexWin32Programs();
                     _settings.LastIndexTime = DateTime.Today;
