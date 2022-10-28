@@ -691,9 +691,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     var image = new BitmapImage();
                     image.BeginInit();
-                    image.UriSource =  new Uri(path);
+                    image.UriSource = new Uri(path);
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.EndInit();
+                    image.Freeze();
                     return image;
                 }
                 else
