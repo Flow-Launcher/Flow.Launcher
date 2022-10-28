@@ -643,46 +643,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             Path.GetFileName(file).StartsWith(logoNamePrefix) && extension == Path.GetExtension(file)
                         );
 
-                        //var scaleFactors = new Dictionary<PackageVersion, List<int>>
-                        //{
-                        //    // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
-                        //    {
-                        //        PackageVersion.Windows10, new List<int>
-                        //        {
-                        //            100,
-                        //            125,
-                        //            150,
-                        //            200,
-                        //            400
-                        //        }
-                        //    },
-                        //    {
-                        //        PackageVersion.Windows81, new List<int>
-                        //        {
-                        //            100,
-                        //            120,
-                        //            140,
-                        //            160,
-                        //            180
-                        //        }
-                        //    },
-                        //    {
-                        //        PackageVersion.Windows8, new List<int>
-                        //        {
-                        //            100
-                        //        }
-                        //    }
-                        //};
-
-                        //if (scaleFactors.ContainsKey(Package.Version))
-                        //{
-                        //    foreach (var factor in scaleFactors[Package.Version])
-                        //    {
-                        //        // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
-                        //        suffixes.Add($"scale-{factor}{extension}");  // MS don't require scale as the last 
-                        //    }
-                        //}
-
                         if (!string.IsNullOrEmpty(selected))
                         {
                             return selected;
