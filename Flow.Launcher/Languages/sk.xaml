@@ -94,18 +94,18 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Nová verzia</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
     <system:String x:Key="pluginStore_None">Pluginy</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
     <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
     <system:String x:Key="updatebtn">Aktualizovať</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin je už nainštalovaný</system:String>
+    <system:String x:Key="LabelNew">Nová verzia</system:String>
+    <system:String x:Key="LabelNewToolTip">Tento plugin bol aktualizovaný v priebehu posledných 7 dní</system:String>
+    <system:String x:Key="LabelUpdateToolTip">K dispozícii je nová aktualizácia</system:String>
 
 
 
