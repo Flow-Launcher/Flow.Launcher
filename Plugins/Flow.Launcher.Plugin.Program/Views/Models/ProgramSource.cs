@@ -83,22 +83,4 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
             UniqueIdentifier = value.ToLowerInvariant();  // Update
         }
     }
-
-    public class DisabledProgramSource : ProgramSource
-    {
-        [JsonConstructor]
-        public DisabledProgramSource(string name, string location, bool enabled, string uniqueIdentifier) : base(name, location, enabled, uniqueIdentifier) { }
-
-        public DisabledProgramSource(string location) : base(location, false) { }
-
-        public DisabledProgramSource(ProgramSource source) : base(source)
-        {
-            Enabled = false;
-        }
-
-        public DisabledProgramSource(IProgram program) : base(program)
-        {
-            Enabled = false;
-        }
-    }
 }

@@ -192,9 +192,9 @@ namespace Flow.Launcher.Plugin.Program
 
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
             {
-                _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
-                     .Enabled = false;
-                _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
+                var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                program.Enabled = false;
+                _settings.DisabledProgramSources.Add(new ProgramSource(program));
                 _ = Task.Run(() =>
                 {
                     IndexUwpPrograms();
@@ -203,9 +203,9 @@ namespace Flow.Launcher.Plugin.Program
             }
             else if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
             {
-                _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
-                    .Enabled = false;
-                _settings.DisabledProgramSources.Add(new DisabledProgramSource(programToDelete));
+                var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                program.Enabled = false;
+                _settings.DisabledProgramSources.Add(new ProgramSource(program));
                 _ = Task.Run(() =>
                 {
                     IndexWin32Programs();

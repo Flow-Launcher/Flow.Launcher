@@ -14,7 +14,6 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
             // Even though these are disabled, we still want to display them so users can enable later on
             return Main._settings
                        .DisabledProgramSources
-                       .Select(s => new ProgramSource(s))
                        .Union(Main._settings.ProgramSources)
                        .ToList();
         }
@@ -62,8 +61,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
             var tmp = ProgramSetting.ProgramSettingDisplayList
                 .Where(t1 => !t1.Enabled
                                 && !Main._settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier)
-                                && !Main._settings.ProgramSources.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
-                .Select(x => new DisabledProgramSource(x));
+                                && !Main._settings.ProgramSources.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier));
 
             Main._settings.DisabledProgramSources.AddRange(tmp);
         }
@@ -76,7 +74,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
             //   .ForEach(t1 => t1.Enabled = true);
 
             Main._settings.DisabledProgramSources
-                .RemoveAll(t1 => ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier && x.Enabled));
+                .RemoveAll(t1 => t1.Enabled);
         }
 
         internal static bool IsReindexRequired(this List<ProgramSource> selectedItems)
