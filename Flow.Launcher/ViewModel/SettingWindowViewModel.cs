@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Core;
@@ -24,8 +19,6 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
-using Windows.Management.Deployment.Preview;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -296,10 +289,10 @@ namespace Flow.Launcher.ViewModel
         private  IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
         {
             return list.Select(p=>new PluginStoreItemViewModel(p))
-                .OrderByDescending(p => p.Category == "NewRelease")
-                .ThenByDescending(p=>p.Category == "RecentlyUpdated")
-                .ThenByDescending(p => p.Category == "None")
-                .ThenByDescending(p => p.Category == "Installed")
+                .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
+                .ThenByDescending(p=>p.Category == PluginStoreItemViewModel.RecentlyUpdated)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
                 .ToList();
         }
 

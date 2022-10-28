@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Converters
 {
@@ -18,23 +13,17 @@ namespace Flow.Launcher.Converters
             var ID = value.ToString();
             switch(ID)
             {
-                case "NewRelease":
+                case PluginStoreItemViewModel.NewRelease:
                     return InternationalizationManager.Instance.GetTranslation("pluginStore_NewRelease");
-                    break;
-                case "RecentlyUpdated":
+                case PluginStoreItemViewModel.RecentlyUpdated:
                     return InternationalizationManager.Instance.GetTranslation("pluginStore_RecentlyUpdated");
-                    break;
-                case "None":
+                case PluginStoreItemViewModel.None:
                     return InternationalizationManager.Instance.GetTranslation("pluginStore_None");
-                    break;
-                case "installed":
+                case PluginStoreItemViewModel.Installed:
                     return InternationalizationManager.Instance.GetTranslation("pluginStore_Installed");
-                    break;
                 default:
                     return ID;
-                    break;
             }
-
             
         }
 
