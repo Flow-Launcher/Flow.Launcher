@@ -63,7 +63,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             if (!update)
             {
-                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.InvariantCultureIgnoreCase)))
+                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.OrdinalIgnoreCase)))
                 {
                     var source = new ProgramSource(path);
                     modified = true;
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Plugin.Program
                 modified = _editing.Location != path || _editing.Enabled != Chkbox.IsChecked;
                 if (modified)
                 {
-                    _editing.SetLocation(path);
+                    _editing.Location = path;
                     _editing.Enabled = Chkbox.IsChecked ?? true;
                 }
             }

@@ -216,7 +216,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 foreach (string directory in directories)
                 {
                     if (Directory.Exists(directory)
-                        && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(directory, System.StringComparison.InvariantCultureIgnoreCase)))
+                        && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
                     {
                         var source = new ProgramSource(directory);
 

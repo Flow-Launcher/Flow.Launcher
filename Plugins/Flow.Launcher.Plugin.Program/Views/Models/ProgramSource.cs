@@ -18,7 +18,16 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
     {
         private string name;
 
-        public string Location { get; private set; }
+        private string loc;
+        public string Location
+        {
+            get => loc;
+            set
+            {
+                loc = value;
+                UniqueIdentifier = value.ToLowerInvariant();
+            }
+        }
         public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
         public bool Enabled { get; set; } = true;
 
@@ -27,10 +36,17 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         [JsonConstructor]
         public ProgramSource(string name, string location, bool enabled, string uniqueIdentifier)
         {
-            Location = location;
+            loc = location;
             this.name = name;
             Enabled = enabled;
-            UniqueIdentifier = uniqueIdentifier;
+            if (location.Equals(uniqueIdentifier, StringComparison.OrdinalIgnoreCase))
+            {
+                UniqueIdentifier = location.ToLowerInvariant();  // To make sure old config can be reset to case-insensitive
+            }
+            else
+            {
+                UniqueIdentifier = uniqueIdentifier;  // For uwp apps
+            }
         }
 
         /// <summary>
@@ -38,24 +54,16 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         /// </summary>
         /// <param name="location">location of program source</param>
         /// <param name="enabled">enabled</param>
-        public ProgramSource(string location, bool enabled=true)
+        public ProgramSource(string location, bool enabled = true)
         {
-            Location = location;
+            loc = location;
             Enabled = enabled;
             UniqueIdentifier = location.ToLowerInvariant();  // For path comparison
         }
 
-        public ProgramSource(ProgramSource source)
-        {
-            Location = source.Location;
-            Name = source.Name;
-            Enabled = source.Enabled;
-            UniqueIdentifier = source.UniqueIdentifier;
-        }
-
         public ProgramSource(IProgram source)
         {
-            Location = source.Location;
+            loc = source.Location;
             Name = source.Name;
             Enabled = source.Enabled;
             UniqueIdentifier = source.UniqueIdentifier;
@@ -74,13 +82,6 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         public override int GetHashCode()
         {
             return HashCode.Combine(UniqueIdentifier);
-        }
-
-        public void SetLocation(string value)
-        {
-            if (Location == value) return;
-            Location = value;
-            UniqueIdentifier = value.ToLowerInvariant();  // Update
         }
     }
 }
