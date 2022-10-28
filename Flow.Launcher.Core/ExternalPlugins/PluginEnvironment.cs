@@ -33,7 +33,6 @@ namespace Flow.Launcher.Core.ExternalPlugins
             this.pluginSettings = pluginSettings;
         }
         //TODO: CHECK IF NEED TO RESET PATH AFTER FLOW UPDATE
-        // LOG NODE PATH
         internal IEnumerable<PluginPair> PythonSetup()
         {
             return Setup(AllowedLanguage.Python, PythonEnv);
@@ -60,7 +59,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 case AllowedLanguage.Python:
                     if (!string.IsNullOrEmpty(pluginSettings.PythonFilePath) && FilesFolders.FileExists(pluginSettings.PythonFilePath))
-                        return SetPathForPluginPairs($"{pluginSettings.PythonFilePath}\\{PythonExecutable}", languageType);
+                        return SetPathForPluginPairs(pluginSettings.PythonFilePath, languageType);
                     break;
 
                 case AllowedLanguage.TypeScript:
