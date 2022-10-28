@@ -134,10 +134,12 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         private void InstallEnvironment(string languageType)
         {
+            var environments = "Environments";
+
             switch (languageType)
-            {//TODO: UPDATE TO USE CENTRALISED PLUGINENVIRONMENT FOLDER
+            {
                 case AllowedLanguage.Python:
-                    var pythonDirPath = Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable");
+                    var pythonDirPath = Path.Combine(DataLocation.DataDirectory(), environments, "PythonEmbeddable");
                     FilesFolders.RemoveFolderIfExists(pythonDirPath);
 
                     // Python 3.8.9 is used for Windows 7 compatibility
@@ -148,7 +150,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
                 case AllowedLanguage.TypeScript:
                 case AllowedLanguage.JavaScript:
-                    var nodeDirPath = Path.Combine(DataLocation.DataDirectory(), "Node");
+                    var nodeDirPath = Path.Combine(DataLocation.DataDirectory(), environments, "Node");
                     FilesFolders.RemoveFolderIfExists(nodeDirPath);
 
                     DroplexPackage.Drop(App.nodejs_16_18_0, nodeDirPath).Wait();
