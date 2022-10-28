@@ -47,6 +47,10 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            view.GroupDescriptions.Add(groupDescription);
         }
 
         #region General
@@ -306,13 +310,32 @@ namespace Flow.Launcher
 
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if (sender is Button { DataContext: UserPlugin plugin })
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
             {
-                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeyword} install {plugin.Name}");
-                API.ShowMainWindow();
+                viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var name = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
+                viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+            }
+
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+        }
+
+        private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
@@ -388,7 +411,7 @@ namespace Flow.Launcher
         {
             if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
                 return true;
-            if (item is UserPlugin model)
+            if (item is PluginStoreItemViewModel model)
             {
                 return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
                     || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
@@ -473,17 +496,6 @@ namespace Flow.Launcher
             var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
             return top;
         }
-        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var id = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
-                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeyword} uninstall {id}");
-                API.ShowMainWindow();
-            }
 
-        }
     }
 }
