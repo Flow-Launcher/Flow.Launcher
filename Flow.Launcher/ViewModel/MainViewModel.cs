@@ -30,6 +30,7 @@ namespace Flow.Launcher.ViewModel
         #region Private Fields
 
         private const string DefaultOpenResultModifiers = "Alt";
+        private const string DefaultCycleHistoryModifiers = "Alt";
 
         private bool _isQueryRunning;
         private Query _lastQuery;
@@ -40,6 +41,7 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         internal readonly Settings _settings;
         private readonly History _history;
+        private int lasthistoryindex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -88,6 +90,7 @@ namespace Flow.Launcher.ViewModel
             RegisterResultsUpdatedEvent();
 
             SetOpenResultModifiers();
+            SetCycleHistoryModifiers();
         }
 
         private void RegisterViewUpdate()
@@ -192,6 +195,50 @@ namespace Flow.Launcher.ViewModel
             SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
 
             SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
+
+            ReverseHistory = new RelayCommand(_ => {
+
+                if (_history.Items.Count > 0)
+                {
+                    ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
+
+                    if (lasthistoryindex < _history.Items.Count)
+                    {
+                        lasthistoryindex++;
+                    }
+                }
+            });
+
+            ForwardHistory = new RelayCommand(_ => {
+
+                if (_history.Items.Count > 0)
+                {
+                    ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
+
+                    if (lasthistoryindex > 1)
+                    {
+                        lasthistoryindex--;
+                    }
+                }
+                
+            });
+
+            ReverseHistoryOnEmptyQuery = new RelayCommand(_ => {
+                var results = SelectedResults;
+
+                if (_history.Items.Count > 0 
+                    && _queryText == String.Empty
+                    && !HistorySelected() 
+                    && !ContextMenuSelected())
+                {
+                    ReverseHistory.Execute(null);
+                }
+                else
+                {
+                    SelectPrevItemCommand.Execute(null);
+                }
+
+            });
 
             StartHelpCommand = new RelayCommand(_ =>
             {
@@ -490,8 +537,12 @@ namespace Flow.Launcher.ViewModel
         public ICommand CopyToClipboard { get; set; }
 
         public ICommand AutocompleteQueryCommand { get; set; }
+        public ICommand ReverseHistory { get; set; }
+        public ICommand ForwardHistory { get; set; }
+        public ICommand ReverseHistoryOnEmptyQuery { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
+        public string CycleHistoryModifiers { get; private set; }
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -609,6 +660,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
+                lasthistoryindex = 1;
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
                 return;
@@ -819,6 +871,11 @@ namespace Flow.Launcher.ViewModel
             OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
+        private void SetCycleHistoryModifiers()
+        {
+            CycleHistoryModifiers = _settings.CycleHistoryModifiers ?? DefaultCycleHistoryModifiers;
+        }
+
         public void ToggleFlowLauncher()
         {
             if (!MainWindowVisibilityStatus)
@@ -864,7 +921,7 @@ namespace Flow.Launcher.ViewModel
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
             }
-
+            lasthistoryindex = 1;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
         }

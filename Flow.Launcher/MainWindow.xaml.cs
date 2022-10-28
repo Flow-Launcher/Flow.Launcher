@@ -522,7 +522,7 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Up:
-                    _viewModel.SelectPrevItemCommand.Execute(null);
+                    _viewModel.ReverseHistoryOnEmptyQuery.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.PageDown:

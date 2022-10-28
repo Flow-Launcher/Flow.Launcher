@@ -676,7 +676,6 @@
                                 </ItemsControl>
                             </Border>
 
-
                             <Border Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
@@ -2356,6 +2355,7 @@
                                                     Style="{DynamicResource SideControlCheckBox}" />
                                             </ItemsControl>
                                         </Border>
+
                                     </StackPanel>
                                 </Border>
 
