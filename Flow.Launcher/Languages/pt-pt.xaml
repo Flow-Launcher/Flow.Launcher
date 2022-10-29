@@ -94,7 +94,7 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Loja de plugins</system:String>
-    <system:String x:Key="pluginStore_NewRelease">Nova versão</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Novo lançamento</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Atualizado recentemente</system:String>
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Instalado</system:String>
@@ -103,9 +103,9 @@
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
     <system:String x:Key="updatebtn">Atualizar</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plug-in já instalado</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelNew">Nova versão</system:String>
+    <system:String x:Key="LabelNewToolTip">Este plug-in foi atualizado nos últimos 7 dias</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Atualização disponível</system:String>
 
 
 
