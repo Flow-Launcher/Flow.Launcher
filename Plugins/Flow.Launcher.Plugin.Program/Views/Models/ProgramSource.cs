@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json.Serialization;
-using System.Windows.Media.Imaging;
 using Flow.Launcher.Plugin.Program.Programs;
 
 namespace Flow.Launcher.Plugin.Program.Views.Models

@@ -246,7 +246,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     if (extension == ExeExtension && File.Exists(target))
                     {
                         program.LnkResolvedPath = program.FullPath;
-                        program.FullPath = Path.GetFullPath(target).ToLower();
+                        program.FullPath = Path.GetFullPath(target).ToLowerInvariant();
                         program.ExecutableName = Path.GetFileName(target);
 
                         var description = _helper.description;
@@ -324,7 +324,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static string Extension(string path)
         {
-            var extension = Path.GetExtension(path)?.ToLower();
+            var extension = Path.GetExtension(path)?.ToLowerInvariant();
             if (!string.IsNullOrEmpty(extension))
             {
                 return extension.Substring(1);
@@ -489,7 +489,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
-            return programs.GroupBy(p => p.FullPath.ToLower())
+            return programs.GroupBy(p => p.FullPath.ToLowerInvariant())
+                .AsParallel()
                 .SelectMany(g =>
                 {
                     var temp = g.Where(g => !string.IsNullOrEmpty(g.Description)).ToList();

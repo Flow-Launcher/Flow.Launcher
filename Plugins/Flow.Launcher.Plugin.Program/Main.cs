@@ -127,9 +127,16 @@ namespace Flow.Launcher.Plugin.Program
 
         public static async Task IndexProgramsAsync()
         {
-            var t1 = Task.Run(IndexWin32Programs);
-            var t2 = Task.Run(IndexUwpPrograms);
-            await Task.WhenAll(t1, t2).ConfigureAwait(false);
+            var a = Task.Run(() =>
+            {
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+            });
+
+            var b = Task.Run(() =>
+            {
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpPrograms);
+            });
+            await Task.WhenAll(a, b).ConfigureAwait(false);
             _settings.LastIndexTime = DateTime.Today;
         }
 
