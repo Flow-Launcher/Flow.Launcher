@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Program.Views.Models;
 
 namespace Flow.Launcher.Plugin.Program.Views.Commands
@@ -20,43 +17,47 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
 
         internal static void DisplayAllPrograms()
         {
-            Main._win32s
-                .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
-                .ToList()
-                .ForEach(t1 => ProgramSetting.ProgramSettingDisplayList.Add(new ProgramSource(t1)));
+            var win32 = Main._win32s
+                            .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
+                            .Select(x => new ProgramSource(x));
 
-            Main._uwps
-                .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
-                .ToList()
-                .ForEach(t1 => ProgramSetting.ProgramSettingDisplayList.Add(new ProgramSource(t1)));
+            var uwp = Main._uwps
+                            .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
+                            .Select(x => new ProgramSource(x));
+
+            ProgramSetting.ProgramSettingDisplayList.AddRange(win32);
+            ProgramSetting.ProgramSettingDisplayList.AddRange(uwp);
         }
 
         internal static void SetProgramSourcesStatus(List<ProgramSource> selectedProgramSourcesToDisable, bool status)
         {
-            ProgramSetting.ProgramSettingDisplayList
-                .Where(t1 => selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier && t1.Enabled != status))
-                .ToList()
-                .ForEach(t1 => t1.Enabled = status);
+            foreach(var program in ProgramSetting.ProgramSettingDisplayList)
+            {
+                if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                {
+                    program.Enabled = status;
+                }
+            }
 
-            Main._win32s
-                .Where(t1 => selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier && t1.Enabled != status))
-                .ToList()
-                .ForEach(t1 => t1.Enabled = status);
+            foreach(var program in Main._win32s)
+            {
+                if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                {
+                    program.Enabled = status;
+                }
+            }
 
-            Main._uwps
-                .Where(t1 => selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier && t1.Enabled != status))
-                .ToList()
-                .ForEach(t1 => t1.Enabled = status);
+            foreach (var program in Main._uwps)
+            {
+                if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                {
+                    program.Enabled = status;
+                }
+            }
         }
 
         internal static void StoreDisabledInSettings()
         {
-            // no need since using refernce now
-            //Main._settings.ProgramSources
-            //   .Where(t1 => ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier && !x.Enabled))
-            //   .ToList()
-            //   .ForEach(t1 => t1.Enabled = false);
-
             // Disabled, not in DisabledProgramSources or ProgramSources
             var tmp = ProgramSetting.ProgramSettingDisplayList
                 .Where(t1 => !t1.Enabled
@@ -68,13 +69,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
 
         internal static void RemoveDisabledFromSettings()
         {
-            //Main._settings.ProgramSources
-            //   .Where(t1 => ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier && x.Enabled))
-            //   .ToList()
-            //   .ForEach(t1 => t1.Enabled = true);
-
-            Main._settings.DisabledProgramSources
-                .RemoveAll(t1 => t1.Enabled);
+            Main._settings.DisabledProgramSources.RemoveAll(t1 => t1.Enabled);
         }
 
         internal static bool IsReindexRequired(this List<ProgramSource> selectedItems)
