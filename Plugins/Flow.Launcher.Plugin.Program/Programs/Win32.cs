@@ -496,7 +496,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     if (temp.Any())
                         return DistinctBy(temp, x => x.Description);
                     return g.Take(1);
-                }).ToArray();
+                });
         }
 
 

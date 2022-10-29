@@ -41,13 +41,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             FullName = package.Id.FullName;
             FamilyName = package.Id.FamilyName;
             InitializeAppInfo();
-            Apps = Apps.Where(a =>
-            {
-                var valid =
-                    !string.IsNullOrEmpty(a.UserModelId) &&
-                    !string.IsNullOrEmpty(a.DisplayName);
-                return valid;
-            }).ToArray();
+            Apps = Apps.Where(a => !string.IsNullOrEmpty(a.UserModelId) && !string.IsNullOrEmpty(a.DisplayName))
+                        .ToArray();
         }
 
         private void InitializeAppInfo()
@@ -80,7 +75,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|UWP|InitializeAppInfo|{path}" +
                                            "|Error caused while trying to get the details of the UWP program", e);
 
-                Apps = new List<Application>().ToArray();
+                Apps = Array.Empty<Application>();
             }
 
             if (stream != null && Marshal.ReleaseComObject(stream) > 0)

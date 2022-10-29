@@ -99,7 +99,7 @@ namespace Flow.Launcher.Plugin.Program
 
             var b = Task.Run(() =>
             {
-                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpPrograms);
             });
 
             if (cacheEmpty)

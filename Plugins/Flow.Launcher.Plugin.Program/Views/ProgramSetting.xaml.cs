@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -224,7 +223,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                     }
                 }
 
-                if (directoriesToAdd.Count() > 0)
+                if (directoriesToAdd.Count > 0)
                 {
                     directoriesToAdd.ForEach(x => _settings.ProgramSources.Add(x));
                     directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));
@@ -347,8 +346,8 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void programSourceView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = programSourceView
-                .SelectedItems.Cast<ProgramSource>()
-                .ToList();
+                                    .SelectedItems.Cast<ProgramSource>()
+                                    .ToList();
 
             if (IsAllItemsUserAdded(selectedItems))
             {
