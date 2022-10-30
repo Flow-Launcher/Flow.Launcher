@@ -80,20 +80,18 @@ namespace Flow.Launcher
                 return;
             }
 
-            Point mpos = e.GetPosition(null);
-            Vector diff = this.start - mpos;
+            Point mousePosition = e.GetPosition(null);
+            Vector diff = this.start - mousePosition;
 
             if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance
-                || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
+                || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance
+                || !File.Exists(file))
                 return;
 
-            DataObject data;
-            data = File.Exists(file)
-                ? new DataObject(DataFormats.FileDrop, new[]
-                {
-                    file
-                })
-                : new DataObject(DataFormats.UnicodeText, file);
+            var data = new DataObject(DataFormats.FileDrop, new[]
+            {
+                file
+            });
             DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
             e.Handled = true;
         }
