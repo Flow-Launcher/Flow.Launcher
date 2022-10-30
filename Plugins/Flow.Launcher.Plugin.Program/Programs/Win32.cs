@@ -317,7 +317,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 var iconPath = urlSection?["IconFile"];
-                if (!String.IsNullOrEmpty(url))
+                if (!String.IsNullOrEmpty(iconPath))
                 {
                     program.IcoPath = iconPath;
                 }
