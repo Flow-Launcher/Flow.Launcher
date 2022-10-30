@@ -22,6 +22,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
         public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
+        public const int SmallIconSize = 32;
 
 
         private static readonly string[] ImageExtensions =
@@ -128,6 +129,11 @@ namespace Flow.Launcher.Infrastructure.Image
                     var image = new BitmapImage();
                     image.BeginInit();
                     image.CacheOption = BitmapCacheOption.OnLoad;
+                    if (!loadFullImage)
+                    {
+                        image.DecodePixelHeight = SmallIconSize;
+                        image.DecodePixelWidth = SmallIconSize;
+                    }
                     image.StreamSource = buffer;
                     image.EndInit();
                     image.StreamSource = null;
