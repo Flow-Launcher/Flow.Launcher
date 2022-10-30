@@ -117,27 +117,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
                     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
-                    // Download image from url
-                    await using var resp = await GetStreamAsync(uriResult);
-                    if (resp == null)
-                    {
-                        return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
-                    }
-                    await using var buffer = new MemoryStream();
-                    await resp.CopyToAsync(buffer);
-                    buffer.Seek(0, SeekOrigin.Begin);
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    if (!loadFullImage)
-                    {
-                        image.DecodePixelHeight = SmallIconSize;
-                        image.DecodePixelWidth = SmallIconSize;
-                    }
-                    image.StreamSource = buffer;
-                    image.EndInit();
-                    image.StreamSource = null;
-                    image.Freeze();
+                    var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
                     ImageCache[path] = image;
                     return new ImageResult(image, ImageType.ImageFile);
                 }
@@ -174,6 +154,27 @@ namespace Flow.Launcher.Infrastructure.Image
             }
 
             return imageResult;
+        }
+        private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
+        {
+            // Download image from url
+            await using var resp = await GetStreamAsync(uriResult);
+            await using var buffer = new MemoryStream();
+            await resp.CopyToAsync(buffer);
+            buffer.Seek(0, SeekOrigin.Begin);
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            if (!loadFullImage)
+            {
+                image.DecodePixelHeight = SmallIconSize;
+                image.DecodePixelWidth = SmallIconSize;
+            }
+            image.StreamSource = buffer;
+            image.EndInit();
+            image.StreamSource = null;
+            image.Freeze();
+            return image;
         }
 
         private static ImageResult GetThumbnailResult(ref string path, bool loadFullImage = false)
