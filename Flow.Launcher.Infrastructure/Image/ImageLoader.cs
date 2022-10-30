@@ -111,7 +111,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(ImageCache[Constant.MissingImgIcon, false], ImageType.Error);
+                    return new ImageResult(DefaultImage, ImageType.Error);
                 }
                 if (ImageCache.ContainsKey(path, loadFullImage))
                 {
