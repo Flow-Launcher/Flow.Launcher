@@ -995,7 +995,7 @@
     <value>Sólo disponible cuando haya conectado un dispositivo móvil a su dispositivo.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones de gráficos avanzados.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de gráficos.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
     <value>Sólo disponible en dispositivos que tienen batería, como una tableta.</value>
