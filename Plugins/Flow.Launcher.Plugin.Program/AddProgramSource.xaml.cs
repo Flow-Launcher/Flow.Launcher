@@ -73,10 +73,14 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                modified = _editing.Location != path || _editing.Enabled != Chkbox.IsChecked;
-                if (modified)
+                if (!_editing.Location.Equals(path, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    _editing.Location = path;
+                    modified = true;
+                    _editing.Location = path;  // Changes UniqueIdentifier internally
+                }
+                if (_editing.Enabled != Chkbox.IsChecked)
+                {
+                    modified = true;
                     _editing.Enabled = Chkbox.IsChecked ?? true;
                 }
             }
