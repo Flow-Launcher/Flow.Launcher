@@ -94,18 +94,18 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Nuevo lanzamiento</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">Instalado</system:String>
     <system:String x:Key="refresh">Refrescar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
     <system:String x:Key="updatebtn">Actualizar</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelInstalledToolTip">El complemento ya está instalado</system:String>
+    <system:String x:Key="LabelNew">Nueva versión</system:String>
+    <system:String x:Key="LabelNewToolTip">Este complemento ha sido actualizado en los últimos 7 días</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Nueva actualización disponible</system:String>
 
 
 
