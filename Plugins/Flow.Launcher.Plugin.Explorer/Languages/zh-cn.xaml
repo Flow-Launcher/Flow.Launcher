@@ -14,7 +14,7 @@
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">若要解决这个问题，请启动 Windows 搜索服务。点击此处删除警告</system:String>
     <system:String x:Key="plugin_explorer_alternative">警告消息已关闭。 作为搜索文件和文件夹的一个替代办法，你想要安装 Everything 插件吗？{0}{0}选择 '是'安装Everything插件'，或者'否' 退出</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">资源管理器选项</system:String>
-    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">搜索时发生错误：{0}</system:String>
 
     <!--Controls-->
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
@@ -23,8 +23,8 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">启用该选项会更快速地找到已索引的文件夹和文件，但未索引的项目不会出现在结果中。在“索引搜索排除的路径”中文件夹和文件仍会出现在结果中。</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索激活：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路径搜索激活:</system:String>

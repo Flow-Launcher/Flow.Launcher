@@ -123,7 +123,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
 
-            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+            if (locationPath.EndsWith(":\\"))
+            {
+                results.Add(ResultManager.CreateDriveSpaceDisplayResult(locationPath, useIndexSearch));
+            }
+            else
+            {
+                results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+            }
 
             token.ThrowIfCancellationRequested();
 

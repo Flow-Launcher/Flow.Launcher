@@ -23,8 +23,8 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palavras-chave</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Ligações de acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Caminhos excluídos do índice de pesquisa</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Turning this on will return indexed directories/files faster, but if a directory/file is not indexed it will not show up. If a directory/file has been added to Index Search Excluded Path then it will still show up even if this option is on</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utilizar índice de pesquisa para o caminho</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Se ativar esta opção, os ficheiros e/ou diretórios indexados serão mostrados mais rapidamente mas, se um ficheiro ou diretório não estiver indexado não será mostrado. Se existirem ficheiros e/ou diretórios que tenham sido adicionados à exclusão do índice de pesquisa, serão mostrados.</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opções de indexação</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Pesquisar:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Pesquisa de caminho:</system:String>

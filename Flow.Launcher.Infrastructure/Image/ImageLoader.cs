@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using static Flow.Launcher.Infrastructure.Http.Http;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -20,17 +22,12 @@ namespace Flow.Launcher.Infrastructure.Image
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
         public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
+        public const int SmallIconSize = 32;
 
 
         private static readonly string[] ImageExtensions =
         {
-            ".png",
-            ".jpg",
-            ".jpeg",
-            ".gif",
-            ".bmp",
-            ".tiff",
-            ".ico"
+            ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico"
         };
 
         public static void Initialize()
@@ -40,21 +37,24 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var usage = LoadStorageToConcurrentDictionary();
 
-            foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
+            foreach (var icon in new[]
+                     {
+                         Constant.DefaultIcon, Constant.MissingImgIcon
+                     })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
                 ImageCache[icon] = img;
             }
 
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
-                Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
+                await Stopwatch.NormalAsync("|ImageLoader.Initialize|Preload images cost", async () =>
                 {
-                    ImageCache.Data.AsParallel().ForAll(x =>
+                    foreach (var imageUsage in ImageCache.Data)
                     {
-                        Load(x.Key);
-                    });
+                        await LoadAsync(imageUsage.Key);
+                    }
                 });
                 Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Infrastructure.Image
             Cache
         }
 
-        private static ImageResult LoadInternal(string path, bool loadFullImage = false)
+        private static async ValueTask<ImageResult> LoadInternalAsync(string path, bool loadFullImage = false)
         {
             ImageResult imageResult;
 
@@ -114,21 +114,29 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(ImageCache[path], ImageType.Cache);
                 }
-                Uri uriResult;
-                bool IsUriScheme = Uri.TryCreate(path, UriKind.Absolute, out uriResult)
-                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-                if (IsUriScheme)
+                if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
+                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
                     // Download image from url
-                    var resp = Http.Http.GetStreamAsync(path).Result;
+                    await using var resp = await GetStreamAsync(uriResult);
                     if (resp == null)
                     {
                         return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
                     }
+                    await using var buffer = new MemoryStream();
+                    await resp.CopyToAsync(buffer);
+                    buffer.Seek(0, SeekOrigin.Begin);
                     var image = new BitmapImage();
                     image.BeginInit();
-                    image.StreamSource = resp;
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    if (!loadFullImage)
+                    {
+                        image.DecodePixelHeight = SmallIconSize;
+                        image.DecodePixelWidth = SmallIconSize;
+                    }
+                    image.StreamSource = buffer;
                     image.EndInit();
+                    image.StreamSource = null;
                     image.Freeze();
                     ImageCache[path] = image;
                     return new ImageResult(image, ImageType.ImageFile);
@@ -237,9 +245,9 @@ namespace Flow.Launcher.Infrastructure.Image
             return ImageCache.ContainsKey(path) && ImageCache[path] != null;
         }
 
-        public static ImageSource Load(string path, bool loadFullImage = false)
+        public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
         {
-            var imageResult = LoadInternal(path, loadFullImage);
+            var imageResult = await LoadInternalAsync(path, loadFullImage);
 
             var img = imageResult.ImageSource;
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
