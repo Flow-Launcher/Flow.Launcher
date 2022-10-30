@@ -34,7 +34,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
     <system:String x:Key="SearchWindowPosition">Posição da janela de pesquisa</system:String>
-    <system:String x:Key="rememberLastLocation">Memorizar localização anterior</system:String>
+    <system:String x:Key="rememberLastLocation">Memorizar posição anterior</system:String>
     <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Memorizar última posição</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenter">Ecrã do rato - Centro</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Ecrã do rato - Centro, cima</system:String>
@@ -47,7 +47,7 @@
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados</system:String>
-    <system:String x:Key="maxShowResultsToolTip">Também pode ajustar rapidamente através do atalho Ctrl+Sinal Mais e Ctrl+Sinal Menos</system:String>
+    <system:String x:Key="maxShowResultsToolTip">Também pode ajustar rapidamente através do atalho Ctrl+ e Ctrl-.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de atalho se em ecrã completo</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desativar ativação do Flow Launcher se alguma aplicação estiver em ecrã completo (recomendado para jogos)</system:String>
     <system:String x:Key="defaultFileManager">Gestor de ficheiros padrão</system:String>
