@@ -17,7 +17,7 @@ namespace Flow.Launcher.Infrastructure.Image
     public static class ImageLoader
     {
         private static readonly ImageCache ImageCache = new();
-        private static BinaryStorage<Dictionary<string, int>> _storage;
+        private static BinaryStorage<Dictionary<(string, bool), int>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
@@ -32,7 +32,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public static void Initialize()
         {
-            _storage = new BinaryStorage<Dictionary<string, int>>("Image");
+            _storage = new BinaryStorage<Dictionary<(string, bool), int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
             var usage = LoadStorageToConcurrentDictionary();
@@ -44,16 +44,16 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
-                ImageCache[icon] = img;
+                ImageCache[icon, false] = img;
             }
 
             _ = Task.Run(async () =>
             {
                 await Stopwatch.NormalAsync("|ImageLoader.Initialize|Preload images cost", async () =>
                 {
-                    foreach (var imageUsage in ImageCache.Data)
+                    foreach (var ((path, isFullImage), _) in ImageCache.Data)
                     {
-                        await LoadAsync(imageUsage.Key);
+                        await LoadAsync(path, isFullImage);
                     }
                 });
                 Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
@@ -64,17 +64,20 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             lock (_storage)
             {
-                _storage.Save(ImageCache.Data.Select(x => (x.Key, x.Value.usage)).ToDictionary(x => x.Key, x => x.usage));
+                _storage.Save(ImageCache.Data
+                    .ToDictionary(
+                        x => x.Key,
+                        x => x.Value.usage));
             }
         }
 
-        private static ConcurrentDictionary<string, int> LoadStorageToConcurrentDictionary()
+        private static ConcurrentDictionary<(string, bool), int> LoadStorageToConcurrentDictionary()
         {
             lock (_storage)
             {
-                var loaded = _storage.TryLoad(new Dictionary<string, int>());
+                var loaded = _storage.TryLoad(new Dictionary<(string, bool), int>());
 
-                return new ConcurrentDictionary<string, int>(loaded);
+                return new ConcurrentDictionary<(string, bool), int>(loaded);
             }
         }
 
@@ -108,17 +111,17 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(ImageCache[Constant.MissingImgIcon], ImageType.Error);
+                    return new ImageResult(ImageCache[Constant.MissingImgIcon, false], ImageType.Error);
                 }
-                if (ImageCache.ContainsKey(path))
+                if (ImageCache.ContainsKey(path, loadFullImage))
                 {
-                    return new ImageResult(ImageCache[path], ImageType.Cache);
+                    return new ImageResult(ImageCache[path, loadFullImage], ImageType.Cache);
                 }
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
                     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
                     var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
-                    ImageCache[path] = image;
+                    ImageCache[path, false] = image;
                     return new ImageResult(image, ImageType.ImageFile);
                 }
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
@@ -147,8 +150,8 @@ namespace Flow.Launcher.Infrastructure.Image
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
                     Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
 
-                    ImageSource image = ImageCache[Constant.MissingImgIcon];
-                    ImageCache[path] = image;
+                    ImageSource image = ImageCache[Constant.MissingImgIcon, false];
+                    ImageCache[path, false] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
                 }
             }
@@ -220,7 +223,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             else
             {
-                image = ImageCache[Constant.MissingImgIcon];
+                image = ImageCache[Constant.MissingImgIcon, false];
                 path = Constant.MissingImgIcon;
             }
 
@@ -243,7 +246,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public static bool CacheContainImage(string path)
         {
-            return ImageCache.ContainsKey(path) && ImageCache[path] != null;
+            return ImageCache.ContainsKey(path, false) && ImageCache[path, false] != null;
         }
 
         public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
@@ -259,7 +262,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
-                        img = ImageCache[key] ?? img;
+                        img = ImageCache[key, false] ?? img;
                     }
                     else
                     { // new guid
@@ -268,7 +271,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
 
                 // update cache
-                ImageCache[path] = img;
+                ImageCache[path, false] = img;
             }
 
             return img;
