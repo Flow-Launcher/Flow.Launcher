@@ -121,7 +121,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
                     var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
-                    ImageCache[path, false] = image;
+                    ImageCache[path, loadFullImage] = image;
                     return new ImageResult(image, ImageType.ImageFile);
                 }
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
