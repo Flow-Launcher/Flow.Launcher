@@ -85,6 +85,22 @@
         <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
         <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
+            Key="OemCloseBrackets"
+            Command="{Binding IncreaseWidthCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="OemOpenBrackets"
+            Command="{Binding DecreaseWidthCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="OemPlus"
+            Command="{Binding IncreaseMaxResultCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="OemMinus"
+            Command="{Binding DecreaseMaxResultCommand}"
+            Modifiers="Control" />
+        <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
@@ -177,9 +193,9 @@
                         AllowDrop="True"
                         Background="Transparent"
                         PreviewDragOver="OnPreviewDragOver"
+                        PreviewKeyUp="QueryTextBox_KeyUp"
                         Style="{DynamicResource QueryBoxStyle}"
                         Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        PreviewKeyUp="QueryTextBox_KeyUp"
                         Visibility="Visible">
                         <TextBox.CommandBindings>
                             <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />

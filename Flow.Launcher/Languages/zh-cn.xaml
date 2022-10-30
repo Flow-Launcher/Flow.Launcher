@@ -77,13 +77,13 @@
     <system:String x:Key="plugin_query_time">查询耗时：</system:String>
     <system:String x:Key="plugin_query_version">| 版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
-    <system:String x:Key="plugin_uninstall">卸载</system:String>
+    <system:String x:Key="uninstallbtn">卸载</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
     <system:String x:Key="refresh">刷新</system:String>
-    <system:String x:Key="install">安装</system:String>
+    <system:String x:Key="installbtn">安装</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>

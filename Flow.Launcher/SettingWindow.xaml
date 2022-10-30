@@ -40,6 +40,8 @@
 
     <Window.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:TextConverter x:Key="TextConverter" />
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -685,12 +687,25 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource rememberLastLocation}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ComboBox
+                                        x:Name="SearchWindowPosition"
+                                        Grid.Column="2"
+                                        MinWidth="220"
+                                        Margin="0,0,18,0"
+                                        VerticalAlignment="Center"
+                                        DisplayMemberPath="Display"
+                                        FontSize="14"
+                                        ItemsSource="{Binding SearchWindowPositions}"
+                                        SelectedValue="{Binding Settings.SearchWindowPosition}"
+                                        SelectedValuePath="Value" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe7f4;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
 
@@ -818,11 +833,13 @@
                                         BorderThickness="0"
                                         Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Style="{DynamicResource SettingTitleLabel}"
-                                                Text="{DynamicResource maxShowResults}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
+                                                    Text="{DynamicResource maxShowResults}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource maxShowResultsToolTip}" />
+                                            </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
                                                 Width="100"
@@ -1315,7 +1332,7 @@
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnExternalPluginUninstallClick"
-                                                                        Text="{DynamicResource plugin_uninstall}"
+                                                                        Text="{DynamicResource uninstallbtn}"
                                                                         TextDecorations="Underline" />
 
                                                                     <TextBlock
@@ -1462,6 +1479,32 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectionMode="Single"
                                 Style="{DynamicResource StoreListStyle}">
+                                <ListBox.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Grid>
+                                                                <StackPanel Orientation="Vertical">
+                                                                    <TextBlock
+                                                                        Margin="0,0,0,10"
+                                                                        VerticalAlignment="Top"
+                                                                        FontSize="16"
+                                                                        FontWeight="Bold"
+                                                                        Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                                                    <ItemsPresenter />
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </ListBox.GroupStyle>
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <UniformGrid
@@ -1518,33 +1561,16 @@
                                                     HorizontalAlignment="Right"
                                                     Orientation="Horizontal">
                                                     <Border
-                                                        x:Name="LabelNew"
+                                                        x:Name="LabelUpdate"
+                                                        Height="12"
                                                         Margin="0,10,8,0"
                                                         Padding="6,2,6,2"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Top"
-                                                        Background="#f14551"
-                                                        CornerRadius="4"
-                                                        Visibility="Collapsed">
-                                                        <TextBlock
-                                                            FontSize="11"
-                                                            Foreground="White"
-                                                            Text="New" />
-                                                    </Border>
-                                                    <Border
-                                                        x:Name="Labelinstalled"
-                                                        Margin="0,10,8,0"
-                                                        Padding="6,2,6,2"
-                                                        HorizontalAlignment="Right"
-                                                        VerticalAlignment="Top"
-                                                        Background="{DynamicResource ToggleSwitchFillOn}"
-                                                        CornerRadius="4"
-                                                        Visibility="Collapsed">
-                                                        <TextBlock
-                                                            FontSize="11"
-                                                            Foreground="White"
-                                                            Text="Installed" />
-                                                    </Border>
+                                                        Background="#45BD59"
+                                                        CornerRadius="36"
+                                                        ToolTip="{DynamicResource LabelUpdateToolTip}"
+                                                        Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                 </StackPanel>
 
                                                 <StackPanel
@@ -1603,7 +1629,7 @@
                                                         <Run
                                                             FontSize="12"
                                                             Foreground="{DynamicResource Color04B}"
-                                                            Text="{Binding Description}" />
+                                                            Text="{Binding Description, Mode=OneWay}" />
                                                     </TextBlock>
 
                                                 </StackPanel>
@@ -1665,25 +1691,45 @@
                                                                         Foreground="{DynamicResource Color04B}"
                                                                         NavigateUri="{Binding Website}"
                                                                         RequestNavigate="OnRequestNavigate">
-                                                                        <Run FontSize="12" Text="{Binding Author}" />
+                                                                        <Run FontSize="12" Text="{Binding Author, Mode=OneWay}" />
                                                                     </Hyperlink>
                                                                 </TextBlock>
                                                             </StackPanel>
                                                         </StackPanel>
-                                                        <Border
-                                                            Grid.Row="0"
-                                                            Grid.Column="1"
-                                                            Padding="0,0,0,0">
-                                                            <Button
-                                                                Name="ShortCutButtonPrev"
-                                                                MinHeight="40"
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <StackPanel
                                                                 Margin="0,70,20,0"
-                                                                Padding="15,5,15,5"
                                                                 HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                Click="OnExternalPluginInstallClick"
-                                                                Content="{DynamicResource install}" />
-                                                        </Border>
+                                                                Orientation="Horizontal">
+                                                                <Button
+                                                                    MinHeight="40"
+                                                                    Padding="15,5,15,5"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="OnExternalPluginInstallClick"
+                                                                    Content="{DynamicResource installbtn}"
+                                                                    Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
+                                                                <Button
+                                                                    MinHeight="40"
+                                                                    Margin="5,0,0,0"
+                                                                    Padding="15,5,15,5"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="OnExternalPluginUninstallClick"
+                                                                    Content="{DynamicResource uninstallbtn}"
+                                                                    Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                                <Button
+                                                                    MinHeight="40"
+                                                                    Margin="5,0,0,0"
+                                                                    Padding="15,5,15,5"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    Click="OnExternalPluginUpdateClick"
+                                                                    Content="{DynamicResource updatebtn}"
+                                                                    Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                                <!--  Hide Install Button when installed Item  -->
+                                                            </StackPanel>
+                                                        </Grid>
                                                     </Grid>
                                                 </StackPanel>
                                             </Grid>
@@ -1815,6 +1861,7 @@
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
                                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource windowWidthSizeToolTip}" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <TextBlock
@@ -1828,6 +1875,7 @@
                                                     Name="WindowWidthValue"
                                                     Width="300"
                                                     Margin="0,0,18,0"
+                                                    VerticalAlignment="Center"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
                                                     Maximum="1920"
