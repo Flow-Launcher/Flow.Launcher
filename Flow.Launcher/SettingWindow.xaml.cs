@@ -507,7 +507,8 @@ namespace Flow.Launcher
                     return;
                 }
                 string selectedItemTag = (string)selectedItem.Tag;
-                sender.Header = string.Concat("Sample Page ", selectedItemTag.AsSpan(selectedItemTag.Length - 1));
+
+                sender.Header =(string)selectedItem.Content;
                 string pageName = $"Flow.Launcher.SettingPages.Views.{selectedItemTag}";
                 Type pageType = typeof(About).Assembly.GetType(pageName);
                 contentFrame.Navigate(pageType, settings);

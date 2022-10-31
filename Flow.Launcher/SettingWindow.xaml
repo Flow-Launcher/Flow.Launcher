@@ -187,6 +187,17 @@
                     PaneDisplayMode="Left"
                     PaneTitle="{Binding ElementName=paneText, Path=Text, Mode=TwoWay}"
                     SelectionChanged="NavigationView_SelectionChanged">
+                    <ui:NavigationView.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Margin="-8,18,0,5"
+                                VerticalAlignment="Center"
+                                FontSize="30"
+                                FontWeight="Medium"
+                                Foreground="{DynamicResource Color05B}"
+                                Text="{Binding}" />
+                        </DataTemplate>
+                    </ui:NavigationView.HeaderTemplate>
                     <ui:NavigationView.MenuItems>
                         <ui:NavigationViewItem
                             x:Name="General"
@@ -247,7 +258,7 @@
                         </ui:NavigationViewItem>
                     </ui:NavigationView.MenuItems>
                     <Grid>
-                        <ui:Frame x:Name="contentFrame" Margin="0"/>
+                        <ui:Frame x:Name="contentFrame" Margin="0" />
                     </Grid>
                 </ui:NavigationView>
             </Grid>

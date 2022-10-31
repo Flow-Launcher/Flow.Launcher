@@ -32,6 +32,9 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
 
     </Style>
+    <Style x:Key="SettingPageBasic" TargetType="{x:Type ui:Page}">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
     <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="Margin" Value="0,0,0,0" />

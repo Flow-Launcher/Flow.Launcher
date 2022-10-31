@@ -8,6 +8,7 @@
     xmlns:vm="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="General"
     d:DataContext="{d:DesignInstance vm:GeneralViewModel}"
+    Style="{DynamicResource SettingPageBasic}"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -23,15 +24,7 @@
             Background="{DynamicResource Color01B}"
             ScrollViewer.CanContentScroll="False"
             VirtualizingStackPanel.IsVirtualizing="True">
-            <StackPanel Margin="12,18,25,30" Orientation="Vertical">
-                <TextBlock
-                    Grid.Row="2"
-                    Margin="0,5,0,5"
-                    FontSize="30"
-                    Style="{StaticResource PageTitle}"
-                    Text="{DynamicResource general}"
-                    TextAlignment="left" />
-
+            <StackPanel Margin="5,0,25,30" Orientation="Vertical">
                 <Border Style="{DynamicResource SettingGroupBox}">
                     <ItemsControl Style="{StaticResource SettingGrid}">
                         <StackPanel Style="{StaticResource TextPanel}">
