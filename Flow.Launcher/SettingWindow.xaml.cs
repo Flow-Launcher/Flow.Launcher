@@ -50,9 +50,9 @@ namespace Flow.Launcher
             InitializePosition();
             InitializeComponent();
 
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-            view.GroupDescriptions.Add(groupDescription);
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            //view.GroupDescriptions.Add(groupDescription);
         }
 
         #region General
@@ -411,6 +411,7 @@ namespace Flow.Launcher
 
         private bool PluginStoreFilter(object item)
         {
+            /*
             if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
                 return true;
             if (item is PluginStoreItemViewModel model)
@@ -418,7 +419,9 @@ namespace Flow.Launcher
                 return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
                     || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
             }
+            */
             return false;
+            
         }
 
         //private string lastPluginListSearch = "";

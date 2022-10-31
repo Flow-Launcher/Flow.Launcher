@@ -2,6 +2,8 @@
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.SettingPages.Views
 {
@@ -102,6 +104,22 @@ namespace Flow.Launcher.SettingPages.Views
                 API.ChangeQuery($"{actionKeyword} install {plugin.Name}");
                 API.ShowMainWindow();
             }*/
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
+        {
+            /*
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+            */
+        }
+
+        private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
+        {
+            /*
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+            */
         }
         private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
