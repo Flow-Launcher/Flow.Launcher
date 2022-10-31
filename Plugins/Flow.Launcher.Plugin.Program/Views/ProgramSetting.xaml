@@ -58,6 +58,10 @@
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
                 </StackPanel>
+                <Separator
+                    Height="1"
+                    BorderBrush="{DynamicResource Color03B}"
+                    BorderThickness="1" />
             </StackPanel>
             <StackPanel
                 Width="Auto"
