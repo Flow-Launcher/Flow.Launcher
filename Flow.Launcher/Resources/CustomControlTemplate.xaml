@@ -2975,6 +2975,7 @@
                     <Grid
                         x:Name="LayoutRoot"
                         MinHeight="{DynamicResource NavigationViewItemOnLeftMinHeight}"
+                        Margin="12,0,12,0"
                         Background="{TemplateBinding Background}">
                         <Grid.Resources>
                             <Storyboard x:Key="ExpandCollapseRotateExpandedStoryboard">
@@ -2997,28 +2998,32 @@
 
                         <Border
                             x:Name="RevealBorder"
+                            Margin="0,2,0,2"
+                            Padding="0,4,0,4"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" />
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" />
                         <Grid x:Name="PresenterContentRootGrid">
                             <!--  Wrap SelectionIndicator in a grid so that its offset is 0,0 - this enables the offset animation.  -->
                             <Grid
-                                Margin="4,0,0,0"
+                                Margin="2,4,0,4"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center">
 
                                 <Rectangle
                                     x:Name="SelectionIndicator"
-                                    Width="2"
-                                    Height="24"
+                                    Width="3"
+                                    Height="16"
                                     Fill="{DynamicResource NavigationViewSelectionIndicatorForeground}"
                                     Opacity="0.0"
-                                    RadiusX="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopLeftCornerRadiusDoubleValueConverter}}"
-                                    RadiusY="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BottomRightCornerRadiusDoubleValueConverter}}" />
+                                    RadiusX="2"
+                                    RadiusY="2" />
                             </Grid>
 
                             <Grid
                                 x:Name="ContentGrid"
                                 MinHeight="{DynamicResource NavigationViewItemOnLeftMinHeight}"
+                                Margin="4,2,0,2"
                                 HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition x:Name="IconColumn" ui:ColumnDefinitionHelper.PixelWidth="{DynamicResource NavigationViewCompactPaneLength}" />
@@ -3067,6 +3072,7 @@
                                 </Grid>
                             </Grid>
                         </Grid>
+
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="PointerStates">
@@ -3137,30 +3143,30 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PointerStatesListener" Property="CurrentStateName" Value="PointerOver">
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource NavigationViewItemBackgroundPointerOver}" />
+                            <Setter TargetName="RevealBorder" Property="Background" Value="{DynamicResource Color06B}" />
                             <Setter TargetName="RevealBorder" Property="BorderBrush" Value="{DynamicResource NavigationViewItemBorderBrushPointerOver}" />
                             <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundPointerOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundPointerOver}" />
                         </Trigger>
                         <Trigger SourceName="PointerStatesListener" Property="CurrentStateName" Value="Pressed">
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource NavigationViewItemBackgroundPressed}" />
+                            <Setter TargetName="RevealBorder" Property="Background" Value="{DynamicResource Color09B}" />
                             <Setter TargetName="RevealBorder" Property="BorderBrush" Value="{DynamicResource NavigationViewItemBorderBrushPressed}" />
                             <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundPressed}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundPressed}" />
                         </Trigger>
                         <Trigger SourceName="PointerStatesListener" Property="CurrentStateName" Value="Selected">
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource NavigationViewItemBackgroundSelected}" />
+                            <Setter TargetName="RevealBorder" Property="Background" Value="{DynamicResource Color06B}" />
                             <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundSelected}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundSelected}" />
                         </Trigger>
                         <Trigger SourceName="PointerStatesListener" Property="CurrentStateName" Value="PointerOverSelected">
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource NavigationViewItemBackgroundSelectedPointerOver}" />
+                            <Setter TargetName="RevealBorder" Property="Background" Value="{DynamicResource HoverLight}" />
                             <Setter TargetName="RevealBorder" Property="BorderBrush" Value="{DynamicResource NavigationViewItemBorderBrushSelectedPointerOver}" />
                             <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundSelectedPointerOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundSelectedPointerOver}" />
                         </Trigger>
                         <Trigger SourceName="PointerStatesListener" Property="CurrentStateName" Value="PressedSelected">
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource NavigationViewItemBackgroundSelectedPressed}" />
+                            <Setter TargetName="RevealBorder" Property="Background" Value="{DynamicResource Color09B}" />
                             <Setter TargetName="RevealBorder" Property="BorderBrush" Value="{DynamicResource NavigationViewItemBorderBrushSelectedPressed}" />
                             <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundSelectedPressed}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource NavigationViewItemForegroundSelectedPressed}" />

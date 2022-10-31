@@ -62,6 +62,8 @@
     <SolidColorBrush x:Key="CustomContextDisabled" Color="#868686" />
     <SolidColorBrush x:Key="ContextSeparator" Color="#dadada" />
 
+    <SolidColorBrush x:Key="HoverLight" Color="#eeeeee" />
+
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
     <Color x:Key="Color03">#e5e5e5</Color>

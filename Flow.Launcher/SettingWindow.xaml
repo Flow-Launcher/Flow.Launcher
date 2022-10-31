@@ -198,13 +198,35 @@
                                 Text="{Binding}" />
                         </DataTemplate>
                     </ui:NavigationView.HeaderTemplate>
+                    <ui:NavigationView.PaneCustomContent>
+                        <Grid Margin="0,35,0,0" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="27" />
+                                <RowDefinition Height="25" />
+                            </Grid.RowDefinitions>
+                            <Image
+                                Grid.Row="0"
+                                Width="50"
+                                Height="50"
+                                RenderOptions.BitmapScalingMode="HighQuality"
+                                Source="images/app.png" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,12,0,0"
+                                Style="{StaticResource TabMenu}"
+                                Text="Flow Launcher"
+                                TextAlignment="Center" />
+                        </Grid>
+                    </ui:NavigationView.PaneCustomContent>
                     <ui:NavigationView.MenuItems>
+
                         <ui:NavigationViewItem
                             x:Name="General"
                             Content="{DynamicResource general}"
                             Tag="General">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Play" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe713;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -213,7 +235,7 @@
                             SelectsOnInvoked="True"
                             Tag="Plugins">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Save" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xea86;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -221,7 +243,7 @@
                             Content="{DynamicResource pluginStore}"
                             Tag="PluginStore">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Refresh" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe719;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -229,7 +251,7 @@
                             Content="{DynamicResource theme}"
                             Tag="Theme">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Refresh" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe790;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -237,7 +259,7 @@
                             Content="{DynamicResource hotkey}"
                             Tag="Hotkey">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Refresh" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe92e;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -245,7 +267,7 @@
                             Content="{DynamicResource proxy}"
                             Tag="Proxy">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Refresh" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xec27;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -253,7 +275,7 @@
                             Content="{DynamicResource about}"
                             Tag="About">
                             <ui:NavigationViewItem.Icon>
-                                <ui:SymbolIcon Symbol="Refresh" />
+                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe946;" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                     </ui:NavigationView.MenuItems>
