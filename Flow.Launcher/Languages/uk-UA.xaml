@@ -77,13 +77,13 @@
     <system:String x:Key="plugin_query_time">Запит:</system:String>
     <system:String x:Key="plugin_query_version">| Версія</system:String>
     <system:String x:Key="plugin_query_web">Сайт</system:String>
-    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
+    <system:String x:Key="uninstallbtn">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
     <system:String x:Key="refresh">Оновити</system:String>
-    <system:String x:Key="install">Встановити</system:String>
+    <system:String x:Key="installbtn">Встановити</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>

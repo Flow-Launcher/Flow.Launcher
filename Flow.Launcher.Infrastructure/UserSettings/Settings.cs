@@ -203,7 +203,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactive { get; set; } = true;
-        public bool RememberLastLaunchLocation { get; set; }
+        public SearchWindowPositions SearchWindowPosition { get; set; } = SearchWindowPositions.MouseScreenCenter;
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
@@ -228,5 +228,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         System,
         Light,
         Dark
+    }
+    public enum SearchWindowPositions
+    {
+        RememberLastLaunchLocation,
+        MouseScreenCenter,
+        MouseScreenCenterTop,
+        MouseScreenLeftTop,
+        MouseScreenRightTop
     }
 }

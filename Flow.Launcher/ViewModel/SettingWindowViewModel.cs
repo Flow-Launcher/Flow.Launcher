@@ -286,12 +286,22 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public IList<UserPlugin> ExternalPlugins
+        public IList<PluginStoreItemViewModel> ExternalPlugins
         {
             get
             {
-                return PluginsManifest.UserPlugins;
+                return LabelMaker(PluginsManifest.UserPlugins);
             }
+        }
+
+        private  IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
+        {
+            return list.Select(p=>new PluginStoreItemViewModel(p))
+                .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
+                .ThenByDescending(p=>p.Category == PluginStoreItemViewModel.RecentlyUpdated)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
+                .ToList();
         }
 
         public Control SettingProvider
@@ -319,6 +329,15 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(ExternalPlugins));
         }
 
+        internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
+        {
+            var actionKeyword = plugin.Metadata.ActionKeywords.Count == 0 
+                ? string.Empty 
+                : plugin.Metadata.ActionKeywords[actionKeywordPosition];
+            
+            App.API.ChangeQuery($"{actionKeyword} {queryToDisplay}");
+            App.API.ShowMainWindow();
+        }
 
 
         #endregion
@@ -389,6 +408,33 @@ namespace Flow.Launcher.ViewModel
                 return modes;
             }
         }
+
+
+
+        public class SearchWindowPosition
+        {
+            public string Display { get; set; }
+            public SearchWindowPositions Value { get; set; }
+        }
+
+        public List<SearchWindowPosition> SearchWindowPositions
+        {
+            get
+            {
+                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
+                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
+                foreach (var e in enums)
+                {
+                    var key = $"SearchWindowPosition{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchWindowPosition { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+
 
         public double WindowWidthSize
         {

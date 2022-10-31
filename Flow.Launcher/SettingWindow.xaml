@@ -408,10 +408,10 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource rememberLastLocation}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
@@ -1047,7 +1047,7 @@
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnExternalPluginUninstallClick"
-                                                                        Text="{DynamicResource plugin_uninstall}"
+                                                                        Text="{DynamicResource uninstallbtn}"
                                                                         TextDecorations="Underline" />
 
                                                                     <TextBlock
