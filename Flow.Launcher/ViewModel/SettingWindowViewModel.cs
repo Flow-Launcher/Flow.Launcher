@@ -647,7 +647,20 @@ namespace Flow.Launcher.ViewModel
         public string Documentation => Constant.Documentation;
         public string Docs => Constant.Docs;
         public string Github => Constant.GitHub;
-        public static string Version => Constant.Version;
+        public string Version
+        {
+            get
+            {
+                if (Constant.Version == "1.0.0")
+                {
+                    return Constant.Dev;
+                }
+                else
+                {
+                    return Constant.Version;
+                }
+            }
+        }
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
         
         public string CheckLogFolder
