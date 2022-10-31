@@ -49,7 +49,7 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
-
+            NavView.SelectedItem = NavView.MenuItems[0];
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
             //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
             //view.GroupDescriptions.Add(groupDescription);

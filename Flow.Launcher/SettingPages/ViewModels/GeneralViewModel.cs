@@ -40,7 +40,7 @@ namespace Flow.Launcher.SettingPages.ViewModels
                 Settings.Language = value;
             }
         }
-
+        private Internationalization _translater => InternationalizationManager.Instance;
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
         public List<Language> Languages { get; set; } = InternationalizationManager.Instance.LoadAvailableLanguages();
@@ -95,5 +95,30 @@ namespace Flow.Launcher.SettingPages.ViewModels
             var browserWindow = new SelectBrowserWindow(Settings);
             browserWindow.ShowDialog();
         }
+
+        public class SearchWindowPosition
+        {
+            public string Display { get; set; }
+            public SearchWindowPositions Value { get; set; }
+        }
+
+        public List<SearchWindowPosition> SearchWindowPositions
+        {
+            get
+            {
+                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
+                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
+                foreach (var e in enums)
+                {
+                    var key = $"SearchWindowPosition{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchWindowPosition { Display = display, Value = e, };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+
     }
 }

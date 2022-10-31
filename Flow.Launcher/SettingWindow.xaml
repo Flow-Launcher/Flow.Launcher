@@ -171,7 +171,7 @@
                     </Path>
                 </Button>
                 <ui:NavigationView
-                    x:Name="nvSample"
+                    x:Name="NavView"
                     Grid.Row="1"
                     Grid.ColumnSpan="5"
                     Margin="0,0,0,0"
