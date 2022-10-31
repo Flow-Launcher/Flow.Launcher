@@ -5,7 +5,10 @@ using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Core;
+using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -16,7 +19,8 @@ namespace Flow.Launcher.SettingPages.ViewModels
     public partial class GeneralViewModel
     {
         public Settings Settings { get; set; }
-
+        private readonly Updater _updater;
+        private readonly IPortable _portable;
         public ResourceBindingModel<LastQueryMode>[] LastQueryModeModels { get; set; } = Enum
             .GetValues<LastQueryMode>()
             .Select(x => new ResourceBindingModel<LastQueryMode>($"LastQuery{x}", x))
@@ -49,6 +53,68 @@ namespace Flow.Launcher.SettingPages.ViewModels
         {
             Settings = settings;
         }
+
+        public async void UpdateApp()
+        {
+            await _updater.UpdateAppAsync(App.API, false);
+        }
+
+        public bool AutoUpdates
+        {
+            get => Settings.AutoUpdates;
+            set
+            {
+                Settings.AutoUpdates = value;
+
+                if (value)
+                {
+                    UpdateApp();
+                }
+            }
+        }
+
+        public bool StartFlowLauncherOnSystemStartup
+        {
+            get => Settings.StartFlowLauncherOnSystemStartup;
+            set
+            {
+                Settings.StartFlowLauncherOnSystemStartup = value;
+
+                try
+                {
+                    if (value)
+                        AutoStartup.Enable();
+                    else
+                        AutoStartup.Disable();
+                }
+                catch (Exception e)
+                {
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
+                }
+            }
+        }
+
+        // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
+        private bool _portableMode = DataLocation.PortableDataLocationInUse();
+        public bool PortableMode
+        {
+            get => _portableMode;
+            set
+            {
+                if (!_portable.CanUpdatePortability())
+                    return;
+
+                if (DataLocation.PortableDataLocationInUse())
+                {
+                    _portable.DisablePortableMode();
+                }
+                else
+                {
+                    _portable.EnablePortableMode();
+                }
+            }
+        }
+
 
         [RelayCommand]
         private void SelectPythonDirectory()

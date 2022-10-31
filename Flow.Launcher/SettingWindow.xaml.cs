@@ -536,7 +536,7 @@ namespace Flow.Launcher
                 sender.Header =(string)selectedItem.Content;
                 string pageName = $"Flow.Launcher.SettingPages.Views.{selectedItemTag}";
                 Type pageType = typeof(About).Assembly.GetType(pageName);
-                contentFrame.Navigate(pageType, settings);
+                contentFrame.Navigate(pageType, settings, new SuppressNavigationTransitionInfo());
             }
         }
     }

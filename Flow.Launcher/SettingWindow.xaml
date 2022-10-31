@@ -178,14 +178,14 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ExpandedModeThresholdWidth="300"
-                    Header="{Binding ElementName=headerText, Path=Text, Mode=TwoWay}"
+                
                     IsBackButtonVisible="Collapsed"
                     IsPaneToggleButtonVisible="False"
                     IsSettingsVisible="False"
                     IsTabStop="False"
                     OpenPaneLength="230"
                     PaneDisplayMode="Left"
-                    PaneTitle="{Binding ElementName=paneText, Path=Text, Mode=TwoWay}"
+                
                     SelectionChanged="NavigationView_SelectionChanged">
                     <ui:NavigationView.HeaderTemplate>
                         <DataTemplate>
