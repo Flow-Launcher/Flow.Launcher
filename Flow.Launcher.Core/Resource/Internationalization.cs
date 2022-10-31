@@ -22,7 +22,8 @@ namespace Flow.Launcher.Core.Resource
         private const string Extension = ".xaml";
         private readonly List<string> _languageDirectories = new List<string>();
         private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
-
+        public event Action<string> OnLanguageChanged;
+        
         public Internationalization()
         {
             AddPluginLanguageDirectories();
@@ -69,6 +70,8 @@ namespace Flow.Launcher.Core.Resource
             languageCode = languageCode.NonNull();
             Language language = GetLanguageByLanguageCode(languageCode);
             ChangeLanguage(language);
+            _ = Task.Run(() => OnLanguageChanged?.Invoke(languageCode));
+
         }
 
         private Language GetLanguageByLanguageCode(string languageCode)

@@ -17,12 +17,10 @@ namespace Flow.Launcher.SettingPages.ViewModels
     {
         public Settings Settings { get; set; }
 
-        public LastQueryModeModel[] LastQueryModeModels { get; set; } = Enum
-            .GetValues<Infrastructure.UserSettings.LastQueryMode>()
-            .Select(x => new LastQueryModeModel
-            {
-                Display = InternationalizationManager.Instance.GetTranslation($"LastQuery{x}"), Value = x
-            }).ToArray();
+        public ResourceBindingModel<LastQueryMode>[] LastQueryModeModels { get; set; } = Enum
+            .GetValues<LastQueryMode>()
+            .Select(x => new ResourceBindingModel<LastQueryMode>($"LastQuery{x}", x))
+            .ToArray();
 
         public List<string> QuerySearchPrecisionStrings { get; set; } =
             Enum.GetValues<SearchPrecisionScore>()
@@ -40,7 +38,6 @@ namespace Flow.Launcher.SettingPages.ViewModels
                     Settings.ShouldUsePinyin = true;
 
                 Settings.Language = value;
-                UpdateLastQueryModeDisplay();
             }
         }
 
@@ -51,14 +48,6 @@ namespace Flow.Launcher.SettingPages.ViewModels
         public GeneralViewModel(Settings settings)
         {
             Settings = settings;
-        }
-        
-        private void UpdateLastQueryModeDisplay()
-        {
-            foreach (var item in LastQueryModeModels)
-            {
-                item.Display = InternationalizationManager.Instance.GetTranslation($"LastQuery{item.Value}");
-            }
         }
 
         [RelayCommand]
@@ -106,11 +95,5 @@ namespace Flow.Launcher.SettingPages.ViewModels
             var browserWindow = new SelectBrowserWindow(Settings);
             browserWindow.ShowDialog();
         }
-    }
-
-    public partial class LastQueryModeModel : BaseModel
-    {
-        public string Display { get; set; }
-        public Infrastructure.UserSettings.LastQueryMode Value { get; set; }
     }
 }
