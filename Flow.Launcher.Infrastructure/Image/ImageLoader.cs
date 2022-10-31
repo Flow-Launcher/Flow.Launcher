@@ -244,9 +244,9 @@ namespace Flow.Launcher.Infrastructure.Image
                 option);
         }
 
-        public static bool CacheContainImage(string path)
+        public static bool CacheContainImage(string path, bool loadFullImage = false)
         {
-            return ImageCache.ContainsKey(path, false) && ImageCache[path, false] != null;
+            return ImageCache.ContainsKey(path, false) && ImageCache[path, loadFullImage] != null;
         }
 
         public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
