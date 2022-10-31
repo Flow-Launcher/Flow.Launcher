@@ -23,6 +23,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Flow.Launcher.SettingPages.Views;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using ListViewItem = System.Windows.Controls.ListViewItem;
@@ -30,7 +31,6 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
-using Flow.Launcher.Pages;
 using ModernWpf.Media.Animation;
 
 namespace Flow.Launcher
@@ -502,14 +502,15 @@ namespace Flow.Launcher
             else
             {
                 var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
-                if (selectedItem != null)
+                if (selectedItem == null)
                 {
-                    string selectedItemTag = (string)selectedItem.Tag;
-                    sender.Header = "Sample Page " + selectedItemTag.Substring(selectedItemTag.Length - 1);
-                    string pageName = "Flow.Launcher.Pages." + selectedItemTag;
-                    Type pageType = typeof(About).Assembly.GetType(pageName);
-                    contentFrame.Navigate(pageType);
+                    return;
                 }
+                string selectedItemTag = (string)selectedItem.Tag;
+                sender.Header = string.Concat("Sample Page ", selectedItemTag.AsSpan(selectedItemTag.Length - 1));
+                string pageName = $"Flow.Launcher.SettingPages.Views.{selectedItemTag}";
+                Type pageType = typeof(About).Assembly.GetType(pageName);
+                contentFrame.Navigate(pageType, settings);
             }
         }
     }

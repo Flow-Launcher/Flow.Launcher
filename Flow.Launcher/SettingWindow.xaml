@@ -247,7 +247,7 @@
                         </ui:NavigationViewItem>
                     </ui:NavigationView.MenuItems>
                     <Grid>
-                        <ui:Frame x:Name="contentFrame" Margin="0" />
+                        <ui:Frame x:Name="contentFrame" Margin="0"/>
                     </Grid>
                 </ui:NavigationView>
             </Grid>

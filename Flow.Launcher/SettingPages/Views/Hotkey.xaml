@@ -1,11 +1,11 @@
-﻿<Page
-    x:Class="Flow.Launcher.Pages.Hotkey"
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.Hotkey"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Title="Hotkey"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -147,7 +147,7 @@
                             <GridView>
                                 <GridViewColumn Width="180" Header="{DynamicResource hotkey}">
                                     <GridViewColumn.CellTemplate>
-                                        <DataTemplate DataType="userSettings:CustomPluginHotkey">
+                                        <DataTemplate DataType="{x:Type userSettings:CustomPluginHotkey}">
                                             <TextBlock Text="{Binding Hotkey}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -188,4 +188,4 @@
             </Border>
         </ScrollViewer>
     </Grid>
-</Page>
+</ui:Page>

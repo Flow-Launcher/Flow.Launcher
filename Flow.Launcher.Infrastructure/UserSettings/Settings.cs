@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -28,6 +29,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
+        
+        public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+        
         public string Theme { get; set; } = Constant.DefaultTheme;
         public bool UseDropShadowEffect { get; set; } = false;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;

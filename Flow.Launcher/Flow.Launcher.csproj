@@ -44,6 +44,27 @@
   
   <ItemGroup>
     <Page Include="App.xaml" />
+    <Page Update="Settings\Pages\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Settings\Pages\General.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Settings\Pages\Hotkey.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Settings\Pages\Plugins.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Settings\Pages\PluginStore.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Settings\Pages\Proxy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Settings\Pages\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   
   <ItemGroup>

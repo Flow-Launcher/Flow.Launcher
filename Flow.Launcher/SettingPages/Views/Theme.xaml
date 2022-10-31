@@ -1,10 +1,9 @@
-﻿<Page
-    x:Class="Flow.Launcher.Pages.Theme"
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.Theme"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="Theme"
@@ -497,4 +496,4 @@
             </Grid>
         </ScrollViewer>
     </Grid>
-</Page>
+</ui:Page>

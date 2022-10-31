@@ -1,9 +1,9 @@
-﻿<Page
-    x:Class="Flow.Launcher.Pages.About"
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.About"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher.Pages"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="About"
     d:DesignHeight="450"
@@ -215,4 +215,4 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-</Page>
+</ui:Page>

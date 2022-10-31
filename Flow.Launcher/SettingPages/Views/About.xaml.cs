@@ -1,42 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
-using System.Windows.Forms;
-using Flow.Launcher.Plugin.SharedCommands;
-using Flow.Launcher.ViewModel;
-using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
-using System.IO;
-using MessageBox = System.Windows.Forms.MessageBox;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Path = System.IO.Path;
-using Droplex;
 
-namespace Flow.Launcher.Pages
+namespace Flow.Launcher.SettingPages.Views
 {
     //public readonly IPublicAPI API;
     //private Settings settings;
     //private SettingWindowViewModel viewModel;
-    public partial class About : Page
+    public partial class About
     {
         public About()
         {
             InitializeComponent();
         }
 
+        
+        
         private void OpenSettingFolder(object sender, RoutedEventArgs e)
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
