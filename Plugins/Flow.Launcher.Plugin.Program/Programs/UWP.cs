@@ -644,7 +644,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         );
 
                         var selected = logos.FirstOrDefault();
-
+                        var closest = selected;
+                        int min = int.MaxValue;
                         foreach(var logo in logos)
                         {
 
@@ -652,13 +653,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.None);
                             var height = decoder.Frames[0].PixelHeight;
                             var width = decoder.Frames[0].PixelWidth;
-                            if(height == 44 && width == 44)
+                            int pixelCountDiff = Math.Abs(height * width - 1936); // 44*44=1936
+                            if(pixelCountDiff < min)
                             {
-                                selected = logo;
-                                break;
+                                // try to find the closest to 44x44 logo
+                                closest = logo;
+                                if (pixelCountDiff == 0)
+                                    break;  // found 44x44
+                                min = pixelCountDiff;
                             }
                         }
 
+                        selected = closest;
                         if (!string.IsNullOrEmpty(selected))
                         {
                             return selected;
