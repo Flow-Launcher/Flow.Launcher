@@ -381,7 +381,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return Array.Empty<Win32>(); 
             }
 
-            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLower());
+            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
             var toFilter = paths.SelectMany(p => ProgramPaths(p, suffixes, recursive:false));
 
