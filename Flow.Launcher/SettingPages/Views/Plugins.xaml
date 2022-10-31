@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="Plugins Page"
     d:DesignHeight="450"
@@ -18,8 +19,78 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="73" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="0"
+            Padding="5,18,0,0"
+            HorizontalAlignment="Stretch">
+            <DockPanel>
+                <TextBlock
+                    Margin="0,5,0,0"
+                    DockPanel.Dock="Left"
+                    FontSize="30"
+                    Style="{StaticResource PageTitle}"
+                    Text="{DynamicResource plugin}"
+                    TextAlignment="Left" />
+                <DockPanel DockPanel.Dock="Right">
+                    <TextBox
+                        Name="pluginFilterTxb"
+                        Width="150"
+                        Height="34"
+                        Margin="0,5,26,0"
+                        HorizontalAlignment="Right"
+                        DockPanel.Dock="Right"
+                        FontSize="14"
+                        KeyDown="PluginFilterTxb_OnKeyDown"
+                        LostFocus="RefreshPluginListEventHandler"
+                        Text=""
+                        TextAlignment="Left"
+                        ToolTip="{DynamicResource searchpluginToolTip}"
+                        ToolTipService.InitialShowDelay="200"
+                        ToolTipService.Placement="Top">
+                        <TextBox.Style>
+                            <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                <Style.Resources>
+                                    <VisualBrush
+                                        x:Key="CueBannerBrush"
+                                        AlignmentX="Left"
+                                        AlignmentY="Center"
+                                        Stretch="None">
+                                        <VisualBrush.Visual>
+                                            <Label
+                                                Padding="10,0,0,0"
+                                                Content="{DynamicResource searchplugin}"
+                                                Foreground="{DynamicResource CustomContextDisabled}" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Style.Resources>
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="{x:Null}">
+                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </DockPanel>
+            </DockPanel>
+        </Border>
+
         <ListView
             Name="Plugins_Temp"
+            Grid.Row="1"
             Width="Auto"
             Margin="5,0,0,0"
             Padding="0,0,7,0"

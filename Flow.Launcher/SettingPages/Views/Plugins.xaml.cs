@@ -105,5 +105,29 @@ namespace Flow.Launcher.SettingPages.Views
 
         }
 
+        private bool PluginListFilter(object item)
+        {
+        //    if (string.IsNullOrEmpty(pluginFilterTxb.Text))
+        //        return true;
+        //    if (item is PluginViewModel model)
+        //    {
+        //        return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
+        //    }
+            return false;
+        }
+        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
+        {
+        //    if (pluginFilterTxb.Text != lastPluginListSearch)
+        //    {
+        //        lastPluginListSearch = pluginFilterTxb.Text;
+        //        pluginListView.Refresh();
+        //    }
+        }
+
+        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+        //    if (e.Key == Key.Enter)
+        //        RefreshPluginListEventHandler(sender, e);
+        }
     }
 }
