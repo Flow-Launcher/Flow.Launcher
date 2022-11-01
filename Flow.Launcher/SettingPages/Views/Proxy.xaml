@@ -8,6 +8,7 @@
     Title="Proxy"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Style="{DynamicResource SettingPageBasic}"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>

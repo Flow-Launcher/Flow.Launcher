@@ -178,7 +178,6 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     AlwaysShowHeader="False"
-                    CacheMode="BitmapCache"
                     ExpandedModeThresholdWidth="300"
                     IsBackButtonVisible="Collapsed"
                     IsPaneToggleButtonVisible="False"
