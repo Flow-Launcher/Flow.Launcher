@@ -27,7 +27,7 @@
             <Border>
                 <Grid Margin="5,18,18,10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="43" />
+                        <RowDefinition Height="49" />
                         <RowDefinition Height="80" />
                         <RowDefinition Height="146" />
                         <RowDefinition Height="50" />

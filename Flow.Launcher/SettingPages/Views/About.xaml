@@ -19,19 +19,29 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="66" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Margin="5,24,0,0"
+            FontSize="30"
+            Style="{DynamicResource PageTitle}"
+            Text="{DynamicResource about}"
+            TextAlignment="left" />
         <ScrollViewer
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
             Margin="0,0,0,0"
             Background="{DynamicResource Color01B}"
             ScrollViewer.CanContentScroll="False"
             VirtualizingStackPanel.IsVirtualizing="True">
-            <StackPanel Margin="5,14,25,30" Orientation="Vertical">
-                <TextBlock
-                    Grid.Row="2"
-                    Margin="0,5,0,5"
-                    FontSize="30"
-                    Style="{DynamicResource PageTitle}"
-                    Text="{DynamicResource about}"
-                    TextAlignment="left" />
+            <StackPanel Margin="5,4,25,0" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Border
                         Width="200"
