@@ -1,31 +1,23 @@
-﻿using Droplex;
-using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Core.Plugin;
+﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
-using Microsoft.Win32;
 using ModernWpf;
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
-using ListViewItem = System.Windows.Controls.ListViewItem;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
@@ -467,33 +459,28 @@ namespace Flow.Launcher
             }
         }
 
-
-        private void ColorSchemeSelectedIndexChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void PreviewClockAndDate(object sender, RoutedEventArgs e)
         {
             ClockDisplay();
         }
         public void ClockDisplay()
         {
-            if (settings.UseClock == true)
+            if (settings.UseClock)
             {
                 ClockBox.Visibility = Visibility.Visible;
-                ClockBox.Text = System.DateTime.Now.ToString(settings.TimeFormat);
+                ClockBox.Text = DateTime.Now.ToString(settings.TimeFormat);
             }
-            else if (settings.UseClock == false)
+            else
             {
                 ClockBox.Visibility = Visibility.Collapsed;
             }
-            if (settings.UseDate == true)
+
+            if (settings.UseDate)
             {
                 DateBox.Visibility = Visibility.Visible;
-                DateBox.Text = System.DateTime.Now.ToString(settings.DateFormat);
+                DateBox.Text = DateTime.Now.ToString(settings.DateFormat);
             }
-            else if (settings.UseDate == false)
+            else
             {
                 DateBox.Visibility = Visibility.Collapsed;
             }

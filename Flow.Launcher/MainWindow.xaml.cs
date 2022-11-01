@@ -21,10 +21,7 @@ using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Windows.Threading;
-using System.Globalization;
-using System.Reflection.Emit;
 using System.Windows.Data;
-using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -58,7 +55,6 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
-
         
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
