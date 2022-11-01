@@ -130,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
