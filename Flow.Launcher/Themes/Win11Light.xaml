@@ -164,4 +164,16 @@
         <Setter Property="Height" Value="32" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#acacac" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#acacac" />
+    </Style>
 </ResourceDictionary>
