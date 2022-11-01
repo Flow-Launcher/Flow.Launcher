@@ -130,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">Reproducir un sonido al abrir la ventana de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
     <system:String x:Key="AnimationTip">Usar Animación en la Interfaz</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla Rápida</system:String>
