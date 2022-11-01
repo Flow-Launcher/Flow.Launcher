@@ -14,14 +14,17 @@ namespace Flow.Launcher.Plugin.Program
         public string[] CustomSuffixes { get; set; } = Array.Empty<string>();
         public string[] CustomProtocols { get; set; } = Array.Empty<string>();
 
-        [JsonIgnore]
         public Dictionary<string, bool> BuiltinSuffixesStatus { get; set; } = new Dictionary<string, bool>{
             { "exe", true }, { "appref-ms", true }, { "lnk", true }
         };
 
-        [JsonIgnore]
         public Dictionary<string, bool> BuiltinProtocolsStatus { get; set; } = new Dictionary<string, bool>{
-            { $"steam://run/{SuffixSeparator}steam://rungameid/", true }, { "com.epicgames.launcher://apps/", true }, { $"http://{SuffixSeparator}https://", false}
+            { "steam", true }, { "epic", true }, { "http", false }
+        };
+
+        [JsonIgnore]
+        public Dictionary<string, string> BuiltinProtocols { get; set; } = new Dictionary<string, string>{
+            { "steam", $"steam://run/{SuffixSeparator}steam://rungameid/" }, { "epic", "com.epicgames.launcher://apps/" }, { "http",  $"http://{SuffixSeparator}https://"}
         };
 
         public bool UseCustomSuffixes { get; set; } = false;
@@ -30,7 +33,7 @@ namespace Flow.Launcher.Plugin.Program
         public string[] GetSuffixes()
         {
             List<string> extensions = new List<string>();
-            foreach(var item in BuiltinSuffixesStatus)
+            foreach (var item in BuiltinSuffixesStatus)
             {
                 if (item.Value)
                 {
@@ -60,10 +63,13 @@ namespace Flow.Launcher.Plugin.Program
             {
                 if (item.Value)
                 {
-                    var tmp = item.Key.Split(SuffixSeparator, StringSplitOptions.RemoveEmptyEntries);
-                    foreach(var p in tmp)
+                    if (BuiltinProtocols.TryGetValue(item.Key, out string ps))
                     {
-                        protocols.Add(p);
+                        var tmp = ps.Split(SuffixSeparator, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var protocol in tmp)
+                        {
+                            protocols.Add(protocol);
+                        }
                     }
                 }
             }
