@@ -130,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">Arama penceresi açıldığında küçük bir ses oynat</system:String>
     <system:String x:Key="Animation">Animasyon</system:String>
     <system:String x:Key="AnimationTip">Arayüzde Animasyon Kullan</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
