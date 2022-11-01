@@ -130,8 +130,8 @@
     <system:String x:Key="SoundEffectTip">Reproduzir um som ao abrir a janela de pesquisa</system:String>
     <system:String x:Key="Animation">Animação</system:String>
     <system:String x:Key="AnimationTip">Utilizar animações na aplicação</system:String>
-    <system:String x:Key="Clock">Clock</system:String>
-    <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="Clock">Relógio</system:String>
+    <system:String x:Key="Date">Data</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
