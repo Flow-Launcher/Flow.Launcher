@@ -151,10 +151,6 @@
                         TextWrapping="Wrap" />
                 </Border>
 
-
-                <!--
-                    <TextBox x:Name="tbSuffixes" Margin="0,20,0,20" />
-                -->
                 <Grid Margin="0,20,0,12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="250" />
