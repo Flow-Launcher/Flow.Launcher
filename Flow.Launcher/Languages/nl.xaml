@@ -77,13 +77,13 @@
     <system:String x:Key="plugin_query_time">Query tijd:</system:String>
     <system:String x:Key="plugin_query_version">| Versie</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
-    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
+    <system:String x:Key="uninstallbtn">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
     <system:String x:Key="refresh">Vernieuwen</system:String>
-    <system:String x:Key="install">Installeren</system:String>
+    <system:String x:Key="installbtn">Installeren</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
