@@ -130,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
