@@ -1474,6 +1474,7 @@
                             ItemsSource="{Binding ExternalPlugins}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            SelectionMode="Single"
                             VirtualizingPanel.CacheLength="1,1"
                             VirtualizingPanel.CacheLengthUnit="Page"
                             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
