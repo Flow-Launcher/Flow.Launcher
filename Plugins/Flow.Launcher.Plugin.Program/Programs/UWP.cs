@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -18,6 +18,8 @@ using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Runtime.Versioning;
+using System.Threading.Channels;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -78,7 +80,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var e = Marshal.GetExceptionForHR((int)hResult);
                 ProgramLogger.LogException($"|UWP|InitializeAppInfo|{path}" +
-                                                "|Error caused while trying to get the details of the UWP program", e);
+                                           "|Error caused while trying to get the details of the UWP program", e);
 
                 Apps = new List<Application>().ToArray();
             }
@@ -89,30 +91,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-
-
         /// http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
         private string[] XmlNamespaces(string path)
         {
             XDocument z = XDocument.Load(path);
             if (z.Root != null)
             {
-                var namespaces = z.Root.Attributes().
-                    Where(a => a.IsNamespaceDeclaration).
-                    GroupBy(
-                        a => a.Name.Namespace == XNamespace.None ? string.Empty : a.Name.LocalName,
-                        a => XNamespace.Get(a.Value)
-                    ).Select(
-                        g => g.First().ToString()
-                    ).ToArray();
+                var namespaces = z.Root.Attributes().Where(a => a.IsNamespaceDeclaration).GroupBy(
+                    a => a.Name.Namespace == XNamespace.None ? string.Empty : a.Name.LocalName,
+                    a => XNamespace.Get(a.Value)
+                ).Select(
+                    g => g.First().ToString()
+                ).ToArray();
                 return namespaces;
             }
             else
             {
                 ProgramLogger.LogException($"|UWP|XmlNamespaces|{path}" +
-                                                $"|Error occured while trying to get the XML from {path}", new ArgumentNullException());
+                                           $"|Error occured while trying to get the XML from {path}", new ArgumentNullException());
 
-                return new string[] { };
+                return new string[]
+                {
+                };
             }
         }
 
@@ -120,9 +120,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var versionFromNamespace = new Dictionary<string, PackageVersion>
             {
-                {"http://schemas.microsoft.com/appx/manifest/foundation/windows10", PackageVersion.Windows10},
-                {"http://schemas.microsoft.com/appx/2013/manifest", PackageVersion.Windows81},
-                {"http://schemas.microsoft.com/appx/2010/manifest", PackageVersion.Windows8},
+                {
+                    "http://schemas.microsoft.com/appx/manifest/foundation/windows10", PackageVersion.Windows10
+                },
+                {
+                    "http://schemas.microsoft.com/appx/2013/manifest", PackageVersion.Windows81
+                },
+                {
+                    "http://schemas.microsoft.com/appx/2010/manifest", PackageVersion.Windows8
+                },
             };
 
             foreach (var n in versionFromNamespace.Keys)
@@ -135,8 +141,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
 
             ProgramLogger.LogException($"|UWP|XmlNamespaces|{Location}" +
-                                                "|Trying to get the package version of the UWP program, but a unknown UWP appmanifest version  "
-                                                + $"{FullName} from location {Location} is returned.", new FormatException());
+                                       "|Trying to get the package version of the UWP program, but a unknown UWP appmanifest version  "
+                                       + $"{FullName} from location {Location} is returned.", new FormatException());
 
             Version = PackageVersion.Unknown;
         }
@@ -157,9 +163,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and "
-                                                        + $"unable to convert Package to UWP for {p.Id.FullName}", e);
-                        return new Application[] { };
+                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and unable to convert Package to UWP for {p.Id.FullName}", e);
+                        return Array.Empty<Application>();
                     }
 #endif
 #if DEBUG //make developer aware and implement handling
@@ -172,15 +177,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }).ToArray();
 
                 var updatedListWithoutDisabledApps = applications
-                                                        .Where(t1 => !Main._settings.DisabledProgramSources
-                                                                        .Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
-                                                        .Select(x => x);
+                    .Where(t1 => !Main._settings.DisabledProgramSources
+                        .Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
+                    .Select(x => x);
 
                 return updatedListWithoutDisabledApps.ToArray();
             }
             else
             {
-                return new Application[] { };
+                return new Application[]
+                {
+                };
             }
         }
 
@@ -216,7 +223,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     catch (Exception e)
                     {
                         ProgramLogger.LogException("UWP", "CurrentUserPackages", $"id", "An unexpected error occured and "
-                                                   + $"unable to verify if package is valid", e);
+                                                                                        + $"unable to verify if package is valid", e);
                         return false;
                     }
 
@@ -226,7 +233,42 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             else
             {
-                return new Package[] { };
+                return new Package[]
+                {
+                };
+            }
+        }
+
+        private static Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
+
+        public static async Task WatchPackageChange()
+        {
+            if (Environment.OSVersion.Version.Major >= 10)
+            {
+                var catalog = PackageCatalog.OpenForCurrentUser();
+                catalog.PackageInstalling += (_, args) =>
+                {
+                    if (args.IsComplete)
+                        PackageChangeChannel.Writer.TryWrite(default);
+                };
+                catalog.PackageUninstalling += (_, args) =>
+                {
+                    if (args.IsComplete)
+                        PackageChangeChannel.Writer.TryWrite(default);
+                };
+                catalog.PackageUpdating += (_, args) =>
+                {
+                    if (args.IsComplete)
+                        PackageChangeChannel.Writer.TryWrite(default);
+                };
+
+                while (await PackageChangeChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
+                {
+                    await Task.Delay(3000).ConfigureAwait(false);
+                    PackageChangeChannel.Reader.TryRead(out _);
+                    await Task.Run(Main.IndexUwpPrograms);
+                }
+                
             }
         }
 
@@ -326,7 +368,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             e.SpecialKeyState.ShiftPressed &&
                             !e.SpecialKeyState.AltPressed &&
                             !e.SpecialKeyState.WinPressed
-                        );
+                            );
 
                         if (elevated && CanRunElevated)
                         {
@@ -359,14 +401,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     new Result
                     {
                         Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
-
                         Action = _ =>
                         {
                             Main.Context.API.OpenDirectory(Package.Location);
 
                             return true;
                         },
-
                         IcoPath = "Images/folder.png"
                     }
                 };
@@ -397,7 +437,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     try
                     {
-                        appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
+                        _ = appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
                     }
                     catch (Exception)
                     {
@@ -408,15 +448,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 });
             }
 
-            private async void LaunchElevated()
+            private void LaunchElevated()
             {
                 string command = "shell:AppsFolder\\" + UniqueIdentifier;
                 command = Environment.ExpandEnvironmentVariables(command.Trim());
 
                 var info = new ProcessStartInfo(command)
                 {
-                    UseShellExecute = true,
-                    Verb = "runas",
+                    UseShellExecute = true, Verb = "runas",
                 };
 
                 Main.StartProcess(Process.Start, info);
@@ -493,7 +532,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     else
                     {
                         ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
-                                                    + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
+                                                   + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
                         return string.Empty;
                     }
                 }
@@ -533,14 +572,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var logoKeyFromVersion = new Dictionary<PackageVersion, string>
                 {
-                    { PackageVersion.Windows10, "Square44x44Logo" },
-                    { PackageVersion.Windows81, "Square30x30Logo" },
-                    { PackageVersion.Windows8, "SmallLogo" },
+                    {
+                        PackageVersion.Windows10, "Square44x44Logo"
+                    },
+                    {
+                        PackageVersion.Windows81, "Square30x30Logo"
+                    },
+                    {
+                        PackageVersion.Windows8, "SmallLogo"
+                    },
                 };
                 if (logoKeyFromVersion.ContainsKey(Package.Version))
                 {
                     var key = logoKeyFromVersion[Package.Version];
-                    app.GetStringValue(key, out string logoUri);
+                    _ = app.GetStringValue(key, out string logoUri);
                     return logoUri;
                 }
                 else
@@ -572,14 +617,40 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     var end = path.Length - extension.Length;
                     var prefix = path.Substring(0, end);
-                    var paths = new List<string> { path };
+                    var paths = new List<string>
+                    {
+                        path
+                    };
 
                     var scaleFactors = new Dictionary<PackageVersion, List<int>>
                     {
                         // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
-                        { PackageVersion.Windows10, new List<int> { 100, 125, 150, 200, 400 } },
-                        { PackageVersion.Windows81, new List<int> { 100, 120, 140, 160, 180 } },
-                        { PackageVersion.Windows8, new List<int> { 100 } }
+                        {
+                            PackageVersion.Windows10, new List<int>
+                            {
+                                100,
+                                125,
+                                150,
+                                200,
+                                400
+                            }
+                        },
+                        {
+                            PackageVersion.Windows81, new List<int>
+                            {
+                                100,
+                                120,
+                                140,
+                                160,
+                                180
+                            }
+                        },
+                        {
+                            PackageVersion.Windows8, new List<int>
+                            {
+                                100
+                            }
+                        }
                     };
 
                     if (scaleFactors.ContainsKey(Package.Version))
@@ -598,15 +669,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     else
                     {
                         ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                    $"|{UserModelId} can't find logo uri for {uri} in package location: {Package.Location}", new FileNotFoundException());
+                                                   $"|{UserModelId} can't find logo uri for {uri} in package location: {Package.Location}", new FileNotFoundException());
                         return string.Empty;
                     }
                 }
                 else
                 {
                     ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                    $"|Unable to find extension from {uri} for {UserModelId} " +
-                                                    $"in package location {Package.Location}", new FileNotFoundException());
+                                               $"|Unable to find extension from {uri} for {UserModelId} " +
+                                               $"in package location {Package.Location}", new FileNotFoundException());
                     return string.Empty;
                 }
             }
@@ -633,8 +704,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 else
                 {
                     ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
-                                                    $"|Unable to get logo for {UserModelId} from {path} and" +
-                                                    $" located in {Package.Location}", new FileNotFoundException());
+                                               $"|Unable to get logo for {UserModelId} from {path} and" +
+                                               $" located in {Package.Location}", new FileNotFoundException());
                     return new BitmapImage(new Uri(Constant.MissingImgIcon));
                 }
             }
@@ -682,8 +753,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     else
                     {
                         ProgramLogger.LogException($"|UWP|PlatedImage|{Package.Location}" +
-                                                    $"|Unable to convert background string {BackgroundColor} " +
-                                                    $"to color for {Package.Location}", new InvalidOperationException());
+                                                   $"|Unable to convert background string {BackgroundColor} " +
+                                                   $"to color for {Package.Location}", new InvalidOperationException());
 
                         return new BitmapImage(new Uri(Constant.MissingImgIcon));
                     }
@@ -728,5 +799,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
         private static extern Hresult SHLoadIndirectString(string pszSource, StringBuilder pszOutBuf, uint cchOutBuf,
             IntPtr ppvReserved);
+
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Squirrel;
 using System;
 using System.IO;
@@ -127,7 +127,7 @@ namespace Flow.Launcher.Core.Configuration
 
             using (var portabilityUpdater = NewUpdateManager())
             {
-                portabilityUpdater.CreateUninstallerRegistryEntry();
+                _ = portabilityUpdater.CreateUninstallerRegistryEntry();
             }
         }
 

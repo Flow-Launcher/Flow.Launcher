@@ -98,7 +98,7 @@ namespace Flow.Launcher.Plugin.Caculator
                                     Clipboard.SetDataObject(newResult);
                                     return true;
                                 }
-                                catch (ExternalException e)
+                                catch (ExternalException)
                                 {
                                     MessageBox.Show("Copy failed, please try later");
                                     return false;

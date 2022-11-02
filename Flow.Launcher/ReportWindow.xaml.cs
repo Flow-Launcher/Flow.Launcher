@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flow.Launcher.Core.ExternalPlugins;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -22,13 +23,34 @@ namespace Flow.Launcher
             SetException(exception);
         }
 
+        private static string GetIssueUrl(string website)
+        {
+            if (!website.StartsWith("https://github.com"))
+            {
+                return website;
+            }
+            if(website.Contains("Flow-Launcher/Flow.Launcher"))
+            {
+                return Constant.Issue;
+            }
+            var treeIndex = website.IndexOf("tree", StringComparison.Ordinal);
+            return treeIndex == -1 ? $"{website}/issues/new" : $"{website[..treeIndex]}/issues/new";
+        }
+
         private void SetException(Exception exception)
         {
             string path = Log.CurrentLogDirectory;
             var directory = new DirectoryInfo(path);
             var log = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First();
 
-            var paragraph = Hyperlink("Please open new issue in: ", Constant.Issue);
+            var websiteUrl = exception switch
+                {
+                    FlowPluginException pluginException =>GetIssueUrl(pluginException.Metadata.Website),
+                    _ => Constant.Issue
+                };
+                
+
+            var paragraph = Hyperlink("Please open new issue in: ", websiteUrl);
             paragraph.Inlines.Add($"1. upload log file: {log.FullName}\n");
             paragraph.Inlines.Add($"2. copy below exception message");
             ErrorTextbox.Document.Blocks.Add(paragraph);
@@ -49,10 +71,12 @@ namespace Flow.Launcher
             var paragraph = new Paragraph();
             paragraph.Margin = new Thickness(0);
 
-            var link = new Hyperlink { IsEnabled = true };
+            var link = new Hyperlink
+            {
+                IsEnabled = true
+            };
             link.Inlines.Add(url);
             link.NavigateUri = new Uri(url);
-            link.RequestNavigate += (s, e) => SearchWeb.OpenInBrowserTab(e.Uri.ToString());
             link.Click += (s, e) => SearchWeb.OpenInBrowserTab(url);
 
             paragraph.Inlines.Add(textBeforeUrl);

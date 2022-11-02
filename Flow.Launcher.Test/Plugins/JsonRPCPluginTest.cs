@@ -48,7 +48,7 @@ namespace Flow.Launcher.Test.Plugins
             foreach (var result in results)
             {
                 Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Action);
+                Assert.IsNotNull(result.AsyncAction);
                 Assert.IsNotNull(result.Title);
             }
 
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCaseSource(typeof(JsonRPCPluginTest), nameof(ResponseModelsSource))]
         public async Task GivenModel_WhenSerializeWithDifferentNamingPolicy_ThenExpectSameResult_Async(JsonRPCQueryResponseModel reference)
         {
-            var camelText = JsonSerializer.Serialize(reference, new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var camelText = JsonSerializer.Serialize(reference, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
             var pascalText = JsonSerializer.Serialize(reference);
 
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Test.Plugins
                 Assert.AreEqual(result1, referenceResult);
 
                 Assert.IsNotNull(result1);
-                Assert.IsNotNull(result1.Action);
+                Assert.IsNotNull(result1.AsyncAction);
             }
         }
 

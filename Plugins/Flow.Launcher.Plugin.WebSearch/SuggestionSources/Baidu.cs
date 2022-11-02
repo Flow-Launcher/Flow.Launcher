@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+                result = await Http.GetAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
             }
             catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {

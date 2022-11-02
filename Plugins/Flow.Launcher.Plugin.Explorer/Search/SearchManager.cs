@@ -93,7 +93,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Settings.ActionKeyword.IndexSearchActionKeyword => Settings.IndexSearchKeywordEnabled &&
                                                                    keyword == Settings.IndexSearchActionKeyword,
                 Settings.ActionKeyword.QuickAccessActionKeyword => Settings.QuickAccessKeywordEnabled &&
-                                                                        keyword == Settings.QuickAccessActionKeyword
+                                                                        keyword == Settings.QuickAccessActionKeyword,
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -122,7 +123,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var useIndexSearch = UseWindowsIndexForDirectorySearch(locationPath);
 
-            results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+            if (locationPath.EndsWith(":\\"))
+            {
+                results.Add(ResultManager.CreateDriveSpaceDisplayResult(locationPath, useIndexSearch));
+            }
+            else
+            {
+                results.Add(ResultManager.CreateOpenCurrentFolderResult(locationPath, useIndexSearch));
+            }
 
             token.ThrowIfCancellationRequested();
 

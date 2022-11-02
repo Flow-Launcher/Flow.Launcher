@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flow.Launcher.Core.ExternalPlugins;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -74,7 +75,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static async Task ReloadData()
+        public static async Task ReloadDataAsync()
         {
             await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
             {
@@ -109,7 +110,7 @@ namespace Flow.Launcher.Core.Plugin
         /// Call initialize for all plugins
         /// </summary>
         /// <returns>return the list of failed to init plugins or null for none</returns>
-        public static async Task InitializePlugins(IPublicAPI api)
+        public static async Task InitializePluginsAsync(IPublicAPI api)
         {
             API = api;
             var failedPlugins = new ConcurrentQueue<PluginPair>();
@@ -165,30 +166,28 @@ namespace Flow.Launcher.Core.Plugin
 
         public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
         {
-            if (NonGlobalPlugins.ContainsKey(query.ActionKeyword))
-            {
-                var plugin = NonGlobalPlugins[query.ActionKeyword];
-                return new List<PluginPair>
-                {
-                    plugin
-                };
-            }
-            else
-            {
+            if (query is null)
+                return Array.Empty<PluginPair>();
+            
+            if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
                 return GlobalPlugins;
-            }
+            
+            
+            var plugin = NonGlobalPlugins[query.ActionKeyword];
+            return new List<PluginPair>
+            {
+                plugin
+            };
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
+            var metadata = pair.Metadata;
+
             try
             {
-                var metadata = pair.Metadata;
-
-                long milliseconds = -1L;
-
-                milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -206,7 +205,10 @@ namespace Flow.Launcher.Core.Plugin
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return null;
             }
-
+            catch (Exception e)
+            {
+                throw new FlowPluginException(metadata, e);
+            }
             return results;
         }
 

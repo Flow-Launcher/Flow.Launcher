@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
 
-            await pluginManager.UpdateManifestAsync();
+            _ = pluginManager.UpdateManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -55,7 +55,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 //search could be url, no need ToLower() when passed in
                 Settings.InstallCommand => await pluginManager.RequestInstallOrUpdate(query.SecondToEndSearch, token),
                 Settings.UninstallCommand => pluginManager.RequestUninstall(query.SecondToEndSearch),
-                Settings.UpdateCommand => await pluginManager.RequestUpdate(query.SecondToEndSearch, token),
+                Settings.UpdateCommand => await pluginManager.RequestUpdateAsync(query.SecondToEndSearch, token),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
                     hotkey.Score = StringMatcher.FuzzySearch(query.Search, hotkey.Title).Score;

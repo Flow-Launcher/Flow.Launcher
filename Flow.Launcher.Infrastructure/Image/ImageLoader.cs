@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -13,11 +13,11 @@ namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
-        private static readonly ImageCache ImageCache = new ImageCache();
+        private static readonly ImageCache ImageCache = new();
         private static BinaryStorage<Dictionary<string, int>> _storage;
-        private static readonly ConcurrentDictionary<string, string> GuidToKey = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
-        private static bool EnableImageHash = true;
+        private static readonly bool EnableImageHash = true;
         public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
 
 
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 ImageCache[icon] = img;
             }
 
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 Stopwatch.Normal("|ImageLoader.Initialize|Preload images cost", () =>
                 {
@@ -243,7 +243,6 @@ namespace Flow.Launcher.Infrastructure.Image
                 ImageCache[path] = img;
             }
 
-
             return img;
         }
 
@@ -253,6 +252,7 @@ namespace Flow.Launcher.Infrastructure.Image
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.UriSource = new Uri(path);
+            image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
             return image;
         }

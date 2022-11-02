@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -22,10 +22,11 @@ using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class MainViewModel : BaseModel, ISavable
+    public partial class MainViewModel : BaseModel, ISavable
     {
         #region Private Fields
 
@@ -38,7 +39,6 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
-        internal readonly Settings _settings;
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
@@ -61,8 +61,8 @@ namespace Flow.Launcher.ViewModel
             _queryText = "";
             _lastQuery = new Query();
 
-            _settings = settings;
-            _settings.PropertyChanged += (_, args) =>
+            Settings = settings;
+            Settings.PropertyChanged += (_, args) =>
             {
                 if (args.PropertyName == nameof(Settings.WindowSize))
                 {
@@ -77,14 +77,16 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(_settings);
-            Results = new ResultsViewModel(_settings);
-            History = new ResultsViewModel(_settings);
+            ContextMenu = new ResultsViewModel(Settings);
+            Results = new ResultsViewModel(Settings);
+            History = new ResultsViewModel(Settings);
             _selectedResults = Results;
 
             InitializeKeyCommands();
+
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
+            RegisterClockAndDateUpdateAsync();
 
             SetOpenResultModifiers();
         }
@@ -155,6 +157,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+
         private void InitializeKeyCommands()
         {
             EscCommand = new RelayCommand(_ =>
@@ -195,37 +199,38 @@ namespace Flow.Launcher.ViewModel
                 PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
-            OpenResultCommand = new RelayCommand(index =>
+            OpenResultCommand = new RelayCommand(async index =>
             {
                 var results = SelectedResults;
 
                 if (index != null)
                 {
-                    results.SelectedIndex = int.Parse(index.ToString());
+                    results.SelectedIndex = int.Parse(index.ToString()!);
                 }
 
                 var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
+                if (result == null)
                 {
-                    bool hideWindow = result.Action != null && result.Action(new ActionContext
-                    {
-                        SpecialKeyState = GlobalHotkey.CheckModifiers()
-                    });
+                    return;
+                }
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
 
-                    if (hideWindow)
-                    {
-                        Hide();
-                    }
+                if (hideWindow)
+                {
+                    Hide();
+                }
 
-                    if (SelectedIsFromQueryResults())
-                    {
-                        _userSelectedRecord.Add(result);
-                        _history.Add(result.OriginQuery.RawQuery);
-                    }
-                    else
-                    {
-                        SelectedResults = Results;
-                    }
+                if (SelectedIsFromQueryResults())
+                {
+                    _userSelectedRecord.Add(result);
+                    _history.Add(result.OriginQuery.RawQuery);
+                }
+                else
+                {
+                    SelectedResults = Results;
                 }
             });
 
@@ -299,16 +304,16 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
 
-                PluginManager
-                    .ReloadData()
+                _ = PluginManager
+                    .ReloadDataAsync()
                     .ContinueWith(_ =>
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             Notification.Show(
                                 InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
-                        }))
+                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
+                            );
+                        }), TaskScheduler.Default)
                     .ConfigureAwait(false);
             });
         }
@@ -317,6 +322,22 @@ namespace Flow.Launcher.ViewModel
 
         #region ViewModel Properties
 
+        public Settings Settings { get; }
+        public object ClockText { get; private set; }
+        public string DateText { get; private set; }
+
+        private async Task RegisterClockAndDateUpdateAsync()
+        {
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            // ReSharper disable once MethodSupportsCancellation
+            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
+            {
+                if (Settings.UseClock)
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat);
+                if (Settings.UseDate)
+                    DateText = DateTime.Now.ToString(Settings.DateFormat);
+            }
+        }
         public ResultsViewModel Results { get; private set; }
 
         public ResultsViewModel ContextMenu { get; private set; }
@@ -336,6 +357,55 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+        [RelayCommand]
+        private void IncreaseWidth()
+        {
+            if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
+            {
+                Settings.WindowSize = 1920;        
+            }
+            else 
+            {
+                Settings.WindowSize += 100;
+                Settings.WindowLeft -= 50;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void DecreaseWidth()
+        {
+            if (MainWindowWidth - 100 < 400 || Settings.WindowSize == 400)
+            {
+                Settings.WindowSize = 400;
+            }
+            else
+            {
+                Settings.WindowLeft += 50;
+                Settings.WindowSize -= 100;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void IncreaseMaxResult()
+        {
+            if (Settings.MaxResultsToShow == 17)
+                return;
+
+            Settings.MaxResultsToShow += 1;
+        }
+
+        [RelayCommand]
+        private void DecreaseMaxResult()
+        {
+            if (Settings.MaxResultsToShow == 2)
+                return;
+
+            Settings.MaxResultsToShow -= 1;
+        }
+
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
@@ -347,6 +417,9 @@ namespace Flow.Launcher.ViewModel
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
             }
             else if (reQuery)
             {
@@ -408,7 +481,11 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility SearchIconVisibility { get; set; }
 
-        public double MainWindowWidth => _settings.WindowSize;
+        public double MainWindowWidth
+        {
+            get => Settings.WindowSize;
+            set => Settings.WindowSize = value;
+        }
 
         public string PluginIconPath { get; set; } = null;
 
@@ -591,7 +668,7 @@ namespace Flow.Launcher.ViewModel
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
             }
-            
+
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -687,7 +764,7 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query)
         {
-            if (_lastQuery.ActionKeyword != query.ActionKeyword)
+            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 Results.Clear();
             }
@@ -781,7 +858,7 @@ namespace Flow.Launcher.ViewModel
 
         private void SetOpenResultModifiers()
         {
-            OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
+            OpenResultCommandModifiers = Settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
         public void ToggleFlowLauncher()
@@ -810,24 +887,24 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
-            switch (_settings.LastQueryMode)
+            switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
                     await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
-                    if (_settings.UseAnimation)
+                    if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
-                    if (_settings.UseAnimation)
+                    if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+                    throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
             }
 
             MainWindowVisibilityStatus = false;
@@ -842,7 +919,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
         }
 
 
@@ -925,18 +1002,18 @@ namespace Flow.Launcher.ViewModel
 
                         Clipboard.SetFileDropList(paths);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                +" " 
-                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            App.API.GetTranslation("copy")
+                            + " "
+                            + (isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")),
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                     else
                     {
                         Clipboard.SetDataObject(copyText.ToString());
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                + " " 
-                                + App.API.GetTranslation("textTitle"), 
+                            App.API.GetTranslation("copy")
+                            + " "
+                            + App.API.GetTranslation("textTitle"),
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                 }

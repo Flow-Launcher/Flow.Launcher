@@ -10,7 +10,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable">Desativar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Localização</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos os programas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes">Sufixos</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">Sufixos de ficheiros</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindexar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexação</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Indexar menu Iniciar</system:String>
@@ -18,7 +18,7 @@
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexar registo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Se ativada, Flow Launcher irá carregar os programas do registo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar caminho da aplicação</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para ficheiros executásseis, tais como UWP ou lnk, ocultar o caminho do ficheiro</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para ficheiros executáveis, tais como UWP ou lnk, ocultar o caminho do ficheiro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Pesquisar na descrição dos programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Se ativada, Flow Launcher irá analisar também a descrição dos programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Sufixos</system:String>

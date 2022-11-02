@@ -38,10 +38,13 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 <h4 align="center">
-  <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
-       <a href="#Hotkeys">Hotkeys</a> •
-  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
-  <a href="#Development">Development</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-plugins">Plugins</a> •
+  <a href="#%EF%B8%8F-hotkeys">Hotkeys</a> •
+  <a href="#sponsors">Sponsors</a> •
+  <a href="#-questionssuggestions">Questions/Suggestions</a> •
+  <a href="#development">Development</a> •
   <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
 
@@ -231,7 +234,6 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
-| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
 
 ## System Command List
@@ -262,11 +264,35 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
+## Sponsors
+
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
+    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+  </a>
+</p>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## ❔ Questions/Suggestions
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## Development
+
+### New changes
+
+All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current latest release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
+
+Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
 ### Contributing
 
@@ -278,8 +304,8 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 5
+- Flow Launcher's target framework is .Net 6
 
-- Install Visual Studio 2019
+- Install Visual Studio 2022
 
-- Install .Net 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
+- Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)

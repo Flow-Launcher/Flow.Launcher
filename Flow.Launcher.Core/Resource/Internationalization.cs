@@ -99,7 +99,7 @@ namespace Flow.Launcher.Core.Resource
             Settings.Language = language.LanguageCode;
             CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
             });
@@ -182,6 +182,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
                 {
