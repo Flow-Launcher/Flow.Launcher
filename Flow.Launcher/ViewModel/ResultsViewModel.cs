@@ -1,4 +1,5 @@
 ﻿using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -196,10 +197,25 @@ namespace Flow.Launcher.ViewModel
             if (!resultsForUpdates.Any())
                 return Results;
 
-            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
-                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
-                          .OrderByDescending(rv => rv.Result.Score)
-                          .ToList();
+            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID)).Where(
+                r =>
+                {
+                    r.Result.SubTitle = r.Result.Score.ToString();
+                    if (r.Result.FuzzyMatchString == null)
+                    {
+                        return true;
+                    }
+                    var match = StringMatcher.FuzzySearch(r.Result.OriginQuery.Search, r.Result.FuzzyMatchString);
+
+                    if (!match.IsSearchPrecisionScoreMet()) return false;
+
+                    r.Result.Score = match.Score;
+                    r.Result.SubTitle = r.Result.Score.ToString();
+                    return true;
+
+                }).Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
+                  .OrderByDescending(rv => rv.Result.Score)
+                  .ToList();
         }
         #endregion
 
