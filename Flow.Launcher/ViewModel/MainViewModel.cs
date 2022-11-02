@@ -631,7 +631,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var query = ConstructQuery(QueryText, _settings.CustomShortcuts, _settings.BuiltinShortcuts);
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
 
             _updateSource?.Dispose();

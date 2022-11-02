@@ -2343,7 +2343,18 @@
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="43" />
+                                    <RowDefinition Height="80" />
+                                    <RowDefinition Height="146" />
+                                    
+                                    <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
+                                    <RowDefinition Height="50" />
+
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="50" />
+
+                                    <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
@@ -2355,103 +2366,89 @@
                                     TextAlignment="left" />
 
                                 <StackPanel Grid.Row="1">
-                                    <Border
-                                        Margin="0,12,0,0"
-                                        Padding="0"
-                                        CornerRadius="5"
-                                        Style="{DynamicResource SettingGroupBox}">
-                                        <StackPanel Orientation="Vertical">
-                                            <Border
-                                                Margin="0"
-                                                BorderThickness="0"
-                                                Style="{DynamicResource SettingGroupBox}">
-                                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                                    <StackPanel Style="{StaticResource TextPanel}">
-                                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource flowlauncherHotkey}" />
-                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource flowlauncherHotkeyToolTip}" />
-                                                    </StackPanel>
-                                                    <flowlauncher:HotkeyControl
-                                                        x:Name="HotkeyControl"
-                                                        Grid.Row="0"
-                                                        Grid.Column="2"
-                                                        Width="300"
-                                                        Height="35"
-                                                        Margin="0,0,0,0"
-                                                        HorizontalAlignment="Right"
-                                                        HorizontalContentAlignment="Right"
-                                                        GotFocus="OnHotkeyControlFocused"
-                                                        Loaded="OnHotkeyControlLoaded"
-                                                        LostFocus="OnHotkeyControlFocusLost" />
+                                    <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource flowlauncherHotkey}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource flowlauncherHotkeyToolTip}" />
+                                            </StackPanel>
+                                            <flowlauncher:HotkeyControl
+                                                x:Name="HotkeyControl"
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Width="300"
+                                                Height="35"
+                                                Margin="0,0,0,0"
+                                                HorizontalAlignment="Right"
+                                                HorizontalContentAlignment="Right"
+                                                GotFocus="OnHotkeyControlFocused"
+                                                Loaded="OnHotkeyControlLoaded"
+                                                LostFocus="OnHotkeyControlFocusLost" />
 
-                                                    <TextBlock Style="{StaticResource Glyph}">
-                                                        &#xeda7;
-                                                    </TextBlock>
-                                                </ItemsControl>
-                                            </Border>
-
-
-
-                                        </StackPanel>
-
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xeda7;
+                                            </TextBlock>
+                                        </ItemsControl>
                                     </Border>
+                                </StackPanel>
 
-                                    <Border
-                                        Margin="0,20,0,0"
-                                        Padding="0"
-                                        CornerRadius="5"
-                                        Style="{DynamicResource SettingGroupBox}">
-                                        <StackPanel Orientation="Vertical">
-                                            <Border
-                                                Margin="0"
-                                                BorderThickness="0"
-                                                Style="{DynamicResource SettingGroupBox}">
-                                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                                    <StackPanel Style="{StaticResource TextPanel}">
-                                                        <TextBlock
-                                                            Grid.Column="1"
-                                                            VerticalAlignment="Center"
-                                                            Style="{DynamicResource SettingTitleLabel}"
-                                                            Text="{DynamicResource openResultModifiers}" />
-                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource openResultModifiersToolTip}" />
-                                                    </StackPanel>
-                                                    <ComboBox
-                                                        Grid.Column="2"
-                                                        Width="120"
-                                                        Margin="0,0,18,0"
-                                                        FontSize="14"
-                                                        ItemsSource="{Binding OpenResultModifiersList}"
-                                                        SelectedItem="{Binding Settings.OpenResultModifiers}" />
-                                                </ItemsControl>
-                                            </Border>
+                                <Border
+                                    Grid.Row="2"
+                                    Margin="0,12,0,0"
+                                    Padding="0"
+                                    CornerRadius="5"
+                                    Style="{DynamicResource SettingGroupBox}">
+                                    <StackPanel Orientation="Vertical">
+                                        <Border
+                                            Margin="0"
+                                            BorderThickness="0"
+                                            Style="{DynamicResource SettingGroupBox}">
+                                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                                <StackPanel Style="{StaticResource TextPanel}">
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
+                                                        Text="{DynamicResource openResultModifiers}" />
+                                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource openResultModifiersToolTip}" />
+                                                </StackPanel>
+                                                <ComboBox
+                                                    Grid.Column="2"
+                                                    Width="120"
+                                                    Margin="0,0,18,0"
+                                                    FontSize="14"
+                                                    ItemsSource="{Binding OpenResultModifiersList}"
+                                                    SelectedItem="{Binding Settings.OpenResultModifiers}" />
+                                            </ItemsControl>
+                                        </Border>
 
-                                            <Separator
-                                                Width="Auto"
-                                                BorderThickness="1"
-                                                Style="{StaticResource SettingSeparatorStyle}" />
-                                            <Border
-                                                Margin="0"
-                                                Padding="0,14,0,14"
-                                                BorderThickness="0"
-                                                Style="{DynamicResource SettingGroupBox}">
-                                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                                    <StackPanel Style="{StaticResource TextPanel}">
-                                                        <TextBlock
-                                                            Grid.Column="1"
-                                                            VerticalAlignment="Center"
-                                                            Style="{DynamicResource SettingTitleLabel}"
-                                                            Text="{DynamicResource showOpenResultHotkey}" />
-                                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource showOpenResultHotkeyToolTip}" />
-                                                    </StackPanel>
-                                                    <CheckBox
-                                                        Grid.Column="2"
-                                                        FontSize="14"
-                                                        IsChecked="{Binding Settings.ShowOpenResultHotkey}"
-                                                        Style="{DynamicResource SideControlCheckBox}" />
-                                                </ItemsControl>
-                                            </Border>
-                                        </StackPanel>
-                                    </Border>
-
+                                        <Separator
+                                            Width="Auto"
+                                            BorderThickness="1"
+                                            Style="{StaticResource SettingSeparatorStyle}" />
+                                        <Border
+                                            Margin="0"
+                                            Padding="0,10,0,0"
+                                            BorderThickness="0"
+                                            Style="{DynamicResource SettingGroupBox}">
+                                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                                <StackPanel Style="{StaticResource TextPanel}">
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
+                                                        Text="{DynamicResource showOpenResultHotkey}" />
+                                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource showOpenResultHotkeyToolTip}" />
+                                                </StackPanel>
+                                                <CheckBox
+                                                    Grid.Column="2"
+                                                    FontSize="14"
+                                                    IsChecked="{Binding Settings.ShowOpenResultHotkey}"
+                                                    Style="{DynamicResource SideControlCheckBox}" />
+                                            </ItemsControl>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
 
                                 <TextBlock
                                     Grid.Row="3"
@@ -2503,108 +2500,109 @@
                                     <Button
                                         MinWidth="100"
                                         Margin="10"
-                                        Click="OnnEditCustomHotkeyClick"
+                                        Click="OnEditCustomHotkeyClick"
                                         Content="{DynamicResource edit}" />
                                     <Button
                                         MinWidth="100"
                                         Margin="10,10,0,10"
                                         Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
-                                    </StackPanel>
-
-
-                                    <TextBlock
-                                        Margin="0,0,12,2"
-                                        Padding="0,12,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Foreground="{DynamicResource Color05B}"
-                                        Text="{DynamicResource customQueryShortcut}" />
-                                    <ListView
-                                        MinHeight="185"
-                                        Margin="0,6,0,0"
-                                        Background="{DynamicResource Color02B}"
-                                        BorderBrush="DarkGray"
-                                        BorderThickness="1"
-                                        ItemsSource="{Binding ShortCuts}"
-                                        SelectedItem="{Binding SelectedCustomShortcut}"
-                                        Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="{DynamicResource customShortcut}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Key}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Header="{DynamicResource customShortcutExpansion}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Value}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                    <StackPanel
-                                        Margin="0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Orientation="Horizontal">
-                                        <Button
-                                            MinWidth="100"
-                                            Margin="10"
-                                            Click="OnDeleteCustomShortCutClick"
-                                            Content="{DynamicResource delete}" />
-                                        <Button
-                                            MinWidth="100"
-                                            Margin="10"
-                                            Click="OnEditCustomShortCutClick"
-                                            Content="{DynamicResource edit}" />
-                                        <Button
-                                            MinWidth="100"
-                                            Margin="10,10,0,10"
-                                            Click="OnAddCustomShortCutClick"
-                                            Content="{DynamicResource add}" />
-                                    </StackPanel>
-
-                                    <TextBlock
-                                        Margin="0,0,12,2"
-                                        Padding="0,12,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Foreground="{DynamicResource Color05B}"
-                                        Text="Built-in Shortcuts" />
-                                    <ListView
-                                        MinHeight="185"
-                                        Margin="0,6,0,0"
-                                        Background="{DynamicResource Color02B}"
-                                        BorderBrush="DarkGray"
-                                        BorderThickness="1"
-                                        ItemsSource="{Binding Settings.BuiltinShortcuts}"
-                                        Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Header="{DynamicResource customShortcut}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Key}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Header="Description">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Description}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
                                 </StackPanel>
+                                
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Margin="0,0,12,2"
+                                    Padding="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="{DynamicResource customQueryShortcut}" />
+                                <ListView
+                                    Grid.Row="7"
+                                    Margin="0,6,0,0"
+                                    Background="{DynamicResource Color02B}"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    ItemsSource="{Binding ShortCuts}"
+                                    SelectedItem="{Binding SelectedCustomShortcut}"
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="{DynamicResource customShortcut}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Key}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="{DynamicResource customShortcutExpansion}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Value}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <StackPanel
+                                    Grid.Row="8"
+                                    Margin="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10"
+                                        Click="OnDeleteCustomShortCutClick"
+                                        Content="{DynamicResource delete}" />
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10"
+                                        Click="OnEditCustomShortCutClick"
+                                        Content="{DynamicResource edit}" />
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10,10,0,10"
+                                        Click="OnAddCustomShortCutClick"
+                                        Content="{DynamicResource add}" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Margin="0,0,12,2"
+                                    Padding="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="Built-in Shortcuts" />
+                                <ListView
+                                    Grid.Row="10"
+                                    Margin="0,6,0,0"
+                                    Background="{DynamicResource Color02B}"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    ItemsSource="{Binding Settings.BuiltinShortcuts}"
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="{DynamicResource customShortcut}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Key}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Header="Description">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Description}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
                             </Grid>
                         </Border>
                     </ScrollViewer>
