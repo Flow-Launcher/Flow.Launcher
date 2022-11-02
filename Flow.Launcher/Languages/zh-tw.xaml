@@ -21,6 +21,8 @@
     <system:String x:Key="textTitle">文字</system:String>
     <system:String x:Key="GameMode">遊戲模式</system:String>
     <system:String x:Key="GameModeToolTip">暫停使用快捷鍵。</system:String>
+    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 設定</system:String>
@@ -31,7 +33,13 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
     <system:String x:Key="rememberLastLocation">記住上次啟動位置</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Location</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
     <system:String x:Key="language">語言</system:String>
     <system:String x:Key="lastQueryMode">Last Query Style</system:String>
     <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
@@ -39,6 +47,7 @@
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">全螢幕模式下停用快捷鍵（推薦用於遊戲時）。</system:String>
     <system:String x:Key="defaultFileManager">預設檔案管理器</system:String>
@@ -58,6 +67,10 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">插件</system:String>
     <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
     <system:String x:Key="enable">啟用</system:String>
@@ -77,13 +90,24 @@
     <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
     <system:String x:Key="plugin_query_version">| 版本</system:String>
     <system:String x:Key="plugin_query_web">官方網站</system:String>
-    <system:String x:Key="uninstallbtn">解除安裝</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">外掛商店</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">外掛</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
     <system:String x:Key="installbtn">安裝</system:String>
+    <system:String x:Key="uninstallbtn">解除安裝</system:String>
+    <system:String x:Key="updatebtn">更新</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主題</system:String>
@@ -106,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">搜索窗口打開時播放音效</system:String>
     <system:String x:Key="Animation">動畫</system:String>
     <system:String x:Key="AnimationTip">使用介面動畫</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">快捷鍵</system:String>
@@ -125,6 +151,7 @@
     <system:String x:Key="queryWindowShadowEffect">查詢窗口陰影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖標</system:String>
     <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖標</system:String>
 
