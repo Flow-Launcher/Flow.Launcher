@@ -15,7 +15,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting">Ajustar definições de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Suspender computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Esvaziar reciclagem</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Abrir Reciclagem</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption">Opções de indexação</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernar computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Guardar definições do Flow Launcher</system:String>
