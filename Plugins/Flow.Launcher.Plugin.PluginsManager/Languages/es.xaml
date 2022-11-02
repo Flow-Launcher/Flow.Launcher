@@ -39,7 +39,7 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Ver código fuente</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Ver el código fuente del complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Sugerir una mejora o enviar una incidencia</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Sugerir una mejora o enviar una incidencia al desarrollador del complemento</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Sugiera una mejora o envíe una incidencia al desarrollador del complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Ir al repositorio de complementos de Flow</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visite el repositorio PluginsManifest para ver complementos hechos por la comunidad</system:String>
 
