@@ -207,6 +207,7 @@ namespace Flow.Launcher.ViewModel
                     var match = StringMatcher.FuzzySearch(r.Result.OriginQuery.Search, r.Result.FuzzyMatchString);
 
                     if (!match.IsSearchPrecisionScoreMet()) return false;
+                    r.Result.TitleHighlightData = match.MatchData;
 
                     r.Result.Score = match.Score;
                     return true;
