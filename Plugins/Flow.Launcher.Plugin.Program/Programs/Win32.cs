@@ -434,6 +434,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .Select(x => Extension(x) switch
                 {
                     ShortcutExtension => LnkProgram(x),
+                    UrlExtension => UrlProgram(x),
                     _ => Win32Program(x)
                 }).Where(x => x.Valid);
             return programs;
