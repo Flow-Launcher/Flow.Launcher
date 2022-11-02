@@ -11,6 +11,7 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     Title="{DynamicResource flowlauncher_settings}"
     Width="{Binding SettingWindowWidth, Mode=TwoWay}"
     Height="{Binding SettingWindowHeight, Mode=TwoWay}"
@@ -1051,7 +1052,7 @@
                                 VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Margin="0,0,0,18" />
+                                        <VirtualizingStackPanel Margin="0,0,0,18" />
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
@@ -1511,7 +1512,7 @@
                                 </ListBox.GroupStyle>
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel Margin="0,0,0,10" />
+                                        <wpftk:VirtualizingWrapPanel />
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
