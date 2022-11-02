@@ -200,7 +200,6 @@ namespace Flow.Launcher.ViewModel
             return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID)).Where(
                 r =>
                 {
-                    r.Result.SubTitle = r.Result.Score.ToString();
                     if (r.Result.FuzzyMatchString == null)
                     {
                         return true;
@@ -210,7 +209,6 @@ namespace Flow.Launcher.ViewModel
                     if (!match.IsSearchPrecisionScoreMet()) return false;
 
                     r.Result.Score = match.Score;
-                    r.Result.SubTitle = r.Result.Score.ToString();
                     return true;
 
                 }).Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
