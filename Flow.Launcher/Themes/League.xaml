@@ -118,5 +118,16 @@
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
     </Style>
-
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#4bb44b" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#4bb44b" />
+    </Style>
 </ResourceDictionary>
