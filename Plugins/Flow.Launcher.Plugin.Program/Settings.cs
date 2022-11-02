@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Windows.Foundation.Metadata;
 
 namespace Flow.Launcher.Plugin.Program
 {
@@ -11,7 +12,10 @@ namespace Flow.Launcher.Plugin.Program
         public DateTime LastIndexTime { get; set; }
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
         public List<DisabledProgramSource> DisabledProgramSources { get; set; } = new List<DisabledProgramSource>();
-        public string[] CustomSuffixes { get; set; } = Array.Empty<string>();
+
+        [Obsolete, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string[] ProgramSuffixes { get; set; } = null;
+        public string[] CustomSuffixes { get; set; } = Array.Empty<string>();  // Custom suffixes only
         public string[] CustomProtocols { get; set; } = Array.Empty<string>();
 
         public Dictionary<string, bool> BuiltinSuffixesStatus { get; set; } = new Dictionary<string, bool>{
@@ -32,6 +36,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public string[] GetSuffixes()
         {
+            RemoveRedundantSuffixes();
             List<string> extensions = new List<string>();
             foreach (var item in BuiltinSuffixesStatus)
             {
@@ -82,6 +87,24 @@ namespace Flow.Launcher.Plugin.Program
             {
                 return protocols.DistinctBy(x => x.ToLower()).ToArray();
             }
+        }
+
+        private void RemoveRedundantSuffixes()
+        {
+            // Migrate to new settings
+            // CustomSuffixes no longer contains custom suffixes
+            // users has tweaked the settings
+            // or this function has been executed once
+            if (UseCustomSuffixes == true || ProgramSuffixes == null) 
+                return;
+            var suffixes = ProgramSuffixes.ToList();
+            foreach(var item in BuiltinSuffixesStatus)
+            {
+                suffixes.Remove(item.Key);
+            }
+            CustomSuffixes = suffixes.ToArray(); // Custom suffixes
+            UseCustomSuffixes = CustomSuffixes.Length != 0; // Search custom suffixes or not
+            ProgramSuffixes = null;
         }
 
         public bool EnableStartMenuSource { get; set; } = true;
