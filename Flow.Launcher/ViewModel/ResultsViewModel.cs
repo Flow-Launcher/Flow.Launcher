@@ -200,7 +200,7 @@ namespace Flow.Launcher.ViewModel
             return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID)).Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings))).Where(
                 r =>
                 {
-                    if (r.Result.FuzzyMatchString == null)
+                    if (r.Result.FuzzyMatchString == null || r.Result.OriginQuery.Search == string.Empty)
                     {
                         return true;
                     }
