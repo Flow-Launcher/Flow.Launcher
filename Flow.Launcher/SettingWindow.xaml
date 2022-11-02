@@ -484,7 +484,6 @@
                 Width="16"
                 Height="16"
                 Margin="10,4,4,4"
-                RenderOptions.BitmapScalingMode="HighQuality"
                 Source="/Images/app.png" />
             <TextBlock
                 Grid.Column="1"
@@ -1047,7 +1046,9 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
                                 SnapsToDevicePixels="True"
-                                Style="{DynamicResource PluginListStyle}">
+                                Style="{DynamicResource PluginListStyle}"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Margin="0,0,0,18" />
@@ -1477,7 +1478,9 @@
                                 ItemsSource="{Binding ExternalPlugins}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectionMode="Single"
-                                Style="{DynamicResource StoreListStyle}">
+                                Style="{DynamicResource StoreListStyle}"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.GroupStyle>
                                     <GroupStyle>
                                         <GroupStyle.ContainerStyle>
@@ -1587,7 +1590,6 @@
                                                         Margin="20,20,6,0"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Top"
-                                                        RenderOptions.BitmapScalingMode="HighQuality"
                                                         Source="{Binding IcoPath, IsAsync=True}"
                                                         Stretch="Uniform" />
                                                 </StackPanel>
@@ -1756,7 +1758,8 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
-                            ScrollViewer.CanContentScroll="False">
+                            ScrollViewer.CanContentScroll="False"
+                            VirtualizingStackPanel.IsVirtualizing="True">
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />

@@ -519,6 +519,8 @@ namespace Flow.Launcher.ViewModel
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.StreamSource = memStream;
+                    bitmap.DecodePixelWidth = 800;
+                    bitmap.DecodePixelHeight = 600;
                     bitmap.EndInit();
                     var brush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
                     return brush;
