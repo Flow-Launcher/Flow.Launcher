@@ -281,12 +281,22 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public IList<UserPlugin> ExternalPlugins
+        public IList<PluginStoreItemViewModel> ExternalPlugins
         {
             get
             {
-                return PluginsManifest.UserPlugins;
+                return LabelMaker(PluginsManifest.UserPlugins);
             }
+        }
+
+        private  IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
+        {
+            return list.Select(p=>new PluginStoreItemViewModel(p))
+                .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
+                .ThenByDescending(p=>p.Category == PluginStoreItemViewModel.RecentlyUpdated)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
+                .ToList();
         }
 
         public Control SettingProvider
@@ -314,6 +324,15 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(ExternalPlugins));
         }
 
+        internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
+        {
+            var actionKeyword = plugin.Metadata.ActionKeywords.Count == 0 
+                ? string.Empty 
+                : plugin.Metadata.ActionKeywords[actionKeywordPosition];
+            
+            App.API.ChangeQuery($"{actionKeyword} {queryToDisplay}");
+            App.API.ShowMainWindow();
+        }
 
 
         #endregion
@@ -410,7 +429,24 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public List<string> TimeFormatList { get; set; } = new List<string>()
+        {
+            "hh:mm",
+            "HH:mm",
+            "tt hh:mm",
+            "hh:mm tt"
+        };
 
+        public List<string> DateFormatList { get; set; } = new List<string>()
+        {
+            "MM'/'dd dddd",
+            "MM'/'dd ddd",
+            "MM'/'dd",
+            "dd'/'MM",
+            "ddd MM'/'dd",
+            "dddd MM'/'dd",
+            "dddd"
+        };
 
         public double WindowWidthSize
         {
@@ -434,6 +470,18 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.UseSound;
             set => Settings.UseSound = value;
+        }
+
+        public bool UseClock
+        {
+            get => Settings.UseClock;
+            set => Settings.UseClock = value;
+        }
+
+        public bool UseDate
+        {
+            get => Settings.UseDate;
+            set => Settings.UseDate = value;
         }
 
         public double SettingWindowWidth

@@ -16,8 +16,11 @@ using System.Collections;
 using System.Diagnostics;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
+using Flow.Launcher.Infrastructure.Image;
+using IniParser;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -37,6 +40,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string Location => ParentDirectory;
 
         private const string ShortcutExtension = "lnk";
+        private const string UrlExtension = "url";
         private const string ExeExtension = "exe";
         private string _uid = string.Empty;
 
@@ -289,6 +293,45 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #endif
         }
 
+        private static Win32 UrlProgram(string path)
+        {
+            var program = Win32Program(path);
+            program.Valid = false;
+
+            try
+            {
+                var parser = new FileIniDataParser();
+                var data = parser.ReadFile(path);
+                var urlSection = data["InternetShortcut"];
+                var url = urlSection?["URL"];
+                if (String.IsNullOrEmpty(url))
+                {
+                    return program;
+                }
+                foreach(var protocol in Main._settings.GetProtocols())
+                {
+                    if(url.StartsWith(protocol))
+                    {
+                        program.LnkResolvedPath = url;
+                        program.Valid = true;
+                        break;
+                    }
+                }
+
+                var iconPath = urlSection?["IconFile"];
+                if (!String.IsNullOrEmpty(iconPath))
+                {
+                    program.IcoPath = iconPath;
+                }
+            }
+            catch (Exception e)
+            {
+                // Many files do not have the required fields, so no logging is done.
+            }
+
+            return program;
+        }
+
         private static Win32 ExeProgram(string path)
         {
             try
@@ -345,6 +388,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 ExeExtension => ExeProgram(x),
                 ShortcutExtension => LnkProgram(x),
+                UrlExtension => UrlProgram(x),
                 _ => Win32Program(x)
             });
 
@@ -367,6 +411,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .Select(x => Extension(x) switch
                 {
                     ShortcutExtension => LnkProgram(x),
+                    UrlExtension => UrlProgram(x),
                     _ => Win32Program(x)
                 }).Where(x => x.Valid);
             return programs;
@@ -507,7 +552,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var programs = Enumerable.Empty<Win32>();
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.ProgramSuffixes);
+                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.GetSuffixes());
 
                 programs = programs.Concat(unregistered);
 
@@ -515,13 +560,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnableRegistrySource)
                 {
-                    var appPaths = AppPathsPrograms(settings.ProgramSuffixes);
+                    var appPaths = AppPathsPrograms(settings.GetSuffixes());
                     autoIndexPrograms = autoIndexPrograms.Concat(appPaths);
                 }
 
                 if (settings.EnableStartMenuSource)
                 {
-                    var startMenu = StartMenuPrograms(settings.ProgramSuffixes);
+                    var startMenu = StartMenuPrograms(settings.GetSuffixes());
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 
