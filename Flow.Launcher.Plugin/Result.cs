@@ -111,6 +111,11 @@ namespace Flow.Launcher.Plugin
         public int Score { get; set; }
 
         /// <summary>
+        /// String to use in fuzzy score matching
+        /// </summary>
+        public string FuzzyMatchString { get; set; }
+
+        /// <summary>
         /// A list of indexes for the characters to be highlighted in Title
         /// </summary>
         public IList<int> TitleHighlightData { get; set; }
