@@ -197,7 +197,7 @@ namespace Flow.Launcher.ViewModel
             if (!resultsForUpdates.Any())
                 return Results;
 
-            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID)).Where(
+            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID)).Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings))).Where(
                 r =>
                 {
                     if (r.Result.FuzzyMatchString == null)
@@ -212,7 +212,7 @@ namespace Flow.Launcher.ViewModel
                     r.Result.Score = match.Score;
                     return true;
 
-                }).Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
+                })
                   .OrderByDescending(rv => rv.Result.Score)
                   .ToList();
         }
