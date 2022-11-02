@@ -21,6 +21,8 @@
     <system:String x:Key="textTitle">텍스트</system:String>
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
+    <system:String x:Key="PositionReset">위치 초기화</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Flow Launcher 설정</system:String>
@@ -31,7 +33,13 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
+    <system:String x:Key="SearchWindowPosition">검색 창 위치</system:String>
     <system:String x:Key="rememberLastLocation">마지막 실행 위치 기억</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">마지막 실행 위치 기억</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
     <system:String x:Key="language">언어</system:String>
     <system:String x:Key="lastQueryMode">마지막 쿼리 스타일</system:String>
     <system:String x:Key="lastQueryModeToolTip">쿼리박스를 열었을 때 쿼리 처리 방식</system:String>
@@ -39,6 +47,7 @@
     <system:String x:Key="LastQuerySelected">직전 쿼리 내용 선택</system:String>
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 단축키 무시</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">게이머라면 켜는 것을 추천합니다.</system:String>
     <system:String x:Key="defaultFileManager">기본 파일관리자</system:String>
@@ -58,6 +67,10 @@
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">플러그인 검색</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F로 플러그인 검색</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">검색 결과를 찾을 수 없습니다.</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">다른 검색어를 시도해주세요.</system:String>
     <system:String x:Key="plugin">플러그인</system:String>
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
     <system:String x:Key="enable">켬</system:String>
@@ -77,13 +90,24 @@
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
     <system:String x:Key="plugin_query_version">| 버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
-    <system:String x:Key="uninstallbtn">제거</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">플러그인</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">새로고침</system:String>
     <system:String x:Key="installbtn">설치</system:String>
+    <system:String x:Key="uninstallbtn">제거</system:String>
+    <system:String x:Key="updatebtn">업데이트</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plug-in already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plug-in has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
@@ -106,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">검색창을 열 때 작은 소리를 재생합니다.</system:String>
     <system:String x:Key="Animation">애니메이션</system:String>
     <system:String x:Key="AnimationTip">일부 UI에 애니메이션을 사용합니다.</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
@@ -125,6 +151,7 @@
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">플루언트 아이콘 사용</system:String>
     <system:String x:Key="useGlyphUIEffect">결과 및 일부 메뉴에서 플루언트 아이콘을 사용합니다.</system:String>
 
@@ -163,8 +190,8 @@
     <system:String x:Key="devtool">개발자도구</system:String>
     <system:String x:Key="settingfolder">설정 폴더</system:String>
     <system:String x:Key="logfolder">로그 폴더</system:String>
-    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
-    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
+    <system:String x:Key="clearlogfolder">로그 삭제</system:String>
+    <system:String x:Key="clearlogfolderMessage">정말 모든 로그를 삭제하시겠습니까?</system:String>
     <system:String x:Key="welcomewindow">마법사</system:String>
 
     <!--  FileManager Setting Dialog  -->
