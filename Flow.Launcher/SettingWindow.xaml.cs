@@ -1,31 +1,23 @@
-﻿using Droplex;
-using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Core.Plugin;
+﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
-using Microsoft.Win32;
 using ModernWpf;
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
-using ListViewItem = System.Windows.Controls.ListViewItem;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
@@ -71,6 +63,7 @@ namespace Flow.Launcher
             pluginStoreView.Filter = PluginStoreFilter;
 
             InitializePosition();
+            ClockDisplay();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -463,6 +456,33 @@ namespace Flow.Launcher
             if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
             {
                 pluginStoreFilterTxb.Focus();
+            }
+        }
+
+        private void PreviewClockAndDate(object sender, RoutedEventArgs e)
+        {
+            ClockDisplay();
+        }
+        public void ClockDisplay()
+        {
+            if (settings.UseClock)
+            {
+                ClockBox.Visibility = Visibility.Visible;
+                ClockBox.Text = DateTime.Now.ToString(settings.TimeFormat);
+            }
+            else
+            {
+                ClockBox.Visibility = Visibility.Collapsed;
+            }
+
+            if (settings.UseDate)
+            {
+                DateBox.Visibility = Visibility.Visible;
+                DateBox.Text = DateTime.Now.ToString(settings.DateFormat);
+            }
+            else
+            {
+                DateBox.Visibility = Visibility.Collapsed;
             }
         }
 
