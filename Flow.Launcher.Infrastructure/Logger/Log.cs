@@ -142,7 +142,7 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             e = e.Demystify();
 #if DEBUG
-            //ExceptionDispatchInfo.Capture(e).Throw();
+            ExceptionDispatchInfo.Capture(e).Throw();
 #else
             if (FormatValid(message))
             {
