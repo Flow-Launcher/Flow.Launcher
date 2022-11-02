@@ -1493,7 +1493,9 @@
                                                                         FontSize="16"
                                                                         FontWeight="Bold"
                                                                         Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+
                                                                     <ItemsPresenter />
+
                                                                 </StackPanel>
 
                                                             </Grid>
@@ -1506,13 +1508,7 @@
                                 </ListBox.GroupStyle>
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid
-                                            Margin="0,0,17,18"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Columns="3"
-                                            IsItemsHost="True"
-                                            SnapsToDevicePixels="True" />
+                                        <WrapPanel Margin="0,0,0,10" />
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
@@ -1520,7 +1516,9 @@
                                         <!--  Hover Layout Style  -->
 
                                         <ToggleButton
-                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
+                                            x:Name="StoreListItem"
+                                            Width="216"
+                                            Height="164"
                                             HorizontalAlignment="Left"
                                             HorizontalContentAlignment="left"
                                             Background="Transparent"
@@ -1543,10 +1541,7 @@
                                                 </ControlTemplate>
                                             </ToggleButton.Template>
 
-                                            <Grid
-                                                Height="160"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Top">
+                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="56" />
                                                     <RowDefinition Height="*" />
@@ -1598,7 +1593,6 @@
                                                 </StackPanel>
                                                 <StackPanel
                                                     Grid.Row="1"
-                                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
                                                     Margin="0,6,0,0"
                                                     VerticalAlignment="Top"
                                                     Panel.ZIndex="0">
@@ -1656,10 +1650,10 @@
                                                         VerticalAlignment="Stretch"
                                                         Panel.ZIndex="1">
                                                         <Grid.Background>
-                                                            <SolidColorBrush Opacity=".95" Color="{DynamicResource HoverStoreGrid}" />
+                                                            <SolidColorBrush Opacity="1" Color="{DynamicResource HoverStoreGrid}" />
                                                         </Grid.Background>
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
+                                                            <ColumnDefinition Width="{Binding Path=ActualWidth, ElementName=StoreListItem}" />
                                                         </Grid.ColumnDefinitions>
 
                                                         <StackPanel
