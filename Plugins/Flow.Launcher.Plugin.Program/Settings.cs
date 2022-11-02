@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
+using PropertyChanged;
 using Windows.Foundation.Metadata;
 
 namespace Flow.Launcher.Plugin.Program
@@ -13,7 +14,7 @@ namespace Flow.Launcher.Plugin.Program
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
         public List<DisabledProgramSource> DisabledProgramSources { get; set; } = new List<DisabledProgramSource>();
 
-        [Obsolete, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [Obsolete("Should use GetSuffixes() instead."), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string[] ProgramSuffixes { get; set; } = null;
         public string[] CustomSuffixes { get; set; } = Array.Empty<string>();  // Custom suffixes only
         public string[] CustomProtocols { get; set; } = Array.Empty<string>();

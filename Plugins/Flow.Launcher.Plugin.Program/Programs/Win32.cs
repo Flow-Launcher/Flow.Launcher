@@ -594,7 +594,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnablePATHSource)
                 {
-                    var path = PATHPrograms(settings.ProgramSuffixes);
+                    var path = PATHPrograms(settings.GetSuffixes());
                     autoIndexPrograms = autoIndexPrograms.Concat(path);
                 }
 
