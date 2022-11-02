@@ -50,7 +50,7 @@
         Insert file suffixes you want to index. Suffixes should be separated by ';'. (ex&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';'. (ex&gt;ftp;netflix)
+        插入您想要索引的 url 文件的协议。协议应该以 ';' 分隔。(例：ftp;netflix)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">以其他用户身份运行</system:String>
