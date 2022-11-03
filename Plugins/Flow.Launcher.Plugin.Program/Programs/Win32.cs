@@ -381,6 +381,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes, string[] protocols)
         {
             var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
+                    .AsParallel()
                     .SelectMany(s => ProgramPaths(s.Location, suffixes)))
                     .Distinct();
 
