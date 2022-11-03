@@ -59,7 +59,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             Key = key;
             Description = description;
-            Expand = expand ?? (() => { return Key; });
+            Expand = expand ?? (() => { return ""; });
         }
     }
 }

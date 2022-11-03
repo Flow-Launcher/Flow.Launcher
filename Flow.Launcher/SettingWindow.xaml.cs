@@ -421,8 +421,9 @@ namespace Flow.Launcher
             var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                settings.CustomShortcuts.Remove(item);
-                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
+                item.Key = shortcutSettingWindow.Key;
+                item.Value = shortcutSettingWindow.Value;
+                customShortcutView.Items.Refresh();
             }
         }
 

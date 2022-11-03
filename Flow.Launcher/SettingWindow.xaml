@@ -2520,6 +2520,7 @@
                                     Text="{DynamicResource customQueryShortcut}" />
                                 <ListView
                                     Grid.Row="7"
+                                    Name="customShortcutView"
                                     MinHeight="160"
                                     Margin="0,6,0,0"
                                     Background="{DynamicResource Color02B}"
