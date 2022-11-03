@@ -227,10 +227,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32()
-                {
-                    Valid = false, Enabled = false
-                };
+                return Default;
             }
         }
 
@@ -308,9 +305,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     return program;
                 }
-                foreach(var protocol in protocols)
+                foreach (var protocol in protocols)
                 {
-                    if(url.StartsWith(protocol))
+                    if (url.StartsWith(protocol))
                     {
                         program.LnkResolvedPath = url;
                         program.Valid = true;
@@ -347,10 +344,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
                                            $"|Permission denied when trying to load the program from {path}", e);
 
-                return new Win32()
-                {
-                    Valid = false, Enabled = false
-                };
+                return Default;
             }
         }
 
@@ -361,7 +355,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
-                IgnoreInaccessible = true, RecurseSubdirectories = true
+                IgnoreInaccessible = true,
+                RecurseSubdirectories = true
             }).Where(x => suffixes.Contains(Extension(x)));
         }
 
@@ -542,6 +537,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var programs = Enumerable.Empty<Win32>();
                 var suffixes = settings.GetSuffixes();
                 var protocols = settings.GetProtocols();
+
                 var unregistered = UnregisteredPrograms(settings.ProgramSources, suffixes, protocols);
 
                 programs = programs.Concat(unregistered);
@@ -634,7 +630,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 await Task.Run(Main.IndexWin32Programs);
             }
         }
-        
+
         public static void WatchDirectory(string directory)
         {
             if (!Directory.Exists(directory))
@@ -647,7 +643,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             watcher.Deleted += static (_, _) => indexQueue.Writer.TryWrite(default);
             watcher.EnableRaisingEvents = true;
             watcher.IncludeSubdirectories = true;
-            
+
             Watchers.Add(watcher);
         }
 
