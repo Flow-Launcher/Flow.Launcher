@@ -20,7 +20,7 @@ namespace Flow.Launcher.Plugin.Program
         /// </summary>
         public List<ProgramSource> DisabledProgramSources { get; set; } = new List<ProgramSource>();
 
-        [Obsolete, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [Obsolete("Should use GetSuffixes() instead."), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string[] ProgramSuffixes { get; set; } = null;
         public string[] CustomSuffixes { get; set; } = Array.Empty<string>();  // Custom suffixes only
         public string[] CustomProtocols { get; set; } = Array.Empty<string>();

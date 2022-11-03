@@ -586,6 +586,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return UniqueIdentifier == other.UniqueIdentifier;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Win32 other)
+            {
+                return UniqueIdentifier == other.UniqueIdentifier;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private static IEnumerable<string> GetStartMenuPaths()
         {
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);

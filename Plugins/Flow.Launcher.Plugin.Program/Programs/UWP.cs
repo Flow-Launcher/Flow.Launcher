@@ -761,6 +761,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 return $"{DisplayName}: {Description}";
             }
+
+            public override bool Equals(object obj)
+            {
+                if (obj is Application other)
+                {
+                    return UniqueIdentifier == other.UniqueIdentifier;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public override int GetHashCode()
+            {
+                return UniqueIdentifier.GetHashCode();
+            }
         }
 
         public enum PackageVersion
