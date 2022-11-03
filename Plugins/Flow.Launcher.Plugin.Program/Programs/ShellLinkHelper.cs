@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.IO;
 using Accessibility;
 using System.Runtime.InteropServices.ComTypes;
-using System.Security.Policy;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {

@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin.Program.Programs;
-
-namespace Flow.Launcher.Plugin.Program
+﻿namespace Flow.Launcher.Plugin.Program
 {
     //internal static class FileChangeWatcher
     //{
