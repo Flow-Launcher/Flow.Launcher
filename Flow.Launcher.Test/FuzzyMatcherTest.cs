@@ -129,6 +129,12 @@ namespace Flow.Launcher.Test
             }
         }
 
+
+        /// <summary>
+        /// These are standard match scenarios
+        /// The intention of this test is provide a bench mark for how much the score has increased from a change.
+        /// Usually the increase in scoring should not be drastic, increase of less than 10 is acceptable.
+        /// </summary>
         [TestCase(Chrome, Chrome, 157)]
         [TestCase(Chrome, LastIsChrome, 147)]
         [TestCase("chro", HelpCureHopeRaiseOnMindEntityChrome, 50)]
@@ -275,7 +281,7 @@ namespace Flow.Launcher.Test
                 $"Query: \"{queryString}\"{Environment.NewLine} " +
                 $"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}" +
                 $"Should be greater than{Environment.NewLine}" +
-                $"CompareString2: \"{compareString2}\", Score: {compareString1Result.Score}{Environment.NewLine}");
+                $"CompareString2: \"{compareString2}\", Score: {compareString2Result.Score}{Environment.NewLine}");
         }
 
         [TestCase("vim", "Vim", "ignoreDescription", "ignore.exe", "Vim Diff", "ignoreDescription", "ignore.exe")]
