@@ -388,8 +388,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ShortcutExtension => LnkProgram(x),
                 UrlExtension => UrlProgram(x),
                 _ => Win32Program(x)
-            });
-
+            }).Where(x => x.Valid);
 
             return programs;
         }
@@ -440,7 +439,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var filtered = ExceptDisabledSource(toFilter);
 
-            return filtered.Select(GetProgramFromPath).ToList(); // ToList due to disposing issue
+            return filtered.Select(GetProgramFromPath).Where(x => x.Valid).ToList(); // ToList due to disposing issue
         }
 
         private static IEnumerable<string> GetPathFromRegistry(RegistryKey root)
