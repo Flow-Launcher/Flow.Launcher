@@ -293,7 +293,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #endif
         }
 
-        private static Win32 UrlProgram(string path)
+        private static Win32 UrlProgram(string path, string[] protocols)
         {
             var program = Win32Program(path);
             program.Valid = false;
@@ -308,7 +308,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     return program;
                 }
-                foreach(var protocol in Main._settings.GetProtocols())
+                foreach(var protocol in protocols)
                 {
                     if(url.StartsWith(protocol))
                     {
@@ -370,7 +370,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var extension = Path.GetExtension(path)?.ToLowerInvariant();
             if (!string.IsNullOrEmpty(extension))
             {
-                return extension.Substring(1);
+                return extension.Substring(1);  // remove dot
             }
             else
             {
@@ -378,27 +378,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes, string[] protocols)
         {
             var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
                     .SelectMany(s => ProgramPaths(s.Location, suffixes)))
                     .Distinct();
 
-            var programs = paths.Select(x => Extension(x) switch
-            {
-                ExeExtension => ExeProgram(x),
-                ShortcutExtension => LnkProgram(x),
-                UrlExtension => UrlProgram(x),
-                _ => Win32Program(x)
-            }).Where(x => x.Valid);
-
+            var programs = paths.Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid);
             return programs;
         }
 
-        private static IEnumerable<Win32> StartMenuPrograms(string[] suffixes)
+        private static IEnumerable<Win32> StartMenuPrograms(string[] suffixes, string[] protocols)
         {
-            var disabledProgramsList = Main._settings.DisabledProgramSources;
-
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
             var paths1 = ProgramPaths(directory1, suffixes);
@@ -407,16 +398,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var toFilter = paths1.Concat(paths2);
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
-                .Select(x => Extension(x) switch
-                {
-                    ShortcutExtension => LnkProgram(x),
-                    UrlExtension => UrlProgram(x),
-                    _ => Win32Program(x)
-                }).Where(x => x.Valid);
+                .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid);
             return programs;
         }
 
-        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes)
+        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes, string[] protocols)
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
@@ -436,12 +422,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 toFilter = toFilter.Concat(GetPathFromRegistry(rootUser));
             }
 
-
             toFilter = toFilter.Distinct().Where(p => suffixes.Contains(Extension(p)));
 
-            var filtered = ExceptDisabledSource(toFilter);
-
-            return filtered.Select(GetProgramFromPath).Where(x => x.Valid).ToList(); // ToList due to disposing issue
+            var programs = ExceptDisabledSource(toFilter)
+                    .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid).ToList(); // ToList due to disposing issue
+            return programs;
         }
 
         private static IEnumerable<string> GetPathFromRegistry(RegistryKey root)
@@ -481,7 +466,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static Win32 GetProgramFromPath(string path)
+        private static Win32 GetProgramFromPath(string path, string[] protocols)
         {
             if (string.IsNullOrEmpty(path))
                 return Default;
@@ -491,9 +476,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!File.Exists(path))
                 return Default;
 
-            var entry = Win32Program(path);
-
-            return entry;
+            return Extension(path) switch
+            {
+                ShortcutExtension => LnkProgram(path),
+                ExeExtension => ExeProgram(path),
+                UrlExtension => UrlProgram(path, protocols),
+                _ => Win32Program(path)
+            }; ;
         }
 
         public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> paths)
@@ -550,8 +539,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             try
             {
                 var programs = Enumerable.Empty<Win32>();
-
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, settings.GetSuffixes());
+                var suffixes = settings.GetSuffixes();
+                var protocols = settings.GetProtocols();
+                var unregistered = UnregisteredPrograms(settings.ProgramSources, suffixes, protocols);
 
                 programs = programs.Concat(unregistered);
 
@@ -559,13 +549,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnableRegistrySource)
                 {
-                    var appPaths = AppPathsPrograms(settings.GetSuffixes());
+                    var appPaths = AppPathsPrograms(suffixes, protocols);
                     autoIndexPrograms = autoIndexPrograms.Concat(appPaths);
                 }
 
                 if (settings.EnableStartMenuSource)
                 {
-                    var startMenu = StartMenuPrograms(settings.GetSuffixes());
+                    var startMenu = StartMenuPrograms(suffixes, protocols);
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 
