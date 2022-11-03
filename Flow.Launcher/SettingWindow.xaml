@@ -130,6 +130,7 @@
             <Setter Property="Margin" Value="0,0,-18,0" />
         </Style>
 
+
         <Style x:Key="logo" TargetType="{x:Type TabItem}">
             <!--#region Logo Style-->
             <Setter Property="Margin" Value="0" />
@@ -243,11 +244,7 @@
         </Style>
 
         <!--  Plugin Store Item when Selected layout for nothing  -->
-        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}">
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True" />
-            </Style.Triggers>
-        </Style>
+        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}" />
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
@@ -320,11 +317,12 @@
         </Style>
 
         <!--#region PluginStore Style-->
-        <Style x:Key="StoreList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{DynamicResource Color02B}" />
+        <Style x:Key="StoreList" TargetType="ListViewItem">
             <Setter Property="Padding" Value="0,0,0,0" />
-            <Setter Property="Margin" Value="0,0,8,5" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+
+            <Setter Property="Margin" Value="0,0,8,8" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -336,7 +334,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="5"
-                            SnapsToDevicePixels="True">
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
                             <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -346,6 +345,24 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ControlTemplate.Triggers>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="False" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color00B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
+                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
+                            </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
@@ -353,29 +370,6 @@
                                 <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="False" />
-                                    <Condition Property="IsSelected" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
-
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                    <Condition Property="IsSelected" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
-
 
                             </MultiTrigger>
                             <Trigger Property="IsEnabled" Value="False">
@@ -1407,6 +1401,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Margin="5,24,0,0">
+
                             <TextBox
                                 Name="pluginStoreFilterTxb"
                                 Width="150"
@@ -1483,7 +1478,9 @@
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <wpftk:VirtualizingWrapPanel
+                                        x:Name="ItemWrapPanel"
                                         Margin="0,0,0,10"
+                                        ItemSize="216,194"
                                         MouseWheelDelta="48"
                                         Orientation="Vertical"
                                         ScrollLineDelta="16"
@@ -1493,15 +1490,30 @@
                             </ListView.ItemsPanel>
                             <ListView.GroupStyle>
                                 <GroupStyle HidesIfEmpty="True">
-                                    <GroupStyle.HeaderTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                HorizontalAlignment="Left"
-                                                FontSize="14"
-                                                FontWeight="Bold"
-                                                Text="{Binding Name, Converter={StaticResource TextConverter}}" />
-                                        </DataTemplate>
-                                    </GroupStyle.HeaderTemplate>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Grid>
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock
+                                                                    Margin="0,0,0,10"
+                                                                    VerticalAlignment="Top"
+                                                                    FontSize="16"
+                                                                    FontWeight="Bold"
+                                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+
+                                                                <ItemsPresenter />
+
+                                                            </StackPanel>
+
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
                                     <GroupStyle.Panel>
                                         <ItemsPanelTemplate>
                                             <VirtualizingStackPanel Orientation="{Binding Orientation, Mode=OneWay}" />
@@ -1510,17 +1522,15 @@
                                 </GroupStyle>
                             </ListView.GroupStyle>
 
-                            <ListView.ItemTemplate>
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <!--  Hover Layout Style  -->
 
                                     <ToggleButton
                                         x:Name="StoreListItem"
-                                        Width="216"
-                                        Height="164"
+                                        Width="200"
                                         HorizontalAlignment="Left"
                                         HorizontalContentAlignment="left"
-                                        Background="Transparent"
                                         IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
                                         Style="{StaticResource StoreItem}">
                                         <ToggleButton.Template>
@@ -1727,9 +1737,10 @@
 
                                     </ToggleButton>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
+                            </ListBox.ItemTemplate>
                         </ListView>
                     </Grid>
+
                 </TabItem>
                 <!--#endregion-->
 

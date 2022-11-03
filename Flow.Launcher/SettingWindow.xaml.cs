@@ -8,7 +8,9 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
+using ModernWpf.Controls;
 using System;
+using System.Drawing.Printing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -17,6 +19,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -425,6 +428,9 @@ namespace Flow.Launcher
             }
         }
 
+        private void ShowStoreItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
         private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
         {
             if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
