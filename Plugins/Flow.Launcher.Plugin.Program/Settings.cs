@@ -9,7 +9,15 @@ namespace Flow.Launcher.Plugin.Program
     public class Settings
     {
         public DateTime LastIndexTime { get; set; }
+
+        /// <summary>
+        /// User-added program sources' directories
+        /// </summary>
         public List<ProgramSource> ProgramSources { get; set; } = new List<ProgramSource>();
+
+        /// <summary>
+        /// Disabled single programs, not including User-added directories
+        /// </summary>
         public List<ProgramSource> DisabledProgramSources { get; set; } = new List<ProgramSource>();
 
         [Obsolete, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
