@@ -18,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Key);
+            return Key.GetHashCode();
         }
     }
 
@@ -59,7 +59,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             Key = key;
             Description = description;
-            Expand = expand ?? (() => { return ""; });
+            Expand = expand ?? (() => { return Key; });
         }
     }
 }
