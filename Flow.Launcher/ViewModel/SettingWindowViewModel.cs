@@ -223,7 +223,7 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public ObservableCollection<CustomShortcutModel> ShortCuts => Settings.CustomShortcuts;
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
 
         public string TestProxy()
         {

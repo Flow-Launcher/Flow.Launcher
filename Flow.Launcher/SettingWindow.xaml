@@ -2525,7 +2525,7 @@
                                     Background="{DynamicResource Color02B}"
                                     BorderBrush="DarkGray"
                                     BorderThickness="1"
-                                    ItemsSource="{Binding ShortCuts}"
+                                    ItemsSource="{Binding CustomShortcuts}"
                                     SelectedItem="{Binding SelectedCustomShortcut}"
                                     Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                                     <ListView.View>
