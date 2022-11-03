@@ -357,7 +357,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive=true)
+        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -422,13 +422,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> PATHPrograms(string[] suffixes)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
-            if (String.IsNullOrEmpty(pathEnv)) { 
+            if (String.IsNullOrEmpty(pathEnv)) 
+            { 
                 return Array.Empty<Win32>(); 
             }
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
-            var toFilter = paths.SelectMany(p => ProgramPaths(p, suffixes, recursive:false));
+            var toFilter = paths.SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => Extension(x) switch
