@@ -36,7 +36,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             public int GetHashCode(Result obj)
             {
-                return obj.SubTitle.GetHashCode();
+                return obj.SubTitle?.GetHashCode() ?? 0;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
                                  && UseWindowsIndexForDirectorySearch(locationPath);
-            
+
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
             if (retrievedDirectoryPath.EndsWith(":\\"))

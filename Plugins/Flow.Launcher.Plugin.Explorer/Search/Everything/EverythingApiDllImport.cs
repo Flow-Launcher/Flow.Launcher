@@ -8,9 +8,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public static class EverythingApiDllImport
     {
-        public static void Load(string path)
+        public static void Load(string directory)
         {
-            int code = LoadLibrary(Path.Combine(path, DLL));
+            var path = Path.Combine(directory, DLL);
+            int code = LoadLibrary(path);
             if (code == 0)
             {
                 int err = Marshal.GetLastPInvokeError();
