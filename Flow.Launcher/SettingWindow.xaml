@@ -358,7 +358,7 @@
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsSelected" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource HoverStoreGrid2}" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                                 <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
@@ -367,7 +367,7 @@
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsMouseOver" Value="True" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource HoverStoreGrid2}" />
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                                 <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
 
@@ -1463,7 +1463,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Margin="0,2,0,0"
+                            Margin="5,2,0,0"
                             Padding="0,0,18,0"
                             ItemContainerStyle="{StaticResource StoreList}"
                             ItemsSource="{Binding ExternalPlugins}"
@@ -1497,10 +1497,11 @@
                                                         <Grid>
                                                             <StackPanel Orientation="Vertical">
                                                                 <TextBlock
-                                                                    Margin="0,0,0,10"
+                                                                    Margin="2,0,0,10"
                                                                     VerticalAlignment="Top"
                                                                     FontSize="16"
                                                                     FontWeight="Bold"
+                                                                    Foreground="{DynamicResource Color05B}"
                                                                     Text="{Binding Name, Converter={StaticResource TextConverter}}" />
 
                                                                 <ItemsPresenter />
@@ -1581,10 +1582,13 @@
                                                     ToolTip="{Binding Version}" />
                                                 <TextBlock
                                                     Grid.Column="0"
-                                                    Margin="18,10,18,10"
+                                                    Height="60"
+                                                    Margin="18,6,18,0"
+                                                    Padding="0,0,0,10"
                                                     FontSize="12"
                                                     Foreground="{DynamicResource Color04B}"
                                                     Text="{Binding Description, Mode=OneWay}"
+                                                    TextTrimming="WordEllipsis"
                                                     TextWrapping="Wrap" />
                                             </StackPanel>
 
