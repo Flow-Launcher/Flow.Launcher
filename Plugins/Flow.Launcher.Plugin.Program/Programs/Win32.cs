@@ -376,7 +376,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     .SelectMany(s => ProgramPaths(s.Location, suffixes)))
                     .Distinct();
 
-            var programs = paths.Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid);
+            var programs = paths.Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
@@ -390,7 +390,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var toFilter = paths1.Concat(paths2);
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
-                .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid);
+                .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
@@ -554,7 +554,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
 
-                return programs.Concat(autoIndexPrograms).Distinct().ToArray();
+                return programs.Concat(autoIndexPrograms).Where(x => x.Valid).Distinct().ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception)
