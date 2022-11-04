@@ -1483,7 +1483,7 @@
                                         MouseWheelDelta="48"
                                         Orientation="Vertical"
                                         ScrollLineDelta="16"
-                                        SpacingMode="Uniform"
+                                        SpacingMode="None"
                                         StretchItems="True" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
@@ -1651,8 +1651,8 @@
                                                     </StackPanel>
                                                     <Grid Grid.Row="0" Grid.Column="1">
                                                         <StackPanel
-                                                            Margin="0,105,5,0"
-                                                            HorizontalAlignment="Right"
+                                                            Margin="12,105,5,5"
+                                                            HorizontalAlignment="Center"
                                                             Orientation="Horizontal">
                                                             <Button
                                                                 MinHeight="40"
