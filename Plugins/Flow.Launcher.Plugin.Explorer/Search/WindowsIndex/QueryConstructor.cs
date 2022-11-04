@@ -52,49 +52,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return queryHelper;
         }
 
-        private static string TopLevelDirectoryConstraint(ReadOnlySpan<char> path) => $"directory='file:{path}'";
-        private static string RecursiveDirectoryConstraint(ReadOnlySpan<char> path) => $"scope='file:{path}'";
-
-        ///<summary>
-        /// Set the required WHERE clause restriction to search on the first level of a specified directory.
-        ///</summary>
-        [Obsolete("This method is not used and will be removed in a future version.")]
-        public string QueryWhereRestrictionsForTopLevelDirectorySearch(string path)
-        {
-            return QueryWhereRestrictionsFromLocationPath(path, "directory='file:");
-        }
+        public static string TopLevelDirectoryConstraint(ReadOnlySpan<char> path) => $"directory='file:{path}'";
+        public static string RecursiveDirectoryConstraint(ReadOnlySpan<char> path) => $"scope='file:{path}'";
 
         
-        ///<summary>
-        /// Set the required WHERE clause restriction to search all files and subfolders of a specified directory.
-        ///</summary>
-        [Obsolete("This method is not used and will be removed in a future version.")]
-        public string QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(string path)
-        {
-            return QueryWhereRestrictionsFromLocationPath(path, "directory='scope:");
-        }
-
-        // TODO: Remove the method
-        private string QueryWhereRestrictionsFromLocationPath(string path, string searchDepth)
-        {
-            if (path.EndsWith(Constants.DirectorySeperator))
-                return searchDepth + $"{path}'";
-
-            var indexOfSeparator = path.LastIndexOf(Constants.DirectorySeperator);
-
-            var itemName = path[(indexOfSeparator + 1)..];
-
-            if (itemName.StartsWith(Constants.AllFilesFolderSearchWildcard))
-                itemName = itemName[1..];
-
-            var previousLevelDirectory = path.Substring(0, indexOfSeparator);
-
-            if (string.IsNullOrEmpty(itemName))
-                return $"{searchDepth}{previousLevelDirectory}'";
-
-            return $"(System.FileName LIKE '{itemName}%' OR CONTAINS({FileName},'\"{itemName}*\"',1033)) AND {searchDepth}{previousLevelDirectory}'";
-        }
-
         ///<summary>
         /// Search will be performed on all folders and files on the first level of a specified directory.
         ///</summary>
