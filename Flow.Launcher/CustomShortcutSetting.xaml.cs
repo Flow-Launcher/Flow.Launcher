@@ -1,6 +1,7 @@
 ﻿using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -12,7 +13,7 @@ namespace Flow.Launcher
         private bool update = false;
         public string Key { get; set; }
         public string Value { get; set; }
-        public CustomShortcutModel ShortCut => (Key, Value);
+        public CustomShortcutModel ShortCut;
 
         public CustomShortcutSetting(Settings settings)
         {
@@ -24,6 +25,7 @@ namespace Flow.Launcher
         {
             Key = shortcut.Key;
             Value = shortcut.Value;
+            ShortCut = shortcut;
             _settings = settings;
             update = true;
             InitializeComponent();
@@ -37,17 +39,32 @@ namespace Flow.Launcher
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
+            bool modified = false;
             if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
-            if (!update && (_settings.CustomShortcuts.Contains(new CustomShortcutModel(Key, Value)) || _settings.BuiltinShortcuts.Contains(new BuiltinShortcutModel(Key, Value, null))))
+            if (!update)
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("dulplicateShortcut"));
-                return;
+                ShortCut = new CustomShortcutModel(Key, Value);
+                if (_settings.CustomShortcuts.Any(x => x.Key == Key) || _settings.BuiltinShortcuts.Any(x => x.Key == Key))
+                {
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                    return;
+                }
+                modified = true;
             }
-            DialogResult = true;
+            else
+            {
+                if (ShortCut.Key != Key && _settings.CustomShortcuts.Any(x => x.Key == Key) || _settings.BuiltinShortcuts.Any(x => x.Key == Key))
+                {
+                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                    return;
+                }
+                modified = ShortCut.Key != Key || ShortCut.Value != Value;
+            }
+            DialogResult = modified;
             Close();
         }
 
