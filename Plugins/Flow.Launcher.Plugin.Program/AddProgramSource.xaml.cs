@@ -79,6 +79,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
+                // Separate checks to avoid changing UniqueIdentifier of UWP
                 if (!_editing.Location.Equals(path, System.StringComparison.OrdinalIgnoreCase))
                 {
                     if (ProgramSetting.ProgramSettingDisplayList
