@@ -27,7 +27,7 @@ namespace Flow.Launcher.Plugin.Program
             btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
         }
 
-        public AddProgramSource(PluginInitContext context, ProgramSource source, Settings settings)
+        public AddProgramSource(PluginInitContext context, Settings settings, ProgramSource source)
         {
             InitializeComponent();
             _context = context;

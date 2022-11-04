@@ -160,7 +160,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
             else
             {
-                var add = new AddProgramSource(context, selectedProgramSource, _settings);
+                var add = new AddProgramSource(context, _settings, selectedProgramSource);
                 if (add.ShowDialog() ?? false)
                 {
                     if (selectedProgramSource.Enabled)
