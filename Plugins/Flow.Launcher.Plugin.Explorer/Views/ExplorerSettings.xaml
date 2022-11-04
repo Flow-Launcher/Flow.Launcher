@@ -279,7 +279,7 @@
                                 DockPanel.Dock="Top"
                                 DragEnter="lbxAccessLinks_DragEnter"
                                 Drop="LbxExcludedPaths_OnDrop"
-                                ItemTemplate="{StaticResource ListViewActionKeywords}"
+                                ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
                                 ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
                                 SelectedItem="{Binding SelectedIndexSearchExcludedPath}" />
                             <StackPanel HorizontalAlignment="Right"

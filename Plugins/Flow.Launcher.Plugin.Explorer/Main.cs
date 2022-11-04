@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Explorer
             SortOptionTranslationHelper.API = context.API;
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
-                Environment.Is64BitProcess ? "Everything64.dll" : "Everything86.dll"));
+                Environment.Is64BitProcess ? "x64" : "x86"));
             return Task.CompletedTask;
         }
 
