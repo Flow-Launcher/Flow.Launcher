@@ -136,13 +136,13 @@ namespace Flow.Launcher.Test
         /// Usually the increase in scoring should not be drastic, increase of less than 10 is acceptable.
         /// </summary>
         [TestCase(Chrome, Chrome, 157)]
-        [TestCase(Chrome, LastIsChrome, 147)]
+        [TestCase(Chrome, LastIsChrome, 145)]
         [TestCase("chro", HelpCureHopeRaiseOnMindEntityChrome, 50)]
         [TestCase("chr", HelpCureHopeRaiseOnMindEntityChrome, 30)]
         [TestCase(Chrome, UninstallOrChangeProgramsOnYourComputer, 21)]
         [TestCase(Chrome, CandyCrushSagaFromKing, 0)]
-        [TestCase("sql", MicrosoftSqlServerManagementStudio, 110)]
-        [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 121)] //double spacing intended
+        [TestCase("sql", MicrosoftSqlServerManagementStudio, 109)]
+        [TestCase("sql  manag", MicrosoftSqlServerManagementStudio, 120)] //double spacing intended
         public void WhenGivenQueryString_ThenShouldReturn_TheDesiredScoring(
             string queryString, string compareString, int expectedScore)
         {
@@ -261,6 +261,38 @@ namespace Flow.Launcher.Test
         {
             // When
             var matcher = new StringMatcher {UserSettingSearchPrecision = SearchPrecisionScore.Regular};
+
+            // Given
+            var compareString1Result = matcher.FuzzyMatch(queryString, compareString1);
+            var compareString2Result = matcher.FuzzyMatch(queryString, compareString2);
+
+            Debug.WriteLine("");
+            Debug.WriteLine("###############################################");
+            Debug.WriteLine($"QueryString: \"{queryString}\"{Environment.NewLine}");
+            Debug.WriteLine(
+                $"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}");
+            Debug.WriteLine(
+                $"CompareString2: \"{compareString2}\", Score: {compareString2Result.Score}{Environment.NewLine}");
+            Debug.WriteLine("###############################################");
+            Debug.WriteLine("");
+
+            // Should
+            Assert.True(compareString1Result.Score > compareString2Result.Score,
+                $"Query: \"{queryString}\"{Environment.NewLine} " +
+                $"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}" +
+                $"Should be greater than{Environment.NewLine}" +
+                $"CompareString2: \"{compareString2}\", Score: {compareString2Result.Score}{Environment.NewLine}");
+        }
+
+        [TestCase("red", "red colour", "metro red")]
+        [TestCase("red", "this red colour", "this colour red")]
+        [TestCase("red", "this red colour", "this colour is very red")]
+        [TestCase("red", "this red colour", "this colour is surprisingly super awesome red and cool")]
+        public void WhenGivenTwoStrings_Scoring_ShouldGiveMoreWeightToTheStringCloserToIndexZero(
+            string queryString, string compareString1, string compareString2)
+        {
+            // When
+            var matcher = new StringMatcher { UserSettingSearchPrecision = SearchPrecisionScore.Regular };
 
             // Given
             var compareString1Result = matcher.FuzzyMatch(queryString, compareString1);
