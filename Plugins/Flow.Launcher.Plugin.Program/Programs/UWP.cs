@@ -640,7 +640,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // select like logo.[xxx_yyy].png
                         // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
                         var logos = files.Where(file =>
-                            Path.GetFileName(file).StartsWith(logoNamePrefix) && extension == Path.GetExtension(file)
+                            Path.GetFileName(file)?.StartsWith(logoNamePrefix, StringComparison.OrdinalIgnoreCase) ?? false
+                            && extension.Equals(Path.GetExtension(file), StringComparison.OrdinalIgnoreCase)
                         );
 
                         var selected = logos.FirstOrDefault();
