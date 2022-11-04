@@ -288,6 +288,7 @@ namespace Flow.Launcher.Test
         [TestCase("red", "this red colour", "this colour red")]
         [TestCase("red", "this red colour", "this colour is very red")]
         [TestCase("red", "this red colour", "this colour is surprisingly super awesome red and cool")]
+        [TestCase("red", "this colour is surprisingly super red very and cool", "this colour is surprisingly super very red and cool")]
         public void WhenGivenTwoStrings_Scoring_ShouldGiveMoreWeightToTheStringCloserToIndexZero(
             string queryString, string compareString1, string compareString2)
         {
