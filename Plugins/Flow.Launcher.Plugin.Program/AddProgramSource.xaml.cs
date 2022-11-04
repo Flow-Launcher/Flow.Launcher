@@ -27,9 +27,10 @@ namespace Flow.Launcher.Plugin.Program
             btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
         }
 
-        public AddProgramSource(ProgramSource source, Settings settings)
+        public AddProgramSource(PluginInitContext context, ProgramSource source, Settings settings)
         {
             InitializeComponent();
+            _context = context;
             _editing = source;
             _settings = settings;
             update = true;
@@ -70,11 +71,24 @@ namespace Flow.Launcher.Plugin.Program
                     _settings.ProgramSources.Insert(0, source);
                     ProgramSetting.ProgramSettingDisplayList.Add(source);
                 }
+                else
+                {
+                    System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
+                    return;
+                }
             }
             else
             {
                 if (!_editing.Location.Equals(path, System.StringComparison.OrdinalIgnoreCase))
                 {
+                    if (ProgramSetting.ProgramSettingDisplayList
+                            .Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.OrdinalIgnoreCase)))
+                    {
+                        // Check if the new location is used
+                        // No need to check win32 or uwp, just override them
+                        System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
+                        return;
+                    }
                     modified = true;
                     _editing.Location = path;  // Changes UniqueIdentifier internally
                 }
