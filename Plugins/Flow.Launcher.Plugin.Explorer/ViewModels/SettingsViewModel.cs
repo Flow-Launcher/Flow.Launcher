@@ -179,7 +179,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             var container = containerName switch
             {
                 "QuickAccessLink" => Settings.QuickAccessLinks,
-                "IndexSearchExcludedPath" => Settings.IndexSearchExcludedSubdirectoryPaths,
+                "IndexSearchExcludedPaths" => Settings.IndexSearchExcludedSubdirectoryPaths,
                 _ => throw new ArgumentException($"Unknown container name: {containerName}")
             };
             container.Add(link);
@@ -190,7 +190,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             (AccessLink selectedLink, ObservableCollection<AccessLink> collection) = commandParameter switch
             {
                 "QuickAccessLink" => (SelectedQuickAccessLink, Settings.QuickAccessLinks),
-                "IndexSearchExcludedPath" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
+                "IndexSearchExcludedPaths" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
                 _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
             };
 
