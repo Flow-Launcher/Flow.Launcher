@@ -7,11 +7,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 {
     public class AppxPackageHelper
     {
-        private static readonly IAppxFactory appxFactory = (IAppxFactory)new AppxFactory();
-
         // This function returns a list of attributes of applications
         public static List<IAppxManifestApplication> GetAppsFromManifest(IStream stream)
         {
+            IAppxFactory appxFactory = (IAppxFactory)new AppxFactory();
             List<IAppxManifestApplication> apps = new List<IAppxManifestApplication>();
             var reader = appxFactory.CreateManifestReader(stream);
             var manifestApps = reader.GetApplications();

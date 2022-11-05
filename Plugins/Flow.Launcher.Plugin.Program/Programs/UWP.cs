@@ -41,8 +41,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             FullName = package.Id.FullName;
             FamilyName = package.Id.FamilyName;
             InitializeAppInfo();
-            Apps = Apps.Where(a => !string.IsNullOrEmpty(a.UserModelId) && !string.IsNullOrEmpty(a.DisplayName))
-                        .ToArray();
         }
 
         private void InitializeAppInfo()
@@ -58,16 +56,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             if (hResult == Hresult.Ok)
             {
-                var apps = new List<Application>();
-
                 List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
-                foreach (var _app in _apps)
-                {
-                    var app = new Application(_app, this);
-                    apps.Add(app);
-                }
 
-                Apps = apps.Where(a => a.AppListEntry != "none").ToArray();
+                Apps = _apps.Select(x => new Application(x, this))
+                            .Where(a => a.AppListEntry != "none" 
+                                    && !string.IsNullOrEmpty(a.UserModelId) 
+                                    && !string.IsNullOrEmpty(a.DisplayName))
+                            .ToArray();
             }
             else
             {
