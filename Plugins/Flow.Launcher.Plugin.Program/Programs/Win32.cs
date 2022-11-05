@@ -395,7 +395,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 _ => Win32Program(x)
             });
 
-
             return programs;
         }
 
@@ -415,7 +414,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     ShortcutExtension => LnkProgram(x),
                     UrlExtension => UrlProgram(x),
                     _ => Win32Program(x)
-                }).Where(x => x.Valid);
+                });
             return programs;
         }
 
@@ -602,7 +601,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
 
-                return programs.Concat(autoIndexPrograms).Distinct().ToArray();
+                return programs.Concat(autoIndexPrograms).Where(x => x.Valid).Distinct().ToArray();
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception)
