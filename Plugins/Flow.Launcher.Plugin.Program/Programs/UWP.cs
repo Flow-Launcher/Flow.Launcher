@@ -59,8 +59,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
 
                 Apps = _apps.Select(x => new Application(x, this))
-                            .Where(a => a.AppListEntry != "none" 
-                                    && !string.IsNullOrEmpty(a.UserModelId) 
+                            .Where(a => !string.IsNullOrEmpty(a.UserModelId) 
                                     && !string.IsNullOrEmpty(a.DisplayName))
                             .ToArray();
             }
@@ -278,7 +277,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         [Serializable]
         public class Application : IProgram
         {
-            public string AppListEntry { get; set; }
             public string UniqueIdentifier { get; set; }
             public string DisplayName { get; set; }
             public string Description { get; set; }
