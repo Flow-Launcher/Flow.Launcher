@@ -391,49 +391,20 @@ namespace Flow.Launcher
 
         private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
         {
-            var item = viewModel.SelectedCustomShortcut;
-            if (item == null)
-            {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
-                return;
-            }
-
-            string deleteWarning =
-                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
-                    item?.Key, item?.Value);
-            if (
-                MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
-                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                settings.CustomShortcuts.Remove(item);
-            }
+            viewModel.DeleteSelectedCustomShortcut();
         }
 
         private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
         {
-            var item = viewModel.SelectedCustomShortcut;
-            if (item == null)
+            if (viewModel.EditSelectedCustomShortcut())
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
-                return;
-            }
-
-            var shortcutSettingWindow = new CustomShortcutSetting(item, settings);
-            if (shortcutSettingWindow.ShowDialog() == true)
-            {
-                item.Key = shortcutSettingWindow.Key;
-                item.Value = shortcutSettingWindow.Value;
                 customShortcutView.Items.Refresh();
             }
         }
 
         private void OnAddCustomShortCutClick(object sender, RoutedEventArgs e)
         {
-            var shortcutSettingWindow = new CustomShortcutSetting(settings);
-            if (shortcutSettingWindow.ShowDialog() == true)
-            {
-                settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
-            }
+            viewModel.AddCustomShortcut();
         }
 
         #endregion

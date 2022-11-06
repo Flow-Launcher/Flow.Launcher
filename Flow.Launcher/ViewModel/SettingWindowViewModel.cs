@@ -689,6 +689,58 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #region shortcut
+
+        public void DeleteSelectedCustomShortcut()
+        {
+            var item = SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return;
+            }
+
+            string deleteWarning =
+                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
+                    item?.Key, item?.Value);
+            if (
+                MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Settings.CustomShortcuts.Remove(item);
+            }
+        }
+
+        public bool EditSelectedCustomShortcut()
+        {
+            var item = SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return false;
+            }
+
+            var shortcutSettingWindow = new CustomShortcutSetting(item, Settings);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                item.Key = shortcutSettingWindow.Key;
+                item.Value = shortcutSettingWindow.Value;
+                return true;
+            }
+            return false;
+        }
+
+        public void AddCustomShortcut()
+        {
+            var shortcutSettingWindow = new CustomShortcutSetting(Settings);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                Settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
+            }
+        }
+
+        #endregion
+
         #region about
 
         public string Website => Constant.Website;
