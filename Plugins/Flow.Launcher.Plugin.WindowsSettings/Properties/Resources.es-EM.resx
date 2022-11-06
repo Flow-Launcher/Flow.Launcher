@@ -174,7 +174,7 @@
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Configuración de pantalla avanzada</value>
+    <value>Configuración avanzada de pantalla</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
@@ -1010,7 +1010,7 @@
     <value>Sólo disponible si DirectAccess está habilitado.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones de pantalla avanzada.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de pantalla.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
     <value>Sólo presente si el usuario está inscrito en el programa de Windows Insider.</value>
