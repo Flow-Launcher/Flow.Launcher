@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Auswählen</system:String>
     <system:String x:Key="hideOnStartup">Verstecke Flow Launcher bei Systemstart</system:String>
     <system:String x:Key="hideNotifyIcon">Statusleistensymbol ausblenden</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Suchgenauigkeit abfragen</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Erforderliche Suchergebnisse.</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin aktivieren</system:String>
@@ -69,18 +70,20 @@
     <system:String x:Key="currentPriority">Aktuelle Priorität</system:String>
     <system:String x:Key="newPriority">Neue Priorität</system:String>
     <system:String x:Key="priority">Priorität</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Pluginordner</system:String>
     <system:String x:Key="author">von</system:String>
     <system:String x:Key="plugin_init_time">Initialisierungszeit:</system:String>
     <system:String x:Key="plugin_query_time">Abfragezeit:</system:String>
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Webseite</system:String>
+    <system:String x:Key="uninstallbtn">Deinstallieren</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Erweiterungen laden</system:String>
     <system:String x:Key="refresh">Aktualisieren</system:String>
-    <system:String x:Key="install">Installieren</system:String>
+    <system:String x:Key="installbtn">Installieren</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Design</system:String>
@@ -155,11 +158,13 @@
         Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
-    <system:String x:Key="releaseNotes">Versionshinweise:</system:String>
+    <system:String x:Key="releaseNotes">Versionshinweise</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
     <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
 
     <!--  FileManager Setting Dialog  -->

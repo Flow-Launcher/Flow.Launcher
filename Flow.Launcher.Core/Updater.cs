@@ -141,6 +141,7 @@ namespace Flow.Launcher.Core
         {
             var translater = InternationalizationManager.Instance;
             var tips = string.Format(translater.GetTranslation("newVersionTips"), version);
+
             return tips;
         }
 

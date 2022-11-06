@@ -84,6 +84,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public double IconRadius
+        {
+            get
+            {
+                if (Result.RoundedIcon)
+                {
+                    return IconXY / 2;
+                }
+                return IconXY;
+            }
+
+        }
+
         public Visibility ShowGlyph
         {
             get
@@ -150,20 +163,34 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            var loadFullImage = (Path.GetExtension(imagePath) ?? "").Equals(".url", StringComparison.OrdinalIgnoreCase);
+
             if (ImageLoader.CacheContainImage(imagePath))
             {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = ImageLoader.Load(imagePath);
+                image = ImageLoader.Load(imagePath, loadFullImage);
                 return;
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+            Image = await Task.Run(() => ImageLoader.Load(imagePath, loadFullImage)).ConfigureAwait(false);
         }
 
         public Result Result { get; }
+        public int ResultProgress
+        {
+            get
+            {
+                if (Result.ProgressBar == null)
+                    return 0;
+
+                return Result.ProgressBar.Value;
+            }
+        }
 
         public string QuerySuggestionText { get; set; }
+
+        public double IconXY { get; set; } = 32;
 
         public override bool Equals(object obj)
         {
