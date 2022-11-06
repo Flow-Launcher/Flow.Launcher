@@ -20,8 +20,8 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Windows.Threading;
 using System.Windows.Data;
-using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -45,7 +45,9 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
+            
             InitializeComponent();
+            InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -53,6 +55,7 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+        
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (QueryTextBox.SelectionLength == 0)
@@ -108,7 +111,6 @@ namespace Flow.Launcher
                                     animationSound.Position = TimeSpan.Zero;
                                     animationSound.Play();
                                 }
-                                
                                 UpdatePosition();
                                 Activate();
                                 QueryTextBox.Focus();
@@ -161,6 +163,7 @@ namespace Flow.Launcher
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
+
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -176,8 +179,41 @@ namespace Flow.Launcher
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
                         break;
+                    case nameof(Settings.WindowLeft):
+                        Left = _settings.WindowLeft;
+                        break;
+                    case nameof(Settings.WindowTop):
+                        Top = _settings.WindowTop;
+                        break;
                 }
             };
+        }
+
+        private void InitializePosition()
+        {
+            switch (_settings.SearchWindowPosition)
+            {
+                case SearchWindowPositions.RememberLastLaunchLocation:
+                    Top = _settings.WindowTop;
+                    Left = _settings.WindowLeft;
+                    break;
+                case SearchWindowPositions.MouseScreenCenter:
+                    Left = HorizonCenter();
+                    Top = VerticalCenter();
+                    break;
+                case SearchWindowPositions.MouseScreenCenterTop:
+                    Left = HorizonCenter();
+                    Top = 10;
+                    break;
+                case SearchWindowPositions.MouseScreenLeftTop:
+                    Left = 10;
+                    Top = 10;
+                    break;
+                case SearchWindowPositions.MouseScreenRightTop:
+                    Left = HorizonRight();
+                    Top = 10;
+                    break;
+            }
         }
 
         private void UpdateNotifyIconText()
@@ -185,8 +221,9 @@ namespace Flow.Launcher
             var menu = contextMenu;
             ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[5]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
         }
 
         private void InitializeNotifyIcon()
@@ -212,6 +249,10 @@ namespace Flow.Launcher
             {
                 Header = InternationalizationManager.Instance.GetTranslation("GameMode")
             };
+            var positionreset = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset")
+            };
             var settings = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
@@ -223,12 +264,15 @@ namespace Flow.Launcher
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             gamemode.Click += (o, e) => ToggleGameMode();
+            positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
             contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
+            positionreset.ToolTip = InternationalizationManager.Instance.GetTranslation("PositionResetToolTip");
             contextMenu.Items.Add(gamemode);
+            contextMenu.Items.Add(positionreset);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
@@ -275,10 +319,17 @@ namespace Flow.Launcher
                 _viewModel.GameModeStatus = true;
             }
         }
+        private async void PositionReset()
+        {
+           _viewModel.Show();
+           await Task.Delay(300); // If don't give a time, Positioning will be weird.
+           Left = HorizonCenter();
+           Top = VerticalCenter();
+        }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
-                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 50, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
@@ -382,6 +433,8 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
             //This condition stops extra hide call when animator is on, 
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
@@ -403,24 +456,14 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-
-            if (_settings.RememberLastLaunchLocation)
-            {
-                Left = _settings.WindowLeft;
-                Top = _settings.WindowTop;
-            }
-            else
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
+            InitializePosition();
         }
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
             if (_animating)
                 return;
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.SearchWindowPosition == SearchWindowPositions.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
@@ -439,17 +482,8 @@ namespace Flow.Launcher
                 _viewModel.Show();
             }
         }
-
-        private void InitializePosition()
-        {
-            if (!_settings.RememberLastLaunchLocation)
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
-        }
         
-        public double WindowLeft()
+        public double HorizonCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
@@ -458,13 +492,22 @@ namespace Flow.Launcher
             return left;
         }
 
-        public double WindowTop()
+        public double VerticalCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
+        }
+
+        public double HorizonRight()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - ActualWidth) - 10;
+            return left;
         }
 
         /// <summary>
