@@ -1,30 +1,24 @@
-﻿using Droplex;
-using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Core.Plugin;
+﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
-using Microsoft.Win32;
 using ModernWpf;
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
-using ListViewItem = System.Windows.Controls.ListViewItem;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
@@ -45,6 +39,10 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            view.GroupDescriptions.Add(groupDescription);
         }
 
         #region General
@@ -57,7 +55,15 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+
+            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
+            pluginListView.Filter = PluginListFilter;
+
+            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
+            pluginStoreView.Filter = PluginStoreFilter;
+
             InitializePosition();
+            ClockDisplay();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -163,7 +169,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnAddCustomeHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             new CustomQueryHotkeySetting(this, settings).ShowDialog();
         }
@@ -297,13 +303,32 @@ namespace Flow.Launcher
 
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if (sender is Button { DataContext: UserPlugin plugin })
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
             {
-                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeyword} install {plugin.Name}");
-                API.ShowMainWindow();
+                viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var name = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
+                viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+            }
+
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+        }
+
+        private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
@@ -361,13 +386,104 @@ namespace Flow.Launcher
             RefreshMaximizeRestoreButton();
         }
 
-        private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
+        private CollectionView pluginListView;
+        private CollectionView pluginStoreView;
+
+        private bool PluginListFilter(object item)
         {
-            Plugins.ScrollIntoView(Plugins.SelectedItem);
+            if (string.IsNullOrEmpty(pluginFilterTxb.Text))
+                return true;
+            if (item is PluginViewModel model)
+            {
+                return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
+            }
+            return false;
         }
-        private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
+
+        private bool PluginStoreFilter(object item)
         {
-            Plugins.ScrollIntoView(Plugins.SelectedItem);
+            if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
+                return true;
+            if (item is PluginStoreItemViewModel model)
+            {
+                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
+                    || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
+            }
+            return false;
+        }
+
+        private string lastPluginListSearch = "";
+        private string lastPluginStoreSearch = "";
+
+        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginFilterTxb.Text != lastPluginListSearch)
+            {
+                lastPluginListSearch = pluginFilterTxb.Text;
+                pluginListView.Refresh();
+            }
+        }
+
+        private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
+            {
+                lastPluginStoreSearch = pluginStoreFilterTxb.Text;
+                pluginStoreView.Refresh();
+            }
+        }
+
+        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginListEventHandler(sender, e);
+        }
+
+        private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginStoreEventHandler(sender, e);
+        }
+
+        private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
+                pluginFilterTxb.Focus();
+        }
+
+        private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+            {
+                pluginStoreFilterTxb.Focus();
+            }
+        }
+
+        private void PreviewClockAndDate(object sender, RoutedEventArgs e)
+        {
+            ClockDisplay();
+        }
+        public void ClockDisplay()
+        {
+            if (settings.UseClock)
+            {
+                ClockBox.Visibility = Visibility.Visible;
+                ClockBox.Text = DateTime.Now.ToString(settings.TimeFormat);
+            }
+            else
+            {
+                ClockBox.Visibility = Visibility.Collapsed;
+            }
+
+            if (settings.UseDate)
+            {
+                DateBox.Visibility = Visibility.Visible;
+                DateBox.Text = DateTime.Now.ToString(settings.DateFormat);
+            }
+            else
+            {
+                DateBox.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void InitializePosition()
@@ -400,17 +516,6 @@ namespace Flow.Launcher
             var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
             return top;
         }
-        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var id = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
-                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeyword} uninstall {id}");
-                API.ShowMainWindow();
-            }
 
-        }
     }
 }
