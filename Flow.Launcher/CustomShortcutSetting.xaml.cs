@@ -9,11 +9,11 @@ namespace Flow.Launcher
     public partial class CustomShortcutSetting : Window
     {
         private SettingWindowViewModel viewModel;
-        public string Key { get; set; }
-        public string Value { get; set; }
+        public string Key { get; set; } = String.Empty;
+        public string Value { get; set; } = String.Empty;
         private string originalKey { get; init; } = null;
         private string originalValue { get; init; } = null;
-        bool update = false;
+        private bool update { get; init; } = false;
 
         public CustomShortcutSetting(SettingWindowViewModel vm)
         {
