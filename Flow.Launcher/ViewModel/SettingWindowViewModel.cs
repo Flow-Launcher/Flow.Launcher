@@ -685,11 +685,11 @@ namespace Flow.Launcher.ViewModel
 
         public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
 
-        public CustomShortcutModel? SelectedCustomShortcut { get; set; }
-
         #endregion
 
         #region shortcut
+
+        public CustomShortcutModel? SelectedCustomShortcut { get; set; }
 
         public void DeleteSelectedCustomShortcut()
         {
@@ -700,11 +700,10 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            string deleteWarning =
-                string.Format(InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
+            string deleteWarning = string.Format(
+                InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
                     item?.Key, item?.Value);
-            if (
-                MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
+            if (MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Settings.CustomShortcuts.Remove(item);
@@ -720,7 +719,7 @@ namespace Flow.Launcher.ViewModel
                 return false;
             }
 
-            var shortcutSettingWindow = new CustomShortcutSetting(item, Settings);
+            var shortcutSettingWindow = new CustomShortcutSetting(item.Key, item.Value, this);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
                 item.Key = shortcutSettingWindow.Key;
@@ -732,11 +731,17 @@ namespace Flow.Launcher.ViewModel
 
         public void AddCustomShortcut()
         {
-            var shortcutSettingWindow = new CustomShortcutSetting(Settings);
+            var shortcutSettingWindow = new CustomShortcutSetting(this);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
-                Settings.CustomShortcuts.Add(shortcutSettingWindow.ShortCut);
+                var shortcut = new CustomShortcutModel(shortcutSettingWindow.Key, shortcutSettingWindow.Value);
+                Settings.CustomShortcuts.Add(shortcut);
             }
+        }
+
+        public bool ShortcutExists(string key)
+        {
+            return Settings.CustomShortcuts.Any(x => x.Key == key) || Settings.BuiltinShortcuts.Any(x => x.Key == key);
         }
 
         #endregion

@@ -1,7 +1,6 @@
 ﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,24 +8,26 @@ namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
-        private Settings _settings;
-        private bool update = false;
+        private SettingWindowViewModel viewModel;
         public string Key { get; set; }
         public string Value { get; set; }
-        public CustomShortcutModel ShortCut;
+        private string originalKey { get; init; } = null;
+        private string originalValue { get; init; } = null;
+        bool update = false;
 
-        public CustomShortcutSetting(Settings settings)
+        public CustomShortcutSetting(SettingWindowViewModel vm)
         {
-            _settings = settings;
+            viewModel = vm;
             InitializeComponent();
         }
 
-        public CustomShortcutSetting(CustomShortcutModel shortcut, Settings settings)
+        public CustomShortcutSetting(string key, string value, SettingWindowViewModel vm)
         {
-            Key = shortcut.Key;
-            Value = shortcut.Value;
-            ShortCut = shortcut;
-            _settings = settings;
+            viewModel = vm;
+            Key = key;
+            Value = value;
+            originalKey = key;
+            originalValue = value;
             update = true;
             InitializeComponent();
         }
@@ -39,32 +40,19 @@ namespace Flow.Launcher
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            bool modified = false;
             if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
-            if (!update)
+            // Check if key is modified or adding a new one
+            if (((update && originalKey != Key) || !update)
+                && viewModel.ShortcutExists(Key))
             {
-                ShortCut = new CustomShortcutModel(Key, Value);
-                if (_settings.CustomShortcuts.Any(x => x.Key == Key) || _settings.BuiltinShortcuts.Any(x => x.Key == Key))
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
-                    return;
-                }
-                modified = true;
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                return;
             }
-            else
-            {
-                if (ShortCut.Key != Key && _settings.CustomShortcuts.Any(x => x.Key == Key) || _settings.BuiltinShortcuts.Any(x => x.Key == Key))
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
-                    return;
-                }
-                modified = ShortCut.Key != Key || ShortCut.Value != Value;
-            }
-            DialogResult = modified;
+            DialogResult = !update || originalKey != Key || originalValue != Value;
             Close();
         }
 
