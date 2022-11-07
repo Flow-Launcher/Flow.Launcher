@@ -1037,12 +1037,12 @@
                                 Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
                                 ItemsSource="{Binding PluginViewModels}"
-                                ScrollViewer.CanContentScroll="False"
+                                ScrollViewer.CanContentScroll="True"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
-                                SnapsToDevicePixels="True"
                                 Style="{DynamicResource PluginListStyle}"
                                 VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingPanel.ScrollUnit="Pixel"
                                 VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
