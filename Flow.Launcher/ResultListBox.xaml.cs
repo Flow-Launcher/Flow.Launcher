@@ -60,7 +60,7 @@ namespace Flow.Launcher
 
 
         private Point start;
-        private string file;
+        private string path;
         private string query;
 
         private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -68,7 +68,7 @@ namespace Flow.Launcher
             if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
                 return;
 
-            file = result.Result.CopyText;
+            path = result.Result.CopyText;
             query = result.Result.OriginQuery.RawQuery;
             start = e.GetPosition(null);
         }
@@ -78,24 +78,28 @@ namespace Flow.Launcher
             if (e.LeftButton != MouseButtonState.Pressed)
             {
                 start = default;
-                file = null;
+                path = null;
                 return;
             }
+
+            if (!File.Exists(path) && !Directory.Exists(path))
+                return;
 
             Point mousePosition = e.GetPosition(null);
             Vector diff = this.start - mousePosition;
 
             if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance
-                || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance
-                || !File.Exists(file))
+                || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
                 return;
 
             var data = new DataObject(DataFormats.FileDrop, new[]
             {
-                file
+                path
             });
             DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
+            
             App.API.ChangeQuery(query, true);
+            
             e.Handled = true;
         }
     }
