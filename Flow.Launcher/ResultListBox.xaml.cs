@@ -78,7 +78,8 @@ namespace Flow.Launcher
             if (e.LeftButton != MouseButtonState.Pressed)
             {
                 start = default;
-                path = null;
+                path = string.Empty;
+                query = string.Empty;
                 return;
             }
 
