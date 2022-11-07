@@ -17,6 +17,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
+using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
@@ -630,6 +631,9 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+
+
             _updateSource?.Dispose();
 
             var currentUpdateSource = new CancellationTokenSource();
@@ -645,8 +649,7 @@ namespace Flow.Launcher.ViewModel
 
             if (currentCancellationToken.IsCancellationRequested)
                 return;
-
-            var query = QueryBuilder.Build(QueryText, PluginManager.NonGlobalPlugins);
+            
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -734,6 +737,35 @@ namespace Flow.Launcher.ViewModel
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
             }
+        }
+
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        {
+            StringBuilder queryBuilder = new(queryText);
+            StringBuilder queryBuilderTmp = new(queryText);
+
+            foreach (var shortcut in customShortcuts)
+            {
+                if (queryBuilder.Equals(shortcut.Key))
+                {
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                }
+
+                queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
+            }
+
+            foreach (var shortcut in builtInShortcuts)
+            {
+                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+            }
+
+            // show expanded builtin shortcuts
+            // use private field to avoid infinite recursion
+            _queryText = queryBuilderTmp.ToString();
+
+            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return query;
         }
 
         private void RemoveOldQueryResults(Query query)
