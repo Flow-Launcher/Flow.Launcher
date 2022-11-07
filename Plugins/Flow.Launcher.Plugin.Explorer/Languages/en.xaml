@@ -1,8 +1,9 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Dialogues-->
+    <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
@@ -17,7 +18,7 @@
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
 
-    <!--Controls-->
+    <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Delete</system:String>
     <system:String x:Key="plugin_explorer_edit">Edit</system:String>
     <system:String x:Key="plugin_explorer_add">Add</system:String>
@@ -47,13 +48,17 @@
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
-    
-    
-    <!--Plugin Infos-->
+
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Path_Enumeration_Engine">Path Enumeration Engine</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
+
+    <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Search and manage files and folders. Explorer utilises Windows Index Search</system:String>
 
-    <!--Context menu items-->
+    <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Delete</system:String>

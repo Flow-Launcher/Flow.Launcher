@@ -181,7 +181,7 @@
             </Setter>
             <!--#endregion-->
         </Style>
-        <Style TargetType="{x:Type TabItem}">
+        <Style x:Key="NavTabItem" TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
@@ -437,7 +437,7 @@
             </Style.Triggers>
         </Style>
         <!--  For Tab Header responsive Width  -->
-        <Style TargetType="{x:Type TabControl}">
+        <Style x:Key="NavTabControl" TargetType="{x:Type TabControl}">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -588,6 +588,7 @@
                 Grid.ColumnSpan="5"
                 Height="auto"
                 SelectedIndex="1"
+                Style="{DynamicResource NavTabControl}"
                 TabStripPlacement="Left">
                 <TabItem Style="{DynamicResource logo}">
                     <TabItem.Header>
@@ -611,7 +612,7 @@
                         </Grid>
                     </TabItem.Header>
                 </TabItem>
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <!--  LEFT TAB WIDTH  -->
                     <TabItem.Header>
                         <Grid>
@@ -943,7 +944,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem KeyDown="OnPluginSettingKeydown">
+                <TabItem KeyDown="OnPluginSettingKeydown" Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1363,7 +1364,7 @@
                 </TabItem>
 
                 <!--#region Plugin Store-->
-                <TabItem KeyDown="PluginStore_OnKeyDown">
+                <TabItem KeyDown="PluginStore_OnKeyDown" Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1742,7 +1743,7 @@
                 </TabItem>
                 <!--#endregion-->
 
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -2319,7 +2320,7 @@
                 </TabItem>
 
 
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -2506,7 +2507,7 @@
                 </TabItem>
 
 
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -2677,7 +2678,7 @@
                         </Border>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
