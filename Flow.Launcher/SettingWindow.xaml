@@ -1040,6 +1040,7 @@
                                 ScrollViewer.CanContentScroll="True"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
+                                SnapsToDevicePixels="True"
                                 Style="{DynamicResource PluginListStyle}"
                                 VirtualizingStackPanel.IsVirtualizing="True"
                                 VirtualizingPanel.ScrollUnit="Pixel"
