@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,11 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Text;
+using DataObject = System.Windows.DataObject;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 using System.Windows.Threading;
 using System.Windows.Data;
 
