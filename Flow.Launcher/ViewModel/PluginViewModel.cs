@@ -4,10 +4,11 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class PluginViewModel : BaseModel
+    public partial class PluginViewModel : BaseModel
     {
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
@@ -36,6 +37,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _isExpanded = value;
+                
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SettingControl));
             }
@@ -70,6 +72,13 @@ namespace Flow.Launcher.ViewModel
         }
 
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+
+        [RelayCommand]
+        private void SetActionKeywords()
+        {
+            ActionKeywords changeKeywordsWindow = new ActionKeywords(this);
+            changeKeywordsWindow.ShowDialog();
+        }
     }
 
 }
