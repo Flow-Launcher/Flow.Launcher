@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,6 +61,7 @@ namespace Flow.Launcher
 
         private Point start;
         private string file;
+        private string query;
 
         private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -68,6 +69,7 @@ namespace Flow.Launcher
                 return;
 
             file = result.Result.CopyText;
+            query = result.Result.OriginQuery.RawQuery;
             start = e.GetPosition(null);
         }
 
@@ -93,6 +95,7 @@ namespace Flow.Launcher
                 file
             });
             DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
+            App.API.ChangeQuery(query, true);
             e.Handled = true;
         }
     }
