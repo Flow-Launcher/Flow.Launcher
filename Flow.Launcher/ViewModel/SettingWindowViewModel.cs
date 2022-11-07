@@ -224,6 +224,7 @@ namespace Flow.Launcher.ViewModel
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
         public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
 
         public string TestProxy()
         {

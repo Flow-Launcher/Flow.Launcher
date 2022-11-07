@@ -41,6 +41,7 @@
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
+        <converters:TranlationConverter x:Key="TranlationConverter" />
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -2531,14 +2532,14 @@
                                     Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn Header="{DynamicResource customShortcut}">
+                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <TextBlock Text="{Binding Key}" />
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Header="{DynamicResource customShortcutExpansion}">
+                                            <GridViewColumn Width="540" Header="{DynamicResource customShortcutExpansion}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <TextBlock Text="{Binding Value}" />
@@ -2586,21 +2587,21 @@
                                     Background="{DynamicResource Color02B}"
                                     BorderBrush="DarkGray"
                                     BorderThickness="1"
-                                    ItemsSource="{Binding Settings.BuiltinShortcuts}"
+                                    ItemsSource="{Binding BuiltinShortcuts}"
                                     Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                                     <ListView.View>
                                         <GridView>
-                                            <GridViewColumn Header="{DynamicResource customShortcut}">
+                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <TextBlock Text="{Binding Key}" />
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Header="Description">
+                                            <GridViewColumn Width="540" Header="{DynamicResource builtinShortcutDescription}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Description}" />
+                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranlationConverter}}" />
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>

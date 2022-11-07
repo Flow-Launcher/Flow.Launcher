@@ -190,7 +190,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonIgnore]
         public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new ObservableCollection<BuiltinShortcutModel>() { 
-            new BuiltinShortcutModel("{clipboard}", "Get text from clipboard.", Clipboard.GetText)  // TODO: translation?
+            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText)
         };
 
         public bool DontPromptUpdateMsg { get; set; }
