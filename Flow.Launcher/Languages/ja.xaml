@@ -142,12 +142,18 @@
     <system:String x:Key="showOpenResultHotkey">ホットキーを表示</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">カスタムクエリ ホットキー</system:String>
+    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expanded</system:String>
+    <system:String x:Key="builtinShortcutDescription">説明</system:String>
     <system:String x:Key="delete">削除</system:String>
     <system:String x:Key="edit">編集</system:String>
     <system:String x:Key="add">追加</system:String>
     <system:String x:Key="pleaseSelectAnItem">項目選択してください</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} プラグインのホットキーを本当に削除しますか？</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
@@ -238,6 +244,12 @@
     <system:String x:Key="hotkeyIsNotUnavailable">ホットキーは使用できません。新しいホットキーを選択してください</system:String>
     <system:String x:Key="invalidPluginHotkey">プラグインホットキーは無効です</system:String>
     <system:String x:Key="update">更新</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">ホットキーは使用できません</system:String>
