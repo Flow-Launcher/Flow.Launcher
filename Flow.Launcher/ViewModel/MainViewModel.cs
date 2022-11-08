@@ -633,6 +633,8 @@ namespace Flow.Launcher.ViewModel
 
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
+            if (query == null) // shortcut expanded
+                return;
 
             _updateSource?.Dispose();
 
