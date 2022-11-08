@@ -42,6 +42,7 @@
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
+        <converters:TranlationConverter x:Key="TranlationConverter" />
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -2257,9 +2258,17 @@
                                     <RowDefinition Height="43" />
                                     <RowDefinition Height="80" />
                                     <RowDefinition Height="146" />
+                                    
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
+
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="50" />
+
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
@@ -2364,6 +2373,7 @@
                                     Text="{DynamicResource customQueryHotkey}" />
                                 <ListView
                                     Grid.Row="4"
+                                    MinHeight="160"
                                     Margin="0,0,0,0"
                                     Background="{DynamicResource Color02B}"
                                     BorderBrush="DarkGray"
@@ -2404,7 +2414,7 @@
                                     <Button
                                         MinWidth="100"
                                         Margin="10"
-                                        Click="OnnEditCustomHotkeyClick"
+                                        Click="OnEditCustomHotkeyClick"
                                         Content="{DynamicResource edit}" />
                                     <Button
                                         MinWidth="100"
@@ -2412,6 +2422,104 @@
                                         Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
                                 </StackPanel>
+                                
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Margin="0,0,12,2"
+                                    Padding="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="{DynamicResource customQueryShortcut}" />
+                                <ListView
+                                    Grid.Row="7"
+                                    Name="customShortcutView"
+                                    MinHeight="160"
+                                    Margin="0,6,0,0"
+                                    Background="{DynamicResource Color02B}"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    ItemsSource="{Binding CustomShortcuts}"
+                                    SelectedItem="{Binding SelectedCustomShortcut}"
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Key}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Width="540" Header="{DynamicResource customShortcutExpansion}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Value}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <StackPanel
+                                    Grid.Row="8"
+                                    Margin="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10"
+                                        Click="OnDeleteCustomShortCutClick"
+                                        Content="{DynamicResource delete}" />
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10"
+                                        Click="OnEditCustomShortCutClick"
+                                        Content="{DynamicResource edit}" />
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10,10,0,10"
+                                        Click="OnAddCustomShortCutClick"
+                                        Content="{DynamicResource add}" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Margin="0,0,12,2"
+                                    Padding="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="Built-in Shortcuts" />
+                                <ListView
+                                    Grid.Row="10"
+                                    MinHeight="160"
+                                    Margin="0,6,0,0"
+                                    Background="{DynamicResource Color02B}"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    ItemsSource="{Binding BuiltinShortcuts}"
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Key}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Width="540" Header="{DynamicResource builtinShortcutDescription}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranlationConverter}}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
                             </Grid>
                         </Border>
                     </ScrollViewer>

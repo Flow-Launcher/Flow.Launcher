@@ -158,7 +158,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;
             if (item != null)
@@ -385,11 +385,34 @@ namespace Flow.Launcher
                 restoreButton.Visibility = Visibility.Collapsed;
             }
         }
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             RefreshMaximizeRestoreButton();
         }
 
+        #region Shortcut
+
+        private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.DeleteSelectedCustomShortcut();
+        }
+
+        private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.EditSelectedCustomShortcut())
+            {
+                customShortcutView.Items.Refresh();
+            }
+        }
+
+        private void OnAddCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.AddCustomShortcut();
+        }
+
+        #endregion
+        
         private CollectionView pluginListView;
         private CollectionView pluginStoreView;
 
@@ -467,6 +490,7 @@ namespace Flow.Launcher
         {
             ClockDisplay();
         }
+
         public void ClockDisplay()
         {
             if (settings.UseClock)

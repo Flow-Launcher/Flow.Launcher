@@ -189,9 +189,9 @@
                                 FontSize="16"
                                 FontWeight="SemiBold"
                                 Text="{DynamicResource flowlauncher_plugin_program_suffixes_URL_types}" />
-                            <CheckBox Name="steam" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[steam]}">Steam Games</CheckBox>
-                            <CheckBox Name="epic" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[epic]}">Epic Games</CheckBox>
-                            <CheckBox Name="http" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[http]}">Http/Https</CheckBox>
+                            <CheckBox Name="steam" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[steam]}" Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_steam}"></CheckBox>
+                            <CheckBox Name="epic" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[epic]}" Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_epic}"></CheckBox>
+                            <CheckBox Name="http" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[http]}" Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_http}"></CheckBox>
                             <CheckBox
                                 Name="CustomProtocol"
                                 Margin="10,0,0,0"

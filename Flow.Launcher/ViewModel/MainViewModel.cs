@@ -17,6 +17,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
+using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
@@ -621,7 +622,9 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            if (string.IsNullOrWhiteSpace(QueryText))
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+
+            if (query == null) // shortcut expanded
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
@@ -645,8 +648,7 @@ namespace Flow.Launcher.ViewModel
 
             if (currentCancellationToken.IsCancellationRequested)
                 return;
-
-            var query = QueryBuilder.Build(QueryText, PluginManager.NonGlobalPlugins);
+            
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -734,6 +736,40 @@ namespace Flow.Launcher.ViewModel
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
             }
+        }
+
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        {
+            if (string.IsNullOrWhiteSpace(queryText))
+            {
+                return null;
+            }
+
+            StringBuilder queryBuilder = new(queryText);
+            StringBuilder queryBuilderTmp = new(queryText);
+
+            foreach (var shortcut in customShortcuts)
+            {
+                if (queryBuilder.Equals(shortcut.Key))
+                {
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                }
+
+                queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
+            }
+
+            foreach (var shortcut in builtInShortcuts)
+            {
+                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+            }
+
+            // show expanded builtin shortcuts
+            // use private field to avoid infinite recursion
+            _queryText = queryBuilderTmp.ToString();
+
+            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return query;
         }
 
         private void RemoveOldQueryResults(Query query)
@@ -966,28 +1002,26 @@ namespace Flow.Launcher.ViewModel
                 var result = Results.SelectedItem?.Result;
                 if (result != null)
                 {
-                    string copyText = string.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
+                    string copyText = result.CopyText;
                     var isFile = File.Exists(copyText);
                     var isFolder = Directory.Exists(copyText);
                     if (isFile || isFolder)
                     {
-                        var paths = new StringCollection();
-                        paths.Add(copyText);
+                        var paths = new StringCollection
+                        {
+                            copyText
+                        };
 
                         Clipboard.SetFileDropList(paths);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy")
-                            + " "
-                            + (isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")),
+                            $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                     else
                     {
-                        Clipboard.SetDataObject(copyText.ToString());
+                        Clipboard.SetDataObject(copyText);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy")
-                            + " "
-                            + App.API.GetTranslation("textTitle"),
+                            $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                 }
