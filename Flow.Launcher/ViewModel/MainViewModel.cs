@@ -622,7 +622,9 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            if (string.IsNullOrWhiteSpace(QueryText))
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+
+            if (query == null) // shortcut expanded
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
@@ -630,11 +632,6 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
                 return;
             }
-
-            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
-
-            if (query == null) // shortcut expanded
-                return;
 
             _updateSource?.Dispose();
 
@@ -743,6 +740,11 @@ namespace Flow.Launcher.ViewModel
 
         private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
         {
+            if (string.IsNullOrWhiteSpace(queryText))
+            {
+                return null;
+            }
+
             StringBuilder queryBuilder = new(queryText);
             StringBuilder queryBuilderTmp = new(queryText);
 
