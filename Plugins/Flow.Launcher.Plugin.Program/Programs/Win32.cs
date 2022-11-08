@@ -428,7 +428,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
-            var toFilter = paths.SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
+            var toFilter = paths.AsParallel().SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => Extension(x) switch
@@ -437,7 +437,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     UrlExtension => UrlProgram(x),
                     ExeExtension => ExeProgram(x),
                     _ => Win32Program(x)
-                }).Where(x => x.Valid);
+                });
             return programs;
         }
 
