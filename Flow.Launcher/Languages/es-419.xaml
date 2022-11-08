@@ -142,12 +142,18 @@
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de acceso directo</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla rápida de selección con resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Tecla Rápida de Consulta Personalizada</system:String>
+    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expanded</system:String>
+    <system:String x:Key="builtinShortcutDescription">Description</system:String>
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar la tecla de acceso directo del plugin {0}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de ventana de búsqueda</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto sombra tiene un uso sustancial de GPU. No se recomienda si el rendimiento de su computadora es limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño de Ancho de Ventana</system:String>
@@ -238,6 +244,12 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla no disponible, por favor seleccione una nueva tecla de acceso directo</system:String>
     <system:String x:Key="invalidPluginHotkey">Tecla de acceso directo al plugin inválida</system:String>
     <system:String x:Key="update">Actualizar</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Tecla No Disponible</system:String>
