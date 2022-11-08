@@ -142,10 +142,10 @@
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="customQueryShortcut">Acceso Directo a Consulta Personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expanded</system:String>
+    <system:String x:Key="customShortcut">Acceso directo</system:String>
+    <system:String x:Key="customShortcutExpansion">Ampliado</system:String>
     <system:String x:Key="builtinShortcutDescription">Descripción</system:String>
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
@@ -246,7 +246,7 @@
     <system:String x:Key="update">Actualizar</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">Acceso Directo a Consulta Personalizada</system:String>
     <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
