@@ -428,9 +428,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void ShowStoreItem_Click(object sender, RoutedEventArgs e)
-        {
-        }
         private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
         {
             if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
