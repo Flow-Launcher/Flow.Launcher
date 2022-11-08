@@ -142,12 +142,18 @@
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
+    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="customQuery">查询</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expanded</system:String>
+    <system:String x:Key="builtinShortcutDescription">描述</system:String>
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
     <system:String x:Key="add">增加</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口宽度</system:String>
@@ -238,6 +244,12 @@
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
     <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
     <system:String x:Key="update">更新</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">热键不可用</system:String>
