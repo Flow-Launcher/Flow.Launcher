@@ -607,7 +607,8 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Background="{DynamicResource Color01B}"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="False"
+                        VirtualizingStackPanel.IsVirtualizing="True">
                         <StackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
@@ -1506,7 +1507,7 @@
                                 <DataTemplate>
                                     <!--  Hover Layout Style  -->
                                     <Button
-                                        x:Name="StoreListItem"
+                                        Name="StoreListItem"
                                         Margin="0"
                                         Padding="0"
                                         HorizontalAlignment="Stretch"
@@ -2251,14 +2252,15 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="False"
+                        VirtualizingStackPanel.IsVirtualizing="True">
                         <Border>
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="43" />
                                     <RowDefinition Height="80" />
                                     <RowDefinition Height="146" />
-                                    
+
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
@@ -2422,7 +2424,7 @@
                                         Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
                                 </StackPanel>
-                                
+
                                 <TextBlock
                                     Grid.Row="6"
                                     Margin="0,0,12,2"
@@ -2432,8 +2434,8 @@
                                     Foreground="{DynamicResource Color05B}"
                                     Text="{DynamicResource customQueryShortcut}" />
                                 <ListView
-                                    Grid.Row="7"
                                     Name="customShortcutView"
+                                    Grid.Row="7"
                                     MinHeight="160"
                                     Margin="0,6,0,0"
                                     Background="{DynamicResource Color02B}"
@@ -2545,7 +2547,8 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="False"
+                        VirtualizingStackPanel.IsVirtualizing="True">
                         <Border>
 
                             <StackPanel>
@@ -2717,7 +2720,8 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Background="{DynamicResource Color01B}"
-                            ScrollViewer.CanContentScroll="False">
+                            ScrollViewer.CanContentScroll="False"
+                            VirtualizingStackPanel.IsVirtualizing="True">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
                                     Grid.Row="2"
