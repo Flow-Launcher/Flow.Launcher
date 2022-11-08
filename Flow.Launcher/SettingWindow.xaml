@@ -1608,6 +1608,7 @@
                                                         Height="32"
                                                         Margin="18,24,0,0"
                                                         HorizontalAlignment="Left"
+                                                        RenderOptions.BitmapScalingMode="Fant"
                                                         Source="{Binding IcoPath, IsAsync=True}" />
                                                     <Border
                                                         x:Name="LabelUpdate"
