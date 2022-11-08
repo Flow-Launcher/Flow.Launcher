@@ -20,10 +20,11 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class SettingWindowViewModel : BaseModel
+    public partial class SettingWindowViewModel : BaseModel
     {
         private readonly Updater _updater;
         private readonly IPortable _portable;
@@ -330,7 +331,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public async Task RefreshExternalPluginsAsync()
+        [RelayCommand]
+        private async Task RefreshExternalPluginsAsync()
         {
             await PluginsManifest.UpdateManifestAsync();
             OnPropertyChanged(nameof(ExternalPlugins));

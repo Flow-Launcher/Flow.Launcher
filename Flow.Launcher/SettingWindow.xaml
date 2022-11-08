@@ -607,7 +607,8 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Background="{DynamicResource Color01B}"
-                        ScrollViewer.CanContentScroll="False"
+                        CanContentScroll="True"
+                        VirtualizingPanel.ScrollUnit="Pixel"
                         VirtualizingStackPanel.IsVirtualizing="True">
                         <StackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
@@ -1395,6 +1396,7 @@
                                 FontSize="14"
                                 KeyDown="PluginStoreFilterTxb_OnKeyDown"
                                 LostFocus="RefreshPluginStoreEventHandler"
+                         
                                 Text=""
                                 TextAlignment="Left"
                                 ToolTip="{DynamicResource searchpluginToolTip}"
@@ -1436,7 +1438,7 @@
                                 Padding="12,4,12,4"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Click="OnPluginStoreRefreshClick"
+                                Command="{Binding RefreshExternalPluginsCommand}"
                                 Content="{DynamicResource refresh}"
                                 DockPanel.Dock="Right"
                                 FontSize="13" />
@@ -1515,7 +1517,8 @@
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch"
                                         BorderThickness="0"
-                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}">
+                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}"
+                                        Click="StoreListItem_Click">
                                         <ui:FlyoutService.Flyout>
                                             <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
                                                 <Grid MinWidth="200">
@@ -1675,7 +1678,8 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
-                            ScrollViewer.CanContentScroll="False"
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel"
                             VirtualizingStackPanel.IsVirtualizing="True">
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
@@ -2252,7 +2256,8 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
-                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.CanContentScroll="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel"
                         VirtualizingStackPanel.IsVirtualizing="True">
                         <Border>
                             <Grid Margin="5,18,18,10">
@@ -2547,7 +2552,8 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
-                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.CanContentScroll="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel"
                         VirtualizingStackPanel.IsVirtualizing="True">
                         <Border>
 
@@ -2720,7 +2726,8 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Background="{DynamicResource Color01B}"
-                            ScrollViewer.CanContentScroll="False"
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel"
                             VirtualizingStackPanel.IsVirtualizing="True">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
