@@ -1,6 +1,9 @@
-﻿using System.Windows;
+using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
@@ -24,7 +27,7 @@ namespace Flow.Launcher
 
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            lock(_lock)
+            lock (_lock)
             {
                 curItem = (ListBoxItem)sender;
                 var p = e.GetPosition((IInputElement)sender);
@@ -34,7 +37,7 @@ namespace Flow.Launcher
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            lock(_lock)
+            lock (_lock)
             {
                 var p = e.GetPosition((IInputElement)sender);
                 if (_lastpos != p)
@@ -46,13 +49,59 @@ namespace Flow.Launcher
 
         private void ListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            lock(_lock)
+            lock (_lock)
             {
                 if (curItem != null)
                 {
                     curItem.IsSelected = true;
                 }
             }
+        }
+
+
+        private Point start;
+        private string path;
+        private string query;
+
+        private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+                return;
+
+            path = result.Result.CopyText;
+            query = result.Result.OriginQuery.RawQuery;
+            start = e.GetPosition(null);
+        }
+
+        private void ResultList_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+            {
+                start = default;
+                path = string.Empty;
+                query = string.Empty;
+                return;
+            }
+
+            if (!File.Exists(path) && !Directory.Exists(path))
+                return;
+
+            Point mousePosition = e.GetPosition(null);
+            Vector diff = this.start - mousePosition;
+
+            if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance
+                || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
+                return;
+
+            var data = new DataObject(DataFormats.FileDrop, new[]
+            {
+                path
+            });
+            DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
+            
+            App.API.ChangeQuery(query, true);
+            
+            e.Handled = true;
         }
     }
 }

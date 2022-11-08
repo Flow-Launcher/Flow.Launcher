@@ -300,7 +300,7 @@
                     <ContentControl>
                         <flowlauncher:ResultListBox x:Name="ResultListBox"
                             DataContext="{Binding Results}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            PreviewMouseLeftButtonUp="OnPreviewMouseButtonDown" />
                     </ContentControl>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
