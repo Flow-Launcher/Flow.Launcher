@@ -42,3 +42,14 @@ jobs:
       run: .\Scripts\post_build.ps1
     - name: Test
       run: dotnet test --no-build --verbosity normal -c Release
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
+          Output\Release\Flow.Launcher.Plugin.*.nupkg
+          Output\Packages\Flow-Launcher-*.exe
+          Output\Packages\Flow-Launcher-Portable.zip
+          Output\Packages\FlowLauncher-*-full.nupkg
+          Output\Packages\RELEASES
+    
+      
