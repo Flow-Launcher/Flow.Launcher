@@ -14,6 +14,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Initialize Service
+      run: |
+        sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
+        net start WSearch
+    - name: Set version in all AssemblyInfo.cs files
+      uses: secondbounce/assemblyinfo-update@v2
+      with:
+        version: '1.9.5'
     - uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
