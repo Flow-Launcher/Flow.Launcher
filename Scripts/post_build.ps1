@@ -8,7 +8,8 @@ function Build-Version {
     if ([string]::IsNullOrEmpty($env:flowVersion)) {
         $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
         $v = (Get-Command ${targetPath}).FileVersionInfo.FileVersion
-    } else {
+    }
+    else {
         $v = $env:flowVersion
     }
 
@@ -19,9 +20,11 @@ function Build-Version {
 function Build-Path {
     if (![string]::IsNullOrEmpty($env:APPVEYOR_BUILD_FOLDER)) {
         $p = $env:APPVEYOR_BUILD_FOLDER
-    } elseif (![string]::IsNullOrEmpty($solution)) {
+    }
+    elseif (![string]::IsNullOrEmpty($solution)) {
         $p = $solution
-    } else {
+    }
+    else {
         $p = Get-Location
     }
 
@@ -38,13 +41,19 @@ function Copy-Resources ($path) {
 
 function Delete-Unused ($path, $config) {
     $target = "$path\Output\$config"
-    $included = Get-ChildItem $target -Filter "*.dll"
-    foreach ($i in $included){
-        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" } 
-        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
-        $deleteList | Remove-Item
+    $included = @{}
+    Get-ChildItem $target -Filter "*.dll" | Get-FileHash | ForEach-Object { $included.Add($_.hash, $true) }
+
+    $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse 
+    | Select-Object Name, VersionInfo, Directory, FullName, @{name = "hash"; expression = { (Get-FileHash $_.FullName).hash } } 
+    | Where-Object { $included.Contains($_.hash) }
+
+    $deleteList | ForEach-Object { 
+        Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName
     }
-    Remove-Item -Path $target -Include "*.xml" -Recurse 
+    $deleteList | Remove-Item -Path { $_.FullName } 
+
+    Remove-Item -Path $target -Include "*.xml" -Recurse
 }
 
 function Remove-CreateDumpExe ($path, $config) {
@@ -99,7 +108,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 
 function Publish-Self-Contained ($p) {
 
-    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
+    $csproj = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
     $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
@@ -119,7 +128,7 @@ function Main {
     $v = Build-Version
     Copy-Resources $p
 
-    if ($config -eq "Release"){
+    if ($config -eq "Release") {
         
         Delete-Unused $p $config
 
@@ -131,7 +140,7 @@ function Main {
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
 
-        Publish-Portable $o $v
+        # Publish-Portable $o $v
     }
 }
 
