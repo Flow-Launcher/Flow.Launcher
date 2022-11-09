@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.19041</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Flow.Launcher.App</StartupObject>
@@ -13,7 +12,6 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +24,6 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
@@ -37,23 +34,18 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-
   <ItemGroup>
     <ApplicationDefinition Remove="App.xaml" />
   </ItemGroup>
-  
   <ItemGroup>
     <Page Include="App.xaml" />
   </ItemGroup>
-  
   <ItemGroup>
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
   </ItemGroup>
-  
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Languages\*.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -66,11 +58,10 @@
     <Content Include="Images\*.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	  <Content Include="Images\*.ico">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
+    <Content Include="Images\*.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Themes\*.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -81,16 +72,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
     <PackageReference Include="Fody" Version="6.5.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
-    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.2" />
-    <PackageReference Include="ModernWpfUI" Version="0.9.4" />
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
+    <PackageReference Include="ModernWpfUI" Version="0.9.6" />
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
     <PackageReference Include="NuGet.CommandLine" Version="5.7.2">
       <PrivateAssets>all</PrivateAssets>
@@ -98,27 +88,25 @@
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.7.6" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Resources\open.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="taskkill /f /fi &quot;IMAGENAME eq Flow.Launcher.exe&quot;" />
   </Target>
-
   <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
     <!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
-
     <ItemGroup>
       <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
       <Analyzer Remove="@(Analyzer)" />
