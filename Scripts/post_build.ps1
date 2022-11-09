@@ -71,7 +71,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.7.2\tools\NuGet.exe -Force
+    New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\6.3.1\tools\NuGet.exe -Force
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
     nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
