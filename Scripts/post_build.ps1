@@ -42,7 +42,7 @@ function Copy-Resources($path) {
 function Delete-Unused($path, $config) {
     $target = "$path\Output\$config"
     $included = @{ }
-    Get-ChildItem -Path $target -r  | Where-Object { $_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } | Get-FileHash | ForEach-Object { $included[$_.hash] = $true }
+    Get-ChildItem -Path $target -r  | Where-Object { !$_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } | Get-FileHash | ForEach-Object { $included[$_.hash] = $true }
 
     $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse |
     Select-Object Name, VersionInfo, Directory, FullName, @{ name = "hash"; expression = { (Get-FileHash $_.FullName).hash } } |
