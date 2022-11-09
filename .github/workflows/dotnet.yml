@@ -42,14 +42,31 @@ jobs:
       run: .\Scripts\post_build.ps1
     - name: Test
       run: dotnet test --no-build --verbosity normal -c Release
-    - name: Upload Artifact
+    - name: Upload Plugin Nupkg
       uses: actions/upload-artifact@v3
       with:
         path: |
           Output\Release\Flow.Launcher.Plugin.*.nupkg
+    - name: Upload Setup
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
           Output\Packages\Flow-Launcher-*.exe
+    - name: Upload Portable Version
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
           Output\Packages\Flow-Launcher-Portable.zip
+    - name: Upload Full Nupkg
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
           Output\Packages\FlowLauncher-*-full.nupkg
+          
+    - name: Upload Release Information
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
           Output\Packages\RELEASES
     
       
