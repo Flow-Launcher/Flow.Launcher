@@ -55,18 +55,18 @@ jobs:
         name: Flow Installer
         path: |
           Output\Packages\Flow-Launcher-*.exe
-    - name: Upload Portable Version
-      uses: actions/upload-artifact@v3
-      with:
-        name: Portable Version
-        path: |
-          Output\Packages\Flow-Launcher-Portable.zip
-    - name: Upload Full Nupkg
-      uses: actions/upload-artifact@v3
-      with:
-        name: Full nupkg
-        path: |
-          Output\Packages\FlowLauncher-*-full.nupkg
+    # - name: Upload Portable Version
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: Portable Version
+    #     path: |
+    #       Output\Packages\Flow-Launcher-Portable.zip
+    # - name: Upload Full Nupkg
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: Full nupkg
+    #     path: |
+    #       Output\Packages\FlowLauncher-*-full.nupkg
           
     - name: Upload Release Information
       uses: actions/upload-artifact@v3
