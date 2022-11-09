@@ -142,7 +142,7 @@
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Acceso directo a Consulta Personalizada</system:String>
+    <system:String x:Key="customQueryShortcut">Acceso directo de consulta personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Acceso directo</system:String>
     <system:String x:Key="customShortcutExpansion">Expandido</system:String>
@@ -246,8 +246,8 @@
     <system:String x:Key="update">Actualizar</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Acceso directo a Consulta Personalizada</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Introduce un acceso directo que se expande automáticamente a la consulta especificada.</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Introduzca acceso directo para mostrar directamente la consulta especificada.</system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
 
