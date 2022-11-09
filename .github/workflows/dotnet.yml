@@ -23,6 +23,12 @@ jobs:
       uses: secondbounce/assemblyinfo-update@v2
       with:
         version: '1.9.5'
+    - if: ${{ runner.os == 'Windows' }}
+      name: Use GNU tar
+      shell: cmd
+      run: |
+        echo "Adding GNU tar to PATH"
+        echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
     - uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
