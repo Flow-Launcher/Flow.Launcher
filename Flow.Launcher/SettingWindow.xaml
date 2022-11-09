@@ -607,10 +607,10 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Background="{DynamicResource Color01B}"
-                        CanContentScroll="True"
+                        CanContentScroll="False"
                         VirtualizingPanel.ScrollUnit="Pixel"
                         VirtualizingStackPanel.IsVirtualizing="True">
-                        <StackPanel Margin="5,18,25,30" Orientation="Vertical">
+                        <VirtualizingStackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
                                 Margin="0,5,0,5"
@@ -917,7 +917,7 @@
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
-                        </StackPanel>
+                        </VirtualizingStackPanel>
                     </ScrollViewer>
                 </TabItem>
                 <TabItem KeyDown="OnPluginSettingKeydown">
@@ -1396,7 +1396,6 @@
                                 FontSize="14"
                                 KeyDown="PluginStoreFilterTxb_OnKeyDown"
                                 LostFocus="RefreshPluginStoreEventHandler"
-                         
                                 Text=""
                                 TextAlignment="Left"
                                 ToolTip="{DynamicResource searchpluginToolTip}"
@@ -1517,8 +1516,8 @@
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Stretch"
                                         BorderThickness="0"
-                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}"
-                                        Click="StoreListItem_Click">
+                                        Click="StoreListItem_Click"
+                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}">
                                         <ui:FlyoutService.Flyout>
                                             <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
                                                 <Grid MinWidth="200">
@@ -1679,8 +1678,8 @@
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
                             ScrollViewer.CanContentScroll="True"
-                            VirtualizingStackPanel.ScrollUnit="Pixel"
-                            VirtualizingStackPanel.IsVirtualizing="True">
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel">
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />
@@ -2257,8 +2256,8 @@
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
                         ScrollViewer.CanContentScroll="True"
-                        VirtualizingStackPanel.ScrollUnit="Pixel"
-                        VirtualizingStackPanel.IsVirtualizing="True">
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
@@ -2553,8 +2552,8 @@
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
                         ScrollViewer.CanContentScroll="True"
-                        VirtualizingStackPanel.ScrollUnit="Pixel"
-                        VirtualizingStackPanel.IsVirtualizing="True">
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
 
                             <StackPanel>
@@ -2727,8 +2726,8 @@
                             Margin="0,0,0,0"
                             Background="{DynamicResource Color01B}"
                             ScrollViewer.CanContentScroll="True"
-                            VirtualizingStackPanel.ScrollUnit="Pixel"
-                            VirtualizingStackPanel.IsVirtualizing="True">
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
                                     Grid.Row="2"

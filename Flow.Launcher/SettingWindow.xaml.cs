@@ -340,18 +340,30 @@ namespace Flow.Launcher
                 viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
 
+
         }
 
         private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
         {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
             if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
                 viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
         {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
             if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
                 viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
