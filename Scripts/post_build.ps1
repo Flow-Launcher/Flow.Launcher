@@ -1,11 +1,11 @@
 param(
-    [string]$config = "Release", 
+    [string]$config = "Release",
     [string]$solution = (Join-Path $PSScriptRoot ".." -Resolve)
 )
 Write-Host "Config: $config"
 
 function Build-Version {
-    if ([string]::IsNullOrEmpty($env:flowVersion)) {
+    if ( [string]::IsNullOrEmpty($env:flowVersion)) {
         $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
         $v = (Get-Command ${targetPath}).FileVersionInfo.FileVersion
     }
@@ -34,29 +34,29 @@ function Build-Path {
     return $p
 }
 
-function Copy-Resources ($path) {
+function Copy-Resources($path) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
     Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
 }
 
-function Delete-Unused ($path, $config) {
+function Delete-Unused($path, $config) {
     $target = "$path\Output\$config"
-    $included = @{}
-    Get-ChildItem $target -Filter "*.dll" | Get-FileHash | ForEach-Object { $included.Add($_.hash, $true) }
+    $included = @{ }
+    Get-ChildItem -Path $target -r  | Where-Object { $_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } | Get-FileHash | ForEach-Object { $included[$_.hash] = $true }
 
-    $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse 
-    | Select-Object Name, VersionInfo, Directory, FullName, @{name = "hash"; expression = { (Get-FileHash $_.FullName).hash } } 
-    | Where-Object { $included.Contains($_.hash) }
+    $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse |
+    Select-Object Name, VersionInfo, Directory, FullName, @{ name = "hash"; expression = { (Get-FileHash $_.FullName).hash } } |
+    Where-Object { $included.Contains($_.hash) }
 
-    $deleteList | ForEach-Object { 
+    $deleteList | ForEach-Object {
         Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName
     }
-    $deleteList | Remove-Item -Path { $_.FullName } 
+    $deleteList | Remove-Item -Path { $_.FullName }
 
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
 
-function Remove-CreateDumpExe ($path, $config) {
+function Remove-CreateDumpExe($path, $config) {
     $target = "$path\Output\$config"
 
     $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
@@ -65,12 +65,12 @@ function Remove-CreateDumpExe ($path, $config) {
 }
 
 
-function Validate-Directory ($output) {
+function Validate-Directory($output) {
     New-Item $output -ItemType Directory -Force
 }
 
 
-function Pack-Squirrel-Installer ($path, $version, $output) {
+function Pack-Squirrel-Installer($path, $version, $output) {
     # msbuild based installer generation is not working in appveyor, not sure why
     Write-Host "Begin pack squirrel installer"
 
@@ -82,7 +82,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
     New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\6.3.1\tools\NuGet.exe -Force
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration = Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
@@ -97,7 +97,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
     Move-Item $temp\* $output -Force
     Remove-Item $temp
-    
+
     $file = "$output\Flow-Launcher-Setup.exe"
     Write-Host "Filename: $file"
 
@@ -106,18 +106,18 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
-function Publish-Self-Contained ($p) {
+function Publish-Self-Contained($p) {
 
     $csproj = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
     $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+    dotnet publish -c Release $csproj /p:PublishProfile = $profile
 }
 
-function Publish-Portable ($outputLocation, $version) {
-    
+function Publish-Portable($outputLocation, $version) {
+
     & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
     mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
     Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
@@ -129,7 +129,7 @@ function Main {
     Copy-Resources $p
 
     if ($config -eq "Release") {
-        
+
         Delete-Unused $p $config
 
         Publish-Self-Contained $p
