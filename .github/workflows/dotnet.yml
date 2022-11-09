@@ -22,7 +22,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore -c Release
     - name: Perform a Pester test from the command-line
       shell: pwsh
       run: .\Scripts\post_build.ps1
