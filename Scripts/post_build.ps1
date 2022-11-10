@@ -44,14 +44,14 @@ function Delete-Unused($path, $config) {
     $included = @{ }
     Get-ChildItem -Path $target -r -Filter "*.dll" | Where-Object { !$_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } | Get-FileHash | ForEach-Object { $included[$_.hash] = $true }
 
-    $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse |
+    $deleteList = Get-ChildItem "$target\Plugins" -Filter "*.dll" -Recurse |
     Select-Object Name, VersionInfo, Directory, FullName, @{ name = "hash"; expression = { (Get-FileHash $_.FullName).hash } } |
     Where-Object { $included.Contains($_.hash) }
 
     $deleteList | ForEach-Object {
         Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName
+        Remove-Item $_.FullName
     }
-    $deleteList | Remove-Item -Path { $_.FullName }
 
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
@@ -130,17 +130,17 @@ function Main {
 
     if ($config -eq "Release") {
 
-        # Delete-Unused $p $config
+        Publish-Self-Contained $p
 
-        # Publish-Self-Contained $p
+        Delete-Unused $p $config
 
-        # Remove-CreateDumpExe $p $config
+        Remove-CreateDumpExe $p $config
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
 
-        Publish-Portable $o $v
+#        Publish-Portable $o $v
     }
 }
 
