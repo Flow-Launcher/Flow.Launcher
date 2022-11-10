@@ -4,6 +4,7 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <AssemblyName>Flow.Launcher.Plugin.ProcessKiller</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.ProcessKiller</PackageId>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Authors>Flow-Launcher</Authors>
     <PackageProjectUrl>https://github.com/Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller</RepositoryUrl>
@@ -45,8 +46,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+    <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj"/>
+    <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">

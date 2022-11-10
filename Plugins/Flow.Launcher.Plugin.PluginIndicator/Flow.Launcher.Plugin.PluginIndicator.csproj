@@ -3,6 +3,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <ProjectGuid>{FDED22C8-B637-42E8-824A-63B5B6E05A3A}</ProjectGuid>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.PluginIndicator</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.PluginIndicator</AssemblyName>
