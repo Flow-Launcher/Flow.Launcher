@@ -142,7 +142,7 @@
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho perto dos resultados</system:String>
     <system:String x:Key="customQueryHotkey">Tecla de atalho personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Atalho personalizado</system:String>
+    <system:String x:Key="customQueryShortcut">Atalho de consulta personalizada</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Atalho</system:String>
     <system:String x:Key="customShortcutExpansion">Expandido</system:String>
@@ -245,10 +245,10 @@
     <system:String x:Key="update">Atualizar</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Atalho personalizado</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Introduza o atalho que se expande automaticamente para a consulta especificada.</system:String>
+    <system:String x:Key="duplicateShortcut">Este atallho já existe. Por favor escolha outro ou edite o existente.</system:String>
+    <system:String x:Key="emptyShortcut">O atalho e/ou a expansão não estão preenchidos.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Tecla de atalho indisponível</system:String>
