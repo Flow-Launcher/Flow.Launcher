@@ -53,13 +53,13 @@ function Delete-Unused($path, $config)
     $included = @{ }
     Get-ChildItem -Path $target -r -Filter "*.dll" | Where-Object { !$_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } |
             ForEach-Object {
-                $included["$($_.Name)-$($_.VersionInfo.FileVersion)"] = $true
+                $included["$( $_.Name )-$( $_.VersionInfo.FileVersion )"] = $true
             }
 
     #    $included
 
     $deleteList = Get-ChildItem "$target\Plugins" -Filter "*.dll" -Recurse |
-            Where-Object { $included.ContainsKey("$($_.Name)-$($_.VersionInfo.FileVersion)") }
+            Where-Object { $included.ContainsKey("$( $_.Name )-$( $_.VersionInfo.FileVersion )") }
 
 
     $deleteList | ForEach-Object {
@@ -99,7 +99,7 @@ function Pack-Squirrel-Installer($path, $version, $output)
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
     New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\6.3.1\tools\NuGet.exe -Force
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration = Release
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
