@@ -8,14 +8,19 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
+using ModernWpf.Controls;
 using System;
+using System.Drawing.Printing;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Navigation;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -296,17 +301,35 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
+        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
-            _ = viewModel.RefreshExternalPluginsAsync();
-        }
+            //get parent item
+            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
 
+            //we've reached the end of the tree
+            if (parentObject == null) return null;
+
+            //check if the parent matches the type we're looking for
+            T parent = parentObject as T;
+            if (parent != null)
+                return parent;
+            else
+                return FindParent<T>(parentObject);
+        }
+        
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+            if (sender is not Button { DataContext: PluginStoreItemViewModel plugin } button)
             {
-                viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+                return;
             }
+
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
+            viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
         }
 
         private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
@@ -317,18 +340,30 @@ namespace Flow.Launcher
                 viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
 
+
         }
 
         private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
         {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
             if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
                 viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
         {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
             if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
                 viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
@@ -541,5 +576,21 @@ namespace Flow.Launcher
             return top;
         }
 
+        private Button storeClickedButton;
+
+        private void StoreListItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button)
+                return;
+
+            storeClickedButton = button;
+
+            var flyout = FlyoutService.GetFlyout(button);
+            flyout.Closed += (_, _) =>
+            {
+                storeClickedButton = null;
+            };
+
+        }
     }
 }

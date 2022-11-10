@@ -11,6 +11,7 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     Title="{DynamicResource flowlauncher_settings}"
     Width="{Binding SettingWindowWidth, Mode=TwoWay}"
     Height="{Binding SettingWindowHeight, Mode=TwoWay}"
@@ -48,6 +49,18 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
+        <Style x:Key="StoreItemFocusVisualStyleKey">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle
+                            Margin="0"
+                            Stroke="Black"
+                            StrokeThickness="2" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Margin" Value="0" />
@@ -129,6 +142,7 @@
             <Setter Property="Grid.Column" Value="1" />
             <Setter Property="Margin" Value="0,0,-18,0" />
         </Style>
+
 
         <Style x:Key="logo" TargetType="{x:Type TabItem}">
             <!--#region Logo Style-->
@@ -243,11 +257,7 @@
         </Style>
 
         <!--  Plugin Store Item when Selected layout for nothing  -->
-        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}">
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True" />
-            </Style.Triggers>
-        </Style>
+        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}" />
 
         <Style x:Key="PluginList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
@@ -320,11 +330,12 @@
         </Style>
 
         <!--#region PluginStore Style-->
-        <Style x:Key="StoreList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{DynamicResource Color02B}" />
+        <Style x:Key="StoreList" TargetType="ListViewItem">
             <Setter Property="Padding" Value="0,0,0,0" />
-            <Setter Property="Margin" Value="0,0,8,5" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0,0,8,8" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -336,7 +347,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="5"
-                            SnapsToDevicePixels="True">
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
                             <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -345,43 +357,6 @@
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="False" />
-                                    <Condition Property="IsSelected" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
-
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                    <Condition Property="IsSelected" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
-
-
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -485,7 +460,6 @@
                 Width="16"
                 Height="16"
                 Margin="10,4,4,4"
-                RenderOptions.BitmapScalingMode="HighQuality"
                 Source="/Images/app.png" />
             <TextBlock
                 Grid.Column="1"
@@ -633,8 +607,10 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Background="{DynamicResource Color01B}"
-                        ScrollViewer.CanContentScroll="False">
-                        <StackPanel Margin="5,18,25,30" Orientation="Vertical">
+                        CanContentScroll="False"
+                        VirtualizingPanel.ScrollUnit="Pixel"
+                        VirtualizingStackPanel.IsVirtualizing="True">
+                        <VirtualizingStackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
                                 Margin="0,5,0,5"
@@ -941,7 +917,7 @@
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
-                        </StackPanel>
+                        </VirtualizingStackPanel>
                     </ScrollViewer>
                 </TabItem>
                 <TabItem KeyDown="OnPluginSettingKeydown">
@@ -1044,14 +1020,17 @@
                                 Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
                                 ItemsSource="{Binding PluginViewModels}"
-                                ScrollViewer.CanContentScroll="False"
+                                ScrollViewer.CanContentScroll="True"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
                                 SnapsToDevicePixels="True"
-                                Style="{DynamicResource PluginListStyle}">
+                                Style="{DynamicResource PluginListStyle}"
+                                VirtualizingPanel.ScrollUnit="Pixel"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Margin="0,0,0,18" />
+                                        <VirtualizingStackPanel Margin="0,0,0,18" />
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
@@ -1401,10 +1380,12 @@
                                 Text="{DynamicResource pluginStore}"
                                 TextAlignment="left" />
                         </Border>
+
                         <DockPanel
                             Grid.Row="0"
                             Grid.Column="1"
                             Margin="5,24,0,0">
+
                             <TextBox
                                 Name="pluginStoreFilterTxb"
                                 Width="150"
@@ -1456,290 +1437,223 @@
                                 Padding="12,4,12,4"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Click="OnPluginStoreRefreshClick"
+                                Command="{Binding RefreshExternalPluginsCommand}"
                                 Content="{DynamicResource refresh}"
                                 DockPanel.Dock="Right"
                                 FontSize="13" />
                         </DockPanel>
-                        <Border
+                        <ListView
+                            x:Name="StoreListBox"
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Padding="0,0,0,0">
-                            <ListBox
-                                x:Name="StoreListBox"
-                                Width="Auto"
-                                Margin="5,1,0,0"
-                                Padding="0,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalContentAlignment="Center"
-                                Background="{DynamicResource Color01B}"
-                                ItemContainerStyle="{StaticResource StoreList}"
-                                ItemsSource="{Binding ExternalPlugins}"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                SelectionMode="Single"
-                                Style="{DynamicResource StoreListStyle}">
-                                <ListBox.GroupStyle>
-                                    <GroupStyle>
-                                        <GroupStyle.ContainerStyle>
-                                            <Style TargetType="{x:Type GroupItem}">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <Grid>
-                                                                <StackPanel Orientation="Vertical">
-                                                                    <TextBlock
-                                                                        Margin="0,0,0,10"
-                                                                        VerticalAlignment="Top"
-                                                                        FontSize="16"
-                                                                        FontWeight="Bold"
-                                                                        Text="{Binding Name, Converter={StaticResource TextConverter}}" />
-                                                                    <ItemsPresenter />
-                                                                </StackPanel>
+                            Margin="4,0,0,0"
+                            Padding="0,0,18,0"
+                            ItemContainerStyle="{StaticResource StoreList}"
+                            ItemsSource="{Binding ExternalPlugins}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            SelectionMode="Single"
+                            Style="{DynamicResource StoreListStyle}"
+                            VirtualizingPanel.CacheLength="1,1"
+                            VirtualizingPanel.CacheLengthUnit="Page"
+                            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                            VirtualizingPanel.ScrollUnit="Pixel"
+                            VirtualizingPanel.VirtualizationMode="Standard">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <wpftk:VirtualizingWrapPanel
+                                        x:Name="ItemWrapPanel"
+                                        Margin="0,0,0,10"
+                                        ItemSize="216,184"
+                                        MouseWheelDelta="48"
+                                        Orientation="Vertical"
+                                        ScrollLineDelta="16"
+                                        SpacingMode="None"
+                                        StretchItems="True" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.GroupStyle>
+                                <GroupStyle HidesIfEmpty="True">
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Grid>
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock
+                                                                    Margin="2,0,0,10"
+                                                                    VerticalAlignment="Top"
+                                                                    FontSize="16"
+                                                                    FontWeight="Bold"
+                                                                    Foreground="{DynamicResource Color05B}"
+                                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                                                <ItemsPresenter />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                    <GroupStyle.Panel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="{Binding Orientation, Mode=OneWay}" />
+                                        </ItemsPanelTemplate>
+                                    </GroupStyle.Panel>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
 
-                                                            </Grid>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </GroupStyle.ContainerStyle>
-                                    </GroupStyle>
-                                </ListBox.GroupStyle>
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <UniformGrid
-                                            Margin="0,0,17,18"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Columns="3"
-                                            IsItemsHost="True"
-                                            SnapsToDevicePixels="True" />
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <!--  Hover Layout Style  -->
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <!--  Hover Layout Style  -->
+                                    <Button
+                                        Name="StoreListItem"
+                                        Margin="0"
+                                        Padding="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        BorderThickness="0"
+                                        Click="StoreListItem_Click"
+                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}">
+                                        <ui:FlyoutService.Flyout>
+                                            <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
+                                                <Grid MinWidth="200">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <VirtualizingStackPanel
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Margin="5,0,0,0"
+                                                        Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Margin="0,0,5,0"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="14"
+                                                            FontWeight="Bold"
+                                                            Foreground="{DynamicResource Color05B}"
+                                                            Text="{Binding Name}"
+                                                            TextWrapping="Wrap"
+                                                            ToolTip="{Binding Name}" />
+                                                        <TextBlock
+                                                            VerticalAlignment="Center"
+                                                            FontSize="12"
+                                                            Foreground="{DynamicResource Color05B}"
+                                                            Text="{Binding Version}"
+                                                            TextWrapping="Wrap"
+                                                            ToolTip="{Binding Version}" />
+                                                    </VirtualizingStackPanel>
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        Margin="5,4,0,0"
+                                                        TextWrapping="Wrap">
+                                                        <Hyperlink
+                                                            Foreground="{DynamicResource Color04B}"
+                                                            NavigateUri="{Binding Website}"
+                                                            RequestNavigate="OnRequestNavigate">
+                                                            <Run FontSize="12" Text="{Binding Author, Mode=OneWay}" />
+                                                        </Hyperlink>
+                                                    </TextBlock>
 
-                                        <ToggleButton
-                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
-                                            HorizontalAlignment="Left"
-                                            HorizontalContentAlignment="left"
-                                            Background="Transparent"
-                                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                            Style="{StaticResource StoreItem}">
-                                            <ToggleButton.Template>
-                                                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                                                    <ContentPresenter
-                                                        x:Name="contentPresenter"
-                                                        Margin="{TemplateBinding Padding}"
-                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                        Content="{TemplateBinding Content}"
-                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                        Focusable="False"
-                                                        RecognizesAccessKey="True"
-                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                    <ControlTemplate.Triggers />
-                                                </ControlTemplate>
-                                            </ToggleButton.Template>
-
-                                            <Grid
-                                                Height="160"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Top">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="56" />
-                                                    <RowDefinition Height="*" />
-                                                </Grid.RowDefinitions>
-                                                <StackPanel
-                                                    Grid.Row="0"
-                                                    Grid.RowSpan="2"
-                                                    Grid.Column="0"
-                                                    Grid.ColumnSpan="2"
-                                                    Margin="0,0,2,0"
-                                                    HorizontalAlignment="Right"
-                                                    Orientation="Horizontal">
+                                                    <VirtualizingStackPanel
+                                                        Grid.Row="0"
+                                                        Grid.RowSpan="2"
+                                                        Grid.Column="1"
+                                                        Margin="20,0,0,0"
+                                                        HorizontalAlignment="Right"
+                                                        Orientation="Horizontal">
+                                                        <Button
+                                                            MinHeight="42"
+                                                            Margin="5,0,5,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Stretch"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginInstallClick"
+                                                            Content="{DynamicResource installbtn}"
+                                                            Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
+                                                        <Button
+                                                            MinHeight="42"
+                                                            Margin="5,0,5,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginUninstallClick"
+                                                            Content="{DynamicResource uninstallbtn}"
+                                                            Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                        <Button
+                                                            MinHeight="42"
+                                                            Margin="5,0,5,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginUpdateClick"
+                                                            Content="{DynamicResource updatebtn}"
+                                                            Style="{DynamicResource AccentButtonStyle}"
+                                                            Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                    </VirtualizingStackPanel>
+                                                </Grid>
+                                            </ui:Flyout>
+                                        </ui:FlyoutService.Flyout>
+                                        <Grid>
+                                            <StackPanel Width="200">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Grid.Column="0"
+                                                        Width="32"
+                                                        Height="32"
+                                                        Margin="18,24,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        RenderOptions.BitmapScalingMode="Fant"
+                                                        Source="{Binding IcoPath, IsAsync=True}" />
                                                     <Border
                                                         x:Name="LabelUpdate"
                                                         Height="12"
-                                                        Margin="0,10,8,0"
+                                                        Margin="10,24,0,0"
                                                         Padding="6,2,6,2"
-                                                        HorizontalAlignment="Right"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Top"
                                                         Background="#45BD59"
                                                         CornerRadius="36"
                                                         ToolTip="{DynamicResource LabelUpdateToolTip}"
                                                         Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                 </StackPanel>
-
-                                                <StackPanel
-                                                    Grid.Row="0"
-                                                    Margin="0,0,0,0"
-                                                    VerticalAlignment="Top">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Opacity" Value="1" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-                                                    <Image
-                                                        Width="32"
-                                                        Height="32"
-                                                        Margin="20,20,6,0"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Top"
-                                                        RenderOptions.BitmapScalingMode="HighQuality"
-                                                        Source="{Binding IcoPath, IsAsync=True}"
-                                                        Stretch="Uniform" />
-                                                </StackPanel>
-                                                <StackPanel
-                                                    Grid.Row="1"
-                                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
-                                                    Margin="0,6,0,0"
-                                                    VerticalAlignment="Top"
-                                                    Panel.ZIndex="0">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Opacity" Value="1" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-                                                    <TextBlock
-                                                        Padding="20,0,20,0"
-                                                        VerticalAlignment="Top"
-                                                        FontWeight="SemiBold"
-                                                        Foreground="{DynamicResource Color05B}"
-                                                        Text="{Binding Name}"
-                                                        TextWrapping="WrapWithOverflow"
-                                                        ToolTip="{Binding Version}" />
-                                                    <TextBlock
-                                                        Margin="0,6,0,0"
-                                                        Padding="20,0,22,20"
-                                                        Foreground="{DynamicResource Color04B}"
-                                                        TextWrapping="WrapWithOverflow">
-                                                        <Run
-                                                            FontSize="12"
-                                                            Foreground="{DynamicResource Color04B}"
-                                                            Text="{Binding Description, Mode=OneWay}" />
-                                                    </TextBlock>
-
-                                                </StackPanel>
-                                                <StackPanel
-                                                    Grid.RowSpan="2"
+                                                <TextBlock
                                                     Grid.Column="0"
-                                                    Grid.ColumnSpan="2"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Collapsed" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
+                                                    Margin="18,10,18,0"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="{DynamicResource Color05B}"
+                                                    Text="{Binding Name}"
+                                                    TextWrapping="Wrap"
+                                                    ToolTip="{Binding Version}" />
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    Height="60"
+                                                    Margin="18,6,18,0"
+                                                    Padding="0,0,0,10"
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource Color04B}"
+                                                    Text="{Binding Description, Mode=OneWay}"
+                                                    TextTrimming="WordEllipsis"
+                                                    TextWrapping="Wrap" />
 
+                                            </StackPanel>
 
-                                                    <Grid
-                                                        Height="180"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Stretch"
-                                                        Panel.ZIndex="1">
-                                                        <Grid.Background>
-                                                            <SolidColorBrush Opacity=".95" Color="{DynamicResource HoverStoreGrid}" />
-                                                        </Grid.Background>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <StackPanel
-                                                            Grid.Row="0"
-                                                            Grid.Column="0"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Top">
-                                                            <StackPanel Orientation="Vertical">
-                                                                <TextBlock
-                                                                    Margin="20,20,20,0"
-                                                                    Padding="0,0,0,0"
-                                                                    FontWeight="Bold"
-                                                                    Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Name}"
-                                                                    TextWrapping="WrapWithOverflow"
-                                                                    ToolTip="{Binding Name}" />
-                                                                <TextBlock
-                                                                    Margin="20,4,20,0"
-                                                                    Padding="0,0,20,0"
-                                                                    Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Version}"
-                                                                    TextWrapping="WrapWithOverflow"
-                                                                    ToolTip="{Binding Version}" />
-                                                            </StackPanel>
-                                                            <StackPanel Margin="20,6,20,0" Orientation="Vertical">
-                                                                <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
-                                                                    <Hyperlink
-                                                                        Foreground="{DynamicResource Color04B}"
-                                                                        NavigateUri="{Binding Website}"
-                                                                        RequestNavigate="OnRequestNavigate">
-                                                                        <Run FontSize="12" Text="{Binding Author, Mode=OneWay}" />
-                                                                    </Hyperlink>
-                                                                </TextBlock>
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                        <Grid Grid.Row="0" Grid.Column="1">
-                                                            <StackPanel
-                                                                Margin="0,70,20,0"
-                                                                HorizontalAlignment="Right"
-                                                                Orientation="Horizontal">
-                                                                <Button
-                                                                    MinHeight="40"
-                                                                    Padding="15,5,15,5"
-                                                                    HorizontalAlignment="Right"
-                                                                    VerticalAlignment="Center"
-                                                                    Click="OnExternalPluginInstallClick"
-                                                                    Content="{DynamicResource installbtn}"
-                                                                    Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
-                                                                <Button
-                                                                    MinHeight="40"
-                                                                    Margin="5,0,0,0"
-                                                                    Padding="15,5,15,5"
-                                                                    HorizontalAlignment="Right"
-                                                                    VerticalAlignment="Center"
-                                                                    Click="OnExternalPluginUninstallClick"
-                                                                    Content="{DynamicResource uninstallbtn}"
-                                                                    Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                                <Button
-                                                                    MinHeight="40"
-                                                                    Margin="5,0,0,0"
-                                                                    Padding="15,5,15,5"
-                                                                    HorizontalAlignment="Right"
-                                                                    VerticalAlignment="Center"
-                                                                    Click="OnExternalPluginUpdateClick"
-                                                                    Content="{DynamicResource updatebtn}"
-                                                                    Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                                <!--  Hide Install Button when installed Item  -->
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
-
-                                        </ToggleButton>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Border>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
+
                 </TabItem>
                 <!--#endregion-->
 
@@ -1763,7 +1677,9 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
-                            ScrollViewer.CanContentScroll="False">
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel">
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />
@@ -2339,14 +2255,16 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="True"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="43" />
                                     <RowDefinition Height="80" />
                                     <RowDefinition Height="146" />
-                                    
+
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
@@ -2510,7 +2428,7 @@
                                         Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
                                 </StackPanel>
-                                
+
                                 <TextBlock
                                     Grid.Row="6"
                                     Margin="0,0,12,2"
@@ -2520,8 +2438,8 @@
                                     Foreground="{DynamicResource Color05B}"
                                     Text="{DynamicResource customQueryShortcut}" />
                                 <ListView
-                                    Grid.Row="7"
                                     Name="customShortcutView"
+                                    Grid.Row="7"
                                     MinHeight="160"
                                     Margin="0,6,0,0"
                                     Background="{DynamicResource Color02B}"
@@ -2633,7 +2551,9 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="True"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
 
                             <StackPanel>
@@ -2805,7 +2725,9 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Background="{DynamicResource Color01B}"
-                            ScrollViewer.CanContentScroll="False">
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
                                     Grid.Row="2"
