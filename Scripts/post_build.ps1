@@ -134,13 +134,13 @@ function Main {
 
         Publish-Self-Contained $p
 
-#        Remove-CreateDumpExe $p $config
+       Remove-CreateDumpExe $p $config
 
-#        $o = "$p\Output\Packages"
-#        Validate-Directory $o
-#        Pack-Squirrel-Installer $p $v $o
+       $o = "$p\Output\Packages"
+       Validate-Directory $o
+       Pack-Squirrel-Installer $p $v $o
 
-        # Publish-Portable $o $v
+        Publish-Portable $o $v
     }
 }
 
