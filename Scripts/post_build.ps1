@@ -42,7 +42,7 @@ function Copy-Resources($path) {
 function Delete-Unused($path, $config) {
     $target = "$path\Output\$config"
     $included = @{ }
-    Get-ChildItem -Path $target -r  | Where-Object { !$_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } | Get-FileHash | ForEach-Object { $included[$_.hash] = $true }
+    Get-ChildItem -Path $target -r -Filter "*.dll" | Where-Object { !$_.PsIsContainer -and $_.FullName -notmatch 'Plugins' } | Get-FileHash | ForEach-Object { $included[$_.hash] = $true }
 
     $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse |
     Select-Object Name, VersionInfo, Directory, FullName, @{ name = "hash"; expression = { (Get-FileHash $_.FullName).hash } } |
@@ -113,7 +113,7 @@ function Publish-Self-Contained($p) {
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile = $profile
+    dotnet publish --no-build -c Release $csproj /p:PublishProfile=$profile
 }
 
 function Publish-Portable($outputLocation, $version) {
@@ -134,11 +134,11 @@ function Main {
 
         Publish-Self-Contained $p
 
-        Remove-CreateDumpExe $p $config
+#        Remove-CreateDumpExe $p $config
 
-        $o = "$p\Output\Packages"
-        Validate-Directory $o
-        Pack-Squirrel-Installer $p $v $o
+#        $o = "$p\Output\Packages"
+#        Validate-Directory $o
+#        Pack-Squirrel-Installer $p $v $o
 
         # Publish-Portable $o $v
     }
