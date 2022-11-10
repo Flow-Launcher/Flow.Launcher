@@ -82,7 +82,7 @@ function Pack-Squirrel-Installer($path, $version, $output) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
     New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\6.3.1\tools\NuGet.exe -Force
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration = Release
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
@@ -130,15 +130,15 @@ function Main {
 
     if ($config -eq "Release") {
 
-        Delete-Unused $p $config
+        # Delete-Unused $p $config
 
-        Publish-Self-Contained $p
+        # Publish-Self-Contained $p
 
-       Remove-CreateDumpExe $p $config
+        # Remove-CreateDumpExe $p $config
 
-       $o = "$p\Output\Packages"
-       Validate-Directory $o
-       Pack-Squirrel-Installer $p $v $o
+        $o = "$p\Output\Packages"
+        Validate-Directory $o
+        Pack-Squirrel-Installer $p $v $o
 
         Publish-Portable $o $v
     }
