@@ -29,7 +29,7 @@ build:
   project: Flow.Launcher.sln
   verbosity: minimal
 test_script:
-  - dotnet test --no-build
+  - dotnet test --no-build -c Release
 after_test:
   - ps: .\Scripts\post_build.ps1
 
