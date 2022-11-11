@@ -91,6 +91,7 @@
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.355802">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
@@ -108,7 +109,7 @@
   <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
     <!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
     <ItemGroup>
-      <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+      <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
       <Analyzer Remove="@(Analyzer)" />
       <Analyzer Include="@(FilteredAnalyzer)" />
     </ItemGroup>
