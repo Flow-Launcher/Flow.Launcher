@@ -7,6 +7,10 @@ init:
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
+cache:
+  - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
+
+
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
