@@ -131,7 +131,7 @@ function Publish-Self-Contained($p)
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish --no-build -c Release $csproj /p:PublishProfile = $profile
+    dotnet publish --no-build -c Release $csproj /p:PublishProfile=$profile
 }
 
 function Publish-Portable($outputLocation, $version)
@@ -160,11 +160,8 @@ function Main
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
-
-        #        Publish-Portable $o $v
+        Publish-Portable $o $v
     }
 }
 
 Main
-
-#Delete-Unused "C:\Users\1\AppData\Local\FlowLauncher\app-1.0.0" ""
