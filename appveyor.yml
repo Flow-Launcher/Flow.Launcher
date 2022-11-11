@@ -28,7 +28,9 @@ before_build:
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
-after_build:
+test_script:
+  - dotnet test --no-build
+after_test:
   - ps: .\Scripts\post_build.ps1
 
 artifacts:
