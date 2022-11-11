@@ -21,7 +21,7 @@ skip_commits:
     - '*.md'
 
 image: Visual Studio 2022
-platform: Any CPU
+platform: AnyCPU
 configuration: Release
 before_build:
 - ps: nuget restore
