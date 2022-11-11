@@ -44,10 +44,6 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
-
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-            view.GroupDescriptions.Add(groupDescription);
         }
 
         #region General

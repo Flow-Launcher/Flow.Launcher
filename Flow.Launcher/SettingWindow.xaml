@@ -48,6 +48,12 @@
                 <scm:SortDescription PropertyName="Source" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        <CollectionViewSource x:Key="PluginStoreCollectionView"
+            Source="{Binding ExternalPlugins}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category"></PropertyGroupDescription>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
 
         <Style x:Key="StoreItemFocusVisualStyleKey">
             <Setter Property="Control.Template">
@@ -1450,7 +1456,7 @@
                             Margin="4,0,0,0"
                             Padding="0,0,18,0"
                             ItemContainerStyle="{StaticResource StoreList}"
-                            ItemsSource="{Binding ExternalPlugins}"
+                            ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             SelectionMode="Single"
                             Style="{DynamicResource StoreListStyle}"
