@@ -31,6 +31,8 @@ build:
 after_test:
   - ps: .\Scripts\post_build.ps1
 
+
+
 artifacts:
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
