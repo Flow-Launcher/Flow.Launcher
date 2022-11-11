@@ -1,0 +1,81 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Initialize Service
+      run: |
+        sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
+        net start WSearch
+    - name: Set version in all AssemblyInfo.cs files
+      uses: secondbounce/assemblyinfo-update@v2
+      with:
+        version: '1.9.5'
+    - if: ${{ runner.os == 'Windows' }}
+      name: Use GNU tar
+      shell: cmd
+      run: |
+        echo "Adding GNU tar to PATH"
+        echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release
+    - name: Perform a Pester test from the command-line
+      shell: pwsh
+      run: .\Scripts\post_build.ps1
+    - name: Test
+      run: dotnet test --no-build --verbosity normal -c Release
+    - name: Upload Plugin Nupkg
+      uses: actions/upload-artifact@v3
+      with:
+        name: Plugin nupkg
+        path: |
+          Output\Release\Flow.Launcher.Plugin.*.nupkg
+    - name: Upload Setup
+      uses: actions/upload-artifact@v3
+      with:
+        name: Flow Installer
+        path: |
+          Output\Packages\Flow-Launcher-*.exe
+    # - name: Upload Portable Version
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: Portable Version
+    #     path: |
+    #       Output\Packages\Flow-Launcher-Portable.zip
+    # - name: Upload Full Nupkg
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: Full nupkg
+    #     path: |
+    #       Output\Packages\FlowLauncher-*-full.nupkg
+          
+    - name: Upload Release Information
+      uses: actions/upload-artifact@v3
+      with:
+        name: RELEASES
+        path: |
+          Output\Packages\RELEASES
+    
+      
